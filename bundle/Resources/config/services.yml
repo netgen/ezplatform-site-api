@@ -1,0 +1,59 @@
+parameters:
+    ezplatform.default_view_templates.content.full: 'NetgenEzPlatformSiteBundle:default:content/full.html.twig'
+    ezsettings.default.pagelayout: 'NetgenEzPlatformSiteBundle::pagelayout.html.twig'
+    ezpublish.urlalias_router.class: Netgen\EzPlatformSiteBundle\Routing\UrlAliasRouter
+
+services:
+    netgen.ezplatform_site.core.find_service:
+        class: Netgen\EzPlatformSite\Core\Site\FindService
+        arguments:
+            - '@netgen.ezplatform_site.core.domain_object_mapper'
+            - '@ezpublish.api.service.search'
+            - '@ezpublish.api.service.content'
+            - '$languages$'
+            - %netgen.ezplatform_site.use_always_available%
+
+    netgen.ezplatform_site.core.load_service:
+        class: Netgen\EzPlatformSite\Core\Site\LoadService
+        arguments:
+            - '@netgen.ezplatform_site.core.domain_object_mapper'
+            - '@ezpublish.api.service.content'
+            - '@ezpublish.api.service.location'
+            - '$languages$'
+            - %netgen.ezplatform_site.use_always_available%
+
+    netgen.ezplatform_site.view_builder.content:
+        class: Netgen\EzPlatformSiteBundle\View\Builder\ContentViewBuilder
+        arguments:
+            - '@netgen.ezplatform_site.site'
+            - '@ezpublish.api.repository'
+            - '@security.authorization_checker'
+            - '@ezpublish.view.configurator'
+            - '@ezpublish.view.view_parameters.injector.dispatcher'
+
+    netgen.ezplatform_site.controller.content.view:
+        class: Netgen\EzPlatformSiteBundle\Controller\Content\ViewController
+        parent: ezpublish.controller.base
+
+    ng_content:
+        alias: netgen.ezplatform_site.controller.content.view
+
+    ezpublish.view_builder.registry:
+        class: %ezpublish.view_builder.registry.class%
+        calls:
+            -
+                - addToRegistry
+                -
+                    -
+                        - '@ezpublish.view_builder.content'
+                        - '@ezpublish.view_builder.block'
+                        - '@netgen.ezplatform_site.view_builder.content'
+
+    netgen.ezplatform_site.twig.extension.field_rendering:
+        class: Netgen\EzPlatformSiteBundle\Templating\Twig\Extension\FieldRenderingExtension
+        arguments:
+            - @ezpublish.templating.field_block_renderer
+            - @ezpublish.api.service.content_type
+            - @ezpublish.fieldType.parameterProviderRegistry
+        tags:
+            - {name: twig.extension}

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="{{ app.request.locale|replace('_', '-') }}">
+<head>
+    <meta charset="utf-8">
+    <title>{{ content.name|default( 'Home' ) }}</title>
+    <meta name="generator" content="eZ Platform"/>
+    {% if content is defined and content.mainLocationId %}
+        <link rel="canonical" href="{{ path( 'ez_urlalias', {'locationId': content.mainLocationId} ) }}" />
+    {% endif %}
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

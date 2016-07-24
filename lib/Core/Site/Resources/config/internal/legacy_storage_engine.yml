@@ -1,0 +1,30 @@
+parameters:
+
+services:
+    netgen.ezplatform_site.core.storage_engine.legacy.identifier_map.gateway:
+        class: Netgen\EzPlatformSite\Core\Persistence\Legacy\IdentifierMap\Gateway\DoctrineDatabase
+        arguments:
+            - '@ezpublish.api.storage_engine.legacy.dbhandler'
+
+    netgen.ezplatform_site.core.storage_engine.legacy.content_type.handler:
+        class: Netgen\EzPlatformSite\Core\Persistence\Legacy\ContentTypeHandler
+        arguments:
+            - '@ezpublish.spi.persistence.legacy.content_type.handler.inner'
+            - '@netgen.ezplatform_site.core.storage_engine.legacy.identifier_map.gateway'
+
+    netgen.ezplatform_site.core.storage_engine.in_memory.content_type.handler:
+        class: Netgen\EzPlatformSite\Core\Persistence\InMemory\ContentTypeHandler
+        arguments:
+            - '@netgen.ezplatform_site.core.storage_engine.legacy.content_type.handler'
+
+    netgen.ezplatform_site.core.storage_engine.cache.content_type.handler:
+        class: Netgen\EzPlatformSite\Core\Persistence\Cache\ContentTypeHandler
+        parent: ezpublish.spi.persistence.cache.abstractHandler
+
+    # eZ Platform Storage Engine overrides
+
+    ezpublish.spi.persistence.legacy.content_type.handler.caching:
+        alias: netgen.ezplatform_site.core.storage_engine.in_memory.content_type.handler
+
+    ezpublish.spi.persistence.cache.contentTypeHandler:
+        alias: netgen.ezplatform_site.core.storage_engine.cache.content_type.handler

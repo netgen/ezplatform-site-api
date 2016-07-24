@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./tests/bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         syntaxCheck="true">
+    <testsuites>
+        <testsuite name="Netgen's Site API for eZ Platform unit tests">
+            <directory suffix="Test.php">./tests/bundle/</directory>
+            <directory suffix="Test.php">./tests/lib/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory>./tests</directory>
+        </whitelist>
+    </filter>
+</phpunit>

@@ -1,0 +1,32 @@
+{
+    "name": "netgen/ezplatform-site-api",
+    "description": "Netgen's Site API for eZ Platform",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Petar Španja",
+            "email": "petar@spanja.info"
+        }
+    ],
+    "require": {
+        "php": "~5.5|~7.0",
+        "ezsystems/ezpublish-kernel": "^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.7",
+        "matthiasnoback/symfony-dependency-injection-test": "0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\EzPlatformSite\\": "lib",
+            "Netgen\\EzPlatformSite\\Tests\\": "tests/lib",
+            "Netgen\\EzPlatformSiteBundle\\": "bundle",
+            "Netgen\\EzPlatformSiteBundle\\Tests\\": "tests/bundle"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

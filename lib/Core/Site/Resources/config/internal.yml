@@ -1,0 +1,41 @@
+imports:
+    - {resource: internal/legacy_storage_engine.yml}
+
+parameters:
+    netgen.ezplatform_site.use_always_available: true
+    netgen.ezplatform_site.prioritized_languages:
+        - 'eng-GB'
+
+services:
+    netgen.ezplatform_site.core.identifier_map_provider:
+        alias: ezpublish.spi.persistence.content_type_handler
+
+    netgen.ezplatform_site.core.domain_object_mapper:
+        class: Netgen\EzPlatformSite\Core\Site\DomainObjectMapper
+        arguments:
+            - '@netgen.ezplatform_site.core.identifier_map_provider'
+            - '@ezpublish.api.service.field_type'
+
+    netgen.ezplatform_site.core.find_service:
+        class: Netgen\EzPlatformSite\Core\Site\FindService
+        arguments:
+            - '@netgen.ezplatform_site.core.domain_object_mapper'
+            - '@ezpublish.api.service.search'
+            - '@ezpublish.api.service.content'
+            - %netgen.ezplatform_site.prioritized_languages%
+            - %netgen.ezplatform_site.use_always_available%
+
+    netgen.ezplatform_site.core.load_service:
+        class: Netgen\EzPlatformSite\Core\Site\LoadService
+        arguments:
+            - '@netgen.ezplatform_site.core.domain_object_mapper'
+            - '@ezpublish.api.service.content'
+            - '@ezpublish.api.service.location'
+            - %netgen.ezplatform_site.prioritized_languages%
+            - %netgen.ezplatform_site.use_always_available%
+
+    netgen.ezplatform_site.core.site:
+        class: Netgen\EzPlatformSite\Core\Site\Site
+        arguments:
+            - '@netgen.ezplatform_site.find_service'
+            - '@netgen.ezplatform_site.load_service'

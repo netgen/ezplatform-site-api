@@ -40,6 +40,7 @@ git:
 # we don't need sudo
 sudo: false
 
+
 # send coverage to codecov.io
 after_success:
     - bash <(curl -s https://codecov.io/bash)

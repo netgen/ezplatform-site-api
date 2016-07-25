@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
-         bootstrap="tests/bootstrap.php"
+         bootstrap="./tests/bootstrap.php"
          processIsolation="false"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
@@ -12,9 +12,9 @@
     </php>
     <testsuites>
         <testsuite name="Netgen's Site API for eZ Platform integration tests">
-            <file>tests/lib/integration/SiteTest.php</file>
-            <file>tests/lib/integration/FindServiceTest.php</file>
-            <file>tests/lib/integration/LoadServiceTest.php</file>
+            <file>tests/lib/Integration/SiteTest.php</file>
+            <file>tests/lib/Integration/FindServiceTest.php</file>
+            <file>tests/lib/Integration/LoadServiceTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

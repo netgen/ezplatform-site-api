@@ -6,6 +6,7 @@ use Netgen\EzPlatformSite\API\LoadService as LoadServiceInterface;
 use Netgen\EzPlatformSite\Core\Site\Exceptions\TranslationNotMatchedException;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 
 final class LoadService implements LoadServiceInterface
@@ -109,7 +110,29 @@ final class LoadService implements LoadServiceInterface
     public function loadLocation($locationId)
     {
         $location = $this->locationService->loadLocation($locationId);
-        $versionInfo = $this->contentService->loadVersionInfo($location->contentInfo);
+
+        return $this->getSiteLocation($location);
+    }
+
+    public function loadLocationByRemoteId($remoteId)
+    {
+        $location = $this->locationService->loadLocationByRemoteId($remoteId);
+
+        return $this->getSiteLocation($location);
+    }
+
+    /**
+     * Returns Site Location object for the given Repository $location.
+     *
+     * @throws \Netgen\EzPlatformSite\Core\Site\Exceptions\TranslationNotMatchedException
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
+     * @return \Netgen\EzPlatformSite\API\Values\Location
+     */
+    private function getSiteLocation(APILocation $location)
+    {
+        $versionInfo = $this->contentService->loadVersionInfoById($location->contentInfo->id);
 
         $languageCode = $this->getLanguage(
             $versionInfo->languageCodes,
@@ -125,13 +148,6 @@ final class LoadService implements LoadServiceInterface
         }
 
         return $this->domainObjectMapper->mapLocation($location, $versionInfo, $languageCode);
-    }
-
-    public function loadLocationByRemoteId($remoteId)
-    {
-        $location = $this->locationService->loadLocationByRemoteId($remoteId);
-
-        return $this->loadLocation($location->id);
     }
 
     /**

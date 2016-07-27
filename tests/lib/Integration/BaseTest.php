@@ -2,9 +2,8 @@
 
 namespace Netgen\EzPlatformSite\Tests\Integration;
 
-use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
 use Netgen\EzPlatformSite\API\Values\Content;
-use Netgen\EzPlatformSite\API\Values\Field;
+use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
 
 /**
  * Base class for API integration tests.
@@ -30,62 +29,34 @@ class BaseTest extends APIBaseTest
             'contentTypeIdentifier' => 'feedback_form',
             'languageCode' => 'eng-GB',
             'fields' => [
-                'description' => new Field(
-                    [
-                        'identifier' => 'description',
-                        'typeIdentifier' => 'ezrichtext',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
-                'email' => new Field(
-                    [
-                        'identifier' => 'email',
-                        'typeIdentifier' => 'ezemail',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
-                'message' => new Field(
-                    [
-                        'identifier' => 'message',
-                        'typeIdentifier' => 'eztext',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
-                'name' => new Field(
-                    [
-                        'identifier' => 'name',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
-                'recipient' => new Field(
-                    [
-                        'identifier' => 'recipient',
-                        'typeIdentifier' => 'ezemail',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
-                'sender_name' => new Field(
-                    [
-                        'identifier' => 'sender_name',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
-                'subject' => new Field(
-                    [
-                        'identifier' => 'subject',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
+                'description' => [
+                    'typeIdentifier' => 'ezrichtext',
+                    'isEmpty' => false,
+                ],
+                'email' => [
+                    'typeIdentifier' => 'ezemail',
+                    'isEmpty' => false,
+                ],
+                'message' => [
+                    'typeIdentifier' => 'eztext',
+                    'isEmpty' => false,
+                ],
+                'name' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'recipient' => [
+                    'typeIdentifier' => 'ezemail',
+                    'isEmpty' => false,
+                ],
+                'sender_name' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'subject' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
             ],
             'isFound' => true,
         ];
@@ -108,150 +79,78 @@ class BaseTest extends APIBaseTest
             'contentTypeIdentifier' => 'template_look',
             'languageCode' => 'ger-DE',
             'fields' => [
-                'email' => new Field(
-                    [
-                        'identifier' => 'email',
-                        'typeIdentifier' => 'ezinisetting',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'footer_script' => new Field(
-                    [
-                        'identifier' => 'footer_script',
-                        'typeIdentifier' => 'eztext',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'footer_text' => new Field(
-                    [
-                        'identifier' => 'footer_text',
-                        'typeIdentifier' => 'eztext',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'hide_powered_by' => new Field(
-                    [
-                        'identifier' => 'hide_powered_by',
-                        'typeIdentifier' => 'ezboolean',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'image' => new Field(
-                    [
-                        'identifier' => 'image',
-                        'typeIdentifier' => 'ezimage',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'login_label' => new Field(
-                    [
-                        'identifier' => 'login_label',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'logout_label' => new Field(
-                    [
-                        'identifier' => 'logout_label',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'meta_data' => new Field(
-                    [
-                        'identifier' => 'meta_data',
-                        'typeIdentifier' => 'ezinisetting',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'my_profile_label' => new Field(
-                    [
-                        'identifier' => 'my_profile_label',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
-                'register_user_label' => new Field(
-                    [
-                        'identifier' => 'register_user_label',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'rss_feed' => new Field(
-                    [
-                        'identifier' => 'rss_feed',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'shopping_basket_label' => new Field(
-                    [
-                        'identifier' => 'shopping_basket_label',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'site_map_url' => new Field(
-                    [
-                        'identifier' => 'site_map_url',
-                        'typeIdentifier' => 'ezurl',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'site_settings_label' => new Field(
-                    [
-                        'identifier' => 'site_settings_label',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'sitestyle' => new Field(
-                    [
-                        'identifier' => 'sitestyle',
-                        'typeIdentifier' => 'ezpackage',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'siteurl' => new Field(
-                    [
-                        'identifier' => 'siteurl',
-                        'typeIdentifier' => 'ezinisetting',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'tag_cloud_url' => new Field(
-                    [
-                        'identifier' => 'tag_cloud_url',
-                        'typeIdentifier' => 'ezurl',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
-                'title' => new Field(
-                    [
-                        'identifier' => 'title',
-                        'typeIdentifier' => 'ezinisetting',
-                        'isEmpty' => true,
-                        'value' => false,
-                    ]
-                ),
+                'email' => [
+                    'typeIdentifier' => 'ezinisetting',
+                    'isEmpty' => true,
+                ],
+                'footer_script' => [
+                    'typeIdentifier' => 'eztext',
+                    'isEmpty' => true,
+                ],
+                'footer_text' => [
+                    'typeIdentifier' => 'eztext',
+                    'isEmpty' => true,
+                ],
+                'hide_powered_by' => [
+                    'typeIdentifier' => 'ezboolean',
+                    'isEmpty' => true,
+                ],
+                'image' => [
+                    'typeIdentifier' => 'ezimage',
+                    'isEmpty' => true,
+                ],
+                'login_label' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => true,
+                ],
+                'logout_label' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => true,
+                ],
+                'meta_data' => [
+                    'typeIdentifier' => 'ezinisetting',
+                    'isEmpty' => true,
+                ],
+                'my_profile_label' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'register_user_label' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => true,
+                ],
+                'rss_feed' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => true,
+                ],
+                'shopping_basket_label' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => true,
+                ],
+                'site_map_url' => [
+                    'typeIdentifier' => 'ezurl',
+                    'isEmpty' => true,
+                ],
+                'site_settings_label' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => true,
+                ],
+                'sitestyle' => [
+                    'typeIdentifier' => 'ezpackage',
+                    'isEmpty' => true,
+                ],
+                'siteurl' => [
+                    'typeIdentifier' => 'ezinisetting',
+                    'isEmpty' => true,
+                ],
+                'tag_cloud_url' => [
+                    'typeIdentifier' => 'ezurl',
+                    'isEmpty' => true,
+                ],
+                'title' => [
+                    'typeIdentifier' => 'ezinisetting',
+                    'isEmpty' => true,
+                ],
             ],
             'isFound' => true,
         ];
@@ -274,22 +173,14 @@ class BaseTest extends APIBaseTest
             'contentTypeIdentifier' => 'user_group',
             'languageCode' => 'eng-US',
             'fields' => [
-                'description' => new Field(
-                    [
-                        'identifier' => 'description',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
-                'name' => new Field(
-                    [
-                        'identifier' => 'name',
-                        'typeIdentifier' => 'ezstring',
-                        'isEmpty' => false,
-                        'value' => true,
-                    ]
-                ),
+                'description' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'name' => [
+                    'typeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
             ],
             'isFound' => true,
         ];
@@ -398,6 +289,7 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($name, $contentInfo->name);
         $this->assertEquals($languageCode, $contentInfo->languageCode);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\ContentInfo', $contentInfo->innerContentInfo);
+        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\ContentType\ContentType', $contentInfo->innerContentType);
     }
 
     protected function assertFields(Content $content, $data)
@@ -423,12 +315,22 @@ class BaseTest extends APIBaseTest
 
             $this->assertSame($field->value, $fieldValueById);
             $this->assertSame($fieldValueById, $fieldValueByIdentifier);
+
+            $this->assertSame($content, $field->content);
         }
 
-        $this->assertEquals(
-            $expectedFields,
-            $this->normalizeFields($content->fields)
-        );
+        foreach ($expectedFields as $identifier => $data) {
+            $this->assertField($content, $identifier, $data);
+        }
+    }
+
+    protected function assertField(Content $content, $identifier, $data)
+    {
+        $field = $content->getField($identifier);
+
+        $this->assertSame($data['isEmpty'], $field->isEmpty());
+        $this->assertSame($identifier, $field->identifier);
+        $this->assertSame($data['typeIdentifier'], $field->typeIdentifier);
     }
 
     protected function assertLocation($location, $data)
@@ -464,25 +366,5 @@ class BaseTest extends APIBaseTest
         $contentUpdateStruct->setField('my_profile_label', 'Das Titel', 'ger-DE');
         $updatedDraft = $contentService->updateContent($draft->versionInfo, $contentUpdateStruct);
         $contentService->publishVersion($updatedDraft->versionInfo);
-    }
-
-    protected function normalizeFields(array $fields)
-    {
-        $normalizedFields = [];
-
-        foreach ($fields as $identifier => $field) {
-            $normalizedFields[$identifier] = new Field(
-                [
-                    'identifier' => $field->identifier,
-                    'typeIdentifier' => $field->typeIdentifier,
-                    'isEmpty' => $field->isEmpty,
-                    'value' => $field->isEmpty ? false : true,
-                ]
-            );
-        }
-
-        ksort($normalizedFields, SORT_STRING);
-
-        return $normalizedFields;
     }
 }

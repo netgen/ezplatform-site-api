@@ -53,7 +53,6 @@ services:
         class: Netgen\EzPlatformSiteBundle\Templating\Twig\Extension\FieldRenderingExtension
         arguments:
             - @ezpublish.templating.field_block_renderer
-            - @ezpublish.api.service.content_type
             - @ezpublish.fieldType.parameterProviderRegistry
         tags:
             - {name: twig.extension}

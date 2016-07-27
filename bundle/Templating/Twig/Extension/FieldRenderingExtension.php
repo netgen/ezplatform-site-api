@@ -23,22 +23,15 @@ class FieldRenderingExtension extends Twig_Extension
     private $fieldBlockRenderer;
 
     /**
-     * @var ContentTypeService
-     */
-    private $contentTypeService;
-
-    /**
      * @var ParameterProviderRegistryInterface
      */
     private $parameterProviderRegistry;
 
     public function __construct(
         FieldBlockRendererInterface $fieldBlockRenderer,
-        ContentTypeService $contentTypeService,
         ParameterProviderRegistryInterface $parameterProviderRegistry
     ) {
         $this->fieldBlockRenderer = $fieldBlockRenderer;
-        $this->contentTypeService = $contentTypeService;
         $this->parameterProviderRegistry = $parameterProviderRegistry;
     }
 
@@ -49,17 +42,16 @@ class FieldRenderingExtension extends Twig_Extension
 
     public function getFunctions()
     {
-        return array(
+        return [
             new Twig_SimpleFunction(
                 'ng_render_field',
-                function (Twig_Environment $environment, Content $content, $identifier, array $params = []) {
+                function (Twig_Environment $environment, Field $field, array $params = []) {
                     $this->fieldBlockRenderer->setTwig($environment);
-
-                    return $this->renderField($content, $identifier, $params);
+                    return $this->renderField($field, $params);
                 },
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
-        );
+        ];
     }
 
     /**
@@ -67,24 +59,14 @@ class FieldRenderingExtension extends Twig_Extension
      *
      * @throws InvalidArgumentException
      *
-     * @param \Netgen\EzPlatformSite\API\Values\Content $content
-     * @param string $identifier Identifier for the field we want to render
+     * @param \Netgen\EzPlatformSite\API\Values\Field $field
      * @param array $params An array of parameters to pass to the field view
      *
      * @return string The HTML markup
      */
-    public function renderField(Content $content, $identifier, array $params = [])
+    public function renderField(Field $field, array $params = [])
     {
-        $field = $content->getField($identifier);
-
-        if (!$field instanceof Field) {
-            throw new InvalidArgumentException(
-                '$identifier',
-                "'{$identifier}' field not present on content #{$content->contentInfo->id} '{$content->contentInfo->name}'"
-            );
-        }
-
-        $params = $this->getRenderFieldBlockParameters($content, $field, $params);
+        $params = $this->getRenderFieldBlockParameters($field, $params);
 
         return $this->fieldBlockRenderer->renderContentFieldView(
             $field->innerField,
@@ -96,13 +78,12 @@ class FieldRenderingExtension extends Twig_Extension
     /**
      * Generates the array of parameter to pass to the field template.
      *
-     * @param \Netgen\EzPlatformSite\API\Values\Content $content
      * @param \Netgen\EzPlatformSite\API\Values\Field $field the Field to display
      * @param array $params An array of parameters to pass to the field view
      *
      * @return array
      */
-    private function getRenderFieldBlockParameters(Content $content, Field $field, array $params = [])
+    private function getRenderFieldBlockParameters(Field $field, array $params = [])
     {
         // Merging passed parameters to default ones
         $params += [
@@ -110,17 +91,15 @@ class FieldRenderingExtension extends Twig_Extension
             'attr' => [], // attributes to add on the enclosing HTML tags
         ];
 
-        $versionInfo = $content->innerContent->getVersionInfo();
-        $contentInfo = $versionInfo->getContentInfo();
-        $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
+        $content = $field->content->innerContent;
+        $contentType = $field->content->contentInfo->innerContentType;
         $fieldDefinition = $contentType->getFieldDefinition($field->identifier);
-        // Adding Field, FieldSettings and ContentInfo objects to
-        // parameters to be passed to the template
+
         $params += [
             'field' => $field->innerField,
-            'content' => $content->innerContent,
-            'contentInfo' => $contentInfo,
-            'versionInfo' => $versionInfo,
+            'content' => $content,
+            'contentInfo' => $content->getVersionInfo()->getContentInfo(),
+            'versionInfo' => $content->getVersionInfo(),
             'fieldSettings' => $fieldDefinition->getFieldSettings(),
         ];
 

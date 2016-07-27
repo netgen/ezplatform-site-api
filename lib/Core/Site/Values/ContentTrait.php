@@ -8,6 +8,21 @@ namespace Netgen\EzPlatformSite\Core\Site\Values;
 trait ContentTrait
 {
     /**
+     * @var \Netgen\EzPlatformSite\API\Values\ContentInfo
+     */
+    protected $contentInfo;
+
+    /**
+     * @var \Netgen\EzPlatformSite\API\Values\Field[]
+     */
+    protected $fields = [];
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     */
+    protected $innerContent;
+
+    /**
      * @var \eZ\Publish\API\Repository\Values\Content\Field[]
      */
     private $fieldsById = [];
@@ -78,18 +93,22 @@ trait ContentTrait
      */
     public function __isset($property)
     {
-        if ($property === 'id') {
-            return true;
-        }
-
-        if ($property === 'name') {
-            return true;
-        }
-
-        if ($property === 'mainLocationId') {
-            return true;
+        switch ($property) {
+            case 'id':
+            case 'name':
+            case 'mainLocationId':
+                return true;
         }
 
         return parent::__isset($property);
+    }
+
+    private function buildField(array $properties = [])
+    {
+        $properties['content'] = $this;
+        $field = new Field($properties);
+
+        $this->fields[$field->identifier] = $field;
+        $this->fieldsById[$field->id] = $field;
     }
 }

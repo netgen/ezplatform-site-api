@@ -10,9 +10,12 @@ final class Content extends APIContent
 
     public function __construct(array $properties = [])
     {
-        if (isset($properties['fieldsById'])) {
-            $this->fieldsById = $properties['fieldsById'];
-            unset($properties['fieldsById']);
+        if (isset($properties['_fields_data'])) {
+            foreach ($properties['_fields_data'] as $fieldData) {
+                $this->buildField($fieldData);
+            }
+
+            unset($properties['_fields_data']);
         }
 
         parent::__construct($properties);

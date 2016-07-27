@@ -16,36 +16,8 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string $name
  * @property-read string $languageCode
  * @property-read \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
+ * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
  */
-class ContentInfo extends ValueObject
+abstract class ContentInfo extends ValueObject
 {
-    /**
-     * @var string|int
-     */
-    protected $id;
-
-    /**
-     * @var string|int
-     */
-    protected $mainLocationId;
-
-    /**
-     * @var string
-     */
-    protected $contentTypeIdentifier;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $languageCode;
-
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
-     */
-    protected $innerContentInfo;
 }

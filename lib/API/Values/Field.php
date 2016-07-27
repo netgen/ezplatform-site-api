@@ -13,39 +13,12 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string|int $id
  * @property-read string $identifier
  * @property-read string $typeIdentifier
- * @property-read bool $isEmpty
  * @property-read \eZ\Publish\SPI\FieldType\Value $value
+ * @property-read \Netgen\EzPlatformSite\API\Values\Content $content
  * @property-read \eZ\Publish\API\Repository\Values\Content\Field $innerField
+ * @property-read \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $innerFieldDefinition
  */
-class Field extends ValueObject
+abstract class Field extends ValueObject
 {
-    /**
-     * @var string|int
-     */
-    protected $id;
-
-    /**
-     * @var string
-     */
-    protected $identifier;
-
-    /**
-     * @var string
-     */
-    protected $typeIdentifier;
-
-    /**
-     * @var bool
-     */
-    protected $isEmpty;
-
-    /**
-     * @var \eZ\Publish\SPI\FieldType\Value
-     */
-    protected $value;
-
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Field
-     */
-    protected $innerField;
+    abstract public function isEmpty();
 }

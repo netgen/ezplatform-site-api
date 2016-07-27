@@ -1,8 +1,12 @@
 {% extends noLayout == true ? viewbaseLayout : pagelayout %}
 {% block content %}
     <h2>{{ content.name }}</h2>
-    {% for field in content.fields %}
-        <h3>{{ field.identifier }}</h3>
-        {{ ng_render_field(content, field.identifier) }}
+    {% for identifier, field in content.fields %}
+        <h3>{{ identifier }}</h3>
+        {% if not field.isEmpty() %}
+            {{ ng_render_field(field) }}
+        {% else %}
+            <p>Field is empty.</p>
+        {% endif %}
     {% endfor %}
 {% endblock %}

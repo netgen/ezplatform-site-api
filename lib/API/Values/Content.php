@@ -21,21 +21,6 @@ use eZ\Publish\API\Repository\Values\ValueObject;
 abstract class Content extends ValueObject
 {
     /**
-     * @var \Netgen\EzPlatformSite\API\Values\ContentInfo
-     */
-    protected $contentInfo;
-
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Field[]
-     */
-    protected $fields = [];
-
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
-     */
-    protected $innerContent;
-
-    /**
      * Return Field object for the given field definition $identifier, or null if not found.
      *
      * @param string $identifier

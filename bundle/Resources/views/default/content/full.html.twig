@@ -1,8 +1,8 @@
 {% extends noLayout == true ? viewbaseLayout : pagelayout %}
 {% block content %}
-    <h2>{{ content.name }}</h2>
+    <h1>{{ content.name }} [{{ content.contentInfo.contentTypeIdentifier }}]</h1>
     {% for identifier, field in content.fields %}
-        <h3>{{ identifier }}</h3>
+        <h3>[{{ identifier }}]</h3>
         {% if not field.isEmpty() %}
             {{ ng_render_field(field) }}
         {% else %}

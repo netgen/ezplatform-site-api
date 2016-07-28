@@ -11,7 +11,7 @@ class NetgenEzPlatformSiteExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $coreFileLocator = new FileLocator(__DIR__ . '/../../lib/Core/Site/Resources/config');
+        $coreFileLocator = new FileLocator(__DIR__ . '/../../lib/Resources/config');
         $coreLoader = new Loader\YamlFileLoader($container, $coreFileLocator);
         $coreLoader->load('services.yml');
 

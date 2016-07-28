@@ -33,7 +33,7 @@ class Legacy extends CoreLegacySetupFactory
             $loader->load('search_engines/legacy.yml');
             $loader->load('tests/integration_legacy.yml');
 
-            $settingsPath = __DIR__ . '/../../../../lib/Core/Site/Resources/config/';
+            $settingsPath = __DIR__ . '/../../../../lib/Resources/config/';
             $siteLoader = new YamlFileLoader($containerBuilder, new FileLocator($settingsPath));
             $siteLoader->load('services.yml');
 

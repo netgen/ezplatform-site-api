@@ -99,7 +99,7 @@ class ContentViewBuilder implements ViewBuilder
             if (isset($parameters['contentId'])) {
                 $contentId = $parameters['contentId'];
             } elseif (isset($location)) {
-                $contentId = $location->contentId;
+                $contentId = $location->contentInfo->id;
             } else {
                 throw new InvalidArgumentException(
                     'Content',

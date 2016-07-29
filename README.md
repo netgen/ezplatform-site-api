@@ -9,7 +9,7 @@
 
 ## Features
 
-- A set of read-only services on top of eZ Platform Repository API, made to transparently resolve correct translation
+- A set of read-only services on top of Repository API, made to transparently resolve correct translation
 
   - [`LoadService`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/LoadService.php)
   - [`FindService`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/FindService.php)

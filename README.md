@@ -45,11 +45,11 @@
     <h2>{{ content.fields.title.value.text }}</h2>
     <h3>{{ content.fields['sub_title'].value.text }}</h3>
     {% for identifier, field in content.fields %}
-        <h4>[{{ identifier }}]</h4>
+        <h4>Field '{{ identifier }}' in Content #{{ field.content.id }}</h4>
         {% if not field.isEmpty() %}
             {{ ng_render_field(field) }}
         {% else %}
-            <p>Field of type '{{ field.typeIdentifier }}' in Content #{{ field.content.id }} is empty.</p>
+            <p>Field of type '{{ field.typeIdentifier }}' is empty.</p>
         {% endif %}
     {% endfor %}
   {% endblock %}

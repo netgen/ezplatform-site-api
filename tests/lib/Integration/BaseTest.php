@@ -26,6 +26,7 @@ class BaseTest extends APIBaseTest
             'contentRemoteId' => 'f8cc7a4cf8a964a1a0ea6666f5da7d0d',
             'locationId' => 60,
             'locationRemoteId' => '86bf306624668ee9b8b979b0d56f7e0d',
+            'parentLocationId' => 2,
             'contentTypeIdentifier' => 'feedback_form',
             'languageCode' => 'eng-GB',
             'fields' => [
@@ -76,6 +77,7 @@ class BaseTest extends APIBaseTest
             'contentRemoteId' => '8b8b22fe3c6061ed500fbd2b377b885f',
             'locationId' => 56,
             'locationRemoteId' => '772da20ecf88b3035d73cbdfcea0f119',
+            'parentLocationId' => 58,
             'contentTypeIdentifier' => 'template_look',
             'languageCode' => 'ger-DE',
             'fields' => [
@@ -170,6 +172,7 @@ class BaseTest extends APIBaseTest
             'contentRemoteId' => 'f5c88a2209584891056f987fd965b0ba',
             'locationId' => 5,
             'locationRemoteId' => '3f6d92f8044aed134f32153517850f5a',
+            'parentLocationId' => 1,
             'contentTypeIdentifier' => 'user_group',
             'languageCode' => 'eng-US',
             'fields' => [
@@ -200,6 +203,7 @@ class BaseTest extends APIBaseTest
             'contentRemoteId' => '27437f3547db19cf81a33c92578b2c89',
             'locationId' => 54,
             'locationRemoteId' => 'fa9f3cff9cf90ecfae335718dcbddfe2',
+            'parentLocationId' => null,
             'contentTypeIdentifier' => null,
             'languageCode' => null,
             'fields' => null,
@@ -278,7 +282,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertContentInfo($contentInfo, $data)
     {
-        list($name, $contentId, , $locationId, , $contentTypeIdentifier, $languageCode) = array_values($data);
+        list($name, $contentId, , $locationId, , , $contentTypeIdentifier, $languageCode) = array_values($data);
 
         /** @var \Netgen\EzPlatformSite\API\Values\ContentInfo $contentInfo */
         $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\ContentInfo', $contentInfo);
@@ -294,7 +298,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertFields(Content $content, $data)
     {
-        list(, , , , , , , $expectedFields) = array_values($data);
+        list(, , , , , , , , $expectedFields) = array_values($data);
 
         $this->assertInternalType('array', $content->fields);
         $this->assertCount(count($expectedFields), $content->fields);
@@ -335,14 +339,13 @@ class BaseTest extends APIBaseTest
 
     protected function assertLocation($location, $data)
     {
-        list(, , , $locationId) = array_values($data);
+        list(, , , $locationId, , $parentLocationId) = array_values($data);
 
-        /**
-         * @var \Netgen\EzPlatformSite\API\Values\Location
-         */
+        /** @var \Netgen\EzPlatformSite\API\Values\Location $location */
         $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\Location', $location);
 
         $this->assertEquals($locationId, $location->id);
+        $this->assertEquals($parentLocationId, $location->parentLocationId);
         $this->assertContentInfo($location->contentInfo, $data);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Location', $location->innerLocation);
     }

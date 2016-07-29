@@ -28,6 +28,8 @@ final class Location extends APILocation
         switch ($property) {
             case 'id':
                 return $this->innerLocation->id;
+            case 'parentLocationId':
+                return $this->innerLocation->parentLocationId;
         }
 
         return parent::__get($property);
@@ -44,6 +46,7 @@ final class Location extends APILocation
     {
         switch ($property) {
             case 'id':
+            case 'parentLocationId':
                 return true;
         }
 

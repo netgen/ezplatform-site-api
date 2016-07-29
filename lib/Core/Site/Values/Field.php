@@ -51,7 +51,7 @@ final class Field extends APIField
                 return $this->innerField->id;
             case 'identifier':
                 return $this->innerField->fieldDefIdentifier;
-            case 'typeIdentifier':
+            case 'fieldTypeIdentifier':
                 return $this->innerFieldDefinition->fieldTypeIdentifier;
             case 'value':
                 return $this->innerField->value;
@@ -86,7 +86,7 @@ final class Field extends APIField
         switch ($property) {
             case 'id':
             case 'identifier':
-            case 'typeIdentifier':
+            case 'fieldTypeIdentifier':
             case 'value':
             case 'innerFieldDefinition':
             case 'name':

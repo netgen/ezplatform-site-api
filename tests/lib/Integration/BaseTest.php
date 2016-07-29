@@ -31,31 +31,31 @@ class BaseTest extends APIBaseTest
             'languageCode' => 'eng-GB',
             'fields' => [
                 'description' => [
-                    'typeIdentifier' => 'ezrichtext',
+                    'fieldTypeIdentifier' => 'ezrichtext',
                     'isEmpty' => false,
                 ],
                 'email' => [
-                    'typeIdentifier' => 'ezemail',
+                    'fieldTypeIdentifier' => 'ezemail',
                     'isEmpty' => false,
                 ],
                 'message' => [
-                    'typeIdentifier' => 'eztext',
+                    'fieldTypeIdentifier' => 'eztext',
                     'isEmpty' => false,
                 ],
                 'name' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'recipient' => [
-                    'typeIdentifier' => 'ezemail',
+                    'fieldTypeIdentifier' => 'ezemail',
                     'isEmpty' => false,
                 ],
                 'sender_name' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'subject' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
             ],
@@ -82,75 +82,75 @@ class BaseTest extends APIBaseTest
             'languageCode' => 'ger-DE',
             'fields' => [
                 'email' => [
-                    'typeIdentifier' => 'ezinisetting',
+                    'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'footer_script' => [
-                    'typeIdentifier' => 'eztext',
+                    'fieldTypeIdentifier' => 'eztext',
                     'isEmpty' => true,
                 ],
                 'footer_text' => [
-                    'typeIdentifier' => 'eztext',
+                    'fieldTypeIdentifier' => 'eztext',
                     'isEmpty' => true,
                 ],
                 'hide_powered_by' => [
-                    'typeIdentifier' => 'ezboolean',
+                    'fieldTypeIdentifier' => 'ezboolean',
                     'isEmpty' => true,
                 ],
                 'image' => [
-                    'typeIdentifier' => 'ezimage',
+                    'fieldTypeIdentifier' => 'ezimage',
                     'isEmpty' => true,
                 ],
                 'login_label' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'logout_label' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'meta_data' => [
-                    'typeIdentifier' => 'ezinisetting',
+                    'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'my_profile_label' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'register_user_label' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'rss_feed' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'shopping_basket_label' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'site_map_url' => [
-                    'typeIdentifier' => 'ezurl',
+                    'fieldTypeIdentifier' => 'ezurl',
                     'isEmpty' => true,
                 ],
                 'site_settings_label' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'sitestyle' => [
-                    'typeIdentifier' => 'ezpackage',
+                    'fieldTypeIdentifier' => 'ezpackage',
                     'isEmpty' => true,
                 ],
                 'siteurl' => [
-                    'typeIdentifier' => 'ezinisetting',
+                    'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'tag_cloud_url' => [
-                    'typeIdentifier' => 'ezurl',
+                    'fieldTypeIdentifier' => 'ezurl',
                     'isEmpty' => true,
                 ],
                 'title' => [
-                    'typeIdentifier' => 'ezinisetting',
+                    'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
             ],
@@ -177,11 +177,11 @@ class BaseTest extends APIBaseTest
             'languageCode' => 'eng-US',
             'fields' => [
                 'description' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'name' => [
-                    'typeIdentifier' => 'ezstring',
+                    'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
             ],
@@ -334,7 +334,7 @@ class BaseTest extends APIBaseTest
 
         $this->assertSame($data['isEmpty'], $field->isEmpty());
         $this->assertSame($identifier, $field->identifier);
-        $this->assertSame($data['typeIdentifier'], $field->typeIdentifier);
+        $this->assertSame($data['fieldTypeIdentifier'], $field->fieldTypeIdentifier);
     }
 
     protected function assertLocation($location, $data)

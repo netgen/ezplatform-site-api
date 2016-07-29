@@ -70,7 +70,7 @@ class FieldRenderingExtension extends Twig_Extension
 
         return $this->fieldBlockRenderer->renderContentFieldView(
             $field->innerField,
-            $field->typeIdentifier,
+            $field->fieldTypeIdentifier,
             $params
         );
     }
@@ -113,9 +113,9 @@ class FieldRenderingExtension extends Twig_Extension
         // make sure we can easily add class="<fieldtypeidentifier>-field" to the
         // generated HTML
         if (isset($params['attr']['class'])) {
-            $params['attr']['class'] .= " {$field->typeIdentifier}-field";
+            $params['attr']['class'] .= " {$field->fieldTypeIdentifier}-field";
         } else {
-            $params['attr']['class'] = "{$field->typeIdentifier}-field";
+            $params['attr']['class'] = "{$field->fieldTypeIdentifier}-field";
         }
 
         return $params;

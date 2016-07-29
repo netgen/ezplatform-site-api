@@ -21,3 +21,23 @@
   - [`Location`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Location.php)
   - [`Node`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Node.php)
   - [`Field`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Field.php)
+
+## Examples
+
+- Twig
+
+  ```twig
+  {% extends noLayout == true ? viewbaseLayout : pagelayout %}
+  {% block content %}
+    <h1>{{ content.name }} [{{ content.contentInfo.contentTypeIdentifier }}]</h1>
+    <h2>{{ content.fields.title.value.text }}</h2>
+    {% for identifier, field in content.fields %}
+        <h3>[{{ identifier }}]</h3>
+        {% if not field.isEmpty() %}
+            {{ ng_render_field(field) }}
+        {% else %}
+            <p>Field is empty.</p>
+        {% endif %}
+    {% endfor %}
+  {% endblock %}
+  ```

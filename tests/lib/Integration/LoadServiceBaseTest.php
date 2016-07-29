@@ -54,4 +54,22 @@ class LoadServiceBaseTest extends BaseTest
         $location = $loadService->loadLocationByRemoteId($remoteId);
         $this->assertLocation($location, $data);
     }
+
+    protected function doTestLoadNode($data)
+    {
+        list(, , , $locationId) = array_values($data);
+        $loadService = $this->getSite()->getLoadService();
+        $node = $loadService->loadNode($locationId);
+        $this->assertContent($node, $data);
+        $this->assertLocation($node->location, $data);
+    }
+
+    protected function doTestLoadNodeByRemoteId($data)
+    {
+        list(, , , , $remoteId) = array_values($data);
+        $loadService = $this->getSite()->getLoadService();
+        $node = $loadService->loadNodeByRemoteId($remoteId);
+        $this->assertContent($node, $data);
+        $this->assertLocation($node->location, $data);
+    }
 }

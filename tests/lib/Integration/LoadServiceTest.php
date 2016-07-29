@@ -365,4 +365,122 @@ class LoadServiceTest extends LoadServiceBaseTest
     {
         $this->doTestLoadLocationByRemoteId($data);
     }
+
+    /**
+     * Test for the loadNode() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadNode()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @dataProvider getPrimaryLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadNodeMatchPrimaryLanguage($data)
+    {
+        $this->doTestLoadNode($data);
+    }
+
+    /**
+     * Test for the loadNode() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadNode()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @dataProvider getSecondaryLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadNodeMatchSecondaryLanguage($data)
+    {
+        $this->createSecondaryTranslationFallback();
+
+        $this->doTestLoadNode($data);
+    }
+
+    /**
+     * Test for the loadNode() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadNode()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @dataProvider getAlwaysAvailableLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadNodeMatchAlwaysAvailableLanguage($data)
+    {
+        $this->doTestLoadNode($data);
+    }
+
+    /**
+     * Test for the loadNode() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadNode()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @dataProvider getNoLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadNodeThrowsTranslationNotMatchedException($data)
+    {
+        $this->doTestLoadNode($data);
+    }
+
+    /**
+     * Test for the loadNodeByRemoteId() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadNodeByRemoteId()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @dataProvider getPrimaryLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadNodeByRemoteIdMatchPrimaryLanguage($data)
+    {
+        $this->doTestLoadNodeByRemoteId($data);
+    }
+
+    /**
+     * Test for the loadNodeByRemoteId() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadNodeByRemoteId()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @dataProvider getSecondaryLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadNodeByRemoteIdMatchSecondaryLanguage($data)
+    {
+        $this->createSecondaryTranslationFallback();
+
+        $this->doTestLoadNodeByRemoteId($data);
+    }
+
+    /**
+     * Test for the loadNodeByRemoteId() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadNodeByRemoteId()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @dataProvider getAlwaysAvailableLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadNodeByRemoteIdMatchAlwaysAvailableLanguage($data)
+    {
+        $this->doTestLoadNodeByRemoteId($data);
+    }
+
+    /**
+     * Test for the loadNodeByRemoteId() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadNodeByRemoteId()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @dataProvider getNoLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadNodeByRemoteIdThrowsTranslationNotMatchedException($data)
+    {
+        $this->doTestLoadNodeByRemoteId($data);
+    }
 }

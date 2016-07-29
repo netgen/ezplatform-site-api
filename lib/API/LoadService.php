@@ -8,7 +8,7 @@ namespace Netgen\EzPlatformSite\API;
 interface LoadService
 {
     /**
-     * Finds Content object for the given $contentId.
+     * Loads Content object for the given $contentId.
      *
      * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      *
@@ -19,7 +19,7 @@ interface LoadService
     public function loadContent($contentId);
 
     /**
-     * Finds Content object for the given $remoteId.
+     * Loads Content object for the given $remoteId.
      *
      * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      *
@@ -30,7 +30,7 @@ interface LoadService
     public function loadContentByRemoteId($remoteId);
 
     /**
-     * Finds ContentInfo object for the given $contentId.
+     * Loads ContentInfo object for the given $contentId.
      *
      * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      *
@@ -41,7 +41,7 @@ interface LoadService
     public function loadContentInfo($contentId);
 
     /**
-     * Finds ContentInfo object for the given $remoteId.
+     * Loads ContentInfo object for the given $remoteId.
      *
      * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      *
@@ -52,7 +52,7 @@ interface LoadService
     public function loadContentInfoByRemoteId($remoteId);
 
     /**
-     * Finds Location object for the given $locationId.
+     * Loads Location object for the given $locationId.
      *
      * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      *
@@ -63,7 +63,7 @@ interface LoadService
     public function loadLocation($locationId);
 
     /**
-     * Finds Location object for the given $remoteId.
+     * Loads Location object for the given $remoteId.
      *
      * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      *
@@ -72,4 +72,26 @@ interface LoadService
      * @return \Netgen\EzPlatformSite\API\Values\Location
      */
     public function loadLocationByRemoteId($remoteId);
+
+    /**
+     * Loads Node object for the given $locationId.
+     *
+     * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     *
+     * @param string|int $locationId
+     *
+     * @return \Netgen\EzPlatformSite\API\Values\Node
+     */
+    public function loadNode($locationId);
+
+    /**
+     * Loads Node object for the given $remoteId.
+     *
+     * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     *
+     * @param string|int $remoteId
+     *
+     * @return \Netgen\EzPlatformSite\API\Values\Node
+     */
+    public function loadNodeByRemoteId($remoteId);
 }

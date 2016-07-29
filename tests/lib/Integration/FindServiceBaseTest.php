@@ -79,7 +79,7 @@ class FindServiceBaseTest extends BaseTest
             return;
         }
 
-        list(, , , , , , $languageCode) = array_values($data);
+        list(, , , , , , , $languageCode) = array_values($data);
 
         $this->assertSame(1, $searchResult->totalCount);
         $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
@@ -94,7 +94,7 @@ class FindServiceBaseTest extends BaseTest
             return;
         }
 
-        list(, , , , , , $languageCode) = array_values($data);
+        list(, , , , , , , $languageCode) = array_values($data);
 
         $this->assertSame(1, $searchResult->totalCount);
         $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
@@ -109,7 +109,7 @@ class FindServiceBaseTest extends BaseTest
             return;
         }
 
-        list(, , , , , , $languageCode) = array_values($data);
+        list(, , , , , , , $languageCode) = array_values($data);
 
         $this->assertSame(1, $searchResult->totalCount);
         $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
@@ -124,7 +124,7 @@ class FindServiceBaseTest extends BaseTest
             return;
         }
 
-        list(, , , , , , $languageCode) = array_values($data);
+        list(, , , , , , , $languageCode) = array_values($data);
 
         $this->assertSame(1, $searchResult->totalCount);
 

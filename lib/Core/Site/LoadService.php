@@ -121,6 +121,20 @@ final class LoadService implements LoadServiceInterface
         return $this->getSiteLocation($location);
     }
 
+    public function loadNode($locationId)
+    {
+        $location = $this->locationService->loadLocation($locationId);
+
+        return $this->getSiteNode($location);
+    }
+
+    public function loadNodeByRemoteId($remoteId)
+    {
+        $location = $this->locationService->loadLocationByRemoteId($remoteId);
+
+        return $this->getSiteNode($location);
+    }
+
     /**
      * Returns Site Location object for the given Repository $location.
      *
@@ -148,6 +162,43 @@ final class LoadService implements LoadServiceInterface
         }
 
         return $this->domainObjectMapper->mapLocation($location, $versionInfo, $languageCode);
+    }
+
+    /**
+     * Returns Site Node object for the given Repository $location.
+     *
+     * @throws \Netgen\EzPlatformSite\Core\Site\Exceptions\TranslationNotMatchedException
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
+     * @return \Netgen\EzPlatformSite\API\Values\Node
+     */
+    private function getSiteNode(APILocation $location)
+    {
+        $versionInfo = $this->contentService->loadVersionInfoById($location->contentInfo->id);
+
+        $languageCode = $this->getLanguage(
+            $versionInfo->languageCodes,
+            $versionInfo->contentInfo->mainLanguageCode,
+            $versionInfo->contentInfo->alwaysAvailable
+        );
+
+        if ($languageCode === null) {
+            throw new TranslationNotMatchedException(
+                $versionInfo->contentInfo->id,
+                $this->getContext($versionInfo)
+            );
+        }
+
+        return $this->domainObjectMapper->mapNode(
+            $location,
+            $this->contentService->loadContent(
+                $location->contentInfo->id,
+                [$languageCode],
+                $location->contentInfo->currentVersionNo
+            ),
+            $languageCode
+        );
     }
 
     /**

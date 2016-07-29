@@ -24,6 +24,18 @@
 
 ## Examples
 
+- PHP
+  ```php
+  /** @var \Netgen\EzPlatformSite\API\Site $site */
+  $loadService = $site->getLoadService();
+  $location = $loadService->loadLocation(42);
+  $parentNode = $loadService()->loadNode($location->parentLocationId);
+
+  if (!$parentNode->getField('image')->isEmpty()) {
+      // do something
+  }
+  ```
+
 - Twig
 
   ```twig
@@ -31,12 +43,13 @@
   {% block content %}
     <h1>{{ content.name }} [{{ content.contentInfo.contentTypeIdentifier }}]</h1>
     <h2>{{ content.fields.title.value.text }}</h2>
+    <h3>{{ content.fields['sub_title'].value.text }}</h3>
     {% for identifier, field in content.fields %}
-        <h3>[{{ identifier }}]</h3>
+        <h4>[{{ identifier }}]</h4>
         {% if not field.isEmpty() %}
             {{ ng_render_field(field) }}
         {% else %}
-            <p>Field is empty.</p>
+            <p>Field of type '{{ field.typeIdentifier }}' in Content #{{ field.content.id }} is empty.</p>
         {% endif %}
     {% endfor %}
   {% endblock %}

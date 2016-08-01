@@ -2,7 +2,7 @@
 {% block content %}
     <h1>{{ content.name }} [{{ content.contentInfo.contentTypeIdentifier }}]</h1>
     {% for identifier, field in content.fields %}
-        <h3>[{{ identifier }}]</h3>
+        <h3>{{ field.name }} [{{ identifier }}/{{ field.fieldTypeIdentifier }}]</h3>
         {% if not field.isEmpty() %}
             {{ ng_render_field(field) }}
         {% else %}

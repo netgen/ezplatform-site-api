@@ -1,9 +1,9 @@
 <?php
 
-namespace Netgen\EzPlatformSiteBundle\View\Builder;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder;
 
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSite\API\Site;
-use Netgen\EzPlatformSiteBundle\View\ContentView;
 use Netgen\EzPlatformSite\API\Values\Location;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;

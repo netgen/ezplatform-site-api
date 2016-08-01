@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSiteBundle\View;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView as BaseContentValueView;
 

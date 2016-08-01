@@ -1,9 +1,7 @@
 <?php
 
-namespace Netgen\EzPlatformSiteBundle\Templating\Twig\Extension;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
-use eZ\Publish\API\Repository\ContentTypeService;
-use Netgen\EzPlatformSite\API\Values\Content;
 use Netgen\EzPlatformSite\API\Values\Field;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\MVC\Symfony\FieldType\View\ParameterProviderRegistryInterface;

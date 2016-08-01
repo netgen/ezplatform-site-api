@@ -19,8 +19,8 @@
         "psr-4": {
             "Netgen\\EzPlatformSite\\": "lib",
             "Netgen\\EzPlatformSite\\Tests\\": "tests/lib",
-            "Netgen\\EzPlatformSiteBundle\\": "bundle",
-            "Netgen\\EzPlatformSiteBundle\\Tests\\": "tests/bundle"
+            "Netgen\\Bundle\\EzPlatformSiteApiBundle\\": "bundle",
+            "Netgen\\Bundle\\EzPlatformSiteApiBundle\\Tests\\": "tests/bundle"
         }
     },
     "extra": {

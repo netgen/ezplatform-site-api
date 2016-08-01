@@ -1,11 +1,11 @@
 <?php
 
-namespace Netgen\EzPlatformSiteBundle;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class NetgenEzPlatformSiteBundle extends Bundle
+class NetgenEzPlatformSiteApiBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Netgen\EzPlatformSiteBundle\Controller\Content;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Content;
 
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
-use Netgen\EzPlatformSiteBundle\View\ContentView;
 
 /**
  * This controller provides the content view feature.
@@ -22,9 +22,9 @@ class ViewController extends Controller
      *
      * Cache is in both cases handled by the CacheViewResponseListener.
      *
-     * @param \Netgen\EzPlatformSiteBundle\View\ContentView $view
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      *
-     * @return \Netgen\EzPlatformSiteBundle\View\ContentView
+     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
     public function viewAction(ContentView $view)
     {
@@ -35,9 +35,9 @@ class ViewController extends Controller
      * Embed a content.
      * Behaves mostly like viewAction(), but with specific content load permission handling.
      *
-     * @param \Netgen\EzPlatformSiteBundle\View\ContentView $view
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      *
-     * @return \Netgen\EzPlatformSiteBundle\View\ContentView
+     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
     public function embedAction(ContentView $view)
     {

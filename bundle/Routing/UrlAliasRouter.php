@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSiteBundle\Routing;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\Routing;
 
 use eZ\Bundle\EzPublishCoreBundle\Routing\UrlAliasRouter as PlatformUrlAliasRouter;
 

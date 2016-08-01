@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSiteBundle\View;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
 use Netgen\EzPlatformSite\API\Values\Content;
 use Netgen\EzPlatformSite\API\Values\Location;

@@ -9,8 +9,17 @@ matrix:
     fast_finish: true
     include:
         - php: 5.5
+          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+        - php: 5.5
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
         - php: 5.6
+          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+        - php: 5.6
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
         - php: 7.0
+          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+        - php: 7.0
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
 
 # test only master (+ pull requests)
 branches:
@@ -27,8 +36,7 @@ install:
 
 # execute phpunit as the script command
 script:
-    - ./vendor/bin/phpunit -d memory_limit=-1 --colors -c phpunit.xml --coverage-clover=coverage.xml
-    - ./vendor/bin/phpunit -d memory_limit=-1 --colors -c phpunit-integration-legacy.xml --coverage-clover=coverage.xml
+    - ./vendor/bin/phpunit -d memory_limit=-1 --colors -c $CONFIG --coverage-clover=coverage.xml
 
 # disable mail notifications
 notification:
@@ -43,4 +51,4 @@ sudo: false
 
 # send coverage to codecov.io
 after_success:
-    - bash <(curl -s https://codecov.io/bash)
+    - bash <(curl -s https://codecov.io/bash) -F $COVERGAGE

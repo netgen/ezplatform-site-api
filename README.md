@@ -1,6 +1,5 @@
 # Netgen's Site API for eZ Platform
 
-
 [![Build Status](https://img.shields.io/travis/netgen/ezplatform-site-api.svg?style=flat-square)](https://travis-ci.org/netgen/ezplatform-site-api)
 [![Code Coverage](https://img.shields.io/codecov/c/github/netgen/ezplatform-site-api.svg?style=flat-square)](https://codecov.io/gh/netgen/ezplatform-site-api)
 [![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg?style=flat-square)](https://packagist.org/packages/netgen/ezplatform-site-api)
@@ -14,7 +13,7 @@
   - [`LoadService`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/LoadService.php)
   - [`FindService`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/FindService.php)
 
-- New set of aggregate objects, tailored to make buidling websites easier
+- New set of aggregate objects, tailored to make building websites easier
 
   - [`Content`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Content.php)
   - [`ContentInfo`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/ContentInfo.php)
@@ -49,7 +48,7 @@
         {% if not field.isEmpty() %}
             {{ ng_render_field(field) }}
         {% else %}
-            <p>Field of type '{{ field.typeIdentifier }}' is empty.</p>
+            <p>Field of type '{{ field.fieldTypeIdentifier }}' is empty.</p>
         {% endif %}
     {% endfor %}
   {% endblock %}

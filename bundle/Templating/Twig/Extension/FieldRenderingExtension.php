@@ -11,7 +11,7 @@ use Twig_Extension;
 use Twig_SimpleFunction;
 
 /**
- * Twig extension for content fields/fieldDefinitions rendering (view and edit).
+ * Twig extension for content fields rendering (view).
  */
 class FieldRenderingExtension extends Twig_Extension
 {
@@ -47,7 +47,12 @@ class FieldRenderingExtension extends Twig_Extension
                     $this->fieldBlockRenderer->setTwig($environment);
                     return $this->renderField($field, $params);
                 },
-                ['is_safe' => ['html'], 'needs_environment' => true]
+                [
+                    'is_safe' => [
+                        'html',
+                    ],
+                    'needs_environment' => true,
+                ]
             ),
         ];
     }

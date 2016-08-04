@@ -1,7 +1,15 @@
 parameters:
-    ezplatform.default_view_templates.content.full: 'NetgenEzPlatformSiteApiBundle:default:content/full.html.twig'
-    ezsettings.default.pagelayout: 'NetgenEzPlatformSiteApiBundle::pagelayout.html.twig'
-    ezpublish.urlalias_router.class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter
+    # URL alias router used for overriding URL alias view action
+    netgen_ez_platform_site_api.urlalias_router.class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter
+
+    # Template defaults for standard eZ Platform installation
+    # By default we don't override URL alias view action, for that reason these are commented out
+    #ezplatform.default_view_templates.content.full: 'NetgenEzPlatformSiteApiBundle:default:content/full.html.twig'
+    #ezsettings.default.pagelayout: 'NetgenEzPlatformSiteApiBundle::pagelayout.html.twig'
+
+    # Defaults for semantic configuration
+    netgen_ez_platform_site_api.default.override_url_alias_view_action: false
+    netgen_ez_platform_site_api.default.url_alias_view_action: 'ng_content:viewAction'
 
 services:
     netgen.ezplatform_site.core.find_service:

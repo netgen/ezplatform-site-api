@@ -45,6 +45,7 @@ class FieldRenderingExtension extends Twig_Extension
                 'ng_render_field',
                 function (Twig_Environment $environment, Field $field, array $params = []) {
                     $this->fieldBlockRenderer->setTwig($environment);
+
                     return $this->renderField($field, $params);
                 },
                 [
@@ -96,7 +97,7 @@ class FieldRenderingExtension extends Twig_Extension
 
         $content = $field->content->innerContent;
         $contentType = $field->content->contentInfo->innerContentType;
-        $fieldDefinition = $contentType->getFieldDefinition($field->identifier);
+        $fieldDefinition = $contentType->getFieldDefinition($field->fieldDefIdentifier);
 
         $params += [
             'field' => $field->innerField,

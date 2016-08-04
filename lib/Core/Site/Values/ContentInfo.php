@@ -6,6 +6,8 @@ use Netgen\EzPlatformSite\API\Values\ContentInfo as APIContentInfo;
 
 final class ContentInfo extends APIContentInfo
 {
+    use TranslatableTrait;
+
     /**
      * @var string
      */
@@ -36,12 +38,24 @@ final class ContentInfo extends APIContentInfo
     public function __get($property)
     {
         switch ($property) {
-            case 'id':
-                return $this->innerContentInfo->id;
-            case 'mainLocationId':
-                return $this->innerContentInfo->mainLocationId;
             case 'contentTypeIdentifier':
                 return $this->innerContentType->identifier;
+            case 'contentTypeName':
+                return $this->getTranslatedString(
+                    $this->languageCode,
+                    (array)$this->innerContentType->getNames()
+                );
+            case 'contentTypeDescription':
+                return $this->getTranslatedString(
+                    $this->languageCode,
+                    (array)$this->innerContentType->getDescriptions()
+                );
+        }
+
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        } elseif (property_exists($this->innerContentInfo, $property)) {
+            return $this->innerContentInfo->$property;
         }
 
         return parent::__get($property);
@@ -57,10 +71,14 @@ final class ContentInfo extends APIContentInfo
     public function __isset($property)
     {
         switch ($property) {
-            case 'id':
-            case 'mainLocationId':
             case 'contentTypeIdentifier':
+            case 'contentTypeName':
+            case 'contentTypeDescription':
                 return true;
+        }
+
+        if (property_exists($this, $property) || property_exists($this->innerContentInfo, $property)) {
+            return true;
         }
 
         return parent::__isset($property);

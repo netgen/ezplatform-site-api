@@ -81,6 +81,12 @@ trait ContentTrait
                 return $this->contentInfo->mainLocationId;
         }
 
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        } elseif (property_exists($this->innerContent, $property)) {
+            return $this->innerContent->$property;
+        }
+
         return parent::__get($property);
     }
 
@@ -100,6 +106,10 @@ trait ContentTrait
                 return true;
         }
 
+        if (property_exists($this, $property) || property_exists($this->innerContent, $property)) {
+            return true;
+        }
+
         return parent::__isset($property);
     }
 
@@ -108,7 +118,7 @@ trait ContentTrait
         $properties['content'] = $this;
         $field = new Field($properties);
 
-        $this->fields[$field->identifier] = $field;
+        $this->fields[$field->fieldDefIdentifier] = $field;
         $this->fieldsById[$field->id] = $field;
     }
 }

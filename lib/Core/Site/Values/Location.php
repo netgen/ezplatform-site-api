@@ -1,13 +1,13 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Values;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
-use Netgen\EzPlatformSite\API\Values\Location as APILocation;
+use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 
 final class Location extends APILocation
 {
     /**
-     * @var \Netgen\EzPlatformSite\API\Values\ContentInfo
+     * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     protected $contentInfo;
 

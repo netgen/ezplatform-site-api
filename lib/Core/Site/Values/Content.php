@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Values;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
-use Netgen\EzPlatformSite\API\Values\Content as APIContent;
+use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 
 final class Content extends APIContent
 {

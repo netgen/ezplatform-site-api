@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Tests\Integration;
+namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
-use Netgen\EzPlatformSite\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
 use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use DateTime;
@@ -13,7 +13,7 @@ use DateTime;
 class BaseTest extends APIBaseTest
 {
     /**
-     * @return \Netgen\EzPlatformSite\API\Site
+     * @return \Netgen\EzPlatformSiteApi\API\Site
      */
     protected function getSite()
     {
@@ -468,8 +468,8 @@ class BaseTest extends APIBaseTest
     {
         list($name, $contentId, , $locationId) = array_values($data);
 
-        /** @var \Netgen\EzPlatformSite\API\Values\Content $content */
-        $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\Content', $content);
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
+        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Content', $content);
 
         $this->assertSame($contentId, $content->id);
         $this->assertSame($locationId, $content->mainLocationId);
@@ -484,8 +484,8 @@ class BaseTest extends APIBaseTest
     {
         list($name, $contentId, $contentRemoteId, $locationId) = array_values($data);
 
-        /** @var \Netgen\EzPlatformSite\API\Values\ContentInfo $contentInfo */
-        $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\ContentInfo', $contentInfo);
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo */
+        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\ContentInfo', $contentInfo);
 
         $this->assertEquals($contentId, $contentInfo->id);
         $this->assertEquals($contentRemoteId, $contentInfo->remoteId);
@@ -515,7 +515,7 @@ class BaseTest extends APIBaseTest
         $this->assertCount(count($data['fields']), $content->fields);
 
         foreach ($content->fields as $identifier => $field) {
-            $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\Field', $field);
+            $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Field', $field);
             $this->assertInstanceOf('\eZ\Publish\SPI\FieldType\Value', $field->value);
             $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Field', $field->innerField);
 
@@ -553,8 +553,8 @@ class BaseTest extends APIBaseTest
     {
         list(, , , $locationId, $locationRemoteId, $parentLocationId) = array_values($data);
 
-        /** @var \Netgen\EzPlatformSite\API\Values\Location $location */
-        $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\Location', $location);
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
+        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Location', $location);
 
         $this->assertEquals($locationId, $location->id);
         $this->assertEquals($locationRemoteId, $location->remoteId);

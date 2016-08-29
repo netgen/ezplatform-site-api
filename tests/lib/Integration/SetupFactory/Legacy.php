@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Tests\Integration\SetupFactory;
+namespace Netgen\EzPlatformSiteApi\Tests\Integration\SetupFactory;
 
 use eZ\Publish\API\Repository\Tests\SetupFactory\Legacy as CoreLegacySetupFactory;
 use eZ\Publish\Core\Base\ServiceContainer;

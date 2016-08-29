@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site;
+namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSite\API\FindService as FindServiceInterface;
+use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -11,7 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 final class FindService implements FindServiceInterface
 {
     /**
-     * @var \Netgen\EzPlatformSite\Core\Site\DomainObjectMapper
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
     private $domainObjectMapper;
 
@@ -36,7 +36,7 @@ final class FindService implements FindServiceInterface
     private $useAlwaysAvailable;
 
     /**
-     * @param \Netgen\EzPlatformSite\Core\Site\DomainObjectMapper $domainObjectMapper
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param array $prioritizedLanguages

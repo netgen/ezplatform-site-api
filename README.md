@@ -25,7 +25,7 @@
 
 - PHP
   ```php
-  /** @var \Netgen\EzPlatformSite\API\Site $site */
+  /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
   $loadService = $site->getLoadService();
   $location = $loadService->loadLocation(42);
   $parentNode = $loadService()->loadNode($location->parentLocationId);

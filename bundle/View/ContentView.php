@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
-use Netgen\EzPlatformSite\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use Netgen\EzPlatformSite\API\Values\Location;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView as BaseContentView;
 use RuntimeException;
 
@@ -15,12 +15,12 @@ use RuntimeException;
 class ContentView extends BaseContentView implements ContentValueView
 {
     /**
-     * @var \Netgen\EzPlatformSite\API\Values\Content
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private $content;
 
     /**
-     * @var \Netgen\EzPlatformSite\API\Values\Location|null
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location|null
      */
     private $location;
 

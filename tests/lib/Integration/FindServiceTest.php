@@ -1,11 +1,11 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Tests\Integration;
+namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
 /**
  * Test case for the FindService.
  *
- * @see \Netgen\EzPlatformSite\API\FindService
+ * @see \Netgen\EzPlatformSiteApi\API\FindService
  *
  * @group integration
  * @group find
@@ -15,8 +15,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -29,8 +29,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -45,8 +45,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -59,8 +59,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -73,8 +73,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -87,8 +87,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -103,8 +103,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -117,8 +117,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -131,8 +131,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findLocations() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findLocations()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findLocations()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -145,8 +145,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findLocations() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findLocations()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findLocations()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -161,8 +161,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findLocations() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findLocations()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findLocations()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -175,8 +175,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findLocations() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findLocations()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findLocations()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -189,8 +189,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findNodes() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findNodes()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findNodes()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -203,8 +203,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findNodes() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findNodes()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findNodes()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -219,8 +219,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findNodes() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findNodes()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findNodes()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -233,8 +233,8 @@ class FindServiceTest extends FindServiceBaseTest
     /**
      * Test for the findNodes() method.
      *
-     * @see \Netgen\EzPlatformSite\API\FindService::findNodes()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetFindService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findNodes()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data

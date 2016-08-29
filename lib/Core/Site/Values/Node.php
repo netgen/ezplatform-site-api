@@ -1,15 +1,15 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Values;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
-use Netgen\EzPlatformSite\API\Values\Node as APINode;
+use Netgen\EzPlatformSiteApi\API\Values\Node as APINode;
 
 final class Node extends APINode
 {
     use ContentTrait;
 
     /**
-     * @var \Netgen\EzPlatformSite\API\Values\Location
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     protected $location;
 

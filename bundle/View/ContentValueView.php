@@ -9,14 +9,14 @@ interface ContentValueView extends BaseContentValueView
     /**
      * Returns the Site Content.
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Content
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     public function getSiteContent();
 
     /**
      * Returns the Site Location.
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Location
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     public function getSiteLocation();
 }

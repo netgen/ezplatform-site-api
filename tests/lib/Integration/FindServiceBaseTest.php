@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Tests\Integration;
+namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -128,10 +128,10 @@ class FindServiceBaseTest extends BaseTest
 
         $this->assertSame(1, $searchResult->totalCount);
 
-        /* @var \Netgen\EzPlatformSite\API\Values\Node */
+        /* @var \Netgen\EzPlatformSiteApi\API\Values\Node */
         $node = $searchResult->searchHits[0]->valueObject;
 
-        $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\Node', $node);
+        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Node', $node);
         $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
         $this->assertContent($node, $data);
         $this->assertLocation($node->location, $data);

@@ -1,12 +1,11 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site;
+namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSite\Core\Site\Values\Content;
-use Netgen\EzPlatformSite\Core\Site\Values\ContentInfo;
-use Netgen\EzPlatformSite\Core\Site\Values\Field;
-use Netgen\EzPlatformSite\Core\Site\Values\Location;
-use Netgen\EzPlatformSite\Core\Site\Values\Node;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Node;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
@@ -51,7 +50,7 @@ final class DomainObjectMapper
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param string $languageCode
      *
-     * @return \Netgen\EzPlatformSite\Core\Site\Values\Content
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Content
      */
     public function mapContent(APIContent $content, $languageCode)
     {
@@ -61,7 +60,7 @@ final class DomainObjectMapper
         $fields = $content->getFieldsByLanguage($languageCode);
         $fieldsData = [];
         foreach ($fields as $field) {
-            $fieldsData[] = $this->mapField($field, $contentType);
+            $fieldsData[] = $this->mapFieldData($field, $contentType);
         }
 
         return new Content(
@@ -84,7 +83,7 @@ final class DomainObjectMapper
      * @param string $languageCode
      * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType|null $contentType
      *
-     * @return \Netgen\EzPlatformSite\API\Values\ContentInfo
+     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     public function mapContentInfo(
         VersionInfo $versionInfo,
@@ -114,7 +113,7 @@ final class DomainObjectMapper
      * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
      * @param string $languageCode
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Location
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     public function mapLocation(APILocation $location, VersionInfo $versionInfo, $languageCode)
     {
@@ -133,7 +132,7 @@ final class DomainObjectMapper
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param string $languageCode
      *
-     * @return \Netgen\EzPlatformSite\Core\Site\Values\Node
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Node
      */
     public function mapNode(APILocation $location, APIContent $content, $languageCode)
     {
@@ -143,7 +142,7 @@ final class DomainObjectMapper
         $fields = $content->getFieldsByLanguage($languageCode);
         $fieldsData = [];
         foreach ($fields as $field) {
-            $fieldsData[] = $this->mapField($field, $contentType);
+            $fieldsData[] = $this->mapFieldData($field, $contentType);
         }
 
         return new Node(
@@ -166,9 +165,9 @@ final class DomainObjectMapper
      * @param \eZ\Publish\API\Repository\Values\Content\Field $field
      * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      *
-     * @return mixed|\Netgen\EzPlatformSite\API\Values\Field
+     * @return mixed|\Netgen\EzPlatformSiteApi\API\Values\Field
      */
-    private function mapField(APIField $field, ContentType $contentType)
+    private function mapFieldData(APIField $field, ContentType $contentType)
     {
         $fieldDefinition = $contentType->getFieldDefinition($field->fieldDefIdentifier);
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;

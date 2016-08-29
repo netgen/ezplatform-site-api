@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\API\Values;
+namespace Netgen\EzPlatformSiteApi\API\Values;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
 
@@ -14,9 +14,9 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string|int $id
  * @property-read string $name
  * @property-read string|int $mainLocationId
- * @property-read \Netgen\EzPlatformSite\API\Values\ContentInfo $contentInfo
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
- * @property-read \Netgen\EzPlatformSite\API\Values\Field[] $fields
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Field[] $fields
  * @property-read \eZ\Publish\API\Repository\Values\Content\Content $innerContent
  */
 abstract class Content extends ValueObject
@@ -35,7 +35,7 @@ abstract class Content extends ValueObject
      *
      * @param string $identifier
      *
-     * @return null|\Netgen\EzPlatformSite\API\Values\Field
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Field
      */
     abstract public function getField($identifier);
 
@@ -53,7 +53,7 @@ abstract class Content extends ValueObject
      *
      * @param string|int $id
      *
-     * @return null|\Netgen\EzPlatformSite\API\Values\Field
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Field
      */
     abstract public function getFieldById($id);
 

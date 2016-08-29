@@ -1,11 +1,11 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Tests\Integration;
+namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
 /**
  * Test case for the LoadService.
  *
- * @see \Netgen\EzPlatformSite\API\LoadService
+ * @see \Netgen\EzPlatformSiteApi\API\LoadService
  *
  * @group integration
  * @group load
@@ -15,8 +15,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -29,8 +29,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -45,8 +45,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -59,8 +59,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getExplicitVersionAndLanguageMatchData
      *
      * @param mixed $data
@@ -73,9 +73,9 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
-     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -88,8 +88,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -102,8 +102,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -118,8 +118,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -132,9 +132,9 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContent() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
-     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -147,8 +147,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -161,8 +161,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -177,8 +177,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -191,8 +191,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getExplicitVersionAndLanguageMatchData
      *
      * @param mixed $data
@@ -205,9 +205,9 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
-     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -220,8 +220,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -234,8 +234,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -250,8 +250,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -264,9 +264,9 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
-     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -279,8 +279,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadLocation() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadLocation()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadLocation()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -293,8 +293,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadLocation() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadLocation()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadLocation()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -309,8 +309,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadLocation() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadLocation()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadLocation()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -323,9 +323,9 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadLocation() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadLocation()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
-     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadLocation()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -338,8 +338,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadLocationByRemoteId() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadLocationByRemoteId()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadLocationByRemoteId()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -352,8 +352,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadLocationByRemoteId() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadLocationByRemoteId()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadLocationByRemoteId()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -368,8 +368,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadLocationByRemoteId() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadLocationByRemoteId()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadLocationByRemoteId()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -382,9 +382,9 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadLocationByRemoteId() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadLocationByRemoteId()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
-     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadLocationByRemoteId()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -397,8 +397,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadNode() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadNode()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadNode()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -411,8 +411,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadNode() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadNode()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadNode()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -427,8 +427,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadNode() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadNode()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadNode()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -441,9 +441,9 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadNode() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadNode()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
-     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadNode()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data
@@ -456,8 +456,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadNodeByRemoteId() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadNodeByRemoteId()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadNodeByRemoteId()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -470,8 +470,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadNodeByRemoteId() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadNodeByRemoteId()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadNodeByRemoteId()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getSecondaryLanguageMatchData
      *
      * @param mixed $data
@@ -486,8 +486,8 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadNodeByRemoteId() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadNodeByRemoteId()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadNodeByRemoteId()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getAlwaysAvailableLanguageMatchData
      *
      * @param mixed $data
@@ -500,9 +500,9 @@ class LoadServiceTest extends LoadServiceBaseTest
     /**
      * Test for the loadNodeByRemoteId() method.
      *
-     * @see \Netgen\EzPlatformSite\API\LoadService::loadNodeByRemoteId()
-     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
-     * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadNodeByRemoteId()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
      * @param mixed $data

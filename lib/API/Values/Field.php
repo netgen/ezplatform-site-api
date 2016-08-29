@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\API\Values;
+namespace Netgen\EzPlatformSiteApi\API\Values;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
 
@@ -17,7 +17,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string $fieldTypeIdentifier
  * @property-read string $name
  * @property-read string $description
- * @property-read \Netgen\EzPlatformSite\API\Values\Content $content
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
  * @property-read \eZ\Publish\API\Repository\Values\Content\Field $innerField
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $innerFieldDefinition
  */

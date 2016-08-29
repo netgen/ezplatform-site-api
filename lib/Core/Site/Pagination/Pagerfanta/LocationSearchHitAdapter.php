@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Pagination\Pagerfanta;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta;
 
-use Netgen\EzPlatformSite\API\FindService;
+use Netgen\EzPlatformSiteApi\API\FindService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use Pagerfanta\Adapter\AdapterInterface;
 
@@ -18,7 +18,7 @@ class LocationSearchHitAdapter implements AdapterInterface
     private $query;
 
     /**
-     * @var \Netgen\EzPlatformSite\API\FindService
+     * @var \Netgen\EzPlatformSiteApi\API\FindService
      */
     private $findService;
 

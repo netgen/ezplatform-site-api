@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Tests\Integration;
+namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
 /**
  * Base class for LoadService API integration tests.

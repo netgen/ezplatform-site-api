@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\API;
+namespace Netgen\EzPlatformSiteApi\API;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -13,7 +13,7 @@ interface FindService
     /**
      * Finds Content objects for the given $query.
      *
-     * @see \Netgen\EzPlatformSite\API\Values\Content
+     * @see \Netgen\EzPlatformSiteApi\API\Values\Content
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      *
@@ -24,7 +24,7 @@ interface FindService
     /**
      * Finds ContentInfo objects for the given $query.
      *
-     * @see \Netgen\EzPlatformSite\API\Values\ContentInfo
+     * @see \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      *
@@ -35,7 +35,7 @@ interface FindService
     /**
      * Finds Location objects for the given $query.
      *
-     * @see \Netgen\EzPlatformSite\API\Values\Location
+     * @see \Netgen\EzPlatformSiteApi\API\Values\Location
      *
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
      *
@@ -46,7 +46,7 @@ interface FindService
     /**
      * Finds Node objects for the given $query.
      *
-     * @see \Netgen\EzPlatformSite\API\Values\Node
+     * @see \Netgen\EzPlatformSiteApi\API\Values\Node
      *
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
      *

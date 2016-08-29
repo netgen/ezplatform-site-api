@@ -1,9 +1,9 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site;
+namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSite\API\LoadService as LoadServiceInterface;
-use Netgen\EzPlatformSite\Core\Site\Exceptions\TranslationNotMatchedException;
+use Netgen\EzPlatformSiteApi\API\LoadService as LoadServiceInterface;
+use Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
@@ -12,7 +12,7 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 final class LoadService implements LoadServiceInterface
 {
     /**
-     * @var \Netgen\EzPlatformSite\Core\Site\DomainObjectMapper
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
     private $domainObjectMapper;
 
@@ -37,7 +37,7 @@ final class LoadService implements LoadServiceInterface
     private $useAlwaysAvailable;
 
     /**
-     * @param \Netgen\EzPlatformSite\Core\Site\DomainObjectMapper $domainObjectMapper
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\LocationService $locationService
      * @param string[] $prioritizedLanguages
@@ -146,11 +146,11 @@ final class LoadService implements LoadServiceInterface
     /**
      * Returns Site Location object for the given Repository $location.
      *
-     * @throws \Netgen\EzPlatformSite\Core\Site\Exceptions\TranslationNotMatchedException
+     * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Location
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private function getSiteLocation(APILocation $location)
     {
@@ -175,11 +175,11 @@ final class LoadService implements LoadServiceInterface
     /**
      * Returns Site Node object for the given Repository $location.
      *
-     * @throws \Netgen\EzPlatformSite\Core\Site\Exceptions\TranslationNotMatchedException
+     * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Node
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Node
      */
     private function getSiteNode(APILocation $location)
     {

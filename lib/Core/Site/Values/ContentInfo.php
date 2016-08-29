@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Values;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
-use Netgen\EzPlatformSite\API\Values\ContentInfo as APIContentInfo;
+use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 
 final class ContentInfo extends APIContentInfo
 {

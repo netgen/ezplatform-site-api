@@ -22,6 +22,15 @@ use eZ\Publish\API\Repository\Values\ValueObject;
 abstract class Content extends ValueObject
 {
     /**
+     * Returns if content has the field with the given field definition $identifier.
+     *
+     * @param string $identifier
+     *
+     * @return bool
+     */
+    abstract public function hasField($identifier);
+
+    /**
      * Return Field object for the given field definition $identifier, or null if not found.
      *
      * @param string $identifier
@@ -29,6 +38,15 @@ abstract class Content extends ValueObject
      * @return null|\Netgen\EzPlatformSite\API\Values\Field
      */
     abstract public function getField($identifier);
+
+    /**
+     * Returns if content has the field with the given field $id.
+     *
+     * @param string|int $id
+     *
+     * @return bool
+     */
+    abstract public function hasFieldById($id);
 
     /**
      * Return Field object for the given field $id, or null if not found.

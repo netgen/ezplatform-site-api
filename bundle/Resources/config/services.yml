@@ -21,7 +21,7 @@ services:
             - '@ezpublish.api.service.search'
             - '@ezpublish.api.service.content'
             - '$languages$'
-            - %netgen.ezplatform_site.use_always_available%
+            - '%netgen.ezplatform_site.use_always_available%'
 
     netgen.ezplatform_site.core.load_service:
         class: Netgen\EzPlatformSite\Core\Site\LoadService
@@ -30,7 +30,7 @@ services:
             - '@ezpublish.api.service.content'
             - '@ezpublish.api.service.location'
             - '$languages$'
-            - %netgen.ezplatform_site.use_always_available%
+            - '%netgen.ezplatform_site.use_always_available%'
 
     netgen.ezplatform_site.view_builder.content:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder
@@ -51,7 +51,7 @@ services:
     netgen.ezplatform_site.twig.extension.field_rendering:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\FieldRenderingExtension
         arguments:
-            - @ezpublish.templating.field_block_renderer
-            - @ezpublish.fieldType.parameterProviderRegistry
+            - '@ezpublish.templating.field_block_renderer'
+            - '@ezpublish.fieldType.parameterProviderRegistry'
         tags:
             - {name: twig.extension}

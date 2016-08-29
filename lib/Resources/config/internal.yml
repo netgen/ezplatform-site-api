@@ -16,8 +16,8 @@ services:
             - '@netgen.ezplatform_site.core.domain_object_mapper'
             - '@ezpublish.api.service.search'
             - '@ezpublish.api.service.content'
-            - %netgen.ezplatform_site.prioritized_languages%
-            - %netgen.ezplatform_site.use_always_available%
+            - '%netgen.ezplatform_site.prioritized_languages%'
+            - '%netgen.ezplatform_site.use_always_available%'
 
     netgen.ezplatform_site.core.load_service:
         class: Netgen\EzPlatformSite\Core\Site\LoadService
@@ -25,8 +25,8 @@ services:
             - '@netgen.ezplatform_site.core.domain_object_mapper'
             - '@ezpublish.api.service.content'
             - '@ezpublish.api.service.location'
-            - %netgen.ezplatform_site.prioritized_languages%
-            - %netgen.ezplatform_site.use_always_available%
+            - '%netgen.ezplatform_site.prioritized_languages%'
+            - '%netgen.ezplatform_site.use_always_available%'
 
     netgen.ezplatform_site.core.site:
         class: Netgen\EzPlatformSite\Core\Site\Site

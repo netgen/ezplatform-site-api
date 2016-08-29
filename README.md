@@ -30,7 +30,7 @@
   $location = $loadService->loadLocation(42);
   $parentNode = $loadService()->loadNode($location->parentLocationId);
 
-  if (!$parentNode->getField('image')->isEmpty()) {
+  if (!$parentNode->content->getField('image')->isEmpty()) {
       // do something
   }
   ```

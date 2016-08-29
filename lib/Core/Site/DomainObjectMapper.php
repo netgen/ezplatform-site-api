@@ -136,25 +136,11 @@ final class DomainObjectMapper
      */
     public function mapNode(APILocation $location, APIContent $content, $languageCode)
     {
-        $contentType = $this->contentTypeService->loadContentType(
-            $content->contentInfo->contentTypeId
-        );
-        $fields = $content->getFieldsByLanguage($languageCode);
-        $fieldsData = [];
-        foreach ($fields as $field) {
-            $fieldsData[] = $this->mapFieldData($field, $contentType);
-        }
-
         return new Node(
             [
-                '_fields_data' => $fieldsData,
-                'contentInfo' => $this->mapContentInfo(
-                    $content->versionInfo,
-                    $languageCode,
-                    $contentType
-                ),
-                'location' => $this->mapLocation($location, $content->versionInfo, $languageCode),
-                'innerContent' => $content,
+                'contentInfo' => $this->mapContentInfo($content->versionInfo, $languageCode),
+                'innerLocation' => $location,
+                'content' => $this->mapContent($content, $languageCode),
             ]
         );
     }

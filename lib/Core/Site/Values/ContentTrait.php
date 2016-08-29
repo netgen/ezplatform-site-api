@@ -27,18 +27,28 @@ trait ContentTrait
      */
     private $fieldsById = [];
 
+    public function hasField($identifier)
+    {
+        return isset($this->fields[$identifier]);
+    }
+
     public function getField($identifier)
     {
-        if (isset($this->fields[$identifier])) {
+        if ($this->hasField($identifier)) {
             return $this->fields[$identifier];
         }
 
         return null;
     }
 
+    public function hasFieldById($id)
+    {
+        return isset($this->fieldsById[$id]);
+    }
+
     public function getFieldById($id)
     {
-        if (isset($this->fieldsById[$id])) {
+        if ($this->hasFieldById($id)) {
             return $this->fieldsById[$id];
         }
 
@@ -47,7 +57,7 @@ trait ContentTrait
 
     public function getFieldValue($identifier)
     {
-        if (isset($this->fields[$identifier])) {
+        if ($this->hasField($identifier)) {
             return $this->fields[$identifier]->value;
         }
 
@@ -56,7 +66,7 @@ trait ContentTrait
 
     public function getFieldValueById($id)
     {
-        if (isset($this->fieldsById[$id])) {
+        if ($this->hasFieldById($id)) {
             return $this->fieldsById[$id]->value;
         }
 

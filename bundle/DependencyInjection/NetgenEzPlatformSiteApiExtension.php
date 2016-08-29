@@ -16,9 +16,14 @@ class NetgenEzPlatformSiteApiExtension extends Extension
         return 'netgen_ez_platform_site_api';
     }
 
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        return new Configuration($this->getAlias());
+    }
+
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration($this->getAlias());
+        $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
         $coreFileLocator = new FileLocator(__DIR__ . '/../../lib/Resources/config');

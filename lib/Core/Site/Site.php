@@ -1,20 +1,20 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site;
+namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSite\API\FindService as FindServiceInterface;
-use Netgen\EzPlatformSite\API\LoadService as LoadServiceInterface;
-use Netgen\EzPlatformSite\API\Site as SiteInterface;
+use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
+use Netgen\EzPlatformSiteApi\API\LoadService as LoadServiceInterface;
+use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 
 final class Site implements SiteInterface
 {
     /**
-     * @var \Netgen\EzPlatformSite\API\FindService
+     * @var \Netgen\EzPlatformSiteApi\API\FindService
      */
     private $findService;
 
     /**
-     * @var \Netgen\EzPlatformSite\API\LoadService
+     * @var \Netgen\EzPlatformSiteApi\API\LoadService
      */
     private $loadService;
 

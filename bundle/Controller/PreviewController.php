@@ -3,8 +3,8 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter;
-use Netgen\EzPlatformSite\API\LoadService;
-use Netgen\EzPlatformSite\Core\Site\Values\Location as SiteLocation;
+use Netgen\EzPlatformSiteApi\API\LoadService;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Location as SiteLocation;
 use eZ\Publish\Core\MVC\Symfony\Controller\Content\PreviewController as BasePreviewController;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\API\Repository\Values\Content\Content;
@@ -25,7 +25,7 @@ class PreviewController extends BasePreviewController
     protected $configResolver;
 
     /**
-     * @var \Netgen\EzPlatformSite\API\LoadService
+     * @var \Netgen\EzPlatformSiteApi\API\LoadService
      */
     protected $loadService;
 
@@ -43,7 +43,7 @@ class PreviewController extends BasePreviewController
     }
 
     /**
-     * @param \Netgen\EzPlatformSite\API\LoadService $loadService
+     * @param \Netgen\EzPlatformSiteApi\API\LoadService $loadService
      */
     public function setLoadService(LoadService $loadService)
     {

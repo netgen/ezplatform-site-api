@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\API\Values;
+namespace Netgen\EzPlatformSiteApi\API\Values;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
 

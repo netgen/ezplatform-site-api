@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Tests\Unit\Pagination\Pagerfanta;
+namespace Netgen\EzPlatformSiteApi\Tests\Unit\Pagination\Pagerfanta;
 
-use Netgen\EzPlatformSite\Core\Site\Pagination\Pagerfanta\NodeSearchHitAdapter;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchHitAdapter;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
@@ -11,14 +11,14 @@ use PHPUnit_Framework_TestCase;
 class NodeSearchHitAdapterTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Netgen\EzPlatformSite\API\FindService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Netgen\EzPlatformSiteApi\API\FindService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $findService;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->findService = $this->getMock('\Netgen\EzPlatformSite\API\FindService');
+        $this->findService = $this->getMock('\Netgen\EzPlatformSiteApi\API\FindService');
     }
 
     protected function getAdapter(LocationQuery $query)

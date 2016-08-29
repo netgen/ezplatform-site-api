@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\API\Values;
+namespace Netgen\EzPlatformSiteApi\API\Values;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
 
@@ -24,7 +24,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read int $sortOrder
  * @property-read int|string $contentId
  * @property-read \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
- * @property-read \Netgen\EzPlatformSite\API\Values\ContentInfo $contentInfo
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  */
 abstract class Location extends ValueObject
 {

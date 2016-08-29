@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Values;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
-use Netgen\EzPlatformSite\API\Values\Field as APIField;
+use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
 
 final class Field extends APIField
 {
@@ -14,7 +14,7 @@ final class Field extends APIField
     private $isEmpty;
 
     /**
-     * @var \Netgen\EzPlatformSite\API\Values\Content
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     protected $content;
 

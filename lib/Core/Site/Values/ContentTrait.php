@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Values;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 /**
  * @internal
@@ -8,12 +8,12 @@ namespace Netgen\EzPlatformSite\Core\Site\Values;
 trait ContentTrait
 {
     /**
-     * @var \Netgen\EzPlatformSite\API\Values\ContentInfo
+     * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     protected $contentInfo;
 
     /**
-     * @var \Netgen\EzPlatformSite\API\Values\Field[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
     protected $fields = [];
 

@@ -3,8 +3,8 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
-use Netgen\EzPlatformSite\API\Site;
-use Netgen\EzPlatformSite\API\Values\Location;
+use Netgen\EzPlatformSiteApi\API\Site;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class ContentViewBuilder implements ViewBuilder
 {
     /**
-     * @var \Netgen\EzPlatformSite\API\Site
+     * @var \Netgen\EzPlatformSiteApi\API\Site
      */
     private $site;
 
@@ -137,7 +137,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @param mixed $contentId
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Content
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private function loadContent($contentId)
     {
@@ -152,9 +152,9 @@ class ContentViewBuilder implements ViewBuilder
      * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
      *
      * @param string|int $contentId
-     * @param \Netgen\EzPlatformSite\API\Values\Location $location
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Content
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private function loadEmbeddedContent($contentId, Location $location = null)
     {
@@ -191,7 +191,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @param string|int $locationId
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Location
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private function loadLocation($locationId)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Values;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 /**
  * @internal

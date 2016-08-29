@@ -15,7 +15,7 @@ parameters:
 
 services:
     netgen.ezplatform_site.core.find_service:
-        class: Netgen\EzPlatformSite\Core\Site\FindService
+        class: Netgen\EzPlatformSiteApi\Core\Site\FindService
         arguments:
             - '@netgen.ezplatform_site.core.domain_object_mapper'
             - '@ezpublish.api.service.search'
@@ -24,7 +24,7 @@ services:
             - '%netgen.ezplatform_site.use_always_available%'
 
     netgen.ezplatform_site.core.load_service:
-        class: Netgen\EzPlatformSite\Core\Site\LoadService
+        class: Netgen\EzPlatformSiteApi\Core\Site\LoadService
         arguments:
             - '@netgen.ezplatform_site.core.domain_object_mapper'
             - '@ezpublish.api.service.content'

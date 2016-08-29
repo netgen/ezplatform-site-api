@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Pagination\Pagerfanta;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta;
 
 /**
  * Pagerfanta adapter for Netgen eZ Platform Site Node search.
@@ -14,7 +14,7 @@ class NodeSearchAdapter extends NodeSearchHitAdapter
      * @param int $offset The offset.
      * @param int $length The length.
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Node[]
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Node[]
      */
     public function getSlice($offset, $length)
     {

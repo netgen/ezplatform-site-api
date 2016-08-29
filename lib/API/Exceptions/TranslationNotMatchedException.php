@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSite\API\Exceptions;
+namespace Netgen\EzPlatformSiteApi\API\Exceptions;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 

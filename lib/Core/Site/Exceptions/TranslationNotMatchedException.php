@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\EzPlatformSite\Core\Site\Exceptions;
+namespace Netgen\EzPlatformSiteApi\Core\Site\Exceptions;
 
-use Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException as APITranslationNotMatchedException;
+use Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException as APITranslationNotMatchedException;
 use eZ\Publish\Core\Base\Exceptions\Httpable;
 use eZ\Publish\Core\Base\Translatable;
 use eZ\Publish\Core\Base\TranslatableBase;

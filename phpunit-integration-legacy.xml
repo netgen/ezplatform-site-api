@@ -8,7 +8,7 @@
          convertWarningsToExceptions="true"
          colors="true">
     <php>
-        <env name="setupFactory" value="Netgen\EzPlatformSite\Tests\Integration\SetupFactory\Legacy" />
+        <env name="setupFactory" value="Netgen\EzPlatformSiteApi\Tests\Integration\SetupFactory\Legacy" />
     </php>
     <testsuites>
         <testsuite name="Netgen's Site API for eZ Platform integration tests">

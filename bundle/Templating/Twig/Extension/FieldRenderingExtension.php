@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
-use Netgen\EzPlatformSite\API\Values\Field;
+use Netgen\EzPlatformSiteApi\API\Values\Field;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\MVC\Symfony\FieldType\View\ParameterProviderRegistryInterface;
 use eZ\Publish\Core\MVC\Symfony\Templating\FieldBlockRendererInterface;
@@ -63,7 +63,7 @@ class FieldRenderingExtension extends Twig_Extension
      *
      * @throws InvalidArgumentException
      *
-     * @param \Netgen\EzPlatformSite\API\Values\Field $field
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
      * @param array $params An array of parameters to pass to the field view
      *
      * @return string The HTML markup
@@ -82,7 +82,7 @@ class FieldRenderingExtension extends Twig_Extension
     /**
      * Generates the array of parameter to pass to the field template.
      *
-     * @param \Netgen\EzPlatformSite\API\Values\Field $field the Field to display
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field the Field to display
      * @param array $params An array of parameters to pass to the field view
      *
      * @return array

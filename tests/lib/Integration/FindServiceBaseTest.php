@@ -133,7 +133,7 @@ class FindServiceBaseTest extends BaseTest
 
         $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Node', $node);
         $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
-        $this->assertContent($node, $data);
-        $this->assertLocation($node->location, $data);
+        $this->assertLocation($node, $data);
+        $this->assertContent($node->content, $data);
     }
 }

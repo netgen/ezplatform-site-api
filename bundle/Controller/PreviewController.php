@@ -91,11 +91,7 @@ class PreviewController extends BasePreviewController
             $siteLocation = $this->loadService->loadLocation($location->id);
         } else {
             $siteLocation = new SiteLocation([
-                'contentInfo' => $this->loadService->loadContentInfo(
-                    $content->id,
-                    $content->versionInfo->versionNo,
-                    $language
-                ),
+                'contentInfo' => $siteContent->contentInfo,
                 'innerLocation' => $location,
             ]);
         }

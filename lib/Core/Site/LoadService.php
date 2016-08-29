@@ -57,17 +57,21 @@ final class LoadService implements LoadServiceInterface
         $this->useAlwaysAvailable = $useAlwaysAvailable;
     }
 
-    public function loadContent($contentId)
+    public function loadContent($contentId, $versionNo = null, $languageCode = null)
     {
-        $versionInfo = $this->contentService->loadVersionInfoById($contentId);
-
-        $languageCode = $this->getLanguage(
-            $versionInfo->languageCodes,
-            $versionInfo->contentInfo->mainLanguageCode,
-            $versionInfo->contentInfo->alwaysAvailable
-        );
+        $versionInfo = $this->contentService->loadVersionInfoById($contentId, $versionNo);
 
         if ($languageCode === null) {
+            $languageCode = $this->getLanguage(
+                $versionInfo->languageCodes,
+                $versionInfo->contentInfo->mainLanguageCode,
+                $versionInfo->contentInfo->alwaysAvailable
+            );
+
+            if ($languageCode === null) {
+                throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
+            }
+        } elseif (!in_array($languageCode, $versionInfo->languageCodes)) {
             throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
         }
 
@@ -83,17 +87,21 @@ final class LoadService implements LoadServiceInterface
         return $this->loadContent($contentInfo->id);
     }
 
-    public function loadContentInfo($contentId)
+    public function loadContentInfo($contentId, $versionNo = null, $languageCode = null)
     {
-        $versionInfo = $this->contentService->loadVersionInfoById($contentId);
-
-        $languageCode = $this->getLanguage(
-            $versionInfo->languageCodes,
-            $versionInfo->contentInfo->mainLanguageCode,
-            $versionInfo->contentInfo->alwaysAvailable
-        );
+        $versionInfo = $this->contentService->loadVersionInfoById($contentId, $versionNo);
 
         if ($languageCode === null) {
+            $languageCode = $this->getLanguage(
+                $versionInfo->languageCodes,
+                $versionInfo->contentInfo->mainLanguageCode,
+                $versionInfo->contentInfo->alwaysAvailable
+            );
+
+            if ($languageCode === null) {
+                throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
+            }
+        } elseif (!in_array($languageCode, $versionInfo->languageCodes)) {
             throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
         }
 

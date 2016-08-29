@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\DefaultViewActionOverridePass;
+use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\PreviewControllerOverridePass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\ViewBuilderRegistrationPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,6 +15,7 @@ class NetgenEzPlatformSiteApiBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new DefaultViewActionOverridePass());
+        $container->addCompilerPass(new PreviewControllerOverridePass());
         $container->addCompilerPass(new ViewBuilderRegistrationPass());
     }
 }

@@ -15,6 +15,16 @@ class LoadServiceBaseTest extends BaseTest
         $this->assertContent($content, $data);
     }
 
+    protected function doTestLoadContentInExplicitVersionAndLanguage($data)
+    {
+        list(, $contentId) = array_values($data);
+        $versionNo = $data['loadVersionNo'];
+        $languageCode = $data['loadLanguageCode'];
+        $loadService = $this->getSite()->getLoadService();
+        $content = $loadService->loadContent($contentId, $versionNo, $languageCode);
+        $this->assertContent($content, $data);
+    }
+
     protected function doTestLoadContentByRemoteId($data)
     {
         list(, , $remoteId) = array_values($data);
@@ -28,6 +38,16 @@ class LoadServiceBaseTest extends BaseTest
         list(, $contentId) = array_values($data);
         $loadService = $this->getSite()->getLoadService();
         $contentInfo = $loadService->loadContentInfo($contentId);
+        $this->assertContentInfo($contentInfo, $data);
+    }
+
+    protected function doTestLoadContentInfoInExplicitVersionAndLanguage($data)
+    {
+        list(, $contentId) = array_values($data);
+        $versionNo = $data['loadVersionNo'];
+        $languageCode = $data['loadLanguageCode'];
+        $loadService = $this->getSite()->getLoadService();
+        $contentInfo = $loadService->loadContentInfo($contentId, $versionNo, $languageCode);
         $this->assertContentInfo($contentInfo, $data);
     }
 

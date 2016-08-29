@@ -13,10 +13,12 @@ interface LoadService
      * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      *
      * @param string|int $contentId
+     * @param int $versionNo
+     * @param string $languageCode
      *
      * @return \Netgen\EzPlatformSite\API\Values\Content
      */
-    public function loadContent($contentId);
+    public function loadContent($contentId, $versionNo = null, $languageCode = null);
 
     /**
      * Loads Content object for the given $remoteId.
@@ -35,10 +37,12 @@ interface LoadService
      * @throws \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      *
      * @param string|int $contentId
+     * @param int $versionNo
+     * @param string $languageCode
      *
      * @return \Netgen\EzPlatformSite\API\Values\ContentInfo
      */
-    public function loadContentInfo($contentId);
+    public function loadContentInfo($contentId, $versionNo = null, $languageCode = null);
 
     /**
      * Loads ContentInfo object for the given $remoteId.

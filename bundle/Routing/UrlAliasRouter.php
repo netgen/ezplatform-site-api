@@ -7,20 +7,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UrlAliasRouter extends BaseUrlAliasRouter
 {
+    const OVERRIDE_VIEW_ACTION = 'ng_content:viewAction';
+
     public function matchRequest(Request $request)
     {
         $parameters = parent::matchRequest($request);
-        $override = $this->configResolver->getParameter(
+        $overrideViewAction = $this->configResolver->getParameter(
             'override_url_alias_view_action',
             'netgen_ez_platform_site_api'
         );
-        $viewAction = $this->configResolver->getParameter(
-            'url_alias_view_action',
-            'netgen_ez_platform_site_api'
-        );
 
-        if ($override && !empty($viewAction)) {
-            $parameters['_controller'] = $viewAction;
+        if ($overrideViewAction) {
+            $parameters['_controller'] = self::OVERRIDE_VIEW_ACTION;
         }
 
         return $parameters;

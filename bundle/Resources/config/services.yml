@@ -14,6 +14,12 @@ parameters:
     netgen_ez_platform_site_api.default.override_url_alias_view_action: false
 
 services:
+    netgen.ezplatform_site.controller.base:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller
+        abstract: true
+        calls:
+            - [setContainer, ["@service_container"]]
+
     netgen.ezplatform_site.core.find_service:
         class: Netgen\EzPlatformSite\Core\Site\FindService
         arguments:

@@ -4,6 +4,8 @@ namespace Netgen\EzPlatformSite\Tests\Integration;
 
 use Netgen\EzPlatformSite\API\Values\Content;
 use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
+use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
+use DateTime;
 
 /**
  * Base class for API integration tests.
@@ -27,7 +29,27 @@ class BaseTest extends APIBaseTest
             'locationId' => 60,
             'locationRemoteId' => '86bf306624668ee9b8b979b0d56f7e0d',
             'parentLocationId' => 2,
+            'locationPriority' => -2,
+            'locationHidden' => false,
+            'locationInvisible' => false,
+            'locationPathString' => '/1/2/60/',
+            'locationPath' => [1, 2, 60],
+            'locationDepth' => 2,
+            'locationSortField' => APILocation::SORT_FIELD_PRIORITY,
+            'locationSortOrder' => APILocation::SORT_ORDER_ASC,
             'contentTypeIdentifier' => 'feedback_form',
+            'contentTypeId' => 20,
+            'sectionId' => 1,
+            'currentVersionNo' => 1,
+            'published' => true,
+            'ownerId' => 14,
+            'modificationDateTimestamp' => 1332927282,
+            'publishedDateTimestamp' => 1332927205,
+            'alwaysAvailable' => false,
+            'mainLanguageCode' => 'eng-GB',
+            'mainLocationId' => 60,
+            'contentTypeName' => 'Feedback form',
+            'contentTypeDescription' => '',
             'languageCode' => 'eng-GB',
             'fields' => [
                 'description' => [
@@ -78,7 +100,27 @@ class BaseTest extends APIBaseTest
             'locationId' => 56,
             'locationRemoteId' => '772da20ecf88b3035d73cbdfcea0f119',
             'parentLocationId' => 58,
+            'locationPriority' => 0,
+            'locationHidden' => false,
+            'locationInvisible' => false,
+            'locationPathString' => '/1/58/56/',
+            'locationPath' => [1, 58, 56],
+            'locationDepth' => 2,
+            'locationSortField' => APILocation::SORT_FIELD_PATH,
+            'locationSortOrder' => APILocation::SORT_ORDER_ASC,
             'contentTypeIdentifier' => 'template_look',
+            'contentTypeId' => 15,
+            'sectionId' => 5,
+            'currentVersionNo' => 3,
+            'published' => true,
+            'ownerId' => 14,
+            'modificationDateTimestamp' => 100,
+            'publishedDateTimestamp' => 1082016652,
+            'alwaysAvailable' => false,
+            'mainLanguageCode' => 'eng-US',
+            'mainLocationId' => 56,
+            'contentTypeName' => '',
+            'contentTypeDescription' => '',
             'languageCode' => 'ger-DE',
             'fields' => [
                 'email' => [
@@ -173,7 +215,27 @@ class BaseTest extends APIBaseTest
             'locationId' => 5,
             'locationRemoteId' => '3f6d92f8044aed134f32153517850f5a',
             'parentLocationId' => 1,
+            'locationPriority' => 0,
+            'locationHidden' => false,
+            'locationInvisible' => false,
+            'locationPathString' => '/1/5/',
+            'locationPath' => [1, 5],
+            'locationDepth' => 1,
+            'locationSortField' => APILocation::SORT_FIELD_PATH,
+            'locationSortOrder' => APILocation::SORT_ORDER_ASC,
             'contentTypeIdentifier' => 'user_group',
+            'contentTypeId' => 3,
+            'sectionId' => 2,
+            'currentVersionNo' => 1,
+            'published' => true,
+            'ownerId' => 14,
+            'modificationDateTimestamp' => 1033917596,
+            'publishedDateTimestamp' => 1033917596,
+            'alwaysAvailable' => true,
+            'mainLanguageCode' => 'eng-US',
+            'mainLocationId' => 5,
+            'contentTypeName' => 'User group',
+            'contentTypeDescription' => '',
             'languageCode' => 'eng-US',
             'fields' => [
                 'description' => [
@@ -204,7 +266,27 @@ class BaseTest extends APIBaseTest
             'locationId' => 54,
             'locationRemoteId' => 'fa9f3cff9cf90ecfae335718dcbddfe2',
             'parentLocationId' => null,
+            'locationPriority' => null,
+            'locationHidden' => null,
+            'locationInvisible' => null,
+            'locationPathString' => null,
+            'locationPath' => null,
+            'locationDepth' => null,
+            'locationSortField' => null,
+            'locationSortOrder' => null,
             'contentTypeIdentifier' => null,
+            'contentTypeId' => null,
+            'sectionId' => null,
+            'currentVersionNo' => null,
+            'published' => null,
+            'ownerId' => null,
+            'modificationDateTimestamp' => null,
+            'publishedDateTimestamp' => null,
+            'alwaysAvailable' => null,
+            'mainLanguageCode' => null,
+            'mainLocationId' => null,
+            'contentTypeName' => null,
+            'contentTypeDescription' => null,
             'languageCode' => null,
             'fields' => null,
             'isFound' => false,
@@ -278,30 +360,42 @@ class BaseTest extends APIBaseTest
         $this->assertContentInfo($content->contentInfo, $data);
         $this->assertFields($content, $data);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Content', $content->innerContent);
+        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\VersionInfo', $content->versionInfo);
     }
 
     protected function assertContentInfo($contentInfo, $data)
     {
-        list($name, $contentId, , $locationId, , , $contentTypeIdentifier, $languageCode) = array_values($data);
+        list($name, $contentId, $contentRemoteId, $locationId) = array_values($data);
 
         /** @var \Netgen\EzPlatformSite\API\Values\ContentInfo $contentInfo */
         $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\ContentInfo', $contentInfo);
 
         $this->assertEquals($contentId, $contentInfo->id);
+        $this->assertEquals($contentRemoteId, $contentInfo->remoteId);
         $this->assertEquals($locationId, $contentInfo->mainLocationId);
-        $this->assertEquals($contentTypeIdentifier, $contentInfo->contentTypeIdentifier);
         $this->assertEquals($name, $contentInfo->name);
-        $this->assertEquals($languageCode, $contentInfo->languageCode);
+        $this->assertEquals($data['contentTypeIdentifier'], $contentInfo->contentTypeIdentifier);
+        $this->assertEquals($data['contentTypeId'], $contentInfo->contentTypeId);
+        $this->assertEquals($data['sectionId'], $contentInfo->sectionId);
+        $this->assertEquals($data['currentVersionNo'], $contentInfo->currentVersionNo);
+        $this->assertEquals($data['published'], $contentInfo->published);
+        $this->assertEquals($data['ownerId'], $contentInfo->ownerId);
+        $this->assertEquals($data['modificationDateTimestamp'], $contentInfo->modificationDate->getTimestamp());
+        $this->assertEquals($data['publishedDateTimestamp'], $contentInfo->publishedDate->getTimestamp());
+        $this->assertEquals($data['alwaysAvailable'], $contentInfo->alwaysAvailable);
+        $this->assertEquals($data['mainLanguageCode'], $contentInfo->mainLanguageCode);
+        $this->assertEquals($data['mainLocationId'], $contentInfo->mainLocationId);
+        $this->assertEquals($data['contentTypeName'], $contentInfo->contentTypeName);
+        $this->assertEquals($data['contentTypeDescription'], $contentInfo->contentTypeDescription);
+        $this->assertEquals($data['languageCode'], $contentInfo->languageCode);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\ContentInfo', $contentInfo->innerContentInfo);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\ContentType\ContentType', $contentInfo->innerContentType);
     }
 
     protected function assertFields(Content $content, $data)
     {
-        list(, , , , , , , , $expectedFields) = array_values($data);
-
         $this->assertInternalType('array', $content->fields);
-        $this->assertCount(count($expectedFields), $content->fields);
+        $this->assertCount(count($data['fields']), $content->fields);
 
         foreach ($content->fields as $identifier => $field) {
             $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\Field', $field);
@@ -323,29 +417,40 @@ class BaseTest extends APIBaseTest
             $this->assertSame($content, $field->content);
         }
 
-        foreach ($expectedFields as $identifier => $data) {
-            $this->assertField($content, $identifier, $data);
+        foreach ($data['fields'] as $identifier => $fieldData) {
+            $this->assertField($content, $identifier, $data['languageCode'], $fieldData);
         }
     }
 
-    protected function assertField(Content $content, $identifier, $data)
+    protected function assertField(Content $content, $identifier, $languageCode, $data)
     {
         $field = $content->getField($identifier);
 
         $this->assertSame($data['isEmpty'], $field->isEmpty());
-        $this->assertSame($identifier, $field->identifier);
+        $this->assertSame($identifier, $field->fieldDefIdentifier);
         $this->assertSame($data['fieldTypeIdentifier'], $field->fieldTypeIdentifier);
+        $this->assertEquals($languageCode, $field->languageCode);
     }
 
     protected function assertLocation($location, $data)
     {
-        list(, , , $locationId, , $parentLocationId) = array_values($data);
+        list(, , , $locationId, $locationRemoteId, $parentLocationId) = array_values($data);
 
         /** @var \Netgen\EzPlatformSite\API\Values\Location $location */
         $this->assertInstanceOf('\Netgen\EzPlatformSite\API\Values\Location', $location);
 
         $this->assertEquals($locationId, $location->id);
+        $this->assertEquals($locationRemoteId, $location->remoteId);
         $this->assertEquals($parentLocationId, $location->parentLocationId);
+        $this->assertEquals(APILocation::STATUS_PUBLISHED, $location->status);
+        $this->assertEquals($data['locationPriority'], $location->priority);
+        $this->assertEquals($data['locationHidden'], $location->hidden);
+        $this->assertEquals($data['locationInvisible'], $location->invisible);
+        $this->assertEquals($data['locationPathString'], $location->pathString);
+        $this->assertEquals($data['locationPath'], $location->path);
+        $this->assertEquals($data['locationDepth'], $location->depth);
+        $this->assertEquals($data['locationSortField'], $location->sortField);
+        $this->assertEquals($data['locationSortOrder'], $location->sortOrder);
         $this->assertContentInfo($location->contentInfo, $data);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Location', $location->innerLocation);
     }
@@ -368,6 +473,10 @@ class BaseTest extends APIBaseTest
         $contentUpdateStruct = $contentService->newContentUpdateStruct();
         $contentUpdateStruct->setField('my_profile_label', 'Das Titel', 'ger-DE');
         $updatedDraft = $contentService->updateContent($draft->versionInfo, $contentUpdateStruct);
-        $contentService->publishVersion($updatedDraft->versionInfo);
+        $content = $contentService->publishVersion($updatedDraft->versionInfo);
+
+        $contentMetadataUpdateStruct = $contentService->newContentMetadataUpdateStruct();
+        $contentMetadataUpdateStruct->modificationDate = new DateTime('@100');
+        $contentService->updateContentMetadata($content->contentInfo, $contentMetadataUpdateStruct);
     }
 }

@@ -10,8 +10,19 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * Corresponds to eZ Platform Repository Location object.
  * @see \eZ\Publish\API\Repository\Values\Content\Location
  *
- * @property-read string|int $id
- * @property-read string|int $parentLocationId
+ * @property-read int|string $id
+ * @property-read int $status
+ * @property-read int $priority
+ * @property-read bool $hidden
+ * @property-read bool $invisible
+ * @property-read string $remoteId
+ * @property-read int|string $parentLocationId
+ * @property-read string $pathString
+ * @property-read int[] $path
+ * @property-read int $depth
+ * @property-read int $sortField
+ * @property-read int $sortOrder
+ * @property-read int|string $contentId
  * @property-read \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
  * @property-read \Netgen\EzPlatformSite\API\Values\ContentInfo $contentInfo
  */

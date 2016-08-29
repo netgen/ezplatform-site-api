@@ -6,6 +6,8 @@ use Netgen\EzPlatformSite\API\Values\Field as APIField;
 
 final class Field extends APIField
 {
+    use TranslatableTrait;
+
     /**
      * @var bool
      */
@@ -47,17 +49,11 @@ final class Field extends APIField
     public function __get($property)
     {
         switch ($property) {
-            case 'id':
-                return $this->innerField->id;
-            case 'identifier':
-                return $this->innerField->fieldDefIdentifier;
             case 'fieldTypeIdentifier':
                 return $this->innerFieldDefinition->fieldTypeIdentifier;
-            case 'value':
-                return $this->innerField->value;
             case 'innerFieldDefinition':
                 return $this->content->contentInfo->innerContentType->getFieldDefinition(
-                    $this->identifier
+                    $this->innerField->fieldDefIdentifier
                 );
             case 'name':
                 return $this->getTranslatedString(
@@ -69,6 +65,12 @@ final class Field extends APIField
                     $this->content->contentInfo->languageCode,
                     (array)$this->innerFieldDefinition->getDescriptions()
                 );
+        }
+
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        } elseif (property_exists($this->innerField, $property)) {
+            return $this->innerField->$property;
         }
 
         return parent::__get($property);
@@ -84,25 +86,17 @@ final class Field extends APIField
     public function __isset($property)
     {
         switch ($property) {
-            case 'id':
-            case 'identifier':
             case 'fieldTypeIdentifier':
-            case 'value':
             case 'innerFieldDefinition':
             case 'name':
             case 'description':
                 return true;
         }
 
-        return parent::__isset($property);
-    }
-
-    private function getTranslatedString($languageCode, $strings)
-    {
-        if (array_key_exists($languageCode, $strings)) {
-            return $strings[$languageCode];
+        if (property_exists($this, $property) || property_exists($this->innerField, $property)) {
+            return true;
         }
 
-        return null;
+        return parent::__isset($property);
     }
 }

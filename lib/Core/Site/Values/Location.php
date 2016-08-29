@@ -26,10 +26,14 @@ final class Location extends APILocation
     public function __get($property)
     {
         switch ($property) {
-            case 'id':
-                return $this->innerLocation->id;
-            case 'parentLocationId':
-                return $this->innerLocation->parentLocationId;
+            case 'contentId':
+                return $this->contentInfo->id;
+        }
+
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        } elseif (property_exists($this->innerLocation, $property)) {
+            return $this->innerLocation->$property;
         }
 
         return parent::__get($property);
@@ -45,9 +49,12 @@ final class Location extends APILocation
     public function __isset($property)
     {
         switch ($property) {
-            case 'id':
-            case 'parentLocationId':
+            case 'contentId':
                 return true;
+        }
+
+        if (property_exists($this, $property) || property_exists($this->innerLocation, $property)) {
+            return true;
         }
 
         return parent::__isset($property);

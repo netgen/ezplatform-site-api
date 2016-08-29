@@ -3,8 +3,11 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
 use Netgen\EzPlatformSite\API\Values\Content;
+use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\EzPlatformSite\API\Values\Location;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView as BaseContentView;
+use RuntimeException;
 
 /**
  * Builds ContentView objects.
@@ -59,5 +62,25 @@ class ContentView extends BaseContentView implements ContentValueView
         }
 
         return $parameters;
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     */
+    public function setContent(APIContent $content)
+    {
+        throw new RuntimeException(
+            'setContent method cannot be used with Site API content view. Use setSiteContent method instead.'
+        );
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     */
+    public function setLocation(APILocation $location)
+    {
+        throw new RuntimeException(
+            'setLocation method cannot be used with Site API content view. Use setSiteLocation method instead.'
+        );
     }
 }

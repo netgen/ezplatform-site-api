@@ -75,7 +75,7 @@ final class LoadService implements LoadServiceInterface
             throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
         }
 
-        $content = $this->contentService->loadContent($contentId, [$languageCode]);
+        $content = $this->contentService->loadContent($contentId, [$languageCode], $versionNo);
 
         return $this->domainObjectMapper->mapContent($content, $languageCode);
     }

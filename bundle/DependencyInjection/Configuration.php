@@ -30,10 +30,6 @@ class Configuration extends SiteAccessConfiguration
         $systemNode
             ->booleanNode('override_url_alias_view_action')
                 ->info('Whether to override URL alias view action')
-            ->end()
-            ->scalarNode('url_alias_view_action')
-                ->info('URL alias view action')
-                ->example('ng_content:viewAction')
             ->end();
     }
 }

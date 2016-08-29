@@ -61,6 +61,20 @@ class LoadServiceTest extends LoadServiceBaseTest
      *
      * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
      * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @dataProvider getExplicitVersionAndLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadContentInExplicitVersionAndLanguage($data)
+    {
+        $this->doTestLoadContentInExplicitVersionAndLanguage($data);
+    }
+
+    /**
+     * Test for the loadContent() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
      * @expectedException \Netgen\EzPlatformSite\API\Exceptions\TranslationNotMatchedException
      * @dataProvider getNoLanguageMatchData
      *
@@ -172,6 +186,20 @@ class LoadServiceTest extends LoadServiceBaseTest
     public function testLoadContentInfoMatchAlwaysAvailableLanguage($data)
     {
         $this->doTestLoadContentInfo($data);
+    }
+
+    /**
+     * Test for the loadContentInfo() method.
+     *
+     * @see \Netgen\EzPlatformSite\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSite\Tests\Integration\SiteTest::testGetLoadService
+     * @dataProvider getExplicitVersionAndLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadContentInfoInExplicitVersionAndLanguage($data)
+    {
+        $this->doTestLoadContentInfoInExplicitVersionAndLanguage($data);
     }
 
     /**

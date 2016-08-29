@@ -206,6 +206,123 @@ class BaseTest extends APIBaseTest
         ];
     }
 
+    public function getExplicitVersionAndLanguageMatchData()
+    {
+        $data = [
+            'name' => 'eZ Publish Demo Design (without demo content)',
+            'contentId' => 54,
+            'contentRemoteId' => '8b8b22fe3c6061ed500fbd2b377b885f',
+            'locationId' => 56,
+            'locationRemoteId' => '772da20ecf88b3035d73cbdfcea0f119',
+            'parentLocationId' => 58,
+            'locationPriority' => 0,
+            'locationHidden' => false,
+            'locationInvisible' => false,
+            'locationPathString' => '/1/58/56/',
+            'locationPath' => [1, 58, 56],
+            'locationDepth' => 2,
+            'locationSortField' => APILocation::SORT_FIELD_PATH,
+            'locationSortOrder' => APILocation::SORT_ORDER_ASC,
+            'contentTypeIdentifier' => 'template_look',
+            'contentTypeId' => 15,
+            'sectionId' => 5,
+            'currentVersionNo' => 3,
+            'published' => true,
+            'ownerId' => 14,
+            'modificationDateTimestamp' => 100,
+            'publishedDateTimestamp' => 1082016652,
+            'alwaysAvailable' => false,
+            'mainLanguageCode' => 'eng-US',
+            'mainLocationId' => 56,
+            'contentTypeName' => 'Template look',
+            'contentTypeDescription' => '',
+            'languageCode' => 'eng-US',
+            'fields' => [
+                'email' => [
+                    'fieldTypeIdentifier' => 'ezinisetting',
+                    'isEmpty' => true,
+                ],
+                'footer_script' => [
+                    'fieldTypeIdentifier' => 'eztext',
+                    'isEmpty' => true,
+                ],
+                'footer_text' => [
+                    'fieldTypeIdentifier' => 'eztext',
+                    'isEmpty' => false,
+                ],
+                'hide_powered_by' => [
+                    'fieldTypeIdentifier' => 'ezboolean',
+                    'isEmpty' => true,
+                ],
+                'image' => [
+                    'fieldTypeIdentifier' => 'ezimage',
+                    'isEmpty' => false,
+                ],
+                'login_label' => [
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'logout_label' => [
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'meta_data' => [
+                    'fieldTypeIdentifier' => 'ezinisetting',
+                    'isEmpty' => true,
+                ],
+                'my_profile_label' => [
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'register_user_label' => [
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'rss_feed' => [
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'shopping_basket_label' => [
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'site_map_url' => [
+                    'fieldTypeIdentifier' => 'ezurl',
+                    'isEmpty' => false,
+                ],
+                'site_settings_label' => [
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'isEmpty' => false,
+                ],
+                'sitestyle' => [
+                    'fieldTypeIdentifier' => 'ezpackage',
+                    'isEmpty' => true,
+                ],
+                'siteurl' => [
+                    'fieldTypeIdentifier' => 'ezinisetting',
+                    'isEmpty' => true,
+                ],
+                'tag_cloud_url' => [
+                    'fieldTypeIdentifier' => 'ezurl',
+                    'isEmpty' => false,
+                ],
+                'title' => [
+                    'fieldTypeIdentifier' => 'ezinisetting',
+                    'isEmpty' => true,
+                ],
+            ],
+            'isFound' => true,
+            'loadVersionNo' => 2,
+            'loadLanguageCode' => 'eng-US',
+        ];
+
+        return [
+            0 => [
+                $data,
+            ],
+        ];
+    }
+
     public function getAlwaysAvailableLanguageMatchData()
     {
         $data = [

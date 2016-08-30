@@ -12,4 +12,3 @@ services:
 
     netgen.ezplatform_site.site:
         alias: 'netgen.ezplatform_site.core.site'
-        lazy: true

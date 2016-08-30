@@ -8,7 +8,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 
-final class FindService implements FindServiceInterface
+class FindService implements FindServiceInterface
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper

@@ -6,7 +6,7 @@ use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
 use Netgen\EzPlatformSiteApi\API\LoadService as LoadServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 
-final class Site implements SiteInterface
+class Site implements SiteInterface
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\API\FindService

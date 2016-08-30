@@ -9,7 +9,7 @@ use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 
-final class LoadService implements LoadServiceInterface
+class LoadService implements LoadServiceInterface
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper

@@ -12,6 +12,7 @@ services:
 
     netgen.ezplatform_site.core.find_service:
         class: Netgen\EzPlatformSiteApi\Core\Site\FindService
+        lazy: true
         arguments:
             - '@netgen.ezplatform_site.core.domain_object_mapper'
             - '@ezpublish.api.service.search'
@@ -21,6 +22,7 @@ services:
 
     netgen.ezplatform_site.core.load_service:
         class: Netgen\EzPlatformSiteApi\Core\Site\LoadService
+        lazy: true
         arguments:
             - '@netgen.ezplatform_site.core.domain_object_mapper'
             - '@ezpublish.api.service.content'
@@ -30,6 +32,7 @@ services:
 
     netgen.ezplatform_site.core.site:
         class: Netgen\EzPlatformSiteApi\Core\Site\Site
+        lazy: true
         arguments:
             - '@netgen.ezplatform_site.find_service'
             - '@netgen.ezplatform_site.load_service'

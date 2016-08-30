@@ -7,7 +7,7 @@ use eZ\Bundle\EzPublishCoreBundle\Controller as BaseController;
 abstract class Controller extends BaseController
 {
     /**
-     * @return \Netgen\EzPlatformSite\API\Site
+     * @return \Netgen\EzPlatformSiteApi\API\Site
      */
     public function getSite()
     {
@@ -17,12 +17,12 @@ abstract class Controller extends BaseController
     /**
      * Returns the root location object for current siteaccess configuration.
      *
-     * @return \Netgen\EzPlatformSite\API\Values\Location
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     public function getRootLocation()
     {
-        $rootLocation = parent::getRootLocation();
-
-        return $this->getSite()->getLoadService()->loadLocation($rootLocation->id);
+        return $this->getSite()->getLoadService()->loadLocation(
+            $this->getConfigResolver()->getParameter('content.tree_root.location_id')
+        );
     }
 }

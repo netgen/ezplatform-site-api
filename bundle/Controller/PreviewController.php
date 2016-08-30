@@ -15,11 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 class PreviewController extends BasePreviewController
 {
     /**
-     * @var bool
-     */
-    protected $overrideViewAction = false;
-
-    /**
      * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
     protected $configResolver;
@@ -35,11 +30,6 @@ class PreviewController extends BasePreviewController
     public function setConfigResolver(ConfigResolverInterface $configResolver)
     {
         $this->configResolver = $configResolver;
-
-        $this->overrideViewAction = $this->configResolver->getParameter(
-            'override_url_alias_view_action',
-            'netgen_ez_platform_site_api'
-        );
     }
 
     /**
@@ -54,13 +44,19 @@ class PreviewController extends BasePreviewController
     {
         $request = parent::getForwardRequest($location, $content, $previewSiteAccess, $request, $language);
 
+        $overrideViewAction = $this->configResolver->getParameter(
+            'override_url_alias_view_action',
+            'netgen_ez_platform_site_api'
+        );
+
         // If the preview siteaccess is configured in legacy_mode
         // we forward to the LegacyKernelController.
         // For compatibility with eZ Publish Legacy
         if ($this->isLegacyModeSiteAccess($previewSiteAccess->name)) {
             $request->attributes->set('_controller', 'ezpublish_legacy.controller:indexAction');
-        } elseif ($this->overrideViewAction) {
+        } elseif ($overrideViewAction) {
             $request->attributes->set('_controller', UrlAliasRouter::OVERRIDE_VIEW_ACTION);
+
             $this->injectSiteApiValueObjects($request, $language);
         }
 

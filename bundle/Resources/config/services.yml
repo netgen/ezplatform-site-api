@@ -63,3 +63,9 @@ services:
             - '@ezpublish.fieldType.parameterProviderRegistry'
         tags:
             - {name: twig.extension}
+
+    netgen.ezplatform_site.twig.extension.image:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension
+        arguments: ['@ezpublish.fieldtype.ezimage.variation_service']
+        tags:
+            - { name: twig.extension }

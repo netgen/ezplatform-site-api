@@ -195,7 +195,11 @@ class ContentViewBuilder implements ViewBuilder
      */
     private function loadLocation($locationId)
     {
-        $location = $this->site->getLoadService()->loadLocation($locationId);
+        $location = $this->repository->sudo(
+            function (Repository $repository) use ($locationId) {
+                return $this->site->getLoadService()->loadLocation($locationId);
+            }
+        );
 
         if ($location->innerLocation->invisible) {
             throw new NotFoundHttpException(
@@ -233,7 +237,7 @@ class ContentViewBuilder implements ViewBuilder
      * Checks if the view is an embed one.
      * Uses either the controller action (embedAction), or the viewType (embed/embed-inline).
      *
-     * @param array $parameters The ViewBuilder parameters array.
+     * @param array $parameters The ViewBuilder parameters array
      *
      * @return bool
      */

@@ -11,8 +11,8 @@ class NodeSearchAdapter extends NodeSearchHitAdapter
     /**
      * Returns a slice of the results as Location objects.
      *
-     * @param int $offset The offset.
-     * @param int $length The length.
+     * @param int $offset The offset
+     * @param int $length The length
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Node[]
      */

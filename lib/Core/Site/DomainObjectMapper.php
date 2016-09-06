@@ -18,7 +18,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
  * @internal
  *
  * Domain object mapper is an internal service that maps eZ Platform Repository objects
- * to the native domain objects.
+ * to the native domain objects
  */
 final class DomainObjectMapper
 {

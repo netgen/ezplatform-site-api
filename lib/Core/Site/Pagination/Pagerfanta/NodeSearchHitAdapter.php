@@ -36,7 +36,7 @@ class NodeSearchHitAdapter implements AdapterInterface
     /**
      * Returns the number of results.
      *
-     * @return int The number of results.
+     * @return int The number of results
      */
     public function getNbResults()
     {
@@ -53,8 +53,8 @@ class NodeSearchHitAdapter implements AdapterInterface
     /**
      * Returns a slice of the results, as SearchHit objects.
      *
-     * @param int $offset The offset.
-     * @param int $length The length.
+     * @param int $offset The offset
+     * @param int $length The length
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchHit[]
      */

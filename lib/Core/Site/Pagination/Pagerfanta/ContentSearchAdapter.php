@@ -11,8 +11,8 @@ class ContentSearchAdapter extends ContentSearchHitAdapter
     /**
      * Returns a slice of the results as Content objects.
      *
-     * @param int $offset The offset.
-     * @param int $length The length.
+     * @param int $offset The offset
+     * @param int $length The length
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */

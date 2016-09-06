@@ -233,7 +233,7 @@ class ContentViewBuilder implements ViewBuilder
      * Checks if the view is an embed one.
      * Uses either the controller action (embedAction), or the viewType (embed/embed-inline).
      *
-     * @param array $parameters The ViewBuilder parameters array.
+     * @param array $parameters The ViewBuilder parameters array
      *
      * @return bool
      */

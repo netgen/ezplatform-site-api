@@ -31,6 +31,10 @@ class ContentView extends BaseContentView implements ContentValueView
 
     public function getContent()
     {
+        if (!$this->content instanceof Content) {
+            return null;
+        }
+
         return $this->content->innerContent;
     }
 
@@ -41,6 +45,10 @@ class ContentView extends BaseContentView implements ContentValueView
 
     public function getLocation()
     {
+        if (!$this->location instanceof Location) {
+            return null;
+        }
+
         return $this->location->innerLocation;
     }
 

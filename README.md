@@ -21,6 +21,12 @@
   - [`Location`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Location.php)
   - [`Node`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Node.php)
 
+## Detailed usage instructions
+
+The following document details what needs to be done to rewrite your existing site to Site API:
+
+[Usage instructions](USAGE.md)
+
 ## Examples
 
 - PHP

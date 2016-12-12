@@ -5,8 +5,11 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
+use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\Base\Exceptions\UnauthorizedException;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute as AuthorizationAttribute;
@@ -89,12 +92,18 @@ class ContentViewBuilder implements ViewBuilder
             $location = $this->loadLocation($parameters['locationId']);
         } elseif (isset($parameters['location'])) {
             $location = $parameters['location'];
+            if (!$location instanceof Location && $location instanceof APILocation) {
+                $location = $this->loadLocation($location->id, false);
+            }
         } else {
             $location = null;
         }
 
         if (isset($parameters['content'])) {
             $content = $parameters['content'];
+            if (!$content instanceof Content && $content instanceof APIContent) {
+                $content = $this->loadContent($content->contentInfo->id);
+            }
         } else {
             if (isset($parameters['contentId'])) {
                 $contentId = $parameters['contentId'];
@@ -190,10 +199,11 @@ class ContentViewBuilder implements ViewBuilder
      * @todo Do we need to handle permissions here ?
      *
      * @param string|int $locationId
+     * @param bool $checkVisibility
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    private function loadLocation($locationId)
+    private function loadLocation($locationId, $checkVisibility = true)
     {
         $location = $this->repository->sudo(
             function (Repository $repository) use ($locationId) {
@@ -201,7 +211,7 @@ class ContentViewBuilder implements ViewBuilder
             }
         );
 
-        if ($location->innerLocation->invisible) {
+        if ($checkVisibility && $location->innerLocation->invisible) {
             throw new NotFoundHttpException(
                 'Location cannot be displayed as it is flagged as invisible.'
             );

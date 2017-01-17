@@ -2,9 +2,9 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
-use eZ\Publish\Core\MVC\Symfony\View\ContentValueView as BaseContentValueView;
+use eZ\Publish\Core\MVC\Symfony\View\LocationValueView as BaseLocationValueView;
 
-interface ContentValueView extends BaseContentValueView
+interface LocationValueView extends BaseLocationValueView
 {
     /**
      * Returns the Site Location.

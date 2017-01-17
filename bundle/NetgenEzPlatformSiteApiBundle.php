@@ -5,6 +5,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\DefaultViewActionOverridePass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\PreviewControllerOverridePass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\ViewBuilderRegistrationPass;
+use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -17,5 +18,9 @@ class NetgenEzPlatformSiteApiBundle extends Bundle
         $container->addCompilerPass(new DefaultViewActionOverridePass());
         $container->addCompilerPass(new PreviewControllerOverridePass());
         $container->addCompilerPass(new ViewBuilderRegistrationPass());
+
+        /** @var \eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension $coreExtension */
+        $coreExtension = $container->getExtension('ezpublish');
+        $coreExtension->addConfigParser(new ContentView());
     }
 }

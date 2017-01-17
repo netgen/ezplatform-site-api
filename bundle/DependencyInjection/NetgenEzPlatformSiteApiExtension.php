@@ -33,6 +33,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension
         $fileLocator = new FileLocator(__DIR__ . '/../Resources/config');
         $loader = new Loader\YamlFileLoader($container, $fileLocator);
         $loader->load('services.yml');
+        $loader->load('view.yml');
 
         $processor = new ConfigurationProcessor($container, $this->getAlias());
         $processor->mapConfig(

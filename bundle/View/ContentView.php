@@ -6,13 +6,16 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
-use eZ\Publish\Core\MVC\Symfony\View\ContentView as BaseContentView;
+use eZ\Publish\Core\MVC\Symfony\View\View;
+use eZ\Publish\Core\MVC\Symfony\View\BaseView;
+use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
+use eZ\Publish\Core\MVC\Symfony\View\CachableView;
 use RuntimeException;
 
 /**
  * Builds ContentView objects.
  */
-class ContentView extends BaseContentView implements ContentValueView
+class ContentView extends BaseView implements View, ContentValueView, LocationValueView, EmbedView, CachableView
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
@@ -23,6 +26,11 @@ class ContentView extends BaseContentView implements ContentValueView
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location|null
      */
     private $location;
+
+    /**
+     * @var bool
+     */
+    private $isEmbed = false;
 
     public function setSiteContent(Content $content)
     {
@@ -90,5 +98,24 @@ class ContentView extends BaseContentView implements ContentValueView
         throw new RuntimeException(
             'setLocation method cannot be used with Site API content view. Use setSiteLocation method instead.'
         );
+    }
+
+    /**
+     * Sets the value as embed / not embed.
+     *
+     * @param bool $value
+     */
+    public function setIsEmbed($value)
+    {
+        $this->isEmbed = (bool)$value;
+    }
+
+    /**
+     * Is the view an embed or not.
+     * @return bool True if the view is an embed, false if it is not.
+     */
+    public function isEmbed()
+    {
+        return $this->isEmbed;
     }
 }

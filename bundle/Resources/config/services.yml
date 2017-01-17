@@ -40,15 +40,6 @@ services:
             - '$languages$'
             - '%netgen.ezplatform_site.use_always_available%'
 
-    netgen.ezplatform_site.view_builder.content:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder
-        arguments:
-            - '@netgen.ezplatform_site.site'
-            - '@ezpublish.api.repository'
-            - '@security.authorization_checker'
-            - '@ezpublish.view.configurator'
-            - '@ezpublish.view.view_parameters.injector.dispatcher'
-
     netgen.ezplatform_site.controller.content.view:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Content\ViewController
         parent: ezpublish.controller.base

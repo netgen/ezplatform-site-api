@@ -1,0 +1,39 @@
+parameters:
+    # Default settings for ngcontent_view template rules
+    ezsettings.default.ngcontent_view: {}
+
+services:
+    netgen.ezplatform_site.view_builder.content:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder
+        arguments:
+            - '@netgen.ezplatform_site.site'
+            - '@ezpublish.api.repository'
+            - '@security.authorization_checker'
+            - '@ezpublish.view.configurator'
+            - '@ezpublish.view.view_parameters.injector.dispatcher'
+
+    netgen.ezplatform_site.ngcontent_view_provider.configured:
+        class: "%ezpublish.view_provider.configured.class%"
+        arguments: ["@netgen.ezplatform_site.ngcontent_view.matcher_factory"]
+        tags:
+            - {name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 110}
+
+    netgen.ezplatform_site.ngcontent_view.matcher_factory:
+        class: "%ezpublish.view.matcher_factory.class%"
+        arguments: ["@ezpublish.api.repository", 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased']
+        calls:
+            - [setContainer, ["@service_container"]]
+            - [setMatchConfig, [$ngcontent_view$]]
+
+    netgen.ezplatform_site.content_view_provider.configured:
+        class: "%ezpublish.view_provider.configured.class%"
+        arguments: ["@netgen.ezplatform_site.content_view.matcher_factory"]
+        tags:
+            - {name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 100}
+
+    netgen.ezplatform_site.content_view.matcher_factory:
+        class: "%ezpublish.view.matcher_factory.class%"
+        arguments: ["@ezpublish.api.repository", 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased']
+        calls:
+            - [setContainer, ["@service_container"]]
+            - [setMatchConfig, [$content_view$]]

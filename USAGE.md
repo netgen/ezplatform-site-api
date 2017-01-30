@@ -9,7 +9,7 @@ Site API provides a complete overhaul of the way you write your code. However, y
 Full view templates and controllers
 -----------------------------------
 
-Once you're ready to rewrite your controllers and templates, you can activate the Site API with the following config:
+Once you're ready to rewrite your full view controllers and templates, you can activate the Site API with the following config:
 
 ```yml
 netgen_ez_platform_site_api:
@@ -25,12 +25,37 @@ From the moment you turn this switch on, all your full view templates and full v
 Other views
 -----------
 
-You will need to replace calls to `ez_content:viewAction` controller subrequest with `ng_content:viewAction`. This will make sure that your views other than full view (line, listitem, embed and so on) also use the Site API.
+You will need to replace calls to `ez_content:viewAction` controller with `ng_content:viewAction`. This will make sure that your views other than full view (line, listitem, embed and so on) also use the Site API.
+
+You can optionally use `ngcontent_view` override rules instead of `content_view`. This will allow you to have both Site API template override rules as well as original eZ Platform template override rules, so you can rewrite your templates bit by bit. You can decide which ones to use by calling either `ng_content:viewAction` or `ez_content:viewAction` controller.
+
+For example, if using a config like this one:
+
+```
+ezpublish:
+    system:
+        frontend_group:
+            ngcontent_view:
+                line:
+                    article:
+                        template: "NetgenSiteBundle:content/line/siteapi:article.html.twig"
+                        match:
+                            Identifier\ContentType: article
+            content_view:
+                line:
+                    article:
+                        template: "NetgenSiteBundle:content/line:article.html.twig"
+                        match:
+                            Identifier\ContentType: article
+```
+
+Rendering a line view for an article with `ng_content:viewAction` would use `NetgenSiteBundle:content/line/siteapi:article.html.twig` template, while rendering a line view for an article with `ez_content:viewAction` would use `NetgenSiteBundle:content/line:article.html.twig` template.  
+
 
 Twig functions
 --------------
 
-You will also need to remove all calls to `ez_*` Twig functions that use the original `Content` value objects, and replace them with Site API compatible ones:
+In all your templates which use the Site API, you will need to remove all calls to `ez_*` Twig functions that use the original `Content` value objects, and replace them with Site API compatible ones:
 
 * `ng_render_field(content.fields.title)` instead of `ez_render_field(content, 'title')`
 * `content.fields.title` instead of `ez_field(content, 'title')`

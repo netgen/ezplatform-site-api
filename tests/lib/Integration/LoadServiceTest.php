@@ -90,6 +90,21 @@ class LoadServiceTest extends LoadServiceBaseTest
      *
      * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @dataProvider getNoLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadContentInLanguageThrowsTranslationNotMatchedException($data)
+    {
+        $this->doTestLoadContentInLanguage($data);
+    }
+
+    /**
+     * Test for the loadContent() method.
+     *
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
      * @dataProvider getPrimaryLanguageMatchData
      *
      * @param mixed $data
@@ -215,6 +230,21 @@ class LoadServiceTest extends LoadServiceBaseTest
     public function testLoadContentInfoThrowsTranslationNotMatchedException($data)
     {
         $this->doTestLoadContentInfo($data);
+    }
+
+    /**
+     * Test for the loadContentInfo() method.
+     *
+     * @see \Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetLoadService
+     * @expectedException \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @dataProvider getNoLanguageMatchData
+     *
+     * @param mixed $data
+     */
+    public function testLoadContentInfoMissingLanguageThrowsTranslationNotMatchedException($data)
+    {
+        $this->doTestLoadContentInfoInLanguage($data);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
+use eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
@@ -53,30 +54,44 @@ class BaseTest extends APIBaseTest
             'languageCode' => 'eng-GB',
             'fields' => [
                 'description' => [
+                    'name' => 'Description',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezrichtext',
                     'isEmpty' => false,
                 ],
                 'email' => [
+                    'name' => 'Email',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezemail',
                     'isEmpty' => false,
                 ],
                 'message' => [
+                    'name' => 'Message',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'eztext',
                     'isEmpty' => false,
                 ],
                 'name' => [
+                    'name' => 'Name',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'recipient' => [
+                    'name' => 'Recipient',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezemail',
                     'isEmpty' => false,
                 ],
                 'sender_name' => [
+                    'name' => 'Sender name',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'subject' => [
+                    'name' => 'Subject',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
@@ -124,74 +139,110 @@ class BaseTest extends APIBaseTest
             'languageCode' => 'ger-DE',
             'fields' => [
                 'email' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'footer_script' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'eztext',
                     'isEmpty' => true,
                 ],
                 'footer_text' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'eztext',
                     'isEmpty' => true,
                 ],
                 'hide_powered_by' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezboolean',
                     'isEmpty' => true,
                 ],
                 'image' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezimage',
                     'isEmpty' => true,
                 ],
                 'login_label' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'logout_label' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'meta_data' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'my_profile_label' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'register_user_label' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'rss_feed' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'shopping_basket_label' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'site_map_url' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezurl',
                     'isEmpty' => true,
                 ],
                 'site_settings_label' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => true,
                 ],
                 'sitestyle' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezpackage',
                     'isEmpty' => true,
                 ],
                 'siteurl' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'tag_cloud_url' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezurl',
                     'isEmpty' => true,
                 ],
                 'title' => [
+                    'name' => null,
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
@@ -239,74 +290,110 @@ class BaseTest extends APIBaseTest
             'languageCode' => 'eng-US',
             'fields' => [
                 'email' => [
+                    'name' => 'Email',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'footer_script' => [
+                    'name' => 'Footer Javascript',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'eztext',
                     'isEmpty' => true,
                 ],
                 'footer_text' => [
+                    'name' => 'Footer text',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'eztext',
                     'isEmpty' => false,
                 ],
                 'hide_powered_by' => [
+                    'name' => 'Hide "Powered by"',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezboolean',
                     'isEmpty' => true,
                 ],
                 'image' => [
+                    'name' => 'Image',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezimage',
                     'isEmpty' => false,
                 ],
                 'login_label' => [
+                    'name' => 'Login (label)',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'logout_label' => [
+                    'name' => 'Logout (label)',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'meta_data' => [
+                    'name' => 'Meta data',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'my_profile_label' => [
+                    'name' => 'My profile (label)',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'register_user_label' => [
+                    'name' => 'Register new user (label)',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'rss_feed' => [
+                    'name' => 'RSS feed',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'shopping_basket_label' => [
+                    'name' => 'Shopping basket (label)',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'site_map_url' => [
+                    'name' => 'Site map URL',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezurl',
                     'isEmpty' => false,
                 ],
                 'site_settings_label' => [
+                    'name' => 'Site settings (label)',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'sitestyle' => [
+                    'name' => 'Sitestyle',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezpackage',
                     'isEmpty' => true,
                 ],
                 'siteurl' => [
+                    'name' => 'Site URL',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
                 'tag_cloud_url' => [
+                    'name' => 'Tag Cloud URL',
+                    'description' => '',
                     'fieldTypeIdentifier' => 'ezurl',
                     'isEmpty' => false,
                 ],
                 'title' => [
+                    'name' => 'Title',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezinisetting',
                     'isEmpty' => true,
                 ],
@@ -356,10 +443,14 @@ class BaseTest extends APIBaseTest
             'languageCode' => 'eng-US',
             'fields' => [
                 'description' => [
+                    'name' => 'Description',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
                 'name' => [
+                    'name' => 'Name',
+                    'description' => null,
                     'fieldTypeIdentifier' => 'ezstring',
                     'isEmpty' => false,
                 ],
@@ -478,6 +569,19 @@ class BaseTest extends APIBaseTest
         $this->assertFields($content, $data);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Content', $content->innerContent);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\VersionInfo', $content->versionInfo);
+
+        $this->assertTrue(isset($content->id));
+        $this->assertTrue(isset($content->name));
+        $this->assertTrue(isset($content->mainLocationId));
+        $this->assertTrue(isset($content->contentInfo));
+        $this->assertFalse(isset($content->nonExistentProperty));
+
+        try {
+            $content->nonExistentProperty;
+            $this->fail('This property should not be found');
+        } catch (PropertyNotFoundException $e) {
+            // Do nothing
+        }
     }
 
     protected function assertContentInfo($contentInfo, $data)
@@ -507,6 +611,19 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($data['languageCode'], $contentInfo->languageCode);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\ContentInfo', $contentInfo->innerContentInfo);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\ContentType\ContentType', $contentInfo->innerContentType);
+
+        $this->assertTrue(isset($contentInfo->name));
+        $this->assertTrue(isset($contentInfo->contentTypeIdentifier));
+        $this->assertTrue(isset($contentInfo->contentTypeName));
+        $this->assertTrue(isset($contentInfo->contentTypeDescription));
+        $this->assertFalse(isset($contentInfo->nonExistentProperty));
+
+        try {
+            $contentInfo->nonExistentProperty;
+            $this->fail('This property should not be found');
+        } catch (PropertyNotFoundException $e) {
+            // Do nothing
+        }
     }
 
     protected function assertFields(Content $content, $data)
@@ -537,6 +654,11 @@ class BaseTest extends APIBaseTest
         foreach ($data['fields'] as $identifier => $fieldData) {
             $this->assertField($content, $identifier, $data['languageCode'], $fieldData);
         }
+
+        $content->getField('non_existent_field');
+        $content->getFieldById('non_existent_field');
+        $content->getFieldValue('non_existent_field');
+        $content->getFieldValueById('non_existent_field');
     }
 
     protected function assertField(Content $content, $identifier, $languageCode, $data)
@@ -546,7 +668,23 @@ class BaseTest extends APIBaseTest
         $this->assertSame($data['isEmpty'], $field->isEmpty());
         $this->assertSame($identifier, $field->fieldDefIdentifier);
         $this->assertSame($data['fieldTypeIdentifier'], $field->fieldTypeIdentifier);
+        $this->assertSame($data['name'], $field->name);
+        $this->assertSame($data['description'], $field->description);
         $this->assertEquals($languageCode, $field->languageCode);
+
+        $this->assertTrue(isset($field->fieldTypeIdentifier));
+        $this->assertTrue(isset($field->innerFieldDefinition));
+        $this->assertTrue(isset($field->name));
+        $this->assertTrue(isset($field->description));
+        $this->assertTrue(isset($field->languageCode));
+        $this->assertFalse(isset($field->nonExistantProperty));
+
+        try {
+            $field->nonExistentProperty;
+            $this->fail('This property should not be found');
+        } catch (PropertyNotFoundException $e) {
+            // Do nothing
+        }
     }
 
     protected function assertLocation($location, $data)
@@ -568,8 +706,20 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($data['locationDepth'], $location->depth);
         $this->assertEquals($data['locationSortField'], $location->sortField);
         $this->assertEquals($data['locationSortOrder'], $location->sortOrder);
+        $this->assertEquals($location->contentInfo->id, $location->contentId);
         $this->assertContentInfo($location->contentInfo, $data);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Location', $location->innerLocation);
+
+        $this->assertTrue(isset($location->contentId));
+        $this->assertTrue(isset($location->contentInfo));
+        $this->assertFalse(isset($location->nonExistentProperty));
+
+        try {
+            $location->nonExistentProperty;
+            $this->fail('This property should not be found');
+        } catch (PropertyNotFoundException $e) {
+            // Do nothing
+        }
     }
 
     protected function createSecondaryTranslationFallback()

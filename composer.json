@@ -19,8 +19,12 @@
     "autoload": {
         "psr-4": {
             "Netgen\\EzPlatformSiteApi\\": "lib",
+            "Netgen\\Bundle\\EzPlatformSiteApiBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Netgen\\EzPlatformSiteApi\\Tests\\": "tests/lib",
-            "Netgen\\Bundle\\EzPlatformSiteApiBundle\\": "bundle",
             "Netgen\\Bundle\\EzPlatformSiteApiBundle\\Tests\\": "tests/bundle"
         }
     },

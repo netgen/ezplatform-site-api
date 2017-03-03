@@ -1,6 +1,7 @@
 {
     "name": "netgen/ezplatform-site-api",
     "description": "Netgen's Site API for eZ Platform",
+    "type": "ezplatform-bundle",
     "license": "GPL-2.0",
     "authors": [
         {

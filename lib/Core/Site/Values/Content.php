@@ -22,7 +22,7 @@ final class Content extends APIContent
     protected $innerContent;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Field[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
     private $fieldsById = [];
 

@@ -3,12 +3,13 @@
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Pagination\Pagerfanta;
 
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentInfoSearchHitAdapter;
+use Netgen\EzPlatformSiteApi\API\FindService;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContentInfoSearchHitAdapterTest extends PHPUnit_Framework_TestCase
+class ContentInfoSearchHitAdapterTest extends TestCase
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\API\FindService|\PHPUnit_Framework_MockObject_MockObject
@@ -18,7 +19,7 @@ class ContentInfoSearchHitAdapterTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->findService = $this->getMock('\Netgen\EzPlatformSiteApi\API\FindService');
+        $this->findService = $this->createMock(FindService::class);
     }
 
     protected function getAdapter(Query $query)

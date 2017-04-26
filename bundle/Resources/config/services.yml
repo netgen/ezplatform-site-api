@@ -57,6 +57,6 @@ services:
 
     netgen.ezplatform_site.twig.extension.image:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension
-        arguments: ['@ezpublish.fieldtype.ezimage.variation_service']
+        arguments: ['@ezpublish.fieldType.ezimage.variation_service']
         tags:
             - { name: twig.extension }

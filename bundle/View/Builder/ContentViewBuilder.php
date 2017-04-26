@@ -117,8 +117,8 @@ class ContentViewBuilder implements ViewBuilder
             }
 
             $content = $view->isEmbed() ?
-                $this->loadContent($contentId) :
-                $this->loadEmbeddedContent($contentId, $location);
+                $this->loadEmbeddedContent($contentId, $location) :
+                $this->loadContent($contentId);
         }
 
         $view->setSiteContent($content);

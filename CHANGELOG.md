@@ -1,6 +1,13 @@
 eZ Platform Site API changelog
 ==============================
 
+2.0.1 (26.04.2017)
+------------------
+
+* Fix EZP-27237: fixed wrong content loading logic in ContentViewBuilder
+* Improvements to tests
+* Remove unneeded ContentTrait
+
 2.0.0 (30.01.2017)
 ------------------
 

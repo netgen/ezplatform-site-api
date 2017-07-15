@@ -2,8 +2,8 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSiteApi\API\FindService;
-use Netgen\EzPlatformSiteApi\API\LoadService;
+use Netgen\EzPlatformSiteApi\API\FindService as APIFindService;
+use Netgen\EzPlatformSiteApi\API\LoadService as APILoadService;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
@@ -59,7 +59,7 @@ final class DomainObjectMapper
     /**
      * @param \Netgen\EzPlatformSiteApi\API\FindService $findService
      */
-    public function setFindService(FindService $findService)
+    public function setFindService(APIFindService $findService)
     {
         $this->findService = $findService;
     }
@@ -67,7 +67,7 @@ final class DomainObjectMapper
     /**
      * @param \Netgen\EzPlatformSiteApi\API\LoadService $loadService
      */
-    public function setLoadService(LoadService $loadService)
+    public function setLoadService(APILoadService $loadService)
     {
         $this->loadService = $loadService;
     }

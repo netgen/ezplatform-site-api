@@ -2,6 +2,8 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
+use Netgen\EzPlatformSiteApi\API\FindService;
+use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
@@ -33,6 +35,16 @@ final class DomainObjectMapper
     private $contentTypeService;
 
     /**
+     * @var \Netgen\EzPlatformSiteApi\API\FindService
+     */
+    private $findService;
+
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\LoadService
+     */
+    private $loadService;
+
+    /**
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
      */
@@ -42,6 +54,22 @@ final class DomainObjectMapper
     ) {
         $this->contentTypeService = $contentTypeService;
         $this->fieldTypeService = $fieldTypeService;
+    }
+
+    /**
+     * @param \Netgen\EzPlatformSiteApi\API\FindService $findService
+     */
+    public function setFindService(FindService $findService)
+    {
+        $this->findService = $findService;
+    }
+
+    /**
+     * @param \Netgen\EzPlatformSiteApi\API\LoadService $loadService
+     */
+    public function setLoadService(LoadService $loadService)
+    {
+        $this->loadService = $loadService;
     }
 
     /**
@@ -72,6 +100,7 @@ final class DomainObjectMapper
                     $contentType
                 ),
                 'innerContent' => $content,
+                'findService' => $this->findService,
             ]
         );
     }
@@ -102,6 +131,8 @@ final class DomainObjectMapper
                 'languageCode' => $languageCode,
                 'innerContentInfo' => $versionInfo->contentInfo,
                 'innerContentType' => $contentType,
+                'findService' => $this->findService,
+                'loadService' => $this->loadService,
             ]
         );
     }
@@ -121,6 +152,8 @@ final class DomainObjectMapper
             [
                 'contentInfo' => $this->mapContentInfo($versionInfo, $languageCode),
                 'innerLocation' => $location,
+                'findService' => $this->findService,
+                'loadService' => $this->loadService,
             ]
         );
     }
@@ -141,6 +174,8 @@ final class DomainObjectMapper
                 'contentInfo' => $this->mapContentInfo($content->versionInfo, $languageCode),
                 'innerLocation' => $location,
                 'content' => $this->mapContent($content, $languageCode),
+                'findService' => $this->findService,
+                'loadService' => $this->loadService,
             ]
         );
     }

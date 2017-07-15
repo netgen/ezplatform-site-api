@@ -78,6 +78,8 @@ interface LoadService
     public function loadLocationByRemoteId($remoteId);
 
     /**
+     * @deprecated Use loadLocation() with lazy loading instead.
+     *
      * Loads Node object for the given $locationId.
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
@@ -89,6 +91,8 @@ interface LoadService
     public function loadNode($locationId);
 
     /**
+     * @deprecated Use loadLocationByRemoteId() with lazy loading instead.
+     *
      * Loads Node object for the given $remoteId.
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException

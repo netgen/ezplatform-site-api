@@ -44,6 +44,8 @@ interface FindService
     public function findLocations(LocationQuery $query);
 
     /**
+     * @deprecated Use findLocations() with lazy loading instead.
+     *
      * Finds Node objects for the given $query.
      *
      * @see \Netgen\EzPlatformSiteApi\API\Values\Node

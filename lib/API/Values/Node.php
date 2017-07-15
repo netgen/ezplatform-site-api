@@ -3,9 +3,9 @@
 namespace Netgen\EzPlatformSiteApi\API\Values;
 
 /**
- * Node represents Site Content object on a specific Location in the content tree.
+ * @deprecated Use Location with lazy loading instead.
  *
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
+ * Node represents Site Content object on a specific Location in the content tree.
  */
 abstract class Node extends Location
 {

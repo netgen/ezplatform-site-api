@@ -25,7 +25,30 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read int|string $contentId
  * @property-read \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $children
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $parent
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
  */
 abstract class Location extends ValueObject
 {
+    /**
+     * Return an array of children Locations.
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    abstract public function getChildren();
+
+    /**
+     * Return parent Location if available.
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location|null
+     */
+    abstract public function getParent();
+
+    /**
+     * Return Location's Content.
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    abstract public function getContent();
 }

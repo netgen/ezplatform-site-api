@@ -2,6 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 
 final class Content extends APIContent
@@ -26,6 +27,16 @@ final class Content extends APIContent
      */
     private $fieldsById = [];
 
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\FindService
+     */
+    private $findService;
+
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    private $internalLocations;
+
     public function __construct(array $properties = [])
     {
         if (isset($properties['_fields_data'])) {
@@ -34,6 +45,11 @@ final class Content extends APIContent
             }
 
             unset($properties['_fields_data']);
+        }
+
+        if (isset($properties['findService'])) {
+            $this->findService = $properties['findService'];
+            unset($properties['findService']);
         }
 
         parent::__construct($properties);
@@ -86,6 +102,8 @@ final class Content extends APIContent
     }
 
     /**
+     * @inheritdoc
+     *
      * Magic getter for retrieving convenience properties.
      *
      * @param string $property The name of the property to retrieve
@@ -101,11 +119,15 @@ final class Content extends APIContent
                 return $this->contentInfo->name;
             case 'mainLocationId':
                 return $this->contentInfo->mainLocationId;
+            case 'locations':
+                return $this->getLocations();
         }
 
         if (property_exists($this, $property)) {
             return $this->$property;
-        } elseif (property_exists($this->innerContent, $property)) {
+        }
+
+        if (property_exists($this->innerContent, $property)) {
             return $this->innerContent->$property;
         }
 
@@ -125,6 +147,7 @@ final class Content extends APIContent
             case 'id':
             case 'name':
             case 'mainLocationId':
+            case 'locations':
                 return true;
         }
 
@@ -142,5 +165,20 @@ final class Content extends APIContent
 
         $this->fields[$field->fieldDefIdentifier] = $field;
         $this->fieldsById[$field->id] = $field;
+    }
+
+    public function getLocations()
+    {
+        if ($this->internalLocations === null) {
+            $this->internalLocations = $this->findService->findLocations(
+                new LocationQuery(
+                    [
+                        //
+                    ]
+                )
+            );
+        }
+
+        return $this->internalLocations;
     }
 }

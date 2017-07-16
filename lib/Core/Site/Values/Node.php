@@ -150,12 +150,8 @@ final class Node extends APINode
     private function getParent()
     {
         if ($this->internalParent === null) {
-            $this->internalParent = $this->site->getFindService()->findLocations(
-                new LocationQuery(
-                    [
-                        'filter' => new LocationId($this->innerLocation->parentLocationId),
-                    ]
-                )
+            $this->internalParent = $this->site->getLoadService()->loadLocation(
+                $this->innerLocation->parentLocationId
             );
         }
 

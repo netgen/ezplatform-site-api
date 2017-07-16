@@ -37,6 +37,11 @@ final class Content extends APIContent
      */
     private $internalLocations;
 
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    private $internalMainLocation;
+
     public function __construct(array $properties = [])
     {
         if (isset($properties['_fields_data'])) {
@@ -121,6 +126,8 @@ final class Content extends APIContent
                 return $this->contentInfo->mainLocationId;
             case 'locations':
                 return $this->getLocations();
+            case 'mainLocation':
+                return $this->getMainLocation();
         }
 
         if (property_exists($this, $property)) {
@@ -148,6 +155,7 @@ final class Content extends APIContent
             case 'name':
             case 'mainLocationId':
             case 'locations':
+            case 'mainLocation':
                 return true;
         }
 
@@ -180,5 +188,24 @@ final class Content extends APIContent
         }
 
         return $this->internalLocations;
+    }
+
+    private function getMainLocation()
+    {
+        if ($this->internalMainLocation === null) {
+            $this->internalMainLocation = $this->site->getFindService()->findLocations(
+                new LocationQuery(
+                    [
+                        //
+                    ]
+                )
+            );
+        }
+
+        if (!empty($this->internalMainLocation)) {
+            return $this->internalMainLocation[0];
+        }
+
+        return null;
     }
 }

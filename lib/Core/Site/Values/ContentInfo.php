@@ -44,6 +44,11 @@ final class ContentInfo extends APIContentInfo
      */
     private $internalContent;
 
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    private $internalMainLocation;
+
     public function __construct(array $properties = [])
     {
         if (array_key_exists('site', $properties)) {
@@ -78,6 +83,8 @@ final class ContentInfo extends APIContentInfo
                 );
             case 'locations':
                 return $this->getLocations();
+            case 'mainLocation':
+                return $this->getMainLocation();
             case 'content':
                 return $this->getContent();
         }
@@ -107,6 +114,7 @@ final class ContentInfo extends APIContentInfo
             case 'contentTypeName':
             case 'contentTypeDescription':
             case 'locations':
+            case 'mainLocation':
             case 'content':
                 return true;
         }
@@ -140,5 +148,24 @@ final class ContentInfo extends APIContentInfo
         }
 
         return $this->internalContent;
+    }
+
+    private function getMainLocation()
+    {
+        if ($this->internalMainLocation === null) {
+            $this->internalMainLocation = $this->site->getFindService()->findLocations(
+                new LocationQuery(
+                    [
+                        //
+                    ]
+                )
+            );
+        }
+
+        if (!empty($this->internalMainLocation)) {
+            return $this->internalMainLocation[0];
+        }
+
+        return null;
     }
 }

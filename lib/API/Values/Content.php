@@ -18,6 +18,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Field[] $fields
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $locations
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
  * @property-read \eZ\Publish\API\Repository\Values\Content\Content $innerContent
  */
 abstract class Content extends ValueObject

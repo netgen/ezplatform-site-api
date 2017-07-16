@@ -25,7 +25,7 @@ final class Location extends APILocation
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
-    private $internalChildren;
+    private $childrenCache = [];
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
@@ -104,10 +104,12 @@ final class Location extends APILocation
         return parent::__isset($property);
     }
 
-    private function getChildren()
+    public function getChildren(array $contentTypeIdentifiers = [], $limit = 10)
     {
-        if ($this->internalChildren === null) {
-            $this->internalChildren = $this->site->getFindService()->findLocations(
+        $cacheId = $this->getChildrenCacheId($contentTypeIdentifiers, $limit);
+
+        if (!array_key_exists($cacheId, $this->childrenCache)) {
+            $this->childrenCache[$cacheId] = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
                         //
@@ -116,7 +118,22 @@ final class Location extends APILocation
             );
         }
 
-        return $this->internalChildren;
+        return $this->childrenCache[$cacheId];
+    }
+
+    /**
+     * Returns unique string for the given parameters.
+     *
+     * @param array $contentTypeIdentifiers
+     * @param int $limit
+     *
+     * @return string
+     */
+    private function getChildrenCacheId(array $contentTypeIdentifiers, $limit)
+    {
+        sort($contentTypeIdentifiers);
+
+        return md5(implode(' ', $contentTypeIdentifiers) . ' ' . $limit);
     }
 
     private function getParent()

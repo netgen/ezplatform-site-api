@@ -31,4 +31,14 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  */
 abstract class Location extends ValueObject
 {
+    /**
+     * Return an array of children Locations, filtered by optional
+     * $contentTypeIdentifiers and $limit.
+     *
+     * @param array $contentTypeIdentifiers
+     * @param int $limit
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    abstract public function getChildren(array $contentTypeIdentifiers = [], $limit = 10);
 }

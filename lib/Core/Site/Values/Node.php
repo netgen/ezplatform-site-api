@@ -59,6 +59,10 @@ final class Node extends APINode
         switch ($property) {
             case 'contentId':
                 return $this->contentInfo->id;
+            case 'children':
+                return $this->getChildren();
+            case 'parent':
+                return $this->getParent();
         }
 
         if (property_exists($this, $property)) {
@@ -83,6 +87,8 @@ final class Node extends APINode
     {
         switch ($property) {
             case 'contentId':
+            case 'children':
+            case 'parent':
                 return true;
         }
 

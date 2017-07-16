@@ -38,7 +38,7 @@ final class Content extends APIContent
     private $internalLocations;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private $internalMainLocation;
 
@@ -192,20 +192,12 @@ final class Content extends APIContent
 
     private function getMainLocation()
     {
-        if ($this->internalMainLocation === null) {
-            $this->internalMainLocation = $this->site->getFindService()->findLocations(
-                new LocationQuery(
-                    [
-                        //
-                    ]
-                )
+        if ($this->internalMainLocation === null && $this->innerContent->contentInfo->mainLocationId !== null) {
+            $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
+                $this->innerContent->contentInfo->mainLocationId
             );
         }
 
-        if (!empty($this->internalMainLocation)) {
-            return $this->internalMainLocation[0];
-        }
-
-        return null;
+        return $this->internalMainLocation;
     }
 }

@@ -3,6 +3,7 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 
 final class ContentInfo extends APIContentInfo
@@ -132,7 +133,7 @@ final class ContentInfo extends APIContentInfo
             $this->internalLocations = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
-                        //
+                        'filter' => new ContentId($this->innerContentInfo->id),
                     ]
                 )
             );

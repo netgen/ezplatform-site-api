@@ -32,7 +32,7 @@ final class Location extends APILocation
     private $childrenCache = [];
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private $internalParent;
 
@@ -160,11 +160,7 @@ final class Location extends APILocation
             );
         }
 
-        if (!empty($this->internalParent)) {
-            return $this->internalParent[0];
-        }
-
-        return null;
+        return $this->internalParent;
     }
 
     private function getContent()

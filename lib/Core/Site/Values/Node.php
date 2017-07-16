@@ -155,10 +155,6 @@ final class Node extends APINode
             );
         }
 
-        if (!empty($this->internalParent)) {
-            return $this->internalParent[0];
-        }
-
-        return null;
+        return $this->internalParent;
     }
 }

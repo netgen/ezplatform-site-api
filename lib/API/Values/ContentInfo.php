@@ -34,17 +34,4 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  */
 abstract class ContentInfo extends ValueObject
 {
-    /**
-     * Return an array of Content's Locations.
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
-     */
-    abstract public function getLocations();
-
-    /**
-     * Return ContentInfo's Content.
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
-     */
-    abstract public function getContent();
 }

@@ -30,14 +30,9 @@ final class ContentInfo extends APIContentInfo
     protected $innerContentType;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\FindService
+     * @var \Netgen\EzPlatformSiteApi\API\Site
      */
-    private $findService;
-
-    /**
-     * @var \Netgen\EzPlatformSiteApi\API\LoadService
-     */
-    private $loadService;
+    private $site;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
@@ -51,14 +46,9 @@ final class ContentInfo extends APIContentInfo
 
     public function __construct(array $properties = [])
     {
-        if (isset($properties['findService'])) {
-            $this->findService = $properties['findService'];
-            unset($properties['findService']);
-        }
-
-        if (isset($properties['loadService'])) {
-            $this->loadService = $properties['loadService'];
-            unset($properties['loadService']);
+        if (array_key_exists('site', $properties)) {
+            $this->site = $properties['site'];
+            unset($properties['site']);
         }
 
         parent::__construct($properties);
@@ -128,10 +118,10 @@ final class ContentInfo extends APIContentInfo
         return parent::__isset($property);
     }
 
-    public function getLocations()
+    private function getLocations()
     {
         if ($this->internalLocations === null) {
-            $this->internalLocations = $this->findService->findLocations(
+            $this->internalLocations = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
                         //
@@ -143,10 +133,10 @@ final class ContentInfo extends APIContentInfo
         return $this->internalLocations;
     }
 
-    public function getContent()
+    private function getContent()
     {
         if ($this->internalContent === null) {
-            $this->internalContent = $this->loadService->loadContent($this->innerContentInfo->id);
+            $this->internalContent = $this->site->getLoadService()->loadContent($this->innerContentInfo->id);
         }
 
         return $this->internalContent;

@@ -23,9 +23,9 @@ final class Node extends APINode
     protected $innerLocation;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\FindService
+     * @var \Netgen\EzPlatformSiteApi\API\Site
      */
-    private $findService;
+    private $site;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
@@ -39,9 +39,9 @@ final class Node extends APINode
 
     public function __construct(array $properties = [])
     {
-        if (isset($properties['findService'])) {
-            $this->findService = $properties['findService'];
-            unset($properties['findService']);
+        if (array_key_exists('site', $properties)) {
+            $this->site = $properties['site'];
+            unset($properties['site']);
         }
 
         parent::__construct($properties);
@@ -93,10 +93,10 @@ final class Node extends APINode
         return parent::__isset($property);
     }
 
-    public function getChildren()
+    private function getChildren()
     {
         if ($this->internalChildren === null) {
-            $this->internalChildren = $this->findService->findLocations(
+            $this->internalChildren = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
                         //
@@ -108,10 +108,10 @@ final class Node extends APINode
         return $this->internalChildren;
     }
 
-    public function getParent()
+    private function getParent()
     {
         if ($this->internalParent === null) {
-            $this->internalParent = $this->findService->findLocations(
+            $this->internalParent = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
                         //
@@ -125,10 +125,5 @@ final class Node extends APINode
         }
 
         return null;
-    }
-
-    public function getContent()
-    {
-        return $this->content;
     }
 }

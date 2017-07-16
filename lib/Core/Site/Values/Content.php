@@ -28,9 +28,9 @@ final class Content extends APIContent
     private $fieldsById = [];
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\FindService
+     * @var \Netgen\EzPlatformSiteApi\API\Site
      */
-    private $findService;
+    private $site;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
@@ -47,9 +47,9 @@ final class Content extends APIContent
             unset($properties['_fields_data']);
         }
 
-        if (isset($properties['findService'])) {
-            $this->findService = $properties['findService'];
-            unset($properties['findService']);
+        if (array_key_exists('site', $properties)) {
+            $this->site = $properties['site'];
+            unset($properties['site']);
         }
 
         parent::__construct($properties);
@@ -167,10 +167,10 @@ final class Content extends APIContent
         $this->fieldsById[$field->id] = $field;
     }
 
-    public function getLocations()
+    private function getLocations()
     {
         if ($this->internalLocations === null) {
-            $this->internalLocations = $this->findService->findLocations(
+            $this->internalLocations = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
                         //

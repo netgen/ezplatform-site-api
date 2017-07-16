@@ -75,11 +75,4 @@ abstract class Content extends ValueObject
      * @return null|\eZ\Publish\SPI\FieldType\Value
      */
     abstract public function getFieldValueById($id);
-
-    /**
-     * Return an array of Content's Locations.
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
-     */
-    abstract public function getLocations();
 }

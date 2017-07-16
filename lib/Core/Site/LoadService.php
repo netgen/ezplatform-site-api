@@ -55,8 +55,6 @@ class LoadService implements LoadServiceInterface
         $this->locationService = $locationService;
         $this->prioritizedLanguages = $prioritizedLanguages;
         $this->useAlwaysAvailable = $useAlwaysAvailable;
-
-        $this->domainObjectMapper->setLoadService($this);
     }
 
     public function loadContent($contentId, $versionNo = null, $languageCode = null)

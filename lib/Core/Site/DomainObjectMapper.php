@@ -38,16 +38,6 @@ final class DomainObjectMapper
     private $contentTypeService;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\FindService
-     */
-    private $findService;
-
-    /**
-     * @var \Netgen\EzPlatformSiteApi\API\LoadService
-     */
-    private $loadService;
-
-    /**
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
      */
@@ -57,22 +47,6 @@ final class DomainObjectMapper
     ) {
         $this->contentTypeService = $contentTypeService;
         $this->fieldTypeService = $fieldTypeService;
-    }
-
-    /**
-     * @param \Netgen\EzPlatformSiteApi\API\FindService $findService
-     */
-    public function setFindService(APIFindService $findService)
-    {
-        $this->findService = $findService;
-    }
-
-    /**
-     * @param \Netgen\EzPlatformSiteApi\API\LoadService $loadService
-     */
-    public function setLoadService(APILoadService $loadService)
-    {
-        $this->loadService = $loadService;
     }
 
     /**

@@ -54,8 +54,6 @@ class FindService implements FindServiceInterface
         $this->contentService = $contentService;
         $this->prioritizedLanguages = $prioritizedLanguages;
         $this->useAlwaysAvailable = $useAlwaysAvailable;
-
-        $this->domainObjectMapper->setFindService($this);
     }
 
     public function findContent(Query $query)

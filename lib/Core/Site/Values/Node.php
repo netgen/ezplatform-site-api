@@ -3,6 +3,10 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationId;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use Netgen\EzPlatformSiteApi\API\Values\Node as APINode;
 
 final class Node extends APINode
@@ -102,12 +106,24 @@ final class Node extends APINode
     public function getChildren(array $contentTypeIdentifiers = [], $limit = 10)
     {
         $cacheId = $this->getChildrenCacheId($contentTypeIdentifiers, $limit);
+        $criteria = [];
+        $criteria[] = new ParentLocationId($this->innerLocation->id);
+
+        if (!empty($contentTypeIdentifiers)) {
+            $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
+        }
+
+        if (count($criteria) > 1) {
+            $criteria = new LogicalAnd($criteria);
+        }
 
         if (!array_key_exists($cacheId, $this->childrenCache)) {
             $this->childrenCache[$cacheId] = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
-                        //
+                        'filter' => $criteria,
+                        'sortClauses' => $this->innerLocation->getSortClauses(),
+                        'limit' => $limit,
                     ]
                 )
             );
@@ -137,7 +153,7 @@ final class Node extends APINode
             $this->internalParent = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
-                        //
+                        'filter' => new LocationId($this->innerLocation->parentLocationId),
                     ]
                 )
             );

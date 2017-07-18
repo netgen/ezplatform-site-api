@@ -4,8 +4,11 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\Node as APINode;
 
 final class Node extends APINode
@@ -38,6 +41,11 @@ final class Node extends APINode
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
+    private $siblingCache = [];
+
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
     private $internalParent;
 
     public function __construct(array $properties = [])
@@ -64,6 +72,8 @@ final class Node extends APINode
                 return $this->contentInfo->id;
             case 'children':
                 return $this->getChildren();
+            case 'siblings':
+                return $this->getSiblings();
             case 'parent':
                 return $this->getParent();
         }
@@ -91,6 +101,7 @@ final class Node extends APINode
         switch ($property) {
             case 'contentId':
             case 'children':
+            case 'siblings':
             case 'parent':
                 return true;
         }
@@ -102,22 +113,26 @@ final class Node extends APINode
         return parent::__isset($property);
     }
 
-    public function getChildren(array $contentTypeIdentifiers = [], $limit = 10)
+    public function getChildren($limit = 25, array $contentTypeIdentifiers = [])
     {
-        $cacheId = $this->getChildrenCacheId($contentTypeIdentifiers, $limit);
-        $criteria = [];
-        $criteria[] = new ParentLocationId($this->innerLocation->id);
-
-        if (!empty($contentTypeIdentifiers)) {
-            $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
-        }
-
-        if (count($criteria) > 1) {
-            $criteria = new LogicalAnd($criteria);
-        }
+        $cacheId = $this->getCacheId($contentTypeIdentifiers, $limit);
 
         if (!array_key_exists($cacheId, $this->childrenCache)) {
-            $this->childrenCache[$cacheId] = $this->site->getFindService()->findLocations(
+            $criteria = [
+                new ParentLocationId($this->id),
+            ];
+
+            if (!empty($contentTypeIdentifiers)) {
+                $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
+            }
+
+            if (count($criteria) > 1) {
+                $criteria = new LogicalAnd($criteria);
+            } else {
+                $criteria = $criteria[0];
+            }
+
+            $searchResult = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
                         'filter' => $criteria,
@@ -126,9 +141,59 @@ final class Node extends APINode
                     ]
                 )
             );
+            $this->childrenCache[$cacheId] = $this->extractValuesFromSearchResult($searchResult);
         }
 
         return $this->childrenCache[$cacheId];
+    }
+
+    public function getSiblings($limit = 25, array $contentTypeIdentifiers = [])
+    {
+        $cacheId = $this->getCacheId($contentTypeIdentifiers, $limit);
+
+        if (!array_key_exists($cacheId, $this->siblingCache)) {
+            $criteria = [
+                new ParentLocationId($this->parentLocationId),
+                new LogicalNot(
+                    new LocationId($this->id)
+                ),
+            ];
+
+            if (!empty($contentTypeIdentifiers)) {
+                $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
+            }
+
+            $searchResult = $this->site->getFindService()->findLocations(
+                new LocationQuery(
+                    [
+                        'filter' => new LogicalAnd($criteria),
+                        'sortClauses' => $this->innerLocation->getSortClauses(),
+                        'limit' => $limit,
+                    ]
+                )
+            );
+            $this->siblingCache[$cacheId] = $this->extractValuesFromSearchResult($searchResult);
+        }
+
+        return $this->siblingCache[$cacheId];
+    }
+
+    /**
+     * Extracts value objects from the given $searchResult.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
+     *
+     * @return \eZ\Publish\API\Repository\Values\ValueObject[]
+     */
+    private function extractValuesFromSearchResult(SearchResult $searchResult)
+    {
+        $locations = [];
+
+        foreach ($searchResult->searchHits as $searchHit) {
+            $locations[] = $searchHit->valueObject;
+        }
+
+        return $locations;
     }
 
     /**
@@ -139,7 +204,7 @@ final class Node extends APINode
      *
      * @return string
      */
-    private function getChildrenCacheId(array $contentTypeIdentifiers, $limit)
+    private function getCacheId(array $contentTypeIdentifiers, $limit)
     {
         sort($contentTypeIdentifiers);
 
@@ -150,7 +215,7 @@ final class Node extends APINode
     {
         if ($this->internalParent === null) {
             $this->internalParent = $this->site->getLoadService()->loadLocation(
-                $this->innerLocation->parentLocationId
+                $this->parentLocationId
             );
         }
 

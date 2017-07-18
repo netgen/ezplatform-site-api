@@ -4,6 +4,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 
 final class Content extends APIContent
@@ -179,21 +180,33 @@ final class Content extends APIContent
     private function getLocations()
     {
         if ($this->internalLocations === null) {
-            $this->internalLocations = $this->site->getFindService()->findLocations(
+            $searchResult = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
-                        'filter' => new ContentId($this->innerContent->contentInfo->id),
+                        'filter' => new ContentId($this->id),
                     ]
                 )
             );
+            $this->internalLocations = $this->extractLocationsFromSearchResult($searchResult);
         }
 
         return $this->internalLocations;
     }
 
+    private function extractLocationsFromSearchResult(SearchResult $searchResult)
+    {
+        $locations = [];
+
+        foreach ($searchResult->searchHits as $searchHit) {
+            $locations[] = $searchHit->valueObject;
+        }
+
+        return $locations;
+    }
+
     private function getMainLocation()
     {
-        if ($this->internalMainLocation === null && $this->innerContent->contentInfo->mainLocationId !== null) {
+        if ($this->internalMainLocation === null && $this->contentInfo->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
                 $this->innerContent->contentInfo->mainLocationId
             );

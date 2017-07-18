@@ -4,6 +4,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 
 final class ContentInfo extends APIContentInfo
@@ -130,22 +131,34 @@ final class ContentInfo extends APIContentInfo
     private function getLocations()
     {
         if ($this->internalLocations === null) {
-            $this->internalLocations = $this->site->getFindService()->findLocations(
+            $searchResult = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
-                        'filter' => new ContentId($this->innerContentInfo->id),
+                        'filter' => new ContentId($this->id),
                     ]
                 )
             );
+            $this->internalLocations = $this->extractLocationsFromSearchResult($searchResult);
         }
 
         return $this->internalLocations;
     }
 
+    private function extractLocationsFromSearchResult(SearchResult $searchResult)
+    {
+        $locations = [];
+
+        foreach ($searchResult->searchHits as $searchHit) {
+            $locations[] = $searchHit->valueObject;
+        }
+
+        return $locations;
+    }
+
     private function getContent()
     {
         if ($this->internalContent === null) {
-            $this->internalContent = $this->site->getLoadService()->loadContent($this->innerContentInfo->id);
+            $this->internalContent = $this->site->getLoadService()->loadContent($this->id);
         }
 
         return $this->internalContent;
@@ -153,7 +166,7 @@ final class ContentInfo extends APIContentInfo
 
     private function getMainLocation()
     {
-        if ($this->internalMainLocation === null && $this->innerContentInfo->mainLocationId !== null) {
+        if ($this->internalMainLocation === null && $this->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
                 $this->innerContentInfo->mainLocationId
             );

@@ -25,7 +25,34 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read int|string $contentId
  * @property-read \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $children
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $siblings
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $parent
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
  */
 abstract class Location extends ValueObject
 {
+    /**
+     * Return an array of children Locations, filtered by optional
+     * $limit and $contentTypeIdentifiers.
+     *
+     * @param int $limit
+     * @param array $contentTypeIdentifiers
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    abstract public function getChildren($limit = 25, array $contentTypeIdentifiers = []);
+
+    /**
+     * Return an array of Location siblings, filtered by optional
+     * $limit and $contentTypeIdentifiers.
+     *
+     * Siblings will not include current Locations.
+     *
+     * @param int $limit
+     * @param array $contentTypeIdentifiers
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    abstract public function getSiblings($limit = 25, array $contentTypeIdentifiers = []);
 }

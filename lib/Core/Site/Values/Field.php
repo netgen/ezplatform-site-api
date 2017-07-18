@@ -69,7 +69,9 @@ final class Field extends APIField
 
         if (property_exists($this, $property)) {
             return $this->$property;
-        } elseif (property_exists($this->innerField, $property)) {
+        }
+
+        if (property_exists($this->innerField, $property)) {
             return $this->innerField->$property;
         }
 

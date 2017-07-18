@@ -2,6 +2,9 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 
 final class Content extends APIContent
@@ -26,6 +29,21 @@ final class Content extends APIContent
      */
     private $fieldsById = [];
 
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Site
+     */
+    private $site;
+
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    private $internalLocations;
+
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    private $internalMainLocation;
+
     public function __construct(array $properties = [])
     {
         if (isset($properties['_fields_data'])) {
@@ -34,6 +52,11 @@ final class Content extends APIContent
             }
 
             unset($properties['_fields_data']);
+        }
+
+        if (array_key_exists('site', $properties)) {
+            $this->site = $properties['site'];
+            unset($properties['site']);
         }
 
         parent::__construct($properties);
@@ -86,6 +109,8 @@ final class Content extends APIContent
     }
 
     /**
+     * @inheritdoc
+     *
      * Magic getter for retrieving convenience properties.
      *
      * @param string $property The name of the property to retrieve
@@ -101,11 +126,17 @@ final class Content extends APIContent
                 return $this->contentInfo->name;
             case 'mainLocationId':
                 return $this->contentInfo->mainLocationId;
+            case 'locations':
+                return $this->getLocations();
+            case 'mainLocation':
+                return $this->getMainLocation();
         }
 
         if (property_exists($this, $property)) {
             return $this->$property;
-        } elseif (property_exists($this->innerContent, $property)) {
+        }
+
+        if (property_exists($this->innerContent, $property)) {
             return $this->innerContent->$property;
         }
 
@@ -125,6 +156,8 @@ final class Content extends APIContent
             case 'id':
             case 'name':
             case 'mainLocationId':
+            case 'locations':
+            case 'mainLocation':
                 return true;
         }
 
@@ -142,5 +175,43 @@ final class Content extends APIContent
 
         $this->fields[$field->fieldDefIdentifier] = $field;
         $this->fieldsById[$field->id] = $field;
+    }
+
+    private function getLocations()
+    {
+        if ($this->internalLocations === null) {
+            $searchResult = $this->site->getFindService()->findLocations(
+                new LocationQuery(
+                    [
+                        'filter' => new ContentId($this->id),
+                    ]
+                )
+            );
+            $this->internalLocations = $this->extractLocationsFromSearchResult($searchResult);
+        }
+
+        return $this->internalLocations;
+    }
+
+    private function extractLocationsFromSearchResult(SearchResult $searchResult)
+    {
+        $locations = [];
+
+        foreach ($searchResult->searchHits as $searchHit) {
+            $locations[] = $searchHit->valueObject;
+        }
+
+        return $locations;
+    }
+
+    private function getMainLocation()
+    {
+        if ($this->internalMainLocation === null && $this->contentInfo->mainLocationId !== null) {
+            $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
+                $this->innerContent->contentInfo->mainLocationId
+            );
+        }
+
+        return $this->internalMainLocation;
     }
 }

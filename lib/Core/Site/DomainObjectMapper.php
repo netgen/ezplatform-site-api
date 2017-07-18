@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * @internal
@@ -22,6 +23,8 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
  */
 final class DomainObjectMapper
 {
+    use ContainerAwareTrait;
+
     /**
      * @var \eZ\Publish\API\Repository\FieldTypeService
      */
@@ -72,6 +75,7 @@ final class DomainObjectMapper
                     $contentType
                 ),
                 'innerContent' => $content,
+                'site' => $this->container->get('netgen.ezplatform_site.core.site'),
             ]
         );
     }
@@ -102,6 +106,7 @@ final class DomainObjectMapper
                 'languageCode' => $languageCode,
                 'innerContentInfo' => $versionInfo->contentInfo,
                 'innerContentType' => $contentType,
+                'site' => $this->container->get('netgen.ezplatform_site.core.site'),
             ]
         );
     }
@@ -121,6 +126,7 @@ final class DomainObjectMapper
             [
                 'contentInfo' => $this->mapContentInfo($versionInfo, $languageCode),
                 'innerLocation' => $location,
+                'site' => $this->container->get('netgen.ezplatform_site.core.site'),
             ]
         );
     }
@@ -141,6 +147,7 @@ final class DomainObjectMapper
                 'contentInfo' => $this->mapContentInfo($content->versionInfo, $languageCode),
                 'innerLocation' => $location,
                 'content' => $this->mapContent($content, $languageCode),
+                'site' => $this->container->get('netgen.ezplatform_site.core.site'),
             ]
         );
     }

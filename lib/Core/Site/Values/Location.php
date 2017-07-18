@@ -8,6 +8,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 
@@ -125,22 +126,17 @@ final class Location extends APILocation
         if (!array_key_exists($cacheId, $this->childrenCache)) {
             $criteria = [
                 new ParentLocationId($this->id),
+                new Visibility(Visibility::VISIBLE),
             ];
 
             if (!empty($contentTypeIdentifiers)) {
                 $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
             }
 
-            if (count($criteria) > 1) {
-                $criteria = new LogicalAnd($criteria);
-            } else {
-                $criteria = $criteria[0];
-            }
-
             $searchResult = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
-                        'filter' => $criteria,
+                        'filter' => new LogicalAnd($criteria),
                         'sortClauses' => $this->innerLocation->getSortClauses(),
                         'limit' => $limit,
                     ]
@@ -162,6 +158,7 @@ final class Location extends APILocation
                 new LogicalNot(
                     new LocationId($this->id)
                 ),
+                new Visibility(Visibility::VISIBLE),
             ];
 
             if (!empty($contentTypeIdentifiers)) {

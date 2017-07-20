@@ -29,10 +29,18 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string $contentTypeDescription
  * @property-read \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $locations
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $locations Up to 25 Content Locations
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
  */
 abstract class ContentInfo extends ValueObject
 {
+    /**
+     * Return an array of Locations, limited by optional $limit.
+     *
+     * @param int $limit
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    abstract public function getLocations($limit = 25);
 }

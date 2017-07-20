@@ -25,8 +25,8 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read int|string $contentId
  * @property-read \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $children
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $siblings
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $children Up to 25 child Locations
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $siblings Up to 25 sibling Locations
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $parent
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
  */

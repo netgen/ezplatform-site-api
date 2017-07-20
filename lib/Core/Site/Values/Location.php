@@ -30,12 +30,12 @@ final class Location extends APILocation
     private $site;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[][]
      */
     private $childrenCache = [];
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[][]
      */
     private $siblingCache = [];
 
@@ -189,13 +189,13 @@ final class Location extends APILocation
      */
     private function extractValuesFromSearchResult(SearchResult $searchResult)
     {
-        $locations = [];
+        $valueObjects = [];
 
         foreach ($searchResult->searchHits as $searchHit) {
-            $locations[] = $searchHit->valueObject;
+            $valueObjects[] = $searchHit->valueObject;
         }
 
-        return $locations;
+        return $valueObjects;
     }
 
     /**

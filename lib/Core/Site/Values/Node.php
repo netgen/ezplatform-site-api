@@ -35,12 +35,12 @@ final class Node extends APINode
     private $site;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[][]
      */
     private $childrenCache = [];
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[][]
      */
     private $siblingCache = [];
 
@@ -184,13 +184,13 @@ final class Node extends APINode
      */
     private function extractValuesFromSearchResult(SearchResult $searchResult)
     {
-        $locations = [];
+        $valueObjects = [];
 
         foreach ($searchResult->searchHits as $searchHit) {
-            $locations[] = $searchHit->valueObject;
+            $valueObjects[] = $searchHit->valueObject;
         }
 
-        return $locations;
+        return $valueObjects;
     }
 
     /**

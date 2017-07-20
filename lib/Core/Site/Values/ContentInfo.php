@@ -4,6 +4,8 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 
@@ -37,9 +39,9 @@ final class ContentInfo extends APIContentInfo
     private $site;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[][]
      */
-    private $internalLocations;
+    private $locationsCache = [];
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
@@ -128,31 +130,46 @@ final class ContentInfo extends APIContentInfo
         return parent::__isset($property);
     }
 
-    private function getLocations()
+    public function getLocations($limit = 25)
     {
-        if ($this->internalLocations === null) {
+        $cacheId = $limit;
+
+        if (!array_key_exists($cacheId, $this->locationsCache)) {
             $searchResult = $this->site->getFindService()->findLocations(
                 new LocationQuery(
                     [
-                        'filter' => new ContentId($this->id),
+                        'filter' => new LogicalAnd(
+                            [
+                                new ContentId($this->id),
+                                new Visibility(Visibility::VISIBLE),
+                            ]
+                        ),
+                        'limit' => $limit,
                     ]
                 )
             );
-            $this->internalLocations = $this->extractLocationsFromSearchResult($searchResult);
+            $this->locationsCache[$cacheId] = $this->extractValuesFromSearchResult($searchResult);
         }
 
-        return $this->internalLocations;
+        return $this->locationsCache[$cacheId];
     }
 
-    private function extractLocationsFromSearchResult(SearchResult $searchResult)
+    /**
+     * Extracts value objects from the given $searchResult.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
+     *
+     * @return \eZ\Publish\API\Repository\Values\ValueObject[]
+     */
+    private function extractValuesFromSearchResult(SearchResult $searchResult)
     {
-        $locations = [];
+        $valueObjects = [];
 
         foreach ($searchResult->searchHits as $searchHit) {
-            $locations[] = $searchHit->valueObject;
+            $valueObjects[] = $searchHit->valueObject;
         }
 
-        return $locations;
+        return $valueObjects;
     }
 
     private function getContent()

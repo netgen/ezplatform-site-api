@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 
@@ -144,6 +145,9 @@ final class ContentInfo extends APIContentInfo
                                 new Visibility(Visibility::VISIBLE),
                             ]
                         ),
+                        'sortClauses' => [
+                            new Path(),
+                        ],
                         'limit' => $limit,
                     ]
                 )

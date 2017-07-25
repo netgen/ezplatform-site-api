@@ -14,6 +14,8 @@ use Netgen\EzPlatformSiteApi\API\Values\Node as APINode;
 
 final class Node extends APINode
 {
+    use ValueObjectExtractableTrait;
+
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
      */
@@ -173,24 +175,6 @@ final class Node extends APINode
         }
 
         return $this->siblingCache[$cacheId];
-    }
-
-    /**
-     * Extracts value objects from the given $searchResult.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
-     *
-     * @return \eZ\Publish\API\Repository\Values\ValueObject[]
-     */
-    private function extractValuesFromSearchResult(SearchResult $searchResult)
-    {
-        $valueObjects = [];
-
-        foreach ($searchResult->searchHits as $searchHit) {
-            $valueObjects[] = $searchHit->valueObject;
-        }
-
-        return $valueObjects;
     }
 
     /**

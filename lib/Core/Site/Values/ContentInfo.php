@@ -13,6 +13,7 @@ use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 final class ContentInfo extends APIContentInfo
 {
     use TranslatableTrait;
+    use ValueObjectExtractableTrait;
 
     /**
      * @var string
@@ -156,24 +157,6 @@ final class ContentInfo extends APIContentInfo
         }
 
         return $this->locationsCache[$cacheId];
-    }
-
-    /**
-     * Extracts value objects from the given $searchResult.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
-     *
-     * @return \eZ\Publish\API\Repository\Values\ValueObject[]
-     */
-    private function extractValuesFromSearchResult(SearchResult $searchResult)
-    {
-        $valueObjects = [];
-
-        foreach ($searchResult->searchHits as $searchHit) {
-            $valueObjects[] = $searchHit->valueObject;
-        }
-
-        return $valueObjects;
     }
 
     private function getContent()

@@ -14,6 +14,8 @@ use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 
 final class Location extends APILocation
 {
+    use ValueObjectExtractableTrait;
+
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
@@ -178,24 +180,6 @@ final class Location extends APILocation
         }
 
         return $this->siblingCache[$cacheId];
-    }
-
-    /**
-     * Extracts value objects from the given $searchResult.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
-     *
-     * @return \eZ\Publish\API\Repository\Values\ValueObject[]
-     */
-    private function extractValuesFromSearchResult(SearchResult $searchResult)
-    {
-        $valueObjects = [];
-
-        foreach ($searchResult->searchHits as $searchHit) {
-            $valueObjects[] = $searchHit->valueObject;
-        }
-
-        return $valueObjects;
     }
 
     /**

@@ -13,7 +13,7 @@ use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 final class ContentInfo extends APIContentInfo
 {
     use TranslatableTrait;
-    use ValueObjectExtractableTrait;
+    use ValueObjectExtractorTrait;
 
     /**
      * @var string

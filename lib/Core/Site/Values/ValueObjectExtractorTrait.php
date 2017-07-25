@@ -4,7 +4,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 
-trait ValueObjectExtractableTrait
+trait ValueObjectExtractorTrait
 {
     /**
      * Extracts value objects from the given $searchResult.

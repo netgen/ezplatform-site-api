@@ -14,7 +14,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Node as APINode;
 
 final class Node extends APINode
 {
-    use ValueObjectExtractableTrait;
+    use ValueObjectExtractorTrait;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content

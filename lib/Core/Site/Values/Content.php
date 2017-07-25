@@ -12,7 +12,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 
 final class Content extends APIContent
 {
-    use ValueObjectExtractableTrait;
+    use ValueObjectExtractorTrait;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo

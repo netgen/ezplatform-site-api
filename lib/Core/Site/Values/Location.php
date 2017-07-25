@@ -14,7 +14,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 
 final class Location extends APILocation
 {
-    use ValueObjectExtractableTrait;
+    use ValueObjectExtractorTrait;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo

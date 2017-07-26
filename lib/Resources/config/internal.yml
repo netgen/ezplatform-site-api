@@ -67,3 +67,4 @@ services:
             - '@netgen.ezplatform_site.inner_repository'
             - getSearchService
         lazy: true
+        public: false

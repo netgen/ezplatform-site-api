@@ -135,7 +135,7 @@ final class Location extends APILocation
                 $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
             }
 
-            $searchResult = $this->site->getFindService()->findLocations(
+            $searchResult = $this->site->getFilterService()->filterLocations(
                 new LocationQuery(
                     [
                         'filter' => new LogicalAnd($criteria),
@@ -167,7 +167,7 @@ final class Location extends APILocation
                 $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
             }
 
-            $searchResult = $this->site->getFindService()->findLocations(
+            $searchResult = $this->site->getFilterService()->filterLocations(
                 new LocationQuery(
                     [
                         'filter' => new LogicalAnd($criteria),

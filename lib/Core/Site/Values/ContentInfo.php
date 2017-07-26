@@ -137,7 +137,7 @@ final class ContentInfo extends APIContentInfo
         $cacheId = $limit;
 
         if (!array_key_exists($cacheId, $this->locationsCache)) {
-            $searchResult = $this->site->getFindService()->findLocations(
+            $searchResult = $this->site->getFilterService()->filterLocations(
                 new LocationQuery(
                     [
                         'filter' => new LogicalAnd(

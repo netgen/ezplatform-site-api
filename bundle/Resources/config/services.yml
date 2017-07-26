@@ -20,6 +20,16 @@ services:
         calls:
             - [setContainer, ["@service_container"]]
 
+    netgen.ezplatform_site.core.filter_service:
+        class: Netgen\EzPlatformSiteApi\Core\Site\FilterService
+        lazy: true
+        arguments:
+            - '@netgen.ezplatform_site.core.domain_object_mapper'
+            - '@netgen.ezplatform_site.repository.filter_service'
+            - '@ezpublish.api.service.content'
+            - '$languages$'
+            - '%netgen.ezplatform_site.use_always_available%'
+
     netgen.ezplatform_site.core.find_service:
         class: Netgen\EzPlatformSiteApi\Core\Site\FindService
         lazy: true

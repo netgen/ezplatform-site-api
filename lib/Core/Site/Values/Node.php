@@ -130,7 +130,7 @@ final class Node extends APINode
                 $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
             }
 
-            $searchResult = $this->site->getFindService()->findLocations(
+            $searchResult = $this->site->getFilterService()->filterLocations(
                 new LocationQuery(
                     [
                         'filter' => new LogicalAnd($criteria),
@@ -162,7 +162,7 @@ final class Node extends APINode
                 $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
             }
 
-            $searchResult = $this->site->getFindService()->findLocations(
+            $searchResult = $this->site->getFilterService()->filterLocations(
                 new LocationQuery(
                     [
                         'filter' => new LogicalAnd($criteria),

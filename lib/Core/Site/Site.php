@@ -2,9 +2,9 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSiteApi\API\FilterService;
-use Netgen\EzPlatformSiteApi\API\FindService;
-use Netgen\EzPlatformSiteApi\API\LoadService;
+use Netgen\EzPlatformSiteApi\API\FilterService as FilterServiceInterface;
+use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
+use Netgen\EzPlatformSiteApi\API\LoadService as LoadServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 
 class Site implements SiteInterface
@@ -30,9 +30,9 @@ class Site implements SiteInterface
      * @param \Netgen\EzPlatformSiteApi\API\LoadService $loadService
      */
     public function __construct(
-        FilterService $filterService,
-        FindService $findService,
-        LoadService $loadService
+        FilterServiceInterface $filterService,
+        FindServiceInterface $findService,
+        LoadServiceInterface $loadService
     ) {
         $this->filterService = $filterService;
         $this->findService = $findService;

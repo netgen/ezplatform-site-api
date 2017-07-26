@@ -12,6 +12,16 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
+    netgen.ezplatform_site.core.filter_service:
+        class: Netgen\EzPlatformSiteApi\Core\Site\FilterService
+        lazy: true
+        arguments:
+            - '@netgen.ezplatform_site.core.domain_object_mapper'
+            - '@netgen.ezplatform_site.repository.filter_service'
+            - '@ezpublish.api.service.content'
+            - '%netgen.ezplatform_site.prioritized_languages%'
+            - '%netgen.ezplatform_site.use_always_available%'
+
     netgen.ezplatform_site.core.find_service:
         class: Netgen\EzPlatformSiteApi\Core\Site\FindService
         lazy: true
@@ -36,5 +46,24 @@ services:
         class: Netgen\EzPlatformSiteApi\Core\Site\Site
         lazy: true
         arguments:
+            - '@netgen.ezplatform_site.filter_service'
             - '@netgen.ezplatform_site.find_service'
             - '@netgen.ezplatform_site.load_service'
+
+    netgen.ezplatform_site.inner_repository:
+        class: '%ezpublish.api.inner_repository.class%'
+        factory:
+            - '@ezpublish.api.repository.factory'
+            - buildRepository
+        arguments:
+            - '@ezpublish.api.persistence_handler'
+            - '@ezpublish.spi.search.legacy'
+        lazy: true
+        public: false
+
+    netgen.ezplatform_site.repository.filter_service:
+        class: %ezpublish.api.service.search.class%
+        factory:
+            - '@netgen.ezplatform_site.inner_repository'
+            - getSearchService
+        lazy: true

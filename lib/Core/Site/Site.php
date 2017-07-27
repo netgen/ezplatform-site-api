@@ -78,7 +78,6 @@ class Site implements SiteInterface
      * @param \eZ\Publish\API\Repository\LocationService $locationService
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\API\Repository\SearchService $synchronousSearchService
-     * @param string[] $prioritizedLanguages
      * @param bool $useAlwaysAvailable
      */
     public function __construct(

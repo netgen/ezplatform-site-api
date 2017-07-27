@@ -36,12 +36,13 @@ abstract class Location extends ValueObject
      * Return an array of children Locations, filtered by optional
      * $limit and $contentTypeIdentifiers.
      *
-     * @param int $limit
      * @param array $contentTypeIdentifiers
+     * @param int $maxPerPage
+     * @param int $currentPage
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
-    abstract public function getChildren($limit = 25, array $contentTypeIdentifiers = []);
+    abstract public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1);
 
     /**
      * Return an array of Location siblings, filtered by optional

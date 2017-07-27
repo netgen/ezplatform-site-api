@@ -4,6 +4,9 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 
+/**
+ * @internal
+ */
 trait ValueObjectExtractorTrait
 {
     /**

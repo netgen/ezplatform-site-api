@@ -7,13 +7,12 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
-use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
+use Pagerfanta\Pagerfanta;
 
 final class Content extends APIContent
 {
-    use ValueObjectExtractorTrait;
-
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
@@ -40,9 +39,9 @@ final class Content extends APIContent
     private $site;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[][]
+     * @var \Pagerfanta\Pagerfanta[]
      */
-    private $locationsCache = [];
+    private $locationsPagerCache = [];
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
@@ -131,8 +130,6 @@ final class Content extends APIContent
                 return $this->contentInfo->name;
             case 'mainLocationId':
                 return $this->contentInfo->mainLocationId;
-            case 'locations':
-                return $this->getLocations();
             case 'mainLocation':
                 return $this->getMainLocation();
         }
@@ -161,7 +158,6 @@ final class Content extends APIContent
             case 'id':
             case 'name':
             case 'mainLocationId':
-            case 'locations':
             case 'mainLocation':
                 return true;
         }
@@ -184,12 +180,17 @@ final class Content extends APIContent
 
     public function getLocations($limit = 25)
     {
-        $cacheId = $limit;
+        return $this->filterLocations($limit)->getIterator();
+    }
 
-        if (!array_key_exists($cacheId, $this->locationsCache)) {
-            $searchResult = $this->site->getFilterService()->filterLocations(
-                new LocationQuery(
-                    [
+    public function filterLocations($maxPerPage = 25, $currentPage = 1)
+    {
+        $cacheId = $maxPerPage;
+
+        if (!array_key_exists($cacheId, $this->locationsPagerCache)) {
+            $pager = new Pagerfanta(
+                new LocationSearchFilterAdapter(
+                    new LocationQuery([
                         'filter' => new LogicalAnd(
                             [
                                 new ContentId($this->id),
@@ -199,14 +200,20 @@ final class Content extends APIContent
                         'sortClauses' => [
                             new Path(),
                         ],
-                        'limit' => $limit,
-                    ]
+                    ]),
+                    $this->site->getFilterService()
                 )
             );
-            $this->locationsCache[$cacheId] = $this->extractValuesFromSearchResult($searchResult);
+
+            $pager->setNormalizeOutOfRangePages(true);
+            $pager->setMaxPerPage($maxPerPage);
+
+            $this->locationsPagerCache[$cacheId] = $pager;
         }
 
-        return $this->locationsCache[$cacheId];
+        $this->locationsPagerCache[$cacheId]->setCurrentPage($currentPage);
+
+        return $this->locationsPagerCache[$cacheId];
     }
 
     private function getMainLocation()

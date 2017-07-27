@@ -17,7 +17,6 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Field[] $fields
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location[] $locations Up to 25 Content Locations
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
  * @property-read \eZ\Publish\API\Repository\Values\Content\Content $innerContent
  */
@@ -85,4 +84,14 @@ abstract class Content extends ValueObject
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
     abstract public function getLocations($limit = 25);
+
+    /**
+     * Return an array of Locations, limited by optional $maxPerPage and $currentPage.
+     *
+     * @param int $maxPerPage
+     * @param int $currentPage
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    abstract public function filterLocations($maxPerPage = 25, $currentPage = 1);
 }

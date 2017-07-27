@@ -15,8 +15,6 @@ use Pagerfanta\Pagerfanta;
 
 final class Location extends APILocation
 {
-    use ValueObjectExtractorTrait;
-
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
@@ -38,9 +36,9 @@ final class Location extends APILocation
     private $childrenPagerCache = [];
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[][]
+     * @var \Pagerfanta\Pagerfanta[]
      */
-    private $siblingCache = [];
+    private $siblingPagerCache = [];
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
@@ -79,7 +77,7 @@ final class Location extends APILocation
             case 'children':
                 return $this->filterChildren()->getIterator();
             case 'siblings':
-                return $this->getSiblings();
+                return $this->filterSiblings()->getIterator();
             case 'parent':
                 return $this->getParent();
             case 'content':
@@ -157,11 +155,11 @@ final class Location extends APILocation
         return $this->childrenPagerCache[$cacheId];
     }
 
-    public function getSiblings($limit = 25, array $contentTypeIdentifiers = [])
+    public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)
     {
-        $cacheId = $this->getCacheId($contentTypeIdentifiers, $limit);
+        $cacheId = $this->getCacheId($contentTypeIdentifiers, $maxPerPage);
 
-        if (!array_key_exists($cacheId, $this->siblingCache)) {
+        if (!array_key_exists($cacheId, $this->siblingPagerCache)) {
             $criteria = [
                 new ParentLocationId($this->parentLocationId),
                 new LogicalNot(
@@ -174,19 +172,25 @@ final class Location extends APILocation
                 $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
             }
 
-            $searchResult = $this->site->getFilterService()->filterLocations(
-                new LocationQuery(
-                    [
+            $pager = new Pagerfanta(
+                new LocationSearchFilterAdapter(
+                    new LocationQuery([
                         'filter' => new LogicalAnd($criteria),
                         'sortClauses' => $this->innerLocation->getSortClauses(),
-                        'limit' => $limit,
-                    ]
+                    ]),
+                    $this->site->getFilterService()
                 )
             );
-            $this->siblingCache[$cacheId] = $this->extractValuesFromSearchResult($searchResult);
+
+            $pager->setNormalizeOutOfRangePages(true);
+            $pager->setMaxPerPage($maxPerPage);
+
+            $this->siblingPagerCache[$cacheId] = $pager;
         }
 
-        return $this->siblingCache[$cacheId];
+        $this->siblingPagerCache[$cacheId]->setCurrentPage($currentPage);
+
+        return $this->siblingPagerCache[$cacheId];
     }
 
     /**

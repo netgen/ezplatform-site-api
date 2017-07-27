@@ -40,21 +40,29 @@ class LoadService implements LoadServiceInterface
      * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\LocationService $locationService
-     * @param string[] $prioritizedLanguages
      * @param bool $useAlwaysAvailable
      */
     public function __construct(
         DomainObjectMapper $domainObjectMapper,
         ContentService $contentService,
         LocationService $locationService,
-        array $prioritizedLanguages,
         $useAlwaysAvailable
     ) {
         $this->domainObjectMapper = $domainObjectMapper;
         $this->contentService = $contentService;
         $this->locationService = $locationService;
-        $this->prioritizedLanguages = $prioritizedLanguages;
         $this->useAlwaysAvailable = $useAlwaysAvailable;
+    }
+
+    /**
+     * Setter for prioritized languages configuration, used to update
+     * the configuration on scope change.
+     *
+     * @param array $prioritizedLanguages
+     */
+    public function setPrioritizedLanguages(array $prioritizedLanguages = null)
+    {
+        $this->prioritizedLanguages = $prioritizedLanguages;
     }
 
     public function loadContent($contentId, $versionNo = null, $languageCode = null)

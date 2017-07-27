@@ -104,58 +104,55 @@ class Site implements SiteInterface
      *
      * @param array $prioritizedLanguages
      */
-    public function setPrioritizedLanguages(array $prioritizedLanguages)
+    public function setPrioritizedLanguages(array $prioritizedLanguages = null)
     {
         $this->prioritizedLanguages = $prioritizedLanguages;
     }
 
     public function getFilterService()
     {
-        if ($this->filterService !== null) {
-            return $this->filterService;
+        if ($this->filterService === null) {
+            $this->filterService = new FilterService(
+                $this->getDomainObjectMapper(),
+                $this->synchronousSearchService,
+                $this->contentService,
+                $this->useAlwaysAvailable
+            );
         }
 
-        $this->filterService = new FilterService(
-            $this->getDomainObjectMapper(),
-            $this->synchronousSearchService,
-            $this->contentService,
-            $this->prioritizedLanguages,
-            $this->useAlwaysAvailable
-        );
+        $this->filterService->setPrioritizedLanguages($this->prioritizedLanguages);
 
         return $this->filterService;
     }
 
     public function getFindService()
     {
-        if ($this->findService !== null) {
-            return $this->findService;
+        if ($this->findService === null) {
+            $this->findService = new FindService(
+                $this->getDomainObjectMapper(),
+                $this->searchService,
+                $this->contentService,
+                $this->useAlwaysAvailable
+            );
         }
 
-        $this->findService = new FindService(
-            $this->getDomainObjectMapper(),
-            $this->searchService,
-            $this->contentService,
-            $this->prioritizedLanguages,
-            $this->useAlwaysAvailable
-        );
+        $this->findService->setPrioritizedLanguages($this->prioritizedLanguages);
 
         return $this->findService;
     }
 
     public function getLoadService()
     {
-        if ($this->loadService !== null) {
-            return $this->loadService;
+        if ($this->loadService === null) {
+            $this->loadService = new LoadService(
+                $this->getDomainObjectMapper(),
+                $this->contentService,
+                $this->locationService,
+                $this->useAlwaysAvailable
+            );
         }
 
-        $this->loadService = new LoadService(
-            $this->getDomainObjectMapper(),
-            $this->contentService,
-            $this->locationService,
-            $this->prioritizedLanguages,
-            $this->useAlwaysAvailable
-        );
+        $this->loadService->setPrioritizedLanguages($this->prioritizedLanguages);
 
         return $this->loadService;
     }
@@ -165,15 +162,13 @@ class Site implements SiteInterface
      */
     private function getDomainObjectMapper()
     {
-        if ($this->domainObjectMapper !== null) {
-            return $this->domainObjectMapper;
+        if ($this->domainObjectMapper === null) {
+            $this->domainObjectMapper = new DomainObjectMapper(
+                $this,
+                $this->contentTypeService,
+                $this->fieldTypeService
+            );
         }
-
-        $this->domainObjectMapper = new DomainObjectMapper(
-            $this,
-            $this->contentTypeService,
-            $this->fieldTypeService
-        );
 
         return $this->domainObjectMapper;
     }

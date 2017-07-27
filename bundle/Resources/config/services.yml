@@ -22,7 +22,6 @@ services:
 
     netgen.ezplatform_site.core.site:
         class: Netgen\EzPlatformSiteApi\Core\Site\Site
-        lazy: true
         arguments:
             - '@ezpublish.api.service.content'
             - '@ezpublish.api.service.content_type'
@@ -33,6 +32,34 @@ services:
             - '%netgen.ezplatform_site.use_always_available%'
         calls:
             - [setPrioritizedLanguages, ['$languages$']]
+        lazy: true
+
+    netgen.ezplatform_site.core.filter_service:
+        class: Netgen\EzPlatformSiteApi\Core\Site\FilterService
+        factory:
+            - '@netgen.ezplatform_site.core.site'
+            - getFilterService
+        calls:
+            - [setPrioritizedLanguages, ['$languages$']]
+        lazy: true
+
+    netgen.ezplatform_site.core.find_service:
+        class: Netgen\EzPlatformSiteApi\Core\Site\FindService
+        factory:
+            - '@netgen.ezplatform_site.core.site'
+            - getFindService
+        calls:
+            - [setPrioritizedLanguages, ['$languages$']]
+        lazy: true
+
+    netgen.ezplatform_site.core.load_service:
+        class: Netgen\EzPlatformSiteApi\Core\Site\LoadService
+        factory:
+            - '@netgen.ezplatform_site.core.site'
+            - getLoadService
+        calls:
+            - [setPrioritizedLanguages, ['$languages$']]
+        lazy: true
 
     netgen.ezplatform_site.controller.content.view:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Content\ViewController

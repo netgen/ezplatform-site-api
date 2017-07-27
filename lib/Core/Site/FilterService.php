@@ -39,21 +39,29 @@ class FilterService implements FilterServiceInterface
      * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param array $prioritizedLanguages
      * @param bool $useAlwaysAvailable
      */
     public function __construct(
         DomainObjectMapper $domainObjectMapper,
         SearchService $searchService,
         ContentService $contentService,
-        array $prioritizedLanguages,
         $useAlwaysAvailable
     ) {
         $this->domainObjectMapper = $domainObjectMapper;
         $this->searchService = $searchService;
         $this->contentService = $contentService;
-        $this->prioritizedLanguages = $prioritizedLanguages;
         $this->useAlwaysAvailable = $useAlwaysAvailable;
+    }
+
+    /**
+     * Setter for prioritized languages configuration, used to update
+     * the configuration on scope change.
+     *
+     * @param array $prioritizedLanguages
+     */
+    public function setPrioritizedLanguages(array $prioritizedLanguages = null)
+    {
+        $this->prioritizedLanguages = $prioritizedLanguages;
     }
 
     public function filterContent(Query $query)

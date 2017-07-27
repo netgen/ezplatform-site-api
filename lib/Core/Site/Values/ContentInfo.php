@@ -7,13 +7,13 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
-use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
+use Pagerfanta\Pagerfanta;
 
 final class ContentInfo extends APIContentInfo
 {
     use TranslatableTrait;
-    use ValueObjectExtractorTrait;
 
     /**
      * @var string
@@ -41,9 +41,9 @@ final class ContentInfo extends APIContentInfo
     private $site;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[][]
+     * @var \Pagerfanta\Pagerfanta[]
      */
-    private $locationsCache = [];
+    private $locationsPagerCache = [];
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
@@ -88,7 +88,7 @@ final class ContentInfo extends APIContentInfo
                     (array)$this->innerContentType->getDescriptions()
                 );
             case 'locations':
-                return $this->getLocations();
+                return $this->filterLocations();
             case 'mainLocation':
                 return $this->getMainLocation();
             case 'content':
@@ -132,14 +132,14 @@ final class ContentInfo extends APIContentInfo
         return parent::__isset($property);
     }
 
-    public function getLocations($limit = 25)
+    public function filterLocations($maxPerPage = 25, $currentPage = 1)
     {
-        $cacheId = $limit;
+        $cacheId = $maxPerPage;
 
-        if (!array_key_exists($cacheId, $this->locationsCache)) {
-            $searchResult = $this->site->getFilterService()->filterLocations(
-                new LocationQuery(
-                    [
+        if (!array_key_exists($cacheId, $this->locationsPagerCache)) {
+            $pager = new Pagerfanta(
+                new LocationSearchFilterAdapter(
+                    new LocationQuery([
                         'filter' => new LogicalAnd(
                             [
                                 new ContentId($this->id),
@@ -149,14 +149,20 @@ final class ContentInfo extends APIContentInfo
                         'sortClauses' => [
                             new Path(),
                         ],
-                        'limit' => $limit,
-                    ]
+                    ]),
+                    $this->site->getFilterService()
                 )
             );
-            $this->locationsCache[$cacheId] = $this->extractValuesFromSearchResult($searchResult);
+
+            $pager->setNormalizeOutOfRangePages(true);
+            $pager->setMaxPerPage($maxPerPage);
+
+            $this->locationsPagerCache[$cacheId] = $pager;
         }
 
-        return $this->locationsCache[$cacheId];
+        $this->locationsPagerCache[$cacheId]->setCurrentPage($currentPage);
+
+        return $this->locationsPagerCache[$cacheId];
     }
 
     private function getContent()

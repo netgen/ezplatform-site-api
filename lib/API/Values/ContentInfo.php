@@ -36,11 +36,12 @@ use eZ\Publish\API\Repository\Values\ValueObject;
 abstract class ContentInfo extends ValueObject
 {
     /**
-     * Return an array of Locations, limited by optional $limit.
+     * Return an array of Locations, limited by optional $maxPerPage and $currentPage.
      *
-     * @param int $limit
+     * @param int $maxPerPage
+     * @param int $currentPage
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
-    abstract public function getLocations($limit = 25);
+    abstract public function filterLocations($maxPerPage = 25, $currentPage = 1);
 }

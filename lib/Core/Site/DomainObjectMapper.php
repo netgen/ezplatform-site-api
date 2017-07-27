@@ -2,6 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
+use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
@@ -13,7 +14,6 @@ use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * @internal
@@ -23,7 +23,10 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  */
 final class DomainObjectMapper
 {
-    use ContainerAwareTrait;
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Site
+     */
+    private $site;
 
     /**
      * @var \eZ\Publish\API\Repository\FieldTypeService
@@ -36,13 +39,16 @@ final class DomainObjectMapper
     private $contentTypeService;
 
     /**
+     * @param \Netgen\EzPlatformSiteApi\API\Site $site
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
      */
     public function __construct(
+        Site $site,
         ContentTypeService $contentTypeService,
         FieldTypeService $fieldTypeService
     ) {
+        $this->site = $site;
         $this->contentTypeService = $contentTypeService;
         $this->fieldTypeService = $fieldTypeService;
     }
@@ -75,7 +81,7 @@ final class DomainObjectMapper
                     $contentType
                 ),
                 'innerContent' => $content,
-                'site' => $this->container->get('netgen.ezplatform_site.core.site'),
+                'site' => $this->site,
             ]
         );
     }
@@ -106,7 +112,7 @@ final class DomainObjectMapper
                 'languageCode' => $languageCode,
                 'innerContentInfo' => $versionInfo->contentInfo,
                 'innerContentType' => $contentType,
-                'site' => $this->container->get('netgen.ezplatform_site.core.site'),
+                'site' => $this->site,
             ]
         );
     }
@@ -126,7 +132,7 @@ final class DomainObjectMapper
             [
                 'contentInfo' => $this->mapContentInfo($versionInfo, $languageCode),
                 'innerLocation' => $location,
-                'site' => $this->container->get('netgen.ezplatform_site.core.site'),
+                'site' => $this->site,
             ]
         );
     }
@@ -147,7 +153,7 @@ final class DomainObjectMapper
                 'contentInfo' => $this->mapContentInfo($content->versionInfo, $languageCode),
                 'innerLocation' => $location,
                 'content' => $this->mapContent($content, $languageCode),
-                'site' => $this->container->get('netgen.ezplatform_site.core.site'),
+                'site' => $this->site,
             ]
         );
     }

@@ -18,37 +18,21 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller
         abstract: true
         calls:
-            - [setContainer, ["@service_container"]]
+            - [setContainer, ['@service_container']]
 
-    netgen.ezplatform_site.core.filter_service:
-        class: Netgen\EzPlatformSiteApi\Core\Site\FilterService
+    netgen.ezplatform_site.core.site:
+        class: Netgen\EzPlatformSiteApi\Core\Site\Site
         lazy: true
         arguments:
-            - '@netgen.ezplatform_site.core.domain_object_mapper'
-            - '@netgen.ezplatform_site.repository.filter_service'
             - '@ezpublish.api.service.content'
-            - '$languages$'
-            - '%netgen.ezplatform_site.use_always_available%'
-
-    netgen.ezplatform_site.core.find_service:
-        class: Netgen\EzPlatformSiteApi\Core\Site\FindService
-        lazy: true
-        arguments:
-            - '@netgen.ezplatform_site.core.domain_object_mapper'
-            - '@ezpublish.api.service.search'
-            - '@ezpublish.api.service.content'
-            - '$languages$'
-            - '%netgen.ezplatform_site.use_always_available%'
-
-    netgen.ezplatform_site.core.load_service:
-        class: Netgen\EzPlatformSiteApi\Core\Site\LoadService
-        lazy: true
-        arguments:
-            - '@netgen.ezplatform_site.core.domain_object_mapper'
-            - '@ezpublish.api.service.content'
+            - '@ezpublish.api.service.content_type'
+            - '@ezpublish.api.service.field_type'
             - '@ezpublish.api.service.location'
-            - '$languages$'
+            - '@ezpublish.api.service.search'
+            - '@netgen.ezplatform_site.repository.filter_service'
             - '%netgen.ezplatform_site.use_always_available%'
+        calls:
+            - [setPrioritizedLanguages, ['$languages$']]
 
     netgen.ezplatform_site.controller.content.view:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Content\ViewController

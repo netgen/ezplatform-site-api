@@ -15,8 +15,6 @@ use Pagerfanta\Pagerfanta;
 
 final class Node extends APINode
 {
-    use ValueObjectExtractorTrait;
-
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
      */

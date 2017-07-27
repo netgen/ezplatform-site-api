@@ -2,7 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSiteApi\API\Site;
+use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
@@ -44,7 +44,7 @@ final class DomainObjectMapper
      * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
      */
     public function __construct(
-        Site $site,
+        SiteInterface $site,
         ContentTypeService $contentTypeService,
         FieldTypeService $fieldTypeService
     ) {

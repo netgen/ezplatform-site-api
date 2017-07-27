@@ -197,15 +197,15 @@ final class Location extends APILocation
      * Returns unique string for the given parameters.
      *
      * @param array $contentTypeIdentifiers
-     * @param int $limit
+     * @param int $maxPerPage
      *
      * @return string
      */
-    private function getCacheId(array $contentTypeIdentifiers, $limit)
+    private function getCacheId(array $contentTypeIdentifiers, $maxPerPage)
     {
         sort($contentTypeIdentifiers);
 
-        return md5(implode(' ', $contentTypeIdentifiers) . ' ' . $limit);
+        return md5(implode(' ', $contentTypeIdentifiers) . ' ' . $maxPerPage);
     }
 
     private function getParent()

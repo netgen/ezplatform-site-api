@@ -87,8 +87,6 @@ final class ContentInfo extends APIContentInfo
                     $this->languageCode,
                     (array)$this->innerContentType->getDescriptions()
                 );
-            case 'locations':
-                return $this->filterLocations();
             case 'mainLocation':
                 return $this->getMainLocation();
             case 'content':
@@ -119,7 +117,6 @@ final class ContentInfo extends APIContentInfo
             case 'contentTypeIdentifier':
             case 'contentTypeName':
             case 'contentTypeDescription':
-            case 'locations':
             case 'mainLocation':
             case 'content':
                 return true;
@@ -130,6 +127,11 @@ final class ContentInfo extends APIContentInfo
         }
 
         return parent::__isset($property);
+    }
+
+    public function getLocations($limit = 25)
+    {
+        return $this->filterLocations($limit)->getIterator();
     }
 
     public function filterLocations($maxPerPage = 25, $currentPage = 1)

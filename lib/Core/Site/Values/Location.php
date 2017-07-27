@@ -74,10 +74,6 @@ final class Location extends APILocation
         switch ($property) {
             case 'contentId':
                 return $this->contentInfo->id;
-            case 'children':
-                return $this->filterChildren()->getIterator();
-            case 'siblings':
-                return $this->filterSiblings()->getIterator();
             case 'parent':
                 return $this->getParent();
             case 'content':
@@ -106,8 +102,6 @@ final class Location extends APILocation
     {
         switch ($property) {
             case 'contentId':
-            case 'children':
-            case 'siblings':
             case 'parent':
             case 'content':
                 return true;
@@ -118,6 +112,11 @@ final class Location extends APILocation
         }
 
         return parent::__isset($property);
+    }
+
+    public function getChildren($limit = 25)
+    {
+        return $this->filterChildren([], $limit)->getIterator();
     }
 
     public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)
@@ -153,6 +152,11 @@ final class Location extends APILocation
         $this->childrenPagerCache[$cacheId]->setCurrentPage($currentPage);
 
         return $this->childrenPagerCache[$cacheId];
+    }
+
+    public function getSiblings($limit = 25)
+    {
+        return $this->filterSiblings([], $limit)->getIterator();
     }
 
     public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)

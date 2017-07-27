@@ -130,8 +130,6 @@ final class Content extends APIContent
                 return $this->contentInfo->name;
             case 'mainLocationId':
                 return $this->contentInfo->mainLocationId;
-            case 'locations':
-                return $this->getLocations();
             case 'mainLocation':
                 return $this->getMainLocation();
         }
@@ -160,7 +158,6 @@ final class Content extends APIContent
             case 'id':
             case 'name':
             case 'mainLocationId':
-            case 'locations':
             case 'mainLocation':
                 return true;
         }
@@ -179,6 +176,11 @@ final class Content extends APIContent
 
         $this->fields[$field->fieldDefIdentifier] = $field;
         $this->fieldsById[$field->id] = $field;
+    }
+
+    public function getLocations($limit = 25)
+    {
+        return $this->filterLocations($limit)->getIterator();
     }
 
     public function filterLocations($maxPerPage = 25, $currentPage = 1)

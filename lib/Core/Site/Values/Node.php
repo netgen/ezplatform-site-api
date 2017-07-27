@@ -72,10 +72,6 @@ final class Node extends APINode
         switch ($property) {
             case 'contentId':
                 return $this->contentInfo->id;
-            case 'children':
-                return $this->filterChildren();
-            case 'siblings':
-                return $this->filterSiblings();
             case 'parent':
                 return $this->getParent();
         }
@@ -102,8 +98,6 @@ final class Node extends APINode
     {
         switch ($property) {
             case 'contentId':
-            case 'children':
-            case 'siblings':
             case 'parent':
                 return true;
         }
@@ -113,6 +107,11 @@ final class Node extends APINode
         }
 
         return parent::__isset($property);
+    }
+
+    public function getChildren($limit = 25)
+    {
+        return $this->filterChildren([], $limit)->getIterator();
     }
 
     public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)
@@ -148,6 +147,11 @@ final class Node extends APINode
         $this->childrenPagerCache[$cacheId]->setCurrentPage($currentPage);
 
         return $this->childrenPagerCache[$cacheId];
+    }
+
+    public function getSiblings($limit = 25)
+    {
+        return $this->filterSiblings([], $limit)->getIterator();
     }
 
     public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)

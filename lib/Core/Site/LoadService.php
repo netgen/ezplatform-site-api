@@ -3,6 +3,7 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use Netgen\EzPlatformSiteApi\API\LoadService as LoadServiceInterface;
+use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 use Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
@@ -11,6 +12,11 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 
 class LoadService implements LoadServiceInterface
 {
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Settings
+     */
+    private $settings;
+
     /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
@@ -27,42 +33,21 @@ class LoadService implements LoadServiceInterface
     private $locationService;
 
     /**
-     * @var string[]
-     */
-    private $prioritizedLanguages;
-
-    /**
-     * @var bool
-     */
-    private $useAlwaysAvailable;
-
-    /**
+     * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
      * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\LocationService $locationService
-     * @param bool $useAlwaysAvailable
      */
     public function __construct(
+        BaseSettings $settings,
         DomainObjectMapper $domainObjectMapper,
         ContentService $contentService,
-        LocationService $locationService,
-        $useAlwaysAvailable
+        LocationService $locationService
     ) {
+        $this->settings = $settings;
         $this->domainObjectMapper = $domainObjectMapper;
         $this->contentService = $contentService;
         $this->locationService = $locationService;
-        $this->useAlwaysAvailable = $useAlwaysAvailable;
-    }
-
-    /**
-     * Setter for prioritized languages configuration, used to update
-     * the configuration on scope change.
-     *
-     * @param array $prioritizedLanguages
-     */
-    public function setPrioritizedLanguages(array $prioritizedLanguages = null)
-    {
-        $this->prioritizedLanguages = $prioritizedLanguages;
     }
 
     public function loadContent($contentId, $versionNo = null, $languageCode = null)
@@ -224,21 +209,21 @@ class LoadService implements LoadServiceInterface
      *
      * @param string[] $languageCodes
      * @param string $mainLanguageCode
-     * @param bool $useAlwaysAvailable
+     * @param bool $alwaysAvailable
      *
      * @return string|null
      */
-    private function getLanguage(array $languageCodes, $mainLanguageCode, $useAlwaysAvailable)
+    private function getLanguage(array $languageCodes, $mainLanguageCode, $alwaysAvailable)
     {
         $languageCodesSet = array_flip($languageCodes);
 
-        foreach ($this->prioritizedLanguages as $languageCode) {
+        foreach ($this->settings->prioritizedLanguages as $languageCode) {
             if (isset($languageCodesSet[$languageCode])) {
                 return $languageCode;
             }
         }
 
-        if ($this->useAlwaysAvailable && $useAlwaysAvailable) {
+        if ($this->settings->useAlwaysAvailable && $alwaysAvailable) {
             return $mainLanguageCode;
         }
 
@@ -257,8 +242,8 @@ class LoadService implements LoadServiceInterface
     private function getContext(VersionInfo $versionInfo)
     {
         return [
-            'prioritizedLanguages' => $this->prioritizedLanguages,
-            'useAlwaysAvailable' => $this->useAlwaysAvailable,
+            'prioritizedLanguages' => $this->settings->prioritizedLanguages,
+            'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
             'availableTranslations' => $versionInfo->languageCodes,
             'mainTranslation' => $versionInfo->contentInfo->mainLanguageCode,
             'alwaysAvailable' => $versionInfo->contentInfo->alwaysAvailable,

@@ -8,6 +8,13 @@ namespace Netgen\EzPlatformSiteApi\API;
 interface Site
 {
     /**
+     * Settings getter.
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Settings
+     */
+    public function getSettings();
+
+    /**
      * FilterService getter.
      *
      * @return \Netgen\EzPlatformSiteApi\API\FilterService

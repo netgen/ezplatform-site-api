@@ -2,6 +2,7 @@ parameters:
     netgen.ezplatform_site.use_always_available: true
     netgen.ezplatform_site.prioritized_languages:
         - 'eng-GB'
+    netgen.ezplatform_site.root_location_id: 2
 
 services:
     netgen.ezplatform_site.inner_repository:
@@ -15,7 +16,7 @@ services:
         lazy: true
         public: false
 
-    netgen.ezplatform_site.repository.filter_service:
+    netgen.ezplatform_site.repository.filtering_search_service:
         class: %ezpublish.api.service.search.class%
         factory:
             - '@netgen.ezplatform_site.inner_repository'
@@ -23,18 +24,24 @@ services:
         lazy: true
         public: false
 
+    netgen.ezplatform_site.core.settings:
+        class: Netgen\EzPlatformSiteApi\Core\Site\Settings
+        arguments:
+            - '%netgen.ezplatform_site.prioritized_languages%'
+            - '%netgen.ezplatform_site.use_always_available%'
+            - '%netgen.ezplatform_site.root_location_id%'
+
     netgen.ezplatform_site.core.site:
         class: Netgen\EzPlatformSiteApi\Core\Site\Site
         arguments:
+            - '@netgen.ezplatform_site.core.settings'
             - '@ezpublish.api.service.content'
             - '@ezpublish.api.service.content_type'
             - '@ezpublish.api.service.field_type'
             - '@ezpublish.api.service.location'
             - '@ezpublish.api.service.search'
-            - '@netgen.ezplatform_site.repository.filter_service'
+            - '@netgen.ezplatform_site.repository.filtering_search_service'
             - '%netgen.ezplatform_site.use_always_available%'
-        calls:
-            - [setPrioritizedLanguages, ['%netgen.ezplatform_site.prioritized_languages%']]
         lazy: true
 
     netgen.ezplatform_site.core.filter_service:
@@ -42,8 +49,6 @@ services:
         factory:
             - '@netgen.ezplatform_site.core.site'
             - getFilterService
-        calls:
-            - [setPrioritizedLanguages, ['%netgen.ezplatform_site.prioritized_languages%']]
         lazy: true
 
     netgen.ezplatform_site.core.find_service:
@@ -51,8 +56,6 @@ services:
         factory:
             - '@netgen.ezplatform_site.core.site'
             - getFindService
-        calls:
-            - [setPrioritizedLanguages, ['%netgen.ezplatform_site.prioritized_languages%']]
         lazy: true
 
     netgen.ezplatform_site.core.load_service:
@@ -60,6 +63,4 @@ services:
         factory:
             - '@netgen.ezplatform_site.core.site'
             - getLoadService
-        calls:
-            - [setPrioritizedLanguages, ['%netgen.ezplatform_site.prioritized_languages%']]
         lazy: true

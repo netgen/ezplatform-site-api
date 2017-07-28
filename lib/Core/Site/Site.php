@@ -7,10 +7,16 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\SearchService;
+use Netgen\EzPlatformSiteApi\API\Settings as BaseSite;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 
 class Site implements SiteInterface
 {
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Settings
+     */
+    private $settings;
+
     /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
@@ -44,17 +50,7 @@ class Site implements SiteInterface
     /**
      * @var \eZ\Publish\API\Repository\SearchService
      */
-    private $synchronousSearchService;
-
-    /**
-     * @var array
-     */
-    private $prioritizedLanguages;
-
-    /**
-     * @var bool
-     */
-    private $useAlwaysAvailable;
+    private $filteringSearchService;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\FilterService
@@ -72,55 +68,47 @@ class Site implements SiteInterface
     private $loadService;
 
     /**
+     * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
      * @param \eZ\Publish\API\Repository\LocationService $locationService
      * @param \eZ\Publish\API\Repository\SearchService $searchService
-     * @param \eZ\Publish\API\Repository\SearchService $synchronousSearchService
-     * @param bool $useAlwaysAvailable
+     * @param \eZ\Publish\API\Repository\SearchService $filteringSearchService
      */
     public function __construct(
+        BaseSite $settings,
         ContentService $contentService,
         ContentTypeService $contentTypeService,
         FieldTypeService $fieldTypeService,
         LocationService $locationService,
         SearchService $searchService,
-        SearchService $synchronousSearchService,
-        $useAlwaysAvailable
+        SearchService $filteringSearchService
     ) {
+        $this->settings = $settings;
         $this->contentService = $contentService;
         $this->contentTypeService = $contentTypeService;
         $this->fieldTypeService = $fieldTypeService;
         $this->locationService = $locationService;
         $this->searchService = $searchService;
-        $this->synchronousSearchService = $synchronousSearchService;
-        $this->useAlwaysAvailable = $useAlwaysAvailable;
+        $this->filteringSearchService = $filteringSearchService;
     }
 
-    /**
-     * Setter for prioritized languages configuration, used to update
-     * the configuration on scope change.
-     *
-     * @param array $prioritizedLanguages
-     */
-    public function setPrioritizedLanguages(array $prioritizedLanguages = null)
+    public function getSettings()
     {
-        $this->prioritizedLanguages = $prioritizedLanguages;
+        return $this->settings;
     }
 
     public function getFilterService()
     {
         if ($this->filterService === null) {
             $this->filterService = new FilterService(
+                $this->settings,
                 $this->getDomainObjectMapper(),
-                $this->synchronousSearchService,
-                $this->contentService,
-                $this->useAlwaysAvailable
+                $this->filteringSearchService,
+                $this->contentService
             );
         }
-
-        $this->filterService->setPrioritizedLanguages($this->prioritizedLanguages);
 
         return $this->filterService;
     }
@@ -129,14 +117,12 @@ class Site implements SiteInterface
     {
         if ($this->findService === null) {
             $this->findService = new FindService(
+                $this->settings,
                 $this->getDomainObjectMapper(),
                 $this->searchService,
-                $this->contentService,
-                $this->useAlwaysAvailable
+                $this->contentService
             );
         }
-
-        $this->findService->setPrioritizedLanguages($this->prioritizedLanguages);
 
         return $this->findService;
     }
@@ -145,14 +131,12 @@ class Site implements SiteInterface
     {
         if ($this->loadService === null) {
             $this->loadService = new LoadService(
+                $this->settings,
                 $this->getDomainObjectMapper(),
                 $this->contentService,
-                $this->locationService,
-                $this->useAlwaysAvailable
+                $this->locationService
             );
         }
-
-        $this->loadService->setPrioritizedLanguages($this->prioritizedLanguages);
 
         return $this->loadService;
     }

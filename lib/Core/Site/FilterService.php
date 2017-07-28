@@ -3,6 +3,7 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use Netgen\EzPlatformSiteApi\API\FilterService as FilterServiceInterface;
+use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -10,6 +11,11 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 
 class FilterService implements FilterServiceInterface
 {
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Settings
+     */
+    private $settings;
+
     /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
@@ -26,42 +32,21 @@ class FilterService implements FilterServiceInterface
     private $contentService;
 
     /**
-     * @var array
-     */
-    private $prioritizedLanguages;
-
-    /**
-     * @var bool
-     */
-    private $useAlwaysAvailable;
-
-    /**
+     * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
      * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param bool $useAlwaysAvailable
      */
     public function __construct(
+        BaseSettings $settings,
         DomainObjectMapper $domainObjectMapper,
         SearchService $searchService,
-        ContentService $contentService,
-        $useAlwaysAvailable
+        ContentService $contentService
     ) {
+        $this->settings = $settings;
         $this->domainObjectMapper = $domainObjectMapper;
         $this->searchService = $searchService;
         $this->contentService = $contentService;
-        $this->useAlwaysAvailable = $useAlwaysAvailable;
-    }
-
-    /**
-     * Setter for prioritized languages configuration, used to update
-     * the configuration on scope change.
-     *
-     * @param array $prioritizedLanguages
-     */
-    public function setPrioritizedLanguages(array $prioritizedLanguages = null)
-    {
-        $this->prioritizedLanguages = $prioritizedLanguages;
     }
 
     public function filterContent(Query $query)
@@ -69,8 +54,8 @@ class FilterService implements FilterServiceInterface
         $searchResult = $this->searchService->findContentInfo(
             $query,
             [
-                'languages' => $this->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->useAlwaysAvailable,
+                'languages' => $this->settings->prioritizedLanguages,
+                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
             ]
         );
 
@@ -94,8 +79,8 @@ class FilterService implements FilterServiceInterface
         $searchResult = $this->searchService->findContentInfo(
             $query,
             [
-                'languages' => $this->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->useAlwaysAvailable,
+                'languages' => $this->settings->prioritizedLanguages,
+                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
             ]
         );
 
@@ -119,8 +104,8 @@ class FilterService implements FilterServiceInterface
         $searchResult = $this->searchService->findLocations(
             $query,
             [
-                'languages' => $this->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->useAlwaysAvailable,
+                'languages' => $this->settings->prioritizedLanguages,
+                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
             ]
         );
 

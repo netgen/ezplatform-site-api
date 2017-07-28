@@ -20,18 +20,22 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
+    netgen.ezplatform_site.core.settings:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Core\Site\Settings
+        arguments:
+            - '@ezpublish.config.resolver'
+            - '%netgen.ezplatform_site.use_always_available%'
+
     netgen.ezplatform_site.core.site:
         class: Netgen\EzPlatformSiteApi\Core\Site\Site
         arguments:
+            - '@netgen.ezplatform_site.settings'
             - '@ezpublish.api.service.content'
             - '@ezpublish.api.service.content_type'
             - '@ezpublish.api.service.field_type'
             - '@ezpublish.api.service.location'
             - '@ezpublish.api.service.search'
-            - '@netgen.ezplatform_site.repository.filter_service'
-            - '%netgen.ezplatform_site.use_always_available%'
-        calls:
-            - [setPrioritizedLanguages, ['$languages$']]
+            - '@netgen.ezplatform_site.repository.filtering_search_service'
         lazy: true
 
     netgen.ezplatform_site.core.filter_service:
@@ -39,8 +43,6 @@ services:
         factory:
             - '@netgen.ezplatform_site.core.site'
             - getFilterService
-        calls:
-            - [setPrioritizedLanguages, ['$languages$']]
         lazy: true
 
     netgen.ezplatform_site.core.find_service:
@@ -48,8 +50,6 @@ services:
         factory:
             - '@netgen.ezplatform_site.core.site'
             - getFindService
-        calls:
-            - [setPrioritizedLanguages, ['$languages$']]
         lazy: true
 
     netgen.ezplatform_site.core.load_service:
@@ -57,8 +57,6 @@ services:
         factory:
             - '@netgen.ezplatform_site.core.site'
             - getLoadService
-        calls:
-            - [setPrioritizedLanguages, ['$languages$']]
         lazy: true
 
     netgen.ezplatform_site.controller.content.view:
@@ -80,4 +78,4 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension
         arguments: ['@ezpublish.fieldType.ezimage.variation_service']
         tags:
-            - { name: twig.extension }
+            - {name: twig.extension}

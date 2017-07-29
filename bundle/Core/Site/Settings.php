@@ -10,23 +10,16 @@ use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 final class Settings extends BaseSettings
 {
     /**
-     * @var bool
-     */
-    private $useAlwaysAvailable;
-
-    /**
      * @var \eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigResolver
      */
     private $configResolver;
 
     /**
      * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
-     * @param bool $useAlwaysAvailable
      */
-    public function __construct(ConfigResolverInterface $configResolver, $useAlwaysAvailable)
+    public function __construct(ConfigResolverInterface $configResolver)
     {
         $this->configResolver = $configResolver;
-        $this->useAlwaysAvailable = $useAlwaysAvailable;
     }
 
     public function __get($property)
@@ -35,7 +28,10 @@ final class Settings extends BaseSettings
             case 'prioritizedLanguages':
                 return $this->configResolver->getParameter('languages');
             case 'useAlwaysAvailable':
-                return $this->useAlwaysAvailable;
+                return $this->configResolver->getParameter(
+                    'use_always_available_fallback',
+                    'netgen_ez_platform_site_api'
+                );
             case 'rootLocationId':
                 return $this->configResolver->getParameter('content.tree_root.location_id');
         }

@@ -30,12 +30,10 @@ class Configuration extends SiteAccessConfiguration
         $systemNode
             ->booleanNode('override_url_alias_view_action')
                 ->info('Controls override of the URL alias view action')
-                ->defaultFalse()
             ->end();
         $systemNode
             ->booleanNode('use_always_available_fallback')
                 ->info('Controls fallback to main language marked as always available')
-                ->defaultTrue()
             ->end();
     }
 }

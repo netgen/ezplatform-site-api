@@ -12,6 +12,7 @@ parameters:
 
     # Defaults for semantic configuration
     netgen_ez_platform_site_api.default.override_url_alias_view_action: false
+    netgen_ez_platform_site_api.default.use_always_available_fallback: true
 
 services:
     netgen.ezplatform_site.controller.base:

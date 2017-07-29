@@ -3,11 +3,11 @@
 namespace Netgen\EzPlatformSiteApi\API;
 
 /**
- * Base Settings class.
+ * Site Settings.
  *
- * @property-read array $prioritizedLanguages
- * @property-read bool $useAlwaysAvailable
- * @property-read int|string $rootLocationId
+ * @property-read array $prioritizedLanguages Array of prioritized languages
+ * @property-read bool $useAlwaysAvailable Always available fallback state
+ * @property-read int|string $rootLocationId Root Location ID
  */
 abstract class Settings
 {

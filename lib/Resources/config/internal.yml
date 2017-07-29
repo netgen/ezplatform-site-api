@@ -41,7 +41,6 @@ services:
             - '@ezpublish.api.service.location'
             - '@ezpublish.api.service.search'
             - '@netgen.ezplatform_site.repository.filtering_search_service'
-            - '%netgen.ezplatform_site.use_always_available%'
         lazy: true
 
     netgen.ezplatform_site.core.filter_service:

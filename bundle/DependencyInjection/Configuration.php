@@ -29,7 +29,11 @@ class Configuration extends SiteAccessConfiguration
         $systemNode = $this->generateScopeBaseNode($rootNode);
         $systemNode
             ->booleanNode('override_url_alias_view_action')
-                ->info('Whether to override URL alias view action')
+                ->info('Controls override of the URL alias view action')
+            ->end();
+        $systemNode
+            ->booleanNode('use_always_available_fallback')
+                ->info('Controls fallback to main language marked as always available')
             ->end();
     }
 }

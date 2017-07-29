@@ -4,6 +4,9 @@ imports:
 parameters:
 
 services:
+    netgen.ezplatform_site.settings:
+        alias: 'netgen.ezplatform_site.core.settings'
+
     netgen.ezplatform_site.filter_service:
         alias: 'netgen.ezplatform_site.core.filter_service'
 

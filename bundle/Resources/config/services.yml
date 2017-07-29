@@ -12,43 +12,53 @@ parameters:
 
     # Defaults for semantic configuration
     netgen_ez_platform_site_api.default.override_url_alias_view_action: false
+    netgen_ez_platform_site_api.default.use_always_available_fallback: true
 
 services:
     netgen.ezplatform_site.controller.base:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller
         abstract: true
         calls:
-            - [setContainer, ["@service_container"]]
+            - [setContainer, ['@service_container']]
+
+    netgen.ezplatform_site.core.settings:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Core\Site\Settings
+        arguments:
+            - '@ezpublish.config.resolver'
+            - '%netgen.ezplatform_site.use_always_available%'
+
+    netgen.ezplatform_site.core.site:
+        class: Netgen\EzPlatformSiteApi\Core\Site\Site
+        arguments:
+            - '@netgen.ezplatform_site.settings'
+            - '@ezpublish.api.service.content'
+            - '@ezpublish.api.service.content_type'
+            - '@ezpublish.api.service.field_type'
+            - '@ezpublish.api.service.location'
+            - '@ezpublish.api.service.search'
+            - '@netgen.ezplatform_site.repository.filtering_search_service'
+        lazy: true
 
     netgen.ezplatform_site.core.filter_service:
         class: Netgen\EzPlatformSiteApi\Core\Site\FilterService
+        factory:
+            - '@netgen.ezplatform_site.core.site'
+            - getFilterService
         lazy: true
-        arguments:
-            - '@netgen.ezplatform_site.core.domain_object_mapper'
-            - '@netgen.ezplatform_site.repository.filter_service'
-            - '@ezpublish.api.service.content'
-            - '$languages$'
-            - '%netgen.ezplatform_site.use_always_available%'
 
     netgen.ezplatform_site.core.find_service:
         class: Netgen\EzPlatformSiteApi\Core\Site\FindService
+        factory:
+            - '@netgen.ezplatform_site.core.site'
+            - getFindService
         lazy: true
-        arguments:
-            - '@netgen.ezplatform_site.core.domain_object_mapper'
-            - '@ezpublish.api.service.search'
-            - '@ezpublish.api.service.content'
-            - '$languages$'
-            - '%netgen.ezplatform_site.use_always_available%'
 
     netgen.ezplatform_site.core.load_service:
         class: Netgen\EzPlatformSiteApi\Core\Site\LoadService
+        factory:
+            - '@netgen.ezplatform_site.core.site'
+            - getLoadService
         lazy: true
-        arguments:
-            - '@netgen.ezplatform_site.core.domain_object_mapper'
-            - '@ezpublish.api.service.content'
-            - '@ezpublish.api.service.location'
-            - '$languages$'
-            - '%netgen.ezplatform_site.use_always_available%'
 
     netgen.ezplatform_site.controller.content.view:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Content\ViewController
@@ -69,4 +79,4 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension
         arguments: ['@ezpublish.fieldType.ezimage.variation_service']
         tags:
-            - { name: twig.extension }
+            - {name: twig.extension}

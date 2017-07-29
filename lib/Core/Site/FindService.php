@@ -3,6 +3,7 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
+use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -10,6 +11,11 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 
 class FindService implements FindServiceInterface
 {
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Settings
+     */
+    private $settings;
+
     /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
@@ -26,34 +32,21 @@ class FindService implements FindServiceInterface
     private $contentService;
 
     /**
-     * @var array
-     */
-    private $prioritizedLanguages;
-
-    /**
-     * @var bool
-     */
-    private $useAlwaysAvailable;
-
-    /**
+     * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
      * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param array $prioritizedLanguages
-     * @param bool $useAlwaysAvailable
      */
     public function __construct(
+        BaseSettings $settings,
         DomainObjectMapper $domainObjectMapper,
         SearchService $searchService,
-        ContentService $contentService,
-        array $prioritizedLanguages,
-        $useAlwaysAvailable
+        ContentService $contentService
     ) {
+        $this->settings = $settings;
         $this->domainObjectMapper = $domainObjectMapper;
         $this->searchService = $searchService;
         $this->contentService = $contentService;
-        $this->prioritizedLanguages = $prioritizedLanguages;
-        $this->useAlwaysAvailable = $useAlwaysAvailable;
     }
 
     public function findContent(Query $query)
@@ -61,8 +54,8 @@ class FindService implements FindServiceInterface
         $searchResult = $this->searchService->findContentInfo(
             $query,
             [
-                'languages' => $this->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->useAlwaysAvailable,
+                'languages' => $this->settings->prioritizedLanguages,
+                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
             ]
         );
 
@@ -86,8 +79,8 @@ class FindService implements FindServiceInterface
         $searchResult = $this->searchService->findContentInfo(
             $query,
             [
-                'languages' => $this->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->useAlwaysAvailable,
+                'languages' => $this->settings->prioritizedLanguages,
+                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
             ]
         );
 
@@ -111,8 +104,8 @@ class FindService implements FindServiceInterface
         $searchResult = $this->searchService->findLocations(
             $query,
             [
-                'languages' => $this->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->useAlwaysAvailable,
+                'languages' => $this->settings->prioritizedLanguages,
+                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
             ]
         );
 
@@ -137,8 +130,8 @@ class FindService implements FindServiceInterface
         $searchResult = $this->searchService->findLocations(
             $query,
             [
-                'languages' => $this->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->useAlwaysAvailable,
+                'languages' => $this->settings->prioritizedLanguages,
+                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
             ]
         );
 

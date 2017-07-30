@@ -78,7 +78,7 @@ interface LoadService
     public function loadLocationByRemoteId($remoteId);
 
     /**
-     * @deprecated Use loadLocation() with lazy loading instead.
+     * @deprecated since version 2.1, to be removed in 3.0. Use loadLocation() instead.
      *
      * Loads Node object for the given $locationId.
      *
@@ -91,7 +91,7 @@ interface LoadService
     public function loadNode($locationId);
 
     /**
-     * @deprecated Use loadLocationByRemoteId() with lazy loading instead.
+     * @deprecated since version 2.1, to be removed in 3.0. Use loadLocationByRemoteId() instead.
      *
      * Loads Node object for the given $remoteId.
      *

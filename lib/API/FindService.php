@@ -44,7 +44,7 @@ interface FindService
     public function findLocations(LocationQuery $query);
 
     /**
-     * @deprecated Use findLocations() with lazy loading instead.
+     * @deprecated since version 2.1, to be removed in 3.0. Use findLocations() instead.
      *
      * Finds Node objects for the given $query.
      *

@@ -127,6 +127,8 @@ class FindService implements FindServiceInterface
 
     public function findNodes(LocationQuery $query)
     {
+        @trigger_error('findNodes() is deprecated since version 2.1 and will be removed in 3.0. Use findLocations() instead.', E_USER_DEPRECATED);
+
         $searchResult = $this->searchService->findLocations(
             $query,
             [

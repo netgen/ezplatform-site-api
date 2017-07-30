@@ -124,6 +124,8 @@ class LoadService implements LoadServiceInterface
 
     public function loadNode($locationId)
     {
+        @trigger_error('loadNode() is deprecated since version 2.1 and will be removed in 3.0. Use loadLocation() instead.', E_USER_DEPRECATED);
+
         $location = $this->locationService->loadLocation($locationId);
 
         return $this->getSiteNode($location);
@@ -131,6 +133,8 @@ class LoadService implements LoadServiceInterface
 
     public function loadNodeByRemoteId($remoteId)
     {
+        @trigger_error('loadNodeByRemoteId() is deprecated since version 2.1 and will be removed in 3.0. Use loadLocationByRemoteId() instead.', E_USER_DEPRECATED);
+
         $location = $this->locationService->loadLocationByRemoteId($remoteId);
 
         return $this->getSiteNode($location);

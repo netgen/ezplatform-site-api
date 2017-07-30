@@ -66,54 +66,8 @@ final class Content extends APIContent
         parent::__construct($properties);
     }
 
-    public function hasField($identifier)
-    {
-        return isset($this->fields[$identifier]);
-    }
-
-    public function getField($identifier)
-    {
-        if ($this->hasField($identifier)) {
-            return $this->fields[$identifier];
-        }
-
-        return null;
-    }
-
-    public function hasFieldById($id)
-    {
-        return isset($this->fieldsById[$id]);
-    }
-
-    public function getFieldById($id)
-    {
-        if ($this->hasFieldById($id)) {
-            return $this->fieldsById[$id];
-        }
-
-        return null;
-    }
-
-    public function getFieldValue($identifier)
-    {
-        if ($this->hasField($identifier)) {
-            return $this->fields[$identifier]->value;
-        }
-
-        return null;
-    }
-
-    public function getFieldValueById($id)
-    {
-        if ($this->hasFieldById($id)) {
-            return $this->fieldsById[$id]->value;
-        }
-
-        return null;
-    }
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * Magic getter for retrieving convenience properties.
      *
@@ -169,13 +123,50 @@ final class Content extends APIContent
         return parent::__isset($property);
     }
 
-    private function buildField(array $properties = [])
+    public function hasField($identifier)
     {
-        $properties['content'] = $this;
-        $field = new Field($properties);
+        return isset($this->fields[$identifier]);
+    }
 
-        $this->fields[$field->fieldDefIdentifier] = $field;
-        $this->fieldsById[$field->id] = $field;
+    public function getField($identifier)
+    {
+        if ($this->hasField($identifier)) {
+            return $this->fields[$identifier];
+        }
+
+        return null;
+    }
+
+    public function hasFieldById($id)
+    {
+        return isset($this->fieldsById[$id]);
+    }
+
+    public function getFieldById($id)
+    {
+        if ($this->hasFieldById($id)) {
+            return $this->fieldsById[$id];
+        }
+
+        return null;
+    }
+
+    public function getFieldValue($identifier)
+    {
+        if ($this->hasField($identifier)) {
+            return $this->fields[$identifier]->value;
+        }
+
+        return null;
+    }
+
+    public function getFieldValueById($id)
+    {
+        if ($this->hasFieldById($id)) {
+            return $this->fieldsById[$id]->value;
+        }
+
+        return null;
     }
 
     public function getLocations($limit = 25)
@@ -214,6 +205,15 @@ final class Content extends APIContent
         $this->locationsPagerCache[$cacheId]->setCurrentPage($currentPage);
 
         return $this->locationsPagerCache[$cacheId];
+    }
+
+    private function buildField(array $properties = [])
+    {
+        $properties['content'] = $this;
+        $field = new Field($properties);
+
+        $this->fields[$field->fieldDefIdentifier] = $field;
+        $this->fieldsById[$field->id] = $field;
     }
 
     private function getMainLocation()

@@ -2,8 +2,8 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Pagination\Pagerfanta;
 
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchAdapter;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchAdapter;
 
 class ContentSearchAdapterTest extends ContentSearchHitAdapterTest
 {

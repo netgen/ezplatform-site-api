@@ -2,8 +2,8 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta;
 
-use Netgen\EzPlatformSiteApi\API\FindService;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use Netgen\EzPlatformSiteApi\API\FindService;
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**

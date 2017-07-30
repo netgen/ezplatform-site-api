@@ -2,25 +2,17 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
+use DateTime;
 use eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException;
-use Netgen\EzPlatformSiteApi\API\Values\Content;
 use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use DateTime;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
 
 /**
  * Base class for API integration tests.
  */
 class BaseTest extends APIBaseTest
 {
-    /**
-     * @return \Netgen\EzPlatformSiteApi\API\Site
-     */
-    protected function getSite()
-    {
-        return $this->getSetupFactory()->getServiceContainer()->get('netgen.ezplatform_site.site');
-    }
-
     public function getPrimaryLanguageMatchData()
     {
         $data = [
@@ -505,6 +497,14 @@ class BaseTest extends APIBaseTest
                 $data,
             ],
         ];
+    }
+
+    /**
+     * @return \Netgen\EzPlatformSiteApi\API\Site
+     */
+    protected function getSite()
+    {
+        return $this->getSetupFactory()->getServiceContainer()->get('netgen.ezplatform_site.site');
     }
 
     protected function doTestLoadContent($data)

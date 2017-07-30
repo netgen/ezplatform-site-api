@@ -2,8 +2,8 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Pagination\Pagerfanta;
 
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchAdapter;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchAdapter;
 
 class NodeSearchAdapterTest extends NodeSearchHitAdapterTest
 {

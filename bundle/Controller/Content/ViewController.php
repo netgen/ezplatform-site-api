@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Content;
 
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 
 /**
  * This controller provides the content view feature.

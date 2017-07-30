@@ -2,14 +2,14 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller;
 
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use eZ\Publish\Core\MVC\Symfony\Controller\Content\PreviewController as BasePreviewController;
+use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter;
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location as SiteLocation;
-use eZ\Publish\Core\MVC\Symfony\Controller\Content\PreviewController as BasePreviewController;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use Symfony\Component\HttpFoundation\Request;
 
 class PreviewController extends BasePreviewController

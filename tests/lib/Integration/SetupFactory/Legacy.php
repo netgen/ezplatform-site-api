@@ -4,8 +4,8 @@ namespace Netgen\EzPlatformSiteApi\Tests\Integration\SetupFactory;
 
 use eZ\Publish\API\Repository\Tests\SetupFactory\Legacy as CoreLegacySetupFactory;
 use eZ\Publish\Core\Base\ServiceContainer;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Used to setup the infrastructure for Repository Public API integration tests,

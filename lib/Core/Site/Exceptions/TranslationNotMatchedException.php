@@ -2,11 +2,11 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Exceptions;
 
-use Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException as APITranslationNotMatchedException;
+use Exception;
 use eZ\Publish\Core\Base\Exceptions\Httpable;
 use eZ\Publish\Core\Base\Translatable;
 use eZ\Publish\Core\Base\TranslatableBase;
-use Exception;
+use Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException as APITranslationNotMatchedException;
 
 /**
  * This exception is thrown if the Content translation language could not be resolved.

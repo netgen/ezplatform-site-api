@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
-use Netgen\EzPlatformSiteApi\API\Values\Field;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\MVC\Symfony\FieldType\View\ParameterProviderRegistryInterface;
 use eZ\Publish\Core\MVC\Symfony\Templating\FieldBlockRendererInterface;
+use Netgen\EzPlatformSiteApi\API\Values\Field;
 use Twig_Environment;
 use Twig_Extension;
 use Twig_SimpleFunction;

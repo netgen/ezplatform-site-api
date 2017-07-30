@@ -61,7 +61,7 @@ final class Location extends APILocation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * Magic getter for retrieving convenience properties.
      *

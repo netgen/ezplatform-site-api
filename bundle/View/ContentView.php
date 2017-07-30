@@ -2,14 +2,14 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
-use Netgen\EzPlatformSiteApi\API\Values\Content;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use Netgen\EzPlatformSiteApi\API\Values\Location;
-use eZ\Publish\Core\MVC\Symfony\View\View;
 use eZ\Publish\Core\MVC\Symfony\View\BaseView;
-use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
 use eZ\Publish\Core\MVC\Symfony\View\CachableView;
+use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
+use eZ\Publish\Core\MVC\Symfony\View\View;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use RuntimeException;
 
 /**
@@ -70,16 +70,6 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
         return $this->location;
     }
 
-    protected function getInternalParameters()
-    {
-        $parameters = ['content' => $this->content];
-        if ($this->location !== null) {
-            $parameters['location'] = $this->location;
-        }
-
-        return $parameters;
-    }
-
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      */
@@ -117,5 +107,15 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
     public function isEmbed()
     {
         return $this->isEmbed;
+    }
+
+    protected function getInternalParameters()
+    {
+        $parameters = ['content' => $this->content];
+        if ($this->location !== null) {
+            $parameters['location'] = $this->location;
+        }
+
+        return $parameters;
     }
 }

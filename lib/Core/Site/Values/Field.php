@@ -9,11 +9,6 @@ final class Field extends APIField
     use TranslatableTrait;
 
     /**
-     * @var bool
-     */
-    private $isEmpty;
-
-    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     protected $content;
@@ -22,6 +17,11 @@ final class Field extends APIField
      * @var \eZ\Publish\API\Repository\Values\Content\Field
      */
     protected $innerField;
+
+    /**
+     * @var bool
+     */
+    private $isEmpty;
 
     public function __construct(array $properties = [])
     {
@@ -32,11 +32,6 @@ final class Field extends APIField
         }
 
         parent::__construct($properties);
-    }
-
-    public function isEmpty()
-    {
-        return $this->isEmpty;
     }
 
     /**
@@ -100,5 +95,10 @@ final class Field extends APIField
         }
 
         return parent::__isset($property);
+    }
+
+    public function isEmpty()
+    {
+        return $this->isEmpty;
     }
 }

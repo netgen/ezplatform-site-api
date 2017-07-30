@@ -2,10 +2,10 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Pagination\Pagerfanta;
 
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchHitAdapter;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchHitAdapter;
 use PHPUnit_Framework_TestCase;
 
 class NodeSearchHitAdapterTest extends PHPUnit_Framework_TestCase
@@ -19,11 +19,6 @@ class NodeSearchHitAdapterTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->findService = $this->getMock('\Netgen\EzPlatformSiteApi\API\FindService');
-    }
-
-    protected function getAdapter(LocationQuery $query)
-    {
-        return new NodeSearchHitAdapter($query, $this->findService);
     }
 
     public function testGetNbResults()
@@ -70,6 +65,11 @@ class NodeSearchHitAdapterTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($this->getExpectedSlice($hits), $adapter->getSlice($offset, $limit));
         $this->assertSame($nbResults, $adapter->getNbResults());
+    }
+
+    protected function getAdapter(LocationQuery $query)
+    {
+        return new NodeSearchHitAdapter($query, $this->findService);
     }
 
     protected function getExpectedSlice($hits)

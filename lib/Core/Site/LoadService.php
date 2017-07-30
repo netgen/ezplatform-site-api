@@ -2,13 +2,13 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSiteApi\API\LoadService as LoadServiceInterface;
-use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
-use Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use Netgen\EzPlatformSiteApi\API\LoadService as LoadServiceInterface;
+use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
+use Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException;
 
 class LoadService implements LoadServiceInterface
 {

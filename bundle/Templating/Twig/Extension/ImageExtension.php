@@ -3,12 +3,12 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
 use eZ\Publish\API\Repository\Exceptions\InvalidVariationException;
-use Netgen\EzPlatformSiteApi\API\Values\Field;
 use eZ\Publish\Core\MVC\Exception\SourceImageNotFoundException;
 use eZ\Publish\SPI\Variation\VariationHandler;
+use InvalidArgumentException;
+use Netgen\EzPlatformSiteApi\API\Values\Field;
 use Twig_Extension;
 use Twig_SimpleFunction;
-use InvalidArgumentException;
 
 class ImageExtension extends Twig_Extension
 {
@@ -29,13 +29,13 @@ class ImageExtension extends Twig_Extension
 
     public function getFunctions()
     {
-        return array(
+        return [
             new Twig_SimpleFunction(
                 'ng_image_alias',
-                array($this, 'getImageVariation'),
-                array('is_safe' => array('html'))
+                [$this, 'getImageVariation'],
+                ['is_safe' => ['html']]
             ),
-        );
+        ];
     }
 
     /**

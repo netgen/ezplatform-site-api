@@ -2,11 +2,6 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Node;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
@@ -14,6 +9,11 @@ use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Node;
 
 /**
  * @internal

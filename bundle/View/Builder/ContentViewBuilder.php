@@ -2,14 +2,10 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder;
 
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
-use Netgen\EzPlatformSiteApi\API\Site;
-use Netgen\EzPlatformSiteApi\API\Values\Location;
-use Netgen\EzPlatformSiteApi\API\Values\Content;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\Base\Exceptions\UnauthorizedException;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute as AuthorizationAttribute;
@@ -17,6 +13,10 @@ use eZ\Publish\Core\MVC\Symfony\View\Builder\ViewBuilder;
 use eZ\Publish\Core\MVC\Symfony\View\Configurator;
 use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
 use eZ\Publish\Core\MVC\Symfony\View\ParametersInjector;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use Netgen\EzPlatformSiteApi\API\Site;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -185,7 +185,7 @@ class ContentViewBuilder implements ViewBuilder
         if (
             !$contentInfo->published &&
             !$this->authorizationChecker->isGranted(
-                new AuthorizationAttribute('content', 'versionread', array('valueObject' => $contentInfo))
+                new AuthorizationAttribute('content', 'versionread', ['valueObject' => $contentInfo])
             )
         ) {
             throw new UnauthorizedException('content', 'versionread', ['contentId' => $contentId]);

@@ -2,12 +2,12 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
-use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
+use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 
 class FindService implements FindServiceInterface
 {

@@ -11,6 +11,7 @@
 
 - A set of read-only services on top of Repository API, made to transparently resolve correct translation
 
+  - [`FilterService`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/FilterService.php)
   - [`FindService`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/FindService.php)
   - [`LoadService`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/LoadService.php)
 
@@ -20,7 +21,6 @@
   - [`ContentInfo`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/ContentInfo.php)
   - [`Field`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Field.php)
   - [`Location`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Location.php)
-  - [`Node`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Node.php)
 
 ## Detailed usage instructions
 
@@ -39,28 +39,102 @@ The following document details what needs to be done to rewrite your existing si
   /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
   $loadService = $site->getLoadService();
   $location = $loadService->loadLocation(42);
-  $parentNode = $loadService()->loadNode($location->parentLocationId);
 
-  if (!$parentNode->content->getField('image')->isEmpty()) {
-      // do something
+  foreach ($location->getChildren(5) as $child) {
+      // ...
   }
+
+  foreach ($location->filterSiblings(['category']) as $sibling) {
+      // ...
+  }
+
+  if (!$location->content->getField('image')->isEmpty()) {
+      // ...
+  }
+
+  echo $location->parent->contentInfo->name;
+  ```
+
+  ```php
+  /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
+  $loadService = $site->getLoadService();
+  $content = $loadService->loadContent(24);
+  $contentInfo = $loadService->loadContentInfo(12);
+
+  foreach ($content->locations as $location) {
+      // ...
+  }
+
+  foreach ($content->mainLocation->getChildren() as $child) {
+      // ...
+  }
+
+  if (!$contentInfo->content->getField('image')->isEmpty()) {
+      // ...
+  }
+  ```
+
+  ```php
+  // Use eZ Publish Search API to find content from the configured
+  // search engine (Solr or Legacy Search Engine).
+
+  use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+
+  /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
+  $findService = $site->getFindService();
+
+  $searchResult = $findService->findLocations(new LocationQuery(...));
+  ```
+
+  ```php
+  // Use eZ Publish Search API to find content from Legacy Search Engine.
+  // That means you can use it in parallel to the Solr Search Engine
+  // configured for the Repository. Advantage of having Legacy Search engine
+  // available is in not needing indexing for data to become available in
+  // search, because it works directly on the database. On the other hand,
+  // it won't support faceting or full text search.
+
+  use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+
+  /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
+  $filterService = $site->getFilterService();
+
+  $searchResult = $filterService->filterLocations(new LocationQuery(...));
   ```
 
 - Twig
 
   ```twig
-  {% extends noLayout == true ? viewbaseLayout : pagelayout %}
-  {% block content %}
-    <h1>{{ content.name }} [{{ content.contentInfo.contentTypeIdentifier }}]</h1>
-    <h2>{{ content.fields.title.value.text }}</h2>
-    <h3>{{ content.fields['sub_title'].value.text }}</h3>
-    {% for identifier, field in content.fields %}
-        <h4>Field '{{ identifier }}' in Content #{{ field.content.id }}</h4>
-        {% if not field.isEmpty() %}
-            {{ ng_render_field(field) }}
-        {% else %}
-            <p>Field of type '{{ field.fieldTypeIdentifier }}' is empty.</p>
-        {% endif %}
-    {% endfor %}
-  {% endblock %}
+  <h1>{{ content.name }} [{{ content.contentInfo.contentTypeIdentifier }}]</h1>
+
+  {% for identifier, field in content.fields %}
+      <h4>Field '{{ identifier }}' in Content #{{ field.content.id }}</h4>
+      {% if not field.isEmpty() %}
+          {{ ng_render_field(field) }}
+      {% else %}
+          <p>Field of type '{{ field.fieldTypeIdentifier }}' is empty.</p>
+      {% endif %}
+  {% endfor %}
+
+  <p>Title: {{ content.fields.title.value.text }}</p>
+  <p>Same title repeated: {{ content.fields['title'].value.text }}</p>
+  ```
+
+  ```twig
+  {% set children = location.filterChildren(['blog_post'], 10, 2) %}
+
+  <p>Parent name: {{ location.parent.contentInfo.name }}<p>
+
+  <!-- 'children' variable is full Pagerfanta instance -->
+  <p>Total blog posts: {{ children.nbResults }}</p>
+  <p>Blog posts per page: {{ children.maxPerPage }}</p>
+  <p>Page: {{ children.currentPage }}</p>
+
+  <ul>
+  {% for child in children %}
+      <li>{{ child.contentInfo.name }}</li>
+  {% endfor %}
+  </ul>
+
+  {{ pagerfanta( children, 'twitter_bootstrap' ) }}
   ```

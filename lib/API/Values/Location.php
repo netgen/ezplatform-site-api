@@ -47,7 +47,7 @@ abstract class Location extends ValueObject
      * @param int $maxPerPage
      * @param int $currentPage
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[] Pagerfanta instance iterating over Site API Locations
      */
     abstract public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1);
 
@@ -70,7 +70,7 @@ abstract class Location extends ValueObject
      * @param int $maxPerPage
      * @param int $currentPage
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]|\Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
     abstract public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1);
 }

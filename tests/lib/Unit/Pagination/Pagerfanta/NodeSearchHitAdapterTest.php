@@ -6,7 +6,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchHitAdapter;
-use PHPUnit\Framework\TestCase;
+use Netgen\EzPlatformSiteApi\Tests\Unit\TestCase;
 
 class NodeSearchHitAdapterTest extends TestCase
 {

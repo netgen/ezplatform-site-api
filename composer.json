@@ -32,5 +32,9 @@
         "branch-alias": {
             "dev-master": "2.1-dev"
         }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always",
+        "test-integration": "@php vendor/bin/phpunit --colors=always -c phpunit-integration-legacy.xml"
     }
 }

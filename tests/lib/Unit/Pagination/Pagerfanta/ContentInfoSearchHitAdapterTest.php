@@ -6,9 +6,9 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentInfoSearchHitAdapter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContentInfoSearchHitAdapterTest extends PHPUnit_Framework_TestCase
+class ContentInfoSearchHitAdapterTest extends TestCase
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\API\FindService|\PHPUnit_Framework_MockObject_MockObject
@@ -18,7 +18,7 @@ class ContentInfoSearchHitAdapterTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->findService = $this->getMock('\Netgen\EzPlatformSiteApi\API\FindService');
+        $this->findService = $this->createMock('\Netgen\EzPlatformSiteApi\API\FindService');
     }
 
     public function testGetNbResults()

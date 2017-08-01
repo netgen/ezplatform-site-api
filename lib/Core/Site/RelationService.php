@@ -9,7 +9,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifi
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use Netgen\EzPlatformSiteApi\API\RelationService as RelationServiceInterface;
-use Netgen\EzPlatformSiteApi\API\Site;
+use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 
 class RelationService implements RelationServiceInterface
@@ -22,7 +22,7 @@ class RelationService implements RelationServiceInterface
     /**
      * @param \Netgen\EzPlatformSiteApi\API\Site $site
      */
-    public function __construct(Site $site)
+    public function __construct(SiteInterface $site)
     {
         $this->site = $site;
     }

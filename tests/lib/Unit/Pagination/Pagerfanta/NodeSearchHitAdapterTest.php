@@ -6,7 +6,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchHitAdapter;
-use Netgen\EzPlatformSiteApi\Tests\Unit\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class NodeSearchHitAdapterTest extends TestCase
 {
@@ -18,7 +18,10 @@ class NodeSearchHitAdapterTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->findService = $this->createMock('\Netgen\EzPlatformSiteApi\API\FindService');
+        $this->findService = $this->getMockBuilder('\Netgen\EzPlatformSiteApi\API\FindService')
+            ->disableOriginalConstructor()
+            ->setMethods(array())
+            ->getMock();
     }
 
     public function testGetNbResults()

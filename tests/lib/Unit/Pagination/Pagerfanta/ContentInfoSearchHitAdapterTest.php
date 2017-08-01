@@ -6,7 +6,7 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentInfoSearchHitAdapter;
-use Netgen\EzPlatformSiteApi\Tests\Unit\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ContentInfoSearchHitAdapterTest extends TestCase
 {
@@ -18,7 +18,10 @@ class ContentInfoSearchHitAdapterTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->findService = $this->createMock('\Netgen\EzPlatformSiteApi\API\FindService');
+        $this->findService = $this->getMockBuilder('\Netgen\EzPlatformSiteApi\API\FindService')
+            ->disableOriginalConstructor()
+            ->setMethods(array())
+            ->getMock();
     }
 
     public function testGetNbResults()

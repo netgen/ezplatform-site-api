@@ -3,9 +3,12 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller as BaseController;
+use Netgen\EzPlatformSiteApi\Core\Traits\SearchHitExtractorTrait;
 
 abstract class Controller extends BaseController
 {
+    use SearchHitExtractorTrait;
+
     /**
      * @return \Netgen\EzPlatformSiteApi\API\Site
      */

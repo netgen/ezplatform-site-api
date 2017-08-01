@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\EzPlatformSiteApi\Core\Site;
+namespace Netgen\EzPlatformSiteApi\Core\Traits;
 
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;

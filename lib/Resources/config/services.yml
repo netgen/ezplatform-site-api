@@ -16,6 +16,9 @@ services:
     netgen.ezplatform_site.load_service:
         alias: 'netgen.ezplatform_site.core.load_service'
 
+    netgen.ezplatform_site.relation_service:
+        alias: 'netgen.ezplatform_site.core.relation_service'
+
     netgen.ezplatform_site.site:
         alias: 'netgen.ezplatform_site.core.site'
 

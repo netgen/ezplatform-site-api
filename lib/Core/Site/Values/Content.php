@@ -362,6 +362,25 @@ final class Content extends APIContent
         return $this->innerOwnerUser;
     }
 
+    public function getFieldRelations($fieldDefinitionIdentifier)
+    {
+        return $this->site->getRelationService()->loadFieldRelations(
+            $this->id,
+            $fieldDefinitionIdentifier
+        );
+    }
+
+    public function filterFieldRelations(
+        $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = []
+    ) {
+        return $this->site->getRelationService()->loadFieldRelations(
+            $this->id,
+            $fieldDefinitionIdentifier,
+            $contentTypeIdentifiers
+        );
+    }
+
     public function __debugInfo()
     {
         $this->initializeFields();

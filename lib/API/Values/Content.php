@@ -98,4 +98,27 @@ abstract class Content extends ValueObject
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]|\Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
     abstract public function filterLocations($maxPerPage = 25, $currentPage = 1);
+
+    /**
+     * Return related Content from $fieldDefinitionIdentifier field in Content with given $contentId.
+     *
+     * @param string $fieldDefinitionIdentifier
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
+     */
+    abstract public function getFieldRelations($fieldDefinitionIdentifier);
+
+    /**
+     * Return related Content from $fieldDefinitionIdentifier field in Content with given $contentId,
+     * optionally limited by a list of $contentTypeIdentifiers.
+     *
+     * @param string $fieldDefinitionIdentifier
+     * @param string[] $contentTypeIdentifiers
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
+     */
+    abstract public function filterFieldRelations(
+        $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = []
+    );
 }

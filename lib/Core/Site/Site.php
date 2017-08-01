@@ -74,6 +74,11 @@ class Site implements SiteInterface
     private $loadService;
 
     /**
+     * @var \Netgen\EzPlatformSiteApi\API\RelationService
+     */
+    private $relationService;
+
+    /**
      * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
@@ -148,6 +153,15 @@ class Site implements SiteInterface
         }
 
         return $this->loadService;
+    }
+
+    public function getRelationService()
+    {
+        if ($this->relationService === null) {
+            $this->relationService = new RelationService($this);
+        }
+
+        return $this->relationService;
     }
 
     /**

@@ -1,6 +1,37 @@
 eZ Platform Site API changelog
 ==============================
 
+2.1.0 (31.07.2017)
+------------------
+
+* Introduces `FilterService`, providing search on top of Legacy Search Engine (it doesn't depend
+on indexing for data to became available in search)
+* Introduces `Settings`, containing all user-defined settings used by the Site API
+* Adds new methods and (lazy-loaded) properties to API entities, enabling simple Content structure
+traversal from both PHP and Twig without writing boilerplate code:
+  * `Location::$content`
+  * `Location::$parent`
+  * `Location::getChildren()`
+  * `Location::filterChildren()`
+  * `Location::getSiblings()`
+  * `Location::filterSiblings()`
+  * `Content::$mainLocation`
+  * `Content::getLocations()`
+  * `Content::filterLocations()`
+  * `ContentInfo::$content`
+  * `ContentInfo::$mainLocation`
+  * `ContentInfo::getLocations()`
+  * `ContentInfo::filterLocations()`
+* Deprecates `Node` object and corresponding methods and classes (to be removed in 3.0), since `Content` is now
+available as lazy-loaded property of `Location`:
+  * `Node`
+  * `LoadService::loadNode()`
+  * `LoadService::loadNodeByRemoteId()`
+  * `FindService::findNodes()`
+  * `NodeSearchAdapter`
+  * `NodeSearchHitAdapter`
+* Updates coding style
+
 2.0.1 (26.04.2017)
 ------------------
 

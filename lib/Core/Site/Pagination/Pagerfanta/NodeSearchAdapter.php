@@ -3,6 +3,8 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta;
 
 /**
+ * @deprecated since version 2.1, to be removed in 3.0. Use LocationSearchAdapter instead.
+ *
  * Pagerfanta adapter for Netgen eZ Platform Site Node search.
  * Will return results as Site Node objects.
  */

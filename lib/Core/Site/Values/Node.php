@@ -2,13 +2,17 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
+use eZ\Publish\API\Repository\Exceptions\NotImplementedException;
+use eZ\Publish\API\Repository\Values\Content\Location as RepositoryLocation;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use Netgen\EzPlatformSiteApi\API\Values\Node as APINode;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
 use Pagerfanta\Pagerfanta;
@@ -132,7 +136,7 @@ final class Node extends APINode
                 new LocationSearchFilterAdapter(
                     new LocationQuery([
                         'filter' => new LogicalAnd($criteria),
-                        'sortClauses' => $this->innerLocation->getSortClauses(),
+                        'sortClauses' => $this->getSortClauses(),
                     ]),
                     $this->site->getFilterService()
                 )
@@ -175,7 +179,7 @@ final class Node extends APINode
                 new LocationSearchFilterAdapter(
                     new LocationQuery([
                         'filter' => new LogicalAnd($criteria),
-                        'sortClauses' => $this->innerLocation->getSortClauses(),
+                        'sortClauses' => $this->getSortClauses(),
                     ]),
                     $this->site->getFilterService()
                 )
@@ -216,5 +220,55 @@ final class Node extends APINode
         }
 
         return $this->internalParent;
+    }
+
+    /**
+     * Map for Location sort fields to their respective SortClauses.
+     *
+     * Those not here (class name/identifier and modified subnode) are
+     * missing/deprecated and will most likely be removed in the future.
+     */
+    static private $sortFieldMap = [
+        RepositoryLocation::SORT_FIELD_PATH => SortClause\Location\Path::class,
+        RepositoryLocation::SORT_FIELD_PUBLISHED => SortClause\DatePublished::class,
+        RepositoryLocation::SORT_FIELD_MODIFIED => SortClause\DateModified::class,
+        RepositoryLocation::SORT_FIELD_SECTION => SortClause\SectionIdentifier::class,
+        RepositoryLocation::SORT_FIELD_DEPTH => SortClause\Location\Depth::class,
+        //RepositoryLocation::SORT_FIELD_CLASS_IDENTIFIER => false,
+        //RepositoryLocation::SORT_FIELD_CLASS_NAME => false,
+        RepositoryLocation::SORT_FIELD_PRIORITY => SortClause\Location\Priority::class,
+        RepositoryLocation::SORT_FIELD_NAME => SortClause\ContentName::class,
+        //RepositoryLocation::SORT_FIELD_MODIFIED_SUBNODE => false,
+        RepositoryLocation::SORT_FIELD_NODE_ID => SortClause\Location\Id::class,
+        RepositoryLocation::SORT_FIELD_CONTENTOBJECT_ID => SortClause\ContentId::class,
+    ];
+
+    /**
+     * Map for Location sort order to their respective Query SORT constants.
+     */
+    static private $sortOrderMap = [
+        RepositoryLocation::SORT_ORDER_DESC => Query::SORT_DESC,
+        RepositoryLocation::SORT_ORDER_ASC => Query::SORT_ASC,
+    ];
+
+    /**
+     * Get SortClause objects built from Locations's sort options.
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotImplementedException If sort field has a deprecated/unsupported value which does not have a Sort Clause.
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause[]
+     */
+    private function getSortClauses()
+    {
+        if (!isset(static::$sortFieldMap[$this->sortField])) {
+            throw new NotImplementedException(
+                "Sort clause not implemented for Location sort field with value {$this->sortField}"
+            );
+        }
+
+        $sortClause = new static::$sortFieldMap[$this->sortField]();
+        $sortClause->direction = static::$sortOrderMap[$this->sortOrder];
+
+        return [$sortClause];
     }
 }

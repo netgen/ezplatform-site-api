@@ -49,7 +49,7 @@ abstract class ContentInfo extends ValueObject
      * @param int $maxPerPage
      * @param int $currentPage
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]|\Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
     abstract public function filterLocations($maxPerPage = 25, $currentPage = 1);
 }

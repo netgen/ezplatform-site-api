@@ -7,6 +7,8 @@ use Netgen\EzPlatformSiteApi\API\FindService;
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
+ * @deprecated since version 2.1, to be removed in 3.0. Use LocationSearchHitAdapter instead.
+ *
  * Pagerfanta adapter for Netgen eZ Platform Site Node search.
  * Will return results as SearchHit objects.
  */

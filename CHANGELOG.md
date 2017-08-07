@@ -31,6 +31,7 @@ available as lazy-loaded property of `Location`:
   * `NodeSearchAdapter`
   * `NodeSearchHitAdapter`
 * Updates coding style
+* Adds `SearchResultExtractorTrait`, providing a way to extract value objects from search result
 
 2.0.1 (26.04.2017)
 ------------------

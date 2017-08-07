@@ -39,11 +39,6 @@ final class Content extends APIContent
     private $site;
 
     /**
-     * @var \Pagerfanta\Pagerfanta[]
-     */
-    private $locationsPagerCache = [];
-
-    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private $internalMainLocation;
@@ -176,35 +171,28 @@ final class Content extends APIContent
 
     public function filterLocations($maxPerPage = 25, $currentPage = 1)
     {
-        $cacheId = $maxPerPage;
+        $pager = new Pagerfanta(
+            new LocationSearchFilterAdapter(
+                new LocationQuery([
+                    'filter' => new LogicalAnd(
+                        [
+                            new ContentId($this->id),
+                            new Visibility(Visibility::VISIBLE),
+                        ]
+                    ),
+                    'sortClauses' => [
+                        new Path(),
+                    ],
+                ]),
+                $this->site->getFilterService()
+            )
+        );
 
-        if (!array_key_exists($cacheId, $this->locationsPagerCache)) {
-            $pager = new Pagerfanta(
-                new LocationSearchFilterAdapter(
-                    new LocationQuery([
-                        'filter' => new LogicalAnd(
-                            [
-                                new ContentId($this->id),
-                                new Visibility(Visibility::VISIBLE),
-                            ]
-                        ),
-                        'sortClauses' => [
-                            new Path(),
-                        ],
-                    ]),
-                    $this->site->getFilterService()
-                )
-            );
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
 
-            $pager->setNormalizeOutOfRangePages(true);
-            $pager->setMaxPerPage($maxPerPage);
-
-            $this->locationsPagerCache[$cacheId] = $pager;
-        }
-
-        $this->locationsPagerCache[$cacheId]->setCurrentPage($currentPage);
-
-        return $this->locationsPagerCache[$cacheId];
+        return $pager;
     }
 
     private function buildField(array $properties = [])

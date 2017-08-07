@@ -41,11 +41,6 @@ final class ContentInfo extends APIContentInfo
     private $site;
 
     /**
-     * @var \Pagerfanta\Pagerfanta[]
-     */
-    private $locationsPagerCache = [];
-
-    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private $internalContent;
@@ -66,6 +61,8 @@ final class ContentInfo extends APIContentInfo
     }
 
     /**
+     * {@inheritdoc}
+     *
      * Magic getter for retrieving convenience properties.
      *
      * @param string $property The name of the property to retrieve
@@ -136,35 +133,28 @@ final class ContentInfo extends APIContentInfo
 
     public function filterLocations($maxPerPage = 25, $currentPage = 1)
     {
-        $cacheId = $maxPerPage;
+        $pager = new Pagerfanta(
+            new LocationSearchFilterAdapter(
+                new LocationQuery([
+                    'filter' => new LogicalAnd(
+                        [
+                            new ContentId($this->id),
+                            new Visibility(Visibility::VISIBLE),
+                        ]
+                    ),
+                    'sortClauses' => [
+                        new Path(),
+                    ],
+                ]),
+                $this->site->getFilterService()
+            )
+        );
 
-        if (!array_key_exists($cacheId, $this->locationsPagerCache)) {
-            $pager = new Pagerfanta(
-                new LocationSearchFilterAdapter(
-                    new LocationQuery([
-                        'filter' => new LogicalAnd(
-                            [
-                                new ContentId($this->id),
-                                new Visibility(Visibility::VISIBLE),
-                            ]
-                        ),
-                        'sortClauses' => [
-                            new Path(),
-                        ],
-                    ]),
-                    $this->site->getFilterService()
-                )
-            );
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
 
-            $pager->setNormalizeOutOfRangePages(true);
-            $pager->setMaxPerPage($maxPerPage);
-
-            $this->locationsPagerCache[$cacheId] = $pager;
-        }
-
-        $this->locationsPagerCache[$cacheId]->setCurrentPage($currentPage);
-
-        return $this->locationsPagerCache[$cacheId];
+        return $pager;
     }
 
     private function getContent()

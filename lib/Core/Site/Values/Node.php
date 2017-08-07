@@ -40,16 +40,6 @@ final class Node extends APINode
     private $site;
 
     /**
-     * @var \Pagerfanta\Pagerfanta[]
-     */
-    private $childrenPagerCache = [];
-
-    /**
-     * @var \Pagerfanta\Pagerfanta[]
-     */
-    private $siblingPagerCache = [];
-
-    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
     private $internalParent;
@@ -120,37 +110,30 @@ final class Node extends APINode
 
     public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)
     {
-        $cacheId = $this->getCacheId($contentTypeIdentifiers, $maxPerPage);
+        $criteria = [
+            new ParentLocationId($this->id),
+            new Visibility(Visibility::VISIBLE),
+        ];
 
-        if (!array_key_exists($cacheId, $this->childrenPagerCache)) {
-            $criteria = [
-                new ParentLocationId($this->id),
-                new Visibility(Visibility::VISIBLE),
-            ];
-
-            if (!empty($contentTypeIdentifiers)) {
-                $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
-            }
-
-            $pager = new Pagerfanta(
-                new LocationSearchFilterAdapter(
-                    new LocationQuery([
-                        'filter' => new LogicalAnd($criteria),
-                        'sortClauses' => $this->getSortClauses(),
-                    ]),
-                    $this->site->getFilterService()
-                )
-            );
-
-            $pager->setNormalizeOutOfRangePages(true);
-            $pager->setMaxPerPage($maxPerPage);
-
-            $this->childrenPagerCache[$cacheId] = $pager;
+        if (!empty($contentTypeIdentifiers)) {
+            $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
         }
 
-        $this->childrenPagerCache[$cacheId]->setCurrentPage($currentPage);
+        $pager = new Pagerfanta(
+            new LocationSearchFilterAdapter(
+                new LocationQuery([
+                    'filter' => new LogicalAnd($criteria),
+                    'sortClauses' => $this->getSortClauses(),
+                ]),
+                $this->site->getFilterService()
+            )
+        );
 
-        return $this->childrenPagerCache[$cacheId];
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
+
+        return $pager;
     }
 
     public function getSiblings($limit = 25)
@@ -160,55 +143,33 @@ final class Node extends APINode
 
     public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)
     {
-        $cacheId = $this->getCacheId($contentTypeIdentifiers, $maxPerPage);
+        $criteria = [
+            new ParentLocationId($this->parentLocationId),
+            new LogicalNot(
+                new LocationId($this->id)
+            ),
+            new Visibility(Visibility::VISIBLE),
+        ];
 
-        if (!array_key_exists($cacheId, $this->siblingPagerCache)) {
-            $criteria = [
-                new ParentLocationId($this->parentLocationId),
-                new LogicalNot(
-                    new LocationId($this->id)
-                ),
-                new Visibility(Visibility::VISIBLE),
-            ];
-
-            if (!empty($contentTypeIdentifiers)) {
-                $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
-            }
-
-            $pager = new Pagerfanta(
-                new LocationSearchFilterAdapter(
-                    new LocationQuery([
-                        'filter' => new LogicalAnd($criteria),
-                        'sortClauses' => $this->getSortClauses(),
-                    ]),
-                    $this->site->getFilterService()
-                )
-            );
-
-            $pager->setNormalizeOutOfRangePages(true);
-            $pager->setMaxPerPage($maxPerPage);
-
-            $this->siblingPagerCache[$cacheId] = $pager;
+        if (!empty($contentTypeIdentifiers)) {
+            $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
         }
 
-        $this->siblingPagerCache[$cacheId]->setCurrentPage($currentPage);
+        $pager = new Pagerfanta(
+            new LocationSearchFilterAdapter(
+                new LocationQuery([
+                    'filter' => new LogicalAnd($criteria),
+                    'sortClauses' => $this->getSortClauses(),
+                ]),
+                $this->site->getFilterService()
+            )
+        );
 
-        return $this->siblingPagerCache[$cacheId];
-    }
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
 
-    /**
-     * Returns unique string for the given parameters.
-     *
-     * @param array $contentTypeIdentifiers
-     * @param int $maxPerPage
-     *
-     * @return string
-     */
-    private function getCacheId(array $contentTypeIdentifiers, $maxPerPage)
-    {
-        sort($contentTypeIdentifiers);
-
-        return md5(implode(' ', $contentTypeIdentifiers) . ' ' . $maxPerPage);
+        return $pager;
     }
 
     private function getParent()

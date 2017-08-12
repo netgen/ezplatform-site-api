@@ -2,11 +2,13 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
+use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
 use Pagerfanta\Pagerfanta;
@@ -21,7 +23,7 @@ final class Content extends APIContent
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
-    protected $fields = [];
+    protected $fields;
 
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Content
@@ -34,9 +36,29 @@ final class Content extends APIContent
     private $fieldsById = [];
 
     /**
+     * @var int
+     */
+    private $versionNo;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     */
+    private $innerContentType;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Site
      */
     private $site;
+
+    /**
+     * @var \eZ\Publish\API\Repository\FieldTypeService
+     */
+    private $fieldTypeService;
+
+    /**
+     * @var \eZ\Publish\API\Repository\ContentService
+     */
+    private $contentService;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
@@ -45,17 +67,29 @@ final class Content extends APIContent
 
     public function __construct(array $properties = [])
     {
-        if (isset($properties['_fields_data'])) {
-            foreach ($properties['_fields_data'] as $fieldData) {
-                $this->buildField($fieldData);
-            }
+        if (array_key_exists('versionNo', $properties)) {
+            $this->versionNo = $properties['versionNo'];
+            unset($properties['versionNo']);
+        }
 
-            unset($properties['_fields_data']);
+        if (array_key_exists('innerContentType', $properties)) {
+            $this->innerContentType = $properties['innerContentType'];
+            unset($properties['innerContentType']);
         }
 
         if (array_key_exists('site', $properties)) {
             $this->site = $properties['site'];
             unset($properties['site']);
+        }
+
+        if (array_key_exists('contentService', $properties)) {
+            $this->contentService = $properties['contentService'];
+            unset($properties['contentService']);
+        }
+
+        if (array_key_exists('fieldTypeService', $properties)) {
+            $this->fieldTypeService = $properties['fieldTypeService'];
+            unset($properties['fieldTypeService']);
         }
 
         parent::__construct($properties);
@@ -73,6 +107,9 @@ final class Content extends APIContent
     public function __get($property)
     {
         switch ($property) {
+            case 'fields':
+                $this->initializeFields();
+                return $this->fields;
             case 'id':
                 return $this->contentInfo->id;
             case 'name':
@@ -81,6 +118,8 @@ final class Content extends APIContent
                 return $this->contentInfo->mainLocationId;
             case 'mainLocation':
                 return $this->getMainLocation();
+            case 'innerContent':
+                return $this->getInnerContent();
         }
 
         if (property_exists($this, $property)) {
@@ -104,10 +143,12 @@ final class Content extends APIContent
     public function __isset($property)
     {
         switch ($property) {
+            case 'fields':
             case 'id':
             case 'name':
             case 'mainLocationId':
             case 'mainLocation':
+            case 'innerContent':
                 return true;
         }
 
@@ -195,10 +236,29 @@ final class Content extends APIContent
         return $pager;
     }
 
-    private function buildField(array $properties = [])
+    private function initializeFields()
     {
-        $properties['content'] = $this;
-        $field = new Field($properties);
+        if ($this->fields === null) {
+            $content = $this->getInnerContent();
+            foreach ($content->getFieldsByLanguage($this->contentInfo->languageCode) as $field) {
+                $this->buildField($field);
+            }
+        }
+    }
+
+    private function buildField(APIField $apiField)
+    {
+        $fieldDefinition = $this->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
+        $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
+        $isEmpty = $this->fieldTypeService->getFieldType($fieldTypeIdentifier)->isEmptyValue(
+            $apiField->value
+        );
+
+        $field = new Field([
+            'isEmpty' => $isEmpty,
+            'innerField' => $apiField,
+            'content' => $this,
+        ]);
 
         $this->fields[$field->fieldDefIdentifier] = $field;
         $this->fieldsById[$field->id] = $field;
@@ -213,5 +273,18 @@ final class Content extends APIContent
         }
 
         return $this->internalMainLocation;
+    }
+
+    private function getInnerContent()
+    {
+        if ($this->innerContent === null) {
+            $this->innerContent = $this->contentService->loadContent(
+                $this->contentInfo->id,
+                [$this->contentInfo->languageCode],
+                $this->versionNo
+            );
+        }
+
+        return $this->innerContent;
     }
 }

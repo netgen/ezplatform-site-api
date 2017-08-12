@@ -63,9 +63,9 @@ class FilterService implements FilterServiceInterface
             /** @var \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo */
             $contentInfo = $searchHit->valueObject;
             $searchHit->valueObject = $this->domainObjectMapper->mapContent(
-                $this->contentService->loadContent(
-                    $contentInfo->id,
-                    [$searchHit->matchedTranslation]
+                $this->contentService->loadVersionInfo(
+                    $contentInfo,
+                    $contentInfo->currentVersionNo
                 ),
                 $searchHit->matchedTranslation
             );

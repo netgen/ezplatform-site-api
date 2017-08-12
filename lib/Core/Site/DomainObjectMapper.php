@@ -2,6 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
+use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
@@ -39,16 +40,24 @@ final class DomainObjectMapper
     private $contentTypeService;
 
     /**
+     * @var \eZ\Publish\API\Repository\ContentService
+     */
+    private $contentService;
+
+    /**
      * @param \Netgen\EzPlatformSiteApi\API\Site $site
+     * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
      */
     public function __construct(
         SiteInterface $site,
+        ContentService $contentService,
         ContentTypeService $contentTypeService,
         FieldTypeService $fieldTypeService
     ) {
         $this->site = $site;
+        $this->contentService = $contentService;
         $this->contentTypeService = $contentTypeService;
         $this->fieldTypeService = $fieldTypeService;
     }
@@ -56,32 +65,29 @@ final class DomainObjectMapper
     /**
      * Maps Repository Content to the Site Content.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
      * @param string $languageCode
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Content
      */
-    public function mapContent(APIContent $content, $languageCode)
+    public function mapContent(VersionInfo $versionInfo, $languageCode)
     {
         $contentType = $this->contentTypeService->loadContentType(
-            $content->contentInfo->contentTypeId
+            $versionInfo->contentInfo->contentTypeId
         );
-        $fields = $content->getFieldsByLanguage($languageCode);
-        $fieldsData = [];
-        foreach ($fields as $field) {
-            $fieldsData[] = $this->mapFieldData($field, $contentType);
-        }
 
         return new Content(
             [
-                '_fields_data' => $fieldsData,
                 'contentInfo' => $this->mapContentInfo(
-                    $content->versionInfo,
+                    $versionInfo,
                     $languageCode,
                     $contentType
                 ),
-                'innerContent' => $content,
+                'innerContentType' => $contentType,
+                'versionNo' => $versionInfo->versionNo,
                 'site' => $this->site,
+                'contentService' => $this->contentService,
+                'fieldTypeService' => $this->fieldTypeService,
             ]
         );
     }
@@ -152,31 +158,9 @@ final class DomainObjectMapper
             [
                 'contentInfo' => $this->mapContentInfo($content->versionInfo, $languageCode),
                 'innerLocation' => $location,
-                'content' => $this->mapContent($content, $languageCode),
+                'content' => $this->mapContent($content->versionInfo, $languageCode),
                 'site' => $this->site,
             ]
         );
-    }
-
-    /**
-     * Maps Repository Field to the Site Field.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Field $field
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
-     *
-     * @return mixed|\Netgen\EzPlatformSiteApi\API\Values\Field
-     */
-    private function mapFieldData(APIField $field, ContentType $contentType)
-    {
-        $fieldDefinition = $contentType->getFieldDefinition($field->fieldDefIdentifier);
-        $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
-        $isEmpty = $this->fieldTypeService->getFieldType($fieldTypeIdentifier)->isEmptyValue(
-            $field->value
-        );
-
-        return [
-            'isEmpty' => $isEmpty,
-            'innerField' => $field,
-        ];
     }
 }

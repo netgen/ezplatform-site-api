@@ -66,25 +66,17 @@ final class Content extends APIContent
 
     public function __construct(array $properties = [])
     {
-        if (array_key_exists('versionNo', $properties)) {
-            $this->versionNo = $properties['versionNo'];
-            unset($properties['versionNo']);
-        }
+        $this->versionNo = $properties['versionNo'];
+        $this->site = $properties['site'];
+        $this->contentService = $properties['contentService'];
+        $this->fieldTypeService = $properties['fieldTypeService'];
 
-        if (array_key_exists('site', $properties)) {
-            $this->site = $properties['site'];
-            unset($properties['site']);
-        }
-
-        if (array_key_exists('contentService', $properties)) {
-            $this->contentService = $properties['contentService'];
-            unset($properties['contentService']);
-        }
-
-        if (array_key_exists('fieldTypeService', $properties)) {
-            $this->fieldTypeService = $properties['fieldTypeService'];
-            unset($properties['fieldTypeService']);
-        }
+        unset(
+            $properties['versionNo'],
+            $properties['site'],
+            $properties['contentService'],
+            $properties['fieldTypeService']
+        );
 
         parent::__construct($properties);
     }

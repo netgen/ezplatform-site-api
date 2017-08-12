@@ -8,7 +8,6 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
 use Pagerfanta\Pagerfanta;
@@ -43,7 +42,7 @@ final class Content extends APIContent
     /**
      * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
      */
-    private $innerContentType;
+    protected $innerContentType;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Site
@@ -70,11 +69,6 @@ final class Content extends APIContent
         if (array_key_exists('versionNo', $properties)) {
             $this->versionNo = $properties['versionNo'];
             unset($properties['versionNo']);
-        }
-
-        if (array_key_exists('innerContentType', $properties)) {
-            $this->innerContentType = $properties['innerContentType'];
-            unset($properties['innerContentType']);
         }
 
         if (array_key_exists('site', $properties)) {

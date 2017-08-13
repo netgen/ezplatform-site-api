@@ -149,11 +149,14 @@ final class Content extends APIContent
 
     public function hasField($identifier)
     {
+        $this->initializeFields();
         return isset($this->fields[$identifier]);
     }
 
     public function getField($identifier)
     {
+        $this->initializeFields();
+
         if ($this->hasField($identifier)) {
             return $this->fields[$identifier];
         }
@@ -163,11 +166,14 @@ final class Content extends APIContent
 
     public function hasFieldById($id)
     {
+        $this->initializeFields();
         return isset($this->fieldsById[$id]);
     }
 
     public function getFieldById($id)
     {
+        $this->initializeFields();
+
         if ($this->hasFieldById($id)) {
             return $this->fieldsById[$id];
         }
@@ -177,6 +183,8 @@ final class Content extends APIContent
 
     public function getFieldValue($identifier)
     {
+        $this->initializeFields();
+
         if ($this->hasField($identifier)) {
             return $this->fields[$identifier]->value;
         }
@@ -186,6 +194,8 @@ final class Content extends APIContent
 
     public function getFieldValueById($id)
     {
+        $this->initializeFields();
+
         if ($this->hasFieldById($id)) {
             return $this->fieldsById[$id]->value;
         }

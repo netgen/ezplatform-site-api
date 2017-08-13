@@ -227,9 +227,11 @@ final class Content extends APIContent
     private function initializeFields()
     {
         if ($this->fields === null) {
-            $content = $this->getInnerContent();
-            foreach ($content->getFieldsByLanguage($this->contentInfo->languageCode) as $field) {
-                $this->buildField($field);
+            $this->fields = [];
+            foreach ($this->getInnerContent()->getFieldsByLanguage($this->contentInfo->languageCode) as $apiField) {
+                $field = $this->buildField($apiField);
+                $this->fields[$field->fieldDefIdentifier] = $field;
+                $this->fieldsById[$field->id] = $field;
             }
         }
     }
@@ -242,14 +244,11 @@ final class Content extends APIContent
             $apiField->value
         );
 
-        $field = new Field([
+        return new Field([
             'isEmpty' => $isEmpty,
             'innerField' => $apiField,
             'content' => $this,
         ]);
-
-        $this->fields[$field->fieldDefIdentifier] = $field;
-        $this->fieldsById[$field->id] = $field;
     }
 
     private function getMainLocation()

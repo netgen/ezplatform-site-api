@@ -569,6 +569,7 @@ class BaseTest extends APIBaseTest
         $this->assertFields($content, $data);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Content', $content->innerContent);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\VersionInfo', $content->versionInfo);
+        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\ContentType\ContentType', $content->innerContentType);
 
         $this->assertTrue(isset($content->id));
         $this->assertTrue(isset($content->name));

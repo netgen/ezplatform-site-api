@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string $name
  * @property-read string|int $mainLocationId
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
+ * @property-read \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
  * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Field[] $fields

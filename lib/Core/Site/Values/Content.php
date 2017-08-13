@@ -15,6 +15,11 @@ use Pagerfanta\Pagerfanta;
 final class Content extends APIContent
 {
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     protected $contentInfo;
@@ -98,8 +103,6 @@ final class Content extends APIContent
                 return $this->fields;
             case 'id':
                 return $this->contentInfo->id;
-            case 'name':
-                return $this->contentInfo->name;
             case 'mainLocationId':
                 return $this->contentInfo->mainLocationId;
             case 'mainLocation':
@@ -131,7 +134,6 @@ final class Content extends APIContent
         switch ($property) {
             case 'fields':
             case 'id':
-            case 'name':
             case 'mainLocationId':
             case 'mainLocation':
             case 'innerContent':

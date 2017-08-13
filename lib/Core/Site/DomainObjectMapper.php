@@ -78,6 +78,7 @@ final class DomainObjectMapper
 
         return new Content(
             [
+                'name' => $versionInfo->getName($languageCode),
                 'contentInfo' => $this->mapContentInfo(
                     $versionInfo,
                     $languageCode,

@@ -30,6 +30,11 @@ final class Content extends APIContent
     protected $languageCode;
 
     /**
+     * @var string|int
+     */
+    protected $mainLocationId;
+
+    /**
      * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
      */
     protected $innerContentInfo;
@@ -116,8 +121,6 @@ final class Content extends APIContent
             case 'fields':
                 $this->initializeFields();
                 return $this->fields;
-            case 'mainLocationId':
-                return $this->contentInfo->mainLocationId;
             case 'mainLocation':
                 return $this->getMainLocation();
             case 'innerContent':
@@ -146,7 +149,6 @@ final class Content extends APIContent
     {
         switch ($property) {
             case 'fields':
-            case 'mainLocationId':
             case 'mainLocation':
             case 'innerContent':
                 return true;
@@ -275,9 +277,9 @@ final class Content extends APIContent
 
     private function getMainLocation()
     {
-        if ($this->internalMainLocation === null && $this->contentInfo->mainLocationId !== null) {
+        if ($this->internalMainLocation === null && $this->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
-                $this->innerContentInfo->mainLocationId
+                $this->mainLocationId
             );
         }
 

@@ -85,6 +85,7 @@ final class DomainObjectMapper
                     $languageCode,
                     $contentType
                 ),
+                'mainLocationId' => $versionInfo->contentInfo->mainLocationId,
                 'innerContentInfo' => $versionInfo->contentInfo,
                 'innerContentType' => $contentType,
                 'versionNo' => $versionInfo->versionNo,

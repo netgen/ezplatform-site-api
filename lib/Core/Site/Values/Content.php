@@ -15,6 +15,11 @@ use Pagerfanta\Pagerfanta;
 final class Content extends APIContent
 {
     /**
+     * @var string|int
+     */
+    protected $id;
+
+    /**
      * @var string
      */
     protected $name;
@@ -111,8 +116,6 @@ final class Content extends APIContent
             case 'fields':
                 $this->initializeFields();
                 return $this->fields;
-            case 'id':
-                return $this->contentInfo->id;
             case 'mainLocationId':
                 return $this->contentInfo->mainLocationId;
             case 'mainLocation':
@@ -143,7 +146,6 @@ final class Content extends APIContent
     {
         switch ($property) {
             case 'fields':
-            case 'id':
             case 'mainLocationId':
             case 'mainLocation':
             case 'innerContent':
@@ -286,7 +288,7 @@ final class Content extends APIContent
     {
         if ($this->innerContent === null) {
             $this->innerContent = $this->contentService->loadContent(
-                $this->contentInfo->id,
+                $this->id,
                 [$this->contentInfo->languageCode],
                 $this->versionNo
             );

@@ -35,11 +35,6 @@ final class Content extends APIContent
     protected $mainLocationId;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
-     */
-    protected $innerContentInfo;
-
-    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     protected $contentInfo;

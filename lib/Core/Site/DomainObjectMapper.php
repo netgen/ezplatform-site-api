@@ -86,7 +86,6 @@ final class DomainObjectMapper
                     $contentType
                 ),
                 'mainLocationId' => $versionInfo->contentInfo->mainLocationId,
-                'innerContentInfo' => $versionInfo->contentInfo,
                 'innerContentType' => $contentType,
                 'versionNo' => $versionInfo->versionNo,
                 'site' => $this->site,

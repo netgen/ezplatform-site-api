@@ -16,12 +16,12 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string $languageCode
  * @property-read string|int $mainLocationId
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
- * @property-read \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
- * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
- * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Field[] $fields
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
  * @property-read \eZ\Publish\API\Repository\Values\Content\Content $innerContent
+ * @property-read \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
+ * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
+ * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
  */
 abstract class Content extends ValueObject
 {

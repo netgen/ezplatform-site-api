@@ -250,7 +250,7 @@ final class Content extends APIContent
     {
         if ($this->fields === null) {
             $this->fields = [];
-            foreach ($this->getInnerContent()->getFieldsByLanguage($this->contentInfo->languageCode) as $apiField) {
+            foreach ($this->getInnerContent()->getFieldsByLanguage($this->languageCode) as $apiField) {
                 $field = $this->buildField($apiField);
                 $this->fields[$field->fieldDefIdentifier] = $field;
                 $this->fieldsById[$field->id] = $field;
@@ -277,7 +277,7 @@ final class Content extends APIContent
     {
         if ($this->internalMainLocation === null && $this->contentInfo->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
-                $this->innerContent->contentInfo->mainLocationId
+                $this->innerContentInfo->mainLocationId
             );
         }
 
@@ -289,7 +289,7 @@ final class Content extends APIContent
         if ($this->innerContent === null) {
             $this->innerContent = $this->contentService->loadContent(
                 $this->id,
-                [$this->contentInfo->languageCode],
+                [$this->languageCode],
                 $this->versionNo
             );
         }

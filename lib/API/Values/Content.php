@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  *
  * @property-read string|int $id
  * @property-read string $name
+ * @property-read string $languageCode
  * @property-read string|int $mainLocationId
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property-read \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo

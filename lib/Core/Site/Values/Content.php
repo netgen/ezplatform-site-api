@@ -20,6 +20,16 @@ final class Content extends APIContent
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $languageCode;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     */
+    protected $innerContentInfo;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     protected $contentInfo;

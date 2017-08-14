@@ -565,10 +565,12 @@ class BaseTest extends APIBaseTest
         $this->assertSame($contentId, $content->id);
         $this->assertSame($locationId, $content->mainLocationId);
         $this->assertSame($name, $content->name);
+        $this->assertEquals($data['languageCode'], $content->languageCode);
         $this->assertContentInfo($content->contentInfo, $data);
         $this->assertFields($content, $data);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Content', $content->innerContent);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\VersionInfo', $content->versionInfo);
+        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\ContentInfo', $content->innerContentInfo);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\ContentType\ContentType', $content->innerContentType);
 
         $this->assertTrue(isset($content->id));

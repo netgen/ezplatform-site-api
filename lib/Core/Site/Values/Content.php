@@ -313,14 +313,14 @@ final class Content extends APIContent
         if ($this->fields === null) {
             $this->fields = [];
             foreach ($this->getInnerContent()->getFieldsByLanguage($this->languageCode) as $apiField) {
-                $field = $this->buildField($apiField);
+                $field = $this->mapField($apiField);
                 $this->fields[$field->fieldDefIdentifier] = $field;
                 $this->fieldsById[$field->id] = $field;
             }
         }
     }
 
-    private function buildField(APIField $apiField)
+    private function mapField(APIField $apiField)
     {
         $fieldDefinition = $this->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;

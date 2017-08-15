@@ -47,17 +47,17 @@ final class Field extends APIField
             case 'fieldTypeIdentifier':
                 return $this->innerFieldDefinition->fieldTypeIdentifier;
             case 'innerFieldDefinition':
-                return $this->content->contentInfo->innerContentType->getFieldDefinition(
+                return $this->content->innerContentType->getFieldDefinition(
                     $this->innerField->fieldDefIdentifier
                 );
             case 'name':
                 return $this->getTranslatedString(
-                    $this->content->contentInfo->languageCode,
+                    $this->content->languageCode,
                     (array)$this->innerFieldDefinition->getNames()
                 );
             case 'description':
                 return $this->getTranslatedString(
-                    $this->content->contentInfo->languageCode,
+                    $this->content->languageCode,
                     (array)$this->innerFieldDefinition->getDescriptions()
                 );
         }

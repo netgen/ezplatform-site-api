@@ -104,7 +104,7 @@ final class DomainObjectMapper
                     $contentType
                 ),
                 'innerContentType' => $contentType,
-                'versionNo' => $versionInfo->versionNo,
+                'innerVersionInfo' => $versionInfo,
                 'site' => $this->site,
                 'contentService' => $this->contentService,
                 'fieldTypeService' => $this->fieldTypeService,

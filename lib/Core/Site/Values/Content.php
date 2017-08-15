@@ -115,14 +115,14 @@ final class Content extends APIContent
     protected $innerContent;
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\Content\VersionInfo
+     */
+    protected $innerVersionInfo;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
     private $fieldsById = [];
-
-    /**
-     * @var int
-     */
-    private $versionNo;
 
     /**
      * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
@@ -151,13 +151,11 @@ final class Content extends APIContent
 
     public function __construct(array $properties = [])
     {
-        $this->versionNo = $properties['versionNo'];
         $this->site = $properties['site'];
         $this->contentService = $properties['contentService'];
         $this->fieldTypeService = $properties['fieldTypeService'];
 
         unset(
-            $properties['versionNo'],
             $properties['site'],
             $properties['contentService'],
             $properties['fieldTypeService']
@@ -185,14 +183,8 @@ final class Content extends APIContent
                 return $this->getMainLocation();
             case 'innerContent':
                 return $this->getInnerContent();
-        }
-
-        if (property_exists($this, $property)) {
-            return $this->$property;
-        }
-
-        if (property_exists($this->innerContent, $property)) {
-            return $this->innerContent->$property;
+            case 'versionInfo':
+                return $this->innerVersionInfo;
         }
 
         return parent::__get($property);
@@ -211,11 +203,8 @@ final class Content extends APIContent
             case 'fields':
             case 'mainLocation':
             case 'innerContent':
+            case 'versionInfo':
                 return true;
-        }
-
-        if (property_exists($this, $property) || property_exists($this->innerContent, $property)) {
-            return true;
         }
 
         return parent::__isset($property);
@@ -352,7 +341,7 @@ final class Content extends APIContent
             $this->innerContent = $this->contentService->loadContent(
                 $this->id,
                 [$this->languageCode],
-                $this->versionNo
+                $this->innerVersionInfo->versionNo
             );
         }
 

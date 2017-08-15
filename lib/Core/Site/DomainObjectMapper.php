@@ -14,6 +14,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Node;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\TranslatableTrait;
 
 /**
  * @internal
@@ -23,6 +24,8 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\Node;
  */
 final class DomainObjectMapper
 {
+    use TranslatableTrait;
+
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Site
      */
@@ -71,21 +74,35 @@ final class DomainObjectMapper
      */
     public function mapContent(VersionInfo $versionInfo, $languageCode)
     {
+        $contentInfo = $versionInfo->contentInfo;
         $contentType = $this->contentTypeService->loadContentType(
             $versionInfo->contentInfo->contentTypeId
         );
 
         return new Content(
             [
-                'id' => $versionInfo->contentInfo->id,
+                'id' => $contentInfo->id,
+                'contentTypeId' => $contentInfo->contentTypeId,
+                'sectionId' => $contentInfo->sectionId,
+                'currentVersionNo' => $contentInfo->currentVersionNo,
+                'published' => $contentInfo->published,
+                'ownerId' => $contentInfo->ownerId,
+                'modificationDate' => $contentInfo->modificationDate,
+                'publishedDate' => $contentInfo->publishedDate,
+                'alwaysAvailable' => $contentInfo->alwaysAvailable,
+                'remoteId' => $contentInfo->remoteId,
+                'mainLanguageCode' => $contentInfo->mainLanguageCode,
+                'mainLocationId' => $contentInfo->mainLocationId,
                 'name' => $versionInfo->getName($languageCode),
                 'languageCode' => $languageCode,
+                'contentTypeIdentifier' => $contentType->identifier,
+                'contentTypeName' => $this->getTranslatedString($languageCode, (array)$contentType->getNames()),
+                'contentTypeDescription' => $this->getTranslatedString($languageCode, (array)$contentType->getDescriptions()),
                 'contentInfo' => $this->mapContentInfo(
                     $versionInfo,
                     $languageCode,
                     $contentType
                 ),
-                'mainLocationId' => $versionInfo->contentInfo->mainLocationId,
                 'innerContentType' => $contentType,
                 'versionNo' => $versionInfo->versionNo,
                 'site' => $this->site,

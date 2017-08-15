@@ -557,15 +557,29 @@ class BaseTest extends APIBaseTest
 
     protected function assertContent($content, $data)
     {
-        list($name, $contentId, , $locationId) = array_values($data);
+        list($name, $contentId, $contentRemoteId, $locationId) = array_values($data);
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
         $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Content', $content);
 
         $this->assertSame($contentId, $content->id);
+        $this->assertEquals($contentRemoteId, $content->remoteId);
         $this->assertSame($locationId, $content->mainLocationId);
         $this->assertSame($name, $content->name);
+        $this->assertEquals($data['contentTypeId'], $content->contentTypeId);
+        $this->assertEquals($data['sectionId'], $content->sectionId);
+        $this->assertEquals($data['currentVersionNo'], $content->currentVersionNo);
+        $this->assertEquals($data['published'], $content->published);
+        $this->assertEquals($data['ownerId'], $content->ownerId);
+        $this->assertEquals($data['modificationDateTimestamp'], $content->modificationDate->getTimestamp());
+        $this->assertEquals($data['publishedDateTimestamp'], $content->publishedDate->getTimestamp());
+        $this->assertEquals($data['alwaysAvailable'], $content->alwaysAvailable);
+        $this->assertEquals($data['mainLanguageCode'], $content->mainLanguageCode);
+        $this->assertEquals($data['mainLocationId'], $content->mainLocationId);
         $this->assertEquals($data['languageCode'], $content->languageCode);
+        $this->assertEquals($data['contentTypeIdentifier'], $content->contentTypeIdentifier);
+        $this->assertEquals($data['contentTypeName'], $content->contentTypeName);
+        $this->assertEquals($data['contentTypeDescription'], $content->contentTypeDescription);
         $this->assertContentInfo($content->contentInfo, $data);
         $this->assertFields($content, $data);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Content', $content->innerContent);

@@ -8,13 +8,27 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * Site Content object represents eZ Platform Repository Content object in a current version
  * and specific language.
  *
- * Corresponds to eZ Platform Repository Content object.
+ * Corresponds to eZ Platform Repository Content and ContentInfo objects.
  * @see \eZ\Publish\API\Repository\Values\Content\Content
+ * @see \eZ\Publish\API\Repository\Values\Content\ContentInfo
  *
  * @property-read string|int $id
+ * @property-read int|string $contentTypeId
+ * @property-read int|string $sectionId
+ * @property-read int $currentVersionNo
+ * @property-read bool $published
+ * @property-read int|string $ownerId
+ * @property-read \DateTime $modificationDate
+ * @property-read \DateTime $publishedDate
+ * @property-read bool $alwaysAvailable
+ * @property-read string $remoteId
+ * @property-read string $mainLanguageCode
+ * @property-read int|string $mainLocationId
  * @property-read string $name
  * @property-read string $languageCode
- * @property-read string|int $mainLocationId
+ * @property-read string $contentTypeIdentifier
+ * @property-read string $contentTypeName
+ * @property-read string $contentTypeDescription
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Field[] $fields
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation

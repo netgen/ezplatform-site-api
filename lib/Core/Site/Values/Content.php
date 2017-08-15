@@ -20,6 +20,61 @@ final class Content extends APIContent
     protected $id;
 
     /**
+     * @var string|int
+     */
+    protected $contentTypeId;
+
+    /**
+     * @var string|int
+     */
+    protected $sectionId;
+
+    /**
+     * @var string|int
+     */
+    protected $currentVersionNo;
+
+    /**
+     * @var bool
+     */
+    protected $published;
+
+    /**
+     * @var string|int
+     */
+    protected $ownerId;
+
+    /**
+     * @var \DateTime
+     */
+    protected $modificationDate;
+
+    /**
+     * @var \DateTime
+     */
+    protected $publishedDate;
+
+    /**
+     * @var bool
+     */
+    protected $alwaysAvailable;
+
+    /**
+     * @var string
+     */
+    protected $remoteId;
+
+    /**
+     * @var string
+     */
+    protected $mainLanguageCode;
+
+    /**
+     * @var string|int
+     */
+    protected $mainLocationId;
+
+    /**
      * @var string
      */
     protected $name;
@@ -32,7 +87,17 @@ final class Content extends APIContent
     /**
      * @var string|int
      */
-    protected $mainLocationId;
+    protected $contentTypeIdentifier;
+
+    /**
+     * @var string
+     */
+    protected $contentTypeName;
+
+    /**
+     * @var string
+     */
+    protected $contentTypeDescription;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo

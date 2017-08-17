@@ -200,7 +200,17 @@ final class DomainObjectMapper
         return new Field([
             'isEmpty' => $isEmpty,
             'innerField' => $apiField,
+            'innerFieldDefinition' => $fieldDefinition,
             'content' => $content,
+            'name' => $this->getTranslatedString(
+                $content->languageCode,
+                (array)$fieldDefinition->getNames()
+            ),
+            'description' => $this->getTranslatedString(
+                $content->languageCode,
+                (array)$fieldDefinition->getDescriptions()
+            ),
+            'fieldTypeIdentifier' => $fieldTypeIdentifier,
         ]);
     }
 }

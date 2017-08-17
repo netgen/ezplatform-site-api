@@ -9,6 +9,21 @@ final class Field extends APIField
     use TranslatableTrait;
 
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var string
+     */
+    protected $fieldTypeIdentifier;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     protected $content;
@@ -17,6 +32,11 @@ final class Field extends APIField
      * @var \eZ\Publish\API\Repository\Values\Content\Field
      */
     protected $innerField;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition
+     */
+    protected $innerFieldDefinition;
 
     /**
      * @var bool
@@ -43,29 +63,6 @@ final class Field extends APIField
      */
     public function __get($property)
     {
-        switch ($property) {
-            case 'fieldTypeIdentifier':
-                return $this->innerFieldDefinition->fieldTypeIdentifier;
-            case 'innerFieldDefinition':
-                return $this->content->innerContentType->getFieldDefinition(
-                    $this->innerField->fieldDefIdentifier
-                );
-            case 'name':
-                return $this->getTranslatedString(
-                    $this->content->languageCode,
-                    (array)$this->innerFieldDefinition->getNames()
-                );
-            case 'description':
-                return $this->getTranslatedString(
-                    $this->content->languageCode,
-                    (array)$this->innerFieldDefinition->getDescriptions()
-                );
-        }
-
-        if (property_exists($this, $property)) {
-            return $this->$property;
-        }
-
         if (property_exists($this->innerField, $property)) {
             return $this->innerField->$property;
         }
@@ -82,15 +79,7 @@ final class Field extends APIField
      */
     public function __isset($property)
     {
-        switch ($property) {
-            case 'fieldTypeIdentifier':
-            case 'innerFieldDefinition':
-            case 'name':
-            case 'description':
-                return true;
-        }
-
-        if (property_exists($this, $property) || property_exists($this->innerField, $property)) {
+        if (property_exists($this->innerField, $property)) {
             return true;
         }
 

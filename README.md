@@ -20,7 +20,6 @@
 - New set of aggregate objects, tailored to make building websites easier
 
   - [`Content`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Content.php)
-  - [`ContentInfo`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/ContentInfo.php)
   - [`Field`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Field.php)
   - [`Location`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Location.php)
 
@@ -54,14 +53,14 @@ The following document details what needs to be done to rewrite your existing si
       // ...
   }
 
-  echo $location->parent->contentInfo->name;
+  echo $location->parent->content->name;
   ```
 
   ```php
   /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
   $loadService = $site->getLoadService();
   $content = $loadService->loadContent(24);
-  $contentInfo = $loadService->loadContentInfo(12);
+  $location = $loadService->loadLocation(12);
 
   foreach ($content->locations as $location) {
       // ...
@@ -71,7 +70,7 @@ The following document details what needs to be done to rewrite your existing si
       // ...
   }
 
-  if (!$contentInfo->content->getField('image')->isEmpty()) {
+  if (!$location->content->getField('image')->isEmpty()) {
       // ...
   }
   ```
@@ -107,7 +106,7 @@ The following document details what needs to be done to rewrite your existing si
 - Twig
 
   ```twig
-  <h1>{{ content.name }} [{{ content.contentInfo.contentTypeIdentifier }}]</h1>
+  <h1>{{ content.name }} [{{ content.contentTypeIdentifier }}]</h1>
 
   {% for identifier, field in content.fields %}
       <h4>Field '{{ identifier }}' in Content #{{ field.content.id }}</h4>
@@ -125,7 +124,7 @@ The following document details what needs to be done to rewrite your existing si
   ```twig
   {% set children = location.filterChildren(['blog_post'], 10, 2) %}
 
-  <p>Parent name: {{ location.parent.contentInfo.name }}<p>
+  <p>Parent name: {{ location.parent.content.name }}<p>
 
   <!-- 'children' variable is full Pagerfanta instance -->
   <p>Total blog posts: {{ children.nbResults }}</p>
@@ -134,7 +133,7 @@ The following document details what needs to be done to rewrite your existing si
 
   <ul>
   {% for child in children %}
-      <li>{{ child.contentInfo.name }}</li>
+      <li>{{ child.content.name }}</li>
   {% endfor %}
   </ul>
 

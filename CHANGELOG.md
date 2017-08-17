@@ -1,6 +1,24 @@
 eZ Platform Site API changelog
 ==============================
 
+2.2.0 (??.??.????)
+------------------
+
+* Introduces lazy loading of `Content` fields, meaning that fields will be transparently loaded only
+if accessed.
+* Deprecates all methods to obtain `ContentInfo` object (to be removed in 3.0):
+  * `LoadService::loadContentInfo()`
+  * `LoadService::loadContentInfoByRemoteId()`
+  * `FilterService::filterContentInfo()`
+  * `FindService::findContentInfo()`
+
+  Note that `ContentInfo` itself is not deprecated, for the sole reason of keeping Site API in line
+  with Repository API. With 3.0, the only way to access `ContentInfo` object will be through
+  aggregation in `Content` and `Location` objects.
+* Deprecates ContentInfo Pagerfanta search adapters (to be removed in 3.0):
+  * `ContentInfoSearchAdapter`
+  * `ContentInfoSearchHitAdapter`
+
 2.1.1 (07.09.2017)
 ------------------
 

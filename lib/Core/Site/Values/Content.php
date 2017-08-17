@@ -14,6 +14,91 @@ use Pagerfanta\Pagerfanta;
 final class Content extends APIContent
 {
     /**
+     * @var string|int
+     */
+    protected $id;
+
+    /**
+     * @var string|int
+     */
+    protected $contentTypeId;
+
+    /**
+     * @var string|int
+     */
+    protected $sectionId;
+
+    /**
+     * @var string|int
+     */
+    protected $currentVersionNo;
+
+    /**
+     * @var bool
+     */
+    protected $published;
+
+    /**
+     * @var string|int
+     */
+    protected $ownerId;
+
+    /**
+     * @var \DateTime
+     */
+    protected $modificationDate;
+
+    /**
+     * @var \DateTime
+     */
+    protected $publishedDate;
+
+    /**
+     * @var bool
+     */
+    protected $alwaysAvailable;
+
+    /**
+     * @var string
+     */
+    protected $remoteId;
+
+    /**
+     * @var string
+     */
+    protected $mainLanguageCode;
+
+    /**
+     * @var string|int
+     */
+    protected $mainLocationId;
+
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var string
+     */
+    protected $languageCode;
+
+    /**
+     * @var string|int
+     */
+    protected $contentTypeIdentifier;
+
+    /**
+     * @var string
+     */
+    protected $contentTypeName;
+
+    /**
+     * @var string
+     */
+    protected $contentTypeDescription;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     protected $contentInfo;
@@ -21,7 +106,7 @@ final class Content extends APIContent
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
-    protected $fields = [];
+    protected $fields;
 
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Content
@@ -29,14 +114,39 @@ final class Content extends APIContent
     protected $innerContent;
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\Content\VersionInfo
+     */
+    protected $innerVersionInfo;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
     private $fieldsById = [];
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     */
+    protected $innerContentType;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Site
      */
     private $site;
+
+    /**
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
+     */
+    private $domainObjectMapper;
+
+    /**
+     * @var \eZ\Publish\API\Repository\FieldTypeService
+     */
+    private $fieldTypeService;
+
+    /**
+     * @var \eZ\Publish\API\Repository\ContentService
+     */
+    private $contentService;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
@@ -45,18 +155,17 @@ final class Content extends APIContent
 
     public function __construct(array $properties = [])
     {
-        if (isset($properties['_fields_data'])) {
-            foreach ($properties['_fields_data'] as $fieldData) {
-                $this->buildField($fieldData);
-            }
+        $this->site = $properties['site'];
+        $this->domainObjectMapper = $properties['domainObjectMapper'];
+        $this->contentService = $properties['contentService'];
+        $this->fieldTypeService = $properties['fieldTypeService'];
 
-            unset($properties['_fields_data']);
-        }
-
-        if (array_key_exists('site', $properties)) {
-            $this->site = $properties['site'];
-            unset($properties['site']);
-        }
+        unset(
+            $properties['site'],
+            $properties['domainObjectMapper'],
+            $properties['contentService'],
+            $properties['fieldTypeService']
+        );
 
         parent::__construct($properties);
     }
@@ -73,22 +182,15 @@ final class Content extends APIContent
     public function __get($property)
     {
         switch ($property) {
-            case 'id':
-                return $this->contentInfo->id;
-            case 'name':
-                return $this->contentInfo->name;
-            case 'mainLocationId':
-                return $this->contentInfo->mainLocationId;
+            case 'fields':
+                $this->initializeFields();
+                return $this->fields;
             case 'mainLocation':
                 return $this->getMainLocation();
-        }
-
-        if (property_exists($this, $property)) {
-            return $this->$property;
-        }
-
-        if (property_exists($this->innerContent, $property)) {
-            return $this->innerContent->$property;
+            case 'innerContent':
+                return $this->getInnerContent();
+            case 'versionInfo':
+                return $this->innerVersionInfo;
         }
 
         return parent::__get($property);
@@ -104,15 +206,11 @@ final class Content extends APIContent
     public function __isset($property)
     {
         switch ($property) {
-            case 'id':
-            case 'name':
-            case 'mainLocationId':
+            case 'fields':
             case 'mainLocation':
+            case 'innerContent':
+            case 'versionInfo':
                 return true;
-        }
-
-        if (property_exists($this, $property) || property_exists($this->innerContent, $property)) {
-            return true;
         }
 
         return parent::__isset($property);
@@ -120,11 +218,14 @@ final class Content extends APIContent
 
     public function hasField($identifier)
     {
+        $this->initializeFields();
         return isset($this->fields[$identifier]);
     }
 
     public function getField($identifier)
     {
+        $this->initializeFields();
+
         if ($this->hasField($identifier)) {
             return $this->fields[$identifier];
         }
@@ -134,11 +235,14 @@ final class Content extends APIContent
 
     public function hasFieldById($id)
     {
+        $this->initializeFields();
         return isset($this->fieldsById[$id]);
     }
 
     public function getFieldById($id)
     {
+        $this->initializeFields();
+
         if ($this->hasFieldById($id)) {
             return $this->fieldsById[$id];
         }
@@ -148,6 +252,8 @@ final class Content extends APIContent
 
     public function getFieldValue($identifier)
     {
+        $this->initializeFields();
+
         if ($this->hasField($identifier)) {
             return $this->fields[$identifier]->value;
         }
@@ -157,6 +263,8 @@ final class Content extends APIContent
 
     public function getFieldValueById($id)
     {
+        $this->initializeFields();
+
         if ($this->hasFieldById($id)) {
             return $this->fieldsById[$id]->value;
         }
@@ -195,23 +303,39 @@ final class Content extends APIContent
         return $pager;
     }
 
-    private function buildField(array $properties = [])
+    private function initializeFields()
     {
-        $properties['content'] = $this;
-        $field = new Field($properties);
-
-        $this->fields[$field->fieldDefIdentifier] = $field;
-        $this->fieldsById[$field->id] = $field;
+        if ($this->fields === null) {
+            $this->fields = [];
+            foreach ($this->getInnerContent()->getFieldsByLanguage($this->languageCode) as $apiField) {
+                $field = $this->domainObjectMapper->mapField($apiField, $this);
+                $this->fields[$field->fieldDefIdentifier] = $field;
+                $this->fieldsById[$field->id] = $field;
+            }
+        }
     }
 
     private function getMainLocation()
     {
-        if ($this->internalMainLocation === null && $this->contentInfo->mainLocationId !== null) {
+        if ($this->internalMainLocation === null && $this->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
-                $this->innerContent->contentInfo->mainLocationId
+                $this->mainLocationId
             );
         }
 
         return $this->internalMainLocation;
+    }
+
+    private function getInnerContent()
+    {
+        if ($this->innerContent === null) {
+            $this->innerContent = $this->contentService->loadContent(
+                $this->id,
+                [$this->languageCode],
+                $this->innerVersionInfo->versionNo
+            );
+        }
+
+        return $this->innerContent;
     }
 }

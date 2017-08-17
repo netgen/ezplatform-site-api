@@ -10,7 +10,7 @@ use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 final class Settings extends BaseSettings
 {
     /**
-     * @var \eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigResolver
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
     private $configResolver;
 

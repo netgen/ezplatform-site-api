@@ -63,9 +63,9 @@ class FilterService implements FilterServiceInterface
             /** @var \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo */
             $contentInfo = $searchHit->valueObject;
             $searchHit->valueObject = $this->domainObjectMapper->mapContent(
-                $this->contentService->loadContent(
-                    $contentInfo->id,
-                    [$searchHit->matchedTranslation]
+                $this->contentService->loadVersionInfo(
+                    $contentInfo,
+                    $contentInfo->currentVersionNo
                 ),
                 $searchHit->matchedTranslation
             );
@@ -76,6 +76,8 @@ class FilterService implements FilterServiceInterface
 
     public function filterContentInfo(Query $query)
     {
+        @trigger_error('filterContentInfo() is deprecated since version 2.2 and will be removed in 3.0. Use filterContent() instead.', E_USER_DEPRECATED);
+
         $searchResult = $this->searchService->findContentInfo(
             $query,
             [

@@ -149,6 +149,7 @@ class Site implements SiteInterface
         if ($this->domainObjectMapper === null) {
             $this->domainObjectMapper = new DomainObjectMapper(
                 $this,
+                $this->contentService,
                 $this->contentTypeService,
                 $this->fieldTypeService
             );

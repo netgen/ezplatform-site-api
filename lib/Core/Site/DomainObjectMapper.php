@@ -206,10 +206,11 @@ final class DomainObjectMapper
         );
 
         return new Field([
-            'isEmpty' => $isEmpty,
-            'innerField' => $apiField,
-            'innerFieldDefinition' => $fieldDefinition,
-            'content' => $content,
+            'id' => $fieldDefinition->id,
+            'fieldDefIdentifier' => $fieldDefinition->identifier,
+            'value' => $apiField->value,
+            'languageCode' => $apiField->languageCode,
+            'fieldTypeIdentifier' => $fieldTypeIdentifier,
             'name' => $this->getTranslatedString(
                 $content->languageCode,
                 (array)$fieldDefinition->getNames()
@@ -218,7 +219,10 @@ final class DomainObjectMapper
                 $content->languageCode,
                 (array)$fieldDefinition->getDescriptions()
             ),
-            'fieldTypeIdentifier' => $fieldTypeIdentifier,
+            'content' => $content,
+            'innerField' => $apiField,
+            'innerFieldDefinition' => $fieldDefinition,
+            'isEmpty' => $isEmpty,
         ]);
     }
 

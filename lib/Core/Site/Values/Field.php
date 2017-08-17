@@ -7,6 +7,31 @@ use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
 final class Field extends APIField
 {
     /**
+     * @var string|int
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $fieldDefIdentifier;
+
+    /**
+     * @var \eZ\Publish\SPI\FieldType\Value
+     */
+    protected $value;
+
+    /**
+     * @var string
+     */
+    protected $languageCode;
+
+    /**
+     * @var string
+     */
+    protected $fieldTypeIdentifier;
+
+    /**
      * @var string
      */
     protected $name;
@@ -15,11 +40,6 @@ final class Field extends APIField
      * @var string
      */
     protected $description;
-
-    /**
-     * @var string
-     */
-    protected $fieldTypeIdentifier;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
@@ -50,38 +70,6 @@ final class Field extends APIField
         }
 
         parent::__construct($properties);
-    }
-
-    /**
-     * Magic getter for retrieving convenience properties.
-     *
-     * @param string $property The name of the property to retrieve
-     *
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        if (property_exists($this->innerField, $property)) {
-            return $this->innerField->$property;
-        }
-
-        return parent::__get($property);
-    }
-
-    /**
-     * Magic isset for signaling existence of convenience properties.
-     *
-     * @param string $property
-     *
-     * @return bool
-     */
-    public function __isset($property)
-    {
-        if (property_exists($this->innerField, $property)) {
-            return true;
-        }
-
-        return parent::__isset($property);
     }
 
     public function isEmpty()

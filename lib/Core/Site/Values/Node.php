@@ -40,7 +40,7 @@ final class Node extends APINode
     private $site;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private $internalParent;
 

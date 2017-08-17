@@ -13,8 +13,6 @@ use Pagerfanta\Pagerfanta;
 
 final class ContentInfo extends APIContentInfo
 {
-    use TranslatableTrait;
-
     /**
      * @var string
      */

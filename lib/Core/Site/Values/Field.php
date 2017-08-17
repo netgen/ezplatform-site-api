@@ -6,8 +6,6 @@ use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
 
 final class Field extends APIField
 {
-    use TranslatableTrait;
-
     /**
      * @var string
      */

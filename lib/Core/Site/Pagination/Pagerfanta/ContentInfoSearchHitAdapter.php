@@ -7,6 +7,8 @@ use Netgen\EzPlatformSiteApi\API\FindService;
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
+ * @deprecated since version 2.2, to be removed in 3.0. Use ContentSearchHitAdapter instead.
+ *
  * Pagerfanta adapter for Netgen eZ Platform Site ContentInfo search.
  * Will return results as SearchHit objects.
  */

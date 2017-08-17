@@ -76,6 +76,8 @@ class FilterService implements FilterServiceInterface
 
     public function filterContentInfo(Query $query)
     {
+        @trigger_error('filterContentInfo() is deprecated since version 2.2 and will be removed in 3.0. Use filterContent() instead.', E_USER_DEPRECATED);
+
         $searchResult = $this->searchService->findContentInfo(
             $query,
             [

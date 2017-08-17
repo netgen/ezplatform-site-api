@@ -80,6 +80,8 @@ class LoadService implements LoadServiceInterface
 
     public function loadContentInfo($contentId, $versionNo = null, $languageCode = null)
     {
+        @trigger_error('loadContentInfo() is deprecated since version 2.2 and will be removed in 3.0. Use loadContent() instead.', E_USER_DEPRECATED);
+
         $versionInfo = $this->contentService->loadVersionInfoById($contentId, $versionNo);
 
         if ($languageCode === null) {
@@ -101,6 +103,8 @@ class LoadService implements LoadServiceInterface
 
     public function loadContentInfoByRemoteId($remoteId)
     {
+        @trigger_error('loadContentInfoByRemoteId() is deprecated since version 2.2 and will be removed in 3.0. Use loadContentByRemoteId() instead.', E_USER_DEPRECATED);
+
         $contentInfo = $this->contentService->loadContentInfoByRemoteId($remoteId);
 
         return $this->loadContentInfo($contentInfo->id);

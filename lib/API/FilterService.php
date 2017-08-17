@@ -25,6 +25,8 @@ interface FilterService
     public function filterContent(Query $query);
 
     /**
+     * @deprecated since version 2.2, to be removed in 3.0. Use filterContent() instead.
+     *
      * Filters ContentInfo objects for the given $query.
      *
      * @see \Netgen\EzPlatformSiteApi\API\Values\ContentInfo

@@ -3,6 +3,8 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta;
 
 /**
+ * @deprecated since version 2.2, to be removed in 3.0. Use ContentSearchAdapter instead.
+ *
  * Pagerfanta adapter for Netgen eZ Platform Site ContentInfo search.
  * Will return results as Site ContentInfo objects.
  */

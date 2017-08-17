@@ -76,6 +76,8 @@ class FindService implements FindServiceInterface
 
     public function findContentInfo(Query $query)
     {
+        @trigger_error('findContentInfo() is deprecated since version 2.2 and will be removed in 3.0. Use findContent() instead.', E_USER_DEPRECATED);
+
         $searchResult = $this->searchService->findContentInfo(
             $query,
             [

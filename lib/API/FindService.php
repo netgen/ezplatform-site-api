@@ -22,6 +22,8 @@ interface FindService
     public function findContent(Query $query);
 
     /**
+     * @deprecated since version 2.2, to be removed in 3.0. Use findContent() instead.
+     *
      * Finds ContentInfo objects for the given $query.
      *
      * @see \Netgen\EzPlatformSiteApi\API\Values\ContentInfo

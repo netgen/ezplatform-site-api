@@ -11,6 +11,10 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @internal hint against API Content instead of this class
+ * @see \Netgen\EzPlatformSiteApi\API\Values\Content
+ */
 final class Content extends APIContent
 {
     /**
@@ -191,6 +195,9 @@ final class Content extends APIContent
                 return $this->getInnerContent();
             case 'versionInfo':
                 return $this->innerVersionInfo;
+            case 'contentInfo':
+                @trigger_error('ContentInfo is deprecated since version 2.2 and will be removed in 3.0. Use Content instead.', E_USER_DEPRECATED);
+                return $this->contentInfo;
         }
 
         return parent::__get($property);
@@ -206,6 +213,9 @@ final class Content extends APIContent
     public function __isset($property)
     {
         switch ($property) {
+            case 'contentInfo':
+                @trigger_error('ContentInfo is deprecated since version 2.2 and will be removed in 3.0. Use Content instead.', E_USER_DEPRECATED);
+                return true;
             case 'fields':
             case 'mainLocation':
             case 'innerContent':

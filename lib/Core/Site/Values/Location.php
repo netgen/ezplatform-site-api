@@ -72,6 +72,9 @@ final class Location extends APILocation
                 return $this->getParent();
             case 'content':
                 return $this->getContent();
+            case 'contentInfo':
+                @trigger_error('ContentInfo is deprecated since version 2.2 and will be removed in 3.0. Use Content instead.', E_USER_DEPRECATED);
+                return $this->contentInfo;
         }
 
         if (property_exists($this, $property)) {
@@ -95,6 +98,9 @@ final class Location extends APILocation
     public function __isset($property)
     {
         switch ($property) {
+            case 'contentInfo':
+                @trigger_error('ContentInfo is deprecated since version 2.2 and will be removed in 3.0. Use Content instead.', E_USER_DEPRECATED);
+                return true;
             case 'contentId':
             case 'parent':
             case 'content':

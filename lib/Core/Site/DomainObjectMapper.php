@@ -6,12 +6,15 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Field;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Node;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\TranslatableTrait;
@@ -106,6 +109,7 @@ final class DomainObjectMapper
                 'innerContentType' => $contentType,
                 'innerVersionInfo' => $versionInfo,
                 'site' => $this->site,
+                'domainObjectMapper' => $this,
                 'contentService' => $this->contentService,
                 'fieldTypeService' => $this->fieldTypeService,
             ]
@@ -182,5 +186,21 @@ final class DomainObjectMapper
                 'site' => $this->site,
             ]
         );
+    }
+
+    public function mapField(APIField $apiField, SiteContent $content)
+    {
+        $contentType = $content->innerContentType;
+        $fieldDefinition = $contentType->getFieldDefinition($apiField->fieldDefIdentifier);
+        $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
+        $isEmpty = $this->fieldTypeService->getFieldType($fieldTypeIdentifier)->isEmptyValue(
+            $apiField->value
+        );
+
+        return new Field([
+            'isEmpty' => $isEmpty,
+            'innerField' => $apiField,
+            'content' => $content,
+        ]);
     }
 }

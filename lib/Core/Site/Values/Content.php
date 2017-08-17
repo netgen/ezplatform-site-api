@@ -2,7 +2,6 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
-use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
@@ -135,6 +134,11 @@ final class Content extends APIContent
     private $site;
 
     /**
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
+     */
+    private $domainObjectMapper;
+
+    /**
      * @var \eZ\Publish\API\Repository\FieldTypeService
      */
     private $fieldTypeService;
@@ -152,11 +156,13 @@ final class Content extends APIContent
     public function __construct(array $properties = [])
     {
         $this->site = $properties['site'];
+        $this->domainObjectMapper = $properties['domainObjectMapper'];
         $this->contentService = $properties['contentService'];
         $this->fieldTypeService = $properties['fieldTypeService'];
 
         unset(
             $properties['site'],
+            $properties['domainObjectMapper'],
             $properties['contentService'],
             $properties['fieldTypeService']
         );
@@ -302,26 +308,11 @@ final class Content extends APIContent
         if ($this->fields === null) {
             $this->fields = [];
             foreach ($this->getInnerContent()->getFieldsByLanguage($this->languageCode) as $apiField) {
-                $field = $this->mapField($apiField);
+                $field = $this->domainObjectMapper->mapField($apiField, $this);
                 $this->fields[$field->fieldDefIdentifier] = $field;
                 $this->fieldsById[$field->id] = $field;
             }
         }
-    }
-
-    private function mapField(APIField $apiField)
-    {
-        $fieldDefinition = $this->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
-        $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
-        $isEmpty = $this->fieldTypeService->getFieldType($fieldTypeIdentifier)->isEmptyValue(
-            $apiField->value
-        );
-
-        return new Field([
-            'isEmpty' => $isEmpty,
-            'innerField' => $apiField,
-            'content' => $this,
-        ]);
     }
 
     private function getMainLocation()

@@ -17,7 +17,6 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Node;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\TranslatableTrait;
 
 /**
  * @internal
@@ -27,8 +26,6 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\TranslatableTrait;
  */
 final class DomainObjectMapper
 {
-    use TranslatableTrait;
-
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Site
      */
@@ -215,5 +212,14 @@ final class DomainObjectMapper
             ),
             'fieldTypeIdentifier' => $fieldTypeIdentifier,
         ]);
+    }
+
+    private function getTranslatedString($languageCode, $strings)
+    {
+        if (array_key_exists($languageCode, $strings)) {
+            return $strings[$languageCode];
+        }
+
+        return null;
     }
 }

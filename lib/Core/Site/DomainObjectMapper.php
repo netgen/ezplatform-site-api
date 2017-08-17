@@ -140,6 +140,9 @@ final class DomainObjectMapper
             [
                 'name' => $versionInfo->getName($languageCode),
                 'languageCode' => $languageCode,
+                'contentTypeIdentifier' => $contentType->identifier,
+                'contentTypeName' => $this->getTranslatedString($languageCode, (array)$contentType->getNames()),
+                'contentTypeDescription' => $this->getTranslatedString($languageCode, (array)$contentType->getDescriptions()),
                 'innerContentInfo' => $versionInfo->contentInfo,
                 'innerContentType' => $contentType,
                 'site' => $this->site,

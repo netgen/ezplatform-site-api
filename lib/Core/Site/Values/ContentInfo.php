@@ -26,6 +26,21 @@ final class ContentInfo extends APIContentInfo
     protected $languageCode;
 
     /**
+     * @var string|int
+     */
+    protected $contentTypeIdentifier;
+
+    /**
+     * @var string
+     */
+    protected $contentTypeName;
+
+    /**
+     * @var string
+     */
+    protected $contentTypeDescription;
+
+    /**
      * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
      */
     protected $innerContentInfo;
@@ -72,18 +87,6 @@ final class ContentInfo extends APIContentInfo
     public function __get($property)
     {
         switch ($property) {
-            case 'contentTypeIdentifier':
-                return $this->innerContentType->identifier;
-            case 'contentTypeName':
-                return $this->getTranslatedString(
-                    $this->languageCode,
-                    (array)$this->innerContentType->getNames()
-                );
-            case 'contentTypeDescription':
-                return $this->getTranslatedString(
-                    $this->languageCode,
-                    (array)$this->innerContentType->getDescriptions()
-                );
             case 'mainLocation':
                 return $this->getMainLocation();
             case 'content':
@@ -111,9 +114,6 @@ final class ContentInfo extends APIContentInfo
     public function __isset($property)
     {
         switch ($property) {
-            case 'contentTypeIdentifier':
-            case 'contentTypeName':
-            case 'contentTypeDescription':
             case 'mainLocation':
             case 'content':
                 return true;

@@ -188,6 +188,14 @@ final class DomainObjectMapper
         );
     }
 
+    /**
+     * Maps Repository Field to the Site Field.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Field $apiField
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
+     *
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Field
+     */
     public function mapField(APIField $apiField, SiteContent $content)
     {
         $contentType = $content->innerContentType;

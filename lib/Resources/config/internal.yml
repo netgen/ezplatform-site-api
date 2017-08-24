@@ -17,7 +17,7 @@ services:
         public: false
 
     netgen.ezplatform_site.repository.filtering_search_service:
-        class: %ezpublish.api.service.search.class%
+        class: '%ezpublish.api.service.search.class%'
         factory:
             - '@netgen.ezplatform_site.inner_repository'
             - getSearchService

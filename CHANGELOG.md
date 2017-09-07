@@ -1,6 +1,11 @@
 eZ Platform Site API changelog
 ==============================
 
+2.1.1 (07.09.2017)
+------------------
+
+* Fix an issue where default value for `ezsettings.default.ngcontent_view` would overwrite any existing value on eZ kernel 6.11+
+
 2.1.0 (31.07.2017)
 ------------------
 

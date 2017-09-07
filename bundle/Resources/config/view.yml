@@ -1,7 +1,3 @@
-parameters:
-    # Default settings for ngcontent_view template rules
-    ezsettings.default.ngcontent_view: {}
-
 services:
     netgen.ezplatform_site.view_builder.content:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder

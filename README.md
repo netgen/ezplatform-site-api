@@ -26,7 +26,7 @@
 
 ## Installation
 
-To install Site API simple add it as a dependency to your project:
+To install Site API simply add it as a dependency to your project:
 
 ```sh
 composer require netgen/ezplatform-site-api:^2.2

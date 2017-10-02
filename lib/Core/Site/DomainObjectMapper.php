@@ -82,28 +82,14 @@ final class DomainObjectMapper
         return new Content(
             [
                 'id' => $contentInfo->id,
-                'contentTypeId' => $contentInfo->contentTypeId,
-                'sectionId' => $contentInfo->sectionId,
-                'currentVersionNo' => $contentInfo->currentVersionNo,
-                'published' => $contentInfo->published,
-                'ownerId' => $contentInfo->ownerId,
-                'modificationDate' => $contentInfo->modificationDate,
-                'publishedDate' => $contentInfo->publishedDate,
-                'alwaysAvailable' => $contentInfo->alwaysAvailable,
-                'remoteId' => $contentInfo->remoteId,
-                'mainLanguageCode' => $contentInfo->mainLanguageCode,
                 'mainLocationId' => $contentInfo->mainLocationId,
                 'name' => $versionInfo->getName($languageCode),
                 'languageCode' => $languageCode,
-                'contentTypeIdentifier' => $contentType->identifier,
-                'contentTypeName' => $this->getTranslatedString($languageCode, (array)$contentType->getNames()),
-                'contentTypeDescription' => $this->getTranslatedString($languageCode, (array)$contentType->getDescriptions()),
                 'contentInfo' => $this->mapContentInfo(
                     $versionInfo,
                     $languageCode,
                     $contentType
                 ),
-                'innerContentType' => $contentType,
                 'innerVersionInfo' => $versionInfo,
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
@@ -198,8 +184,7 @@ final class DomainObjectMapper
      */
     public function mapField(APIField $apiField, SiteContent $content)
     {
-        $contentType = $content->innerContentType;
-        $fieldDefinition = $contentType->getFieldDefinition($apiField->fieldDefIdentifier);
+        $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
         $isEmpty = $this->fieldTypeService->getFieldType($fieldTypeIdentifier)->isEmptyValue(
             $apiField->value

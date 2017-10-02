@@ -25,56 +25,6 @@ final class Content extends APIContent
     /**
      * @var string|int
      */
-    protected $contentTypeId;
-
-    /**
-     * @var string|int
-     */
-    protected $sectionId;
-
-    /**
-     * @var string|int
-     */
-    protected $currentVersionNo;
-
-    /**
-     * @var bool
-     */
-    protected $published;
-
-    /**
-     * @var string|int
-     */
-    protected $ownerId;
-
-    /**
-     * @var \DateTime
-     */
-    protected $modificationDate;
-
-    /**
-     * @var \DateTime
-     */
-    protected $publishedDate;
-
-    /**
-     * @var bool
-     */
-    protected $alwaysAvailable;
-
-    /**
-     * @var string
-     */
-    protected $remoteId;
-
-    /**
-     * @var string
-     */
-    protected $mainLanguageCode;
-
-    /**
-     * @var string|int
-     */
     protected $mainLocationId;
 
     /**
@@ -86,21 +36,6 @@ final class Content extends APIContent
      * @var string
      */
     protected $languageCode;
-
-    /**
-     * @var string|int
-     */
-    protected $contentTypeIdentifier;
-
-    /**
-     * @var string
-     */
-    protected $contentTypeName;
-
-    /**
-     * @var string
-     */
-    protected $contentTypeDescription;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
@@ -126,11 +61,6 @@ final class Content extends APIContent
      * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
     private $fieldsById = [];
-
-    /**
-     * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
-     */
-    protected $innerContentType;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Site

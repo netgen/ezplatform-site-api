@@ -33,7 +33,7 @@ composer require netgen/ezplatform-site-api:^2.2
 ```
 
 That will provide you with public Site API services defined in the [container](lib/Resources/config/services.yml),
-which will enable you to rewrite your custom services piece by piece, while at the same time controllers
+which will enable you to rewrite your custom services piece by piece. At the same time controllers
 and Twig templates can keep using the old code (meaning eZ Platform Repository API).
 
 If you are starting from scratch, or once you're ready to fully switch to Site API, you can set it

@@ -5,8 +5,6 @@ namespace Netgen\EzPlatformSiteApi\API\Values;
 use eZ\Publish\API\Repository\Values\ValueObject;
 
 /**
- * @deprecated since version 2.2, to be removed in 3.0. Use Site API Content instead.
- *
  * Site ContentInfo object provides meta information of the Site Content object.
  *
  * Corresponds to eZ Platform Repository ContentInfo object.

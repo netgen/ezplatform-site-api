@@ -196,7 +196,6 @@ final class Content extends APIContent
             case 'versionInfo':
                 return $this->innerVersionInfo;
             case 'contentInfo':
-                @trigger_error('ContentInfo is deprecated since version 2.2 and will be removed in 3.0. Use Content instead.', E_USER_DEPRECATED);
                 return $this->contentInfo;
         }
 
@@ -214,8 +213,6 @@ final class Content extends APIContent
     {
         switch ($property) {
             case 'contentInfo':
-                @trigger_error('ContentInfo is deprecated since version 2.2 and will be removed in 3.0. Use Content instead.', E_USER_DEPRECATED);
-                return true;
             case 'fields':
             case 'mainLocation':
             case 'innerContent':

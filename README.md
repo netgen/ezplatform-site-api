@@ -23,6 +23,30 @@
   - [`Field`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Field.php)
   - [`Location`](https://github.com/netgen/ezplatform-site-api/blob/master/lib/API/Values/Location.php)
 
+## Installation
+
+To install Site API simple add it as a dependency to your project:
+
+```sh
+composer require netgen/ezplatform-site-api:^2.2
+```
+
+That will provide you with public Site API services defined in the [container](lib/Resources/config/services.yml),
+which will enable you to rewrite your custom services piece by piece, while at the same time controllers
+and Twig templates can keep using the old code (meaning eZ Platform Repository API).
+
+If you are starting from scratch, or once you're ready to fully switch to Site API, you can set it
+as a default for URL alias routes with the following site-access aware config:
+
+```yml
+netgen_ez_platform_site_api:
+    system:
+        frontend_group:
+            override_url_alias_view_action: true
+```
+
+For more details see [Usage instructions](USAGE.md).
+
 ## Detailed usage instructions
 
 The following document details what needs to be done to rewrite your existing site to Site API:

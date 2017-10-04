@@ -82,7 +82,6 @@ final class DomainObjectMapper
                 'mainLocationId' => $contentInfo->mainLocationId,
                 'name' => $versionInfo->getName($languageCode),
                 'languageCode' => $languageCode,
-                'contentInfo' => $this->mapContentInfo($versionInfo, $languageCode),
                 'innerVersionInfo' => $versionInfo,
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
@@ -131,9 +130,11 @@ final class DomainObjectMapper
     {
         return new Location(
             [
-                'contentInfo' => $this->mapContentInfo($versionInfo, $languageCode),
                 'innerLocation' => $location,
+                'languageCode' => $languageCode,
+                'innerVersionInfo' => $versionInfo,
                 'site' => $this->site,
+                'domainObjectMapper' => $this,
             ]
         );
     }

@@ -30,9 +30,24 @@ final class Location extends APILocation
     protected $innerLocation;
 
     /**
+     * @var string
+     */
+    private $languageCode;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\VersionInfo
+     */
+    private $innerVersionInfo;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Site
      */
     private $site;
+
+    /**
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
+     */
+    private $domainObjectMapper;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
@@ -46,10 +61,17 @@ final class Location extends APILocation
 
     public function __construct(array $properties = [])
     {
-        if (array_key_exists('site', $properties)) {
-            $this->site = $properties['site'];
-            unset($properties['site']);
-        }
+        $this->site = $properties['site'];
+        $this->domainObjectMapper = $properties['domainObjectMapper'];
+        $this->innerVersionInfo = $properties['innerVersionInfo'];
+        $this->languageCode = $properties['languageCode'];
+
+        unset(
+            $properties['site'],
+            $properties['domainObjectMapper'],
+            $properties['innerVersionInfo'],
+            $properties['languageCode']
+        );
 
         parent::__construct($properties);
     }
@@ -73,7 +95,7 @@ final class Location extends APILocation
             case 'content':
                 return $this->getContent();
             case 'contentInfo':
-                return $this->contentInfo;
+                return $this->getContentInfo();
         }
 
         if (property_exists($this, $property)) {
@@ -200,6 +222,18 @@ final class Location extends APILocation
         }
 
         return $this->internalContent;
+    }
+
+    private function getContentInfo()
+    {
+        if ($this->contentInfo === null) {
+            $this->contentInfo = $this->domainObjectMapper->mapContentInfo(
+                $this->innerVersionInfo,
+                $this->languageCode
+            );
+        }
+
+        return $this->contentInfo;
     }
 
     /**

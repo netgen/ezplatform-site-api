@@ -119,7 +119,7 @@ final class Content extends APIContent
             case 'versionInfo':
                 return $this->innerVersionInfo;
             case 'contentInfo':
-                return $this->contentInfo;
+                return $this->getContentInfo();
         }
 
         return parent::__get($property);
@@ -267,5 +267,17 @@ final class Content extends APIContent
         }
 
         return $this->innerContent;
+    }
+
+    private function getContentInfo()
+    {
+        if ($this->contentInfo === null) {
+            $this->contentInfo = $this->domainObjectMapper->mapContentInfo(
+                $this->innerVersionInfo,
+                $this->languageCode
+            );
+        }
+
+        return $this->contentInfo;
     }
 }

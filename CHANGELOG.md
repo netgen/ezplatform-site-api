@@ -5,7 +5,8 @@ eZ Platform Site API changelog
 ------------------
 
 * Introduces lazy loading of `Content` fields, meaning that fields will be transparently loaded only
-if accessed.
+if accessed
+* Introduces lazy loading of `ContentInfo` when accessed from `Content` or `Location`
 * Deprecates all methods to obtain `ContentInfo` object (to be removed in 3.0):
   * `LoadService::loadContentInfo()`
   * `LoadService::loadContentInfoByRemoteId()`
@@ -18,6 +19,7 @@ if accessed.
 * Deprecates ContentInfo Pagerfanta search adapters (to be removed in 3.0):
   * `ContentInfoSearchAdapter`
   * `ContentInfoSearchHitAdapter`
+* Fixes https://github.com/netgen/ezplatform-site-api/issues/48: Mapping a field takes the wrong ID
 
 2.1.1 (07.09.2017)
 ------------------

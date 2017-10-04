@@ -668,6 +668,7 @@ class BaseTest extends APIBaseTest
     {
         $field = $content->getField($identifier);
 
+        $this->assertSame($field->id, $field->innerField->id);
         $this->assertSame($data['isEmpty'], $field->isEmpty());
         $this->assertSame($identifier, $field->fieldDefIdentifier);
         $this->assertSame($data['fieldTypeIdentifier'], $field->fieldTypeIdentifier);

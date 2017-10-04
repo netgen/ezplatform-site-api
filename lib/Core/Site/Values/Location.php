@@ -216,8 +216,9 @@ final class Location extends APILocation
     private function getContent()
     {
         if ($this->internalContent === null) {
-            $this->internalContent = $this->site->getLoadService()->loadContent(
-                $this->contentInfo->id
+            $this->internalContent = $this->domainObjectMapper->mapContent(
+                $this->innerVersionInfo,
+                $this->languageCode
             );
         }
 

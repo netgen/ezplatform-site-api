@@ -44,6 +44,35 @@ final class Node extends APINode
      */
     private $internalParent;
 
+    /**
+     * Map for Location sort fields to their respective SortClauses.
+     *
+     * Those not here (class name/identifier and modified subnode) are
+     * missing/deprecated and will most likely be removed in the future.
+     */
+    private static $sortFieldMap = [
+        RepositoryLocation::SORT_FIELD_PATH => SortClause\Location\Path::class,
+        RepositoryLocation::SORT_FIELD_PUBLISHED => SortClause\DatePublished::class,
+        RepositoryLocation::SORT_FIELD_MODIFIED => SortClause\DateModified::class,
+        RepositoryLocation::SORT_FIELD_SECTION => SortClause\SectionIdentifier::class,
+        RepositoryLocation::SORT_FIELD_DEPTH => SortClause\Location\Depth::class,
+        //RepositoryLocation::SORT_FIELD_CLASS_IDENTIFIER => false,
+        //RepositoryLocation::SORT_FIELD_CLASS_NAME => false,
+        RepositoryLocation::SORT_FIELD_PRIORITY => SortClause\Location\Priority::class,
+        RepositoryLocation::SORT_FIELD_NAME => SortClause\ContentName::class,
+        //RepositoryLocation::SORT_FIELD_MODIFIED_SUBNODE => false,
+        RepositoryLocation::SORT_FIELD_NODE_ID => SortClause\Location\Id::class,
+        RepositoryLocation::SORT_FIELD_CONTENTOBJECT_ID => SortClause\ContentId::class,
+    ];
+
+    /**
+     * Map for Location sort order to their respective Query SORT constants.
+     */
+    private static $sortOrderMap = [
+        RepositoryLocation::SORT_ORDER_DESC => Query::SORT_DESC,
+        RepositoryLocation::SORT_ORDER_ASC => Query::SORT_ASC,
+    ];
+
     public function __construct(array $properties = [])
     {
         if (array_key_exists('site', $properties)) {
@@ -182,35 +211,6 @@ final class Node extends APINode
 
         return $this->internalParent;
     }
-
-    /**
-     * Map for Location sort fields to their respective SortClauses.
-     *
-     * Those not here (class name/identifier and modified subnode) are
-     * missing/deprecated and will most likely be removed in the future.
-     */
-    static private $sortFieldMap = [
-        RepositoryLocation::SORT_FIELD_PATH => SortClause\Location\Path::class,
-        RepositoryLocation::SORT_FIELD_PUBLISHED => SortClause\DatePublished::class,
-        RepositoryLocation::SORT_FIELD_MODIFIED => SortClause\DateModified::class,
-        RepositoryLocation::SORT_FIELD_SECTION => SortClause\SectionIdentifier::class,
-        RepositoryLocation::SORT_FIELD_DEPTH => SortClause\Location\Depth::class,
-        //RepositoryLocation::SORT_FIELD_CLASS_IDENTIFIER => false,
-        //RepositoryLocation::SORT_FIELD_CLASS_NAME => false,
-        RepositoryLocation::SORT_FIELD_PRIORITY => SortClause\Location\Priority::class,
-        RepositoryLocation::SORT_FIELD_NAME => SortClause\ContentName::class,
-        //RepositoryLocation::SORT_FIELD_MODIFIED_SUBNODE => false,
-        RepositoryLocation::SORT_FIELD_NODE_ID => SortClause\Location\Id::class,
-        RepositoryLocation::SORT_FIELD_CONTENTOBJECT_ID => SortClause\ContentId::class,
-    ];
-
-    /**
-     * Map for Location sort order to their respective Query SORT constants.
-     */
-    static private $sortOrderMap = [
-        RepositoryLocation::SORT_ORDER_DESC => Query::SORT_DESC,
-        RepositoryLocation::SORT_ORDER_ASC => Query::SORT_ASC,
-    ];
 
     /**
      * Get SortClause objects built from Locations's sort options.

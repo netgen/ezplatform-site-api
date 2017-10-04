@@ -111,6 +111,7 @@ final class Content extends APIContent
         switch ($property) {
             case 'fields':
                 $this->initializeFields();
+
                 return $this->fields;
             case 'mainLocation':
                 return $this->getMainLocation();
@@ -149,6 +150,7 @@ final class Content extends APIContent
     public function hasField($identifier)
     {
         $this->initializeFields();
+
         return isset($this->fields[$identifier]);
     }
 
@@ -166,6 +168,7 @@ final class Content extends APIContent
     public function hasFieldById($id)
     {
         $this->initializeFields();
+
         return isset($this->fieldsById[$id]);
     }
 

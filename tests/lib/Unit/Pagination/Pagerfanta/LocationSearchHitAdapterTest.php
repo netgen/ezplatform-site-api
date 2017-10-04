@@ -20,7 +20,7 @@ class LocationSearchHitAdapterTest extends TestCase
         parent::setUp();
         $this->findService = $this->getMockBuilder('\Netgen\EzPlatformSiteApi\API\FindService')
             ->disableOriginalConstructor()
-            ->setMethods(array())
+            ->setMethods([])
             ->getMock();
     }
 

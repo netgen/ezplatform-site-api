@@ -48,7 +48,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension
         if (!$container->hasParameter('ezsettings.default.ngcontent_view')) {
             // Default value for ngcontent_view template rules
             // Setting this through the config file causes issues in eZ kernel 6.11+
-            $container->setParameter('ezsettings.default.ngcontent_view', array());
+            $container->setParameter('ezsettings.default.ngcontent_view', []);
         }
     }
 }

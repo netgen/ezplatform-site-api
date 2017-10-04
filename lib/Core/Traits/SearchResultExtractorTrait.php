@@ -23,7 +23,7 @@ trait SearchResultExtractorTrait
     protected function extractValueObjects(SearchResult $searchResult)
     {
         return array_map(
-            function(SearchHit $searchHit) {
+            function (SearchHit $searchHit) {
                 return $searchHit->valueObject;
             },
             $searchResult->searchHits

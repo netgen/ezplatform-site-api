@@ -89,7 +89,7 @@ final class Location extends APILocation
     {
         switch ($property) {
             case 'contentId':
-                return $this->contentInfo->id;
+                return $this->innerLocation->contentId;
             case 'parent':
                 return $this->getParent();
             case 'content':

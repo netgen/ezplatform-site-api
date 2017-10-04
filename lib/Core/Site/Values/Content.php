@@ -73,11 +73,6 @@ final class Content extends APIContent
     private $domainObjectMapper;
 
     /**
-     * @var \eZ\Publish\API\Repository\FieldTypeService
-     */
-    private $fieldTypeService;
-
-    /**
      * @var \eZ\Publish\API\Repository\ContentService
      */
     private $contentService;
@@ -92,13 +87,11 @@ final class Content extends APIContent
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
         $this->contentService = $properties['contentService'];
-        $this->fieldTypeService = $properties['fieldTypeService'];
 
         unset(
             $properties['site'],
             $properties['domainObjectMapper'],
-            $properties['contentService'],
-            $properties['fieldTypeService']
+            $properties['contentService']
         );
 
         parent::__construct($properties);

@@ -94,7 +94,6 @@ final class DomainObjectMapper
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
                 'contentService' => $this->contentService,
-                'fieldTypeService' => $this->fieldTypeService,
             ]
         );
     }

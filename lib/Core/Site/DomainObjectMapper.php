@@ -176,7 +176,7 @@ final class DomainObjectMapper
         );
 
         return new Field([
-            'id' => $fieldDefinition->id,
+            'id' => $apiField->id,
             'fieldDefIdentifier' => $fieldDefinition->identifier,
             'value' => $apiField->value,
             'languageCode' => $apiField->languageCode,

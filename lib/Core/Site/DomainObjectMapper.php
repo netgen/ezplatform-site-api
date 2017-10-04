@@ -75,9 +75,6 @@ final class DomainObjectMapper
     public function mapContent(VersionInfo $versionInfo, $languageCode)
     {
         $contentInfo = $versionInfo->contentInfo;
-        $contentType = $this->contentTypeService->loadContentType(
-            $versionInfo->contentInfo->contentTypeId
-        );
 
         return new Content(
             [
@@ -85,11 +82,7 @@ final class DomainObjectMapper
                 'mainLocationId' => $contentInfo->mainLocationId,
                 'name' => $versionInfo->getName($languageCode),
                 'languageCode' => $languageCode,
-                'contentInfo' => $this->mapContentInfo(
-                    $versionInfo,
-                    $languageCode,
-                    $contentType
-                ),
+                'contentInfo' => $this->mapContentInfo($versionInfo, $languageCode),
                 'innerVersionInfo' => $versionInfo,
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
@@ -103,20 +96,13 @@ final class DomainObjectMapper
      *
      * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
      * @param string $languageCode
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType|null $contentType
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
-    public function mapContentInfo(
-        VersionInfo $versionInfo,
-        $languageCode,
-        ContentType $contentType = null
-    ) {
+    public function mapContentInfo(VersionInfo $versionInfo, $languageCode)
+    {
         $contentInfo = $versionInfo->contentInfo;
-
-        if ($contentType === null) {
-            $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
-        }
+        $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
 
         return new ContentInfo(
             [

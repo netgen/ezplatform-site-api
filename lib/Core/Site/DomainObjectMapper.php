@@ -5,6 +5,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
+use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
@@ -46,21 +47,29 @@ final class DomainObjectMapper
     private $contentService;
 
     /**
+     * @var \eZ\Publish\API\Repository\UserService
+     */
+    private $userService;
+
+    /**
      * @param \Netgen\EzPlatformSiteApi\API\Site $site
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
+     * @param \eZ\Publish\API\Repository\UserService $userService
      */
     public function __construct(
         SiteInterface $site,
         ContentService $contentService,
         ContentTypeService $contentTypeService,
-        FieldTypeService $fieldTypeService
+        FieldTypeService $fieldTypeService,
+        UserService $userService
     ) {
         $this->site = $site;
         $this->contentService = $contentService;
         $this->contentTypeService = $contentTypeService;
         $this->fieldTypeService = $fieldTypeService;
+        $this->userService = $userService;
     }
 
     /**
@@ -85,6 +94,7 @@ final class DomainObjectMapper
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
                 'contentService' => $this->contentService,
+                'userService' => $this->userService,
             ]
         );
     }

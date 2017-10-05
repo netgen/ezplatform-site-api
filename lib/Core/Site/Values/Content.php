@@ -2,6 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
@@ -48,6 +49,16 @@ final class Content extends APIContent
     protected $fields;
 
     /**
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    protected $owner;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\User\User
+     */
+    protected $innerOwnerUser;
+
+    /**
      * @var \eZ\Publish\API\Repository\Values\Content\Content
      */
     protected $innerContent;
@@ -78,6 +89,11 @@ final class Content extends APIContent
     private $contentService;
 
     /**
+     * @var \eZ\Publish\API\Repository\UserService
+     */
+    private $userService;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private $internalMainLocation;
@@ -87,11 +103,13 @@ final class Content extends APIContent
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
         $this->contentService = $properties['contentService'];
+        $this->userService = $properties['userService'];
 
         unset(
             $properties['site'],
             $properties['domainObjectMapper'],
-            $properties['contentService']
+            $properties['contentService'],
+            $properties['userService']
         );
 
         parent::__construct($properties);
@@ -121,6 +139,10 @@ final class Content extends APIContent
                 return $this->innerVersionInfo;
             case 'contentInfo':
                 return $this->getContentInfo();
+            case 'owner':
+                return $this->getOwner();
+            case 'innerOwnerUser':
+                return $this->getInnerOwnerUser();
         }
 
         return parent::__get($property);
@@ -141,6 +163,8 @@ final class Content extends APIContent
             case 'mainLocation':
             case 'innerContent':
             case 'versionInfo':
+            case 'owner':
+            case 'innerOwnerUser':
                 return true;
         }
 
@@ -282,6 +306,46 @@ final class Content extends APIContent
         }
 
         return $this->contentInfo;
+    }
+
+    /**
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    private function getOwner()
+    {
+        if ($this->owner === null) {
+            try {
+                $this->owner = $this->site->getLoadService()->loadContent($this->contentInfo->ownerId);
+            } catch (NotFoundException $e) {
+                $this->owner = false;
+            }
+        }
+
+        if ($this->owner === false) {
+            return null;
+        }
+
+        return $this->owner;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\User\User
+     */
+    private function getInnerOwnerUser()
+    {
+        if ($this->innerOwnerUser === null) {
+            try {
+                $this->innerOwnerUser = $this->userService->loadUser($this->contentInfo->ownerId);
+            } catch (NotFoundException $e) {
+                $this->innerOwnerUser = false;
+            }
+        }
+
+        if ($this->innerOwnerUser === false) {
+            return null;
+        }
+
+        return $this->innerOwnerUser;
     }
 
     public function __debugInfo()

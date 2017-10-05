@@ -1,8 +1,8 @@
 eZ Platform Site API changelog
 ==============================
 
-2.2.0 (??.??.????)
-------------------
+2.2.0 (05.10.2017.)
+-------------------
 
 * Introduces lazy loading of `Content` fields, meaning that fields will be transparently loaded only
 if accessed

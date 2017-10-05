@@ -76,4 +76,21 @@ final class Field extends APIField
     {
         return $this->isEmpty;
     }
+
+    public function __debugInfo()
+    {
+        return [
+            'id' => $this->id,
+            'fieldDefIdentifier' => $this->fieldDefIdentifier,
+            'value' => $this->value,
+            'languageCode' => $this->languageCode,
+            'fieldTypeIdentifier' => $this->fieldTypeIdentifier,
+            'name' => $this->name,
+            'description' => $this->description,
+            //'content' => $this->content,
+            'contentId' => $this->content->id,
+            //'innerField' => $this->innerField,
+            'innerFieldDefinition' => $this->innerFieldDefinition,
+        ];
+    }
 }

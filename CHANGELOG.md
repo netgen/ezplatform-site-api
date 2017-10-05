@@ -13,8 +13,12 @@ if accessed
   * `FilterService::filterContentInfo()`
   * `FindService::findContentInfo()`
 
+  The intention behind this is that, with lazy loading of `Content` fields, `Content` takes over the
+  role of `ContentInfo`. It basically behaves the same until the fields are accessed, so you don't
+  need to think about it. 
+
   Note that `ContentInfo` itself is not deprecated, for the sole reason of keeping Site API in line
-  with Repository API. With 3.0, the only way to access `ContentInfo` object will be through
+  with Repository API. With 3.0 the only way to access `ContentInfo` object will be through
   aggregation in `Content` and `Location` objects.
 * Deprecates ContentInfo Pagerfanta search adapters (to be removed in 3.0):
   * `ContentInfoSearchAdapter`

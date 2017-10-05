@@ -18,6 +18,8 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Field[] $fields
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $owner
+ * @property-read \eZ\Publish\API\Repository\Values\User\User $innerOwnerUser
  * @property-read \eZ\Publish\API\Repository\Values\Content\Content $innerContent
  * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $innerVersionInfo
  * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo

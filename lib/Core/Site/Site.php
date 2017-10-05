@@ -7,6 +7,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\SearchService;
+use eZ\Publish\API\Repository\UserService;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSite;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 
@@ -53,6 +54,11 @@ class Site implements SiteInterface
     private $filteringSearchService;
 
     /**
+     * @var \eZ\Publish\API\Repository\UserService
+     */
+    private $userService;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\FilterService
      */
     private $filterService;
@@ -75,6 +81,7 @@ class Site implements SiteInterface
      * @param \eZ\Publish\API\Repository\LocationService $locationService
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\API\Repository\SearchService $filteringSearchService
+     * @param \eZ\Publish\API\Repository\UserService $userService
      */
     public function __construct(
         BaseSite $settings,
@@ -83,7 +90,8 @@ class Site implements SiteInterface
         FieldTypeService $fieldTypeService,
         LocationService $locationService,
         SearchService $searchService,
-        SearchService $filteringSearchService
+        SearchService $filteringSearchService,
+        UserService $userService
     ) {
         $this->settings = $settings;
         $this->contentService = $contentService;
@@ -92,6 +100,7 @@ class Site implements SiteInterface
         $this->locationService = $locationService;
         $this->searchService = $searchService;
         $this->filteringSearchService = $filteringSearchService;
+        $this->userService = $userService;
     }
 
     public function getSettings()
@@ -151,7 +160,8 @@ class Site implements SiteInterface
                 $this,
                 $this->contentService,
                 $this->contentTypeService,
-                $this->fieldTypeService
+                $this->fieldTypeService,
+                $this->userService
             );
         }
 

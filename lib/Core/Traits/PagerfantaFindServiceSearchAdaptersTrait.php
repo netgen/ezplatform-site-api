@@ -103,6 +103,7 @@ trait PagerfantaFindServiceSearchAdaptersTrait
     protected function getPagerfantaPager(AdapterInterface $adapter, Request $request, $maxPerPage)
     {
         $pager = new Pagerfanta($adapter);
+        $pager->setNormalizeOutOfRangePages(true);
         $pager->setMaxPerPage($maxPerPage);
         $pager->setCurrentPage(
             $request->query->get('page', 1)

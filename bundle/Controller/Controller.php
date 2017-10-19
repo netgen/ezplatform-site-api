@@ -3,11 +3,13 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller as BaseController;
+use Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaFindServiceSearchAdaptersTrait;
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 
 abstract class Controller extends BaseController
 {
     use SearchResultExtractorTrait;
+    use PagerfantaFindServiceSearchAdaptersTrait;
 
     /**
      * @return \Netgen\EzPlatformSiteApi\API\Site

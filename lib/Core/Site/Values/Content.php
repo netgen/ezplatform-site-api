@@ -98,6 +98,20 @@ final class Content extends APIContent
      */
     private $internalMainLocation;
 
+    /**
+     * Denotes if $owner property is initialized.
+     *
+     * @var bool
+     */
+    private $isOwnerInitialized = false;
+
+    /**
+     * Denotes if $innerOwnerUser property is initialized.
+     *
+     * @var bool
+     */
+    private $isInnerOwnerUserInitialized = false;
+
     public function __construct(array $properties = [])
     {
         $this->site = $properties['site'];
@@ -313,17 +327,17 @@ final class Content extends APIContent
      */
     private function getOwner()
     {
-        if ($this->owner === null) {
-            try {
-                $this->owner = $this->site->getLoadService()->loadContent($this->contentInfo->ownerId);
-            } catch (NotFoundException $e) {
-                $this->owner = false;
-            }
+        if ($this->isOwnerInitialized) {
+            return $this->owner;
         }
 
-        if ($this->owner === false) {
-            return null;
+        try {
+            $this->owner = $this->site->getLoadService()->loadContent($this->contentInfo->ownerId);
+        } catch (NotFoundException $e) {
+            // Do nothing
         }
+
+        $this->isOwnerInitialized = true;
 
         return $this->owner;
     }
@@ -333,17 +347,17 @@ final class Content extends APIContent
      */
     private function getInnerOwnerUser()
     {
-        if ($this->innerOwnerUser === null) {
-            try {
-                $this->innerOwnerUser = $this->userService->loadUser($this->contentInfo->ownerId);
-            } catch (NotFoundException $e) {
-                $this->innerOwnerUser = false;
-            }
+        if ($this->isInnerOwnerUserInitialized) {
+            return $this->innerOwnerUser;
         }
 
-        if ($this->innerOwnerUser === false) {
-            return null;
+        try {
+            $this->innerOwnerUser = $this->userService->loadUser($this->contentInfo->ownerId);
+        } catch (NotFoundException $e) {
+            // Do nothing
         }
+
+        $this->isInnerOwnerUserInitialized = true;
 
         return $this->innerOwnerUser;
     }

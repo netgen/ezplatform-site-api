@@ -16,78 +16,74 @@ trait PagerfantaFindServiceSearchAdaptersTrait
 {
     /**
      * Returns Pagerfanta pager that starts from first page
-     * and uses 'page' GET parameter from Request object
      * configured with
      * ContentSearchAdapter and FindService
      *
      * @param Query $query
-     * @param Request $request
+     * @param int $currentPage
      * @param int $maxPerPage
      *
      * @return Pagerfanta
      */
-    protected function createContentSearchPager(Query $query, Request $request, $maxPerPage)
+    protected function createContentSearchPager(Query $query, $currentPage, $maxPerPage)
     {
         $adapter = new ContentSearchAdapter($query, $this->getSite()->getFindService());
 
-        return $this->getPagerfantaPager($adapter, $request, $maxPerPage);
+        return $this->getPagerfantaPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
      * Returns Pagerfanta pager that starts from first page
-     * and uses 'page' GET parameter from Request object
      * configured with
      * ContentSearchHitAdapter and FindService
      *
      * @param Query $query
-     * @param Request $request
+     * @param int $currentPage
      * @param int $maxPerPage
      *
      * @return Pagerfanta
      */
-    protected function createContentSearchHitPager(Query $query, Request $request, $maxPerPage)
+    protected function createContentSearchHitPager(Query $query, $currentPage, $maxPerPage)
     {
         $adapter = new ContentSearchHitAdapter($query, $this->getSite()->getFindService());
 
-        return $this->getPagerfantaPager($adapter, $request, $maxPerPage);
+        return $this->getPagerfantaPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
      * Returns Pagerfanta pager that starts from first page
-     * and uses 'page' GET parameter from Request object
      * configured with
      * LocationSearchAdapter and FindService
      *
      * @param LocationQuery $locationQuery
-     * @param Request $request
+     * @param int $currentPage
      * @param int $maxPerPage
      *
      * @return Pagerfanta
      */
-    protected function createLocationSearchPager(LocationQuery $locationQuery, Request $request, $maxPerPage)
+    protected function createLocationSearchPager(LocationQuery $locationQuery, $currentPage, $maxPerPage)
     {
         $adapter = new LocationSearchAdapter($locationQuery, $this->getSite()->getFindService());
 
-        return $this->getPagerfantaPager($adapter, $request, $maxPerPage);
+        return $this->getPagerfantaPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
      * Returns Pagerfanta pager that starts from first page
-     * and uses 'page' GET parameter from Request object
      * configured with
      * LocationSearchHitAdapter and FindService
      *
      * @param LocationQuery $locationQuery
-     * @param Request $request
+     * @param int $currentPage
      * @param int $maxPerPage
      *
      * @return Pagerfanta
      */
-    protected function createLocationSearchHitPager(LocationQuery $locationQuery, Request $request, $maxPerPage)
+    protected function createLocationSearchHitPager(LocationQuery $locationQuery, $currentPage, $maxPerPage)
     {
         $adapter = new LocationSearchHitAdapter($locationQuery, $this->getSite()->getFindService());
 
-        return $this->getPagerfantaPager($adapter, $request, $maxPerPage);
+        return $this->getPagerfantaPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
@@ -95,19 +91,17 @@ trait PagerfantaFindServiceSearchAdaptersTrait
      * with preconfigured Adapter
      *
      * @param AdapterInterface $adapter
-     * @param Request $request
+     * @param int $currentPage
      * @param int $maxPerPage
      *
      * @return Pagerfanta
      */
-    protected function getPagerfantaPager(AdapterInterface $adapter, Request $request, $maxPerPage)
+    protected function getPagerfantaPager(AdapterInterface $adapter, $currentPage, $maxPerPage)
     {
         $pager = new Pagerfanta($adapter);
         $pager->setNormalizeOutOfRangePages(true);
         $pager->setMaxPerPage($maxPerPage);
-        $pager->setCurrentPage(
-            $request->query->get('page', 1)
-        );
+        $pager->setCurrentPage($currentPage);
 
         return $pager;
     }

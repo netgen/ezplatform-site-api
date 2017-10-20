@@ -10,9 +10,8 @@ use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchAdapt
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchHitAdapter;
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\HttpFoundation\Request;
 
-trait PagerfantaFindServiceSearchAdaptersTrait
+trait PagerfantaFindTrait
 {
     /**
      * Returns Pagerfanta pager that starts from first page

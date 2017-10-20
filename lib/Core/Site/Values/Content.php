@@ -332,7 +332,7 @@ final class Content extends APIContent
         }
 
         try {
-            $this->owner = $this->site->getLoadService()->loadContent($this->contentInfo->ownerId);
+            $this->owner = $this->site->getLoadService()->loadContent($this->getContentInfo()->ownerId);
         } catch (NotFoundException $e) {
             // Do nothing
         }
@@ -352,7 +352,7 @@ final class Content extends APIContent
         }
 
         try {
-            $this->innerOwnerUser = $this->userService->loadUser($this->contentInfo->ownerId);
+            $this->innerOwnerUser = $this->userService->loadUser($this->getContentInfo()->ownerId);
         } catch (NotFoundException $e) {
             // Do nothing
         }

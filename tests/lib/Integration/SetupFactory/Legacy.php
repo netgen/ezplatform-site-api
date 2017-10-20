@@ -13,14 +13,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class Legacy extends CoreLegacySetupFactory
 {
-    public function getRepository($initializeFromScratch = true)
-    {
-        // Load repository first so all initialization steps are done
-        $repository = parent::getRepository($initializeFromScratch);
-
-        return $repository;
-    }
-
     public function getServiceContainer()
     {
         if (!isset(self::$serviceContainer)) {

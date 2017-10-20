@@ -15,9 +15,8 @@ class Legacy extends CoreLegacySetupFactory
 {
     public function getServiceContainer()
     {
-        if (!isset(self::$serviceContainer)) {
-            $configPath = __DIR__ . '/../../../../vendor/ezsystems/ezpublish-kernel/config.php';
-            $config = include $configPath;
+        if (null === self::$serviceContainer) {
+            $config = include __DIR__ . '/../../../../vendor/ezsystems/ezpublish-kernel/config.php';
             $installDir = $config['install_dir'];
             /* @var \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder */
             $containerBuilder = include $config['container_builder_path'];

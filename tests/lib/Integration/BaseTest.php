@@ -569,6 +569,8 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($data['languageCode'], $content->languageCode);
         $this->assertContentInfo($content->contentInfo, $data);
         $this->assertFields($content, $data);
+        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Content', $content->owner);
+        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\User\User', $content->innerOwnerUser);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Content', $content->innerContent);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\VersionInfo', $content->versionInfo);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\VersionInfo', $content->innerVersionInfo);

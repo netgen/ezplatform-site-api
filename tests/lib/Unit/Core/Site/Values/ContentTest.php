@@ -307,7 +307,9 @@ class ContentTest extends TestCase
             ->expects($this->any())
             ->method('loadContentType')
             ->with('contentTypeId')
-            ->willReturn(new ContentType());
+            ->willReturn(new ContentType([
+                'fieldDefinitions' => [],
+            ]));
 
         return $this->contentTypeServiceMock;
     }

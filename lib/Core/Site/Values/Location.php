@@ -286,4 +286,27 @@ final class Location extends APILocation
 
         return [$sortClause];
     }
+
+    public function __debugInfo()
+    {
+        return [
+            'id' => $this->innerLocation->id,
+            'status' => $this->innerLocation->status,
+            'priority' => $this->innerLocation->priority,
+            'hidden' => $this->innerLocation->hidden,
+            'invisible' => $this->innerLocation->invisible,
+            'remoteId' => $this->innerLocation->remoteId,
+            'parentLocationId' => $this->innerLocation->parentLocationId,
+            'pathString' => $this->innerLocation->pathString,
+            'path' => $this->innerLocation->path,
+            'depth' => $this->innerLocation->depth,
+            'sortField' => $this->innerLocation->sortField,
+            'sortOrder' => $this->innerLocation->sortOrder,
+            'contentId' => $this->innerLocation->contentId,
+            //'innerLocation' => $this->innerLocation,
+            'contentInfo' => $this->getContentInfo(),
+            //'parent' => $this->getParent(),
+            //'content' => $this->getContent(),
+        ];
+    }
 }

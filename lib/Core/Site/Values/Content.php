@@ -283,4 +283,21 @@ final class Content extends APIContent
 
         return $this->contentInfo;
     }
+
+    public function __debugInfo()
+    {
+        $this->initializeFields();
+
+        return [
+            'id' => $this->id,
+            'mainLocationId' => $this->mainLocationId,
+            'name' => $this->name,
+            'languageCode' => $this->languageCode,
+            'contentInfo' => $this->getContentInfo(),
+            'fields' => $this->fields,
+            //'mainLocation' => $this->getMainLocation(),
+            //'innerContent' => $this->getInnerContent(),
+            //'innerVersionInfo' => $this->innerVersionInfo,
+        ];
+    }
 }

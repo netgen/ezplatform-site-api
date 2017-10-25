@@ -28,7 +28,7 @@ trait PagerfantaFindTrait
     {
         $adapter = new ContentSearchAdapter($query, $this->getSite()->getFindService());
 
-        return $this->getPagerfantaPager($adapter, $currentPage, $maxPerPage);
+        return $this->getPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
@@ -46,7 +46,7 @@ trait PagerfantaFindTrait
     {
         $adapter = new ContentSearchHitAdapter($query, $this->getSite()->getFindService());
 
-        return $this->getPagerfantaPager($adapter, $currentPage, $maxPerPage);
+        return $this->getPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
@@ -64,7 +64,7 @@ trait PagerfantaFindTrait
     {
         $adapter = new LocationSearchAdapter($locationQuery, $this->getSite()->getFindService());
 
-        return $this->getPagerfantaPager($adapter, $currentPage, $maxPerPage);
+        return $this->getPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
@@ -82,7 +82,7 @@ trait PagerfantaFindTrait
     {
         $adapter = new LocationSearchHitAdapter($locationQuery, $this->getSite()->getFindService());
 
-        return $this->getPagerfantaPager($adapter, $currentPage, $maxPerPage);
+        return $this->getPager($adapter, $currentPage, $maxPerPage);
     }
 
     /**
@@ -95,7 +95,7 @@ trait PagerfantaFindTrait
      *
      * @return Pagerfanta
      */
-    protected function getPagerfantaPager(AdapterInterface $adapter, $currentPage, $maxPerPage)
+    protected function getPager(AdapterInterface $adapter, $currentPage, $maxPerPage)
     {
         $pager = new Pagerfanta($adapter);
         $pager->setNormalizeOutOfRangePages(true);

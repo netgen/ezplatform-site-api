@@ -18,11 +18,11 @@ trait PagerfantaFindTrait
      * configured with
      * ContentSearchAdapter and FindService
      *
-     * @param Query $query
+     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      * @param int $currentPage
      * @param int $maxPerPage
      *
-     * @return Pagerfanta
+     * @return \Pagerfanta\Pagerfanta
      */
     protected function createContentSearchPager(Query $query, $currentPage, $maxPerPage)
     {
@@ -36,11 +36,11 @@ trait PagerfantaFindTrait
      * configured with
      * ContentSearchHitAdapter and FindService
      *
-     * @param Query $query
+     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      * @param int $currentPage
      * @param int $maxPerPage
      *
-     * @return Pagerfanta
+     * @return \Pagerfanta\Pagerfanta
      */
     protected function createContentSearchHitPager(Query $query, $currentPage, $maxPerPage)
     {
@@ -54,11 +54,11 @@ trait PagerfantaFindTrait
      * configured with
      * LocationSearchAdapter and FindService
      *
-     * @param LocationQuery $locationQuery
+     * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $locationQuery
      * @param int $currentPage
      * @param int $maxPerPage
      *
-     * @return Pagerfanta
+     * @return \Pagerfanta\Pagerfanta
      */
     protected function createLocationSearchPager(LocationQuery $locationQuery, $currentPage, $maxPerPage)
     {
@@ -72,11 +72,11 @@ trait PagerfantaFindTrait
      * configured with
      * LocationSearchHitAdapter and FindService
      *
-     * @param LocationQuery $locationQuery
+     * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $locationQuery
      * @param int $currentPage
      * @param int $maxPerPage
      *
-     * @return Pagerfanta
+     * @return \Pagerfanta\Pagerfanta
      */
     protected function createLocationSearchHitPager(LocationQuery $locationQuery, $currentPage, $maxPerPage)
     {
@@ -89,11 +89,11 @@ trait PagerfantaFindTrait
      * Shorthand method for creating Pagerfanta pager
      * with preconfigured Adapter
      *
-     * @param AdapterInterface $adapter
+     * @param \Pagerfanta\Adapter\AdapterInterface $adapter
      * @param int $currentPage
      * @param int $maxPerPage
      *
-     * @return Pagerfanta
+     * @return \Pagerfanta\Pagerfanta
      */
     protected function getPager(AdapterInterface $adapter, $currentPage, $maxPerPage)
     {

@@ -12,14 +12,6 @@ abstract class Controller extends BaseController
     use PagerfantaFindTrait;
 
     /**
-     * @return \Netgen\EzPlatformSiteApi\API\Site
-     */
-    public function getSite()
-    {
-        return $this->container->get('netgen.ezplatform_site.site');
-    }
-
-    /**
      * Returns the root location object for current siteaccess configuration.
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location

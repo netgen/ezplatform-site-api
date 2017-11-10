@@ -17,7 +17,8 @@ class PagerfantaFindTraitTest extends BaseTest
     public function setUp()
     {
         parent::setUp();
-        $this->stub = new PagerFantaFindStub($this->getSite());
+        $this->stub = new PagerFantaFindStub();
+        $this->stub->setSite($this->getSite());
     }
 
     public function testCreateContentSearchHitPager()

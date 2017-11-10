@@ -4,6 +4,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Traits;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchHitAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchAdapter;
@@ -13,6 +14,31 @@ use Pagerfanta\Pagerfanta;
 
 trait PagerfantaFindTrait
 {
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Site
+     */
+    protected $site;
+
+    /**
+     * Site getter
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Site
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * Site setter
+     *
+     * @param \Netgen\EzPlatformSiteApi\API\Site $site
+     */
+    public function setSite(Site $site)
+    {
+        $this->site = $site;
+    }
+    
     /**
      * Returns Pagerfanta pager that starts from first page
      * configured with

@@ -12,29 +12,6 @@ class PagerFantaFindStub
     use PagerfantaFindTrait;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Site
-     */
-    protected $site;
-
-    /**
-     * PagerFantaFindStub constructor.
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Site $site
-     */
-    public function __construct(Site $site)
-    {
-        $this->site = $site;
-    }
-
-    /**
-     * @return \Netgen\EzPlatformSiteApi\API\Site
-     */
-    public function getSite()
-    {
-        return $this->site;
-    }
-
-    /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      * @param int $currentPage
      * @param int $maxPerPage

@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\UserService;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSite;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
+use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 
 class Site implements SiteInterface
 {
@@ -64,6 +65,11 @@ class Site implements SiteInterface
     private $filterService;
 
     /**
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry
+     */
+    private $relationResolverRegistry;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\FindService
      */
     private $findService;
@@ -87,6 +93,7 @@ class Site implements SiteInterface
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\API\Repository\SearchService $filteringSearchService
      * @param \eZ\Publish\API\Repository\UserService $userService
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry $relationResolverRegistry
      */
     public function __construct(
         BaseSite $settings,
@@ -96,7 +103,8 @@ class Site implements SiteInterface
         LocationService $locationService,
         SearchService $searchService,
         SearchService $filteringSearchService,
-        UserService $userService
+        UserService $userService,
+        RelationResolverRegistry $relationResolverRegistry
     ) {
         $this->settings = $settings;
         $this->contentService = $contentService;
@@ -106,6 +114,7 @@ class Site implements SiteInterface
         $this->searchService = $searchService;
         $this->filteringSearchService = $filteringSearchService;
         $this->userService = $userService;
+        $this->relationResolverRegistry = $relationResolverRegistry;
     }
 
     public function getSettings()
@@ -158,7 +167,10 @@ class Site implements SiteInterface
     public function getRelationService()
     {
         if ($this->relationService === null) {
-            $this->relationService = new RelationService($this);
+            $this->relationService = new RelationService(
+                $this,
+                $this->relationResolverRegistry
+            );
         }
 
         return $this->relationService;

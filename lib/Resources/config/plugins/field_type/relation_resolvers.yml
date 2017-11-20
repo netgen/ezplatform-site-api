@@ -1,0 +1,19 @@
+parameters:
+
+services:
+    # Services tagged with 'netgen.ezplatform_site.plugins.field_type.relation_resolver'
+    # register to Registry through a compiler pass
+    netgen.ezplatform_site.plugins.field_type.relation_resolver.registry:
+        class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry
+
+    # Resolver for Relation field type
+    netgen.ezplatform_site.plugins.field_type.relation_resolver.relation:
+        class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\Relation
+        tags:
+            - {name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ezobjectrelation}
+
+    # Resolver for RelationList field type
+    netgen.ezplatform_site.plugins.field_type.relation_resolver.relation_list:
+        class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\RelationList
+        tags:
+            - {name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ezobjectrelationlist}

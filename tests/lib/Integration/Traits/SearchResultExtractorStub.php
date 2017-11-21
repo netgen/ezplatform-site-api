@@ -12,7 +12,7 @@ class SearchResultExtractorStub
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
      *
-     * @return
+     * @return \eZ\Publish\API\Repository\Values\ValueObject[]
      */
     public function extract(SearchResult $searchResult)
     {

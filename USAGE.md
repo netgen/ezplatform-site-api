@@ -65,3 +65,48 @@ In all your templates which use the Site API, you will need to remove all calls 
 * `content.name` instead of `ez_content_name(content)`
 
 If you want to keep using `ez_*` Twig functions, you can, since you have access to original `Content` and `Location` value objects with `content.innerContent` and `location.innerLocation`.
+
+Upgrade from eZ Twig statements
+-------------------------------
+
+With the help of PHPStorm we can update Twig statements very easily, just follow these steps:
+1. Open your PHPStorm.
+2. Navigate to template.
+3. Press CTRL + R or Command + R.
+4. Enter regex expressions.
+
+##### ez_is_field_empty()
+```regexp
+# Search for:
+ez_is_field_empty[ ]?\([ ]?([a-zA-Z0-9\_]+)[ ]?,[ ]?['"]([a-zA-Z0-9\_]+)['"][ ]?\)
+ 
+# Replace with:
+$1.fields.$2.empty
+```
+
+##### ez_render_field()
+```regexp
+# Search for:
+ez_render_field[ ]?\([ ]?([a-zA-Z0-9\_]+)[ ]?,[ ]?['"]([a-zA-Z0-9\_]+)['"][ ]?\)
+ 
+# Replace with:
+ng_render_field( $1.fields.$2 )
+```
+
+##### ez_field_value()
+```regexp
+# Search for:
+ez_field_value[ ]?\([ ]?([a-zA-Z0-9\_]+)[ ]?,[ ]?['"]([a-zA-Z0-9\_]+)['"][ ]?\)
+ 
+# Replace with:
+$1.getFieldValue( '$2' )
+```
+
+##### ez_render_field() with parameters
+```regexp
+# Search for:
+ez_render_field[ ]?\(\s+([a-zA-Z0-9\_]+),\s+['"]([a-zA-Z0-9\_]+)['"],([\s\w\{\}'"\:]+)\)
+ 
+# Replace with:
+ng_render_field( \n$1.fields.$2,$3 )
+```

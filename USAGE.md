@@ -99,7 +99,7 @@ ng_render_field( $1.fields.$2 )
 ez_field_value[ ]?\([ ]?([a-zA-Z0-9\_]+)[ ]?,[ ]?['"]([a-zA-Z0-9\_]+)['"][ ]?\)
  
 # Replace with:
-$1.getFieldValue( '$2' )
+$1.fieldValue( '$2' )
 ```
 
 ##### ez_render_field() with parameters

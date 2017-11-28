@@ -13,6 +13,7 @@ services:
         arguments:
             - '@ezpublish.api.persistence_handler'
             - '@ezpublish.spi.search.legacy'
+            - '@?ezpublish.search.background_indexer'
         lazy: true
         public: false
 

@@ -18,3 +18,21 @@ services:
 
     netgen.ezplatform_site.site:
         alias: 'netgen.ezplatform_site.core.site'
+
+    # Search adapters for filter and find services to
+    # eZ\Publish\API\Repository\SearchService interface
+    # from eZ Publish
+
+    netgen.ezplatform_site.filter_service.search_adapter:
+        class: Netgen\EzPlatformSiteApi\API\Adapter\FilterServiceAdapter
+        public: false
+        arguments:
+            - "@netgen.ezplatform_site.filter_service"
+            - "@ezpublish.spi.search.legacy"
+
+    netgen.ezplatform_site.find_service.search_adapter:
+        class: Netgen\EzPlatformSiteApi\API\Adapter\FindServiceAdapter
+        public: false
+        arguments:
+            - "@netgen.ezplatform_site.find_service"
+            - "@ezpublish.spi.search_engine"

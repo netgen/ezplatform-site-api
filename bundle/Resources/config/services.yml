@@ -1,10 +1,4 @@
 parameters:
-    # URL alias router used for overriding URL alias view action
-    netgen_ez_platform_site_api.urlalias_router.class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter
-
-    # Preview controller used for overriding URL alias view action
-    netgen_ez_platform_site_api.preview_controller.class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\PreviewController
-
     # Template defaults for standard eZ Platform installation
     # By default we don't override URL alias view action, for that reason these are commented out
     #ezplatform.default_view_templates.content.full: 'NetgenEzPlatformSiteApiBundle:default:content/full.html.twig'

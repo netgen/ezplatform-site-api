@@ -34,4 +34,11 @@ interface Site
      * @return \Netgen\EzPlatformSiteApi\API\LoadService
      */
     public function getLoadService();
+
+    /**
+     * RelationService getter.
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\RelationService
+     */
+    public function getRelationService();
 }

@@ -43,6 +43,7 @@ services:
             - '@ezpublish.api.service.search'
             - '@netgen.ezplatform_site.repository.filtering_search_service'
             - '@ezpublish.api.service.user'
+            - '@netgen.ezplatform_site.plugins.field_type.relation_resolver.registry'
         lazy: true
 
     netgen.ezplatform_site.core.filter_service:
@@ -64,4 +65,11 @@ services:
         factory:
             - '@netgen.ezplatform_site.core.site'
             - getLoadService
+        lazy: true
+
+    netgen.ezplatform_site.core.relation_service:
+        class: Netgen\EzPlatformSiteApi\Core\Site\RelationService
+        factory:
+            - '@netgen.ezplatform_site.core.site'
+            - getRelationService
         lazy: true

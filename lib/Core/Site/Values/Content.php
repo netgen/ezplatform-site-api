@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
+use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
 /**
@@ -360,6 +361,45 @@ final class Content extends APIContent
         $this->isInnerOwnerUserInitialized = true;
 
         return $this->innerOwnerUser;
+    }
+
+    public function getFieldRelation($fieldDefinitionIdentifier)
+    {
+        return $this->site->getRelationService()->loadFieldRelation(
+            $this->id,
+            $fieldDefinitionIdentifier
+        );
+    }
+
+    public function getFieldRelations($fieldDefinitionIdentifier, $limit = 25)
+    {
+        $relations = $this->site->getRelationService()->loadFieldRelations(
+            $this->id,
+            $fieldDefinitionIdentifier
+        );
+
+        return array_slice($relations, 0, $limit);
+    }
+
+    public function filterFieldRelations(
+        $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        $maxPerPage = 25,
+        $currentPage = 1
+    ) {
+        $relations = $this->site->getRelationService()->loadFieldRelations(
+            $this->id,
+            $fieldDefinitionIdentifier,
+            $contentTypeIdentifiers
+        );
+
+        $pager = new Pagerfanta(new ArrayAdapter($relations));
+
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
+
+        return $pager;
     }
 
     public function __debugInfo()

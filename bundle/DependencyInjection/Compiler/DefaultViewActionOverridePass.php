@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler;
 
+use Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -15,8 +16,6 @@ class DefaultViewActionOverridePass implements CompilerPassInterface
 
         $container
             ->findDefinition('ezpublish.urlalias_router')
-            ->setClass(
-                $container->getParameter('netgen_ez_platform_site_api.urlalias_router.class')
-            );
+            ->setClass(UrlAliasRouter::class);
     }
 }

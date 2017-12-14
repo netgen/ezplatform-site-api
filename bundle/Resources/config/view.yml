@@ -21,20 +21,20 @@ services:
         public: false
 
     netgen.ezplatform_site.ngcontent_view.matcher_factory:
-        class: "%ezpublish.view.matcher_factory.class%"
+        class: eZ\Bundle\EzPublishCoreBundle\Matcher\ServiceAwareMatcherFactory
         arguments: ["@ezpublish.api.repository", 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased']
         calls:
             - [setContainer, ["@service_container"]]
             - [setMatchConfig, [$ngcontent_view$]]
 
     netgen.ezplatform_site.content_view_provider.configured:
-        class: "%ezpublish.view_provider.configured.class%"
+        class: eZ\Bundle\EzPublishCoreBundle\View\Provider\Configured
         arguments: ["@netgen.ezplatform_site.content_view.matcher_factory"]
         tags:
             - {name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 100}
 
     netgen.ezplatform_site.content_view.matcher_factory:
-        class: "%ezpublish.view.matcher_factory.class%"
+        class: eZ\Bundle\EzPublishCoreBundle\Matcher\ServiceAwareMatcherFactory
         arguments: ["@ezpublish.api.repository", 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased']
         calls:
             - [setContainer, ["@service_container"]]

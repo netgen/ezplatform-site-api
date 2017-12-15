@@ -11,29 +11,34 @@ parameters:
 services:
     netgen.ezplatform_site.controller.base:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller
+        public: true
         abstract: true
         calls:
             - [setContainer, ['@service_container']]
 
     netgen.ezplatform_site.core.settings:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Core\Site\Settings
+        public: false
         arguments:
             - '@ezpublish.config.resolver'
 
     netgen.ezplatform_site.controller.content.view:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Content\ViewController
         parent: ezpublish.controller.base
+        public: true
 
     ng_content:
         alias: netgen.ezplatform_site.controller.content.view
+        public: true
 
     netgen.ezplatform_site.twig.extension.field_rendering:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\FieldRenderingExtension
+        public: false
         arguments:
             - '@ezpublish.templating.field_block_renderer'
             - '@ezpublish.fieldType.parameterProviderRegistry'
         tags:
-            - {name: twig.extension}
+            - { name: twig.extension }
 
     netgen.ezplatform_site.sort_clause_parser:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\SortClauseParser
@@ -41,9 +46,10 @@ services:
 
     netgen.ezplatform_site.twig.extension.image:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension
+        public: false
         arguments: ['@ezpublish.fieldType.ezimage.variation_service']
         tags:
-            - {name: twig.extension}
+            - { name: twig.extension }
 
     netgen.ezplatform_site.query_type.parameter_processor:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor

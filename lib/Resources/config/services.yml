@@ -8,21 +8,27 @@ parameters:
 services:
     netgen.ezplatform_site.settings:
         alias: 'netgen.ezplatform_site.core.settings'
+        public: false
 
     netgen.ezplatform_site.filter_service:
         alias: 'netgen.ezplatform_site.core.filter_service'
+        public: false
 
     netgen.ezplatform_site.find_service:
         alias: 'netgen.ezplatform_site.core.find_service'
+        public: false
 
     netgen.ezplatform_site.load_service:
         alias: 'netgen.ezplatform_site.core.load_service'
+        public: false
 
     netgen.ezplatform_site.relation_service:
         alias: 'netgen.ezplatform_site.core.relation_service'
+        public: false
 
     netgen.ezplatform_site.site:
         alias: 'netgen.ezplatform_site.core.site'
+        public: true
 
     # Search adapters for filter and find services to
     # eZ\Publish\API\Repository\SearchService interface

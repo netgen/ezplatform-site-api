@@ -5,15 +5,18 @@ services:
     # register to Registry through a compiler pass
     netgen.ezplatform_site.plugins.field_type.relation_resolver.registry:
         class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry
+        public: false
 
     # Resolver for Relation field type
     netgen.ezplatform_site.plugins.field_type.relation_resolver.relation:
         class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\Relation
+        public: false
         tags:
-            - {name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ezobjectrelation}
+            - { name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ezobjectrelation }
 
     # Resolver for RelationList field type
     netgen.ezplatform_site.plugins.field_type.relation_resolver.relation_list:
         class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\RelationList
+        public: false
         tags:
-            - {name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ezobjectrelationlist}
+            - { name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ezobjectrelationlist }

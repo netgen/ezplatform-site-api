@@ -20,6 +20,14 @@ matrix:
           env: CONFIG="phpunit.xml" COVERGAGE="unit"
         - php: 7.0
           env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
+        - php: 7.1 
+          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+        - php: 7.1 
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
+        - php: 7.2 
+          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+        - php: 7.2 
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
 
 # test only master (+ pull requests)
 branches:

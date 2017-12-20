@@ -34,11 +34,18 @@ services:
     netgen.ezplatform_site.twig.extension.field_rendering:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\FieldRenderingExtension
         public: false
+        tags:
+            - {name: twig.extension}
+
+    netgen.ezplatform_site.twig.runtime.field_rendering:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\FieldRenderingRuntime
+        # public: false
         arguments:
+            - '@twig'
             - '@ezpublish.templating.field_block_renderer'
             - '@ezpublish.fieldType.parameterProviderRegistry'
         tags:
-            - { name: twig.extension }
+            - {name: twig.runtime}
 
     netgen.ezplatform_site.sort_clause_parser:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\SortClauseParser
@@ -47,9 +54,16 @@ services:
     netgen.ezplatform_site.twig.extension.image:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension
         public: false
-        arguments: ['@ezpublish.fieldType.ezimage.variation_service']
         tags:
             - { name: twig.extension }
+
+    netgen.ezplatform_site.twig.runtime.image:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageRuntime
+        # public: false
+        arguments:
+            - '@ezpublish.fieldType.ezimage.variation_service'
+        tags:
+            - { name: twig.runtime }
 
     netgen.ezplatform_site.query_type.parameter_processor:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor

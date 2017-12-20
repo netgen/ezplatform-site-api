@@ -26,6 +26,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_annotation_without_dot' => false,
         'phpdoc_no_alias_tag' => false,
         'space_after_semicolon' => false,
+        'yoda_style' => false,
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder)

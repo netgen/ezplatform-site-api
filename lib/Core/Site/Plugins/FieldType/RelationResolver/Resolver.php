@@ -18,6 +18,28 @@ use Netgen\EzPlatformSiteApi\API\Values\Field;
 abstract class Resolver
 {
     /**
+     * Return related Content IDs for the given $field.
+     *
+     * @throws \LogicException If the field can't be handled by the resolver
+     *
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
+     *
+     * @return int[]|string[]
+     */
+    public function getRelationIds(Field $field)
+    {
+        if (!$this->accept($field)) {
+            $identifier = $this->getSupportedFieldTypeIdentifier();
+
+            throw new LogicException(
+                "This resolver can only handle fields of '{$identifier}' type"
+            );
+        }
+
+        return $this->getRelationIdsFromValue($field->value);
+    }
+
+    /**
      * Return accepted field type identifier.
      *
      * @return string
@@ -43,27 +65,5 @@ abstract class Resolver
     protected function accept(Field $field)
     {
         return $field->fieldTypeIdentifier === $this->getSupportedFieldTypeIdentifier();
-    }
-
-    /**
-     * Return related Content IDs for the given $field.
-     *
-     * @throws \LogicException If the field can't be handled by the resolver
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
-     *
-     * @return int[]|string[]
-     */
-    public function getRelationIds(Field $field)
-    {
-        if (!$this->accept($field)) {
-            $identifier = $this->getSupportedFieldTypeIdentifier();
-
-            throw new LogicException(
-                "This resolver can only handle fields of '{$identifier}' type"
-            );
-        }
-
-        return $this->getRelationIdsFromValue($field->value);
     }
 }

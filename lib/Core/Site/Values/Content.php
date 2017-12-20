@@ -186,6 +186,23 @@ final class Content extends APIContent
         return parent::__isset($property);
     }
 
+    public function __debugInfo()
+    {
+        $this->initializeFields();
+
+        return [
+            'id' => $this->id,
+            'mainLocationId' => $this->mainLocationId,
+            'name' => $this->name,
+            'languageCode' => $this->languageCode,
+            'contentInfo' => $this->getContentInfo(),
+            'fields' => $this->fields,
+            //'mainLocation' => $this->getMainLocation(),
+            //'innerContent' => $this->getInnerContent(),
+            //'innerVersionInfo' => $this->innerVersionInfo,
+        ];
+    }
+
     public function hasField($identifier)
     {
         $this->initializeFields();
@@ -267,6 +284,45 @@ final class Content extends APIContent
                 $this->site->getFilterService()
             )
         );
+
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
+
+        return $pager;
+    }
+
+    public function getFieldRelation($fieldDefinitionIdentifier)
+    {
+        return $this->site->getRelationService()->loadFieldRelation(
+            $this->id,
+            $fieldDefinitionIdentifier
+        );
+    }
+
+    public function getFieldRelations($fieldDefinitionIdentifier, $limit = 25)
+    {
+        $relations = $this->site->getRelationService()->loadFieldRelations(
+            $this->id,
+            $fieldDefinitionIdentifier
+        );
+
+        return array_slice($relations, 0, $limit);
+    }
+
+    public function filterFieldRelations(
+        $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        $maxPerPage = 25,
+        $currentPage = 1
+    ) {
+        $relations = $this->site->getRelationService()->loadFieldRelations(
+            $this->id,
+            $fieldDefinitionIdentifier,
+            $contentTypeIdentifiers
+        );
+
+        $pager = new Pagerfanta(new ArrayAdapter($relations));
 
         $pager->setNormalizeOutOfRangePages(true);
         $pager->setMaxPerPage($maxPerPage);
@@ -361,61 +417,5 @@ final class Content extends APIContent
         $this->isInnerOwnerUserInitialized = true;
 
         return $this->innerOwnerUser;
-    }
-
-    public function getFieldRelation($fieldDefinitionIdentifier)
-    {
-        return $this->site->getRelationService()->loadFieldRelation(
-            $this->id,
-            $fieldDefinitionIdentifier
-        );
-    }
-
-    public function getFieldRelations($fieldDefinitionIdentifier, $limit = 25)
-    {
-        $relations = $this->site->getRelationService()->loadFieldRelations(
-            $this->id,
-            $fieldDefinitionIdentifier
-        );
-
-        return array_slice($relations, 0, $limit);
-    }
-
-    public function filterFieldRelations(
-        $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = [],
-        $maxPerPage = 25,
-        $currentPage = 1
-    ) {
-        $relations = $this->site->getRelationService()->loadFieldRelations(
-            $this->id,
-            $fieldDefinitionIdentifier,
-            $contentTypeIdentifiers
-        );
-
-        $pager = new Pagerfanta(new ArrayAdapter($relations));
-
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage($maxPerPage);
-        $pager->setCurrentPage($currentPage);
-
-        return $pager;
-    }
-
-    public function __debugInfo()
-    {
-        $this->initializeFields();
-
-        return [
-            'id' => $this->id,
-            'mainLocationId' => $this->mainLocationId,
-            'name' => $this->name,
-            'languageCode' => $this->languageCode,
-            'contentInfo' => $this->getContentInfo(),
-            'fields' => $this->fields,
-            //'mainLocation' => $this->getMainLocation(),
-            //'innerContent' => $this->getInnerContent(),
-            //'innerVersionInfo' => $this->innerVersionInfo,
-        ];
     }
 }

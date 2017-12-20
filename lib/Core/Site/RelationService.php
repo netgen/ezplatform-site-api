@@ -122,8 +122,6 @@ class RelationService implements RelationServiceInterface
      *
      * @param array $relatedContentItems
      * @param array $relatedContentIds
-     *
-     * @return void
      */
     private function sortByIdOrder(array &$relatedContentItems, array $relatedContentIds)
     {

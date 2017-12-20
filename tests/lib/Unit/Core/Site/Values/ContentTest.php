@@ -212,7 +212,7 @@ class ContentTest extends TestCase
                 'contentInfo' => new RepoContentInfo([
                     'ownerId' => 'ownerId',
                     'contentTypeId' => 'contentTypeId',
-                ])
+                ]),
             ]),
         ]);
     }

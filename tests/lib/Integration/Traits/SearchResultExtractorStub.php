@@ -2,8 +2,8 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration\Traits;
 
-use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
+use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 
 class SearchResultExtractorStub
 {

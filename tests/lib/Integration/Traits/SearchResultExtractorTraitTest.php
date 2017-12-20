@@ -2,11 +2,11 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration\Traits;
 
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Tests\Integration\BaseTest;
-use eZ\Publish\API\Repository\Values\Content\LocationQuery;
-use eZ\Publish\API\Repository\Values\Content\Query;
 
 class SearchResultExtractorTraitTest extends BaseTest
 {

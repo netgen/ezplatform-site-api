@@ -16,7 +16,7 @@ class Registry
      *
      * @var \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver[]
      */
-    protected $resolverMap = array();
+    protected $resolverMap = [];
 
     /**
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver[] $resolverMap
@@ -33,8 +33,6 @@ class Registry
      *
      * @param string $fieldTypeIdentifier
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver $resolver
-     *
-     * @return void
      */
     public function register($fieldTypeIdentifier, Resolver $resolver)
     {

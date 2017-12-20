@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\DependencyInjection\Compiler;
 
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\RelationResolverRegistrationPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
+use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\RelationResolverRegistrationPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -17,11 +17,6 @@ class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
             'netgen.ezplatform_site.plugins.field_type.relation_resolver.registry',
             new Definition()
         );
-    }
-
-    protected function registerCompilerPass(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new RelationResolverRegistrationPass());
     }
 
     public function testRegisterResolver()
@@ -55,5 +50,10 @@ class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition($serviceId, $definition);
 
         $this->compile();
+    }
+
+    protected function registerCompilerPass(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new RelationResolverRegistrationPass());
     }
 }

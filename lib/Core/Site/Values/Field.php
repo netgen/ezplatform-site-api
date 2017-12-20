@@ -72,11 +72,6 @@ final class Field extends APIField
         parent::__construct($properties);
     }
 
-    public function isEmpty()
-    {
-        return $this->isEmpty;
-    }
-
     public function __debugInfo()
     {
         return [
@@ -92,5 +87,10 @@ final class Field extends APIField
             //'innerField' => $this->innerField,
             'innerFieldDefinition' => $this->innerFieldDefinition,
         ];
+    }
+
+    public function isEmpty()
+    {
+        return $this->isEmpty;
     }
 }

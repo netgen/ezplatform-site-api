@@ -55,8 +55,6 @@ final class RelationResolverRegistrationPass implements CompilerPassInterface
      * @param \Symfony\Component\DependencyInjection\Definition $resolverRegistryDefinition
      * @param string $id
      * @param array $attributes
-     *
-     * @return void
      */
     private function registerResolver(Definition $resolverRegistryDefinition, $id, array $attributes)
     {

@@ -1,6 +1,6 @@
 # Getting started with Site API
 
-This guide presume that you've already installed and enabled Site API inside your project.
+This guide presumes that you've already installed and enabled Site API inside your project.
 
 First you need to activate the full view route override:
 
@@ -20,7 +20,7 @@ ezpublish:
             ngcontent_view:
                 full:
                     article:
-                        template: "AppBundle:content/full:article.html.twig"
+                        template: "@App/content/full/article.html.twig"
                         controller: "AppBundle:Demo:viewArticle"
                         match:
                             Identifier\ContentType: article
@@ -75,9 +75,9 @@ class DemoController extends Controller
 Finally, create the template:
 
 ```twig
-{# AppBundle:content/full:article.html.twig #}
+{# @App/content/full/article.html.twig #}
 
-{% extends 'AppBundle::pagelayout.html.twig' %}
+{% extends '@App/pagelayout.html.twig' %}
 
 {% block content %}
     {# In here, you have access to content and location Site API objects #}
@@ -101,7 +101,7 @@ ezpublish:
             ngcontent_view:
                 full:
                     article:
-                        template: "AppBundle:content/full:article.html.twig"
+                        template: "@App/content/full/article.html.twig"
                         controller: "app.controller.demo:viewArticleAction"
                         match:
                             Identifier\ContentType: article
@@ -132,13 +132,13 @@ Checking if field is not empty:
 
 Getting image alias:
 ```twig
-{% if not content.fields.image.empty %}
-    {% set image = content.fields.image %}
+{% set image = content.fields.image %}
+{% if not image.empty %}
      <img src="{{ ng_image_alias( image, 'i1140' ).uri|default('') }}" alt="{{ image.value.alternativeText }}" />
 {% endif %}
 ```
 
-Getting `FieldValue`:
+Getting field:
 ```twig
 {% set title_field_value = content.fields.title %}
 ```
@@ -162,9 +162,8 @@ Displaying owner:
 
 Displaying all locations of current content (default limit is 25):
 ```twig
-{% set locations = content.getLocations() %}
 <ul>
-{% for location in locations %}
+{% for location in content.locations %}
 	<li>Location name: {{ location.content.name }}</li>
 {% endfor %}
 </ul>
@@ -231,9 +230,8 @@ Displaying parent location of current location:
 
 Displaying all children of current location (default limit is 25):
 ```twig
-{% set children = content.location.getChildren() %}
 <ul>
-{% for child in children %}
+{% for child in content.location.getChildren() %}
 	<li>Child name: {{ child.content.name }}</li>
 {% endfor %}
 </ul>
@@ -251,9 +249,8 @@ Displaying children of current location by simple criteria (content type, limit 
 
 Displaying all siblings of current location (default limit is 25):
 ```twig
-{% set siblings = content.location.getSiblings() %}
 <ul>
-{% for sibling in siblings %}
+{% for sibling in content.location.getSiblings() %}
 	<li>Sibling name: {{ sibling.content.name }}</li>
 {% endfor %}
 </ul>

@@ -47,25 +47,25 @@ class DemoController extends Controller
     {
         $content = $view->getSiteContent();
         $location = $view->getSiteLocation();
-
+    
         $filterService = $this-getSite()->getFilterService();
-
-		$hasRelatedItems = false;
-		// No need to use FieldHelper here
-		if (!$content->getField('related')->isEmpty()) {
-			$hasRelatedItems = true;
-		}
-
+    
+        $hasRelatedItems = false;
+        // No need to use FieldHelper here
+        if (!$content->getField('related')->isEmpty()) {
+            $hasRelatedItems = true;
+        }
+    
         // Custom logic here
         ...
-
+    
         $view->addParameters(
             array(
                 // Adding a variable to the view
-                'items' => $items,
+                'has_related' => $hasRelatedItems,
             )
         );
-
+    
         return $view;
     }
 }
@@ -87,7 +87,7 @@ Finally, create the template:
 Registering controller as service:
 
 ```yaml
-acme.controller.demo:
+app.controller.demo:
     parent: netgen.ezplatform_site.controller.base
     class: AppBundle\Controller\DemoController
 ```
@@ -102,7 +102,7 @@ ezpublish:
                 full:
                     article:
                         template: "AppBundle:content/full:article.html.twig"
-                        controller: "acme.controller.demo:viewArticleAction"
+                        controller: "app.controller.demo:viewArticleAction"
                         match:
                             Identifier\ContentType: article
 ```

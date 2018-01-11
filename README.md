@@ -54,6 +54,10 @@ The following document details what needs to be done to rewrite your existing si
 
 [Usage instructions](USAGE.md)
 
+[Getting started guide](GETTING_STARTED.md)
+
+[Helpers](HELPERS.md)
+
 [Changelog](CHANGELOG.md)
 
 [Upgrade instructions](UPGRADE.md)

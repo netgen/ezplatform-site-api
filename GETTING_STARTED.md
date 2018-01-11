@@ -134,13 +134,13 @@ Getting image alias:
 ```twig
 {% set image = content.fields.image %}
 {% if not image.empty %}
-     <img src="{{ ng_image_alias( image, 'i1140' ).uri|default('') }}" alt="{{ image.value.alternativeText }}" />
+     <img src="{{ ng_image_alias( image, 'i1140' ).uri }}" alt="{{ image.value.alternativeText }}" />
 {% endif %}
 ```
 
 Getting field:
 ```twig
-{% set title_field_value = content.fields.title %}
+{% set title_field = content.fields.title %}
 ```
 
 Displaying content name:

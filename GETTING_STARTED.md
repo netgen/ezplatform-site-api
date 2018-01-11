@@ -231,7 +231,7 @@ Displaying parent location of current location:
 Displaying all children of current location (default limit is 25):
 ```twig
 <ul>
-{% for child in content.location.getChildren() %}
+{% for child in content.location.children %}
 	<li>Child name: {{ child.content.name }}</li>
 {% endfor %}
 </ul>
@@ -250,7 +250,7 @@ Displaying children of current location by simple criteria (content type, limit 
 Displaying all siblings of current location (default limit is 25):
 ```twig
 <ul>
-{% for sibling in content.location.getSiblings() %}
+{% for sibling in content.location.siblings %}
 	<li>Sibling name: {{ sibling.content.name }}</li>
 {% endfor %}
 </ul>

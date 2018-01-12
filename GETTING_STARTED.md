@@ -258,7 +258,7 @@ Displaying all siblings of current location (default limit is 25):
 
 Displaying siblings of current location by simple criteria (content type, limit and offset):
 ```twig
-{% set children = content.location.filterSiblings(['blog_post'], 10, 2) %}
+{% set siblings = content.location.filterSiblings(['blog_post'], 10, 2) %}
 <ul>
 {% for sibling in siblings %}
 	<li>Sibling name: {{ sibling.content.name }}</li>

@@ -1,7 +1,7 @@
 eZ Platform Site API upgrade instructions
 =========================================
 
-Upgrading from 2.2 to 2.3
+Upgrading from 2.3 to 2.4
 -------------------------
 
 Controllers that extend from `Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller` and are registered inside dependency injection container must set `parent` config key within service definition, example:

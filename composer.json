@@ -14,8 +14,8 @@
         "ezsystems/ezpublish-kernel": "^6.0|^7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8.35|^5.7",
-        "matthiasnoback/symfony-dependency-injection-test": "~1.0"
+        "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
+        "matthiasnoback/symfony-dependency-injection-test": "~1.0|~2.0"
     },
     "autoload": {
         "psr-4": {

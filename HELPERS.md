@@ -115,6 +115,9 @@ namespace AppBundle\Controller;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchAdapter;
+use Pagerfanta\Pagerfanta;
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 
 class DemoController extends Controller
 {
@@ -157,6 +160,7 @@ namespace AppBundle\Controller;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 
 class DemoController extends Controller
 {
@@ -194,6 +198,9 @@ namespace AppBundle\Controller;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchAdapter;
+use Pagerfanta\Pagerfanta;
+use eZ\Publish\API\Repository\Values\Content\Query;
 
 class DemoController extends Controller
 {
@@ -236,6 +243,7 @@ namespace AppBundle\Controller;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use eZ\Publish\API\Repository\Values\Content\Query;
 
 class DemoController extends Controller
 {

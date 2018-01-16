@@ -95,6 +95,11 @@ final class Content extends APIContent
     private $userService;
 
     /**
+     * @var \eZ\Publish\API\Repository\Repository
+     */
+    private $repository;
+
+    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private $internalMainLocation;
@@ -117,14 +122,14 @@ final class Content extends APIContent
     {
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
-        $this->contentService = $properties['contentService'];
-        $this->userService = $properties['userService'];
+        $this->contentService = $properties['repository']->getContentService();
+        $this->userService = $properties['repository']->getUserService();
+        $this->repository = $properties['repository'];
 
         unset(
             $properties['site'],
             $properties['domainObjectMapper'],
-            $properties['contentService'],
-            $properties['userService']
+            $properties['repository']
         );
 
         parent::__construct($properties);
@@ -332,11 +337,16 @@ final class Content extends APIContent
             return $this->owner;
         }
 
-        try {
-            $this->owner = $this->site->getLoadService()->loadContent($this->getContentInfo()->ownerId);
-        } catch (NotFoundException $e) {
-            // Do nothing
-        }
+        $this->owner = $this->repository->sudo(
+            function() {
+                try {
+                    return $this->site->getLoadService()
+                        ->loadContent($this->getContentInfo()->ownerId);
+                } catch (NotFoundException $e) {
+                    // Do nothing
+                }
+            }
+        );
 
         $this->isOwnerInitialized = true;
 

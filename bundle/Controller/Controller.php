@@ -3,19 +3,13 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller as BaseController;
+use Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaFindTrait;
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 
 abstract class Controller extends BaseController
 {
     use SearchResultExtractorTrait;
-
-    /**
-     * @return \Netgen\EzPlatformSiteApi\API\Site
-     */
-    public function getSite()
-    {
-        return $this->container->get('netgen.ezplatform_site.site');
-    }
+    use PagerfantaFindTrait;
 
     /**
      * Returns the root location object for current siteaccess configuration.

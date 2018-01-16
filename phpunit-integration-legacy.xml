@@ -6,7 +6,6 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         beStrictAboutTestsThatDoNotTestAnything="false"
          colors="true">
     <php>
         <env name="setupFactory" value="Netgen\EzPlatformSiteApi\Tests\Integration\SetupFactory\Legacy" />

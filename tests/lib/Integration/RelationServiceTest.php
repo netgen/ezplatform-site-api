@@ -15,7 +15,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
  */
 class RelationServiceTest extends BaseTest
 {
-    public function testPrepareTestContent()
+    protected function prepareTestContent()
     {
         $repository = $this->getRepository();
         $contentTypeService = $repository->getContentTypeService();
@@ -64,14 +64,9 @@ class RelationServiceTest extends BaseTest
         return [$fieldDefinitionIdentifier, $relationContent, $relationId, $relationListContent, $relationIds];
     }
 
-    /**
-     * @depends testPrepareTestContent
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content[] $testContentItems
-     */
-    public function testLoadFieldRelation(array $testContentItems)
+    public function testLoadFieldRelation()
     {
-        list($identifier, $testApiContent, $testRelationId) = $testContentItems;
+        list($identifier, $testApiContent, $testRelationId) = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $content = $relationService->loadFieldRelation($testApiContent->id, $identifier);
@@ -80,14 +75,9 @@ class RelationServiceTest extends BaseTest
         $this->assertEquals($testRelationId, $content->id);
     }
 
-    /**
-     * @depends testPrepareTestContent
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content[] $testContentItems
-     */
-    public function testLoadFieldRelations(array $testContentItems)
+    public function testLoadFieldRelations()
     {
-        list($identifier, , , $testApiContent, $testRelationIds) = $testContentItems;
+        list($identifier, , , $testApiContent, $testRelationIds) = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier);

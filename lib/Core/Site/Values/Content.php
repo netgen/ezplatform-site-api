@@ -3,6 +3,7 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
@@ -338,7 +339,7 @@ final class Content extends APIContent
         }
 
         $this->owner = $this->repository->sudo(
-            function() {
+            function(Repository $repository) {
                 try {
                     return $this->site->getLoadService()
                         ->loadContent($this->getContentInfo()->ownerId);

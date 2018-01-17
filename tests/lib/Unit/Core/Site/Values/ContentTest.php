@@ -5,10 +5,11 @@ namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\Values;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
+use eZ\Publish\Core\Repository\Repository as CoreRepository;
+use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo as RepoContentInfo;
 use eZ\Publish\API\Repository\Values\User\User;
-use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use Netgen\EzPlatformSiteApi\API\LoadService;
@@ -60,12 +61,18 @@ class ContentTest extends TestCase
      */
     protected $userServiceMock;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
+     */
+    protected $repositoryMock;
+
     public function setUp()
     {
         $this->getSiteMock();
         $this->getDomainObjectMapper();
         $this->getLoadServiceMock();
         $this->getUserServiceMock();
+        $this->getRepositoryMock();
 
         parent::setUp();
     }
@@ -75,11 +82,8 @@ class ContentTest extends TestCase
         $content = $this->getMockedContent();
         $ownerMock = $this->getMockBuilder(APIContent::class)->getMock();
 
-        $this
-            ->loadServiceMock
-            ->expects($this->once())
-            ->method('loadContent')
-            ->with('ownerId')
+        $this->repositoryMock->expects($this->once())
+            ->method('sudo')
             ->willReturn($ownerMock);
 
         $this->assertSame($ownerMock, $content->owner);
@@ -90,11 +94,8 @@ class ContentTest extends TestCase
         $content = $this->getMockedContent();
         $ownerMock = $this->getMockBuilder(APIContent::class)->getMock();
 
-        $this
-            ->loadServiceMock
-            ->expects($this->once())
-            ->method('loadContent')
-            ->with('ownerId')
+        $this->repositoryMock->expects($this->once())
+            ->method('sudo')
             ->willReturn($ownerMock);
 
         $this->assertSame($ownerMock, $content->owner);
@@ -105,14 +106,9 @@ class ContentTest extends TestCase
     {
         $content = $this->getMockedContent();
 
-        $this
-            ->loadServiceMock
-            ->expects($this->once())
-            ->method('loadContent')
-            ->with('ownerId')
-            ->willThrowException(
-                new NotFoundException('ContentType', 'contentTypeId')
-            );
+        $this->repositoryMock->expects($this->once())
+            ->method('sudo')
+            ->willReturn(null);
 
         $this->assertNull($content->owner);
     }
@@ -121,14 +117,9 @@ class ContentTest extends TestCase
     {
         $content = $this->getMockedContent();
 
-        $this
-            ->loadServiceMock
-            ->expects($this->once())
-            ->method('loadContent')
-            ->with('ownerId')
-            ->willThrowException(
-                new NotFoundException('ContentType', 'contentTypeId')
-            );
+        $this->repositoryMock->expects($this->once())
+            ->method('sudo')
+            ->willReturn(null);
 
         $this->assertNull($content->owner);
         $this->assertNull($content->owner);
@@ -206,8 +197,7 @@ class ContentTest extends TestCase
         return new Content([
             'site' => $this->getSiteMock(),
             'domainObjectMapper' => $this->getDomainObjectMapper(),
-            'contentService' => $this->getContentServiceMock(),
-            'userService' => $this->getUserServiceMock(),
+            'repository' => $this->getRepositoryMock(),
             'innerVersionInfo' => new VersionInfo([
                 'contentInfo' => new RepoContentInfo([
                     'ownerId' => 'ownerId',
@@ -249,10 +239,7 @@ class ContentTest extends TestCase
 
         $this->domainObjectMapper = new DomainObjectMapper(
             $this->getSiteMock(),
-            $this->getContentServiceMock(),
-            $this->getContentTypeServiceMock(),
-            $this->getFieldTypeServiceMock(),
-            $this->getUserServiceMock()
+            $this->getRepositoryMock()
         );
 
         return $this->domainObjectMapper;
@@ -344,5 +331,38 @@ class ContentTest extends TestCase
             ->getMock();
 
         return $this->userServiceMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
+     */
+    protected function getRepositoryMock()
+    {
+        if (null !== $this->repositoryMock) {
+            return $this->repositoryMock;
+        }
+
+        $this->repositoryMock = $this
+            ->getMockBuilder(CoreRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->repositoryMock->expects($this->any())
+            ->method('getContentService')
+            ->willReturn($this->getContentServiceMock());
+
+        $this->repositoryMock->expects($this->any())
+            ->method('getContentTypeService')
+            ->willReturn($this->getContentTypeServiceMock());
+
+        $this->repositoryMock->expects($this->any())
+            ->method('getFieldTypeService')
+            ->willReturn($this->getFieldTypeServiceMock());
+
+        $this->repositoryMock->expects($this->any())
+            ->method('getUserService')
+            ->willReturn($this->getUserServiceMock());
+
+        return $this->repositoryMock;
     }
 }

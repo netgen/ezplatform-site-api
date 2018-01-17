@@ -1,6 +1,24 @@
 eZ Platform Site API changelog
 ==============================
 
+2.3.1 (17.01.2018.)
+-------------------
+
+* Fix anonymous users do not have access to content.owner property (#61, #66)
+
+2.3.0 (14.12.2017.)
+-------------------
+
+* `Content`, `ContentInfo`, `Field` and `Location` now implement `__debugInfo()` method that controls which
+  properties are shown when the object is dumped. Through it, recursion and tree traversal are avoided,
+  which will provide cleaner output when dumping the objects for debugging purpose. (#50)
+* Content now implements `$owner` and `$innerOwnerUser` lazy-loaded properties. (#51)
+* More tests by @MarioBlazek (#53)
+* We now support eZ Platform Kernel 7.0 beta by @emodric (#54)
+* Some regular expressions to ease migration by @MarioBlazek (#55)
+* Adapters from eZ Platform Kernel `SearchService` interface to `FindService` and `FilterService` by @emodric (#57)
+* Support for simple forward relations with `RelationsService` and new methods on `Content` object (#42)
+
 2.2.0 (05.10.2017.)
 -------------------
 

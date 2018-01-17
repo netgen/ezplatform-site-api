@@ -2,12 +2,8 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
-use eZ\Publish\API\Repository\ContentService;
-use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\SearchService;
-use eZ\Publish\API\Repository\UserService;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSite;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
@@ -30,16 +26,6 @@ class Site implements SiteInterface
     private $contentService;
 
     /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService
-     */
-    private $contentTypeService;
-
-    /**
-     * @var \eZ\Publish\API\Repository\FieldTypeService
-     */
-    private $fieldTypeService;
-
-    /**
      * @var \eZ\Publish\API\Repository\LocationService
      */
     private $locationService;
@@ -53,11 +39,6 @@ class Site implements SiteInterface
      * @var \eZ\Publish\API\Repository\SearchService
      */
     private $filteringSearchService;
-
-    /**
-     * @var \eZ\Publish\API\Repository\UserService
-     */
-    private $userService;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\FilterService
@@ -85,35 +66,28 @@ class Site implements SiteInterface
     private $relationService;
 
     /**
+     * @var \eZ\Publish\API\Repository\Repository
+     */
+    private $repository;
+
+    /**
      * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
-     * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     * @param \eZ\Publish\API\Repository\SearchService $searchService
+     * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\API\Repository\SearchService $filteringSearchService
-     * @param \eZ\Publish\API\Repository\UserService $userService
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry $relationResolverRegistry
      */
     public function __construct(
         BaseSite $settings,
-        ContentService $contentService,
-        ContentTypeService $contentTypeService,
-        FieldTypeService $fieldTypeService,
-        LocationService $locationService,
-        SearchService $searchService,
+        Repository $repository,
         SearchService $filteringSearchService,
-        UserService $userService,
         RelationResolverRegistry $relationResolverRegistry
     ) {
         $this->settings = $settings;
-        $this->contentService = $contentService;
-        $this->contentTypeService = $contentTypeService;
-        $this->fieldTypeService = $fieldTypeService;
-        $this->locationService = $locationService;
-        $this->searchService = $searchService;
+        $this->repository = $repository;
+        $this->contentService = $repository->getContentService();
+        $this->locationService = $repository->getLocationService();
+        $this->searchService = $repository->getSearchService();
         $this->filteringSearchService = $filteringSearchService;
-        $this->userService = $userService;
         $this->relationResolverRegistry = $relationResolverRegistry;
     }
 
@@ -184,10 +158,7 @@ class Site implements SiteInterface
         if ($this->domainObjectMapper === null) {
             $this->domainObjectMapper = new DomainObjectMapper(
                 $this,
-                $this->contentService,
-                $this->contentTypeService,
-                $this->fieldTypeService,
-                $this->userService
+                $this->repository
             );
         }
 

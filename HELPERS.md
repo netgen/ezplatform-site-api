@@ -177,7 +177,9 @@ class DemoController extends Controller
 	
         // set additional params on query
 	
-        $pager = $this->createLocationSearchPager($locationQuery, 1, 9);
+        $pager = $this->createLocationSearchPager(
+            $locationQuery, $request->query->get('page', 1), 9
+        );
 
         $view->addParameters(
             array(
@@ -260,7 +262,9 @@ class DemoController extends Controller
 	
        // set additional params on query
 	
-       $pager = $this->createContentSearchPager($query, 1, 9);
+       $pager = $this->createContentSearchPager(
+           $query, $request->query->get('page', 1), 9
+       );
 
        $view->addParameters(
             array(

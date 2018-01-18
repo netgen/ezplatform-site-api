@@ -168,3 +168,4 @@ The following document details what needs to be done to rewrite your existing si
 
   {{ pagerfanta( children, 'twitter_bootstrap' ) }}
   ```
+

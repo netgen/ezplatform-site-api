@@ -6,7 +6,7 @@
 [![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg?style=flat-square)](https://packagist.org/packages/netgen/ezplatform-site-api)
 [![Latest stable](https://img.shields.io/packagist/v/netgen/ezplatform-site-api.svg?style=flat-square)](https://packagist.org/packages/netgen/ezplatform-site-api)
 [![License](https://img.shields.io/packagist/l/netgen/ezplatform-site-api.svg?style=flat-square)](https://packagist.org/packages/netgen/ezplatform-site-api)
-[![PHP](https://img.shields.io/badge/php-%3E%3D%205.5-8892BF.svg?style=flat-square)](https://secure.php.net/)
+[![PHP](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://secure.php.net/)
 [![eZ](https://img.shields.io/badge/eZ%20Platform-%3E%3D%201.0-EF5B2F.svg?style=flat-square)](https://ezplatform.com/)
 
 ## Features

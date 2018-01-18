@@ -139,7 +139,7 @@ class DemoController extends Controller
         );
         $pager->setMaxPerPage(9);
         $pager->setCurrentPage($request->query->get('page', 1));
-	
+        $pager->setNormalizeOutOfRangePages(true);
 
         $view->addParameters(
             array(
@@ -224,7 +224,7 @@ class DemoController extends Controller
         );
         $pager->setMaxPerPage(9);
         $pager->setCurrentPage($request->query->get('page', 1));
-	
+        $pager->setNormalizeOutOfRangePages(true);
 
         $view->addParameters(
             array(

@@ -5,6 +5,14 @@ parameters:
     netgen.ezplatform_site.root_location_id: 2
 
 services:
+    #
+    netgen.ezplatform_site.aggregate_repository:
+        class: Netgen\EzPlatformSiteApi\Core\Repository\Aggregate\Repository
+        arguments:
+            - '@netgen.ezpublish.api.repository'
+            -
+                - '@netgen.ezplatform_site.inner_repository'
+
     netgen.ezplatform_site.inner_repository:
         class: '%ezpublish.api.inner_repository.class%'
         factory:

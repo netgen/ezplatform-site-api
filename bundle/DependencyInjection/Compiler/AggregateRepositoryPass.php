@@ -44,21 +44,22 @@ class AggregateRepositoryPass implements CompilerPassInterface
     /**
      * @inheritdoc
      *
-     * @throws \LogicException
      * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\DependencyInjection\Exception\OutOfBoundsException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
      */
     public function process(ContainerBuilder $container)
     {
         // 1. Register custom repositories with Aggregate repository
         $aggregateRepositoryDefinition = $container->findDefinition(static::$aggregateRepositoryId);
-        $customRepositories = $container->findTaggedServiceIds(static::$customRepositoryTag);
+        $customRepositoryTags = $container->findTaggedServiceIds(static::$customRepositoryTag);
+        $customRepositoryReferences = [];
 
-        foreach ($customRepositories as $id => $attributes) {
-            $aggregateRepositoryDefinition->addMethodCall(
-                'addRepository',
-                [new Reference($id)]
-            );
+        foreach (array_keys($customRepositoryTags) as $id) {
+            $customRepositoryReferences[] = new Reference($id);
         }
+
+        $aggregateRepositoryDefinition->replaceArgument(1, $customRepositoryReferences);
 
         $topEzRepositoryAlias = $container->getAlias(static::$topEzRepositoryAliasId);
 

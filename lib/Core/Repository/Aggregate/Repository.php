@@ -41,20 +41,7 @@ class Repository implements RepositoryInterface
         array $customRepositories = []
     ) {
         $this->ezRepository = $ezRepository;
-
-        foreach ($customRepositories as $repository) {
-            $this->addRepository($repository);
-        }
-    }
-
-    /**
-     * Add a $repository to the internal collection.
-     *
-     * @param \eZ\Publish\API\Repository\Repository $repository
-     */
-    public function addRepository(RepositoryInterface $repository)
-    {
-        $this->customRepositories[] = $repository;
+        $this->customRepositories = $customRepositories;
     }
 
     public function getCurrentUser()

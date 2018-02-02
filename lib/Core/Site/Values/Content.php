@@ -316,12 +316,12 @@ final class Content extends APIContent
 
     public function getFieldRelations(string $fieldDefinitionIdentifier, int $limit = 25): array
     {
-        $relations = $this->site->getRelationService()->loadFieldRelations(
+        return $this->site->getRelationService()->loadFieldRelations(
             $this->id,
             $fieldDefinitionIdentifier
+            [],
+            $limit
         );
-
-        return array_slice($relations, 0, $limit);
     }
 
     public function filterFieldRelations(

@@ -114,7 +114,7 @@ class RelationService implements RelationServiceInterface
 
         $query = new Query([
             'filter' => $criteria,
-            'limit' => $limit ? $limit : count($relatedContentIds),
+            'limit' => is_int($limit) && $limit > 0 ? $limit : count($relatedContentIds),
         ]);
 
         $searchResult = $this->site->getFilterService()->filterContent($query);

@@ -318,7 +318,7 @@ final class Content extends APIContent
     {
         return $this->site->getRelationService()->loadFieldRelations(
             $this->id,
-            $fieldDefinitionIdentifier
+            $fieldDefinitionIdentifier,
             [],
             $limit
         );

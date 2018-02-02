@@ -5,15 +5,14 @@ parameters:
     netgen.ezplatform_site.root_location_id: 2
 
 services:
-    #
-    netgen.ezplatform_site.aggregate_repository:
+    # Services tagged with 'netgen.ezplatform_site.repository' are registered to this one
+    # through a compiler pass
+    netgen.ezplatform_site.repository.aggregate:
         class: Netgen\EzPlatformSiteApi\Core\Repository\Aggregate\Repository
         arguments:
             - '@netgen.ezpublish.api.repository'
-            -
-                - '@netgen.ezplatform_site.inner_repository'
 
-    netgen.ezplatform_site.inner_repository:
+    netgen.ezplatform_site.repository.inner:
         class: '%ezpublish.api.inner_repository.class%'
         factory:
             - '@ezpublish.api.repository.factory'
@@ -23,11 +22,13 @@ services:
             - '@ezpublish.spi.search.legacy'
         lazy: true
         public: false
+        tags:
+            - {name: netgen.ezplatform_site.repository}
 
     netgen.ezplatform_site.repository.filtering_search_service:
         class: %ezpublish.api.service.search.class%
         factory:
-            - '@netgen.ezplatform_site.inner_repository'
+            - '@netgen.ezplatform_site.repository.inner'
             - getSearchService
         lazy: true
         public: false

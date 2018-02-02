@@ -27,7 +27,7 @@ class Repository implements RepositoryInterface
     /**
      * @var \eZ\Publish\API\Repository\Repository[]
      */
-    private $customRepositories;
+    private $customRepositories = [];
 
     /**
      * Construct repository object from top eZ Platform Repository and
@@ -38,10 +38,23 @@ class Repository implements RepositoryInterface
      */
     public function __construct(
         RepositoryInterface $ezRepository,
-        array $customRepositories
+        array $customRepositories = []
     ) {
         $this->ezRepository = $ezRepository;
-        $this->customRepositories = $customRepositories;
+
+        foreach ($customRepositories as $repository) {
+            $this->addRepository($repository);
+        }
+    }
+
+    /**
+     * Add a $repository to the internal collection.
+     *
+     * @param \eZ\Publish\API\Repository\Repository $repository
+     */
+    public function addRepository(RepositoryInterface $repository)
+    {
+        $this->customRepositories[] = $repository;
     }
 
     public function getCurrentUser()

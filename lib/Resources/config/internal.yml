@@ -11,6 +11,7 @@ services:
         class: Netgen\EzPlatformSiteApi\Core\Repository\Aggregate\Repository
         arguments:
             - '@netgen.ezpublish.api.repository'
+        public: false
 
     netgen.ezplatform_site.repository.inner:
         class: '%ezpublish.api.inner_repository.class%'

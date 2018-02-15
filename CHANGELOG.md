@@ -1,13 +1,36 @@
 eZ Platform Site API changelog
 ==============================
 
-2.3.1 (17.01.2018.)
--------------------
+2.4.2 (15.02.2018)
+------------------
+
+* Fix the method name in `ContentValueView` interface
+
+2.4.1 (02.02.2018)
+------------------
+
+* Fix filter service always using anonymous users (#64, #67)
+
+2.4.0 (22.01.2018)
+------------------
+
+* Implemented Pagerfanta trait (#52)
+* Removed support for PHP 5.5 (#65)
+* Enabled PHPUnit 6 for tests (#63)
+* Improvements to docs (#62)
+
+2.3.2 (02.02.2018)
+------------------
+
+* Fix filter service always using anonymous users (#64, #67)
+
+2.3.1 (17.01.2018)
+------------------
 
 * Fix anonymous users do not have access to content.owner property (#61, #66)
 
-2.3.0 (14.12.2017.)
--------------------
+2.3.0 (14.12.2017)
+------------------
 
 * `Content`, `ContentInfo`, `Field` and `Location` now implement `__debugInfo()` method that controls which
   properties are shown when the object is dumped. Through it, recursion and tree traversal are avoided,
@@ -19,8 +42,13 @@ eZ Platform Site API changelog
 * Adapters from eZ Platform Kernel `SearchService` interface to `FindService` and `FilterService` by @emodric (#57)
 * Support for simple forward relations with `RelationsService` and new methods on `Content` object (#42)
 
-2.2.0 (05.10.2017.)
--------------------
+2.2.1 (02.02.2018)
+------------------
+
+* * Fix filter service always using anonymous users (#64, #67)
+
+2.2.0 (05.10.2017)
+------------------
 
 * Introduces lazy loading of `Content` fields, meaning that fields will be transparently loaded only
 if accessed
@@ -42,6 +70,11 @@ if accessed
   * `ContentInfoSearchAdapter`
   * `ContentInfoSearchHitAdapter`
 * Fixes https://github.com/netgen/ezplatform-site-api/issues/48: Mapping a field takes the wrong ID
+
+2.1.2 (02.02.2018)
+------------------
+
+* Fix filter service always using anonymous users (#64, #67)
 
 2.1.1 (07.09.2017)
 ------------------

@@ -66,7 +66,7 @@ class ContentViewBuilder implements ViewBuilder
 
     public function matches($argument)
     {
-        return strpos($argument, 'ng_content:') !== false;
+        return is_string($argument) && strpos($argument, 'ng_content:') !== false;
     }
 
     /**

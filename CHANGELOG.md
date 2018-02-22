@@ -1,6 +1,11 @@
 eZ Platform Site API changelog
 ==============================
 
+2.4.3 (22.02.2018)
+------------------
+
+* Fix using `ContentViewBuilder` when dealing with closure controllers
+
 2.4.2 (15.02.2018)
 ------------------
 

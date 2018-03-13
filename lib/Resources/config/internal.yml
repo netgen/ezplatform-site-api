@@ -23,6 +23,7 @@ services:
             - '@ezpublish.api.persistence_handler'
             - '@ezpublish.spi.search.legacy'
             - '@?ezpublish.search.background_indexer'
+            - '@?ezpublish.repository.relation_processor'
         lazy: true
         public: false
         tags:

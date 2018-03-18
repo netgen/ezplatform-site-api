@@ -22,4 +22,12 @@ abstract class Controller extends BaseController
             $this->getConfigResolver()->getParameter('content.tree_root.location_id')
         );
     }
+
+    /**
+     * @return \eZ\Publish\Core\QueryType\QueryTypeRegistry
+     */
+    public function getQueryTypeRegistry()
+    {
+        return $this->container->get('ezpublish.query_type.registry');
+    }
 }

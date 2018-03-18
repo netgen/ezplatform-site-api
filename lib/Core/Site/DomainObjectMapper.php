@@ -7,6 +7,7 @@ use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
@@ -44,17 +45,25 @@ final class DomainObjectMapper
     private $repository;
 
     /**
+     * @var \eZ\Publish\Core\QueryType\QueryTypeRegistry
+     */
+    private $queryTypeRegistry;
+
+    /**
      * @param \Netgen\EzPlatformSiteApi\API\Site $site
      * @param \eZ\Publish\API\Repository\Repository $repository
+     * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
      */
     public function __construct(
         SiteInterface $site,
-        Repository $repository
+        Repository $repository,
+        QueryTypeRegistry $queryTypeRegistry
     ) {
         $this->site = $site;
         $this->repository = $repository;
         $this->contentTypeService = $repository->getContentTypeService();
         $this->fieldTypeService = $repository->getFieldTypeService();
+        $this->queryTypeRegistry = $queryTypeRegistry;
     }
 
     /**
@@ -79,6 +88,7 @@ final class DomainObjectMapper
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
                 'repository' => $this->repository,
+                'queryTypeRegistry' => $this->queryTypeRegistry,
             ]
         );
     }

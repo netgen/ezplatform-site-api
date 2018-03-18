@@ -42,8 +42,37 @@ services:
         tags:
             - {name: twig.extension}
 
+    netgen.ezplatform_site.sort_clause_parser:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Search\SortClauseParser
+
+    netgen.ezplatform_site.twig.extension.sort_clause:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\SortClauseExtension
+        arguments:
+            - '@netgen.ezplatform_site.sort_clause_parser'
+        tags:
+            - {name: twig.extension}
+
     netgen.ezplatform_site.twig.extension.image:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension
         arguments: ['@ezpublish.fieldType.ezimage.variation_service']
         tags:
             - {name: twig.extension}
+
+    netgen.ezplatform_site.query_type_mapper:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryTypeMapper
+        arguments:
+            - '@ezpublish.query_type.registry'
+            - '@netgen.ezplatform_site.sort_clause_parser'
+
+    netgen.ezplatform_site.query_collection_mapper:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollectionMapper
+        arguments:
+            - '@netgen.ezplatform_site.query_type_mapper'
+            - '@netgen.ezplatform_site.filter_service'
+
+    netgen.ezplatform_site.query_type_listener:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\QueryTypeListener
+        arguments:
+            - '@netgen.ezplatform_site.query_collection_mapper'
+        tags:
+            - {name: kernel.event_subscriber}

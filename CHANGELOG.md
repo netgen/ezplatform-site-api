@@ -1,6 +1,11 @@
 eZ Platform Site API changelog
 ==============================
 
+2.4.4 (21.03.2018)
+------------------
+
+* Fix building repository after https://github.com/ezsystems/ezpublish-kernel/pull/2253
+
 2.4.3 (22.02.2018)
 ------------------
 

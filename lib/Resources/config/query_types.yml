@@ -7,18 +7,22 @@ services:
             - '@netgen.ezplatform_site.plugins.field_type.relation_resolver.registry'
         tags:
             - {name: ezpublish.query_type}
+        public: false
 
     netgen.ezplatform_site.query_type.reverse_field_relations:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryTypes\ReverseFieldRelations
         tags:
             - {name: ezpublish.query_type}
+        public: false
 
     netgen.ezplatform_site.query_type.tag_field_relations:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryTypes\TagFieldRelations
         tags:
             - {name: ezpublish.query_type}
+        public: false
 
     netgen.ezplatform_site.query_type.tag_relations:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryTypes\TagRelations
         tags:
             - {name: ezpublish.query_type}
+        public: false

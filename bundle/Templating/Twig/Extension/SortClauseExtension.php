@@ -7,7 +7,9 @@ use Twig_Extension;
 use Twig_SimpleFunction;
 
 /**
- * todo
+ * Twig extension for parsing sort clause strings.
+ *
+ * @see \Netgen\Bundle\EzPlatformSiteApiBundle\Search\SortClauseParser
  */
 class SortClauseExtension extends Twig_Extension
 {
@@ -22,11 +24,6 @@ class SortClauseExtension extends Twig_Extension
     public function __construct(SortClauseParser $sortClauseParser)
     {
         $this->sortClauseParser = $sortClauseParser;
-    }
-
-    public function getName()
-    {
-        return 'netgen.sort_clause';
     }
 
     public function getFunctions()

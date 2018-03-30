@@ -148,7 +148,7 @@ if ($canShowContent && $versionInfo->contentInfo->contentTypeId === 239458721341
 /** @var $site \Netgen\EzPlatformSiteApi\API\Site */
 $loadService = $site->getLoadService();
 
-$location = $loadService->loadContent(42);
+$content = $loadService->loadContent(42);
 
 if ($content->contentInfo->contentTypeIdentifier === 'article') {
     $field = $content->getField('name');

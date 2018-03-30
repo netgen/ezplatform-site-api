@@ -70,19 +70,19 @@ class SortClauseParser
      */
     private function buildFieldSortClause(array $values, $direction)
     {
-        if (!array_key_exists(2, $values)) {
+        if (!array_key_exists(1, $values)) {
             throw new InvalidArgumentException(
                 'Field sort clause requires ContentType identifier'
             );
         }
 
-        if (!array_key_exists(3, $values)) {
+        if (!array_key_exists(2, $values)) {
             throw new InvalidArgumentException(
                 'Field sort clause requires FieldDefinition identifier'
             );
         }
 
-        return new Field($values[2], $values[3], $direction);
+        return new Field($values[1], $values[2], $direction);
     }
 
     /**

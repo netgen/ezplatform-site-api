@@ -60,24 +60,11 @@ services:
         tags:
             - {name: twig.extension}
 
-    netgen.ezplatform_site.query_type_mapper:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryTypeMapper
-        arguments:
-            - '@ezpublish.query_type.registry'
-            - '@netgen.ezplatform_site.sort_clause_parser'
-        public: false
-
     netgen.ezplatform_site.query_collection_mapper:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollectionMapper
         arguments:
-            - '@netgen.ezplatform_site.query_type_mapper'
+            - '@ezpublish.query_type.registry'
             - '@netgen.ezplatform_site.filter_service'
-        public: false
-
-    netgen.ezplatform_site.query_type_listener:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\QueryTypeListener
-        arguments:
-            - '@netgen.ezplatform_site.query_collection_mapper'
-        tags:
-            - {name: kernel.event_subscriber}
+            - '@netgen.ezplatform_site.sort_clause_parser'
+            - '@request_stack'
         public: false

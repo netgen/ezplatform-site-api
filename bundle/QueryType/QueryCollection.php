@@ -5,7 +5,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 use ArrayAccess;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use Netgen\EzPlatformSiteApi\Core\Site\FilterService;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchFilterAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
@@ -13,10 +13,17 @@ use Pagerfanta\Pagerfanta;
 use RuntimeException;
 
 /**
- * todo
+ * QueryCollection contains a map of QueryDefinitions by their key string,
+ * implemented as ArrayAccess. QueryDefinitions are mapped to a Query object and
+ * executed in a lazy way, as accessed.
  */
 final class QueryCollection implements ArrayAccess
 {
+    /**
+     * @var \eZ\Publish\Core\QueryType\QueryTypeRegistry
+     */
+    private $queryTypeRegistry;
+
     /**
      * @var \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition[]
      */
@@ -28,33 +35,20 @@ final class QueryCollection implements ArrayAccess
     private $resultMap = [];
 
     /**
-     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryTypeMapper
-     */
-    private $queryTypeMapper;
-
-    /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\FilterService
      */
     private $filterService;
 
     /**
-     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
-     */
-    private $view;
-
-    /**
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryTypeMapper $queryTypeMapper
+     * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
      * @param \Netgen\EzPlatformSiteApi\Core\Site\FilterService $filterService
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      */
     public function __construct(
-        QueryTypeMapper $queryTypeMapper,
-        FilterService $filterService,
-        ContentView $view
+        QueryTypeRegistry $queryTypeRegistry,
+        FilterService $filterService
     ) {
-        $this->queryTypeMapper = $queryTypeMapper;
+        $this->queryTypeRegistry = $queryTypeRegistry;
         $this->filterService = $filterService;
-        $this->view = $view;
     }
 
     public function addQueryDefinition($key, QueryDefinition $queryDefinition)
@@ -67,6 +61,12 @@ final class QueryCollection implements ArrayAccess
         return isset($this->queryDefinitionMap[$offset]);
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @throws \Pagerfanta\Exception\Exception
+     * @throws \RuntimeException
+     */
     public function offsetGet($offset)
     {
         if (!array_key_exists($offset, $this->resultMap)) {
@@ -89,14 +89,22 @@ final class QueryCollection implements ArrayAccess
     /**
      * Execute search query by the QueryDefinition at the given $offset.
      *
-     * @param string $offset
+     * @throws \Pagerfanta\Exception\Exception
+     * @throws \RuntimeException
+     *
+     * @param string $name
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|Pagerfanta
      */
-    private function executeQuery($offset)
+    private function executeQuery($name)
     {
-        $queryDefinition = $this->queryDefinitionMap[$offset];
-        $query = $this->queryTypeMapper->map($this->view, $queryDefinition);
+        if (!array_key_exists($name, $this->queryDefinitionMap)) {
+            throw new RuntimeException("Found no QueryDefinition for key '{$name}'");
+        }
+
+        $queryDefinition = $this->queryDefinitionMap[$name];
+        $queryType = $this->queryTypeRegistry->getQueryType($queryDefinition->name);
+        $query = $queryType->getQuery($queryDefinition->parameters);
 
         if ($query instanceof LocationQuery) {
             return $this->getLocationResult($query, $queryDefinition);
@@ -106,11 +114,13 @@ final class QueryCollection implements ArrayAccess
             return $this->getContentResult($query, $queryDefinition);
         }
 
-        throw new RuntimeException("Could not handle given query");
+        throw new RuntimeException('Could not handle given query');
     }
 
     /**
      * Return search result by the given parameters.
+     *
+     * @throws \Pagerfanta\Exception\Exception
      *
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
@@ -139,6 +149,8 @@ final class QueryCollection implements ArrayAccess
     /**
      * Return search result by the given parameters.
      *
+     * @throws \Pagerfanta\Exception\Exception
+     *
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      *
@@ -165,15 +177,13 @@ final class QueryCollection implements ArrayAccess
 
     private function getUsePager(QueryDefinition $queryDefinition)
     {
-        $options = $queryDefinition->options;
-
-        return !array_key_exists('use_pager', $options) || true === $options['pager'];
+        return !array_key_exists('use_pager', $queryDefinition->parameters) || true === $queryDefinition->parameters['pager'];
     }
 
     private function getMaxPerPage(QueryDefinition $queryDefinition)
     {
-        if (array_key_exists('max_per_page', $queryDefinition->options)) {
-            return $queryDefinition->options['max_per_page'];
+        if (array_key_exists('max_per_page', $queryDefinition->parameters)) {
+            return $queryDefinition->parameters['max_per_page'];
         }
 
         return 25;
@@ -181,8 +191,8 @@ final class QueryCollection implements ArrayAccess
 
     private function getCurrentPage(QueryDefinition $queryDefinition)
     {
-        if (array_key_exists('current_page', $queryDefinition->options)) {
-            return $queryDefinition->options['current_page'];
+        if (array_key_exists('current_page', $queryDefinition->parameters)) {
+            return $queryDefinition->parameters['current_page'];
         }
 
         return 1;

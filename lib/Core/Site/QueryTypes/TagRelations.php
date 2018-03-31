@@ -19,7 +19,7 @@ class TagRelations extends OptionsResolverBasedQueryType implements QueryType
 {
     public static function getName()
     {
-        return 'SiteAPI:TagFieldRelations';
+        return 'SiteAPI:TagRelations';
     }
 
     /**
@@ -35,9 +35,6 @@ class TagRelations extends OptionsResolverBasedQueryType implements QueryType
         ]);
 
         $optionsResolver->setDefaults([
-            'use_pager' => true,
-            'max_per_page' => 25,
-            'current_page' => 1,
             'limit' => 25,
             'offset' => 0,
             'content_type_identifiers' => [],
@@ -45,13 +42,13 @@ class TagRelations extends OptionsResolverBasedQueryType implements QueryType
         ]);
 
         $optionsResolver->setAllowedTypes('content', Content::class);
-        $optionsResolver->setAllowedTypes('use_pager', 'bool');
-        $optionsResolver->setAllowedTypes('max_per_page', 'int');
-        $optionsResolver->setAllowedTypes('current_page', 'int');
         $optionsResolver->setAllowedTypes('limit', 'int');
         $optionsResolver->setAllowedTypes('offset', 'int');
         $optionsResolver->setAllowedTypes('content_type_identifiers', 'string[]');
-        $optionsResolver->setAllowedTypes('sort_clauses', 'eZ\Publish\API\Repository\Values\Content\Query\SortClause[]');
+        $optionsResolver->setAllowedTypes(
+            'sort_clauses',
+            'eZ\Publish\API\Repository\Values\Content\Query\SortClause[]'
+        );
     }
 
     /**

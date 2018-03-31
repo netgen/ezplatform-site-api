@@ -2,9 +2,7 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 
-use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
-use Netgen\EzPlatformSiteApi\Core\Site\FilterService;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Search\SortClauseParser;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -19,16 +17,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 final class QueryCollectionMapper
 {
     /**
-     * @var \eZ\Publish\Core\QueryType\QueryTypeRegistry
-     */
-    private $queryTypeRegistry;
-
-    /**
-     * @var \Netgen\EzPlatformSiteApi\Core\Site\FilterService
-     */
-    private $filterService;
-
-    /**
      * @var \Netgen\Bundle\EzPlatformSiteApiBundle\Search\SortClauseParser
      */
     private $sortClauseParser;
@@ -39,19 +27,14 @@ final class QueryCollectionMapper
     private $requestStack;
 
     /**
-     * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\FilterService $filterService
+     *
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\Search\SortClauseParser $sortClauseParser
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
-        QueryTypeRegistry $queryTypeRegistry,
-        FilterService $filterService,
         SortClauseParser $sortClauseParser,
         RequestStack $requestStack
     ) {
-        $this->queryTypeRegistry = $queryTypeRegistry;
-        $this->filterService = $filterService;
         $this->sortClauseParser = $sortClauseParser;
         $this->requestStack = $requestStack;
     }
@@ -66,15 +49,14 @@ final class QueryCollectionMapper
      */
     public function map(array $configuration, ContentView $view)
     {
-        $queryCollection = new QueryCollection(
-            $this->queryTypeRegistry,
-            $this->filterService
-        );
+        $queryCollection = new QueryCollection();
 
         foreach ($configuration as $name => $queryConfiguration) {
             $queryDefinition = new QueryDefinition([
                 'name' => $queryConfiguration['query_type'],
                 'parameters' => $this->resolveParameters($queryConfiguration['parameters'], $view),
+                'maxPerPage' => $this->resolveParameter($queryConfiguration['max_per_page'], $view),
+                'page' => $this->resolveParameter($queryConfiguration['page'], $view),
             ]);
             $queryCollection->addQueryDefinition($name, $queryDefinition);
         }

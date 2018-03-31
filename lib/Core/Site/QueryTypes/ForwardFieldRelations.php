@@ -9,6 +9,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\Core\QueryType\OptionsResolverBasedQueryType;
 use eZ\Publish\Core\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Field;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use RuntimeException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,9 +51,6 @@ class ForwardFieldRelations extends OptionsResolverBasedQueryType implements Que
         ]);
 
         $optionsResolver->setDefaults([
-            'use_pager' => true,
-            'max_per_page' => 25,
-            'current_page' => 1,
             'limit' => 25,
             'offset' => 0,
             'content_type_identifiers' => [],
@@ -61,9 +59,6 @@ class ForwardFieldRelations extends OptionsResolverBasedQueryType implements Que
 
         $optionsResolver->setAllowedTypes('content', Content::class);
         $optionsResolver->setAllowedTypes('field_definition_identifier', 'string');
-        $optionsResolver->setAllowedTypes('use_pager', 'bool');
-        $optionsResolver->setAllowedTypes('max_per_page', 'int');
-        $optionsResolver->setAllowedTypes('current_page', 'int');
         $optionsResolver->setAllowedTypes('limit', 'int');
         $optionsResolver->setAllowedTypes('offset', 'int');
         $optionsResolver->setAllowedTypes('content_type_identifiers', 'string[]');
@@ -74,6 +69,8 @@ class ForwardFieldRelations extends OptionsResolverBasedQueryType implements Que
      * todo test empty id search solr/db
      * @inheritdoc
      *
+     * @throws \LogicException
+     * @throws \OutOfBoundsException
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
@@ -94,6 +91,7 @@ class ForwardFieldRelations extends OptionsResolverBasedQueryType implements Que
         }
 
         $field = $content->getField($fieldDefinitionIdentifier);
+        assert($field instanceof Field);
         $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);
         $relatedContentIds = $relationResolver->getRelationIds($field);
 

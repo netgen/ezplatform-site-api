@@ -19,7 +19,7 @@ class TagFieldRelations extends OptionsResolverBasedQueryType implements QueryTy
 {
     public static function getName()
     {
-        return 'SiteAPI:TagFieldsRelations';
+        return 'SiteAPI:TagFieldRelations';
     }
 
     /**
@@ -36,9 +36,6 @@ class TagFieldRelations extends OptionsResolverBasedQueryType implements QueryTy
         ]);
 
         $optionsResolver->setDefaults([
-            'use_pager' => true,
-            'max_per_page' => 25,
-            'current_page' => 1,
             'limit' => 25,
             'offset' => 0,
             'content_type_identifiers' => [],
@@ -47,13 +44,13 @@ class TagFieldRelations extends OptionsResolverBasedQueryType implements QueryTy
 
         $optionsResolver->setAllowedTypes('content', Content::class);
         $optionsResolver->setAllowedTypes('field_definition_identifiers', 'string[]');
-        $optionsResolver->setAllowedTypes('use_pager', 'bool');
-        $optionsResolver->setAllowedTypes('max_per_page', 'int');
-        $optionsResolver->setAllowedTypes('current_page', 'int');
         $optionsResolver->setAllowedTypes('limit', 'int');
         $optionsResolver->setAllowedTypes('offset', 'int');
         $optionsResolver->setAllowedTypes('content_type_identifiers', 'string[]');
-        $optionsResolver->setAllowedTypes('sort_clauses', 'eZ\Publish\API\Repository\Values\Content\Query\SortClause[]');
+        $optionsResolver->setAllowedTypes(
+            'sort_clauses',
+            'eZ\Publish\API\Repository\Values\Content\Query\SortClause[]'
+        );
     }
 
     /**

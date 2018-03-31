@@ -7,7 +7,7 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class ContentView extends View
 {
-    const QUERY_KEY = 'find';
+    const QUERY_KEY = 'queries';
     const NODE_KEY = 'ngcontent_view';
     const INFO = 'Template selection settings when displaying a content with Netgen Site API';
 
@@ -53,6 +53,14 @@ EOT
                                         ->scalarNode('query_type')
                                             ->info('Name of the QueryType implementation')
                                             ->isRequired()
+                                        ->end()
+                                        ->scalarNode('max_per_page')
+                                            ->info('Number of results per page when using pager')
+                                            ->defaultValue(25)
+                                        ->end()
+                                        ->scalarNode('page')
+                                            ->info('Current page when using pager')
+                                            ->defaultValue(1)
                                         ->end()
                                         ->arrayNode('parameters')
                                             ->info('Parameters for the QueryType implementation')

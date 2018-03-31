@@ -22,7 +22,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
      *
      * @see \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollection
      */
-    const QUERY_COLLECTION_NAME = 'find';
+    const QUERY_COLLECTION_NAME = 'queryCollection';
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content

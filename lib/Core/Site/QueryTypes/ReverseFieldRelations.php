@@ -36,9 +36,6 @@ class ReverseFieldRelations extends OptionsResolverBasedQueryType implements Que
         ]);
 
         $optionsResolver->setDefaults([
-            'use_pager' => true,
-            'max_per_page' => 25,
-            'current_page' => 1,
             'limit' => 25,
             'offset' => 0,
             'content_type_identifiers' => [],
@@ -47,9 +44,6 @@ class ReverseFieldRelations extends OptionsResolverBasedQueryType implements Que
 
         $optionsResolver->setAllowedTypes('content', Content::class);
         $optionsResolver->setAllowedTypes('field_definition_identifier', 'string');
-        $optionsResolver->setAllowedTypes('use_pager', 'bool');
-        $optionsResolver->setAllowedTypes('max_per_page', 'int');
-        $optionsResolver->setAllowedTypes('current_page', 'int');
         $optionsResolver->setAllowedTypes('limit', 'int');
         $optionsResolver->setAllowedTypes('offset', 'int');
         $optionsResolver->setAllowedTypes('content_type_identifiers', 'string[]');

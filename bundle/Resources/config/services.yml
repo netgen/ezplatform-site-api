@@ -63,8 +63,20 @@ services:
     netgen.ezplatform_site.query_collection_mapper:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollectionMapper
         arguments:
-            - '@ezpublish.query_type.registry'
-            - '@netgen.ezplatform_site.filter_service'
             - '@netgen.ezplatform_site.sort_clause_parser'
             - '@request_stack'
         public: false
+
+    netgen.ezplatform_site.query_executor:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor
+        arguments:
+            - '@ezpublish.query_type.registry'
+            - '@netgen.ezplatform_site.filter_service'
+        public: false
+
+    netgen.ezplatform_site.twig.extension.query:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\QueryExtension
+        arguments:
+            - '@netgen.ezplatform_site.query_executor'
+        tags:
+            - {name: twig.extension}

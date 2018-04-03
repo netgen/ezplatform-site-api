@@ -6,16 +6,16 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\Core\QueryType\OptionsResolverBasedQueryType;
 use eZ\Publish\Core\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
-use Netgen\EzPlatformSiteApi\API\Values\Field;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use RuntimeException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * todo
+ * QueryType for finding specific field relations of a Content.
  */
 class ForwardFieldRelations extends OptionsResolverBasedQueryType implements QueryType
 {
@@ -91,11 +91,35 @@ class ForwardFieldRelations extends OptionsResolverBasedQueryType implements Que
         }
 
         $field = $content->getField($fieldDefinitionIdentifier);
-        assert($field instanceof Field);
         $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);
         $relatedContentIds = $relationResolver->getRelationIds($field);
 
-        $criteria = new ContentId($relatedContentIds);
+        $query = new Query([
+            'filter' => $this->buildCriteria($relatedContentIds, $contentTypeIdentifiers),
+            'limit' => $limit,
+            'offset' => $offset,
+            'sortClauses' => $sortClauses,
+        ]);
+
+        return $query;
+    }
+
+    /**
+     * Build Query criteria by the given parameters.
+     *
+     * @param int[]|string[] $contentIds
+     * @param string[] $contentTypeIdentifiers
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone
+     * @throws \InvalidArgumentException
+     */
+    private function buildCriteria(array $contentIds, array $contentTypeIdentifiers)
+    {
+        if (empty($contentIds)) {
+            return new MatchNone();
+        }
+
+        $criteria = new ContentId($contentIds);
 
         if (!empty($contentTypeIdentifiers)) {
             $criteria = new LogicalAnd([
@@ -104,13 +128,6 @@ class ForwardFieldRelations extends OptionsResolverBasedQueryType implements Que
             ]);
         }
 
-        $query = new Query([
-            'filter' => $criteria,
-            'limit' => $limit,
-            'offset' => $offset,
-            'sortClauses' => $sortClauses,
-        ]);
-
-        return $query;
+        return $criteria;
     }
 }

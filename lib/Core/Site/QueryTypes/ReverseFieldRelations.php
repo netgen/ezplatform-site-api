@@ -13,7 +13,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * todo
+ * QueryType for finding specific field reverse relations of a Content.
  */
 class ReverseFieldRelations extends OptionsResolverBasedQueryType implements QueryType
 {

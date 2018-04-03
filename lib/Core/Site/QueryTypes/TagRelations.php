@@ -5,6 +5,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\QueryTypes;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\Core\QueryType\OptionsResolverBasedQueryType;
 use eZ\Publish\Core\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
@@ -13,7 +14,7 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * todo
+ * QueryType for finding all Tag relations in a given Content.
  */
 class TagRelations extends OptionsResolverBasedQueryType implements QueryType
 {
@@ -66,6 +67,27 @@ class TagRelations extends OptionsResolverBasedQueryType implements QueryType
         $offset = $parameters['offset'];
         $sortClauses = $parameters['sort_clauses'];
 
+        $tagIds = $this->extractTagIds($content);
+
+        $query = new Query([
+            'filter' => $this->buildCriteria($tagIds, $contentTypeIdentifiers),
+            'limit' => $limit,
+            'offset' => $offset,
+            'sortClauses' => $sortClauses,
+        ]);
+
+        return $query;
+    }
+
+    /**
+     * Extract all Tag IDs from the given $content.
+     *
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
+     *
+     * @return array
+     */
+    private function extractTagIds(Content $content)
+    {
         $tagsIdSets = [];
 
         foreach ($content->fields as $field) {
@@ -78,7 +100,24 @@ class TagRelations extends OptionsResolverBasedQueryType implements QueryType
             $tagsIdSets[] = array_map(function (Tag $tag) {return $tag->id;}, $value->tags);
         }
 
-        $tagIds = array_merge(...$tagsIdSets);
+        return array_merge(...$tagsIdSets);
+    }
+
+    /**
+     * Build Query criteria by the given parameters.
+     *
+     * @param int[]|string[] $tagIds
+     * @param string[] $contentTypeIdentifiers
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone
+     * @throws \InvalidArgumentException
+     */
+    private function buildCriteria(array $tagIds, array $contentTypeIdentifiers)
+    {
+        if (empty($tagIds)) {
+            return new MatchNone();
+        }
+
         $criteria = new TagId($tagIds);
 
         if (!empty($contentTypeIdentifiers)) {
@@ -88,13 +127,6 @@ class TagRelations extends OptionsResolverBasedQueryType implements QueryType
             ]);
         }
 
-        $query = new Query([
-            'filter' => $criteria,
-            'limit' => $limit,
-            'offset' => $offset,
-            'sortClauses' => $sortClauses,
-        ]);
-
-        return $query;
+        return $criteria;
     }
 }

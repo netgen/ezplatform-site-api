@@ -47,7 +47,7 @@ final class QueryCollection
         }
 
         throw new OutOfBoundsException(
-            ''
+            "Could not find QueryDefinition with name '{$name}'"
         );
     }
 }

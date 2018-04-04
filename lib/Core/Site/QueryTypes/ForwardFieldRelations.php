@@ -62,7 +62,10 @@ class ForwardFieldRelations extends OptionsResolverBasedQueryType implements Que
         $optionsResolver->setAllowedTypes('limit', 'int');
         $optionsResolver->setAllowedTypes('offset', 'int');
         $optionsResolver->setAllowedTypes('content_type_identifiers', 'string[]');
-        $optionsResolver->setAllowedTypes('sort_clauses', 'eZ\Publish\API\Repository\Values\Content\Query\SortClause[]');
+        $optionsResolver->setAllowedTypes(
+            'sort_clauses',
+            'eZ\Publish\API\Repository\Values\Content\Query\SortClause[]'
+        );
     }
 
     /**

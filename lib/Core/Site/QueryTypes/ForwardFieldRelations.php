@@ -69,7 +69,6 @@ class ForwardFieldRelations extends OptionsResolverBasedQueryType implements Que
     }
 
     /**
-     * todo test empty id search solr/db
      * @inheritdoc
      *
      * @throws \LogicException

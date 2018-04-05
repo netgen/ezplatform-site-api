@@ -53,13 +53,11 @@ class Configured implements ViewProvider
             return null;
         }
 
-        // This service is dispatched by the configured view class, so this assertion should be safe
-        assert($view instanceof ContentView);
-
         // We can set the collection directly to the view, no need to go through DTO
         $view->addParameters([
             ContentView::QUERY_COLLECTION_NAME => $this->queryCollectionMapper->map(
                 $this->getQueryConfiguration($configHash),
+                // Service is dispatched by the configured view class, so this should be safe
                 $view
             ),
         ]);

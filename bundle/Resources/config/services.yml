@@ -80,3 +80,4 @@ services:
             - '@netgen.ezplatform_site.query_executor'
         tags:
             - {name: twig.extension}
+        public: false

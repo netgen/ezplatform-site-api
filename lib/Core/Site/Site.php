@@ -4,7 +4,6 @@ namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\SearchService;
-use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSite;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
@@ -72,23 +71,16 @@ class Site implements SiteInterface
     private $repository;
 
     /**
-     * @var \eZ\Publish\Core\QueryType\QueryTypeRegistry
-     */
-    private $queryTypeRegistry;
-
-    /**
      * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\API\Repository\SearchService $filteringSearchService
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry $relationResolverRegistry
-     * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
      */
     public function __construct(
         BaseSite $settings,
         Repository $repository,
         SearchService $filteringSearchService,
-        RelationResolverRegistry $relationResolverRegistry,
-        QueryTypeRegistry $queryTypeRegistry
+        RelationResolverRegistry $relationResolverRegistry
     ) {
         $this->settings = $settings;
         $this->repository = $repository;
@@ -97,7 +89,6 @@ class Site implements SiteInterface
         $this->searchService = $repository->getSearchService();
         $this->filteringSearchService = $filteringSearchService;
         $this->relationResolverRegistry = $relationResolverRegistry;
-        $this->queryTypeRegistry = $queryTypeRegistry;
     }
 
     public function getSettings()
@@ -167,8 +158,7 @@ class Site implements SiteInterface
         if ($this->domainObjectMapper === null) {
             $this->domainObjectMapper = new DomainObjectMapper(
                 $this,
-                $this->repository,
-                $this->queryTypeRegistry
+                $this->repository
             );
         }
 

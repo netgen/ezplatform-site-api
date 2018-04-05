@@ -5,7 +5,6 @@ namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\Values;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use eZ\Publish\Core\Repository\Repository as CoreRepository;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\UserService;
@@ -204,7 +203,6 @@ class ContentTest extends TestCase
             'site' => $this->getSiteMock(),
             'domainObjectMapper' => $this->getDomainObjectMapper(),
             'repository' => $this->getRepositoryMock(),
-            'queryTypeRegistry' => $this->getQueryTypeRegistryMock(),
             'innerVersionInfo' => new VersionInfo([
                 'contentInfo' => new RepoContentInfo([
                     'ownerId' => 'ownerId',
@@ -246,8 +244,7 @@ class ContentTest extends TestCase
 
         $this->domainObjectMapper = new DomainObjectMapper(
             $this->getSiteMock(),
-            $this->getRepositoryMock(),
-            $this->getQueryTypeRegistryMock()
+            $this->getRepositoryMock()
         );
 
         return $this->domainObjectMapper;
@@ -372,21 +369,5 @@ class ContentTest extends TestCase
             ->willReturn($this->getUserServiceMock());
 
         return $this->repositoryMock;
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
-     */
-    protected function getQueryTypeRegistryMock()
-    {
-        if (null !== $this->queryTypeRegistryMock) {
-            return $this->queryTypeRegistryMock;
-        }
-
-        $this->queryTypeRegistryMock = $this
-            ->getMockBuilder(QueryTypeRegistry::class)
-            ->getMock();
-
-        return $this->queryTypeRegistryMock;
     }
 }

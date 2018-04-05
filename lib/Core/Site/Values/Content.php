@@ -10,9 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchFilterAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
-use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -22,8 +20,6 @@ use Pagerfanta\Pagerfanta;
  */
 final class Content extends APIContent
 {
-    use SearchResultExtractorTrait;
-
     /**
      * @var string|int
      */
@@ -105,11 +101,6 @@ final class Content extends APIContent
     private $repository;
 
     /**
-     * @var \eZ\Publish\Core\QueryType\QueryTypeRegistry
-     */
-    private $queryTypeRegistry;
-
-    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private $internalMainLocation;
@@ -135,13 +126,11 @@ final class Content extends APIContent
         $this->contentService = $properties['repository']->getContentService();
         $this->userService = $properties['repository']->getUserService();
         $this->repository = $properties['repository'];
-        $this->queryTypeRegistry = $properties['queryTypeRegistry'];
 
         unset(
             $properties['site'],
             $properties['domainObjectMapper'],
-            $properties['repository'],
-            $properties['queryTypeRegistry']
+            $properties['repository']
         );
 
         parent::__construct($properties);
@@ -439,184 +428,5 @@ final class Content extends APIContent
         $this->isInnerOwnerUserInitialized = true;
 
         return $this->innerOwnerUser;
-    }
-
-    public function getReverseFieldRelation(
-        $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = []
-    ) {
-        $queryType = $this->queryTypeRegistry->getQueryType('SiteAPI:ReverseFieldRelations');
-        $query = $queryType->getQuery([
-            'content' => $this,
-            'field_definition_identifier' => $fieldDefinitionIdentifier,
-            'content_type_identifiers' => $contentTypeIdentifiers,
-            'offset' => 0,
-            'limit' => 1,
-        ]);
-
-        $searchResult = $this->site->getFilterService()->filterContent($query);
-
-        if ($searchResult->totalCount === 0) {
-            return null;
-        }
-
-        return $searchResult->searchHits[0]->valueObject;
-    }
-
-    public function getReverseFieldRelations(
-        $fieldDefinitionIdentifier,
-        $limit = 25,
-        array $sortClauses = []
-    ) {
-        $queryType = $this->queryTypeRegistry->getQueryType('SiteAPI:ReverseFieldRelations');
-        $query = $queryType->getQuery([
-            'content' => $this,
-            'field_definition_identifier' => $fieldDefinitionIdentifier,
-            'offset' => 0,
-            'limit' => $limit,
-            'sort_clauses' => $sortClauses,
-        ]);
-
-        $searchResult = $this->site->getFilterService()->filterContent($query);
-
-        return $this->extractValueObjects($searchResult);
-    }
-
-    public function filterReverseFieldRelations(
-        $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = [],
-        $maxPerPage = 25,
-        $currentPage = 1,
-        array $sortClauses = []
-    ) {
-        $queryType = $this->queryTypeRegistry->getQueryType('SiteAPI:ReverseFieldRelations');
-        $pager = new Pagerfanta(
-            new ContentSearchFilterAdapter(
-                $queryType->getQuery([
-                    'content' => $this,
-                    'field_definition_identifier' => $fieldDefinitionIdentifier,
-                    'content_type_identifiers' => $contentTypeIdentifiers,
-                    'sort_clauses' => $sortClauses,
-                ]),
-                $this->site->getFilterService()
-            )
-        );
-
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage($maxPerPage);
-        $pager->setCurrentPage($currentPage);
-
-        return $pager;
-    }
-
-    public function getTagRelations($limit = 25, array $sortClauses = [])
-    {
-        $queryType = $this->queryTypeRegistry->getQueryType('SiteAPI:TagRelations');
-        $query = $queryType->getQuery([
-            'use_pager' => false,
-            'content' => $this,
-            'offset' => 0,
-            'limit' => $limit,
-            'sort_clauses' => $sortClauses,
-        ]);
-
-        $searchResult = $this->site->getFilterService()->filterContent($query);
-
-        return $this->extractValueObjects($searchResult);
-    }
-
-    public function filterTagRelations(
-        array $contentTypeIdentifiers = [],
-        $maxPerPage = 25,
-        $currentPage = 1,
-        array $sortClauses = []
-    ) {
-        $queryType = $this->queryTypeRegistry->getQueryType('SiteAPI:TagRelations');
-        $pager = new Pagerfanta(
-            new ContentSearchFilterAdapter(
-                $queryType->getQuery([
-                    'content' => $this,
-                    'content_type_identifiers' => $contentTypeIdentifiers,
-                    'sort_clauses' => $sortClauses,
-                ]),
-                $this->site->getFilterService()
-            )
-        );
-
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage($maxPerPage);
-        $pager->setCurrentPage($currentPage);
-
-        return $pager;
-    }
-
-    public function getTagFieldRelation(
-        $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = []
-    ) {
-        $queryType = $this->queryTypeRegistry->getQueryType('SiteAPI:TagFieldRelations');
-        $query = $queryType->getQuery([
-            'use_pager' => false,
-            'content' => $this,
-            'field_definition_identifier' => $fieldDefinitionIdentifier,
-            'content_type_identifiers' => $contentTypeIdentifiers,
-            'offset' => 0,
-            'limit' => 1,
-        ]);
-
-        $searchResult = $this->site->getFilterService()->filterContent($query);
-
-        if ($searchResult->totalCount === 0) {
-            return null;
-        }
-
-        return $searchResult->searchHits[0]->valueObject;
-    }
-
-    public function getTagFieldRelations(
-        $fieldDefinitionIdentifier,
-        $limit = 25,
-        array $sortClauses = []
-    ) {
-        $queryType = $this->queryTypeRegistry->getQueryType('SiteAPI:TagFieldRelations');
-        $query = $queryType->getQuery([
-            'use_pager' => false,
-            'content' => $this,
-            'field_definition_identifier' => $fieldDefinitionIdentifier,
-            'offset' => 0,
-            'limit' => $limit,
-            'sort_clauses' => $sortClauses,
-        ]);
-
-        $searchResult = $this->site->getFilterService()->filterContent($query);
-
-        return $this->extractValueObjects($searchResult);
-    }
-
-    public function filterTagFieldRelations(
-        $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = [],
-        $maxPerPage = 25,
-        $currentPage = 1,
-        array $sortClauses = []
-    ) {
-        $queryType = $this->queryTypeRegistry->getQueryType('SiteAPI:TagFieldRelations');
-        $pager = new Pagerfanta(
-            new ContentSearchFilterAdapter(
-                $queryType->getQuery([
-                    'content' => $this,
-                    'field_definition_identifier' => $fieldDefinitionIdentifier,
-                    'content_type_identifiers' => $contentTypeIdentifiers,
-                    'sort_clauses' => $sortClauses,
-                ]),
-                $this->site->getFilterService()
-            )
-        );
-
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage($maxPerPage);
-        $pager->setCurrentPage($currentPage);
-
-        return $pager;
     }
 }

@@ -41,3 +41,8 @@ services:
         arguments:
             - "@netgen.ezplatform_site.find_service"
             - "@ezpublish.spi.search_engine"
+
+    # In ezpublish-kernel this is defined in bundle, however we define query
+    # types in the core implementation here
+    ezpublish.query_type.registry:
+        class: eZ\Publish\Core\QueryType\ArrayQueryTypeRegistry

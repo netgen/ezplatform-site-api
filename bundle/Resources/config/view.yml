@@ -15,6 +15,7 @@ services:
             - '@netgen.ezplatform_site.query_collection_mapper'
         tags:
             - {name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 110}
+        public: false
 
     netgen.ezplatform_site.ngcontent_view.matcher_factory:
         class: "%ezpublish.view.matcher_factory.class%"

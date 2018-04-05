@@ -72,6 +72,7 @@ services:
         arguments:
             - '@ezpublish.query_type.registry'
             - '@netgen.ezplatform_site.filter_service'
+            - '@netgen.ezplatform_site.find_service'
         public: false
 
     netgen.ezplatform_site.twig.extension.query:

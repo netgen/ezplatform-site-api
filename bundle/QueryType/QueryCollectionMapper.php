@@ -55,6 +55,7 @@ final class QueryCollectionMapper
             $queryDefinition = new QueryDefinition([
                 'name' => $queryConfiguration['query_type'],
                 'parameters' => $this->resolveParameters($queryConfiguration['parameters'], $view),
+                'useFilter' => $this->resolveParameters($queryConfiguration['use_filter'], $view),
                 'maxPerPage' => $this->resolveParameter($queryConfiguration['max_per_page'], $view),
                 'page' => $this->resolveParameter($queryConfiguration['page'], $view),
             ]);

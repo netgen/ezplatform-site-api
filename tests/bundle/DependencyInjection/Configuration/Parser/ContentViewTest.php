@@ -65,6 +65,17 @@ class ContentViewTest extends AbstractExtensionTestCase
                     'queries' => [
                         'query_name' => [
                             'query_type' => 'query_type_name',
+                            'use_filter' => false,
+                        ],
+                    ],
+                ],
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'query_type' => 'query_type_name',
                             'max_per_page' => 10,
                         ],
                     ],
@@ -141,6 +152,17 @@ class ContentViewTest extends AbstractExtensionTestCase
                         'query_name' => [
                             'query_type' => 'query_type_name',
                             'parameters' => 'parameters',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'query_type' => 'query_type_name',
+                            'use_filter' => 1337,
                         ],
                     ],
                 ],

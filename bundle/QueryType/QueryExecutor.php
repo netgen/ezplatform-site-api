@@ -6,7 +6,10 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use Netgen\EzPlatformSiteApi\Core\Site\FilterService;
+use Netgen\EzPlatformSiteApi\Core\Site\FindService;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchFilterAdapter;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
 use Pagerfanta\Pagerfanta;
 use RuntimeException;
@@ -29,15 +32,23 @@ final class QueryExecutor
     private $filterService;
 
     /**
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\FindService
+     */
+    private $findService;
+
+    /**
      * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
      * @param \Netgen\EzPlatformSiteApi\Core\Site\FilterService $filterService
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\FindService $findService
      */
     public function __construct(
         QueryTypeRegistry $queryTypeRegistry,
-        FilterService $filterService
+        FilterService $filterService,
+        FindService $findService
     ) {
         $this->queryTypeRegistry = $queryTypeRegistry;
         $this->filterService = $filterService;
+        $this->findService = $findService;
     }
 
     /**
@@ -81,9 +92,13 @@ final class QueryExecutor
     private function getLocationResult(LocationQuery $query, QueryDefinition $queryDefinition, $usePager)
     {
         if ($usePager) {
-            $pager = new Pagerfanta(
-                new LocationSearchFilterAdapter($query, $this->filterService)
-            );
+            if ($queryDefinition->useFilter) {
+                $adapter = new LocationSearchFilterAdapter($query, $this->filterService);
+            } else {
+                $adapter = new LocationSearchAdapter($query, $this->findService);
+            }
+
+            $pager = new Pagerfanta($adapter);
 
             $pager->setNormalizeOutOfRangePages(true);
             $pager->setMaxPerPage($queryDefinition->maxPerPage);
@@ -109,9 +124,13 @@ final class QueryExecutor
     private function getContentResult(Query $query, QueryDefinition $queryDefinition, $usePager)
     {
         if ($usePager) {
-            $pager = new Pagerfanta(
-                new ContentSearchFilterAdapter($query, $this->filterService)
-            );
+            if ($queryDefinition->useFilter) {
+                $adapter = new ContentSearchFilterAdapter($query, $this->filterService);
+            } else {
+                $adapter = new ContentSearchAdapter($query, $this->findService);
+            }
+
+            $pager = new Pagerfanta($adapter);
 
             $pager->setNormalizeOutOfRangePages(true);
             $pager->setMaxPerPage($queryDefinition->maxPerPage);

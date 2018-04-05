@@ -140,28 +140,6 @@ class ContentViewTest extends AbstractExtensionTestCase
                     'queries' => [
                         'query_name' => [
                             'query_type' => 'query_type_name',
-                            'max_per_page' => 'ten',
-                        ],
-                    ],
-                ],
-            ],
-            [
-                [
-                    'match' => ['config'],
-                    'queries' => [
-                        'query_name' => [
-                            'query_type' => 'query_type_name',
-                            'page' => 'two',
-                        ],
-                    ],
-                ],
-            ],
-            [
-                [
-                    'match' => ['config'],
-                    'queries' => [
-                        'query_name' => [
-                            'query_type' => 'query_type_name',
                             'parameters' => 'parameters',
                         ],
                     ],

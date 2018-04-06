@@ -624,6 +624,8 @@ class BaseTest extends APIBaseTest
         $this->assertTrue(isset($contentInfo->contentTypeIdentifier));
         $this->assertTrue(isset($contentInfo->contentTypeName));
         $this->assertTrue(isset($contentInfo->contentTypeDescription));
+        $this->assertTrue(isset($contentInfo->content));
+        $this->assertTrue(isset($contentInfo->mainLocation));
         $this->assertFalse(isset($contentInfo->nonExistentProperty));
 
         try {

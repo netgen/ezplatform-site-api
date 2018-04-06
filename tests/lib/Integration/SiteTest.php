@@ -2,6 +2,10 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
+use Netgen\EzPlatformSiteApi\API\FilterService;
+use Netgen\EzPlatformSiteApi\API\FindService;
+use Netgen\EzPlatformSiteApi\API\LoadService;
+
 /**
  * Test case for the Site.
  *
@@ -12,6 +16,20 @@ namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 class SiteTest extends BaseTest
 {
     /**
+     * Test for the getFilterService() method.
+     *
+     * @see \Netgen\EzPlatformSiteApi\API\Site::getFilterService()
+     */
+    public function testGetFilterService()
+    {
+        $site = $this->getSite();
+        $this->assertInstanceOf(
+            FilterService::class,
+            $site->getFilterService()
+        );
+    }
+
+    /**
      * Test for the getFindService() method.
      *
      * @see \Netgen\EzPlatformSiteApi\API\Site::getFindService()
@@ -20,7 +38,7 @@ class SiteTest extends BaseTest
     {
         $site = $this->getSite();
         $this->assertInstanceOf(
-            '\Netgen\EzPlatformSiteApi\API\FindService',
+            FindService::class,
             $site->getFindService()
         );
     }
@@ -33,7 +51,7 @@ class SiteTest extends BaseTest
     {
         $site = $this->getSite();
         $this->assertInstanceOf(
-            '\Netgen\EzPlatformSiteApi\API\LoadService',
+            LoadService::class,
             $site->getLoadService()
         );
     }

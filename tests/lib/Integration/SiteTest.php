@@ -5,6 +5,7 @@ namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 use Netgen\EzPlatformSiteApi\API\FilterService;
 use Netgen\EzPlatformSiteApi\API\FindService;
 use Netgen\EzPlatformSiteApi\API\LoadService;
+use Netgen\EzPlatformSiteApi\API\Settings;
 
 /**
  * Test case for the Site.
@@ -15,6 +16,20 @@ use Netgen\EzPlatformSiteApi\API\LoadService;
  */
 class SiteTest extends BaseTest
 {
+    /**
+     * Test for the getSettings() method.
+     *
+     * @see \Netgen\EzPlatformSiteApi\API\Site::getSettings()
+     */
+    public function testGetSettings()
+    {
+        $site = $this->getSite();
+        $this->assertInstanceOf(
+            Settings::class,
+            $site->getSettings()
+        );
+    }
+
     /**
      * Test for the getFilterService() method.
      *

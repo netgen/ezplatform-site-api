@@ -615,6 +615,7 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($data['contentTypeName'], $contentInfo->contentTypeName);
         $this->assertEquals($data['contentTypeDescription'], $contentInfo->contentTypeDescription);
         $this->assertEquals($data['languageCode'], $contentInfo->languageCode);
+        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Location', $contentInfo->mainLocation);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\ContentInfo', $contentInfo->innerContentInfo);
         $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\ContentType\ContentType', $contentInfo->innerContentType);
 

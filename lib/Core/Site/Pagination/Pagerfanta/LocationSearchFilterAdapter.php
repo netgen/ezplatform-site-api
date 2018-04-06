@@ -28,6 +28,11 @@ class LocationSearchFilterAdapter implements AdapterInterface
     private $nbResults;
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    private $searchResult;
+
+    /**
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
      * @param \Netgen\EzPlatformSiteApi\API\FilterService $filterService
      */
@@ -64,18 +69,30 @@ class LocationSearchFilterAdapter implements AdapterInterface
         $query->limit = $length;
         $query->performCount = false;
 
-        $searchResult = $this->filterService->filterLocations($query);
+        $this->searchResult = $this->filterService->filterLocations($query);
 
         // Set count for further use if returned by search engine despite !performCount (Solr, ES)
-        if (null === $this->nbResults && null !== $searchResult->totalCount) {
-            $this->nbResults = $searchResult->totalCount;
+        if (!isset($this->nbResults) && isset($this->searchResult->totalCount)) {
+            $this->nbResults = $this->searchResult->totalCount;
         }
 
         $list = [];
-        foreach ($searchResult->searchHits as $hit) {
+        foreach ($this->searchResult->searchHits as $hit) {
             $list[] = $hit->valueObject;
         }
 
         return $list;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    public function getSearchResult()
+    {
+        if ($this->searchResult === null) {
+            $this->searchResult = $this->filterService->filterLocations($this->query);
+        }
+
+        return $this->searchResult;
     }
 }

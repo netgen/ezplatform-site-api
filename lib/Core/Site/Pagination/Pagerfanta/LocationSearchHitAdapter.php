@@ -27,6 +27,11 @@ class LocationSearchHitAdapter implements AdapterInterface
      */
     private $nbResults;
 
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    private $searchResult;
+
     public function __construct(LocationQuery $query, FindService $findService)
     {
         $this->query = $query;
@@ -65,13 +70,25 @@ class LocationSearchHitAdapter implements AdapterInterface
         $query->limit = $length;
         $query->performCount = false;
 
-        $searchResult = $this->findService->findLocations($query);
+        $this->searchResult = $this->findService->findLocations($query);
 
         // Set count for further use if returned by search engine despite !performCount (Solr, ES)
-        if (!isset($this->nbResults) && isset($searchResult->totalCount)) {
-            $this->nbResults = $searchResult->totalCount;
+        if (!isset($this->nbResults) && isset($this->searchResult->totalCount)) {
+            $this->nbResults = $this->searchResult->totalCount;
         }
 
-        return $searchResult->searchHits;
+        return $this->searchResult->searchHits;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    public function getSearchResult()
+    {
+        if ($this->searchResult === null) {
+            $this->searchResult = $this->findService->findLocations($this->query);
+        }
+
+        return $this->searchResult;
     }
 }

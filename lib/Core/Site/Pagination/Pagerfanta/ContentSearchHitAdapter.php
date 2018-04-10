@@ -28,6 +28,11 @@ class ContentSearchHitAdapter implements AdapterInterface
     private $nbResults;
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Search\Facet[]
+     */
+    private $facets;
+
+    /**
      * @var \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     private $searchResult;
@@ -49,10 +54,21 @@ class ContentSearchHitAdapter implements AdapterInterface
             return $this->nbResults;
         }
 
-        $countQuery = clone $this->query;
-        $countQuery->limit = 0;
+        return $this->nbResults = $this->getSearchResult()->totalCount;
+    }
 
-        return $this->nbResults = $this->findService->findContent($countQuery)->totalCount;
+    /**
+     * Returns the facets of the results.
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\Facet[] The facets of the results
+     */
+    public function getFacets()
+    {
+        if (isset($this->facets)) {
+            return $this->facets;
+        }
+
+        return $this->facets = $this->getSearchResult()->facets;
     }
 
     /**
@@ -77,16 +93,22 @@ class ContentSearchHitAdapter implements AdapterInterface
             $this->nbResults = $this->searchResult->totalCount;
         }
 
+        if (!isset($this->facets) && isset($this->searchResult->facets)) {
+            $this->facets = $this->searchResult->facets;
+        }
+
         return $this->searchResult->searchHits;
     }
 
     /**
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    public function getSearchResult()
+    private function getSearchResult()
     {
         if ($this->searchResult === null) {
-            $this->searchResult = $this->findService->findContent($this->query);
+            $query = clone $this->query;
+            $query->limit = 0;
+            $this->searchResult = $this->findService->findContent($query);
         }
 
         return $this->searchResult;

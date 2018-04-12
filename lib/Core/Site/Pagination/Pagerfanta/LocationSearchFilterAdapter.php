@@ -28,6 +28,16 @@ class LocationSearchFilterAdapter implements AdapterInterface
     private $nbResults;
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Search\Facet[]
+     */
+    private $facets;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    private $searchResult;
+
+    /**
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
      * @param \Netgen\EzPlatformSiteApi\API\FilterService $filterService
      */
@@ -37,16 +47,32 @@ class LocationSearchFilterAdapter implements AdapterInterface
         $this->filterService = $filterService;
     }
 
+    /**
+     * Returns the number of results.
+     *
+     * @return int The number of results
+     */
     public function getNbResults()
     {
-        if (null !== $this->nbResults) {
+        if (isset($this->nbResults)) {
             return $this->nbResults;
         }
 
-        $countQuery = clone $this->query;
-        $countQuery->limit = 0;
+        return $this->nbResults = $this->getSearchResult()->totalCount;
+    }
 
-        return $this->nbResults = $this->filterService->filterLocations($countQuery)->totalCount;
+    /**
+     * Returns the facets of the results.
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\Facet[] The facets of the results
+     */
+    public function getFacets()
+    {
+        if (isset($this->facets)) {
+            return $this->facets;
+        }
+
+        return $this->facets = $this->getSearchResult()->facets;
     }
 
     /**
@@ -64,18 +90,36 @@ class LocationSearchFilterAdapter implements AdapterInterface
         $query->limit = $length;
         $query->performCount = false;
 
-        $searchResult = $this->filterService->filterLocations($query);
+        $this->searchResult = $this->filterService->filterLocations($query);
 
         // Set count for further use if returned by search engine despite !performCount (Solr, ES)
-        if (null === $this->nbResults && null !== $searchResult->totalCount) {
-            $this->nbResults = $searchResult->totalCount;
+        if (!isset($this->nbResults) && isset($this->searchResult->totalCount)) {
+            $this->nbResults = $this->searchResult->totalCount;
+        }
+
+        if (!isset($this->facets) && isset($this->searchResult->facets)) {
+            $this->facets = $this->searchResult->facets;
         }
 
         $list = [];
-        foreach ($searchResult->searchHits as $hit) {
+        foreach ($this->searchResult->searchHits as $hit) {
             $list[] = $hit->valueObject;
         }
 
         return $list;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    private function getSearchResult()
+    {
+        if ($this->searchResult === null) {
+            $query = clone $this->query;
+            $query->limit = 0;
+            $this->searchResult = $this->filterService->filterLocations($query);
+        }
+
+        return $this->searchResult;
     }
 }

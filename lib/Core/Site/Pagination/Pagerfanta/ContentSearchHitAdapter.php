@@ -27,6 +27,16 @@ class ContentSearchHitAdapter implements AdapterInterface
      */
     private $nbResults;
 
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Search\Facet[]
+     */
+    private $facets;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    private $searchResult;
+
     public function __construct(Query $query, FindService $findService)
     {
         $this->query = $query;
@@ -44,10 +54,21 @@ class ContentSearchHitAdapter implements AdapterInterface
             return $this->nbResults;
         }
 
-        $countQuery = clone $this->query;
-        $countQuery->limit = 0;
+        return $this->nbResults = $this->getSearchResult()->totalCount;
+    }
 
-        return $this->nbResults = $this->findService->findContent($countQuery)->totalCount;
+    /**
+     * Returns the facets of the results.
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\Facet[] The facets of the results
+     */
+    public function getFacets()
+    {
+        if (isset($this->facets)) {
+            return $this->facets;
+        }
+
+        return $this->facets = $this->getSearchResult()->facets;
     }
 
     /**
@@ -65,13 +86,31 @@ class ContentSearchHitAdapter implements AdapterInterface
         $query->limit = $length;
         $query->performCount = false;
 
-        $searchResult = $this->findService->findContent($query);
+        $this->searchResult = $this->findService->findContent($query);
 
         // Set count for further use if returned by search engine despite !performCount (Solr, ES)
-        if (!isset($this->nbResults) && isset($searchResult->totalCount)) {
-            $this->nbResults = $searchResult->totalCount;
+        if (!isset($this->nbResults) && isset($this->searchResult->totalCount)) {
+            $this->nbResults = $this->searchResult->totalCount;
         }
 
-        return $searchResult->searchHits;
+        if (!isset($this->facets) && isset($this->searchResult->facets)) {
+            $this->facets = $this->searchResult->facets;
+        }
+
+        return $this->searchResult->searchHits;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    private function getSearchResult()
+    {
+        if ($this->searchResult === null) {
+            $query = clone $this->query;
+            $query->limit = 0;
+            $this->searchResult = $this->findService->findContent($query);
+        }
+
+        return $this->searchResult;
     }
 }

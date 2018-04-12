@@ -65,6 +65,7 @@ services:
         arguments:
             - '@netgen.ezplatform_site.sort_clause_parser'
             - '@request_stack'
+            - '$ng_queries$'
         public: false
 
     netgen.ezplatform_site.query_executor:

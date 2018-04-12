@@ -27,16 +27,23 @@ final class QueryCollectionMapper
     private $requestStack;
 
     /**
-     *
+     * @var array
+     */
+    private $queriesConfig;
+
+    /**
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\Search\SortClauseParser $sortClauseParser
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param array $queriesConfig
      */
     public function __construct(
         SortClauseParser $sortClauseParser,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        array $queriesConfig
     ) {
         $this->sortClauseParser = $sortClauseParser;
         $this->requestStack = $requestStack;
+        $this->queriesConfig = $queriesConfig;
     }
 
     /**
@@ -51,18 +58,36 @@ final class QueryCollectionMapper
     {
         $queryCollection = new QueryCollection();
 
-        foreach ($configuration as $name => $queryConfiguration) {
-            $queryDefinition = new QueryDefinition([
-                'name' => $queryConfiguration['query_type'],
-                'parameters' => $this->resolveParameters($queryConfiguration['parameters'], $view),
-                'useFilter' => $this->resolveParameters($queryConfiguration['use_filter'], $view),
-                'maxPerPage' => $this->resolveParameter($queryConfiguration['max_per_page'], $view),
-                'page' => $this->resolveParameter($queryConfiguration['page'], $view),
-            ]);
-            $queryCollection->addQueryDefinition($name, $queryDefinition);
+        foreach ($configuration as $variableName => $queryConfiguration) {
+            $queryCollection->addQueryDefinition(
+                $variableName,
+                $this->getQueryDefinition($queryConfiguration, $view)
+            );
         }
 
         return $queryCollection;
+    }
+
+    private function getQueryDefinition(array $config, ContentView $view)
+    {
+        if (isset($config['named_query'])) {
+            $queryName = $config['named_query'];
+
+            return $this->buildQueryDefinition($this->queriesConfig[$queryName], $view);
+        }
+
+        return $this->buildQueryDefinition($config, $view);
+    }
+
+    private function buildQueryDefinition(array $config, ContentView $view)
+    {
+        return new QueryDefinition([
+            'name' => $config['query_type'],
+            'parameters' => $this->resolveParameters($config['parameters'], $view),
+            'useFilter' => $this->resolveParameters($config['use_filter'], $view),
+            'maxPerPage' => $this->resolveParameter($config['max_per_page'], $view),
+            'page' => $this->resolveParameter($config['page'], $view),
+        ]);
     }
 
     /**
@@ -101,22 +126,7 @@ final class QueryCollectionMapper
         if (is_string($value) && 0 === strpos($value, '@=')) {
             $language = new ExpressionLanguage();
 
-            $language->register(
-                'viewParam',
-                function ($name, $default) {
-                    return sprintf('($view->hasParameter(%1$s) ? $view->getParameter(%1$s) : %2$s)', $name, $default);
-                },
-                function ($arguments, $name, $default) {
-                    /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
-                    $view = $arguments['view'];
-
-                    if ($view->hasParameter($name)) {
-                        return $view->getParameter($name);
-                    }
-
-                    return $default;
-                }
-            );
+            $this->registerFunctions($language);
 
             return $language->evaluate(
                 substr($value, 2),
@@ -131,5 +141,38 @@ final class QueryCollectionMapper
         }
 
         return $value;
+    }
+
+    private function registerFunctions(ExpressionLanguage $language)
+    {
+        $language->register(
+            'viewParam',
+            function ($name, $default) {
+                return sprintf('($view->hasParameter(%1$s) ? $view->getParameter(%1$s) : %2$s)', $name, $default);
+            },
+            function ($arguments, $name, $default) {
+                /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
+                $view = $arguments['view'];
+
+                if ($view->hasParameter($name)) {
+                    return $view->getParameter($name);
+                }
+
+                return $default;
+            }
+        );
+
+        $language->register(
+            'queryParam',
+            function ($name, $default) {
+                return sprintf('($request->query->get(%1$s, %2$s))', $name, $default);
+            },
+            function ($arguments, $name, $default) {
+                /** @var \Symfony\Component\HttpFoundation\Request $request */
+                $request = $arguments['request'];
+
+                return $request->query->get($name, $default);
+            }
+        );
     }
 }

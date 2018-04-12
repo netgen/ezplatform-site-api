@@ -1,3 +1,6 @@
+parameters:
+    ezsettings.default.ng_queries: {}
+
 services:
     netgen.ezplatform_site.view_builder.content:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder

@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\Parser\View;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class ContentView extends View
@@ -45,36 +46,7 @@ EOT
                                 ->useAttributeAsKey('key')
                                 ->prototype('variable')->end()
                             ->end()
-                            ->arrayNode(static::QUERY_KEY)
-                                ->info('Query configuration')
-                                ->useAttributeAsKey('key')
-                                ->prototype('array')
-                                    ->children()
-                                        ->scalarNode('query_type')
-                                            ->info('Name of the QueryType implementation')
-                                            ->isRequired()
-                                        ->end()
-                                        ->booleanNode('use_filter')
-                                            ->info('Whether to use FilterService of FindService')
-                                            ->defaultValue(true)
-                                        ->end()
-                                        ->scalarNode('max_per_page')
-                                            ->info('Number of results per page when using pager')
-                                            ->defaultValue(25)
-                                        ->end()
-                                        ->scalarNode('page')
-                                            ->info('Current page when using pager')
-                                            ->defaultValue(1)
-                                        ->end()
-                                        ->arrayNode('parameters')
-                                            ->info('Parameters for the QueryType implementation')
-                                            ->defaultValue([])
-                                            ->useAttributeAsKey('key')
-                                            ->prototype('variable')->end()
-                                        ->end()
-                                    ->end()
-                                ->end()
-                            ->end()
+                            ->append($this->getQueryNode(static::QUERY_KEY))
                             ->arrayNode('params')
                                 ->info(
 <<<EOT
@@ -95,5 +67,74 @@ EOT
                     ->end()
                 ->end()
             ->end();
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function getQueryNode($name)
+    {
+        $queries = new ArrayNodeDefinition($name);
+        $queries
+            ->info('Query configuration')
+            ->useAttributeAsKey('key')
+            ->prototype('array')
+                ->beforeNormalization()
+                    ->always(
+                        // String is shortcut to the named query
+                        function ($v) {
+                            if (is_string($v)) {
+                                $v = ['named_query' => $v];
+                            }
+
+                            return $v;
+                        }
+                    )
+                ->end()
+                ->children()
+                    ->scalarNode('query_type')
+                        ->info('Name of the QueryType implementation')
+                    ->end()
+                    ->booleanNode('use_filter')
+                        ->info('Whether to use FilterService of FindService')
+                        ->defaultValue(true)
+                    ->end()
+                    ->scalarNode('max_per_page')
+                        ->info('Number of results per page when using pager')
+                        ->defaultValue(25)
+                    ->end()
+                    ->scalarNode('page')
+                        ->info('Current page when using pager')
+                        ->defaultValue(1)
+                    ->end()
+                    ->arrayNode('parameters')
+                        ->info('Parameters for the QueryType implementation')
+                        ->defaultValue([])
+                        ->useAttributeAsKey('key')
+                        ->prototype('variable')->end()
+                    ->end()
+                    ->scalarNode('named_query')
+                        ->info('Name of the configured query')
+                    ->end()
+                ->end()
+                ->validate()
+                    ->ifTrue(function ($v) {
+                        return array_key_exists('named_query', $v) && array_key_exists('query_type', $v);
+                    })
+                    ->thenInvalid(
+                        'You cannot use both "named_query" and "query_type" at the same time.'
+                    )
+                ->end()
+                ->validate()
+                    ->ifTrue(function ($v) {
+                        return !array_key_exists('named_query', $v) && !array_key_exists('query_type', $v);
+                    })
+                    ->thenInvalid(
+                        'One of "named_query" or "query_type" must be set.'
+                    );
+
+        return $queries;
     }
 }

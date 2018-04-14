@@ -59,12 +59,14 @@ final class QueryExecutor
      *
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      * @param bool $usePager
+     * @param array $override
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
      */
-    public function execute(QueryDefinition $queryDefinition, $usePager = true)
+    public function execute(QueryDefinition $queryDefinition, $usePager, array $override)
     {
         $queryType = $this->queryTypeRegistry->getQueryType($queryDefinition->name);
+        $queryDefinition = $this->overrideQueryDefinition($queryDefinition, $override);
         $query = $queryType->getQuery($queryDefinition->parameters);
 
         if ($query instanceof LocationQuery) {
@@ -76,6 +78,27 @@ final class QueryExecutor
         }
 
         throw new RuntimeException('Could not handle given query');
+    }
+
+    private function overrideQueryDefinition(QueryDefinition $queryDefinition, array $override)
+    {
+        if (empty($override)) {
+            return $queryDefinition;
+        }
+
+        $params = [
+            'parameters' => $queryDefinition->parameters,
+            'use_filter' => $queryDefinition->useFilter,
+            'max_per_page' => $queryDefinition->maxPerPage,
+            'page' => $queryDefinition->page,
+        ];
+
+        return new QueryDefinition([
+            'parameters' => array_replace_recursive($queryDefinition->parameters, $override),
+            'useFilter' => $params['use_filter'],
+            'maxPerPage' => $params['max_per_page'],
+            'page' => $params['page'],
+        ]);
     }
 
     /**

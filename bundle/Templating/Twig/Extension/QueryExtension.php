@@ -31,18 +31,39 @@ class QueryExtension extends Twig_Extension
     {
         return [
             new Twig_SimpleFunction(
-            /**
-             * @param $context
-             * @param $name
-             * @param bool $usePager
-             *
-             * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
-             */
                 'ng_query',
-                function ($context, $name, $usePager = true) {
+                /**
+                 * @param $context
+                 * @param string $name
+                 * @param array $override
+                 *
+                 * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
+                 */
+                function ($context, $name, $override = []) {
                     return $this->queryExecutor->execute(
                         $this->getQueryCollection($context)->getQueryDefinition($name),
-                        $usePager
+                        true,
+                        $override
+                    );
+                },
+                [
+                    'needs_context' => true,
+                ]
+            ),
+            new Twig_SimpleFunction(
+                'ng_raw_query',
+                /**
+                 * @param $context
+                 * @param string $name
+                 * @param array $override
+                 *
+                 * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
+                 */
+                function ($context, $name, $override = []) {
+                    return $this->queryExecutor->execute(
+                        $this->getQueryCollection($context)->getQueryDefinition($name),
+                        false,
+                        $override
                     );
                 },
                 [

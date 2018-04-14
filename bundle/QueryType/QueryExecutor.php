@@ -93,8 +93,10 @@ final class QueryExecutor
             'page' => $queryDefinition->page,
         ];
 
+        $params = array_replace_recursive($params, $override);
+
         return new QueryDefinition([
-            'parameters' => array_replace_recursive($queryDefinition->parameters, $override),
+            'parameters' => $params['parameters'],
             'useFilter' => $params['use_filter'],
             'maxPerPage' => $params['max_per_page'],
             'page' => $params['page'],

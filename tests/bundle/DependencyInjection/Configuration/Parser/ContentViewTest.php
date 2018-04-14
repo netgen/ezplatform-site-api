@@ -5,6 +5,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\DependencyInjection\Config
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * @group config
@@ -47,6 +48,14 @@ class ContentViewTest extends AbstractExtensionTestCase
                     'template' => 'template',
                     'controller' => 'controller',
                     'queries' => [],
+                ],
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => 'named_query',
+                    ],
                 ],
             ],
             [
@@ -130,7 +139,13 @@ class ContentViewTest extends AbstractExtensionTestCase
             [
                 [
                     'match' => ['config'],
-                    'queries' => ['query'],
+                    'queries' => [0 => 'query'],
+                ],
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => ['123abc' => 'query'],
                 ],
             ],
             [
@@ -172,12 +187,13 @@ class ContentViewTest extends AbstractExtensionTestCase
 
     /**
      * @dataProvider providerForTestInvalid
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      *
      * @param array $configurationValues
      */
     public function testInvalid(array $configurationValues)
     {
+        $this->expectException(InvalidConfigurationException::class);
+
         $this->load($configurationValues);
     }
 

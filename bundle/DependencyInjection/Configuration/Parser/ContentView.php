@@ -5,6 +5,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuratio
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\Parser\View;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+use Twig_Lexer;
 
 class ContentView extends View
 {
@@ -82,16 +83,9 @@ EOT
             ->useAttributeAsKey('key')
             ->prototype('array')
                 ->beforeNormalization()
-                    ->always(
-                        // String is shortcut to the named query
-                        function ($v) {
-                            if (is_string($v)) {
-                                $v = ['named_query' => $v];
-                            }
-
-                            return $v;
-                        }
-                    )
+                    // String is shortcut to the named query
+                    ->ifString()
+                    ->then(function ($v) {return ['named_query' => $v];})
                 ->end()
                 ->children()
                     ->scalarNode('query_type')
@@ -133,7 +127,23 @@ EOT
                     })
                     ->thenInvalid(
                         'One of "named_query" or "query_type" must be set.'
-                    );
+                    )
+                ->end()
+            ->end()
+            ->validate()
+                ->ifTrue(function ($v) {
+                    foreach (array_keys($v) as $key) {
+                        if (!is_string($key) || !preg_match(Twig_Lexer::REGEX_NAME, $key)) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                })
+                ->thenInvalid(
+                    'Query keys must be strings conforming to a valid Twig variable names.'
+                )
+            ->end();
 
         return $queries;
     }

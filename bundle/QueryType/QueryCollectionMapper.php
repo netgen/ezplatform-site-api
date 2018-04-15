@@ -29,21 +29,21 @@ final class QueryCollectionMapper
     /**
      * @var array
      */
-    private $queriesConfig;
+    private $namedQueriesConfig;
 
     /**
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\Search\SortClauseParser $sortClauseParser
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param array $queriesConfig
+     * @param array $namedQueriesConfig
      */
     public function __construct(
         SortClauseParser $sortClauseParser,
         RequestStack $requestStack,
-        array $queriesConfig
+        array $namedQueriesConfig
     ) {
         $this->sortClauseParser = $sortClauseParser;
         $this->requestStack = $requestStack;
-        $this->queriesConfig = $queriesConfig;
+        $this->namedQueriesConfig = $namedQueriesConfig;
     }
 
     /**
@@ -72,8 +72,7 @@ final class QueryCollectionMapper
     {
         if (isset($config['named_query'])) {
             $queryName = $config['named_query'];
-
-            return $this->buildQueryDefinition($this->queriesConfig[$queryName], $view);
+            $config = array_replace_recursive($this->namedQueriesConfig[$queryName], $config);
         }
 
         return $this->buildQueryDefinition($config, $view);

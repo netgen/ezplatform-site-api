@@ -83,7 +83,7 @@ EOT
             ->useAttributeAsKey('key')
             ->prototype('array')
                 ->beforeNormalization()
-                    // String is shortcut to the named query
+                    // String value is a shortcut to the named query
                     ->ifString()
                     ->then(function ($v) {return ['named_query' => $v];})
                 ->end()
@@ -93,19 +93,15 @@ EOT
                     ->end()
                     ->booleanNode('use_filter')
                         ->info('Whether to use FilterService of FindService')
-                        ->defaultValue(true)
                     ->end()
                     ->scalarNode('max_per_page')
                         ->info('Number of results per page when using pager')
-                        ->defaultValue(25)
                     ->end()
                     ->scalarNode('page')
                         ->info('Current page when using pager')
-                        ->defaultValue(1)
                     ->end()
                     ->arrayNode('parameters')
                         ->info('Parameters for the QueryType implementation')
-                        ->defaultValue([])
                         ->useAttributeAsKey('key')
                         ->prototype('variable')->end()
                     ->end()
@@ -128,6 +124,28 @@ EOT
                     ->thenInvalid(
                         'One of "named_query" or "query_type" must be set.'
                     )
+                ->end()
+                ->validate()
+                    ->ifTrue(function ($v) {return array_key_exists('query_type', $v);})
+                    ->then(function ($v) {
+                        if (!array_key_exists('use_filter', $v)) {
+                            $v['use_filter'] = true;
+                        }
+
+                        if (!array_key_exists('max_per_page', $v)) {
+                            $v['max_per_page'] = 25;
+                        }
+
+                        if (!array_key_exists('page', $v)) {
+                            $v['page'] = 1;
+                        }
+
+                        if (!array_key_exists('parameters', $v)) {
+                            $v['parameters'] = [];
+                        }
+
+                        return $v;
+                    })
                 ->end()
             ->end()
             ->validate()

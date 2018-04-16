@@ -27,29 +27,12 @@ class ContentViewTest extends AbstractParserTestCase
         return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
     }
 
-    protected function load(array $configurationValues = [])
-    {
-        $configurationValues = [
-            'system' => [
-                'siteaccess_group' => [
-                    'ngcontent_view' => [
-                        'some_view' => [
-                            'some_key' => $configurationValues,
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        parent::load($configurationValues);
-    }
-
     public function providerForTestValid()
     {
         return [
             [
                 [
-                    'match' => ['config']
+                    'match' => ['config'],
                 ],
             ],
             [
@@ -150,7 +133,17 @@ class ContentViewTest extends AbstractParserTestCase
      */
     public function testValid(array $configurationValues)
     {
-        $this->load($configurationValues);
+        $this->load([
+            'system' => [
+                'siteaccess_group' => [
+                    'ngcontent_view' => [
+                        'some_view' => [
+                            'some_key' => $configurationValues,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
         // Avoid detecting risky tests
         $this->assertTrue(true);
@@ -237,7 +230,17 @@ class ContentViewTest extends AbstractParserTestCase
         $message = preg_quote($message, '/');
         $this->expectExceptionMessageRegExp("/{$message}/");
 
-        $this->load($configurationValues);
+        $this->load([
+            'system' => [
+                'siteaccess_group' => [
+                    'ngcontent_view' => [
+                        'some_view' => [
+                            'some_key' => $configurationValues,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
     }
 
     public function providerForTestDefaultValues()
@@ -352,7 +355,17 @@ class ContentViewTest extends AbstractParserTestCase
      */
     public function testDefaultValues(array $configurationValues, array $expectedConfigurationValues)
     {
-        $this->load($configurationValues);
+        $this->load([
+            'system' => [
+                'siteaccess_group' => [
+                    'ngcontent_view' => [
+                        'some_view' => [
+                            'some_key' => $configurationValues,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
         $expectedConfigurationValues = [
             'some_view' => [
                 'some_key' => $expectedConfigurationValues,

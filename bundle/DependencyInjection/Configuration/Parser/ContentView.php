@@ -160,8 +160,7 @@ EOT
                 })
                 ->thenInvalid(
                     'Query keys must be strings conforming to a valid Twig variable names.'
-                )
-            ->end();
+                );
 
         return $queries;
     }

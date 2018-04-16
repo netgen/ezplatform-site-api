@@ -91,7 +91,7 @@ EOT
                     ->scalarNode('query_type')
                         ->info('Name of the QueryType implementation')
                     ->end()
-                    ->booleanNode('use_filter')
+                    ->scalarNode('use_filter')
                         ->info('Whether to use FilterService of FindService')
                     ->end()
                     ->scalarNode('max_per_page')

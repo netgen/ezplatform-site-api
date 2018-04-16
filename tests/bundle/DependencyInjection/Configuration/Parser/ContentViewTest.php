@@ -3,14 +3,15 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\DependencyInjection\Configuration\Parser;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension;
-use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use eZ\Bundle\EzPublishCoreBundle\Tests\DependencyInjection\Configuration\Parser\AbstractParserTestCase;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @group config
  */
-class ContentViewTest extends AbstractExtensionTestCase
+class ContentViewTest extends AbstractParserTestCase
 {
     protected function getContainerExtensions()
     {
@@ -19,6 +20,28 @@ class ContentViewTest extends AbstractExtensionTestCase
                 new ContentView(),
             ]),
         ];
+    }
+
+    protected function getMinimalConfiguration()
+    {
+        return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
+    }
+
+    protected function load(array $configurationValues = [])
+    {
+        $configurationValues = [
+            'system' => [
+                'siteaccess_group' => [
+                    'ngcontent_view' => [
+                        'some_view' => [
+                            'some_key' => $configurationValues,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        parent::load($configurationValues);
     }
 
     public function providerForTestValid()
@@ -141,12 +164,14 @@ class ContentViewTest extends AbstractExtensionTestCase
                     'match' => ['config'],
                     'queries' => [0 => 'query'],
                 ],
+                'Query keys must be strings conforming to a valid Twig variable names',
             ],
             [
                 [
                     'match' => ['config'],
                     'queries' => ['123abc' => 'query'],
                 ],
+                'Query keys must be strings conforming to a valid Twig variable names',
             ],
             [
                 [
@@ -159,6 +184,7 @@ class ContentViewTest extends AbstractExtensionTestCase
                         ],
                     ],
                 ],
+                'One of "named_query" or "query_type" must be set',
             ],
             [
                 [
@@ -170,6 +196,7 @@ class ContentViewTest extends AbstractExtensionTestCase
                         ],
                     ],
                 ],
+                'Expected array, but got string',
             ],
             [
                 [
@@ -177,10 +204,23 @@ class ContentViewTest extends AbstractExtensionTestCase
                     'queries' => [
                         'query_name' => [
                             'query_type' => 'query_type_name',
-                            'use_filter' => 1337,
+                            'use_filter' => [],
                         ],
                     ],
                 ],
+                'Expected scalar, but got array',
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'named_query' => 'named_query_name',
+                            'query_type' => 'query_type_name',
+                        ],
+                    ],
+                ],
+                'You cannot use both "named_query" and "query_type" at the same time',
             ],
         ];
     }
@@ -189,28 +229,140 @@ class ContentViewTest extends AbstractExtensionTestCase
      * @dataProvider providerForTestInvalid
      *
      * @param array $configurationValues
+     * @param string $message
      */
-    public function testInvalid(array $configurationValues)
+    public function testInvalid(array $configurationValues, $message)
     {
         $this->expectException(InvalidConfigurationException::class);
+        $message = preg_quote($message, '/');
+        $this->expectExceptionMessageRegExp("/{$message}/");
 
         $this->load($configurationValues);
     }
 
-    protected function load(array $configurationValues = [])
+    public function providerForTestDefaultValues()
     {
-        $configurationValues = [
-            'system' => [
-                'siteaccess_group' => [
-                    'ngcontent_view' => [
-                        'some_view' => [
-                            'some_key' => $configurationValues,
+        return [
+            [
+                [
+                    'match' => ['config'],
+                ],
+                [
+                    'match' => ['config'],
+                    'queries' => [],
+                    'params' => [],
+                ],
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => 'named_query',
+                    ],
+                ],
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'named_query' => 'named_query',
+                            'parameters' => [],
+                        ],
+                    ],
+                    'params' => [],
+                ],
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'named_query' => 'named_query',
+                            'max_per_page' => 50,
                         ],
                     ],
                 ],
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'named_query' => 'named_query',
+                            'max_per_page' => 50,
+                            'parameters' => [],
+                        ],
+                    ],
+                    'params' => [],
+                ],
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'named_query' => 'named_query',
+                            'parameters' => [
+                                'some' => 'value,'
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'named_query' => 'named_query',
+                            'parameters' => [
+                                'some' => 'value,'
+                            ],
+                        ],
+                    ],
+                    'params' => [],
+                ],
+            ],
+            [
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'query_type' => 'query_type',
+                        ],
+                    ],
+                ],
+                [
+                    'match' => ['config'],
+                    'queries' => [
+                        'query_name' => [
+                            'query_type' => 'query_type',
+                            'parameters' => [],
+                            'use_filter' => true,
+                            'max_per_page' => 25,
+                            'page' => 1,
+                        ],
+                    ],
+                    'params' => [],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider providerForTestDefaultValues
+     *
+     * @param array $configurationValues
+     * @param array $expectedConfigurationValues
+     */
+    public function testDefaultValues(array $configurationValues, array $expectedConfigurationValues)
+    {
+        $this->load($configurationValues);
+        $expectedConfigurationValues = [
+            'some_view' => [
+                'some_key' => $expectedConfigurationValues,
             ],
         ];
 
-        parent::load($configurationValues);
+        $this->assertConfigResolverParameterValue(
+            'ngcontent_view',
+            $expectedConfigurationValues,
+            'cro'
+        );
     }
 }

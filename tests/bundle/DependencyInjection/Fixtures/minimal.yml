@@ -1,0 +1,11 @@
+siteaccess:
+    default_siteaccess: cro
+    list:
+        - cro
+    groups:
+        siteaccess_group:
+            - cro
+    match:
+        URIElement: 1
+        Map\URI:
+            site: cro

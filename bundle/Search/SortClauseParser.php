@@ -40,9 +40,9 @@ class SortClauseParser
         $values = explode(' ', $definition);
         $direction = $this->getDirection($values);
         $values = explode('/', $values[0]);
-        $order = $values[0];
+        $type = $values[0];
 
-        switch (strtolower($order)) {
+        switch (strtolower($type)) {
             case 'published':
                 return new DatePublished($direction);
             case 'modified':
@@ -54,7 +54,7 @@ class SortClauseParser
         }
 
         throw new InvalidArgumentException(
-            "Could not handle sort order '$order'"
+            "Could not handle sort type '$type'"
         );
     }
 
@@ -96,7 +96,7 @@ class SortClauseParser
      */
     private function getDirection(array $values)
     {
-        $direction = 'desc';
+        $direction = 'asc';
 
         if (array_key_exists(1, $values)) {
             $direction = $values[1];

@@ -2,27 +2,27 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Pagination\Pagerfanta;
 
-use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchHitAdapter;
+use Netgen\EzPlatformSiteApi\API\FilterService;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchFilterAdapter;
 use PHPUnit\Framework\TestCase;
-use Netgen\EzPlatformSiteApi\API\FindService;
 
 /**
  * @group pager
  */
-class LocationSearchHitAdapterTest extends TestCase
+class ContentSearchFilterAdapterTest extends TestCase
 {
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\FindService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Netgen\EzPlatformSiteApi\API\FilterService|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $findService;
+    protected $filterService;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->findService = $this->getMockBuilder(FindService::class)
+        $this->filterService = $this->getMockBuilder(FilterService::class)
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -31,14 +31,14 @@ class LocationSearchHitAdapterTest extends TestCase
     public function testGetNbResults()
     {
         $nbResults = 123;
-        $query = new LocationQuery(['limit' => 10]);
+        $query = new Query(['limit' => 10]);
         $countQuery = clone $query;
         $countQuery->limit = 0;
         $searchResult = new SearchResult(['totalCount' => $nbResults]);
 
-        $this->findService
+        $this->filterService
             ->expects($this->once())
-            ->method('findLocations')
+            ->method('filterContent')
             ->with($this->equalTo($countQuery))
             ->will($this->returnValue($searchResult));
 
@@ -53,7 +53,7 @@ class LocationSearchHitAdapterTest extends TestCase
         $offset = 20;
         $limit = 25;
         $nbResults = 123;
-        $query = new LocationQuery(['offset' => 5, 'limit' => 10]);
+        $query = new Query(['offset' => 5, 'limit' => 10]);
 
         $searchQuery = clone $query;
         $searchQuery->offset = $offset;
@@ -63,9 +63,9 @@ class LocationSearchHitAdapterTest extends TestCase
         $hits = [new SearchHit(['valueObject' => 'Location'])];
         $searchResult = new SearchResult(['searchHits' => $hits, 'totalCount' => $nbResults]);
 
-        $this->findService
+        $this->filterService
             ->expects($this->once())
-            ->method('findLocations')
+            ->method('filterContent')
             ->with($this->equalTo($searchQuery))
             ->will($this->returnValue($searchResult));
 
@@ -75,13 +75,20 @@ class LocationSearchHitAdapterTest extends TestCase
         $this->assertSame($nbResults, $adapter->getNbResults());
     }
 
-    protected function getAdapter(LocationQuery $query)
+    protected function getAdapter(Query $query)
     {
-        return new LocationSearchHitAdapter($query, $this->findService);
+        return new ContentSearchFilterAdapter($query, $this->filterService);
     }
 
     protected function getExpectedSlice($hits)
     {
-        return $hits;
+        $expectedResult = [];
+
+        /** @var \eZ\Publish\API\Repository\Values\Content\Search\SearchHit[] $hits */
+        foreach ($hits as $hit) {
+            $expectedResult[] = $hit->valueObject;
+        }
+
+        return $expectedResult;
     }
 }

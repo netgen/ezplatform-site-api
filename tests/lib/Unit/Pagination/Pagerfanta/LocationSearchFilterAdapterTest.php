@@ -9,6 +9,9 @@ use Netgen\EzPlatformSiteApi\API\FilterService;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group pager
+ */
 class LocationSearchFilterAdapterTest extends TestCase
 {
     /**

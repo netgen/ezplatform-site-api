@@ -5,8 +5,6 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 use eZ\Publish\API\Repository\Values\ValueObject;
 
 /**
- * @internal
- *
  * QueryDefinition defines a search query through the QueryType configuration.
  *
  * @see \eZ\Publish\Core\QueryType\QueryType
@@ -16,6 +14,8 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read bool $useFilter Whether to use FilterService or Find Service.
  * @property-read string $maxPerPage Maximum results per page for Pagerfanta.
  * @property-read string $page Current page for Pagerfanta.
+ *
+ * @internal Do not depend on this class, it can be changed without warning.
  */
 final class QueryDefinition extends ValueObject
 {

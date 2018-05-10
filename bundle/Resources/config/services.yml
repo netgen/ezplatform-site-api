@@ -43,15 +43,7 @@ services:
             - {name: twig.extension}
 
     netgen.ezplatform_site.sort_clause_parser:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\Search\SortClauseParser
-        public: false
-
-    netgen.ezplatform_site.twig.extension.sort_clause:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\SortClauseExtension
-        arguments:
-            - '@netgen.ezplatform_site.sort_clause_parser'
-        tags:
-            - {name: twig.extension}
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\SortClauseParser
         public: false
 
     netgen.ezplatform_site.twig.extension.image:
@@ -60,15 +52,21 @@ services:
         tags:
             - {name: twig.extension}
 
-    netgen.ezplatform_site.query_collection_mapper:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollectionMapper
+    netgen.ezplatform_site.query_type.parameter_processor:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
         arguments:
-            - '@netgen.ezplatform_site.sort_clause_parser'
             - '@request_stack'
+        public: false
+
+    netgen.ezplatform_site.query_type.query_definition_mapper:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper
+        arguments:
+            - '@ezpublish.query_type.registry'
+            - '@netgen.ezplatform_site.query_type.parameter_processor'
             - '$ng_queries$'
         public: false
 
-    netgen.ezplatform_site.query_executor:
+    netgen.ezplatform_site.query_type.query_executor:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor
         arguments:
             - '@ezpublish.query_type.registry'
@@ -79,7 +77,7 @@ services:
     netgen.ezplatform_site.twig.extension.query:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\QueryExtension
         arguments:
-            - '@netgen.ezplatform_site.query_executor'
+            - '@netgen.ezplatform_site.query_type.query_executor'
         tags:
             - {name: twig.extension}
         public: false

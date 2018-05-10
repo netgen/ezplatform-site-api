@@ -13,6 +13,7 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./bundle</directory>
             <directory suffix=".php">./lib</directory>
         </whitelist>
     </filter>

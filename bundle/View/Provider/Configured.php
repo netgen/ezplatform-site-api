@@ -7,7 +7,8 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentView as CoreContentView;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use eZ\Publish\Core\MVC\Symfony\View\ViewProvider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView as ContentViewParser;
-use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollectionMapper;
+use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection;
+use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 
@@ -24,20 +25,20 @@ class Configured implements ViewProvider
     protected $matcherFactory;
 
     /**
-     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollectionMapper
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper
      */
-    private $queryCollectionMapper;
+    private $queryDefinitionMapper;
 
     /**
      * @param \eZ\Publish\Core\MVC\Symfony\Matcher\MatcherFactoryInterface $matcherFactory
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollectionMapper $queryCollectionMapper
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper $queryDefinitionMapper
      */
     public function __construct(
         MatcherFactoryInterface $matcherFactory,
-        QueryCollectionMapper $queryCollectionMapper
+        QueryDefinitionMapper $queryDefinitionMapper
     ) {
         $this->matcherFactory = $matcherFactory;
-        $this->queryCollectionMapper = $queryCollectionMapper;
+        $this->queryDefinitionMapper = $queryDefinitionMapper;
     }
 
     /**
@@ -55,18 +56,33 @@ class Configured implements ViewProvider
 
         // We can set the collection directly to the view, no need to go through DTO
         $view->addParameters([
-            ContentView::QUERY_COLLECTION_NAME => $this->queryCollectionMapper->map(
-                $this->getQueryConfiguration($configHash),
-                // Service is dispatched by the configured view class, so this should be safe
-                $view
-            ),
+            ContentView::QUERY_DEFINITION_COLLECTION_NAME => $this->getQueryDefinitionCollection($configHash, $view),
         ]);
 
         // Return DTO so that Configurator can set the data back to the $view
         return $this->getDTO($configHash);
     }
 
-    private function getQueryConfiguration(array $configHash)
+    private function getQueryDefinitionCollection(array $configHash, View $view)
+    {
+        $queryDefinitionCollection = new QueryDefinitionCollection();
+        $queriesConfiguration = $this->getQueriesConfiguration($configHash);
+
+        foreach ($queriesConfiguration as $variableName => $queryConfiguration) {
+            $queryDefinitionCollection->add(
+                $variableName,
+                $this->queryDefinitionMapper->map(
+                    $queryConfiguration,
+                    // Service is dispatched by the configured view class, so this should be safe
+                    $view
+                )
+            );
+        }
+
+        return $queryDefinitionCollection;
+    }
+
+    private function getQueriesConfiguration(array $configHash)
     {
         if (array_key_exists(ContentViewParser::QUERY_KEY, $configHash)) {
             return $configHash[ContentViewParser::QUERY_KEY];

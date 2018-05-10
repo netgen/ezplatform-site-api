@@ -1,28 +1,58 @@
 parameters:
 
 services:
-    netgen.ezplatform_site.query_type.forward_field_relations:
-        class: Netgen\EzPlatformSiteApi\Core\Site\QueryTypes\ForwardFieldRelations
+    netgen.ezplatform_site.query_type.content.relations.forward_fields:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ForwardFields
         arguments:
             - '@netgen.ezplatform_site.plugins.field_type.relation_resolver.registry'
         tags:
             - {name: ezpublish.query_type}
         public: false
 
-    netgen.ezplatform_site.query_type.reverse_field_relations:
-        class: Netgen\EzPlatformSiteApi\Core\Site\QueryTypes\ReverseFieldRelations
+    netgen.ezplatform_site.query_type.content.relations.reverse_fields:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields
         tags:
             - {name: ezpublish.query_type}
         public: false
 
-    netgen.ezplatform_site.query_type.tag_field_relations:
-        class: Netgen\EzPlatformSiteApi\Core\Site\QueryTypes\TagFieldRelations
+    netgen.ezplatform_site.query_type.content.relations.tag_fields:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\TagFields
         tags:
             - {name: ezpublish.query_type}
         public: false
 
-    netgen.ezplatform_site.query_type.tag_relations:
-        class: Netgen\EzPlatformSiteApi\Core\Site\QueryTypes\TagRelations
+    netgen.ezplatform_site.query_type.content.relations.all_tag_fields:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\AllTagFields
+        tags:
+            - {name: ezpublish.query_type}
+        public: false
+
+    netgen.ezplatform_site.query_type.content.fetch:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Fetch
+        tags:
+            - {name: ezpublish.query_type}
+        public: false
+
+    netgen.ezplatform_site.query_type.location.children:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Children
+        tags:
+            - {name: ezpublish.query_type}
+        public: false
+
+    netgen.ezplatform_site.query_type.location.siblings:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Siblings
+        tags:
+            - {name: ezpublish.query_type}
+        public: false
+
+    netgen.ezplatform_site.query_type.location.subtree:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Subtree
+        tags:
+            - {name: ezpublish.query_type}
+        public: false
+
+    netgen.ezplatform_site.query_type.location.fetch:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Fetch
         tags:
             - {name: ezpublish.query_type}
         public: false

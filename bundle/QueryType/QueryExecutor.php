@@ -5,8 +5,8 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
-use Netgen\EzPlatformSiteApi\Core\Site\FilterService;
-use Netgen\EzPlatformSiteApi\Core\Site\FindService;
+use Netgen\EzPlatformSiteApi\API\FilterService;
+use Netgen\EzPlatformSiteApi\API\FindService;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchFilterAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchAdapter;
@@ -15,9 +15,9 @@ use Pagerfanta\Pagerfanta;
 use RuntimeException;
 
 /**
- * @internal
+ * QueryExecutor resolves the Query from the QueryDefinition, executes it and returns the result.
  *
- * QueryExecutor resolves the Query from the given QueryDefinition, executes it and returns the result.
+ * @internal Do not depend on this service, it can be changed without warning.
  */
 final class QueryExecutor
 {
@@ -38,8 +38,8 @@ final class QueryExecutor
 
     /**
      * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\FilterService $filterService
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\FindService $findService
+     * @param \Netgen\EzPlatformSiteApi\API\FilterService $filterService
+     * @param \Netgen\EzPlatformSiteApi\API\FindService $findService
      */
     public function __construct(
         QueryTypeRegistry $queryTypeRegistry,
@@ -59,14 +59,12 @@ final class QueryExecutor
      *
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      * @param bool $usePager
-     * @param array $override
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
      */
-    public function execute(QueryDefinition $queryDefinition, $usePager, array $override)
+    public function execute(QueryDefinition $queryDefinition, $usePager)
     {
         $queryType = $this->queryTypeRegistry->getQueryType($queryDefinition->name);
-        $queryDefinition = $this->overrideQueryDefinition($queryDefinition, $override);
         $query = $queryType->getQuery($queryDefinition->parameters);
 
         if ($query instanceof LocationQuery) {
@@ -78,29 +76,6 @@ final class QueryExecutor
         }
 
         throw new RuntimeException('Could not handle given query');
-    }
-
-    private function overrideQueryDefinition(QueryDefinition $queryDefinition, array $override)
-    {
-        if (empty($override)) {
-            return $queryDefinition;
-        }
-
-        $params = [
-            'parameters' => $queryDefinition->parameters,
-            'use_filter' => $queryDefinition->useFilter,
-            'max_per_page' => $queryDefinition->maxPerPage,
-            'page' => $queryDefinition->page,
-        ];
-
-        $params = array_replace_recursive($params, $override);
-
-        return new QueryDefinition([
-            'parameters' => $params['parameters'],
-            'useFilter' => $params['use_filter'],
-            'maxPerPage' => $params['max_per_page'],
-            'page' => $params['page'],
-        ]);
     }
 
     /**
@@ -132,7 +107,11 @@ final class QueryExecutor
             return $pager;
         }
 
-        return $this->filterService->filterLocations($query);
+        if ($queryDefinition->useFilter) {
+            return $this->filterService->filterLocations($query);
+        }
+
+        return $this->findService->findLocations($query);
     }
 
     /**
@@ -164,6 +143,10 @@ final class QueryExecutor
             return $pager;
         }
 
-        return $this->filterService->filterContent($query);
+        if ($queryDefinition->useFilter) {
+            return $this->filterService->filterContent($query);
+        }
+
+        return $this->findService->findContent($query);
     }
 }

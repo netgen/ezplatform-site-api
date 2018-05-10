@@ -15,7 +15,7 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\Configured
         arguments:
             - '@netgen.ezplatform_site.ngcontent_view.matcher_factory'
-            - '@netgen.ezplatform_site.query_collection_mapper'
+            - '@netgen.ezplatform_site.query_type.query_definition_mapper'
         tags:
             - {name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 110}
         public: false

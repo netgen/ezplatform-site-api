@@ -5,11 +5,13 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 use OutOfBoundsException;
 
 /**
- * QueryCollection contains a map of QueryDefinitions by their name string.
+ * QueryDefinitionCollection contains a map of QueryDefinitions by their name string.
  *
  * @see \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
+ *
+ * @internal Do not depend on this service, it can be changed without warning.
  */
-final class QueryCollection
+final class QueryDefinitionCollection
 {
     /**
      * Internal map of QueryDefinitions.
@@ -26,7 +28,7 @@ final class QueryCollection
      *
      * @return void
      */
-    public function addQueryDefinition($name, QueryDefinition $queryDefinition)
+    public function add($name, QueryDefinition $queryDefinition)
     {
         $this->queryDefinitionMap[$name] = $queryDefinition;
     }
@@ -40,7 +42,7 @@ final class QueryCollection
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
      */
-    public function getQueryDefinition($name)
+    public function get($name)
     {
         if (array_key_exists($name, $this->queryDefinitionMap)) {
             return $this->queryDefinitionMap[$name];

@@ -9,7 +9,7 @@ use Twig_Extension;
 use Twig_SimpleFunction;
 
 /**
- * Twig extension for executing queries from the QueryCollection injected
+ * Twig extension for executing queries from the QueryDefinitionCollection injected
  * into the template.
  */
 class QueryExtension extends Twig_Extension
@@ -33,17 +33,15 @@ class QueryExtension extends Twig_Extension
             new Twig_SimpleFunction(
                 'ng_query',
                 /**
-                 * @param $context
+                 * @param mixed $context
                  * @param string $name
-                 * @param array $override
                  *
                  * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
                  */
-                function ($context, $name, $override = []) {
+                function ($context, $name) {
                     return $this->queryExecutor->execute(
-                        $this->getQueryCollection($context)->getQueryDefinition($name),
-                        true,
-                        $override
+                        $this->getQueryDefinitionCollection($context)->get($name),
+                        true
                     );
                 },
                 [
@@ -53,17 +51,15 @@ class QueryExtension extends Twig_Extension
             new Twig_SimpleFunction(
                 'ng_raw_query',
                 /**
-                 * @param $context
+                 * @param mixed $context
                  * @param string $name
-                 * @param array $override
                  *
                  * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
                  */
-                function ($context, $name, $override = []) {
+                function ($context, $name) {
                     return $this->queryExecutor->execute(
-                        $this->getQueryCollection($context)->getQueryDefinition($name),
-                        false,
-                        $override
+                        $this->getQueryDefinitionCollection($context)->get($name),
+                        false
                     );
                 },
                 [
@@ -74,24 +70,24 @@ class QueryExtension extends Twig_Extension
     }
 
     /**
-     * Returns the QueryCollection from the given $context.
+     * Returns the QueryDefinitionCollection variable from the given $context.
      *
      * @throws \Twig_Error_Runtime
      *
      * @param mixed $context
      *
-     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollection
+     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection
      */
-    private function getQueryCollection($context)
+    private function getQueryDefinitionCollection($context)
     {
-        $variableName = ContentView::QUERY_COLLECTION_NAME;
+        $variableName = ContentView::QUERY_DEFINITION_COLLECTION_NAME;
 
         if (is_array($context) && array_key_exists($variableName, $context)) {
-            return $context['queryCollection'];
+            return $context[$variableName];
         }
 
         throw new Twig_Error_Runtime(
-            "Could not find QueryCollection variable '{$variableName}'"
+            "Could not find QueryDefinitionCollection variable '{$variableName}'"
         );
     }
 }

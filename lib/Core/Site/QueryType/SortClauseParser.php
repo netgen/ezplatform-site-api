@@ -1,12 +1,14 @@
 <?php
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\Search;
+namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DateModified;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Field;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Depth;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Priority;
 use InvalidArgumentException;
 
 /**
@@ -15,14 +17,26 @@ use InvalidArgumentException;
  *
  * Supported sort clause strings:
  *
- *  - published asc
- *  - published desc
- *  - modified asc
- *  - modified desc
- *  - name asc
- *  - name desc
+ *  - depth
+ *  - depth asc
+ *  - depth desc
+ *  - field/article/title
  *  - field/article/title asc
  *  - field/article/title desc
+ *  - modified
+ *  - modified asc
+ *  - modified desc
+ *  - name
+ *  - name asc
+ *  - name desc
+ *  - priority
+ *  - priority asc
+ *  - priority desc
+ *  - published
+ *  - published asc
+ *  - published desc
+ *
+ * @internal Do not depend on this service, it can be changed without warning.
  */
 class SortClauseParser
 {
@@ -43,18 +57,22 @@ class SortClauseParser
         $type = $values[0];
 
         switch (strtolower($type)) {
-            case 'published':
-                return new DatePublished($direction);
+            case 'depth':
+                return new Depth($direction);
+            case 'field':
+                return $this->buildFieldSortClause($values, $direction);
             case 'modified':
                 return new DateModified($direction);
             case 'name':
                 return new ContentName($direction);
-            case 'field':
-                return $this->buildFieldSortClause($values, $direction);
+            case 'priority':
+                return new Priority($direction);
+            case 'published':
+                return new DatePublished($direction);
         }
 
         throw new InvalidArgumentException(
-            "Could not handle sort type '$type'"
+            "Could not handle sort type '{$type}'"
         );
     }
 
@@ -110,7 +128,7 @@ class SortClauseParser
         }
 
         throw new InvalidArgumentException(
-            "Could not handle sort direction '$direction'"
+            "Could not handle sort direction '{$direction}'"
         );
     }
 }

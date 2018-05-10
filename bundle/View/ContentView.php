@@ -18,11 +18,11 @@ use RuntimeException;
 class ContentView extends BaseView implements View, ContentValueView, LocationValueView, EmbedView, CachableView
 {
     /**
-     * Name of the QueryCollection variable injected to the template.
+     * Name of the QueryDefinitionCollection variable injected to the template.
      *
-     * @see \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryCollection
+     * @see \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection
      */
-    const QUERY_COLLECTION_NAME = 'queryCollection';
+    const QUERY_DEFINITION_COLLECTION_NAME = 'queryDefinitionCollection';
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content

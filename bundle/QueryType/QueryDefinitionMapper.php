@@ -128,15 +128,13 @@ final class QueryDefinitionMapper
      * @param array $parameters
      * @param string $queryTypeName
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
-     * @return array|string
      */
     private function injectSupportedParameters(array &$parameters, $queryTypeName, ContentView $view)
     {
         $queryType = $this->queryTypeRegistry->getQueryType($queryTypeName);
 
         if (!$queryType instanceof SiteQueryType) {
-            return $parameters;
+            return;
         }
 
         if (!array_key_exists('content', $parameters) && $queryType->supportsParameter('content')) {
@@ -146,8 +144,6 @@ final class QueryDefinitionMapper
         if (!array_key_exists('location', $parameters) && $queryType->supportsParameter('location')) {
             $parameters['location'] = $view->getSiteLocation();
         }
-
-        return $parameters;
     }
 
     /**

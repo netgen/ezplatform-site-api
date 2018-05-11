@@ -4,20 +4,20 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\DependencyInjection\Config
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension;
 use eZ\Bundle\EzPublishCoreBundle\Tests\DependencyInjection\Configuration\Parser\AbstractParserTestCase;
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\Query;
+use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\NamedQuery;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
  * @group config
  */
-class QueryTest extends AbstractParserTestCase
+class NamedQueryTest extends AbstractParserTestCase
 {
     protected function getContainerExtensions()
     {
         return [
             new EzPublishCoreExtension([
-                new Query(),
+                new NamedQuery(),
             ]),
         ];
     }
@@ -87,7 +87,7 @@ class QueryTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'siteaccess_group' => [
-                    'ng_queries' => $configurationValues,
+                    'ng_named_query' => $configurationValues,
                 ],
             ],
         ]);
@@ -121,7 +121,7 @@ class QueryTest extends AbstractParserTestCase
                         'page' => 2,
                     ]
                 ],
-                'The child node "query_type" at path "ezpublish.system.siteaccess_group.ng_queries.some_key" must be configured',
+                'The child node "query_type" at path "ezpublish.system.siteaccess_group.ng_named_query.some_key" must be configured',
             ],
             [
                 [
@@ -168,7 +168,7 @@ class QueryTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'siteaccess_group' => [
-                    'ng_queries' => $configurationValues,
+                    'ng_named_query' => $configurationValues,
                 ],
             ],
         ]);
@@ -207,13 +207,13 @@ class QueryTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'siteaccess_group' => [
-                    'ng_queries' => $configurationValues,
+                    'ng_named_query' => $configurationValues,
                 ],
             ],
         ]);
 
         $this->assertConfigResolverParameterValue(
-            'ng_queries',
+            'ng_named_query',
             $expectedConfigurationValues,
             'cro'
         );

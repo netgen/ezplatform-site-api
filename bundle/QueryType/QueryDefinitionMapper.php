@@ -29,21 +29,21 @@ final class QueryDefinitionMapper
     /**
      * @var array
      */
-    private $namedQueriesConfiguration;
+    private $namedQueryConfiguration;
 
     /**
      * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor $parameterProcessor
-     * @param array $namedQueriesConfiguration
+     * @param array $namedQueryConfiguration
      */
     public function __construct(
         QueryTypeRegistry $queryTypeRegistry,
         ParameterProcessor $parameterProcessor,
-        array $namedQueriesConfiguration
+        array $namedQueryConfiguration
     ) {
         $this->queryTypeRegistry = $queryTypeRegistry;
         $this->parameterProcessor = $parameterProcessor;
-        $this->namedQueriesConfiguration = $namedQueriesConfiguration;
+        $this->namedQueryConfiguration = $namedQueryConfiguration;
     }
 
     /**
@@ -90,8 +90,8 @@ final class QueryDefinitionMapper
      */
     private function getNamedQueryConfiguration($name)
     {
-        if (array_key_exists($name, $this->namedQueriesConfiguration)) {
-            return $this->namedQueriesConfiguration[$name];
+        if (array_key_exists($name, $this->namedQueryConfiguration)) {
+            return $this->namedQueryConfiguration[$name];
         }
 
         throw new InvalidArgumentException(

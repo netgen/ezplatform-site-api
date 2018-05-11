@@ -9,15 +9,15 @@ use Twig_Lexer;
 /**
  * Named queries configuration.
  */
-class Query extends View
+class NamedQuery extends View
 {
-    const NODE_KEY = 'ng_queries';
+    const NODE_KEY = 'ng_named_query';
 
     public function addSemanticConfig(NodeBuilder $nodeBuilder)
     {
         $nodeBuilder
             ->arrayNode(static::NODE_KEY)
-                ->info("Netgen's Site API named queries configuration")
+                ->info("Netgen's Site API named query configuration")
                 ->useAttributeAsKey('key')
                 ->prototype('array')
                     ->children()

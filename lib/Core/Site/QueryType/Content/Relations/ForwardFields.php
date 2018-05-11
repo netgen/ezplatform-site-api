@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content;
-use RuntimeException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**

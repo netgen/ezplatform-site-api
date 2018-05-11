@@ -298,9 +298,9 @@ abstract class Base implements QueryType
     }
 
     /**
-     * @param string|\eZ\Publish\API\Repository\Values\Content\Query\SortClause $string
+     * @param string $string
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause
+     * @return string|\eZ\Publish\API\Repository\Values\Content\Query\SortClause
      */
     private function parseSortString($string)
     {

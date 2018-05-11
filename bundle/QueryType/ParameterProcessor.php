@@ -66,7 +66,7 @@ final class ParameterProcessor
     {
         $expressionLanguage->register(
             'viewParam',
-            function ($name, $default) {},
+            function () {},
             function ($arguments, $name, $default) {
                 /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
                 $view = $arguments['view'];
@@ -81,7 +81,7 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'queryParam',
-            function ($name, $default) {},
+            function () {},
             function ($arguments, $name, $default) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
@@ -92,7 +92,7 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'timestamp',
-            function ($timeString) {},
+            function () {},
             function ($arguments, $timeString) {
                 return strtotime($timeString);
             }

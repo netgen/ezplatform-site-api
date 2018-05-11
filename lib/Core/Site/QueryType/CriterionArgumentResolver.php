@@ -146,7 +146,7 @@ final class CriterionArgumentResolver
         $isValueCollection = false;
 
         foreach (array_keys($parameters) as $key) {
-            if (array_key_exists($key, static::$operatorMap)) {
+            if (array_key_exists($key, self::$operatorMap)) {
                 $isOperatorMap = true;
             } else {
                 $isValueCollection = true;
@@ -176,7 +176,7 @@ final class CriterionArgumentResolver
             return $this->getOperatorByValueType($value);
         }
 
-        return static::$operatorMap[$symbol];
+        return self::$operatorMap[$symbol];
     }
 
     /**

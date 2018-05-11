@@ -297,6 +297,11 @@ abstract class Base implements QueryType
         return $sortClauses;
     }
 
+    /**
+     * @param string|\eZ\Publish\API\Repository\Values\Content\Query\SortClause $string
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause
+     */
     private function parseSortString($string)
     {
         try {

@@ -34,7 +34,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
     {
         return [
             'content_type',
-            'fields',
+            'field',
             'publication_date',
             'sort',
             'limit',
@@ -78,7 +78,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             [
                 [
                     'content_type' => 'article',
-                    'fields' => [],
+                    'field' => [],
                     'sort' => [
                         'published asc',
                     ],
@@ -93,7 +93,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             [
                 [
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => 'Hello',
                     ],
                     'sort' => [
@@ -115,7 +115,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             [
                 [
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                         ]
@@ -135,7 +135,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             [
                 [
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
@@ -192,7 +192,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                     'content_type' => [1],
                 ],
                 [
-                    'fields' => 1,
+                    'field' => 1,
                 ],
                 [
                     'publication_date' => true,

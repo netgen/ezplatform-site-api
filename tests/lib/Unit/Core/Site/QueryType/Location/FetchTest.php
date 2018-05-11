@@ -41,7 +41,7 @@ class FetchTest extends QueryTypeBaseTest
     {
         return [
             'content_type',
-            'fields',
+            'field',
             'publication_date',
             'sort',
             'limit',
@@ -107,7 +107,7 @@ class FetchTest extends QueryTypeBaseTest
             [
                 [
                     'content_type' => 'article',
-                    'fields' => [],
+                    'field' => [],
                     'depth' => 5,
                     'sort' => [
                         'published desc',
@@ -128,7 +128,7 @@ class FetchTest extends QueryTypeBaseTest
             [
                 [
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => 'Hello',
                     ],
                     'sort' => new DatePublished(Query::SORT_DESC),
@@ -148,7 +148,7 @@ class FetchTest extends QueryTypeBaseTest
                     'content_type' => 'article',
                     'parent_location_id' => 42,
                     'subtree' => '/1/2/42/',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                         ]
@@ -176,7 +176,7 @@ class FetchTest extends QueryTypeBaseTest
                     'content_type' => 'article',
                     'parent_location_id' => [24, 42],
                     'subtree' => ['/1/2/42/', '/2/3/4/'],
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
@@ -227,7 +227,7 @@ class FetchTest extends QueryTypeBaseTest
                     'content_type' => [1],
                 ],
                 [
-                    'fields' => 1,
+                    'field' => 1,
                 ],
                 [
                     'publication_date' => true,

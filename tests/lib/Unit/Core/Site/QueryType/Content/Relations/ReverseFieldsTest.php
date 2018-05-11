@@ -70,13 +70,13 @@ class ReverseFieldsTest extends QueryTypeBaseTest
     {
         return [
             'content_type',
-            'fields',
+            'field',
             'publication_date',
             'sort',
             'limit',
             'offset',
             'content',
-            'relation_fields',
+            'relation_field',
         ];
     }
 
@@ -88,7 +88,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['relations_a', 'relations_b'],
+                    'relation_field' => ['relations_a', 'relations_b'],
                     'limit' => 12,
                     'offset' => 34,
                     'sort' => 'published asc',
@@ -108,9 +108,9 @@ class ReverseFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['relations_a'],
+                    'relation_field' => ['relations_a'],
                     'content_type' => 'article',
-                    'fields' => [],
+                    'field' => [],
                     'sort' => [
                         'published asc',
                     ],
@@ -128,9 +128,9 @@ class ReverseFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['relations_b'],
+                    'relation_field' => ['relations_b'],
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => 'Hello',
                     ],
                     'sort' => [
@@ -153,9 +153,9 @@ class ReverseFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => [],
+                    'relation_field' => [],
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                         ]
@@ -176,9 +176,9 @@ class ReverseFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['relations_a', 'relations_b'],
+                    'relation_field' => ['relations_a', 'relations_b'],
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
@@ -206,7 +206,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['relations_a', 'relations_b'],
+                    'relation_field' => ['relations_a', 'relations_b'],
                     'publication_date' => '4 May 2018',
                     'sort' => [
                         new DatePublished(Query::SORT_DESC),
@@ -248,7 +248,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
                 ],
                 [
                     'content' => $content,
-                    'fields' => 1,
+                    'field' => 1,
                 ],
                 [
                     'content' => $content,
@@ -278,7 +278,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['relations_a', 'relations_b'],
+                    'relation_field' => ['relations_a', 'relations_b'],
                     'publication_date' => [
                         'like' => 5,
                     ],
@@ -295,7 +295,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['relations_a', 'relations_b'],
+                    'relation_field' => ['relations_a', 'relations_b'],
                     'sort' => 'just sort it',
                 ],
             ],

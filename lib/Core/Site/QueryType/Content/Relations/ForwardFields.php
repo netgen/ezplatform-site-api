@@ -44,11 +44,11 @@ final class ForwardFields extends Content
     {
         $resolver->setRequired([
             'content',
-            'relation_fields',
+            'relation_field',
         ]);
 
         $resolver->setAllowedTypes('content', SiteContent::class);
-        $resolver->setAllowedTypes('relation_fields', ['string', 'string[]']);
+        $resolver->setAllowedTypes('relation_field', ['string', 'string[]']);
     }
 
     /**
@@ -62,7 +62,7 @@ final class ForwardFields extends Content
     {
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
         $content = $parameters['content'];
-        $fields = (array) $parameters['relation_fields'];
+        $fields = (array) $parameters['relation_field'];
         $idsGrouped = [[]];
 
         foreach ($fields as $identifier) {

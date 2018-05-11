@@ -30,11 +30,11 @@ final class TagFields extends Content
     {
         $resolver->setRequired([
             'content',
-            'relation_fields',
+            'relation_field',
         ]);
 
         $resolver->setAllowedTypes('content', SiteContent::class);
-        $resolver->setAllowedTypes('relation_fields', ['string', 'string[]']);
+        $resolver->setAllowedTypes('relation_field', ['string', 'string[]']);
     }
 
     /**
@@ -49,7 +49,7 @@ final class TagFields extends Content
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
         $content = $parameters['content'];
         /** @var string[] $fields */
-        $fields = (array) $parameters['relation_fields'];
+        $fields = (array) $parameters['relation_field'];
 
         $tagIds = $this->extractTagIds($content, $fields);
 

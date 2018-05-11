@@ -74,7 +74,7 @@ class CriteriaBuilderTest extends TestCase
                 ],
             ],
             [
-                'fields',
+                'field',
                 [
                     new CriterionArgument([
                         'target' => 'title',

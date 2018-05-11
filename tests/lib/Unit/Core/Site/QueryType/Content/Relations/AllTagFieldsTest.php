@@ -118,7 +118,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
     {
         return [
             'content_type',
-            'fields',
+            'field',
             'publication_date',
             'sort',
             'limit',
@@ -169,7 +169,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $contentWithTags,
                     'content_type' => 'article',
-                    'fields' => [],
+                    'field' => [],
                     'sort' => [
                         'published asc',
                     ],
@@ -188,7 +188,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $contentWithTags,
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => 'Hello',
                     ],
                     'sort' => [
@@ -212,7 +212,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $contentWithTags,
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                         ]
@@ -234,7 +234,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $contentWithTags,
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
@@ -301,7 +301,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 [
                     'content' => $content,
-                    'fields' => 1,
+                    'field' => 1,
                 ],
                 [
                     'content' => $content,

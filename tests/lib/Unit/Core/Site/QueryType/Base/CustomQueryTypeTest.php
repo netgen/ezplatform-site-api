@@ -37,7 +37,7 @@ class CustomQueryTypeTest extends TestCase
         $this->assertEquals(
             [
                 'content_type',
-                'fields',
+                'field',
                 'publication_date',
                 'sort',
                 'limit',

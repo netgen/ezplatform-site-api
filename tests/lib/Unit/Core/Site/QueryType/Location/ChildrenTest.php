@@ -54,7 +54,7 @@ class ChildrenTest extends QueryTypeBaseTest
     {
         return [
             'content_type',
-            'fields',
+            'field',
             'publication_date',
             'sort',
             'limit',
@@ -132,7 +132,7 @@ class ChildrenTest extends QueryTypeBaseTest
                 [
                     'location' => $location,
                     'content_type' => 'article',
-                    'fields' => [],
+                    'field' => [],
                     'sort' => [
                         'published desc',
                         'name asc',
@@ -153,7 +153,7 @@ class ChildrenTest extends QueryTypeBaseTest
                 [
                     'location' => $location,
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => 'Hello',
                     ],
                     'sort' => new DatePublished(Query::SORT_DESC),
@@ -173,7 +173,7 @@ class ChildrenTest extends QueryTypeBaseTest
                 [
                     'location' => $location,
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                         ]
@@ -199,7 +199,7 @@ class ChildrenTest extends QueryTypeBaseTest
                 [
                     'location' => $location,
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
@@ -261,7 +261,7 @@ class ChildrenTest extends QueryTypeBaseTest
                 ],
                 [
                     'location' => $location,
-                    'fields' => 1,
+                    'field' => 1,
                 ],
                 [
                     'location' => $location,

@@ -29,11 +29,11 @@ final class ReverseFields extends Content
     {
         $resolver->setRequired([
             'content',
-            'relation_fields',
+            'relation_field',
         ]);
 
         $resolver->setAllowedTypes('content', SiteContent::class);
-        $resolver->setAllowedTypes('relation_fields', ['string', 'string[]']);
+        $resolver->setAllowedTypes('relation_field', ['string', 'string[]']);
     }
 
     /**
@@ -46,7 +46,7 @@ final class ReverseFields extends Content
      */
     protected function getFilterCriteria(array $parameters)
     {
-        $fields = (array) $parameters['relation_fields'];
+        $fields = (array) $parameters['relation_field'];
 
         if (empty($fields)) {
             return new MatchNone();

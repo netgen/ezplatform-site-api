@@ -177,7 +177,7 @@ abstract class Base implements QueryType
     {
         $resolver->setDefined([
             'content_type',
-            'fields',
+            'field',
             'publication_date',
         ]);
         $resolver->setDefaults([
@@ -187,7 +187,7 @@ abstract class Base implements QueryType
         ]);
 
         $resolver->setAllowedTypes('content_type', ['string', 'string[]']);
-        $resolver->setAllowedTypes('fields', ['array']);
+        $resolver->setAllowedTypes('field', ['array']);
         $resolver->setAllowedTypes('limit', ['int']);
         $resolver->setAllowedTypes('offset', ['int']);
         $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
@@ -222,7 +222,7 @@ abstract class Base implements QueryType
                 case 'visible':
                     $arguments = $this->getCriterionArgumentResolver()->resolve($value);
                     break;
-                case 'fields':
+                case 'field':
                     $arguments = $this->getCriterionArgumentResolver()->resolveTargets($value);
                     break;
                 default:

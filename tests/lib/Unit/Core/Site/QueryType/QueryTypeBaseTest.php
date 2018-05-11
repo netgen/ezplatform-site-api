@@ -70,7 +70,7 @@ abstract class QueryTypeBaseTest extends TestCase
 
         $expectedParameters = [
             'content_type',
-            'fields',
+            'field',
             'publication_date',
             'sort',
             'limit',

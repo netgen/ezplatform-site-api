@@ -63,7 +63,7 @@ final class CriteriaBuilder
                 return $this->buildContentTypeIdentifier($argument);
             case 'depth':
                 return $this->buildDepth($argument);
-            case 'fields':
+            case 'field':
                 return $this->buildField($argument);
             case 'main':
                 return $this->buildIsMainLocation($argument);

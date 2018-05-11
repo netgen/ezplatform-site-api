@@ -111,13 +111,13 @@ class TagFieldsTest extends QueryTypeBaseTest
     {
         return [
             'content_type',
-            'fields',
+            'field',
             'publication_date',
             'sort',
             'limit',
             'offset',
             'content',
-            'relation_fields',
+            'relation_field',
         ];
     }
 
@@ -129,7 +129,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['tags_a', 'tags_b'],
+                    'relation_field' => ['tags_a', 'tags_b'],
                     'limit' => 12,
                     'offset' => 34,
                     'sort' => 'published asc',
@@ -146,9 +146,9 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['tags_a'],
+                    'relation_field' => ['tags_a'],
                     'content_type' => 'article',
-                    'fields' => [],
+                    'field' => [],
                     'sort' => [
                         'published asc',
                     ],
@@ -166,9 +166,9 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['tags_b'],
+                    'relation_field' => ['tags_b'],
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => 'Hello',
                     ],
                     'sort' => [
@@ -191,9 +191,9 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => [],
+                    'relation_field' => [],
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                         ]
@@ -214,9 +214,9 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['tags_a', 'tags_b'],
+                    'relation_field' => ['tags_a', 'tags_b'],
                     'content_type' => 'article',
-                    'fields' => [
+                    'field' => [
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
@@ -243,7 +243,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['tags_a', 'tags_b'],
+                    'relation_field' => ['tags_a', 'tags_b'],
                     'publication_date' => '4 May 2018',
                     'sort' => [
                         new DatePublished(Query::SORT_DESC),
@@ -277,7 +277,7 @@ class TagFieldsTest extends QueryTypeBaseTest
 
         $queryType->getQuery([
             'content' => $content,
-            'relation_fields' => ['not_tags'],
+            'relation_field' => ['not_tags'],
             'content_type' => 'article',
             'sort' => 'published desc',
         ]);
@@ -292,7 +292,7 @@ class TagFieldsTest extends QueryTypeBaseTest
 
         $queryType->getQuery([
             'content' => $content,
-            'relation_fields' => ['ćići'],
+            'relation_field' => ['ćići'],
             'content_type' => 'article',
             'sort' => 'published desc',
         ]);
@@ -314,7 +314,7 @@ class TagFieldsTest extends QueryTypeBaseTest
                 ],
                 [
                     'content' => $content,
-                    'fields' => 1,
+                    'field' => 1,
                 ],
                 [
                     'content' => $content,
@@ -344,7 +344,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['tags_a', 'tags_b'],
+                    'relation_field' => ['tags_a', 'tags_b'],
                     'publication_date' => [
                         'like' => 5,
                     ],
@@ -361,7 +361,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'relation_fields' => ['tags_a', 'tags_b'],
+                    'relation_field' => ['tags_a', 'tags_b'],
                     'sort' => 'just sort it',
                 ],
             ],

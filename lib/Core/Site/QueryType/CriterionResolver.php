@@ -8,9 +8,9 @@ use InvalidArgumentException;
 /**
  * @internal Do not depend on this service, it can be changed without warning.
  *
- * CriterionArgumentResolver resolves CriterionArgument instances from the given parameters.
+ * CriterionResolver resolves CriterionDefinition instances from the given parameters.
  */
-final class CriterionArgumentResolver
+final class CriterionResolver
 {
     /**
      * Set of available operator names.
@@ -32,89 +32,104 @@ final class CriterionArgumentResolver
     /**
      * Resolve Criterion $parameters.
      *
+     * @param string $name
      * @param mixed $parameters
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionArgument[]
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    public function resolve($parameters)
+    public function resolve($name, $parameters)
     {
-        return $this->resolveForTarget(null, $parameters);
+        return $this->resolveForTarget($name, null, $parameters);
     }
 
     /**
      * Resolve Field Criterion $parameters.
      *
+     * @param string $name
      * @param array $parameters
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionArgument[]
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    public function resolveTargets(array $parameters)
+    public function resolveTargets($name, array $parameters)
     {
         $argumentsGrouped = [[]];
 
         foreach ($parameters as $target => $params) {
-            $argumentsGrouped[] = $this->resolveForTarget($target, $params);
+            $argumentsGrouped[] = $this->resolveForTarget($name, $target, $params);
         }
 
         return array_merge(...$argumentsGrouped);
     }
 
     /**
-     * Return CriterionArgument instances for the given Field $target and its $parameters.
+     * Return CriterionDefinition instances for the given Field $target and its $parameters.
      *
      * @throws \InvalidArgumentException
      *
+     * @param string $name
      * @param string|null $target
      * @param mixed $parameters
      *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionArgument[]
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    private function resolveForTarget($target, $parameters)
+    private function resolveForTarget($name, $target, $parameters)
     {
         if ($this->isOperatorMap($parameters)) {
-            return $this->resolveOperatorMap($target, $parameters);
+            return $this->resolveOperatorMap($name, $target, $parameters);
         }
 
         return [
-            $this->buildArgument($target, null, $parameters),
+            $this->buildArgument($name, $target, null, $parameters),
         ];
     }
 
     /**
-     * Return CriterionArgument instances for the given Field $target and its operator $map.
+     * Return CriterionDefinition instances for the given Field $target and its operator $map.
      *
+     * @param string $name
      * @param string|null $target
      * @param array $map
      *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionArgument[]
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    private function resolveOperatorMap($target, array $map)
+    private function resolveOperatorMap($name, $target, array $map)
     {
         $arguments = [];
 
         foreach ($map as $operator => $value) {
-            $arguments[] = $this->buildArgument($target, $operator, $value);
+            if ('not' === $operator) {
+                $arguments[] = $this->buildArgument(
+                    'not',
+                    null,
+                    null,
+                    $this->resolveForTarget($name, $target, $value)
+                );
+            } else {
+                $arguments[] = $this->buildArgument($name, $target, $operator, $value);
+            }
         }
 
         return $arguments;
     }
 
     /**
-     * Return CriterionArgument instance from the given arguments.
+     * Return CriterionDefinition instance from the given arguments.
      *
+     * @param string $name
      * @param string|null $target
      * @param string|null $operator
      * @param mixed $value
      *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionArgument
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
-    private function buildArgument($target, $operator, $value)
+    private function buildArgument($name, $target, $operator, $value)
     {
-        return new CriterionArgument([
+        return new CriterionDefinition([
+            'name' => $name,
             'target' => $target,
             'operator' => $this->resolveOperator($operator, $value),
             'value' => $value,
@@ -140,7 +155,7 @@ final class CriterionArgumentResolver
         $isValueCollection = false;
 
         foreach (array_keys($parameters) as $key) {
-            if (array_key_exists($key, self::$operatorMap)) {
+            if (array_key_exists($key, self::$operatorMap) || 'not' === $key) {
                 $isOperatorMap = true;
             } else {
                 $isValueCollection = true;

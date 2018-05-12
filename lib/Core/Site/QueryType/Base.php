@@ -25,9 +25,9 @@ abstract class Base implements QueryType
     private $optionsResolver;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionArgumentResolver
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionResolver
      */
-    private $criterionArgumentResolver;
+    private $criterionResolver;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
@@ -98,18 +98,18 @@ abstract class Base implements QueryType
     }
 
     /**
-     * Resolve criterion configuration to CriterionArgument instance.
+     * Resolve criterion configuration to CriterionDefinition instance.
      *
      * @param mixed $parameters
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionArgument[]
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    protected function resolveCriterionArguments($parameters)
+    protected function resolveCriterionDefinitions($parameters)
     {
-        return $this->getCriterionArgumentResolver()->resolve($parameters);
+        return $this->getCriterionResolver()->resolve($parameters);
     }
 
     /**
@@ -220,16 +220,16 @@ abstract class Base implements QueryType
                 case 'publication_date':
                 case 'subtree':
                 case 'visible':
-                    $arguments = $this->getCriterionArgumentResolver()->resolve($value);
+                    $arguments = $this->getCriterionResolver()->resolve($name, $value);
                     break;
                 case 'field':
-                    $arguments = $this->getCriterionArgumentResolver()->resolveTargets($value);
+                    $arguments = $this->getCriterionResolver()->resolveTargets($name, $value);
                     break;
                 default:
                     continue 2;
             }
 
-            $criteriaGrouped[] = $this->getCriteriaBuilder()->build($name, $arguments);
+            $criteriaGrouped[] = $this->getCriteriaBuilder()->build($arguments);
         }
 
         return array_merge(...$criteriaGrouped);
@@ -331,13 +331,13 @@ abstract class Base implements QueryType
         return $this->optionsResolver;
     }
 
-    private function getCriterionArgumentResolver()
+    private function getCriterionResolver()
     {
-        if ($this->criterionArgumentResolver === null) {
-            $this->criterionArgumentResolver = new CriterionArgumentResolver();
+        if ($this->criterionResolver === null) {
+            $this->criterionResolver = new CriterionResolver();
         }
 
-        return $this->criterionArgumentResolver;
+        return $this->criterionResolver;
     }
 
     private function getCriteriaBuilder()

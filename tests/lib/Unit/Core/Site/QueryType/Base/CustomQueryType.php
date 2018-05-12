@@ -30,7 +30,7 @@ class CustomQueryType extends Base
     protected function getFilterCriteria(array $parameters)
     {
         $criteria = [];
-        $criterionArguments = $this->resolveCriterionArguments($parameters['modification_date']);
+        $criterionArguments = $this->resolveCriterionDefinitions($parameters['modification_date']);
 
         foreach ($criterionArguments as $criterionArgument) {
             $criteria[] = new DateMetadata(
@@ -74,6 +74,6 @@ class CustomQueryType extends Base
                 return new SectionName();
         }
 
-        return $string;
+        return null;
     }
 }

@@ -40,13 +40,7 @@ final class CriterionArgumentResolver
      */
     public function resolve($parameters)
     {
-        if ($this->isOperatorMap($parameters)) {
-            return $this->resolveOperatorMap(null, $parameters);
-        }
-
-        return [
-            $this->buildArgument(null, null, $parameters),
-        ];
+        return $this->resolveForTarget(null, $parameters);
     }
 
     /**

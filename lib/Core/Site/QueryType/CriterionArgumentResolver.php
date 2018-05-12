@@ -155,7 +155,7 @@ final class CriterionArgumentResolver
 
         if ($isOperatorMap && $isValueCollection) {
             throw new InvalidArgumentException(
-                'Could not decide if the configured array of parameters is an operator map or a value collection'
+                'Array of parameters is not an operator map nor a value collection'
             );
         }
 

@@ -47,6 +47,7 @@ class SubtreeTest extends QueryTypeBaseTest
             'innerLocation' => new RepositoryLocation([
                 'id' => 42,
                 'pathString' => '/3/5/7/11/',
+                'depth' => 4,
                 'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
                 'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
             ]),
@@ -68,6 +69,7 @@ class SubtreeTest extends QueryTypeBaseTest
             'visible',
             'location',
             'include_root',
+            'relative_depth',
         ];
     }
 
@@ -114,6 +116,50 @@ class SubtreeTest extends QueryTypeBaseTest
                 new LocationQuery([
                     'filter' => new LogicalAnd([
                         new Depth(Operator::IN, [2, 3, 7]),
+                        new SubtreeCriterion('/3/5/7/11/'),
+                        new LogicalNot(new LocationId(42)),
+                    ]),
+                    'limit' => 12,
+                    'offset' => 34,
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_DESC),
+                    ],
+                ]),
+            ],
+            [
+                [
+                    'location' => $location,
+                    'relative_depth' => 5,
+                    'limit' => 12,
+                    'offset' => 34,
+                    'sort' => 'published desc',
+                ],
+                new LocationQuery([
+                    'filter' => new LogicalAnd([
+                        new Depth(Operator::EQ, 9),
+                        new SubtreeCriterion('/3/5/7/11/'),
+                        new LogicalNot(new LocationId(42)),
+                    ]),
+                    'limit' => 12,
+                    'offset' => 34,
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_DESC),
+                    ],
+                ]),
+            ],
+            [
+                [
+                    'location' => $location,
+                    'relative_depth' => [
+                        'in' => [2, 3, 7],
+                    ],
+                    'limit' => 12,
+                    'offset' => 34,
+                    'sort' => 'published desc',
+                ],
+                new LocationQuery([
+                    'filter' => new LogicalAnd([
+                        new Depth(Operator::IN, [6, 7, 11]),
                         new SubtreeCriterion('/3/5/7/11/'),
                         new LogicalNot(new LocationId(42)),
                     ]),

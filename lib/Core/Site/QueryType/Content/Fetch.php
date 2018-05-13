@@ -36,4 +36,9 @@ class Fetch extends Content
     {
         return [];
     }
+
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 }

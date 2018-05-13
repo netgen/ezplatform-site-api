@@ -61,4 +61,9 @@ final class Children extends Location
     {
         return [];
     }
+
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 }

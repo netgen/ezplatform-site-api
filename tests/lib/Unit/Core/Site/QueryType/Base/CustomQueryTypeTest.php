@@ -8,6 +8,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\DateMetadata;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\FullText;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\SectionId;
 use eZ\Publish\API\Repository\Values\Content\Query\FacetBuilder\SectionFacetBuilder;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionName;
@@ -42,7 +43,7 @@ class CustomQueryTypeTest extends TestCase
                 'sort',
                 'limit',
                 'offset',
-                'modification_date',
+                'prefabrication_date',
             ],
             $queryType->getSupportedParameters()
         );
@@ -53,15 +54,18 @@ class CustomQueryTypeTest extends TestCase
         return [
             [
                 [
-                    'modification_date' => 123,
+                    'prefabrication_date' => 123,
                     'sort' => 'section',
                 ],
                 new LocationQuery([
-                    'filter' => new DateMetadata(
-                        DateMetadata::MODIFIED,
-                        Operator::EQ,
-                        123
-                    ),
+                    'filter' => new LogicalAnd([
+                        new DateMetadata(
+                            DateMetadata::MODIFIED,
+                            Operator::EQ,
+                            123
+                        ),
+                        new SectionId(42),
+                    ]),
                     'query' => new FullText('one AND two OR three'),
                     'sortClauses' => [
                         new SectionIdentifier(),
@@ -73,18 +77,21 @@ class CustomQueryTypeTest extends TestCase
             ],
             [
                 [
-                    'modification_date' => [123, 456],
+                    'prefabrication_date' => [123, 456],
                     'sort' => [
                         'whatever',
                         'section',
                     ]
                 ],
                 new LocationQuery([
-                    'filter' => new DateMetadata(
-                        DateMetadata::MODIFIED,
-                        Operator::IN,
-                        [123, 456]
-                    ),
+                    'filter' => new LogicalAnd([
+                        new DateMetadata(
+                            DateMetadata::MODIFIED,
+                            Operator::IN,
+                            [123, 456]
+                        ),
+                        new SectionId(42),
+                    ]),
                     'query' => new FullText('one AND two OR three'),
                     'sortClauses' => [
                         new SectionName(),
@@ -97,7 +104,7 @@ class CustomQueryTypeTest extends TestCase
             ],
             [
                 [
-                    'modification_date' => [
+                    'prefabrication_date' => [
                         'eq' => 123,
                         'in' => [123, 456],
                     ]
@@ -114,6 +121,7 @@ class CustomQueryTypeTest extends TestCase
                             Operator::IN,
                             [123, 456]
                         ),
+                        new SectionId(42),
                     ]),
                     'query' => new FullText('one AND two OR three'),
                     'facetBuilders' => [

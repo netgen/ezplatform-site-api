@@ -66,4 +66,9 @@ final class Siblings extends Location
     {
         return [];
     }
+
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 }

@@ -72,4 +72,9 @@ final class ReverseFields extends Content
     {
         return [];
     }
+
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 }

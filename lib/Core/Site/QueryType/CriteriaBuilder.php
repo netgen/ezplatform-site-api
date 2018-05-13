@@ -17,6 +17,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use InvalidArgumentException;
 
 /**
+ * @todo use array_values on values
  * @internal Do not depend on this service, it can be changed without warning.
  *
  * CriteriaBuilder builds criteria from CriterionDefinition instances.

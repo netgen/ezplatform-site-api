@@ -36,4 +36,9 @@ class Fetch extends Location
     {
         return [];
     }
+
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 }

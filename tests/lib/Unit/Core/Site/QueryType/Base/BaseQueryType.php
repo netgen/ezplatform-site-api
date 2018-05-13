@@ -42,4 +42,9 @@ class BaseQueryType extends Base
     {
         return [];
     }
+
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 }

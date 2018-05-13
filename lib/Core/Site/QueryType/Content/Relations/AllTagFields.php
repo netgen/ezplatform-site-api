@@ -85,4 +85,9 @@ final class AllTagFields extends Content
 
         return array_merge(...$tagsIdsGrouped);
     }
+
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 }

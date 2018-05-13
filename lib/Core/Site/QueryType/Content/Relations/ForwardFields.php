@@ -94,4 +94,9 @@ final class ForwardFields extends Content
     {
         return [];
     }
+
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 }

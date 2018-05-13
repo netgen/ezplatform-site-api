@@ -2,6 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType;
 
+use Closure;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
@@ -38,6 +39,11 @@ abstract class Base implements QueryType
      * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\SortClauseParser
      */
     private $sortClauseParser;
+
+    /**
+     * @var \Closure[]
+     */
+    private $registeredCriterionBuilders;
 
     /**
      * Configure options with the given options $resolver if needed.
@@ -82,6 +88,13 @@ abstract class Base implements QueryType
     abstract protected function getFacetBuilders(array $parameters);
 
     /**
+     * Register criterion builders using registerCriterionBuilder().
+     *
+     * @see registerCriterionBuilder()
+     */
+    abstract protected function registerCriterionBuilders();
+
+    /**
      * Parse custom sort string.
      *
      * Override the method if needed, this implementation will only throw an exception.
@@ -98,18 +111,19 @@ abstract class Base implements QueryType
     }
 
     /**
-     * Resolve criterion configuration to CriterionDefinition instance.
+     * Register builder closure for $name criterion.
      *
-     * @param mixed $parameters
+     * Closure will be called with an instance of CriterionDefinition and an array of QueryType
+     * parameters and it must return a Criterion instance.
      *
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
+     * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
+     * @param string $name
+     * @param \Closure $builder
      */
-    protected function resolveCriterionDefinitions($parameters)
+    final protected function registerCriterionBuilder($name, Closure $builder)
     {
-        return $this->getCriterionResolver()->resolve($parameters);
+        $this->registeredCriterionBuilders[$name] = $builder;
     }
 
     /**
@@ -235,6 +249,37 @@ abstract class Base implements QueryType
         return array_merge(...$criteriaGrouped);
     }
 
+    private function buildRegisteredCriteria(array $parameters)
+    {
+        if (null === $this->registeredCriterionBuilders) {
+            $this->registeredCriterionBuilders = [];
+            $this->registerCriterionBuilders();
+        }
+
+        $criteriaGrouped = [[]];
+
+        foreach ($this->registeredCriterionBuilders as $name => $builder) {
+            $criteriaGrouped[] = $this->buildCriteria($builder, $name, $parameters);
+        }
+
+        return array_merge(...$criteriaGrouped);
+    }
+
+    private function buildCriteria(Closure $builder, $name, $parameters)
+    {
+        $criteria = [];
+
+        if (array_key_exists($name, $parameters)) {
+            $arguments = $this->getCriterionResolver()->resolve($name, $parameters[$name]);
+
+            foreach ($arguments as $argument) {
+                $criteria[] = $builder($argument, $parameters);
+            }
+        }
+
+        return $criteria;
+    }
+
     /**
      * @param array $parameters
      *
@@ -246,6 +291,7 @@ abstract class Base implements QueryType
     private function resolveFilterCriteria(array $parameters)
     {
         $baseCriteria = $this->buildBaseCriteria($parameters);
+        $registeredCriteria = $this->buildRegisteredCriteria($parameters);
         $filterCriteria = $this->getFilterCriteria($parameters);
 
         if (null === $filterCriteria) {
@@ -256,7 +302,7 @@ abstract class Base implements QueryType
             $filterCriteria = [$filterCriteria];
         }
 
-        $criteria = array_merge($baseCriteria, $filterCriteria);
+        $criteria = array_merge($baseCriteria, $registeredCriteria, $filterCriteria);
 
         if (empty($criteria)) {
             return null;

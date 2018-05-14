@@ -157,10 +157,10 @@ final class CriteriaBuilder
     {
         $criteria = $this->build($argument->value);
 
-        if (count($criteria) > 1) {
-            $criteria = new LogicalAnd($criteria);
-        } else {
+        if (1 === count($criteria)) {
             $criteria = reset($criteria);
+        } else {
+            $criteria = new LogicalAnd($criteria);
         }
 
         return new LogicalNot($criteria);

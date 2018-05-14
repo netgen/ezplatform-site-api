@@ -174,7 +174,7 @@ final class CriterionResolver
     /**
      * Resolve actual operator value from the given arguments.
      *
-     * @param string $symbol
+     * @param string|null $symbol
      * @param mixed $value
      *
      * @return string

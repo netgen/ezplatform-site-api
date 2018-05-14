@@ -8,9 +8,9 @@ use InvalidArgumentException;
 /**
  * @internal Do not depend on this service, it can be changed without warning.
  *
- * CriterionResolver resolves CriterionDefinition instances from the given parameters.
+ * CriterionDefinitionResolver resolves CriterionDefinition instances from the given parameters.
  */
-final class CriterionResolver
+final class CriterionDefinitionResolver
 {
     /**
      * Set of available operator names.
@@ -56,13 +56,13 @@ final class CriterionResolver
      */
     public function resolveTargets($name, array $parameters)
     {
-        $argumentsGrouped = [[]];
+        $definitionsGrouped = [[]];
 
         foreach ($parameters as $target => $params) {
-            $argumentsGrouped[] = $this->resolveForTarget($name, $target, $params);
+            $definitionsGrouped[] = $this->resolveForTarget($name, $target, $params);
         }
 
-        return array_merge(...$argumentsGrouped);
+        return array_merge(...$definitionsGrouped);
     }
 
     /**
@@ -83,7 +83,7 @@ final class CriterionResolver
         }
 
         return [
-            $this->buildArgument($name, $target, null, $parameters),
+            $this->buildDefinition($name, $target, null, $parameters),
         ];
     }
 
@@ -98,22 +98,22 @@ final class CriterionResolver
      */
     private function resolveOperatorMap($name, $target, array $map)
     {
-        $arguments = [];
+        $definitions = [];
 
         foreach ($map as $operator => $value) {
             if ('not' === $operator) {
-                $arguments[] = $this->buildArgument(
+                $definitions[] = $this->buildDefinition(
                     'not',
                     null,
                     null,
                     $this->resolveForTarget($name, $target, $value)
                 );
             } else {
-                $arguments[] = $this->buildArgument($name, $target, $operator, $value);
+                $definitions[] = $this->buildDefinition($name, $target, $operator, $value);
             }
         }
 
-        return $arguments;
+        return $definitions;
     }
 
     /**
@@ -126,7 +126,7 @@ final class CriterionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
-    private function buildArgument($name, $target, $operator, $value)
+    private function buildDefinition($name, $target, $operator, $value)
     {
         return new CriterionDefinition([
             'name' => $name,

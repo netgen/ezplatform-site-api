@@ -8,7 +8,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * Holds resolved values of parameters defining a criterion: name, target, operator and value.
  *
  * @see \eZ\Publish\API\Repository\Values\Content\Query\Criterion
- * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionResolver
+ * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinitionResolver
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
  *
  * @property-read string $name

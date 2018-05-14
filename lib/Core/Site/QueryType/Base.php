@@ -26,9 +26,9 @@ abstract class Base implements QueryType
     private $optionsResolver;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionResolver
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinitionResolver
      */
-    private $criterionResolver;
+    private $criterionDefinitionResolver;
 
     /**
      * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
@@ -111,7 +111,7 @@ abstract class Base implements QueryType
     }
 
     /**
-     * Register builder closure for $name criterion.
+     * Register builder closure for $name Criterion.
      *
      * Closure will be called with an instance of CriterionDefinition and an array of QueryType
      * parameters and it must return a Criterion instance.
@@ -127,7 +127,7 @@ abstract class Base implements QueryType
     }
 
     /**
-     * Return the appropriate query instance.
+     * Return the appropriate Query instance.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query
      */
@@ -234,16 +234,16 @@ abstract class Base implements QueryType
                 case 'publication_date':
                 case 'subtree':
                 case 'visible':
-                    $arguments = $this->getCriterionResolver()->resolve($name, $value);
+                    $definitions = $this->getCriterionDefinitionResolver()->resolve($name, $value);
                     break;
                 case 'field':
-                    $arguments = $this->getCriterionResolver()->resolveTargets($name, $value);
+                    $definitions = $this->getCriterionDefinitionResolver()->resolveTargets($name, $value);
                     break;
                 default:
                     continue 2;
             }
 
-            $criteriaGrouped[] = $this->getCriteriaBuilder()->build($arguments);
+            $criteriaGrouped[] = $this->getCriteriaBuilder()->build($definitions);
         }
 
         return array_merge(...$criteriaGrouped);
@@ -270,10 +270,10 @@ abstract class Base implements QueryType
         $criteria = [];
 
         if (array_key_exists($name, $parameters)) {
-            $arguments = $this->getCriterionResolver()->resolve($name, $parameters[$name]);
+            $definitions = $this->getCriterionDefinitionResolver()->resolve($name, $parameters[$name]);
 
-            foreach ($arguments as $argument) {
-                $criteria[] = $builder($argument, $parameters);
+            foreach ($definitions as $definition) {
+                $criteria[] = $builder($definition, $parameters);
             }
         }
 
@@ -377,13 +377,13 @@ abstract class Base implements QueryType
         return $this->optionsResolver;
     }
 
-    private function getCriterionResolver()
+    private function getCriterionDefinitionResolver()
     {
-        if ($this->criterionResolver === null) {
-            $this->criterionResolver = new CriterionResolver();
+        if ($this->criterionDefinitionResolver === null) {
+            $this->criterionDefinitionResolver = new CriterionDefinitionResolver();
         }
 
-        return $this->criterionResolver;
+        return $this->criterionDefinitionResolver;
     }
 
     private function getCriteriaBuilder()

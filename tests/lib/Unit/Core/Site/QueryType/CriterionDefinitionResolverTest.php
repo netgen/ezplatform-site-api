@@ -5,16 +5,16 @@ namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition;
-use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionResolver;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinitionResolver;
 use PHPUnit\Framework\TestCase;
 
 /**
- * CriterionResolver test case.
+ * CriterionDefinitionResolver test case.
  *
  * @group query-type
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaResolver
  */
-class CriterionResolverTest extends TestCase
+class CriterionDefinitionResolverTest extends TestCase
 {
     public function providerForTestResolve()
     {
@@ -353,9 +353,9 @@ class CriterionResolverTest extends TestCase
      */
     public function testResolve($parameters, array $expectedCriterionDefinitions)
     {
-        $criterionResolver = $this->getCriterionResolverUnderTest();
+        $criterionDefinitionResolver = $this->getCriterionDefinitionResolverUnderTest();
 
-        $criterionArguments = $criterionResolver->resolve('test', $parameters);
+        $criterionArguments = $criterionDefinitionResolver->resolve('test', $parameters);
 
         $this->assertEquals(
             $expectedCriterionDefinitions,
@@ -782,9 +782,9 @@ class CriterionResolverTest extends TestCase
      */
     public function testResolveTargets($parameters, array $expectedCriterionDefinitions)
     {
-        $criterionResolver = $this->getCriterionResolverUnderTest();
+        $criterionDefinitionResolver = $this->getCriterionDefinitionResolverUnderTest();
 
-        $criterionArguments = $criterionResolver->resolveTargets('test', $parameters);
+        $criterionArguments = $criterionDefinitionResolver->resolveTargets('test', $parameters);
 
         $this->assertEquals(
             $expectedCriterionDefinitions,
@@ -796,9 +796,9 @@ class CriterionResolverTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $criterionResolver = $this->getCriterionResolverUnderTest();
+        $criterionDefinitionResolver = $this->getCriterionDefinitionResolverUnderTest();
 
-        $criterionResolver->resolve(
+        $criterionDefinitionResolver->resolve(
             'test',
             [
                 'smilje' => 'bosilje',
@@ -811,9 +811,9 @@ class CriterionResolverTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $criterionResolver = $this->getCriterionResolverUnderTest();
+        $criterionDefinitionResolver = $this->getCriterionDefinitionResolverUnderTest();
 
-        $criterionResolver->resolveTargets(
+        $criterionDefinitionResolver->resolveTargets(
             'test',
             [
                 'mogoruš' => [
@@ -824,17 +824,17 @@ class CriterionResolverTest extends TestCase
         );
     }
 
-    protected $criterionResolver;
+    protected $criterionDefinitionResolver;
 
     /**
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionResolver
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinitionResolver
      */
-    protected function getCriterionResolverUnderTest()
+    protected function getCriterionDefinitionResolverUnderTest()
     {
-        if (null === $this->criterionResolver) {
-            $this->criterionResolver = new CriterionResolver();
+        if (null === $this->criterionDefinitionResolver) {
+            $this->criterionDefinitionResolver = new CriterionDefinitionResolver();
         }
 
-        return $this->criterionResolver;
+        return $this->criterionDefinitionResolver;
     }
 }

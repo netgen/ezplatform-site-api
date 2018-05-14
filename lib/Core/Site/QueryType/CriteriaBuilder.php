@@ -26,20 +26,20 @@ use InvalidArgumentException;
 final class CriteriaBuilder
 {
     /**
-     * Build criteria for the given array of criterion $arguments.
+     * Build criteria for the given array of criterion $definitions.
      *
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $arguments
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $definitions
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
      */
-    public function build(array $arguments)
+    public function build(array $definitions)
     {
         $criteria = [];
 
-        foreach ($arguments as $argument) {
-            $criterion = $this->dispatchBuild($argument);
+        foreach ($definitions as $definition) {
+            $criterion = $this->dispatchBuild($definition);
 
             if ($criterion instanceof Criterion) {
                 $criteria[] = $criterion;
@@ -50,112 +50,112 @@ final class CriteriaBuilder
     }
 
     /**
-     * Build criterion $name from the given criterion $argument.
+     * Build criterion $name from the given criterion $definition.
      *
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return null|Criterion
      */
-    private function dispatchBuild(CriterionDefinition $argument)
+    private function dispatchBuild(CriterionDefinition $definition)
     {
-        switch ($argument->name) {
+        switch ($definition->name) {
             case 'content_type':
-                return $this->buildContentTypeIdentifier($argument);
+                return $this->buildContentTypeIdentifier($definition);
             case 'depth':
-                return $this->buildDepth($argument);
+                return $this->buildDepth($definition);
             case 'field':
-                return $this->buildField($argument);
+                return $this->buildField($definition);
             case 'main':
-                return $this->buildIsMainLocation($argument);
+                return $this->buildIsMainLocation($definition);
             case 'not':
-                return $this->buildLogicalNot($argument);
+                return $this->buildLogicalNot($definition);
             case 'parent_location_id':
-                return $this->buildParentLocationId($argument);
+                return $this->buildParentLocationId($definition);
             case 'priority':
-                return $this->buildPriority($argument);
+                return $this->buildPriority($definition);
             case 'publication_date':
-                return $this->buildDateMetadataCreated($argument);
+                return $this->buildDateMetadataCreated($definition);
             case 'subtree':
-                return $this->buildSubtree($argument);
+                return $this->buildSubtree($definition);
             case 'visible':
-                return $this->buildVisibility($argument);
+                return $this->buildVisibility($definition);
         }
 
         throw new InvalidArgumentException(
-            "Criterion named '{$argument->name}' is not handled"
+            "Criterion named '{$definition->name}' is not handled"
         );
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier
      */
-    private function buildContentTypeIdentifier(CriterionDefinition $argument)
+    private function buildContentTypeIdentifier(CriterionDefinition $definition)
     {
-        return new ContentTypeIdentifier($argument->value);
+        return new ContentTypeIdentifier($definition->value);
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\Depth
      */
-    private function buildDepth(CriterionDefinition $argument)
+    private function buildDepth(CriterionDefinition $definition)
     {
-        return new Depth($argument->operator, $argument->value);
+        return new Depth($definition->operator, $definition->value);
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Field
      */
-    private function buildField(CriterionDefinition $argument)
+    private function buildField(CriterionDefinition $definition)
     {
         return new Field(
-            $argument->target,
-            $argument->operator,
-            $argument->value
+            $definition->target,
+            $definition->operator,
+            $definition->value
         );
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return null|IsMainLocation
      */
-    private function buildIsMainLocation(CriterionDefinition $argument)
+    private function buildIsMainLocation(CriterionDefinition $definition)
     {
-        if (null === $argument->value) {
+        if (null === $definition->value) {
             return null;
         }
 
-        $isMainLocation = $argument->value ? IsMainLocation::MAIN : IsMainLocation::NOT_MAIN;
+        $isMainLocation = $definition->value ? IsMainLocation::MAIN : IsMainLocation::NOT_MAIN;
 
         return new IsMainLocation($isMainLocation);
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot
      */
-    private function buildLogicalNot(CriterionDefinition $argument)
+    private function buildLogicalNot(CriterionDefinition $definition)
     {
-        $criteria = $this->build($argument->value);
+        $criteria = $this->build($definition->value);
 
         if (1 === count($criteria)) {
             $criteria = reset($criteria);
@@ -167,55 +167,55 @@ final class CriteriaBuilder
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId
      */
-    private function buildParentLocationId(CriterionDefinition $argument)
+    private function buildParentLocationId(CriterionDefinition $definition)
     {
-        return new ParentLocationId($argument->value);
+        return new ParentLocationId($definition->value);
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\Priority
      */
-    private function buildPriority(CriterionDefinition $argument)
+    private function buildPriority(CriterionDefinition $definition)
     {
-        return new Priority($argument->operator, $argument->value);
+        return new Priority($definition->operator, $definition->value);
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\DateMetadata
      */
-    private function buildDateMetadataCreated(CriterionDefinition $argument)
+    private function buildDateMetadataCreated(CriterionDefinition $definition)
     {
         return new DateMetadata(
             DateMetadata::CREATED,
-            $argument->operator,
-            $this->resolveTimeValues($argument->value)
+            $definition->operator,
+            $this->resolveTimeValues($definition->value)
         );
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree
      */
-    private function buildSubtree(CriterionDefinition $argument)
+    private function buildSubtree(CriterionDefinition $definition)
     {
-        return new Subtree($argument->value);
+        return new Subtree($definition->value);
     }
 
     /**
@@ -265,19 +265,19 @@ final class CriteriaBuilder
     }
 
     /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $argument
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
      *
      * @return null|Visibility
      */
-    private function buildVisibility(CriterionDefinition $argument)
+    private function buildVisibility(CriterionDefinition $definition)
     {
-        if (null === $argument->value) {
+        if (null === $definition->value) {
             return null;
         }
 
-        $isVisible = $argument->value ? Visibility::VISIBLE : Visibility::HIDDEN;
+        $isVisible = $definition->value ? Visibility::VISIBLE : Visibility::HIDDEN;
 
         return new Visibility($isVisible);
     }

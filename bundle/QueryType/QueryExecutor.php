@@ -27,12 +27,12 @@ final class QueryExecutor
     private $queryTypeRegistry;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\Core\Site\FilterService
+     * @var \Netgen\EzPlatformSiteApi\API\FilterService
      */
     private $filterService;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\Core\Site\FindService
+     * @var \Netgen\EzPlatformSiteApi\API\FindService
      */
     private $findService;
 

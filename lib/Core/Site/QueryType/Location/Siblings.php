@@ -34,7 +34,7 @@ final class Siblings extends Location
         $resolver->setRequired('location');
         $resolver->setAllowedTypes('location', SiteLocation::class);
 
-        $resolver->setDefault('sort', function (Options $options, $value) {
+        $resolver->setDefault('sort', function (Options $options) {
             /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
             $location = $options['location'];
             return $location->parent->innerLocation->getSortClauses();

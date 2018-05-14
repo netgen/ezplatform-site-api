@@ -133,7 +133,7 @@ final class CriteriaBuilder
      *
      * @throws \InvalidArgumentException
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\IsMainLocation
+     * @return null|IsMainLocation
      */
     private function buildIsMainLocation(CriterionDefinition $argument)
     {
@@ -269,7 +269,7 @@ final class CriteriaBuilder
      *
      * @throws \InvalidArgumentException
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility
+     * @return null|Visibility
      */
     private function buildVisibility(CriterionDefinition $argument)
     {

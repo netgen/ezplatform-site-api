@@ -56,7 +56,7 @@ final class CriteriaBuilder
      *
      * @throws \InvalidArgumentException
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion
+     * @return null|Criterion
      */
     private function dispatchBuild(CriterionDefinition $argument)
     {

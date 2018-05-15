@@ -69,6 +69,8 @@ final class QueryDefinitionMapper
     /**
      * Override $configuration parameters with $override.
      *
+     * Only first level keys in main configuration and separately under 'parameters' key are replaced.
+     *
      * @param array $configuration
      * @param array $override
      *
@@ -76,7 +78,14 @@ final class QueryDefinitionMapper
      */
     private function overrideConfiguration(array $configuration, array $override)
     {
-        return array_replace_recursive($configuration, $override);
+        $configuration['parameters'] = array_replace(
+            $configuration['parameters'],
+            $override['parameters']
+        );
+
+        unset($override['parameters']);
+
+        return array_replace($configuration, $override);
     }
 
     /**

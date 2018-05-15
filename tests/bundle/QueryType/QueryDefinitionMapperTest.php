@@ -96,6 +96,7 @@ class QueryDefinitionMapperTest extends TestCase
                     'name' => 'query_type',
                     'parameters' => [
                         'some' => 'pancakes',
+                        'chair' => 'table',
                     ],
                     'useFilter' => true,
                     'maxPerPage' => 10,
@@ -107,7 +108,9 @@ class QueryDefinitionMapperTest extends TestCase
                     'named_query' => 'named_site_query',
                     'page' => 3,
                     'parameters' => [
-                        'some' => 'steaks',
+                        'some' => [
+                            'various' => 'delicacies',
+                        ],
                         'salad' => true,
                     ],
                     'use_filter' => false,
@@ -115,10 +118,13 @@ class QueryDefinitionMapperTest extends TestCase
                 new QueryDefinition([
                     'name' => 'site_query_type',
                     'parameters' => [
-                        'some' => 'steaks',
+                        'some' => [
+                            'various' => 'delicacies',
+                        ],
                         'salad' => true,
                         'content' => 'content',
                         'location' => 'location',
+                        'spoon' => 'soup',
                     ],
                     'useFilter' => false,
                     'maxPerPage' => 10,
@@ -178,7 +184,10 @@ class QueryDefinitionMapperTest extends TestCase
                     'max_per_page' => 10,
                     'page' => 1,
                     'parameters' => [
-                        'some' => 'parameters',
+                        'some' => [
+                            'parameters' => 'and stuff',
+                        ],
+                        'chair' => 'table',
                     ],
                 ],
                 'named_site_query' => [
@@ -187,7 +196,10 @@ class QueryDefinitionMapperTest extends TestCase
                     'max_per_page' => 10,
                     'page' => 1,
                     'parameters' => [
-                        'some' => 'parameters',
+                        'some' => [
+                            'parameters' => 'and other stuff',
+                        ],
+                        'spoon' => 'soup',
                     ],
                 ],
             ]

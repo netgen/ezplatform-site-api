@@ -22,6 +22,8 @@ final class QueryDefinition extends ValueObject
     /**
      * QueryType name.
      *
+     * @see \eZ\Publish\Core\QueryType\QueryType::getName()
+     *
      * @var string
      */
     protected $name;

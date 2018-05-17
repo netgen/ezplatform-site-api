@@ -16,29 +16,4 @@ class Fetch extends Content
     {
         return 'SiteAPI:Content/Fetch';
     }
-
-    protected function configureOptions(OptionsResolver $resolver)
-    {
-        // do nothing
-    }
-
-    protected function getFilterCriteria(array $parameters)
-    {
-        return null;
-    }
-
-    protected function getQueryCriteria(array $parameters)
-    {
-        return null;
-    }
-
-    protected function getFacetBuilders(array $parameters)
-    {
-        return [];
-    }
-
-    protected function registerCriterionBuilders()
-    {
-        // do nothing
-    }
 }

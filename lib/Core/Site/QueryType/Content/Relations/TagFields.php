@@ -60,16 +60,6 @@ final class TagFields extends Content
         return new TagId($tagIds);
     }
 
-    protected function getQueryCriteria(array $parameters)
-    {
-        return null;
-    }
-
-    protected function getFacetBuilders(array $parameters)
-    {
-        return [];
-    }
-
     /**
      * Extract Tag IDs from $fields in the given $content.
      *
@@ -105,10 +95,5 @@ final class TagFields extends Content
         }
 
         return array_merge(...$tagsIdsGrouped);
-    }
-
-    protected function registerCriterionBuilders()
-    {
-        // do nothing
     }
 }

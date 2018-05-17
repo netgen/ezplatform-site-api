@@ -56,19 +56,4 @@ final class Siblings extends Location
             new LogicalNot(new LocationId($location->id)),
         ];
     }
-
-    protected function getQueryCriteria(array $parameters)
-    {
-        return null;
-    }
-
-    protected function getFacetBuilders(array $parameters)
-    {
-        return [];
-    }
-
-    protected function registerCriterionBuilders()
-    {
-        // do nothing
-    }
 }

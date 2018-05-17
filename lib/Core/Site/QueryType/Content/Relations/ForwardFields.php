@@ -84,19 +84,4 @@ final class ForwardFields extends Content
 
         return new ContentId($relatedContentIds);
     }
-
-    protected function getQueryCriteria(array $parameters)
-    {
-        return null;
-    }
-
-    protected function getFacetBuilders(array $parameters)
-    {
-        return [];
-    }
-
-    protected function registerCriterionBuilders()
-    {
-        // do nothing
-    }
 }

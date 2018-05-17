@@ -52,16 +52,6 @@ final class AllTagFields extends Content
         return new TagId($tagIds);
     }
 
-    protected function getQueryCriteria(array $parameters)
-    {
-        return null;
-    }
-
-    protected function getFacetBuilders(array $parameters)
-    {
-        return [];
-    }
-
     /**
      * Extract all Tag IDs from the given $content.
      *
@@ -84,10 +74,5 @@ final class AllTagFields extends Content
         }
 
         return array_merge(...$tagsIdsGrouped);
-    }
-
-    protected function registerCriterionBuilders()
-    {
-        // do nothing
     }
 }

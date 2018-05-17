@@ -46,11 +46,16 @@ abstract class Base implements QueryType
     private $registeredCriterionBuilders;
 
     /**
-     * Configure options with the given options $resolver if needed.
+     * Configure options with the given options $resolver.
+     *
+     * Override this method as needed.
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    abstract protected function configureOptions(OptionsResolver $resolver);
+    protected function configureOptions(OptionsResolver $resolver)
+    {
+        // do nothing
+    }
 
     /**
      * Return filter criteria.
@@ -58,41 +63,58 @@ abstract class Base implements QueryType
      * Here you can return null, a single criterion or an array of criteria.
      * If an array of criteria is returned, it will be combined with base criteria
      * using logical AND.
+     * Override this method as needed.
      *
      * @param array $parameters
      *
      * @return null|Criterion|Criterion[]
      */
-    abstract protected function getFilterCriteria(array $parameters);
+    protected function getFilterCriteria(array $parameters)
+    {
+        return null;
+    }
 
     /**
      * Return query criteria.
      *
      * Here you can return null or a Criterion instance.
+     * Override this method as needed.
      *
      * @param array $parameters
      *
      * @return null|Criterion
      */
-    abstract protected function getQueryCriteria(array $parameters);
+    protected function getQueryCriteria(array $parameters)
+    {
+        return null;
+    }
 
     /**
      * Return an array of FacetBuilder instances.
      *
      * Return an empty array if you don't need to use facets.
+     * Override this method as needed.
      *
      * @param array $parameters
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\FacetBuilder[]
      */
-    abstract protected function getFacetBuilders(array $parameters);
+    protected function getFacetBuilders(array $parameters)
+    {
+        return [];
+    }
 
     /**
      * Register criterion builders using registerCriterionBuilder().
      *
+     * Override this method as needed.
+     *
      * @see registerCriterionBuilder()
      */
-    abstract protected function registerCriterionBuilders();
+    protected function registerCriterionBuilders()
+    {
+        // do nothing
+    }
 
     /**
      * Parse custom sort string.

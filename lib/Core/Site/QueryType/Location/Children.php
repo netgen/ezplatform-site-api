@@ -51,19 +51,4 @@ final class Children extends Location
 
         return new ParentLocationId($location->id);
     }
-
-    protected function getQueryCriteria(array $parameters)
-    {
-        return null;
-    }
-
-    protected function getFacetBuilders(array $parameters)
-    {
-        return [];
-    }
-
-    protected function registerCriterionBuilders()
-    {
-        // do nothing
-    }
 }

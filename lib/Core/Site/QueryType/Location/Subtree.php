@@ -100,14 +100,4 @@ final class Subtree extends Location
 
         return $criteria;
     }
-
-    protected function getQueryCriteria(array $parameters)
-    {
-        return null;
-    }
-
-    protected function getFacetBuilders(array $parameters)
-    {
-        return [];
-    }
 }

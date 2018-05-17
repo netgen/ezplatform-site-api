@@ -58,7 +58,7 @@ class CustomQueryType extends Base
         return 'Test:Custom';
     }
 
-    protected function getQueryCriteria(array $parameters)
+    protected function getQueryCriterion(array $parameters)
     {
         return new FullText('one AND two OR three');
     }

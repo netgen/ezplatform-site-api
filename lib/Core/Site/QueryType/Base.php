@@ -75,7 +75,7 @@ abstract class Base implements QueryType
     }
 
     /**
-     * Return query criteria.
+     * Return query Criterion.
      *
      * Here you can return null or a Criterion instance.
      * Override this method as needed.
@@ -84,7 +84,7 @@ abstract class Base implements QueryType
      *
      * @return null|Criterion
      */
-    protected function getQueryCriteria(array $parameters)
+    protected function getQueryCriterion(array $parameters)
     {
         return null;
     }
@@ -180,7 +180,7 @@ abstract class Base implements QueryType
             $sortDefinitions = [$sortDefinitions];
         }
 
-        $query->query = $this->getQueryCriteria($parameters);
+        $query->query = $this->getQueryCriterion($parameters);
         $query->filter = $this->resolveFilterCriteria($parameters);
         $query->facetBuilders = $this->getFacetBuilders($parameters);
         $query->sortClauses = $this->getSortClauses($sortDefinitions);

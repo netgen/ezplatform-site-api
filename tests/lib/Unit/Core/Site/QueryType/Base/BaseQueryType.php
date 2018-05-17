@@ -33,7 +33,7 @@ class BaseQueryType extends Base
         return null;
     }
 
-    protected function getQueryCriteria(array $parameters)
+    protected function getQueryCriterion(array $parameters)
     {
         return null;
     }

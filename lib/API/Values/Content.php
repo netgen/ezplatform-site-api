@@ -12,7 +12,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @see \eZ\Publish\API\Repository\Values\Content\Content
  *
  * @property-read string|int $id
- * @property-read int|string $mainLocationId
+ * @property-read int|string|null $mainLocationId
  * @property-read string $name
  * @property-read string $languageCode
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo

@@ -9,6 +9,9 @@ use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchHitAd
 use PHPUnit\Framework\TestCase;
 use Netgen\EzPlatformSiteApi\API\FindService;
 
+/**
+ * @group pager
+ */
 class LocationSearchHitAdapterTest extends TestCase
 {
     /**

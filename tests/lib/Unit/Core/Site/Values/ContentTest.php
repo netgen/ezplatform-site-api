@@ -66,6 +66,11 @@ class ContentTest extends TestCase
      */
     protected $repositoryMock;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
+     */
+    protected $queryTypeRegistryMock;
+
     public function setUp()
     {
         $this->getSiteMock();

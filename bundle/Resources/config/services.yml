@@ -42,8 +42,43 @@ services:
         tags:
             - {name: twig.extension}
 
+    netgen.ezplatform_site.sort_clause_parser:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\SortClauseParser
+        public: false
+
     netgen.ezplatform_site.twig.extension.image:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension
         arguments: ['@ezpublish.fieldType.ezimage.variation_service']
         tags:
             - {name: twig.extension}
+
+    netgen.ezplatform_site.query_type.parameter_processor:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
+        arguments:
+            - '@request_stack'
+        public: false
+
+    netgen.ezplatform_site.query_type.query_definition_mapper:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper
+        arguments:
+            - '@ezpublish.query_type.registry'
+            - '@netgen.ezplatform_site.query_type.parameter_processor'
+        calls:
+            - ['setNamedQueryConfiguration', ['$ng_named_query$']]
+        public: false
+
+    netgen.ezplatform_site.query_type.query_executor:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor
+        arguments:
+            - '@ezpublish.query_type.registry'
+            - '@netgen.ezplatform_site.filter_service'
+            - '@netgen.ezplatform_site.find_service'
+        public: false
+
+    netgen.ezplatform_site.twig.extension.query:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\QueryExtension
+        arguments:
+            - '@netgen.ezplatform_site.query_type.query_executor'
+        tags:
+            - {name: twig.extension}
+        public: false

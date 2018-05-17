@@ -5,6 +5,9 @@ namespace Netgen\EzPlatformSiteApi\Tests\Unit\Pagination\Pagerfanta;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchAdapter;
 
+/**
+ * @group pager
+ */
 class NodeSearchAdapterTest extends NodeSearchHitAdapterTest
 {
     protected function getAdapter(LocationQuery $query)

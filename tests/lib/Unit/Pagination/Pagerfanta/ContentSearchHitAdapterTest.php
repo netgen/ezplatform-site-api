@@ -9,6 +9,9 @@ use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchHitAda
 use PHPUnit\Framework\TestCase;
 use Netgen\EzPlatformSiteApi\API\FindService;
 
+/**
+ * @group pager
+ */
 class ContentSearchHitAdapterTest extends TestCase
 {
     /**

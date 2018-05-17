@@ -27,7 +27,7 @@ class Repository implements RepositoryInterface
     /**
      * @var \eZ\Publish\API\Repository\Repository[]
      */
-    private $customRepositories = [];
+    private $customRepositories;
 
     /**
      * Construct repository object from top eZ Platform Repository and

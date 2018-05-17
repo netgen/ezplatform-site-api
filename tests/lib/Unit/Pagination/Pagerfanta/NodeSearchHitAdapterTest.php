@@ -9,6 +9,9 @@ use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchHitAdapte
 use PHPUnit\Framework\TestCase;
 use Netgen\EzPlatformSiteApi\API\FindService;
 
+/**
+ * @group pager
+ */
 class NodeSearchHitAdapterTest extends TestCase
 {
     /**

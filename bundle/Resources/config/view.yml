@@ -1,3 +1,6 @@
+parameters:
+    ezsettings.default.ng_named_query: {}
+
 services:
     netgen.ezplatform_site.view_builder.content:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder
@@ -9,10 +12,13 @@ services:
             - '@ezpublish.view.view_parameters.injector.dispatcher'
 
     netgen.ezplatform_site.ngcontent_view_provider.configured:
-        class: "%ezpublish.view_provider.configured.class%"
-        arguments: ["@netgen.ezplatform_site.ngcontent_view.matcher_factory"]
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\Configured
+        arguments:
+            - '@netgen.ezplatform_site.ngcontent_view.matcher_factory'
+            - '@netgen.ezplatform_site.query_type.query_definition_mapper'
         tags:
             - {name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 110}
+        public: false
 
     netgen.ezplatform_site.ngcontent_view.matcher_factory:
         class: "%ezpublish.view.matcher_factory.class%"

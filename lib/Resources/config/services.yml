@@ -1,5 +1,6 @@
 imports:
     - {resource: internal.yml}
+    - {resource: query_types/base.yml}
     - {resource: plugins/field_type/relation_resolvers.yml}
 
 parameters:

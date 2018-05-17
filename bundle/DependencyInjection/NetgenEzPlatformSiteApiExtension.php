@@ -21,14 +21,25 @@ class NetgenEzPlatformSiteApiExtension extends Extension
         return new Configuration($this->getAlias());
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Exception
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
+
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
         $coreFileLocator = new FileLocator(__DIR__ . '/../../lib/Resources/config');
         $coreLoader = new Loader\YamlFileLoader($container, $coreFileLocator);
         $coreLoader->load('services.yml');
+
+        if (in_array('NetgenTagsBundle', $activatedBundles, true)) {
+            $coreLoader->load('query_types/netgen_tags_dependant.yml');
+        }
 
         $fileLocator = new FileLocator(__DIR__ . '/../Resources/config');
         $loader = new Loader\YamlFileLoader($container, $fileLocator);

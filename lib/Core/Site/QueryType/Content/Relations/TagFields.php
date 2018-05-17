@@ -54,10 +54,10 @@ final class TagFields extends Content
             }
         );
 
-        $resolver->setDefined('exclude_context');
-        $resolver->setAllowedTypes('exclude_context', ['bool']);
+        $resolver->setDefined('exclude_self');
+        $resolver->setAllowedTypes('exclude_self', ['bool']);
         $resolver->setDefaults([
-            'exclude_context' => true,
+            'exclude_self' => true,
         ]);
     }
 
@@ -84,7 +84,7 @@ final class TagFields extends Content
         $criteria = [];
         $criteria[] = new TagId($tagIds);
 
-        if ($parameters['exclude_context']) {
+        if ($parameters['exclude_self']) {
             $criteria[] = new LogicalNot(new ContentId($content->id));
         }
 

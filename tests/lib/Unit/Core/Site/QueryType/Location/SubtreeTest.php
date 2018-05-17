@@ -68,7 +68,7 @@ class SubtreeTest extends QueryTypeBaseTest
             'priority',
             'visible',
             'location',
-            'exclude_root',
+            'exclude_self',
             'relative_depth',
         ];
     }
@@ -81,7 +81,7 @@ class SubtreeTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'exclude_root' => true,
+                    'exclude_self' => true,
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
@@ -93,7 +93,7 @@ class SubtreeTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'exclude_root' => false,
+                    'exclude_self' => false,
                     'sort' => 'published asc',
                 ],
                 new LocationQuery([

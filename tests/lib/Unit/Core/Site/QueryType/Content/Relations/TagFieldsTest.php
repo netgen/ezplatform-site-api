@@ -121,7 +121,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             'offset',
             'content',
             'relation_field',
-            'exclude_context',
+            'exclude_self',
         ];
     }
 
@@ -153,7 +153,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'exclude_context' => true,
+                    'exclude_self' => true,
                     'relation_field' => ['tags_a'],
                     'content_type' => 'article',
                     'field' => [],
@@ -175,7 +175,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'exclude_context' => false,
+                    'exclude_self' => false,
                     'relation_field' => ['tags_b'],
                     'content_type' => 'article',
                     'field' => [

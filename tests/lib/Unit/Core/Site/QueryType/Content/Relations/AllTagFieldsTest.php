@@ -128,7 +128,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             'limit',
             'offset',
             'content',
-            'exclude_context',
+            'exclude_self',
         ];
     }
 
@@ -176,7 +176,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $contentWithTags,
-                    'exclude_context' => true,
+                    'exclude_self' => true,
                     'content_type' => 'article',
                     'field' => [],
                     'sort' => [
@@ -197,7 +197,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $contentWithTags,
-                    'exclude_context' => false,
+                    'exclude_self' => false,
                     'content_type' => 'article',
                     'field' => [
                         'title' => 'Hello',

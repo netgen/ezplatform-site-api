@@ -3,7 +3,6 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Fetch Location QueryType.

@@ -3,10 +3,12 @@
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\Content\Relations;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\DateMetadata;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Field;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
@@ -104,6 +106,7 @@ class TagFieldsTest extends QueryTypeBaseTest
                     'fieldTypeIdentifier' => 'ezstring',
                 ]),
             ],
+            'id' => 42,
         ]);
     }
 
@@ -118,6 +121,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             'offset',
             'content',
             'relation_field',
+            'exclude_context',
         ];
     }
 
@@ -135,7 +139,10 @@ class TagFieldsTest extends QueryTypeBaseTest
                     'sort' => 'published asc',
                 ],
                 new Query([
-                    'filter' => new TagId([1, 2, 3, 4]),
+                    'filter' => new LogicalAnd([
+                        new TagId([1, 2, 3, 4]),
+                        new LogicalNot(new ContentId(42)),
+                    ]),
                     'limit' => 12,
                     'offset' => 34,
                     'sortClauses' => [
@@ -146,6 +153,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
+                    'exclude_context' => true,
                     'relation_field' => ['tags_a'],
                     'content_type' => 'article',
                     'field' => [],
@@ -157,6 +165,7 @@ class TagFieldsTest extends QueryTypeBaseTest
                     'filter' => new LogicalAnd([
                         new ContentTypeIdentifier('article'),
                         new TagId([1, 2]),
+                        new LogicalNot(new ContentId(42)),
                     ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
@@ -166,6 +175,7 @@ class TagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
+                    'exclude_context' => false,
                     'relation_field' => ['tags_b'],
                     'content_type' => 'article',
                     'field' => [
@@ -233,6 +243,7 @@ class TagFieldsTest extends QueryTypeBaseTest
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
                         new TagId([1, 2, 3, 4]),
+                        new LogicalNot(new ContentId(42)),
                     ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_DESC),
@@ -258,6 +269,7 @@ class TagFieldsTest extends QueryTypeBaseTest
                             1525384800
                         ),
                         new TagId([1, 2, 3, 4]),
+                        new LogicalNot(New ContentId(42)),
                     ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_DESC),

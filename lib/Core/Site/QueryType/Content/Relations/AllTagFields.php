@@ -2,6 +2,8 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations;
 
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content;
@@ -29,6 +31,12 @@ final class AllTagFields extends Content
     {
         $resolver->setRequired('content');
         $resolver->setAllowedTypes('content', SiteContent::class);
+
+        $resolver->setDefined('exclude_context');
+        $resolver->setAllowedTypes('exclude_context', ['bool']);
+        $resolver->setDefaults([
+            'exclude_context' => true,
+        ]);
     }
 
     /**
@@ -49,7 +57,14 @@ final class AllTagFields extends Content
             return new MatchNone();
         }
 
-        return new TagId($tagIds);
+        $criteria = [];
+        $criteria[] = new TagId($tagIds);
+
+        if ($parameters['exclude_context']) {
+            $criteria[] = new LogicalNot(new ContentId($content->id));
+        }
+
+        return $criteria;
     }
 
     /**

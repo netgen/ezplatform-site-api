@@ -34,16 +34,23 @@ final class QueryDefinitionMapper
     /**
      * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor $parameterProcessor
-     * @param array $namedQueryConfiguration
      */
     public function __construct(
         QueryTypeRegistry $queryTypeRegistry,
-        ParameterProcessor $parameterProcessor,
-        array $namedQueryConfiguration
+        ParameterProcessor $parameterProcessor
     ) {
         $this->queryTypeRegistry = $queryTypeRegistry;
         $this->parameterProcessor = $parameterProcessor;
-        $this->namedQueryConfiguration = $namedQueryConfiguration;
+    }
+
+    /**
+     * Setter for 'ng_named_query' semantic configuration.
+     *
+     * @param array $configuration
+     */
+    public function setNamedQueryConfiguration(array $configuration)
+    {
+        $this->namedQueryConfiguration = $configuration;
     }
 
     /**

@@ -63,7 +63,8 @@ services:
         arguments:
             - '@ezpublish.query_type.registry'
             - '@netgen.ezplatform_site.query_type.parameter_processor'
-            - '$ng_named_query$'
+        calls:
+            - ['setNamedQueryConfiguration', ['$ng_named_query$']]
         public: false
 
     netgen.ezplatform_site.query_type.query_executor:

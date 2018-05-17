@@ -137,7 +137,7 @@ final class CriterionDefinitionResolver
     }
 
     /**
-     * Decide if the given $parameters is an operator-value map.
+     * Decide if the given $parameters is an operator-value map (otherwise it's a value collection).
      *
      * @param mixed $parameters
      *
@@ -164,7 +164,7 @@ final class CriterionDefinitionResolver
 
         if ($isOperatorMap && $isValueCollection) {
             throw new InvalidArgumentException(
-                'Array of parameters is not an operator map nor a value collection'
+                'Array of parameters is ambiguous: it should be either an operator map or a value collection'
             );
         }
 

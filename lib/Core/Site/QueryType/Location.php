@@ -23,10 +23,44 @@ abstract class Location extends Base
             'visible',
         ]);
 
-        $resolver->setAllowedTypes('parent_location_id', ['int', 'int[]', 'string', 'string[]']);
-        $resolver->setAllowedTypes('subtree', ['string', 'string[]']);
-        $resolver->setAllowedTypes('depth', ['int', 'int[]', 'array']);
-        $resolver->setAllowedTypes('priority', ['int', 'int[]', 'array']);
+        $resolver->setAllowedTypes('parent_location_id', ['int', 'string', 'array']);
+        $resolver->setAllowedValues(
+            'parent_location_id',
+            function ($ids) {
+                if (!is_array($ids)) {
+                    return true;
+                }
+
+                foreach ($ids as $id) {
+                    if (!is_int($id) && !is_string($id)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+        $resolver->setAllowedTypes('subtree', ['string', 'array']);
+        $resolver->setAllowedValues(
+            'subtree',
+            function ($subtrees) {
+                if (!is_array($subtrees)) {
+                    return true;
+                }
+
+                foreach ($subtrees as $subtree) {
+                    if (!is_string($subtree)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+        $resolver->setAllowedTypes('depth', ['int', 'array']);
+        $resolver->setAllowedTypes('priority', ['int', 'array']);
 
         $resolver->setAllowedValues('main', [true, false, null]);
         $resolver->setAllowedValues('visible', [true, false, null]);

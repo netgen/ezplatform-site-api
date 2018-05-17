@@ -222,11 +222,44 @@ abstract class Base implements QueryType
             'offset' => 0,
         ]);
 
-        $resolver->setAllowedTypes('content_type', ['string', 'string[]']);
+        $resolver->setAllowedTypes('content_type', ['string', 'array']);
+        $resolver->setAllowedValues(
+            'content_type',
+            function ($contentTypes) {
+                if (!is_array($contentTypes)) {
+                    return true;
+                }
+
+                foreach ($contentTypes as $contentType) {
+                    if (!is_string($contentType)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
         $resolver->setAllowedTypes('field', ['array']);
         $resolver->setAllowedTypes('limit', ['int']);
         $resolver->setAllowedTypes('offset', ['int']);
         $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
+        $resolver->setAllowedValues(
+            'publication_date',
+            function ($dates) {
+                if (!is_array($dates)) {
+                    return true;
+                }
+
+                foreach ($dates as $date) {
+                    if (!is_int($date) && !is_string($date)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
 
         $class = SortClause::class;
         $resolver->setAllowedTypes('sort', ['string', $class, 'array']);

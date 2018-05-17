@@ -295,31 +295,43 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                     'content' => $content,
                     'content_type' => 1,
                 ],
+            ],
+            [
                 [
                     'content' => $content,
                     'content_type' => [1],
                 ],
+            ],
+            [
                 [
                     'content' => $content,
                     'field' => 1,
                 ],
+            ],
+            [
                 [
                     'content' => $content,
                     'publication_date' => true,
                 ],
+            ],
+            [
                 [
                     'content' => $content,
                     'publication_date' => [false],
                 ],
+            ],
+            [
                 [
                     'content' => $content,
                     'limit' => 'five',
                 ],
+            ],
+            [
                 [
                     'content' => $content,
                     'offset' => 'ten',
                 ],
-            ]
+            ],
         ];
     }
 

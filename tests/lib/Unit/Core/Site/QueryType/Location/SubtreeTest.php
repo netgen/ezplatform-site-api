@@ -318,31 +318,43 @@ class SubtreeTest extends QueryTypeBaseTest
                     'location' => $location,
                     'content_type' => 1,
                 ],
+            ],
+            [
                 [
                     'location' => $location,
                     'content_type' => [1],
                 ],
+            ],
+            [
                 [
                     'location' => $location,
                     'field' => 1,
                 ],
+            ],
+            [
                 [
                     'location' => $location,
                     'publication_date' => true,
                 ],
+            ],
+            [
                 [
                     'location' => $location,
                     'publication_date' => [false],
                 ],
+            ],
+            [
                 [
                     'location' => $location,
                     'limit' => 'five',
                 ],
+            ],
+            [
                 [
                     'location' => $location,
                     'offset' => 'ten',
                 ],
-            ]
+            ],
         ];
     }
 

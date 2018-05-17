@@ -40,7 +40,7 @@ final class Subtree extends Location
 
         $resolver->setAllowedTypes('location', [SiteLocation::class]);
         $resolver->setAllowedTypes('include_root', ['bool']);
-        $resolver->setAllowedTypes('relative_depth', ['int', 'int[]', 'array']);
+        $resolver->setAllowedTypes('relative_depth', ['int', 'array']);
 
         $resolver->setDefaults([
             'include_root' => false,

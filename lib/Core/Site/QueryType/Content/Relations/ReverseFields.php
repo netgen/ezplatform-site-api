@@ -33,7 +33,23 @@ final class ReverseFields extends Content
         ]);
 
         $resolver->setAllowedTypes('content', SiteContent::class);
-        $resolver->setAllowedTypes('relation_field', ['string', 'string[]']);
+        $resolver->setAllowedTypes('relation_field', ['string', 'array']);
+        $resolver->setAllowedValues(
+            'relation_field',
+            function ($fields) {
+                if (!is_array($fields)) {
+                    return true;
+                }
+
+                foreach ($fields as $field) {
+                    if (!is_string($field)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
     }
 
     /**

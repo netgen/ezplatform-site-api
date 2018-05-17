@@ -301,33 +301,58 @@ class ForwardFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
+                    'relation_field' => 'field',
                     'content_type' => 1,
                 ],
+            ],
+            [
                 [
                     'content' => $content,
+                    'relation_field' => 'field',
                     'content_type' => [1],
                 ],
+            ],
+            [
                 [
                     'content' => $content,
+                    'relation_field' => 'field',
                     'field' => 1,
                 ],
+            ],
+            [
                 [
                     'content' => $content,
+                    'relation_field' => 'field',
                     'publication_date' => true,
                 ],
+            ],
+            [
                 [
                     'content' => $content,
+                    'relation_field' => 'field',
                     'publication_date' => [false],
                 ],
+            ],
+            [
                 [
                     'content' => $content,
+                    'relation_field' => 'field',
                     'limit' => 'five',
                 ],
+            ],
+            [
                 [
                     'content' => $content,
+                    'relation_field' => 'field',
                     'offset' => 'ten',
                 ],
-            ]
+            ],
+            [
+                [
+                    'content' => $content,
+                    'relation_field' => [1],
+                ],
+            ],
         ];
     }
 

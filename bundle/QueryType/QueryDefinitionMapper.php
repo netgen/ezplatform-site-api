@@ -48,8 +48,12 @@ final class QueryDefinitionMapper
      *
      * @param array $configuration
      */
-    public function setNamedQueryConfiguration(array $configuration)
+    public function setNamedQueryConfiguration(array $configuration = null)
     {
+        if (null === $configuration) {
+            $configuration = [];
+        }
+
         $this->namedQueryConfiguration = $configuration;
     }
 

@@ -92,6 +92,14 @@ abstract class Base implements QueryType
     /**
      * Return an array of FacetBuilder instances.
      *
+     * Note: facets are supported only with Solr search engine, which will be available
+     * through FindService. By default query types use FilterService, where faceting is
+     * not supported. You can control that behavior with 'use_filter' option of the query
+     * configuration (defaulting to false).
+     *
+     * @see \Netgen\EzPlatformSiteApi\API\FilterService
+     * @see \Netgen\EzPlatformSiteApi\API\FindService
+     *
      * Return an empty array if you don't need to use facets.
      * Override this method as needed.
      *

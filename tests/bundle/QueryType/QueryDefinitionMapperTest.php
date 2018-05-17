@@ -174,36 +174,39 @@ class QueryDefinitionMapperTest extends TestCase
 
     protected function getQueryDefinitionMapperUnderTest()
     {
-        return new QueryDefinitionMapper(
+        $queryDefinitionMapper = new QueryDefinitionMapper(
             $this->getQueryTypeRegistryMock(),
-            $this->getParameterProcessor(),
-            [
-                'named_query' => [
-                    'query_type' => 'query_type',
-                    'use_filter' => true,
-                    'max_per_page' => 10,
-                    'page' => 1,
-                    'parameters' => [
-                        'some' => [
-                            'parameters' => 'and stuff',
-                        ],
-                        'chair' => 'table',
-                    ],
-                ],
-                'named_site_query' => [
-                    'query_type' => 'site_query_type',
-                    'use_filter' => true,
-                    'max_per_page' => 10,
-                    'page' => 1,
-                    'parameters' => [
-                        'some' => [
-                            'parameters' => 'and other stuff',
-                        ],
-                        'spoon' => 'soup',
-                    ],
-                ],
-            ]
+            $this->getParameterProcessor()
         );
+
+        $queryDefinitionMapper->setNamedQueryConfiguration([
+            'named_query' => [
+                'query_type' => 'query_type',
+                'use_filter' => true,
+                'max_per_page' => 10,
+                'page' => 1,
+                'parameters' => [
+                    'some' => [
+                        'parameters' => 'and stuff',
+                    ],
+                    'chair' => 'table',
+                ],
+            ],
+            'named_site_query' => [
+                'query_type' => 'site_query_type',
+                'use_filter' => true,
+                'max_per_page' => 10,
+                'page' => 1,
+                'parameters' => [
+                    'some' => [
+                        'parameters' => 'and other stuff',
+                    ],
+                    'spoon' => 'soup',
+                ],
+            ],
+        ]);
+
+        return $queryDefinitionMapper;
     }
 
     /**

@@ -29,7 +29,7 @@ final class QueryDefinitionMapper
     /**
      * @var array
      */
-    private $namedQueryConfiguration;
+    private $namedQueryConfiguration = [];
 
     /**
      * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry

@@ -36,7 +36,7 @@ class QueryExtension extends Twig_Extension
                  * @param mixed $context
                  * @param string $name
                  *
-                 * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
+                 * @return \Pagerfanta\Pagerfanta
                  */
                 function ($context, $name) {
                     return $this->queryExecutor->execute(
@@ -54,7 +54,7 @@ class QueryExtension extends Twig_Extension
                  * @param mixed $context
                  * @param string $name
                  *
-                 * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
+                 * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
                  */
                 function ($context, $name) {
                     return $this->queryExecutor->execute(

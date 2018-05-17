@@ -34,16 +34,16 @@ final class Subtree extends Location
         $resolver->remove(['parent_location_id', 'subtree']);
         $resolver->setRequired(['location']);
         $resolver->setDefined([
-            'include_root',
+            'exclude_root',
             'relative_depth',
         ]);
 
         $resolver->setAllowedTypes('location', [SiteLocation::class]);
-        $resolver->setAllowedTypes('include_root', ['bool']);
+        $resolver->setAllowedTypes('exclude_root', ['bool']);
         $resolver->setAllowedTypes('relative_depth', ['int', 'array']);
 
         $resolver->setDefaults([
-            'include_root' => false,
+            'exclude_root' => true,
         ]);
     }
 
@@ -94,7 +94,7 @@ final class Subtree extends Location
         $criteria = [];
         $criteria[] = new SubtreeCriterion($location->pathString);
 
-        if (!$parameters['include_root']) {
+        if ($parameters['exclude_root']) {
             $criteria[] = new LogicalNot(new LocationId($location->id));
         }
 

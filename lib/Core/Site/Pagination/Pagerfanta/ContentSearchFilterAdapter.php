@@ -7,6 +7,8 @@ use Netgen\EzPlatformSiteApi\API\FilterService;
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
+ * @deprecated since version 2.5, to be removed in 3.0. Use FindAdapter or FilterAdapter instead.
+ *
  * Pagerfanta adapter for Netgen eZ Platform Site Content filtering.
  * Will return results as Site Location objects.
  */
@@ -33,6 +35,11 @@ class ContentSearchFilterAdapter implements AdapterInterface
      */
     public function __construct(Query $query, FilterService $filterService)
     {
+        @trigger_error(
+            'ContentSearchFilterAdapter is deprecated since version 2.5 and will be removed in 3.0. Use FindAdapter or FilterAdapter instead.',
+            E_USER_DEPRECATED
+        );
+
         $this->query = $query;
         $this->filterService = $filterService;
     }

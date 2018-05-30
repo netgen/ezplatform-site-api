@@ -11,6 +11,10 @@ use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchHitAd
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @deprecated since version 2.5, to be removed in 3.0. Use PagerfantaTrait instead.
+ * @see \Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaTrait
+ */
 trait PagerfantaFindTrait
 {
     use SiteAwareTrait;
@@ -28,6 +32,11 @@ trait PagerfantaFindTrait
      */
     protected function createContentSearchPager(Query $query, $currentPage, $maxPerPage)
     {
+        @trigger_error(
+            'PagerfantaFindTrait is deprecated since version 2.5 and will be removed in 3.0. Use PagerfantaTrait instead.',
+            E_USER_DEPRECATED
+        );
+
         $adapter = new ContentSearchAdapter($query, $this->getSite()->getFindService());
 
         return $this->getPager($adapter, $currentPage, $maxPerPage);
@@ -46,6 +55,11 @@ trait PagerfantaFindTrait
      */
     protected function createContentSearchHitPager(Query $query, $currentPage, $maxPerPage)
     {
+        @trigger_error(
+            'PagerfantaFindTrait is deprecated since version 2.5 and will be removed in 3.0. Use PagerfantaTrait instead.',
+            E_USER_DEPRECATED
+        );
+
         $adapter = new ContentSearchHitAdapter($query, $this->getSite()->getFindService());
 
         return $this->getPager($adapter, $currentPage, $maxPerPage);
@@ -64,6 +78,11 @@ trait PagerfantaFindTrait
      */
     protected function createLocationSearchPager(LocationQuery $locationQuery, $currentPage, $maxPerPage)
     {
+        @trigger_error(
+            'PagerfantaFindTrait is deprecated since version 2.5 and will be removed in 3.0. Use PagerfantaTrait instead.',
+            E_USER_DEPRECATED
+        );
+
         $adapter = new LocationSearchAdapter($locationQuery, $this->getSite()->getFindService());
 
         return $this->getPager($adapter, $currentPage, $maxPerPage);
@@ -82,6 +101,11 @@ trait PagerfantaFindTrait
      */
     protected function createLocationSearchHitPager(LocationQuery $locationQuery, $currentPage, $maxPerPage)
     {
+        @trigger_error(
+            'PagerfantaFindTrait is deprecated since version 2.5 and will be removed in 3.0. Use PagerfantaTrait instead.',
+            E_USER_DEPRECATED
+        );
+
         $adapter = new LocationSearchHitAdapter($locationQuery, $this->getSite()->getFindService());
 
         return $this->getPager($adapter, $currentPage, $maxPerPage);
@@ -99,6 +123,11 @@ trait PagerfantaFindTrait
      */
     protected function getPager(AdapterInterface $adapter, $currentPage, $maxPerPage)
     {
+        @trigger_error(
+            'PagerfantaFindTrait is deprecated since version 2.5 and will be removed in 3.0. Use PagerfantaTrait instead.',
+            E_USER_DEPRECATED
+        );
+
         $pager = new Pagerfanta($adapter);
         $pager->setNormalizeOutOfRangePages(true);
         $pager->setMaxPerPage($maxPerPage);

@@ -7,6 +7,8 @@ use Netgen\EzPlatformSiteApi\API\FindService;
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
+ * @deprecated since version 2.5, to be removed in 3.0. Use FindAdapter or FilterAdapter instead.
+ *
  * Pagerfanta adapter for Netgen eZ Platform Site Content search.
  * Will return results as SearchHit objects.
  */
@@ -39,6 +41,11 @@ class ContentSearchHitAdapter implements AdapterInterface
 
     public function __construct(Query $query, FindService $findService)
     {
+        @trigger_error(
+            'ContentSearchHitAdapter is deprecated since version 2.5 and will be removed in 3.0. Use FindAdapter or FilterAdapter instead.',
+            E_USER_DEPRECATED
+        );
+
         $this->query = $query;
         $this->findService = $findService;
     }

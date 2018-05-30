@@ -12,10 +12,8 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor;
 use Netgen\EzPlatformSiteApi\API\FilterService;
 use Netgen\EzPlatformSiteApi\API\FindService;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchAdapter;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchFilterAdapter;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchAdapter;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FindAdapter;
 use Pagerfanta\Pagerfanta;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -60,7 +58,7 @@ class QueryExecutorTest extends TestCase
         );
 
         $this->assertInstanceOf(Pagerfanta::class, $result);
-        $this->assertInstanceOf(ContentSearchFilterAdapter::class, $result->getAdapter());
+        $this->assertInstanceOf(FilterAdapter::class, $result->getAdapter());
         $this->assertEquals(20, $result->getMaxPerPage());
         $this->assertEquals(2, $result->getCurrentPage());
         $this->assertTrue($result->getNormalizeOutOfRangePages());
@@ -104,7 +102,7 @@ class QueryExecutorTest extends TestCase
         );
 
         $this->assertInstanceOf(Pagerfanta::class, $result);
-        $this->assertInstanceOf(ContentSearchAdapter::class, $result->getAdapter());
+        $this->assertInstanceOf(FindAdapter::class, $result->getAdapter());
         $this->assertEquals(20, $result->getMaxPerPage());
         $this->assertEquals(2, $result->getCurrentPage());
         $this->assertTrue($result->getNormalizeOutOfRangePages());
@@ -148,7 +146,7 @@ class QueryExecutorTest extends TestCase
         );
 
         $this->assertInstanceOf(Pagerfanta::class, $result);
-        $this->assertInstanceOf(LocationSearchFilterAdapter::class, $result->getAdapter());
+        $this->assertInstanceOf(FilterAdapter::class, $result->getAdapter());
         $this->assertEquals(20, $result->getMaxPerPage());
         $this->assertEquals(2, $result->getCurrentPage());
         $this->assertTrue($result->getNormalizeOutOfRangePages());
@@ -192,7 +190,7 @@ class QueryExecutorTest extends TestCase
         );
 
         $this->assertInstanceOf(Pagerfanta::class, $result);
-        $this->assertInstanceOf(LocationSearchAdapter::class, $result->getAdapter());
+        $this->assertInstanceOf(FindAdapter::class, $result->getAdapter());
         $this->assertEquals(20, $result->getMaxPerPage());
         $this->assertEquals(2, $result->getCurrentPage());
         $this->assertTrue($result->getNormalizeOutOfRangePages());
@@ -214,7 +212,7 @@ class QueryExecutorTest extends TestCase
                 'maxPerPage' => 20,
                 'page' => 2,
             ]),
-            true
+            false
         );
     }
 

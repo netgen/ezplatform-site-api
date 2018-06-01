@@ -25,9 +25,10 @@ class SliceTest extends TestCase
     public function testArrayAccess()
     {
         $slice = $this->getSlice();
+        $iterator = $slice->getIterator();
 
-        $this->assertEquals('one', $slice[0]);
-        $this->assertEquals('two', $slice[1]);
+        $this->assertEquals('one', $iterator[0]);
+        $this->assertEquals('two', $iterator[1]);
     }
 
     public function testGetSearchHits()

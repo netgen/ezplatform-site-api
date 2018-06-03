@@ -31,6 +31,11 @@ class ContentInfoSearchHitAdapter implements AdapterInterface
 
     public function __construct(Query $query, FindService $findService)
     {
+        @trigger_error(
+            'ContentInfoSearchHitAdapter is deprecated since version 2.2 and will be removed in 3.0. Use FindAdapter or FilterAdapter instead.',
+            E_USER_DEPRECATED
+        );
+
         $this->query = $query;
         $this->findService = $findService;
     }

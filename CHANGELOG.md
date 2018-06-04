@@ -1,6 +1,22 @@
 eZ Platform Site API changelog
 ==============================
 
+2.5.0 (04.06.2018)
+------------------
+
+* support for QueryTypes (#70)
+* minor doc correction by @wizhippo (#71)
+* improved test coverage (#73)
+* exposed facets on Pagerfanta adapters by @wizhippo (#74)
+* rewrite of Pagerfanta adapters (#76)
+* deprecation of `PagerfantaFindTrait` and old Pagerfanta adapters:
+  * `ContentSearchAdapter`
+  * `ContentSearchFilterAdapter`
+  * `ContentSearchHitAdapter`
+  * `LocationSearchAdapter`
+  * `LocationSearchFilterAdapter`
+  * `LocationSearchHitAdapter`
+
 2.4.4 (21.03.2018)
 ------------------
 

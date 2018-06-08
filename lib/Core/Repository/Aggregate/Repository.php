@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\Repository as RepositoryInterface;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use eZ\Publish\API\Repository\Values\User\UserReference;
 use Closure;
+use RuntimeException;
 
 /**
  * Aggregate implementation of Repository interface.
@@ -76,6 +77,15 @@ class Repository implements RepositoryInterface
     public function canUser($module, $function, ValueObject $object, $targets = null)
     {
         return $this->ezRepository->canUser($module, $function, $object, $targets);
+    }
+
+    public function getBookmarkService()
+    {
+        if (!method_exists($this->ezRepository, 'getBookmarkService')) {
+            throw new RuntimeException(sprintf('getBookmarkService method does not exist in %s class', get_class($this->ezRepository)));
+        }
+
+        return $this->ezRepository->getBookmarkService();
     }
 
     public function getContentService()

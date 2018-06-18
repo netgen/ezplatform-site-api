@@ -26,10 +26,24 @@
 
 ## Installation
 
-To install Site API simply add it as a dependency to your project:
+To install Site API first add it as a dependency to your project:
 
 ```sh
 composer require netgen/ezplatform-site-api:^2.4
+```
+
+Once Site API is installed, activate the bundle in `app/AppKernel.php` file by adding it to the `$bundles` array in `registerBundles()` method, together with other required bundles:
+
+```php
+public function registerBundles()
+{
+    ...
+
+    $bundles[] = new Netgen\Bundle\EzPlatformSiteApiBundle\NetgenEzPlatformSiteApiBundle();
+    $bundles[] = new Netgen\Bundle\EzPlatformSearchExtraLegacyBundle\NetgenEzPlatformSearchExtraBundle;
+
+    return $bundles;
+}
 ```
 
 That will provide you with public Site API services defined in the [container](lib/Resources/config/services.yml),

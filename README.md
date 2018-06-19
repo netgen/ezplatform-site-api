@@ -40,7 +40,7 @@ public function registerBundles()
     ...
 
     $bundles[] = new Netgen\Bundle\EzPlatformSiteApiBundle\NetgenEzPlatformSiteApiBundle();
-    $bundles[] = new Netgen\Bundle\EzPlatformSearchExtraLegacyBundle\NetgenEzPlatformSearchExtraBundle;
+    $bundles[] = new Netgen\Bundle\EzPlatformSearchExtraBundle\NetgenEzPlatformSearchExtraBundle;
 
     return $bundles;
 }

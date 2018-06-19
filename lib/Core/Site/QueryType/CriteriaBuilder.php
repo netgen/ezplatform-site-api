@@ -15,6 +15,8 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use InvalidArgumentException;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
 
 /**
  * @internal Do not depend on this service, it can be changed without warning.
@@ -77,6 +79,10 @@ final class CriteriaBuilder
                 return $this->buildPriority($definition);
             case 'publication_date':
                 return $this->buildDateMetadataCreated($definition);
+            case 'section':
+                return $this->buildSection($definition);
+            case 'state':
+                return $this->buildObjectState($definition);
             case 'subtree':
                 return $this->buildSubtree($definition);
             case 'visible':
@@ -204,6 +210,30 @@ final class CriteriaBuilder
             $definition->operator,
             $this->resolveTimeValues($definition->value)
         );
+    }
+
+    /**
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier
+     */
+    private function buildSection(CriterionDefinition $definition)
+    {
+        return new SectionIdentifier($definition->value);
+    }
+
+    /**
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier
+     */
+    private function buildObjectState(CriterionDefinition $definition)
+    {
+        return new ObjectStateIdentifier($definition->target, $definition->value);
     }
 
     /**

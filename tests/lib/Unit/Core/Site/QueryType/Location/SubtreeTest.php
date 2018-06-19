@@ -60,6 +60,8 @@ class SubtreeTest extends QueryTypeBaseTest
             'content_type',
             'field',
             'publication_date',
+            'section',
+            'state',
             'sort',
             'limit',
             'offset',

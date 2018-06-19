@@ -15,6 +15,8 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use InvalidArgumentException;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition;
 use PHPUnit\Framework\TestCase;
@@ -66,6 +68,39 @@ class CriteriaBuilderTest extends TestCase
             [
                 [
                     new CriterionDefinition([
+                        'name' => 'section',
+                        'target' => null,
+                        'operator' => Operator::EQ,
+                        'value' => 'standard',
+                    ]),
+                ],
+                [
+                    new SectionIdentifier('standard'),
+                ],
+            ],
+            [
+                [
+                    new CriterionDefinition([
+                        'name' => 'section',
+                        'target' => null,
+                        'operator' => Operator::EQ,
+                        'value' => 'standard',
+                    ]),
+                    new CriterionDefinition([
+                        'name' => 'section',
+                        'target' => null,
+                        'operator' => Operator::IN,
+                        'value' => ['users', 'media'],
+                    ]),
+                ],
+                [
+                    new SectionIdentifier('standard'),
+                    new SectionIdentifier(['users', 'media']),
+                ],
+            ],
+            [
+                [
+                    new CriterionDefinition([
                         'name' => 'depth',
                         'target' => null,
                         'operator' => Operator::EQ,
@@ -87,6 +122,41 @@ class CriteriaBuilderTest extends TestCase
                 ],
                 [
                     new Field('title', Operator::EQ, 'Hello'),
+                ],
+            ],
+            [
+                [
+                    new CriterionDefinition([
+                        'name' => 'state',
+                        'target' => 'ez_lock',
+                        'operator' => Operator::EQ,
+                        'value' => 'locked',
+                    ]),
+                ],
+                [
+                    new ObjectStateIdentifier('ez_lock', 'locked'),
+                ],
+            ],
+            [
+                [
+                    new CriterionDefinition([
+                        'name' => 'not',
+                        'target' => null,
+                        'operator' => null,
+                        'value' => [
+                            new CriterionDefinition([
+                                'name' => 'state',
+                                'target' => 'ez_lock',
+                                'operator' => Operator::EQ,
+                                'value' => 'locked',
+                            ]),
+                        ],
+                    ]),
+                ],
+                [
+                    new LogicalNot(
+                        new ObjectStateIdentifier('ez_lock', 'locked')
+                    ),
                 ],
             ],
             [

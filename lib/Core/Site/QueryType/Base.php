@@ -223,6 +223,8 @@ abstract class Base implements QueryType
             'content_type',
             'field',
             'publication_date',
+            'section',
+            'state',
         ]);
         $resolver->setDefaults([
             'sort' => [],
@@ -231,27 +233,29 @@ abstract class Base implements QueryType
         ]);
 
         $resolver->setAllowedTypes('content_type', ['string', 'array']);
-        $resolver->setAllowedValues(
-            'content_type',
-            function ($contentTypes) {
-                if (!is_array($contentTypes)) {
-                    return true;
-                }
-
-                foreach ($contentTypes as $contentType) {
-                    if (!is_string($contentType)) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        );
-
+        $resolver->setAllowedTypes('section', ['string', 'array']);
         $resolver->setAllowedTypes('field', ['array']);
         $resolver->setAllowedTypes('limit', ['int']);
         $resolver->setAllowedTypes('offset', ['int']);
         $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
+        $resolver->setAllowedTypes('state', ['array']);
+
+        $identifierValuesCallback = function ($identifiers) {
+            if (!is_array($identifiers)) {
+                return true;
+            }
+
+            foreach ($identifiers as $identifier) {
+                if (!is_string($identifier)) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        $resolver->setAllowedValues('content_type', $identifierValuesCallback);
+        $resolver->setAllowedValues('section', $identifierValuesCallback);
         $resolver->setAllowedValues(
             'publication_date',
             function ($dates) {
@@ -295,11 +299,13 @@ abstract class Base implements QueryType
                 case 'parent_location_id':
                 case 'priority':
                 case 'publication_date':
+                case 'section':
                 case 'subtree':
                 case 'visible':
                     $definitions = $this->getCriterionDefinitionResolver()->resolve($name, $value);
                     break;
                 case 'field':
+                case 'state':
                     $definitions = $this->getCriterionDefinitionResolver()->resolveTargets($name, $value);
                     break;
                 default:

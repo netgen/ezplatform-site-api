@@ -88,6 +88,15 @@ class Repository implements RepositoryInterface
         return $this->ezRepository->getBookmarkService();
     }
 
+    public function getNotificationService()
+    {
+        if (!method_exists($this->ezRepository, 'getNotificationService')) {
+            throw new RuntimeException(sprintf('getNotificationService method does not exist in %s class', get_class($this->ezRepository)));
+        }
+
+        return $this->ezRepository->getNotificationService();
+    }
+
     public function getContentService()
     {
         return $this->ezRepository->getContentService();

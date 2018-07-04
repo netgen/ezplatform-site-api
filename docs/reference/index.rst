@@ -4,7 +4,7 @@ Reference
 .. toctree::
     :hidden:
 
-    install_instructions
+    installation_instructions
     configuration
 
 .. include:: /reference/map.rst.inc

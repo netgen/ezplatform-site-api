@@ -8,7 +8,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Pagerfanta;
 
 final class ContentInfo extends APIContentInfo
@@ -159,7 +159,7 @@ final class ContentInfo extends APIContentInfo
     public function filterLocations($maxPerPage = 25, $currentPage = 1)
     {
         $pager = new Pagerfanta(
-            new LocationSearchFilterAdapter(
+            new FilterAdapter(
                 new LocationQuery([
                     'filter' => new LogicalAnd(
                         [

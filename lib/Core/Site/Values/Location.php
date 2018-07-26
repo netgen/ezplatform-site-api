@@ -14,7 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter;
+use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Pagerfanta;
 
 final class Location extends APILocation
@@ -202,7 +202,7 @@ final class Location extends APILocation
         }
 
         $pager = new Pagerfanta(
-            new LocationSearchFilterAdapter(
+            new FilterAdapter(
                 new LocationQuery([
                     'filter' => new LogicalAnd($criteria),
                     'sortClauses' => $this->getSortClauses(),
@@ -238,7 +238,7 @@ final class Location extends APILocation
         }
 
         $pager = new Pagerfanta(
-            new LocationSearchFilterAdapter(
+            new FilterAdapter(
                 new LocationQuery([
                     'filter' => new LogicalAnd($criteria),
                     'sortClauses' => $this->getSortClauses(),

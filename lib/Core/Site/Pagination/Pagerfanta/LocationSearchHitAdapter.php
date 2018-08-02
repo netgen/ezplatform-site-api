@@ -37,7 +37,7 @@ class LocationSearchHitAdapter implements AdapterInterface
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    private $searchResult;
+    private $searchResultWithLimitZero;
 
     public function __construct(LocationQuery $query, FindService $findService)
     {
@@ -61,7 +61,7 @@ class LocationSearchHitAdapter implements AdapterInterface
             return $this->nbResults;
         }
 
-        return $this->nbResults = $this->getSearchResult()->totalCount;
+        return $this->nbResults = $this->getSearchResultWithLimitZero()->totalCount;
     }
 
     /**
@@ -75,7 +75,7 @@ class LocationSearchHitAdapter implements AdapterInterface
             return $this->facets;
         }
 
-        return $this->facets = $this->getSearchResult()->facets;
+        return $this->facets = $this->getSearchResultWithLimitZero()->facets;
     }
 
     /**
@@ -93,31 +93,31 @@ class LocationSearchHitAdapter implements AdapterInterface
         $query->limit = $length;
         $query->performCount = false;
 
-        $this->searchResult = $this->findService->findLocations($query);
+        $searchResult = $this->findService->findLocations($query);
 
         // Set count for further use if returned by search engine despite !performCount (Solr, ES)
-        if (!isset($this->nbResults) && isset($this->searchResult->totalCount)) {
-            $this->nbResults = $this->searchResult->totalCount;
+        if (!isset($this->nbResults) && isset($searchResult->totalCount)) {
+            $this->nbResults = $searchResult->totalCount;
         }
 
-        if (!isset($this->facets) && isset($this->searchResult->facets)) {
-            $this->facets = $this->searchResult->facets;
+        if (!isset($this->facets) && isset($searchResult->facets)) {
+            $this->facets = $searchResult->facets;
         }
 
-        return $this->searchResult->searchHits;
+        return $searchResult->searchHits;
     }
 
     /**
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    private function getSearchResult()
+    private function getSearchResultWithLimitZero()
     {
-        if ($this->searchResult === null) {
+        if ($this->searchResultWithLimitZero === null) {
             $query = clone $this->query;
             $query->limit = 0;
-            $this->searchResult = $this->findService->findLocations($query);
+            $this->searchResultWithLimitZero = $this->findService->findLocations($query);
         }
 
-        return $this->searchResult;
+        return $this->searchResultWithLimitZero;
     }
 }

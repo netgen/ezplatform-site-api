@@ -37,7 +37,7 @@ class LocationSearchFilterAdapter implements AdapterInterface
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    private $searchResult;
+    private $searchResultWithLimitZero;
 
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
@@ -65,7 +65,7 @@ class LocationSearchFilterAdapter implements AdapterInterface
             return $this->nbResults;
         }
 
-        return $this->nbResults = $this->getSearchResult()->totalCount;
+        return $this->nbResults = $this->getSearchResultWithLimitZero()->totalCount;
     }
 
     /**
@@ -79,7 +79,7 @@ class LocationSearchFilterAdapter implements AdapterInterface
             return $this->facets;
         }
 
-        return $this->facets = $this->getSearchResult()->facets;
+        return $this->facets = $this->getSearchResultWithLimitZero()->facets;
     }
 
     /**
@@ -97,19 +97,19 @@ class LocationSearchFilterAdapter implements AdapterInterface
         $query->limit = $length;
         $query->performCount = false;
 
-        $this->searchResult = $this->filterService->filterLocations($query);
+        $searchResult = $this->filterService->filterLocations($query);
 
         // Set count for further use if returned by search engine despite !performCount (Solr, ES)
-        if (!isset($this->nbResults) && isset($this->searchResult->totalCount)) {
-            $this->nbResults = $this->searchResult->totalCount;
+        if (!isset($this->nbResults) && isset($searchResult->totalCount)) {
+            $this->nbResults = $searchResult->totalCount;
         }
 
-        if (!isset($this->facets) && isset($this->searchResult->facets)) {
-            $this->facets = $this->searchResult->facets;
+        if (!isset($this->facets) && isset($searchResult->facets)) {
+            $this->facets = $searchResult->facets;
         }
 
         $list = [];
-        foreach ($this->searchResult->searchHits as $hit) {
+        foreach ($searchResult->searchHits as $hit) {
             $list[] = $hit->valueObject;
         }
 
@@ -119,14 +119,14 @@ class LocationSearchFilterAdapter implements AdapterInterface
     /**
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    private function getSearchResult()
+    private function getSearchResultWithLimitZero()
     {
-        if ($this->searchResult === null) {
+        if ($this->searchResultWithLimitZero === null) {
             $query = clone $this->query;
             $query->limit = 0;
-            $this->searchResult = $this->filterService->filterLocations($query);
+            $this->searchResultWithLimitZero = $this->filterService->filterLocations($query);
         }
 
-        return $this->searchResult;
+        return $this->searchResultWithLimitZero;
     }
 }

@@ -203,9 +203,9 @@ final class Content extends APIContent
             'languageCode' => $this->languageCode,
             'contentInfo' => $this->getContentInfo(),
             'fields' => $this->fields,
-            //'mainLocation' => $this->getMainLocation(),
-            //'innerContent' => $this->getInnerContent(),
-            //'innerVersionInfo' => $this->innerVersionInfo,
+            'mainLocation' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]',
+            'innerContent' => '[An instance of eZ\Publish\API\Repository\Values\Content\Content]',
+            'innerVersionInfo' => '[An instance of eZ\Publish\API\Repository\Values\Content\VersionInfo]',
         ];
     }
 

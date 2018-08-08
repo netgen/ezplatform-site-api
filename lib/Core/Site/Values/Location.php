@@ -178,10 +178,10 @@ final class Location extends APILocation
             'sortField' => $this->innerLocation->sortField,
             'sortOrder' => $this->innerLocation->sortOrder,
             'contentId' => $this->innerLocation->contentId,
-            //'innerLocation' => $this->innerLocation,
+            'innerLocation' => '[An instance of eZ\Publish\API\Repository\Values\Content\Location]',
             'contentInfo' => $this->getContentInfo(),
-            //'parent' => $this->getParent(),
-            //'content' => $this->getContent(),
+            'parent' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]',
+            'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
         ];
     }
 

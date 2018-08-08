@@ -82,9 +82,9 @@ final class Field extends APIField
             'fieldTypeIdentifier' => $this->fieldTypeIdentifier,
             'name' => $this->name,
             'description' => $this->description,
-            //'content' => $this->content,
+            'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
             'contentId' => $this->content->id,
-            //'innerField' => $this->innerField,
+            'innerField' => '[An instance of eZ\Publish\API\Repository\Values\Content\Field]',
             'innerFieldDefinition' => $this->innerFieldDefinition,
         ];
     }

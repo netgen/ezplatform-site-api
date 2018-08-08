@@ -22,13 +22,50 @@ class SliceTest extends TestCase
         }
     }
 
-    public function testArrayAccess()
+    public function testIteratorArrayAccess()
     {
         $slice = $this->getSlice();
         $iterator = $slice->getIterator();
 
         $this->assertEquals('one', $iterator[0]);
         $this->assertEquals('two', $iterator[1]);
+    }
+
+    public function testArrayAccessGet()
+    {
+        $slice = $this->getSlice();
+
+        $this->assertEquals('one', $slice[0]);
+        $this->assertEquals('two', $slice[1]);
+    }
+
+    public function testArrayAccessExists()
+    {
+        $slice = $this->getSlice();
+
+        $this->assertTrue(isset($slice[0]));
+        $this->assertTrue(isset($slice[1]));
+        $this->assertFalse(isset($slice[2]));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testArrayAccessSet()
+    {
+        $slice = $this->getSlice();
+
+        $slice[0] = 1;
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testArrayAccessUnset()
+    {
+        $slice = $this->getSlice();
+
+        unset($slice[0]);
     }
 
     public function testGetSearchHits()
@@ -49,7 +86,7 @@ class SliceTest extends TestCase
         ];
     }
 
-    public function getSlice()
+    protected function getSlice()
     {
         return new Slice($this->getSearchHits());
     }

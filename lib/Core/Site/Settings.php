@@ -35,6 +35,13 @@ final class Settings extends BaseSettings
         $this->rootLocationId = $rootLocationId;
     }
 
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
+     *
+     * @param $property
+     *
+     * @return bool|int|string|string[]
+     */
     public function __get($property)
     {
         switch ($property) {
@@ -49,11 +56,24 @@ final class Settings extends BaseSettings
         throw new PropertyNotFoundException($property, get_class($this));
     }
 
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
+     *
+     * @param $property
+     * @param $value
+     */
     public function __set($property, $value)
     {
         throw new PropertyReadOnlyException($property, get_class($this));
     }
 
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
+     *
+     * @param $property
+     *
+     * @return bool
+     */
     public function __isset($property)
     {
         switch ($property) {

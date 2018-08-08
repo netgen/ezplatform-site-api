@@ -2,557 +2,98 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
-use DateTime;
+use ArrayIterator;
 use eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException;
 use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
+use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
+use Netgen\EzPlatformSiteApi\API\Values\Field;
+use eZ\Publish\SPI\FieldType\Value;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\API\Repository\Values\User\User;
+use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use ReflectionProperty;
 
 /**
  * Base class for API integration tests.
  */
 class BaseTest extends APIBaseTest
 {
-    public function getPrimaryLanguageMatchData()
+    public function getData($languageCode)
     {
-        $data = [
-            'name' => 'Contact Us',
-            'contentId' => 58,
-            'contentRemoteId' => 'f8cc7a4cf8a964a1a0ea6666f5da7d0d',
-            'locationId' => 60,
-            'locationRemoteId' => '86bf306624668ee9b8b979b0d56f7e0d',
-            'parentLocationId' => 2,
-            'locationPriority' => -2,
+        return [
+            'name' => $languageCode,
+            'contentId' => 61,
+            'contentRemoteId' => 'content-remote-id',
+            'locationId' => 63,
+            'locationRemoteId' => 'location-remote-id',
+            'parentLocationId' => 62,
+            'locationPriority' => 1,
             'locationHidden' => false,
             'locationInvisible' => false,
-            'locationPathString' => '/1/2/60/',
-            'locationPath' => [1, 2, 60],
-            'locationDepth' => 2,
-            'locationSortField' => APILocation::SORT_FIELD_PRIORITY,
-            'locationSortOrder' => APILocation::SORT_ORDER_ASC,
-            'contentTypeIdentifier' => 'feedback_form',
-            'contentTypeId' => 20,
+            'locationPathString' => '/1/2/62/63/',
+            'locationPath' => [1, 2, 62, 63],
+            'locationDepth' => 3,
+            'locationSortField' => APILocation::SORT_FIELD_NODE_ID,
+            'locationSortOrder' => APILocation::SORT_ORDER_DESC,
+            'contentTypeIdentifier' => 'test-type',
+            'contentTypeId' => 37,
             'sectionId' => 1,
             'currentVersionNo' => 1,
             'published' => true,
             'ownerId' => 14,
-            'modificationDateTimestamp' => 1332927282,
-            'publishedDateTimestamp' => 1332927205,
-            'alwaysAvailable' => false,
+            'modificationDateTimestamp' => 100,
+            'publishedDateTimestamp' => 101,
+            'alwaysAvailable' => true,
             'mainLanguageCode' => 'eng-GB',
-            'mainLocationId' => 60,
-            'contentTypeName' => 'Feedback form',
-            'contentTypeDescription' => '',
-            'languageCode' => 'eng-GB',
+            'mainLocationId' => 63,
+            'contentTypeName' => 'Test type',
+            'contentTypeDescription' => 'A test type',
+            'languageCode' => $languageCode,
             'fields' => [
-                'description' => [
-                    'name' => 'Description',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezrichtext',
-                    'isEmpty' => false,
-                ],
-                'email' => [
-                    'name' => 'Email',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezemail',
-                    'isEmpty' => false,
-                ],
-                'message' => [
-                    'name' => 'Message',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'eztext',
-                    'isEmpty' => false,
-                ],
-                'name' => [
-                    'name' => 'Name',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'recipient' => [
-                    'name' => 'Recipient',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezemail',
-                    'isEmpty' => false,
-                ],
-                'sender_name' => [
-                    'name' => 'Sender name',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'subject' => [
-                    'name' => 'Subject',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-            ],
-            'isFound' => true,
-        ];
-
-        return [
-            0 => [
-                $data,
-            ],
-        ];
-    }
-
-    public function getSecondaryLanguageMatchData()
-    {
-        $data = [
-            'name' => 'Das Titel',
-            'contentId' => 54,
-            'contentRemoteId' => '8b8b22fe3c6061ed500fbd2b377b885f',
-            'locationId' => 56,
-            'locationRemoteId' => '772da20ecf88b3035d73cbdfcea0f119',
-            'parentLocationId' => 58,
-            'locationPriority' => 0,
-            'locationHidden' => false,
-            'locationInvisible' => false,
-            'locationPathString' => '/1/58/56/',
-            'locationPath' => [1, 58, 56],
-            'locationDepth' => 2,
-            'locationSortField' => APILocation::SORT_FIELD_PATH,
-            'locationSortOrder' => APILocation::SORT_ORDER_ASC,
-            'contentTypeIdentifier' => 'template_look',
-            'contentTypeId' => 15,
-            'sectionId' => 5,
-            'currentVersionNo' => 3,
-            'published' => true,
-            'ownerId' => 14,
-            'modificationDateTimestamp' => 100,
-            'publishedDateTimestamp' => 1082016652,
-            'alwaysAvailable' => false,
-            'mainLanguageCode' => 'eng-US',
-            'mainLocationId' => 56,
-            'contentTypeName' => '',
-            'contentTypeDescription' => '',
-            'languageCode' => 'ger-DE',
-            'fields' => [
-                'email' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezinisetting',
-                    'isEmpty' => true,
-                ],
-                'footer_script' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'eztext',
-                    'isEmpty' => true,
-                ],
-                'footer_text' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'eztext',
-                    'isEmpty' => true,
-                ],
-                'hide_powered_by' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezboolean',
-                    'isEmpty' => true,
-                ],
-                'image' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezimage',
-                    'isEmpty' => true,
-                ],
-                'login_label' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => true,
-                ],
-                'logout_label' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => true,
-                ],
-                'meta_data' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezinisetting',
-                    'isEmpty' => true,
-                ],
-                'my_profile_label' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'register_user_label' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => true,
-                ],
-                'rss_feed' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => true,
-                ],
-                'shopping_basket_label' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => true,
-                ],
-                'site_map_url' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezurl',
-                    'isEmpty' => true,
-                ],
-                'site_settings_label' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => true,
-                ],
-                'sitestyle' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezpackage',
-                    'isEmpty' => true,
-                ],
-                'siteurl' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezinisetting',
-                    'isEmpty' => true,
-                ],
-                'tag_cloud_url' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezurl',
-                    'isEmpty' => true,
-                ],
-                'title' => [
-                    'name' => null,
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezinisetting',
-                    'isEmpty' => true,
-                ],
-            ],
-            'isFound' => true,
-        ];
-
-        return [
-            0 => [
-                $data,
-            ],
-        ];
-    }
-
-    public function getExplicitVersionAndLanguageMatchData()
-    {
-        $data = [
-            'name' => 'eZ Publish Demo Design (without demo content)',
-            'contentId' => 54,
-            'contentRemoteId' => '8b8b22fe3c6061ed500fbd2b377b885f',
-            'locationId' => 56,
-            'locationRemoteId' => '772da20ecf88b3035d73cbdfcea0f119',
-            'parentLocationId' => 58,
-            'locationPriority' => 0,
-            'locationHidden' => false,
-            'locationInvisible' => false,
-            'locationPathString' => '/1/58/56/',
-            'locationPath' => [1, 58, 56],
-            'locationDepth' => 2,
-            'locationSortField' => APILocation::SORT_FIELD_PATH,
-            'locationSortOrder' => APILocation::SORT_ORDER_ASC,
-            'contentTypeIdentifier' => 'template_look',
-            'contentTypeId' => 15,
-            'sectionId' => 5,
-            'currentVersionNo' => 3,
-            'published' => true,
-            'ownerId' => 14,
-            'modificationDateTimestamp' => 100,
-            'publishedDateTimestamp' => 1082016652,
-            'alwaysAvailable' => false,
-            'mainLanguageCode' => 'eng-US',
-            'mainLocationId' => 56,
-            'contentTypeName' => 'Template look',
-            'contentTypeDescription' => '',
-            'languageCode' => 'eng-US',
-            'fields' => [
-                'email' => [
-                    'name' => 'Email',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezinisetting',
-                    'isEmpty' => true,
-                ],
-                'footer_script' => [
-                    'name' => 'Footer Javascript',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'eztext',
-                    'isEmpty' => true,
-                ],
-                'footer_text' => [
-                    'name' => 'Footer text',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'eztext',
-                    'isEmpty' => false,
-                ],
-                'hide_powered_by' => [
-                    'name' => 'Hide "Powered by"',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezboolean',
-                    'isEmpty' => true,
-                ],
-                'image' => [
-                    'name' => 'Image',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezimage',
-                    'isEmpty' => false,
-                ],
-                'login_label' => [
-                    'name' => 'Login (label)',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'logout_label' => [
-                    'name' => 'Logout (label)',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'meta_data' => [
-                    'name' => 'Meta data',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezinisetting',
-                    'isEmpty' => true,
-                ],
-                'my_profile_label' => [
-                    'name' => 'My profile (label)',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'register_user_label' => [
-                    'name' => 'Register new user (label)',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'rss_feed' => [
-                    'name' => 'RSS feed',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'shopping_basket_label' => [
-                    'name' => 'Shopping basket (label)',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'site_map_url' => [
-                    'name' => 'Site map URL',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezurl',
-                    'isEmpty' => false,
-                ],
-                'site_settings_label' => [
-                    'name' => 'Site settings (label)',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-                'sitestyle' => [
-                    'name' => 'Sitestyle',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezpackage',
-                    'isEmpty' => true,
-                ],
-                'siteurl' => [
-                    'name' => 'Site URL',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezinisetting',
-                    'isEmpty' => true,
-                ],
-                'tag_cloud_url' => [
-                    'name' => 'Tag Cloud URL',
-                    'description' => '',
-                    'fieldTypeIdentifier' => 'ezurl',
-                    'isEmpty' => false,
-                ],
                 'title' => [
                     'name' => 'Title',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezinisetting',
-                    'isEmpty' => true,
-                ],
-            ],
-            'isFound' => true,
-            'loadVersionNo' => 2,
-            'loadLanguageCode' => 'eng-US',
-        ];
-
-        return [
-            0 => [
-                $data,
-            ],
-        ];
-    }
-
-    public function getAlwaysAvailableLanguageMatchData()
-    {
-        $data = [
-            'name' => 'Users',
-            'contentId' => 4,
-            'contentRemoteId' => 'f5c88a2209584891056f987fd965b0ba',
-            'locationId' => 5,
-            'locationRemoteId' => '3f6d92f8044aed134f32153517850f5a',
-            'parentLocationId' => 1,
-            'locationPriority' => 0,
-            'locationHidden' => false,
-            'locationInvisible' => false,
-            'locationPathString' => '/1/5/',
-            'locationPath' => [1, 5],
-            'locationDepth' => 1,
-            'locationSortField' => APILocation::SORT_FIELD_PATH,
-            'locationSortOrder' => APILocation::SORT_ORDER_ASC,
-            'contentTypeIdentifier' => 'user_group',
-            'contentTypeId' => 3,
-            'sectionId' => 2,
-            'currentVersionNo' => 1,
-            'published' => true,
-            'ownerId' => 14,
-            'modificationDateTimestamp' => 1033917596,
-            'publishedDateTimestamp' => 1033917596,
-            'alwaysAvailable' => true,
-            'mainLanguageCode' => 'eng-US',
-            'mainLocationId' => 5,
-            'contentTypeName' => 'User group',
-            'contentTypeDescription' => '',
-            'languageCode' => 'eng-US',
-            'fields' => [
-                'description' => [
-                    'name' => 'Description',
-                    'description' => null,
+                    'description' => 'Title of the test type',
                     'fieldTypeIdentifier' => 'ezstring',
+                    'value' => $languageCode,
                     'isEmpty' => false,
                 ],
-                'name' => [
-                    'name' => 'Name',
-                    'description' => null,
-                    'fieldTypeIdentifier' => 'ezstring',
-                    'isEmpty' => false,
-                ],
-            ],
-            'isFound' => true,
-        ];
-
-        return [
-            0 => [
-                $data,
-            ],
-        ];
-    }
-
-    public function getNoLanguageMatchData()
-    {
-        $data = [
-            'name' => 'Common INI settings',
-            'contentId' => 52,
-            'contentRemoteId' => '27437f3547db19cf81a33c92578b2c89',
-            'locationId' => 54,
-            'locationRemoteId' => 'fa9f3cff9cf90ecfae335718dcbddfe2',
-            'parentLocationId' => null,
-            'locationPriority' => null,
-            'locationHidden' => null,
-            'locationInvisible' => null,
-            'locationPathString' => null,
-            'locationPath' => null,
-            'locationDepth' => null,
-            'locationSortField' => null,
-            'locationSortOrder' => null,
-            'contentTypeIdentifier' => null,
-            'contentTypeId' => null,
-            'sectionId' => null,
-            'currentVersionNo' => null,
-            'published' => null,
-            'ownerId' => null,
-            'modificationDateTimestamp' => null,
-            'publishedDateTimestamp' => null,
-            'alwaysAvailable' => null,
-            'mainLanguageCode' => null,
-            'mainLocationId' => null,
-            'contentTypeName' => null,
-            'contentTypeDescription' => null,
-            'languageCode' => null,
-            'fields' => null,
-            'isFound' => false,
-        ];
-
-        return [
-            0 => [
-                $data,
             ],
         ];
     }
 
     /**
+     * @throws \ReflectionException
+     * @throws \ErrorException
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    protected function overrideSettings($name, $value)
+    {
+        $settings = $this->getSite()->getSettings();
+
+        $property = new ReflectionProperty(get_class($settings), $name);
+        $property->setAccessible(true);
+        $property->setValue($settings, $value);
+    }
+
+    /**
+     * @throws \ErrorException
+     *
      * @return \Netgen\EzPlatformSiteApi\API\Site
      */
     protected function getSite()
     {
-        return $this->getSetupFactory()->getServiceContainer()->get('netgen.ezplatform_site.site');
-    }
+        /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
+        $site = $this->getSetupFactory()->getServiceContainer()->get('netgen.ezplatform_site.site');
 
-    protected function doTestLoadContent($data)
-    {
-        list(, $contentId) = array_values($data);
-        $loadService = $this->getSite()->getLoadService();
-        $content = $loadService->loadContent($contentId);
-        $this->assertContent($content, $data);
-    }
-
-    protected function doTestLoadContentByRemoteId($data)
-    {
-        list(, , $remoteId) = array_values($data);
-        $loadService = $this->getSite()->getLoadService();
-        $content = $loadService->loadContentByRemoteId($remoteId);
-        $this->assertContent($content, $data);
-    }
-
-    protected function doTestLoadContentInfo($data)
-    {
-        list(, $contentId) = array_values($data);
-        $loadService = $this->getSite()->getLoadService();
-        $contentInfo = $loadService->loadContentInfo($contentId);
-        $this->assertContentInfo($contentInfo, $data);
-    }
-
-    protected function doTestLoadContentInfoByRemoteId($data)
-    {
-        list(, , $remoteId) = array_values($data);
-        $loadService = $this->getSite()->getLoadService();
-        $contentInfo = $loadService->loadContentInfoByRemoteId($remoteId);
-        $this->assertContentInfo($contentInfo, $data);
-    }
-
-    protected function doTestLoadLocation($data)
-    {
-        list(, , , $locationId) = array_values($data);
-        $loadService = $this->getSite()->getLoadService();
-        $location = $loadService->loadLocation($locationId);
-        $this->assertLocation($location, $data);
-    }
-
-    protected function doTestLoadLocationByRemoteId($data)
-    {
-        list(, , , , $remoteId) = array_values($data);
-        $loadService = $this->getSite()->getLoadService();
-        $location = $loadService->loadLocationByRemoteId($remoteId);
-        $this->assertLocation($location, $data);
+        return $site;
     }
 
     protected function assertContent($content, $data)
@@ -560,7 +101,7 @@ class BaseTest extends APIBaseTest
         list($name, $contentId, , $locationId) = array_values($data);
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
-        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Content', $content);
+        $this->assertInstanceOf(Content::class, $content);
 
         $this->assertSame($contentId, $content->id);
         $this->assertSame($locationId, $content->mainLocationId);
@@ -569,12 +110,19 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($data['languageCode'], $content->languageCode);
         $this->assertContentInfo($content->contentInfo, $data);
         $this->assertFields($content, $data);
-        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Content', $content->owner);
-        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Location', $content->mainLocation);
-        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\User\User', $content->innerOwnerUser);
-        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Content', $content->innerContent);
-        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\VersionInfo', $content->versionInfo);
-        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\VersionInfo', $content->innerVersionInfo);
+        $this->assertInstanceOf(Content::class, $content->owner);
+        $this->assertInstanceOf(Location::class, $content->mainLocation);
+        $this->assertInstanceOf(Content::class, $content->owner);
+        $this->assertInstanceOf(User::class, $content->innerOwnerUser);
+        $this->assertInstanceOf(User::class, $content->innerOwnerUser);
+        $this->assertInstanceOf(APIContent::class, $content->innerContent);
+        $this->assertInstanceOf(VersionInfo::class, $content->versionInfo);
+        $this->assertInstanceOf(VersionInfo::class, $content->innerVersionInfo);
+
+        $locations = $content->getLocations();
+        $this->assertInstanceOf(ArrayIterator::class, $locations);
+        $this->assertCount(1, $locations);
+        $this->assertInstanceOf(Location::class, reset($locations));
 
         $this->assertTrue(isset($content->id));
         $this->assertTrue(isset($content->name));
@@ -595,7 +143,7 @@ class BaseTest extends APIBaseTest
         list($name, $contentId, $contentRemoteId, $locationId) = array_values($data);
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo */
-        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\ContentInfo', $contentInfo);
+        $this->assertInstanceOf(APIContentInfo::class, $contentInfo);
 
         $this->assertEquals($contentId, $contentInfo->id);
         $this->assertEquals($contentRemoteId, $contentInfo->remoteId);
@@ -615,10 +163,15 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($data['contentTypeName'], $contentInfo->contentTypeName);
         $this->assertEquals($data['contentTypeDescription'], $contentInfo->contentTypeDescription);
         $this->assertEquals($data['languageCode'], $contentInfo->languageCode);
-        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Content', $contentInfo->content);
-        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Location', $contentInfo->mainLocation);
-        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\ContentInfo', $contentInfo->innerContentInfo);
-        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\ContentType\ContentType', $contentInfo->innerContentType);
+        $this->assertInstanceOf(Content::class, $contentInfo->content);
+        $this->assertInstanceOf(Location::class, $contentInfo->mainLocation);
+        $this->assertInstanceOf(ContentInfo::class, $contentInfo->innerContentInfo);
+        $this->assertInstanceOf(ContentType::class, $contentInfo->innerContentType);
+
+        $locations = $contentInfo->getLocations();
+        $this->assertInstanceOf(ArrayIterator::class, $locations);
+        $this->assertCount(1, $locations);
+        $this->assertInstanceOf(Location::class, reset($locations));
 
         $this->assertTrue(isset($contentInfo->name));
         $this->assertTrue(isset($contentInfo->contentTypeIdentifier));
@@ -642,9 +195,9 @@ class BaseTest extends APIBaseTest
         $this->assertCount(count($data['fields']), $content->fields);
 
         foreach ($content->fields as $identifier => $field) {
-            $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Field', $field);
-            $this->assertInstanceOf('\eZ\Publish\SPI\FieldType\Value', $field->value);
-            $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Field', $field->innerField);
+            $this->assertInstanceOf(Field::class, $field);
+            $this->assertInstanceOf(Value::class, $field->value);
+            $this->assertInstanceOf(APIField::class, $field->innerField);
 
             $fieldById = $content->getFieldById($field->id);
             $fieldByIdentifier = $content->getField($identifier);
@@ -659,16 +212,18 @@ class BaseTest extends APIBaseTest
             $this->assertSame($fieldValueById, $fieldValueByIdentifier);
 
             $this->assertSame($content, $field->content);
+
+            $this->assertSame($data['fields'][$identifier]['value'], (string)$field->value);
         }
 
         foreach ($data['fields'] as $identifier => $fieldData) {
             $this->assertField($content, $identifier, $data['languageCode'], $fieldData);
         }
 
-        $content->getField('non_existent_field');
-        $content->getFieldById('non_existent_field');
-        $content->getFieldValue('non_existent_field');
-        $content->getFieldValueById('non_existent_field');
+        $this->assertNull($content->getField('non_existent_field'));
+        $this->assertNull($content->getFieldById('non_existent_field'));
+        $this->assertNull($content->getFieldValue('non_existent_field'));
+        $this->assertNull($content->getFieldValueById('non_existent_field'));
     }
 
     protected function assertField(Content $content, $identifier, $languageCode, $data)
@@ -703,7 +258,7 @@ class BaseTest extends APIBaseTest
         list(, , , $locationId, $locationRemoteId, $parentLocationId) = array_values($data);
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
-        $this->assertInstanceOf('\Netgen\EzPlatformSiteApi\API\Values\Location', $location);
+        $this->assertInstanceOf(Location::class, $location);
 
         $this->assertEquals($locationId, $location->id);
         $this->assertEquals($locationRemoteId, $location->remoteId);
@@ -719,7 +274,12 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($data['locationSortOrder'], $location->sortOrder);
         $this->assertEquals($location->contentInfo->id, $location->contentId);
         $this->assertContentInfo($location->contentInfo, $data);
-        $this->assertInstanceOf('\eZ\Publish\API\Repository\Values\Content\Location', $location->innerLocation);
+        $this->assertInstanceOf(APILocation::class, $location->innerLocation);
+        $this->assertInstanceOf(Content::class, $location->content);
+
+        if ($location->parentLocationId !== 1) {
+            $this->assertInstanceOf(Location::class, $location->parent);
+        }
 
         $this->assertTrue(isset($location->contentId));
         $this->assertTrue(isset($location->contentInfo));
@@ -731,30 +291,5 @@ class BaseTest extends APIBaseTest
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
-    }
-
-    protected function createSecondaryTranslationFallback()
-    {
-        $templateLookContentTypeId = 15;
-        $contentTypeService = $this->getRepository()->getContentTypeService();
-        $contentType = $contentTypeService->loadContentType($templateLookContentTypeId);
-        $contentTypeDraft = $contentTypeService->createContentTypeDraft($contentType);
-        $contentTypeUpdateStruct = $contentTypeService->newContentTypeUpdateStruct();
-        $contentTypeUpdateStruct->nameSchema = '<my_profile_label>';
-        $contentTypeService->updateContentTypeDraft($contentTypeDraft, $contentTypeUpdateStruct);
-        $contentTypeService->publishContentTypeDraft($contentTypeDraft);
-
-        $demoDesignContentId = 54;
-        $contentService = $this->getRepository()->getContentService();
-        $contentInfo = $contentService->loadContentInfo($demoDesignContentId);
-        $draft = $contentService->createContentDraft($contentInfo);
-        $contentUpdateStruct = $contentService->newContentUpdateStruct();
-        $contentUpdateStruct->setField('my_profile_label', 'Das Titel', 'ger-DE');
-        $updatedDraft = $contentService->updateContent($draft->versionInfo, $contentUpdateStruct);
-        $content = $contentService->publishVersion($updatedDraft->versionInfo);
-
-        $contentMetadataUpdateStruct = $contentService->newContentMetadataUpdateStruct();
-        $contentMetadataUpdateStruct->modificationDate = new DateTime('@100');
-        $contentService->updateContentMetadata($content->contentInfo, $contentMetadataUpdateStruct);
     }
 }

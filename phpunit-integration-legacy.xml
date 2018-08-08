@@ -12,6 +12,7 @@
     </php>
     <testsuites>
         <testsuite name="Netgen's Site API for eZ Platform integration tests">
+            <file>tests/lib/Integration/PrepareFixturesTest.php</file>
             <file>tests/lib/Integration/SiteTest.php</file>
             <file>tests/lib/Integration/FilterServiceTest.php</file>
             <file>tests/lib/Integration/FindServiceTest.php</file>

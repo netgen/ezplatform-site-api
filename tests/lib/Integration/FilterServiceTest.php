@@ -2,6 +2,11 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
+
 /**
  * Test case for the FilterService.
  *
@@ -10,179 +15,410 @@ namespace Netgen\EzPlatformSiteApi\Tests\Integration;
  * @group integration
  * @group filter
  */
-class FilterServiceTest extends FilterServiceBaseTest
+class FilterServiceTest extends BaseTest
 {
     /**
-     * Test for the filterContent() method.
+     * Test for the findContent() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterContent()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getPrimaryLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterContentMatchPrimaryLanguage($data)
+    public function testFilterContentMatchPrimaryLanguage()
     {
-        $this->doTestFilterContent($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-GB',
+                'ger-DE',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('eng-GB');
+        $searchResult = $filterService->filterContent(
+            new Query([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertContentSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterContent() method.
+     * Test for the findContent() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterContent()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getSecondaryLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterContentMatchSecondaryLanguage($data)
+    public function testFilterContentMatchSecondaryLanguage()
     {
-        $this->createSecondaryTranslationFallback();
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-US',
+                'ger-DE',
+            ]
+        );
 
-        $this->doTestFilterContent($data);
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('ger-DE');
+        $searchResult = $filterService->filterContent(
+            new Query([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertContentSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterContent() method.
+     * Test for the findContent() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterContent()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getAlwaysAvailableLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterContentMatchAlwaysAvailableLanguage($data)
+    public function testFilterContentMatchAlwaysAvailableLanguage()
     {
-        $this->doTestFilterContent($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-US',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('eng-GB');
+        $searchResult = $filterService->filterContent(
+            new Query([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertContentSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterContent() method.
+     * Test for the findContent() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterContent()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContent()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getNoLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterContentTranslationNotMatched($data)
+    public function testFilterContentTranslationNotMatched()
     {
-        $this->doTestFilterContent($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-GB',
+                'ger-DE',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $searchResult = $filterService->filterContent(
+            new Query([
+                'filter' => new ContentId(52),
+            ])
+        );
+
+        $this->assertEquals(0, $searchResult->totalCount);
     }
 
     /**
-     * Test for the filterContentInfo() method.
+     * Test for the findContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterContentInfo()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getPrimaryLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterContentInfoMatchPrimaryLanguage($data)
+    public function testFilterContentInfoMatchPrimaryLanguage()
     {
-        $this->doTestFilterContentInfo($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-GB',
+                'ger-DE',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('eng-GB');
+        $searchResult = $filterService->filterContentInfo(
+            new Query([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertContentInfoSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterContentInfo() method.
+     * Test for the findContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterContentInfo()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getSecondaryLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterContentInfoMatchSecondaryLanguage($data)
+    public function testFilterContentInfoMatchSecondaryLanguage()
     {
-        $this->createSecondaryTranslationFallback();
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-US',
+                'ger-DE',
+            ]
+        );
 
-        $this->doTestFilterContentInfo($data);
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('ger-DE');
+        $searchResult = $filterService->filterContentInfo(
+            new Query([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertContentInfoSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterContentInfo() method.
+     * Test for the findContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterContentInfo()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getAlwaysAvailableLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterContentInfoMatchAlwaysAvailableLanguage($data)
+    public function testFilterContentInfoMatchAlwaysAvailableLanguage()
     {
-        $this->doTestFilterContentInfo($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-US',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('eng-GB');
+        $searchResult = $filterService->filterContentInfo(
+            new Query([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertContentInfoSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterContentInfo() method.
+     * Test for the findContentInfo() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterContentInfo()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getNoLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterContentInfoTranslationNotMatched($data)
+    public function testFilterContentInfoTranslationNotMatched()
     {
-        $this->doTestFilterContentInfo($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-GB',
+                'ger-DE',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $searchResult = $filterService->filterContentInfo(
+            new Query([
+                'filter' => new ContentId(52),
+            ])
+        );
+
+        $this->assertEquals(0, $searchResult->totalCount);
     }
 
     /**
-     * Test for the filterLocations() method.
+     * Test for the findLocations() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterLocations()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findLocations()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getPrimaryLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterLocationsMatchPrimaryLanguage($data)
+    public function testFilterLocationsMatchPrimaryLanguage()
     {
-        $this->doTestFilterLocations($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-GB',
+                'ger-DE',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('eng-GB');
+        $searchResult = $filterService->filterLocations(
+            new LocationQuery([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertLocationSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterLocations() method.
+     * Test for the findLocations() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterLocations()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findLocations()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getSecondaryLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterLocationsMatchSecondaryLanguage($data)
+    public function testFilterLocationsMatchSecondaryLanguage()
     {
-        $this->createSecondaryTranslationFallback();
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-US',
+                'ger-DE',
+            ]
+        );
 
-        $this->doTestFilterLocations($data);
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('ger-DE');
+        $searchResult = $filterService->filterLocations(
+            new LocationQuery([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertLocationSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterLocations() method.
+     * Test for the findLocations() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterLocations()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findLocations()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getAlwaysAvailableLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterLocationsMatchAlwaysAvailableLanguage($data)
+    public function testFilterLocationsMatchAlwaysAvailableLanguage()
     {
-        $this->doTestFilterLocations($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-US',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $data = $this->getData('eng-GB');
+        $searchResult = $filterService->filterLocations(
+            new LocationQuery([
+                'filter' => new ContentId($data['contentId']),
+            ])
+        );
+
+        $this->assertLocationSearchResult($searchResult, $data);
     }
 
     /**
-     * Test for the filterLocations() method.
+     * Test for the findLocations() method.
      *
-     * @see \Netgen\EzPlatformSiteApi\API\FilterService::filterLocations()
+     * @see \Netgen\EzPlatformSiteApi\API\FindService::findLocations()
+     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
      * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFilterService
-     * @dataProvider getNoLanguageMatchData
      *
-     * @param mixed $data
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
-    public function testFilterLocationsTranslationNotMatched($data)
+    public function testFilterLocationsTranslationNotMatched()
     {
-        $this->doTestFilterLocations($data);
+        $this->overrideSettings(
+            'prioritizedLanguages',
+            [
+                'eng-GB',
+                'ger-DE',
+            ]
+        );
+
+        $filterService = $this->getSite()->getFilterService();
+
+        $searchResult = $filterService->filterLocations(
+            new LocationQuery([
+                'filter' => new ContentId(52),
+            ])
+        );
+
+        $this->assertEquals(0, $searchResult->totalCount);
+    }
+
+    protected function assertContentSearchResult(SearchResult $searchResult, $data)
+    {
+        $languageCode = $data['languageCode'];
+
+        $this->assertSame(1, $searchResult->totalCount);
+        $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
+        $this->assertContent($searchResult->searchHits[0]->valueObject, $data);
+    }
+
+    protected function assertContentInfoSearchResult(SearchResult $searchResult, $data)
+    {
+        $languageCode = $data['languageCode'];
+
+        $this->assertSame(1, $searchResult->totalCount);
+        $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
+        $this->assertContentInfo($searchResult->searchHits[0]->valueObject, $data);
+    }
+
+    protected function assertLocationSearchResult(SearchResult $searchResult, $data)
+    {
+        $languageCode = $data['languageCode'];
+
+        $this->assertSame(1, $searchResult->totalCount);
+        $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
+        $this->assertLocation($searchResult->searchHits[0]->valueObject, $data);
     }
 }

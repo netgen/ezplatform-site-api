@@ -33,6 +33,8 @@ class SiteTest extends BaseTest
     /**
      * Test for the getFilterService() method.
      *
+     * @group filter
+     *
      * @see \Netgen\EzPlatformSiteApi\API\Site::getFilterService()
      */
     public function testGetFilterService()
@@ -47,6 +49,8 @@ class SiteTest extends BaseTest
     /**
      * Test for the getFindService() method.
      *
+     * @group find
+     *
      * @see \Netgen\EzPlatformSiteApi\API\Site::getFindService()
      */
     public function testGetFindService()
@@ -60,6 +64,9 @@ class SiteTest extends BaseTest
 
     /**
      * Test for the getLoadService() method.
+     *
+     * @group load
+     *
      * @see \Netgen\EzPlatformSiteApi\API\Site::getLoadService()
      */
     public function testGetLoadService()

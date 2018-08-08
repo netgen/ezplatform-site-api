@@ -15,6 +15,17 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
  */
 class RelationServiceTest extends BaseTest
 {
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return array
+     */
     protected function prepareTestContent()
     {
         $repository = $this->getRepository();
@@ -64,6 +75,17 @@ class RelationServiceTest extends BaseTest
         return [$fieldDefinitionIdentifier, $relationContent, $relationId, $relationListContent, $relationIds];
     }
 
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentValue
+     */
     public function testLoadFieldRelation()
     {
         list($identifier, $testApiContent, $testRelationId) = $this->prepareTestContent();
@@ -75,6 +97,17 @@ class RelationServiceTest extends BaseTest
         $this->assertEquals($testRelationId, $content->id);
     }
 
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentValue
+     */
     public function testLoadFieldRelations()
     {
         list($identifier, , , $testApiContent, $testRelationIds) = $this->prepareTestContent();

@@ -17,6 +17,7 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use Netgen\EzPlatformSiteApi\API\Values\Node;
 use ReflectionProperty;
 
 /**
@@ -100,7 +101,7 @@ class BaseTest extends APIBaseTest
     {
         list($name, $contentId, , $locationId) = array_values($data);
 
-        /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Content|\Netgen\EzPlatformSiteApi\Core\Site\Values\Content $content */
         $this->assertInstanceOf(Content::class, $content);
 
         $this->assertSame($contentId, $content->id);
@@ -136,13 +137,30 @@ class BaseTest extends APIBaseTest
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
+
+        $this->assertEquals(
+            [
+                'id' => $content->id,
+                'mainLocationId' => $content->mainLocationId,
+                'name' => $content->name,
+                'languageCode' => $content->languageCode,
+                'contentInfo' => $content->contentInfo,
+                'fields' => [
+                    'title' => $content->getField('title'),
+                ],
+                'mainLocation' => "[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]",
+                'innerContent' => "[An instance of eZ\Publish\API\Repository\Values\Content\Content]",
+                'innerVersionInfo' => "[An instance of eZ\Publish\API\Repository\Values\Content\VersionInfo]"
+            ],
+            $content->__debugInfo()
+        );
     }
 
     protected function assertContentInfo($contentInfo, $data)
     {
         list($name, $contentId, $contentRemoteId, $locationId) = array_values($data);
 
-        /** @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo */
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo|\Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo $contentInfo */
         $this->assertInstanceOf(APIContentInfo::class, $contentInfo);
 
         $this->assertEquals($contentId, $contentInfo->id);
@@ -187,6 +205,29 @@ class BaseTest extends APIBaseTest
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
+
+        $this->assertEquals(
+            [
+                'id' => $contentInfo->id,
+                'contentTypeId' => $contentInfo->contentTypeId,
+                'sectionId' => $contentInfo->sectionId,
+                'currentVersionNo' => $contentInfo->currentVersionNo,
+                'published' => $contentInfo->published,
+                'ownerId' => $contentInfo->ownerId,
+                'modificationDate' => $contentInfo->modificationDate,
+                'publishedDate' => $contentInfo->publishedDate,
+                'alwaysAvailable' => $contentInfo->alwaysAvailable,
+                'remoteId' => $contentInfo->remoteId,
+                'mainLanguageCode' => $contentInfo->mainLanguageCode,
+                'mainLocationId' => $contentInfo->mainLocationId,
+                'name' => $contentInfo->name,
+                'languageCode' => $contentInfo->languageCode,
+                'contentTypeIdentifier' => $contentInfo->contentTypeIdentifier,
+                'contentTypeName' => $contentInfo->contentTypeName,
+                'contentTypeDescription' => $contentInfo->contentTypeDescription,
+            ],
+            $contentInfo->__debugInfo()
+        );
     }
 
     protected function assertFields(Content $content, $data)
@@ -228,6 +269,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertField(Content $content, $identifier, $languageCode, $data)
     {
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Field|\Netgen\EzPlatformSiteApi\Core\Site\Values\Field $field */
         $field = $content->getField($identifier);
 
         $this->assertSame($field->id, $field->innerField->id);
@@ -251,13 +293,30 @@ class BaseTest extends APIBaseTest
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
+
+        $this->assertEquals(
+            [
+                'id' => $field->id,
+                'fieldDefIdentifier' => $field->fieldDefIdentifier,
+                'value' => $field->value,
+                'languageCode' => $field->languageCode,
+                'fieldTypeIdentifier' => $field->fieldTypeIdentifier,
+                'name' => $field->name,
+                'description' => $field->description,
+                'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
+                'contentId' => $field->content->id,
+                'innerField' => '[An instance of eZ\Publish\API\Repository\Values\Content\Field]',
+                'innerFieldDefinition' => $field->innerFieldDefinition,
+            ],
+            $field->__debugInfo()
+        );
     }
 
     protected function assertLocation($location, $data)
     {
         list(, , , $locationId, $locationRemoteId, $parentLocationId) = array_values($data);
 
-        /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Location|\Netgen\EzPlatformSiteApi\Core\Site\Values\Location  $location */
         $this->assertInstanceOf(Location::class, $location);
 
         $this->assertEquals($locationId, $location->id);
@@ -291,5 +350,32 @@ class BaseTest extends APIBaseTest
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
+
+        if ($location instanceof Node) {
+            return;
+        }
+
+        $this->assertEquals(
+            [
+                'id' => $location->id,
+                'status' => $location->status,
+                'priority' => $location->priority,
+                'hidden' => $location->hidden,
+                'invisible' => $location->invisible,
+                'remoteId' => $location->remoteId,
+                'parentLocationId' => $location->parentLocationId,
+                'pathString' => $location->pathString,
+                'path' => $location->path,
+                'depth' => $location->depth,
+                'sortField' => $location->sortField,
+                'sortOrder' => $location->sortOrder,
+                'contentId' => $location->contentId,
+                'innerLocation' => '[An instance of eZ\Publish\API\Repository\Values\Content\Location]',
+                'contentInfo' => $location->contentInfo,
+                'parent' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]',
+                'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
+            ],
+            $location->__debugInfo()
+        );
     }
 }

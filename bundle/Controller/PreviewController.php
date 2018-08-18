@@ -40,6 +40,11 @@ class PreviewController extends BasePreviewController
         $this->loadService = $loadService;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     */
     protected function getForwardRequest(Location $location, Content $content, SiteAccess $previewSiteAccess, Request $request, $language)
     {
         $request = parent::getForwardRequest($location, $content, $previewSiteAccess, $request, $language);
@@ -66,6 +71,8 @@ class PreviewController extends BasePreviewController
     /**
      * Injects the Site API value objects into request, replacing the original
      * eZ API value objects.
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $language

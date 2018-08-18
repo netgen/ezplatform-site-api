@@ -188,6 +188,8 @@ final class ContentInfo extends APIContentInfo
 
     private function getContent()
     {
+        @trigger_error('Accessing Content from ContentInfo is deprecated since version 2.6 and will be removed in 3.0. Use the Content object directly instead.', E_USER_DEPRECATED);
+
         if ($this->internalContent === null) {
             $this->internalContent = $this->site->getLoadService()->loadContent($this->id);
         }

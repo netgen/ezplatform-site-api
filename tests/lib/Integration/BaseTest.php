@@ -225,6 +225,10 @@ class BaseTest extends APIBaseTest
                 'contentTypeIdentifier' => $contentInfo->contentTypeIdentifier,
                 'contentTypeName' => $contentInfo->contentTypeName,
                 'contentTypeDescription' => $contentInfo->contentTypeDescription,
+                'innerContentInfo' => '[An instance of eZ\Publish\API\Repository\Values\Content\ContentInfo]',
+                'innerContentType' => '[An instance of eZ\Publish\API\Repository\Values\ContentType\ContentType]',
+                'mainLocation' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]',
+                'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
             ],
             $contentInfo->__debugInfo()
         );

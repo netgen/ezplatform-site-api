@@ -37,8 +37,6 @@ abstract class ContentInfo extends ValueObject
     /**
      * Return an array of Locations, limited by optional $limit.
      *
-     * @deprecated since version 2.6, to be removed in 3.0. Use the same method on Content object instead.
-     *
      * @param int $limit
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
@@ -47,8 +45,6 @@ abstract class ContentInfo extends ValueObject
 
     /**
      * Return an array of Locations, limited by optional $maxPerPage and $currentPage.
-     *
-     * @deprecated since version 2.6, to be removed in 3.0. Use the same method on Content object instead.
      *
      * @param int $maxPerPage
      * @param int $currentPage

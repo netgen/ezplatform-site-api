@@ -153,14 +153,14 @@ final class ContentInfo extends APIContentInfo
 
     public function getLocations($limit = 25)
     {
-        @trigger_error('getContent() is deprecated since version 2.6 and will be removed in 3.0. Use the same method on Content object instead.', E_USER_DEPRECATED);
+        @trigger_error('getLocations() is deprecated since version 2.6 and will be removed in 3.0. Use the same method on Content object instead.', E_USER_DEPRECATED);
 
         return $this->filterLocations($limit)->getIterator();
     }
 
     public function filterLocations($maxPerPage = 25, $currentPage = 1)
     {
-        @trigger_error('getContent() is deprecated since version 2.6 and will be removed in 3.0. Use the same method on Content object instead.', E_USER_DEPRECATED);
+        @trigger_error('filterLocations() is deprecated since version 2.6 and will be removed in 3.0. Use the same method on Content object instead.', E_USER_DEPRECATED);
 
         $pager = new Pagerfanta(
             new FilterAdapter(

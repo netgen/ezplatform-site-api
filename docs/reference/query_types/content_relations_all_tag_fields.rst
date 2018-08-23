@@ -31,7 +31,7 @@ Examples
 Own conditions
 --------------------------------------------------------------------------------
 .. include:: /reference/query_types/parameters/query_type/content.rst.inc
-.. include:: /reference/query_types/parameters/query_type/exclude_self.rst.inc
+.. include:: /reference/query_types/parameters/query_type/exclude_self_content.rst.inc
 
 .. include:: /reference/query_types/parameters/common_content_parameters.rst.inc
 .. include:: /reference/query_types/parameters/common_query_parameters.rst.inc

@@ -34,7 +34,7 @@ Examples
 
 Own conditions
 --------------------------------------------------------------------------------
-.. include:: /reference/query_types/parameters/query_type/exclude_self.rst.inc
+.. include:: /reference/query_types/parameters/query_type/exclude_self_location.rst.inc
 .. include:: /reference/query_types/parameters/query_type/location.rst.inc
 .. include:: /reference/query_types/parameters/query_type/relative_depth.rst.inc
 

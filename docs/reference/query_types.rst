@@ -1,7 +1,9 @@
 Query Types
 ===========
 
-Site API Query Types expand upon Query Type feature from eZ Publish Kernel, using the same basic interfaces. That will enable using your existing Query Types, but how Site API integrates them with the rest of the system differs from eZ Publish Kernel.
+Site API Query Types expand upon Query Type feature from eZ Publish Kernel, using the same basic
+interfaces. That will enable using your existing Query Types, but how Site API integrates them with
+the rest of the system differs from eZ Publish Kernel.
 
 Built-in Query Types
 --------------------
@@ -26,7 +28,9 @@ Location hierarchy
 Query Type configuration
 --------------------------------------------------------------------------------
 
-Query Types have their own semantic configuration under ``queries`` key in configuration for a particular Content view. Under this key separate queries are defined under their own identifier keys, which are later used to reference the configured query from the Twig templates.
+Query Types have their own semantic configuration under ``queries`` key in configuration for a
+particular Content view. Under this key separate queries are defined under their own identifier
+keys, which are later used to reference the configured query from the Twig templates.
 
 Available parameters and their default values are:
 
@@ -37,7 +41,8 @@ Available parameters and their default values are:
 - ``use_filter: true`` - whether to use ``FilterService`` or ``FindService`` for executing the query
 - ``parameters: []`` - contains the actual Query Type parameters
 
-Parameters ``query_type`` and ``named_query`` are mutually exclusive, you are allowed to set only one or the other. But they are also mandatory - you will have to set one of them.
+Parameters ``query_type`` and ``named_query`` are mutually exclusive, you are allowed to set only
+one or the other. But they are also mandatory - you will have to set one of them.
 
 Example below shows how described configuration looks in practice:
 
@@ -76,7 +81,10 @@ Example below shows how described configuration looks in practice:
 Named Query Type configuration
 ------------------------------
 
-As hinted above with ``named_query`` parameter, it is possible to define "named queries", which can be referenced in query configuration for a particular content view. They are configured under ``ng_named_query``, which is a top section of a siteaccess configuration, on the same level as ``ng_content_view``:
+As hinted above with ``named_query`` parameter, it is possible to define "named queries", which can
+be referenced in query configuration for a particular content view. They are configured under
+``ng_named_query``, which is a top section of a siteaccess configuration, on the same level as
+``ng_content_view``:
 
 .. code-block:: yaml
 
@@ -111,7 +119,8 @@ As hinted above with ``named_query`` parameter, it is possible to define "named 
 
 .. note:: You can override some of the parameters from the referenced named query.
 
-You can notice that there are two ways of referencing a named query. In case when there are no other parameters, you can do it directly like this:.
+You can notice that there are two ways of referencing a named query. In case when there are no other
+parameters, you can do it directly like this:.
 
 .. code-block:: yaml
 
@@ -126,7 +135,9 @@ The example above is really just a shortcut to the example below:
         children:
             named_query: 'children_named_query'
 
-You can also notice that it's possible to override parameters from the referenced named query. This is limited to first level keys from the main configuration and also first level keys under the ``parameters`` key.
+You can also notice that it's possible to override parameters from the referenced named query. This
+is limited to first level keys from the main configuration and also first level keys under the
+``parameters`` key.
 
 Language expressions
 --------------------------------------------------------------------------------
@@ -136,11 +147,16 @@ TODO
 Accessing the configured queries from Twig
 --------------------------------------------------------------------------------
 
-Configured queries will be available in Twig templates, through ``ng_query`` or ``ng_raw_query``. The difference it that the former will return a ``Pagerfanta`` instance, while the latter will return an instance of ``SerachResult``. That also means ``ng_query`` will use ``max_per_page`` and ``page`` parameters to configure the pager, while ``ng_raw_query`` ignores them and executes the configured query directly.
+Configured queries will be available in Twig templates, through ``ng_query`` or ``ng_raw_query``.
+The difference it that the former will return a ``Pagerfanta`` instance, while the latter will
+return an instance of ``SerachResult``. That also means ``ng_query`` will use ``max_per_page`` and
+``page`` parameters to configure the pager, while ``ng_raw_query`` ignores them and executes the
+configured query directly.
 
 .. note:: Queries are only executed as you access them through ``ng_query`` or ``ng_raw_query``. If you don't call those functions on any of the configured queries, none of them will be executed.
 
-Both ``ng_query`` and ``ng_raw_query`` accept a single argument. This is the identifier of the query, which is the key under the ``queries`` section, under which the query is configured.
+Both ``ng_query`` and ``ng_raw_query`` accept a single argument. This is the identifier of the
+query, which is the key under the ``queries`` section, under which the query is configured.
 
 Example usage of ``ng_query``:
 

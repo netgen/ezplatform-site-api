@@ -5,6 +5,7 @@
 - **value format**: ``single``, ``array``
 - **operators**: none
 - **target**: none
+- **required**: ``true``
 - **default**: not defined
 
 bla bla

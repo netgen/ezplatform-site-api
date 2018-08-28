@@ -32,7 +32,39 @@ Examples
 
 Own conditions
 --------------------------------------------------------------------------------
-.. include:: /reference/query_types/parameters/query_type/location.rst.inc
+
+``location``
+~~~~~~~~~~~~
+
+Defines sibling Location reference for fetching other siblings Locations.
+
+.. note:: This condition is required.
+
+- **value type**: ``Location``
+- **value format**: ``single``
+- **operators**: none
+- **target**: none
+- **required**: ``true``
+- **default**: not defined
+
+  If used through view builder configuration, value will be automatically set to the ``Location`` instance resolved by the view builder.
+
+Examples:
+
+.. code-block:: yaml
+
+    # this is also automatically set when using from view builder configuration
+    location: '@=location'
+
+.. code-block:: yaml
+
+    # fetch siblings of the parent Location
+    location: '@=location.parent'
+
+.. code-block:: yaml
+
+    # fetch siblings of the parent Location's parent Location
+    location: '@=location.parent.parent'
 
 Inherited Location conditions
 --------------------------------------------------------------------------------

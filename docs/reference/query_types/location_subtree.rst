@@ -34,9 +34,110 @@ Examples
 
 Own conditions
 --------------------------------------------------------------------------------
-.. include:: /reference/query_types/parameters/query_type/exclude_self_location.rst.inc
-.. include:: /reference/query_types/parameters/query_type/location.rst.inc
-.. include:: /reference/query_types/parameters/query_type/relative_depth.rst.inc
+
+``exclude_self``
+~~~~~~~~~~~~~~~~
+
+Defines whether to include Location defined by the ``location`` condition in the result set.
+
+- **value type**: ``boolean``
+- **value format**: ``single``
+- **operators**: none
+- **target**: none
+- **required**: ``false``
+- **default**: ``true``
+
+Examples:
+
+.. code-block:: yaml
+
+    # do not include the subtree root Location, this is also the default behaviour
+    exclude_self: true
+
+.. code-block:: yaml
+
+    # include the subtree root Location
+    exclude_self: false
+
+``location``
+~~~~~~~~~~~~
+
+Defines the root Location of the Location subtree.
+
+.. note:: This condition is required.
+
+- **value type**: ``Location``
+- **value format**: ``single``
+- **operators**: none
+- **target**: none
+- **required**: ``true``
+- **default**: not defined
+
+  If used through view builder configuration, value will be automatically set to the ``Location`` instance resolved by the view builder.
+
+Examples:
+
+.. code-block:: yaml
+
+    # this is also automatically set when using from view builder configuration
+    location: '@=location'
+
+.. code-block:: yaml
+
+    # fetch from subtree of the parent Location
+    location: '@=location.parent'
+
+.. code-block:: yaml
+
+    # fetch from subtree of the parent Location's parent Location
+    location: '@=location.parent.parent'
+
+``relative_depth``
+~~~~~~~~~~~~~~~~~~
+
+Defines depth of the Location in the tree relative to the Location defined by ``location`` condition.
+
+- **value type**: ``integer``
+- **value format**: ``single``, ``array``
+- **operators**: ``eq``, ``in``, ``gt``, ``gte``, ``lt``, ``lte``, ``between``
+- **target**: none
+- **required**: ``false``
+- **default**: not defined
+
+Examples:
+
+.. code-block:: yaml
+
+    # identical to the example below
+    depth: 2
+
+.. code-block:: yaml
+
+    depth:
+        eq: 2
+
+.. code-block:: yaml
+
+    # identical to the example below
+    depth: [2, 3]
+
+.. code-block:: yaml
+
+    depth:
+        in: [2, 3]
+
+.. code-block:: yaml
+
+    # multiple operators are combined with logical AND
+    depth:
+        in: [2, 3]
+        gt: 1
+        lte: 3
+
+.. code-block:: yaml
+
+    depth:
+        between: [2, 4]
 
 Inherited Location conditions
 --------------------------------------------------------------------------------

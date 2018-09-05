@@ -1,6 +1,7 @@
 # Netgen's Site API for eZ Platform
 
 [![Build Status](https://img.shields.io/travis/netgen/ezplatform-site-api.svg?style=flat-square)](https://travis-ci.org/netgen/ezplatform-site-api)
+[![Read the Docs](https://img.shields.io/readthedocs/pip.svg?style=flat-square)](https://docs.netgen.io/projects/site-api/en/latest/)
 [![Code Coverage](https://img.shields.io/codecov/c/github/netgen/ezplatform-site-api.svg?style=flat-square)](https://codecov.io/gh/netgen/ezplatform-site-api)
 [![Quality Score](https://img.shields.io/scrutinizer/g/netgen/ezplatform-site-api.svg?style=flat-square)](https://scrutinizer-ci.com/g/netgen/ezplatform-site-api)
 [![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg?style=flat-square)](https://packagist.org/packages/netgen/ezplatform-site-api)

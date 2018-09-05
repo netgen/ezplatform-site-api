@@ -20,13 +20,3 @@ Upgrades
     upgrades/index
 
 .. include:: /upgrades/map.rst.inc
-
-Cookbook
---------
-
-.. toctree::
-    :hidden:
-
-    cookbook/index
-
-.. include:: /cookbook/map.rst.inc

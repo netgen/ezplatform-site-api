@@ -51,7 +51,7 @@ Examples:
 
 .. code-block:: yaml
 
-    # do not include the subtree root Location, this is also the default behaviour
+    # do not include the subtree root Location, this is also default behaviour
     exclude_self: true
 
 .. code-block:: yaml

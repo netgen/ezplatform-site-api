@@ -50,6 +50,7 @@ sort them by title and paginate them by 10 per page using URL query parameter ``
                                         relation_field: authors
                                         content_type: article
                                         sort: 'field/article/title asc'
+
 .. code-block:: twig
 
     <h3>Author's articles:</h3>
@@ -83,7 +84,8 @@ Defines the destination (to) relation Content.
 - **required**: ``true``
 - **default**: not defined
 
-  If used through view builder configuration, value will be automatically set to the ``Content`` instance resolved by the view builder.
+  If used through view builder configuration, value will be automatically set to the ``Content``
+  instance resolved by the view builder.
 
 Examples:
 

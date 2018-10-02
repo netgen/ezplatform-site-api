@@ -73,7 +73,8 @@ Defines the root Location of the Location subtree.
 - **required**: ``true``
 - **default**: not defined
 
-  If used through view builder configuration, value will be automatically set to the ``Location`` instance resolved by the view builder.
+  If used through view builder configuration, value will be automatically set to the ``Location``
+  instance resolved by the view builder.
 
 Examples:
 
@@ -95,7 +96,8 @@ Examples:
 ``relative_depth``
 ~~~~~~~~~~~~~~~~~~
 
-Defines depth of the Location in the tree relative to the Location defined by ``location`` condition.
+Defines depth of the Location in the tree relative to the Location defined by ``location``
+condition.
 
 - **value type**: ``integer``
 - **value format**: ``single``, ``array``

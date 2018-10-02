@@ -32,6 +32,45 @@ This Query Type is used to build queries that fetch from the Location subtree.
 Examples
 --------------------------------------------------------------------------------
 
+Subtree of the ``calendar`` type Location contains ``event`` type Locations. On the full view for
+``calendar`` fetch all pending events from its subtree, sort them by their start date and paginate
+them by 10 per page using URL query parameter ``page``:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ngcontent_view:
+                    full:
+                        calendar:
+                            template: '@ezdesign/content/full/calendar.html.twig'
+                            match:
+                                Identifier\ContentType: calendar
+                            queries:
+                                pending_events:
+                                    query_type: SiteAPI:Content/Location/Subtree
+                                    max_per_page: 10
+                                    page: '@=queryParam("page", 1)'
+                                    parameters:
+                                        content_type: event
+                                        field:
+                                            start_date:
+                                                gt: '@=timestamp("today")'
+                                        sort: field/event/start_date asc
+
+.. code-block:: twig
+
+    <h3>Pending events:</h3>
+
+    <ul>
+    {% for event in ng_query( 'pending_events' ) %}
+        <li>{{ event.name }}</li>
+    {% endfor %}
+    </ul>
+
+    {{ pagerfanta( children, 'twitter_bootstrap' ) }}
+
 Own conditions
 --------------------------------------------------------------------------------
 

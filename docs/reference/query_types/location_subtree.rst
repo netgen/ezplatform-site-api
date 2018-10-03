@@ -33,8 +33,8 @@ Examples
 --------------------------------------------------------------------------------
 
 Subtree of the ``calendar`` type Location contains ``event`` type Locations. On the full view for
-``calendar`` fetch all pending events from its subtree, sort them by their start date and paginate
-them by 10 per page using URL query parameter ``page``:
+``calendar`` fetch all pending events from its subtree up to depth of 3, sort them by their start
+date and paginate them by 10 per page using URL query parameter ``page``:
 
 .. code-block:: yaml
 
@@ -54,6 +54,8 @@ them by 10 per page using URL query parameter ``page``:
                                     page: '@=queryParam("page", 1)'
                                     parameters:
                                         content_type: event
+                                        relative_depth:
+                                            lte: 3
                                         field:
                                             start_date:
                                                 gt: '@=timestamp("today")'

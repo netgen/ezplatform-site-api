@@ -85,7 +85,10 @@ Own conditions
 
 Defines the source (from) relation Content, which is the one containing tag fields.
 
-.. note:: This condition is required.
+.. note::
+
+  This condition is required. It's also automatically set to the ``Content`` instance resolved by
+  the view builder if the query is defined in the view builder configuration.
 
 - **value type**: ``Content``
 - **value format**: ``single``
@@ -93,9 +96,6 @@ Defines the source (from) relation Content, which is the one containing tag fiel
 - **target**: none
 - **required**: ``true``
 - **default**: not defined
-
-  If used through view builder configuration, value will be automatically set to the ``Content``
-  instance resolved by the view builder.
 
 Examples:
 

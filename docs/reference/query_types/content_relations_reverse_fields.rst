@@ -68,7 +68,10 @@ Own parameters
 
 Defines the destination (to) relation Content.
 
-.. note:: This condition is required.
+.. note::
+
+  This condition is required. It's also automatically set to the ``Content`` instance resolved by
+  the view builder if the query is defined in the view builder configuration.
 
 .. note:: Since this is about **reverse** relations, Content defined by this condition is **not**
           the one containing relation type fields referenced by ``relation_field``. It's the one
@@ -80,9 +83,6 @@ Defines the destination (to) relation Content.
 - **target**: none
 - **required**: ``true``
 - **default**: not defined
-
-  If used through view builder configuration, value will be automatically set to the ``Content``
-  instance resolved by the view builder.
 
 Examples:
 

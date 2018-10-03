@@ -74,7 +74,10 @@ Own conditions
 
 Defines the parent Location for children Locations.
 
-.. note:: This condition is required.
+.. note::
+
+  This condition is required. It's also automatically set to the ``Location`` instance resolved by
+  the view builder if the query is defined in the view builder configuration.
 
 - **value type**: ``Location``
 - **value format**: ``single``
@@ -82,8 +85,6 @@ Defines the parent Location for children Locations.
 - **target**: none
 - **required**: ``true``
 - **default**: not defined
-
-  If used through view builder configuration, value will be automatically set to the ``Location`` instance resolved by the view builder.
 
 Examples:
 

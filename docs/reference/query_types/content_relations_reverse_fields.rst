@@ -1,7 +1,7 @@
 Reverse field Content relations Query Type
 ================================================================================
 
-This Query Type is used to build ....
+This Query Type is used to build fetch Content that relates to the given Content from its relation type fields.
 
 +-------------+----------------------------------------------------------------------------------------------+
 | Identifier  | ``SiteAPI:Content/Relations/ReverseFields``                                                  |

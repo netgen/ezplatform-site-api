@@ -87,7 +87,8 @@ Defines sibling Location reference for fetching other siblings Locations.
 - **required**: ``true``
 - **default**: not defined
 
-  If used through view builder configuration, value will be automatically set to the ``Location`` instance resolved by the view builder.
+  If used through view builder configuration, value will be automatically set to the ``Location``
+  instance resolved by the view builder.
 
 Examples:
 

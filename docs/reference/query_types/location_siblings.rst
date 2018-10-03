@@ -30,6 +30,46 @@ This Query Type is used to build queries that fetch Location siblings.
 Examples
 --------------------------------------------------------------------------------
 
+On the full view for ``article`` type Content fetch all siblings of type ``news`` that are in
+ObjectState ``review/approved``, sort them by name and paginate them by 10 per page using URL query
+parameter ``page``:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ngcontent_view:
+                    full:
+                        article:
+                            template: '@ezdesign/content/full/article.html.twig'
+                            match:
+                                Identifier\ContentType: article
+                            queries:
+                                news_siblings:
+                                    query_type: SiteAPI:Content/Location/Siblings
+                                    max_per_page: 10
+                                    page: '@=queryParam("page", 1)'
+                                    parameters:
+                                        content_type: news
+                                        state:
+                                            review: approved
+                                        sort: name
+
+.. code-block:: twig
+
+    {% set news_list = ng_query( 'news_siblings' ) %}
+
+    <h3>Article's news siblings</h3>
+
+    <ul>
+    {% for news in news_list %}
+        <li>{{ news.name }}</li>
+    {% endfor %}
+    </ul>
+
+    {{ pagerfanta( news_list, 'twitter_bootstrap' ) }}
+
 Own conditions
 --------------------------------------------------------------------------------
 

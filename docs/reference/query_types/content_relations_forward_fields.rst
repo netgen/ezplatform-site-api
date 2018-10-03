@@ -25,7 +25,7 @@ Examples
 
 Content of type ``blog_post`` has relation field ``images`` which is used to define relations to
 ``image`` type Content. On full view for ``blog_post`` fetch 10 related images sorted by name and
-render them as a gallery:
+paginate them by 10 per page using URL query parameter ``page``.
 
 .. code-block:: yaml
 
@@ -50,21 +50,23 @@ render them as a gallery:
 
 .. code-block:: twig
 
-    <h3>Related images gallery</h3>
+    <h3>Related images</h3>
 
-    <div class="gallery">
+    <ul>
     {% for image in ng_query( 'related_images' ) %}
-        <div class="image">
+        <li>
             {{ ng_image_alias( image.fields.image, 'gallery' ) }}
-        </div>
+        </li>
     {% endfor %}
-    </div>
+    </ul>
+
+    {{ pagerfanta( documents, 'twitter_bootstrap' ) }}
 
 Own conditions
 --------------------------------------------------------------------------------
 
 ``content``
-~~~~~~~~~~~~
+~~~~~~~~~~~
 
 Defines the source (from) relation Content, which is the one containing relation type fields.
 

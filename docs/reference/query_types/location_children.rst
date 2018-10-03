@@ -46,7 +46,7 @@ by 10 per page using URL query parameter ``page``:
                             match:
                                 Identifier\ContentType: folder
                             queries:
-                                children:
+                                children_documents:
                                     query_type: SiteAPI:Content/Location/Children
                                     max_per_page: 10
                                     page: '@=queryParam("page", 1)'
@@ -57,15 +57,17 @@ by 10 per page using URL query parameter ``page``:
 
 .. code-block:: twig
 
-    <h3>Children:</h3>
+    {% set documents = ng_query( 'children_documents' ) %}
+
+    <h3>Documents in this folder</h3>
 
     <ul>
-    {% for child in ng_query( 'children' ) %}
-        <li>{{ child.name }}</li>
+    {% for document in documents %}
+        <li>{{ document.name }}</li>
     {% endfor %}
     </ul>
 
-    {{ pagerfanta( children, 'twitter_bootstrap' ) }}
+    {{ pagerfanta( documents, 'twitter_bootstrap' ) }}
 
 Own conditions
 --------------------------------------------------------------------------------

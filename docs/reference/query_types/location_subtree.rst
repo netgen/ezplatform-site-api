@@ -63,15 +63,17 @@ date and paginate them by 10 per page using URL query parameter ``page``:
 
 .. code-block:: twig
 
-    <h3>Pending events:</h3>
+    {% set events = ng_query( 'pending_events' ) %}
+
+    <h3>Pending events</h3>
 
     <ul>
-    {% for event in ng_query( 'pending_events' ) %}
+    {% for event in events %}
         <li>{{ event.name }}</li>
     {% endfor %}
     </ul>
 
-    {{ pagerfanta( children, 'twitter_bootstrap' ) }}
+    {{ pagerfanta( events, 'twitter_bootstrap' ) }}
 
 Own conditions
 --------------------------------------------------------------------------------

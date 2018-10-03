@@ -75,6 +75,8 @@ by their publication date and paginate them by 10 per page using URL query param
     {% endfor %}
     </ul>
 
+    {{ pagerfanta( articles, 'twitter_bootstrap' ) }}
+
 Own conditions
 --------------------------------------------------------------------------------
 

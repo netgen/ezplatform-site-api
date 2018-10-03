@@ -26,6 +26,43 @@ This Query Type is used to build ....
 Examples
 --------------------------------------------------------------------------------
 
+Content of type ``blog_post`` has relation field ``images`` which is used to define relations to
+``image`` type Content. On full view for ``blog_post`` fetch 10 related images sorted by name and
+render them as a gallery:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ngcontent_view:
+                    full:
+                        blog_post:
+                            template: '@ezdesign/content/full/blog_post.html.twig'
+                            match:
+                                Identifier\ContentType: blog_post
+                            queries:
+                                related_images:
+                                    query_type: SiteAPI:Content/Relations/ForwardFields
+                                    max_per_page: 10
+                                    page: 1
+                                    parameters:
+                                        relation_field: images
+                                        content_type: image
+                                        sort: name
+
+.. code-block:: twig
+
+    <h3>Related images gallery</h3>
+
+    <div class="gallery">
+    {% for image in ng_query( 'related_images' ) %}
+        <div class="image">
+            {{ ng_image_alias( image.fields.image, 'gallery' ) }}
+        </div>
+    {% endfor %}
+    </div>
+
 Own conditions
 --------------------------------------------------------------------------------
 

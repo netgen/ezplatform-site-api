@@ -20,9 +20,6 @@ This Query Type is used to build fetch Content that is related to from relation 
 | parameters  | - `sort`_                                                                                    |
 +-------------+----------------------------------------------------------------------------------------------+
 
-.. | Class       | :class:`Netgen\\EzPlatformSiteApi\\Core\\Site\\QueryType\\Content\\Relations\\ForwardFields` |
-.. +-------------+----------------------------------------------------------------------------------------------+
-
 Examples
 --------------------------------------------------------------------------------
 

@@ -22,9 +22,6 @@ This Query Type is used to build queries that fetch Content tag field relations 
 | parameters  | - `sort`_                                                                                   |
 +-------------+---------------------------------------------------------------------------------------------+
 
-.. | Class       | :class:`Netgen\\EzPlatformSiteApi\\Core\\Site\\QueryType\\Content\\Relations\\AllTagFields` |
-.. +-------------+---------------------------------------------------------------------------------------------+
-
 Examples
 --------------------------------------------------------------------------------
 

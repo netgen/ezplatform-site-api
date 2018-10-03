@@ -24,9 +24,6 @@ This Query Type is used to build general purpose Location queries.
 | parameters  | - `sort`_                                                                    |
 +-------------+------------------------------------------------------------------------------+
 
-.. | Class       | :class:`Netgen\\EzPlatformSiteApi\\Core\\Site\\QueryType\\Location\\Fetch`   |
-.. +-------------+------------------------------------------------------------------------------+
-
 Examples
 --------------------------------------------------------------------------------
 

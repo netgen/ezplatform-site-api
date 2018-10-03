@@ -49,11 +49,11 @@ sort them by title and paginate them by 10 per page using URL query parameter ``
                                     parameters:
                                         relation_field: authors
                                         content_type: article
-                                        sort: 'field/article/title asc'
+                                        sort: field/article/title asc
 
 .. code-block:: twig
 
-    <h3>Author's articles:</h3>
+    <h3>Author's articles</h3>
 
     <ul>
     {% for article in ng_query( 'authored_articles' ) %}
@@ -67,7 +67,7 @@ Own parameters
 --------------------------------------------------------------------------------
 
 ``content``
-~~~~~~~~~~~~
+~~~~~~~~~~~
 
 Defines the destination (to) relation Content.
 

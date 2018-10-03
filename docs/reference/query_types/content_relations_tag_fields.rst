@@ -1,9 +1,13 @@
 Tag field Content relations Query Type
 ================================================================================
 
-This Query Type is used to build queries that fetch Content tag field relations from selected tag fields of a given Content.
+This Query Type is used to build queries that fetch Content tag field relations from selected tag
+fields of a given Content.
 
-.. hint:: Tag field Content relations are Content items tagged with a tag contained in the tag fields of a given Content.
+.. hint::
+
+    Tag field Content relations are Content items tagged with a tag contained in a tag field of a
+    given Content.
 
 +-------------+------------------------------------------------------------------------------------------+
 | Identifier  | ``SiteAPI:Content/Relations/TagFields``                                                  |
@@ -33,7 +37,7 @@ Own conditions
 --------------------------------------------------------------------------------
 
 ``content``
-~~~~~~~~~~~~
+~~~~~~~~~~~
 
 Defines the source (from) relation Content, which is the one containing tag fields.
 
@@ -46,7 +50,8 @@ Defines the source (from) relation Content, which is the one containing tag fiel
 - **required**: ``true``
 - **default**: not defined
 
-  If used through view builder configuration, value will be automatically set to the ``Content`` instance resolved by the view builder.
+  If used through view builder configuration, value will be automatically set to the ``Content``
+  instance resolved by the view builder.
 
 Examples:
 

@@ -33,6 +33,44 @@ of a given Content.
 Examples
 --------------------------------------------------------------------------------
 
+On full view for ``product`` type Content fetch all Content of type ``article`` that is tagged with
+any of the tags from the given product. Sort them by name and paginate them by 10 per page using URL
+query parameter ``page``:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ngcontent_view:
+                    full:
+                        product:
+                            template: '@ezdesign/content/full/product.html.twig'
+                            match:
+                                Identifier\ContentType: product
+                            queries:
+                                related_articles:
+                                    query_type: SiteAPI:Content/Relations/AllTagFields
+                                    max_per_page: 10
+                                    page: '@=queryParam("page", 1)'
+                                    parameters:
+                                        content_type: article
+                                        sort: name
+
+.. code-block:: twig
+
+    {% set articles = ng_query( 'related_articles' ) %}
+
+    <h3>Related articles</h3>
+
+    <ul>
+    {% for article in articles %}
+        <li>{{ article.name }}</li>
+    {% endfor %}
+    </ul>
+
+    {{ pagerfanta( articles, 'twitter_bootstrap' ) }}
+
 Own conditions
 --------------------------------------------------------------------------------
 

@@ -1,32 +1,34 @@
 All tag fields Content relations Query Type
 ================================================================================
 
-This Query Type is used to build queries that fetch Content tag field relations from all tag fields of a given Content.
+This Query Type is used to build queries that fetch Content tag field relations from all tag fields
+of a given Content.
 
 .. hint::
 
-    Tag field Content relations are Content items tagged with a tag contained in the tag fields of a given Content.
+    Tag field Content relations are Content items tagged with a tag contained in the tag fields of a
+    given Content.
 
 .. hint::
 
     This query type assumes `Netgen's TagsBundle`_ is used for tagging functionality.
 
-+-------------+---------------------------------------------------------------------------------------------+
-| Identifier  | ``SiteAPI:Content/Relations/AllTagFields``                                                  |
-+-------------+---------------------------------------------------------------------------------------------+
-| Own         | - `content`_                                                                                |
-| conditions  | - `exclude_self`_                                                                           |
-+-------------+---------------------------------------------------------------------------------------------+
-| Common      | - `content_type`_                                                                           |
-| Content     | - `field`_                                                                                  |
-| conditions  | - `publication_date`_                                                                       |
-|             | - `section`_                                                                                |
-|             | - `state`_                                                                                  |
-+-------------+---------------------------------------------------------------------------------------------+
-| Common      | - `limit`_                                                                                  |
-| query       | - `offset`_                                                                                 |
-| parameters  | - `sort`_                                                                                   |
-+-------------+---------------------------------------------------------------------------------------------+
++-------------+------------------------------------------------------------------------------------+
+| Identifier  | ``SiteAPI:Content/Relations/AllTagFields``                                         |
++-------------+------------------------------------------------------------------------------------+
+| Own         | - `content`_                                                                       |
+| conditions  | - `exclude_self`_                                                                  |
++-------------+------------------------------------------------------------------------------------+
+| Common      | - `content_type`_                                                                  |
+| Content     | - `field`_                                                                         |
+| conditions  | - `publication_date`_                                                              |
+|             | - `section`_                                                                       |
+|             | - `state`_                                                                         |
++-------------+------------------------------------------------------------------------------------+
+| Common      | - `limit`_                                                                         |
+| query       | - `offset`_                                                                        |
+| parameters  | - `sort`_                                                                          |
++-------------+------------------------------------------------------------------------------------+
 
 Examples
 --------------------------------------------------------------------------------
@@ -48,7 +50,8 @@ Defines the source (from) relation Content, which is the one containing tag fiel
 - **required**: ``true``
 - **default**: not defined
 
-  If used through view builder configuration, value will be automatically set to the ``Content`` instance resolved by the view builder.
+  If used through view builder configuration, value will be automatically set to the ``Content``
+  instance resolved by the view builder.
 
 Examples:
 

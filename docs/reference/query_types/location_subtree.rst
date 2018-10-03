@@ -26,7 +26,7 @@ This Query Type is used to build queries that fetch from the Location subtree.
 | parameters  | - `sort`_                                                                    |
 +-------------+------------------------------------------------------------------------------+
 
-.. | Class       | :class:`Netgen\\EzPlatformSiteApi\\Core\\Site\\QueryType\\Location\\Fetch`   |
+.. | Class       | :class:`Netgen\\EzPlatformSiteApi\\Core\\Site\\QueryType\\Location\\Subtree`   |
 .. +-------------+------------------------------------------------------------------------------+
 
 Examples

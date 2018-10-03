@@ -73,9 +73,9 @@ Defines the destination (to) relation Content.
 
 .. note:: This condition is required.
 
-.. note:: This is about **reverse** relations, which means that Content defined by this condition is
-          **not** the one containing relation type fields referenced by ``relation_field``, it's the
-          one receiving relations from Content containing those fields.
+.. note:: Since this is about **reverse** relations, Content defined by this condition is **not**
+          the one containing relation type fields referenced by ``relation_field``. It's the one
+          receiving relations from Content containing those fields.
 
 - **value type**: ``Content``
 - **value format**: ``single``

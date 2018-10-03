@@ -32,12 +32,12 @@ Examples:
     # identical to the example below
     state:
         ez_lock: locked
-        review: not_reviewed
+        approval: rejected
 
 .. code-block:: yaml
 
     state:
         ez_lock:
             eq: locked
-        review:
-            eq: not_reviewed
+        approval:
+            eq: rejected

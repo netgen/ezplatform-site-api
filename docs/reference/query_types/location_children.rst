@@ -30,6 +30,43 @@ This Query Type is used to build queries that fetch children Locations.
 Examples
 --------------------------------------------------------------------------------
 
+On full view for ``folder`` type Location fetch folder's children Locations of the type
+``document`` that are in ``restricted`` Section, sort them by priority descending and paginate them
+by 10 per page using URL query parameter ``page``:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ngcontent_view:
+                    full:
+                        folder:
+                            template: '@ezdesign/content/full/calendar.html.twig'
+                            match:
+                                Identifier\ContentType: folder
+                            queries:
+                                children:
+                                    query_type: SiteAPI:Content/Location/Children
+                                    max_per_page: 10
+                                    page: '@=queryParam("page", 1)'
+                                    parameters:
+                                        content_type: document
+                                        section: restricted
+                                        sort: priority desc
+
+.. code-block:: twig
+
+    <h3>Children:</h3>
+
+    <ul>
+    {% for child in ng_query( 'children' ) %}
+        <li>{{ child.name }}</li>
+    {% endfor %}
+    </ul>
+
+    {{ pagerfanta( children, 'twitter_bootstrap' ) }}
+
 Own conditions
 --------------------------------------------------------------------------------
 

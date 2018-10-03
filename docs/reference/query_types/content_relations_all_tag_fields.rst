@@ -3,7 +3,13 @@ All tag fields Content relations Query Type
 
 This Query Type is used to build queries that fetch Content tag field relations from all tag fields of a given Content.
 
-.. hint:: Tag field Content relations are Content items tagged with a tag contained in the tag fields of a given Content.
+.. hint::
+
+    Tag field Content relations are Content items tagged with a tag contained in the tag fields of a given Content.
+
+.. hint::
+
+    This query type assumes `Netgen's TagsBundle`_ is used for tagging functionality.
 
 +-------------+---------------------------------------------------------------------------------------------+
 | Identifier  | ``SiteAPI:Content/Relations/AllTagFields``                                                  |
@@ -87,3 +93,5 @@ Examples:
 
 .. include:: /reference/query_types/parameters/common_content_parameters.rst.inc
 .. include:: /reference/query_types/parameters/common_query_parameters.rst.inc
+
+.. _`Netgen's TagsBundle`: https://github.com/netgen/TagsBundle

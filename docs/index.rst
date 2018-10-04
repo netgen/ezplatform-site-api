@@ -17,7 +17,7 @@ Reference
     reference/index
 
 .. include:: /reference/map.rst.inc
-q
+
 Upgrades
 --------
 

@@ -21,3 +21,8 @@ Once Site API is installed, activate the bundle in ``app/AppKernel.php`` file by
 
         return $bundles;
     }
+
+And that's it. Once you finish the installation you will be able to use Site API services as you
+would normally do in a Symfony application. However, at this point Site API is not yet fully
+enabled. That is done per siteaccess, see :doc:`Configuration </reference/configuration>` page to
+learn more.

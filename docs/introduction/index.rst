@@ -8,7 +8,7 @@ productivity, but also -- it will open most the process to roles other than just
 For the purpose of this introduction, we can break the whole package into three main parts:
 
 1. `Dedicated API layer`_
-2. `Integration of the API with eZ Platform`_
+2. `Integration with eZ Platform`_
 3. `Query Types`_
 
 Dedicated API layer
@@ -157,8 +157,8 @@ prefixed with ``inner``. Example usage from Twig:
   <h2>Location ID: {{ location.innerLocation.id }}</h2>
   <h3>Field ID: {{ field.innerField.id }}</h3>
 
-Integration of the API with eZ Platform
----------------------------------------
+Integration with eZ Platform
+----------------------------
 
 You can use the Site API services described above as you would normally do it a Symfony application.
 But these are also integrated into eZ Platform's view layer. That means you have Site API version of

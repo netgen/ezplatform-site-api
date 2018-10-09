@@ -39,7 +39,7 @@ by 10 per page using URL query parameter ``page``:
                 ngcontent_view:
                     full:
                         folder:
-                            template: '@ezdesign/content/full/calendar.html.twig'
+                            template: '@ezdesign/content/full/folder.html.twig'
                             match:
                                 Identifier\ContentType: folder
                             queries:

@@ -239,9 +239,9 @@ Other side of the configuration from above is full view ``folder`` template:
 
     {{ pagerfanta( documents, 'twitter_bootstrap' ) }}
 
-If you used Legacy eZ Publish, this is similar to template fetch function. Important distinction is
-In Legacy you used template fetch functions to pull the data into the template. With Site API Query
-Types, push the data to the template instead. That keeps the logic out of the templates and gives
-better control and overview.
+If you used Legacy eZ Publish, this is similar to template fetch function. Important difference is
+that in Legacy you used template fetch functions to pull the data into the template. Instead, with
+Site API Query Types you push the data to the template. This keeps the logic out of the templates
+and gives you better control and overview.
 
 For more details see :doc:`Query Types decumentation page </reference/query_types>`.

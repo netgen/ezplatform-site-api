@@ -48,13 +48,13 @@ For example, if using the following configuration:
                 ngcontent_view:
                     line:
                         article:
-                            template: "Bundle:content/line:article.html.twig"
+                            template: 'Bundle:content/line:article.html.twig'
                             match:
                                 Identifier\ContentType: article
                 content_view:
                     line:
                         article:
-                            template: "Bundle:content/line:ez_article.html.twig"
+                            template: 'Bundle:content/line:ez_article.html.twig'
                             match:
                                 Identifier\ContentType: article
 

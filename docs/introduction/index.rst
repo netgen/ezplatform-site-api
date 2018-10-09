@@ -244,4 +244,4 @@ that in Legacy you used template fetch functions to pull the data into the templ
 Site API Query Types you push the data to the template. This keeps the logic out of the templates
 and gives you better control and overview.
 
-For more details see :doc:`Query Types decumentation page </reference/query_types>`.
+For more details see :doc:`Query Types documentation page </reference/query_types>`.

@@ -1,9 +1,10 @@
 Introduction
 ============
 
-Site API is a lightweight layer built on top of eZ Platform's Repository API. It's purpose is to
-provide better developer experience in context of building websites. It will increase developer's
-productivity, but also -- it will open most the process to roles other than just PHP developers.
+**Site API** is a lightweight layer built on top of eZ Platform's **Repository API**. It's purpose
+is to provide better developer experience in context of building websites. It will increase
+developer's productivity, but also -- it will open most the process to **roles other than just PHP
+developers**.
 
 For the purpose of this introduction, we can break the whole package into three main parts:
 
@@ -34,7 +35,7 @@ The API provides you with a set of read-only services:
 3. ``FilterService``
 
   This is quite similar to the ``FindService``, but only works with Legacy search engine, even if
-  that is not the configured egine for the repository.
+  that is not the configured engine for the repository.
 
   Why? While Solr search engine provides more features and more performance than Legacy search
   engine, it's a separate system needs to be synchronized with the changes in the database. This
@@ -131,7 +132,7 @@ step and do things you would not typically want to do in Repository API:
 
   ``Field`` object aggregates some properties from it's FieldDefinition, like FieldType identifier,
   or name and description. It also provides ``isEmpty()`` method, which makes simple to check if the
-  field value is empty, without external helpers. Example usage from Twig:
+  field value is empty, without requiring external helpers. Example usage from Twig:
 
   .. code-block:: twig
 
@@ -148,7 +149,7 @@ step and do things you would not typically want to do in Repository API:
              alt="{{ image.value.alternativeText }}" />
     {% endif %}
 
-For your convenience, all objects contain their corresponding Repository objects in properties
+For your convenience all objects contain their corresponding Repository objects in properties
 prefixed with ``inner``. Example usage from Twig:
 
 .. code-block:: twig
@@ -176,9 +177,10 @@ the view configuration, available under ``ngcontent_view`` key:
                             match:
                                 Identifier\ContentType: article
 
-With that, you can render a live view for an article by executing a request to
-``ng_content:viewAction``. However, that does not mean URL aliases will be handed by the Site API
-view configuration. This needs to be explicitly enabled, per siteaccess:
+Aside from Query Type configuration described below, this is exactly the same as eZ Platform's view
+configuration under ``content_view`` key. With this you can render a live view for an article by
+executing a request to ``ng_content:viewAction``. However, that does not mean URL aliases will be
+handled by the Site API view configuration. This needs to be explicitly enabled, per siteaccess:
 
 .. code-block:: yaml
 

@@ -6,7 +6,7 @@ interfaces. That will enable using your existing Query Types, but how Site API i
 the rest of the system differs from eZ Publish Kernel.
 
 Built-in Query Types
---------------------
+--------------------------------------------------------------------------------
 
 A number of generic Query Types is provided out of the box. We can separate these into three groups:
 
@@ -25,7 +25,7 @@ Location hierarchy
 
 .. include:: /reference/query_types/location_query_types.rst.inc
 
-Query Type configuration
+Query configuration
 --------------------------------------------------------------------------------
 
 Query Types have their own semantic configuration under ``queries`` key in configuration for a
@@ -78,7 +78,7 @@ Example below shows how described configuration looks in practice:
 
 .. note:: You can define unlimited number of queries on any controller.
 
-Named Query Type configuration
+Named query configuration
 ------------------------------
 
 As hinted above with ``named_query`` parameter, it is possible to define "named queries", which can
@@ -144,7 +144,7 @@ Language expressions
 
 TODO
 
-Accessing the configured queries from Twig
+Templating
 --------------------------------------------------------------------------------
 
 Configured queries will be available in Twig templates, through ``ng_query`` or ``ng_raw_query``.

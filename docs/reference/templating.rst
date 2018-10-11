@@ -254,7 +254,7 @@ Content Field relations
 
   This is done by calling the method ``getFieldRelation()``, also available as
   ``fieldRelation()`` in Twig. It has one required parameter, which is the identifier of the
-  relation field.
+  relation field. In our example, the relation field's identifier is ``related_article``.
 
   .. code-block:: twig
 
@@ -263,13 +263,19 @@ Content Field relations
     {% if related_content is defined %}
         <a href="{{ path(related_content) }}">{{ related_content.name }}</a>
     {% else %}
-        <p>Relation field 'related_article' is empty.</p>
+        <p>There are two possibilities:</p>
+        <ol>
+            <li>Relation field 'related_article' is empty</p>
+            <li>You don't have a permission to read the related Content</li>
+        </ol>
+        <p>In any case, you can't render the related Content!</p>
     {% endif %}
 
   .. note::
 
     If relation field contains multiple relations, the first one will be returned. If it doesn't
-    contain relations the method will return ``null``, so you should also check it that's the case.
+    contain relations or you don't have the access to read the related Content, the method will
+    return ``null``. Make sure to check if that's the case.
 
 - **Accessing all field relations**
 

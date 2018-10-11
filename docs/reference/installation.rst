@@ -1,5 +1,5 @@
-Installation instructions
-=========================
+Installation
+============
 
 To install Site API first add it as a dependency to your project:
 

@@ -4,7 +4,7 @@ Reference
 .. toctree::
     :hidden:
 
-    installation_instructions
+    installation
     configuration
     templating
     query_types

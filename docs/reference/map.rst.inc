@@ -1,4 +1,4 @@
-* :doc:`/reference/installation_instructions`
+* :doc:`/reference/installation`
 * :doc:`/reference/configuration`
 * :doc:`/reference/templating`
 * :doc:`/reference/query_types`

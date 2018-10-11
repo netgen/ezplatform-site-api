@@ -153,7 +153,10 @@ return an instance of ``SerachResult``. That also means ``ng_query`` will use ``
 ``page`` parameters to configure the pager, while ``ng_raw_query`` ignores them and executes the
 configured query directly.
 
-.. note:: Queries are only executed as you access them through ``ng_query`` or ``ng_raw_query``. If you don't call those functions on any of the configured queries, none of them will be executed.
+.. note::
+
+    Queries are only executed as you access them through ``ng_query`` or ``ng_raw_query``. If you
+    don't call those functions on any of the configured queries, none of them will be executed.
 
 Both ``ng_query`` and ``ng_raw_query`` accept a single argument. This is the identifier of the
 query, which is the key under the ``queries`` section, under which the query is configured.
@@ -182,8 +185,18 @@ Example usage of ``ng_raw_query``:
         <p>{{ categoryHit.valueObject.content.name }}: {{ categoryHit.valueObject.score }}</p>
     {% endfor %}
 
-.. note:: You can't execute named queries. They are only available for referencing in concrete query configuration for a particular view.
+.. note::
 
-.. note:: Execution of queries is **not cached**. If you call ``ng_query`` or ``ng_raw_query`` on the same query multiple times, the same query will be executed multiple times. You should store the result in a variable and reuse the variable instead.
+    You can't execute named queries. They are only available for referencing in concrete query
+    configuration for a particular view.
 
-.. hint:: If you need to access the same query result multiple times, store it in a variable and instead access that variable.
+.. note::
+
+    Execution of queries is **not cached**. If you call ``ng_query`` or ``ng_raw_query`` on the same
+    query multiple times, the same query will be executed multiple times. You should store the
+    result in a variable and reuse the variable instead.
+
+.. hint::
+
+    If you need to access the same query result multiple times, store it in a variable and instead
+    access that variable.

@@ -198,5 +198,4 @@ Example usage of ``ng_raw_query``:
 
 .. hint::
 
-    If you need to access the same query result multiple times, store it in a variable and instead
-    access that variable.
+    If you need to access the same query result multiple times, store it in a variable.

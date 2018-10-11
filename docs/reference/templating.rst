@@ -149,7 +149,7 @@ Working with Content fields
 
 - **Checking if the Field's value is empty**
 
-  This is achieved by calling ``isEmpty()`` method on the Field object, also available as
+  This is done by calling ``isEmpty()`` method on the Field object, also available as
   ``empty()`` or just ``empty`` in Twig:
 
   .. code-block:: twig
@@ -203,7 +203,7 @@ Content Locations
 
 - **Listing Content's Locations**
 
-  This is achieved by calling the method ``getLocations()``, also available as ``locations()`` in
+  This is done by calling the method ``getLocations()``, also available as ``locations()`` in
   Twig. It returns an array of Locations sorted by the path string (e.g. ``/1/2/191/300/``) and
   optionally accepts maximum number of items returned (by default ``25``).
 
@@ -223,7 +223,7 @@ Content Locations
 
 - **Paginating through Content's Locations**
 
-  This is achieved by calling the method ``filterLocations()``, which returns a ``Pagerfanta``
+  This is done by calling the method ``filterLocations()``, which returns a ``Pagerfanta``
   instance with Locations sorted by the path string (e.g. ``/1/2/191/300/``) and accepts two
   optional parameters:
 
@@ -252,7 +252,7 @@ Content Field relations
 
 - **Accessing a single field relation**
 
-  This is achieved by calling the method ``getFieldRelation()``, also available as
+  This is done by calling the method ``getFieldRelation()``, also available as
   ``fieldRelation()`` in Twig. It has one required parameter, which is the identifier of the
   relation field.
 
@@ -273,7 +273,7 @@ Content Field relations
 
 - **Accessing all field relations**
 
-  This is achieved by calling the method ``getFieldRelations()``, also available as
+  This is done by calling the method ``getFieldRelations()``, also available as
   ``fieldRelations()`` in Twig. It returns an array of Content items and has two parameters:
 
   1. **required** identifier of the relation field
@@ -291,7 +291,7 @@ Content Field relations
 
 - **Filtering through field relations**
 
-  This is achieved by calling the method ``filterFieldRelations()``, which returns a Pagerfanta
+  This is done by calling the method ``filterFieldRelations()``, which returns a Pagerfanta
   instance and has four parameters:
 
   1. **required** identifier of the relation field
@@ -317,7 +317,7 @@ Location children
 
 - **Listing Location's children**
 
-  This is achieved by calling the method ``getChildren()``, also available as ``children()`` in
+  This is done by calling the method ``getChildren()``, also available as ``children()`` in
   Twig. It returns an array of children Locations and optionally accepts maximum number of items
   returned (by default ``25``).
 
@@ -335,7 +335,7 @@ Location children
 
 - **Filtering through Location's children**
 
-  This is achieved by calling the method ``filterChildren()``, which returns a Pagerfanta instance
+  This is done by calling the method ``filterChildren()``, which returns a Pagerfanta instance
   and has three parameters:
 
   1. **optional** array of ContentType identifiers that will be used to filter the result, by default
@@ -363,7 +363,7 @@ Location siblings
 
 - **Listing Location's siblings**
 
-  This is achieved by calling the method ``getSiblings()``, also available as ``siblings()`` in
+  This is done by calling the method ``getSiblings()``, also available as ``siblings()`` in
   Twig. It returns an array of children Locations and optionally accepts maximum number of items
   returned (by default ``25``).
 
@@ -381,7 +381,7 @@ Location siblings
 
 - **Filtering through Location's siblings**
 
-  This is achieved by calling the method ``filterSiblings()``, which returns a Pagerfanta instance
+  This is done by calling the method ``filterSiblings()``, which returns a Pagerfanta instance
   and has three parameters:
 
   1. **optional** array of ContentType identifiers that will be used to filter the result, by default

@@ -20,51 +20,10 @@ As Repository API was designed to be usable for general purpose, it can come as 
 verbose when used for building websites. Site API implements a dedicated API layer on top of
 eZ Platform Repository API which is designed for developing websites.
 
-Services
-~~~~~~~~
-
-The API provides you with a set of **read-only** services:
-
-1. ``LoadService``
-
-  Provides methods to load Content and Locations by ID (and remote ID):
-
-2. ``FindService``
-
-  Provides methods to find Content and Locations using eZ Platform Repository Search API.
-
-3. ``FilterService``
-
-  This is quite similar to the ``FindService``, but only works with Legacy search engine, even if
-  that is not the configured engine for the repository.
-
-  Why? While Solr search engine provides more features and more performance than Legacy search
-  engine, it's a separate system needs to be synchronized with the changes in the database. This
-  synchronization comes with a delay, which can be a problem in some cases.
-
-  FilterService gives you access to search that is always up to date, because it uses Legacy search
-  engine that works directly with database. At the same time, search on top of Solr, with all the
-  advanced features (like fulltext search or facets) is still available through FindService.
-
-4. ``RelationService``
-
-  Provides methods for loading relations.
-
-All services return only published Content and handle translations in a completely transparent way.
-Language fallback configuration for the current siteaccess is automatically taken into account and
-you will always get back only what should be rendered on the siteaccess. If the translation is not
-configured for a siteaccess, you won't be able to find or load it -- the system will behave as if it
-does not exist.
-
-.. note::
-
-  All of the Site API services are read-only. If you need to write to the eZ Platform's content
-  repository, use it's existing Repository API. (link)
-
 Objects
 ~~~~~~~
 
-The services return their own objects, similar but different from their counterparts in
+Site API has it's own set of entities and values, similar but different from their counterparts in
 Repository API. Having a layer that is dedicated for building websites enables us to take an extra
 step and do things you would not typically want to do in Repository API:
 
@@ -159,6 +118,47 @@ prefixed with ``inner``. Example usage from Twig:
   <h1>Content ID: {{ content.innerContent.id }}</h1>
   <h2>Location ID: {{ location.innerLocation.id }}</h2>
   <h3>Field ID: {{ field.innerField.id }}</h3>
+
+Services
+~~~~~~~~
+
+The API provides you with a set of **read-only** services:
+
+1. ``LoadService``
+
+  Provides methods to load Content and Locations by ID (and remote ID):
+
+2. ``FindService``
+
+  Provides methods to find Content and Locations using eZ Platform Repository Search API.
+
+3. ``FilterService``
+
+  This is quite similar to the ``FindService``, but only works with Legacy search engine, even if
+  that is not the configured engine for the repository.
+
+  Why? While Solr search engine provides more features and more performance than Legacy search
+  engine, it's a separate system needs to be synchronized with the changes in the database. This
+  synchronization comes with a delay, which can be a problem in some cases.
+
+  FilterService gives you access to search that is always up to date, because it uses Legacy search
+  engine that works directly with database. At the same time, search on top of Solr, with all the
+  advanced features (like fulltext search or facets) is still available through FindService.
+
+4. ``RelationService``
+
+  Provides methods for loading relations.
+
+All services return only published Content and handle translations in a completely transparent way.
+Language fallback configuration for the current siteaccess is automatically taken into account and
+you will always get back only what should be rendered on the siteaccess. If the translation is not
+configured for a siteaccess, you won't be able to find or load it -- the system will behave as if it
+does not exist.
+
+.. note::
+
+  All of the Site API services are read-only. If you need to write to the eZ Platform's content
+  repository, use it's existing Repository API. (link)
 
 Integration with eZ Platform
 ----------------------------

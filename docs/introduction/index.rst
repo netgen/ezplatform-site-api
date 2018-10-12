@@ -23,9 +23,7 @@ eZ Platform Repository API which is designed for developing websites.
 Services
 ~~~~~~~~
 
-TODO describe published version
-
-The API provides you with a set of read-only services:
+The API provides you with a set of **read-only** services:
 
 1. ``LoadService``
 
@@ -52,10 +50,11 @@ The API provides you with a set of read-only services:
 
   Provides methods for loading relations.
 
-All of these services make handling of languages completely transparent. Language fallback
-configuration for the current siteaccess is automatically taken into account and you will always get
-back only what should be rendered on the siteaccess. If the translation is not configured for a
-siteaccess, you won't be able to find or load it -- the system will behave as if it does not exist.
+All services return only published Content and handle translations in a completely transparent way.
+Language fallback configuration for the current siteaccess is automatically taken into account and
+you will always get back only what should be rendered on the siteaccess. If the translation is not
+configured for a siteaccess, you won't be able to find or load it -- the system will behave as if it
+does not exist.
 
 .. note::
 

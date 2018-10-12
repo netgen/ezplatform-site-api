@@ -6,7 +6,8 @@ is to provide better developer experience in context of building websites. It wi
 developer's productivity, but also -- it will open most the process to **roles other than just PHP
 developers**.
 
-For the purpose of this introduction, we can break the whole package into three main parts:
+The intention of this page is to give you a short overview of what Site API is. For that purpose we
+can break the whole package into three main parts:
 
 1. `Dedicated API layer`_
 2. `Integration with eZ Platform`_
@@ -21,6 +22,8 @@ eZ Platform Repository API which is designed for developing websites.
 
 Services
 ~~~~~~~~
+
+TODO describe published version
 
 The API provides you with a set of read-only services:
 
@@ -178,9 +181,10 @@ the view configuration, available under ``ngcontent_view`` key:
                                 Identifier\ContentType: article
 
 Aside from Query Type configuration described below, this is exactly the same as eZ Platform's view
-configuration under ``content_view`` key. With this you can render a live view for an article by
+configuration under ``content_view`` key. With this you can render a line view for an article by
 executing a request to ``ng_content:viewAction``. However, that does not mean URL aliases will be
-handled by the Site API view configuration. This needs to be explicitly enabled, per siteaccess:
+also handled by the Site API view configuration. This needs to be explicitly enabled, per
+siteaccess:
 
 .. code-block:: yaml
 

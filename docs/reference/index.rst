@@ -6,6 +6,7 @@ Reference
 
     installation
     configuration
+    objects
     templating
     query_types
     migration

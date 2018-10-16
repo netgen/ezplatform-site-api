@@ -38,6 +38,11 @@ template override rules as well as original eZ Platform template override rules,
 your templates bit by bit. You can decide which one to use by calling either
 ``ng_content:viewAction`` or ``ez_content:viewAction`` controller.
 
+.. tip::
+
+    | View configuration is the only eZ Platform configuration regularly edited
+    | by frontend developers.
+
 For example, if using the following configuration:
 
 .. code-block:: yaml

@@ -20,8 +20,8 @@ things you would not typically want to do in Repository API, like lazy loaded pr
 methods that enable Location tree traversal. With Site API we can do that because:
 
 1. it's a dedicated layer for building websites
-2. it's not intended to be layered (meaning no different API implementations like Cache, Permission
-   etc)
+2. | it's not intended to be layered (meaning no different API implementations
+   | like Cache, Permission etc)
 
 Objects
 ~~~~~~~
@@ -73,9 +73,9 @@ their counterparts in eZ Platform's Repository API:
 
 - ``Location``
 
-  Site ``Location`` is very similar to Repository Location, but the objects it aggregates are Site
-  API objects instead of Repository objects. It also provides methods for simple tree traversal.
-  Example usage from Twig:
+  Site ``Location`` is similar to Repository Location, but the objects it aggregates are Site API
+  objects instead of Repository objects. It also provides properties and methods to enable simple
+  Location tree traversal (siblings, children, parents, ancestors etc). Example usage from Twig:
 
   .. code-block:: twig
 

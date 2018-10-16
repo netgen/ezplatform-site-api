@@ -9,8 +9,8 @@ Netgen's Site API for eZ Platform
 
 **Site API** is a lightweight layer built on top of eZ Platform's **Repository API**. It's purpose
 is to provide better developer experience in context of building websites. It will increase PHP
-developer's productivity, but it's intention is also to open most the development to **roles other
-than PHP developer**.
+developer's productivity, but it's intention is also to open most of the development process to
+**roles other than PHP developer**.
 
 If you are new to Site API, read the :doc:`Introduction </introduction/index>` first.
 

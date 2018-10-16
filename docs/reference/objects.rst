@@ -566,7 +566,7 @@ Location the method is called on. The single optional parameter of this method i
 limits the number of siblings returned and defaults to ``25``.
 
 +----------------------------------------+------------------------------------------------------------------------------------+
-| **Parameters**                         | ``string $limit``                                                                  |
+| **Parameters**                         | ``string $limit = 25``                                                             |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Returns**                            | An array of first ``$limit`` sibling Locations                                     |
 +----------------------------------------+------------------------------------------------------------------------------------+

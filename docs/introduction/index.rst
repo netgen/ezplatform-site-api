@@ -23,16 +23,17 @@ eZ Platform Repository API which is designed for developing websites.
 Objects
 ~~~~~~~
 
-Site API has it's own set of entities and values, similar but different from their counterparts in
-Repository API. Having a layer that is dedicated for building websites enables us to take an extra
-step and do things you would not typically want to do in Repository API:
+Site API comes with it's own set of entities and values. These are similar, but still different from
+their counterparts in eZ Platform's Repository API. Having a layer that is dedicated for building
+websites enables us to take an extra step and do things you would not typically want to do in
+Repository API:
 
 - ``Content``
 
   The first difference from Repository Content is that it exist it a single translation only,
   meaning it contains the fields for only one translation. That will always be the translation to be
   rendered on the siteaccess. You won't need to choose the field in the correct translation,
-  manually or through some kind of helper service. There is only one translation - the correct one.
+  manually or through some kind of helper service. There is only one translation: the correct one.
 
   Fields are actually lazy-loaded, which means they are loaded only if accessed. This voids the
   need to have separate, light version of Content (ContentInfo in Repository API).
@@ -52,10 +53,11 @@ step and do things you would not typically want to do in Repository API:
 
 - ``ContentInfo``
 
-  Above we said that ``Content``'s fields are lazy-loaded, which voids the need for ``ContentInfo``.
-  Still, Site API has it's own version of ``ContentInfo``. The reason for this is to keep the
-  usage in templates similar to standard eZ Platform templates and through that make the migration
-  easier. Example usage from Twig:
+  The purpose of ``ContentInfo`` object in Repository API is to provide a lightweight version of
+  ``Content`` object, containing only metadata and omitting the fields. Since in Site API
+  ``Content``'s fields are lazy-loaded, there is no real need for ``ContentInfo``. Still, Site API
+  provides it to keep the usage in templates similar to standard eZ Platform templates and through
+  that make the migration/comparison easier. Example usage from Twig:
 
   .. code-block:: twig
 
@@ -69,8 +71,8 @@ step and do things you would not typically want to do in Repository API:
 
 - ``Location``
 
-  Site ``Location`` is very similar to Repository Location, but the objects it aggregates objects
-  come from Site API and not from Repository. It also provides methods for simple tree traversal.
+  Site ``Location`` is very similar to Repository Location, but the objects it aggregates are Site
+  API objects instead of Repository objects. It also provides methods for simple tree traversal.
   Example usage from Twig:
 
   .. code-block:: twig

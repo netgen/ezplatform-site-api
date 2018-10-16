@@ -1,11 +1,6 @@
 Introduction
 ============
 
-**Site API** is a lightweight layer built on top of eZ Platform's **Repository API**. It's purpose
-is to provide better developer experience in context of building websites. It will increase
-developer's productivity, but also -- it will open most the process to **roles other than just PHP
-developers**.
-
 The intention of this page is to give you a short overview of what Site API is. For that purpose we
 can break the whole package into three main parts:
 
@@ -20,24 +15,31 @@ As Repository API was designed to be usable for general purpose, it can come as 
 verbose when used for building websites. Site API implements a dedicated API layer on top of
 eZ Platform Repository API which is designed for developing websites.
 
+Having a layer that is dedicated for building websites enables us to take an extra step and do
+things you would not typically want to do in Repository API, like lazy loaded properties and
+methods that enable Location tree traversal. With Site API we can do that because:
+
+1. it's a dedicated layer for building websites
+2. it's not intended to be layered (meaning no different API implementations like Cache, Permission
+   etc)
+
 Objects
 ~~~~~~~
 
 Site API comes with it's own set of entities and values. These are similar, but still different from
-their counterparts in eZ Platform's Repository API. Having a layer that is dedicated for building
-websites enables us to take an extra step and do things you would not typically want to do in
-Repository API:
+their counterparts in eZ Platform's Repository API:
 
 - ``Content``
 
   The first difference from Repository Content is that it exist it a single translation only,
   meaning it contains the fields for only one translation. That will always be the translation to be
   rendered on the siteaccess. You won't need to choose the field in the correct translation,
-  manually or through some kind of helper service. There is only one translation: the correct one.
+  manually or through some kind of helper service. The Content's single translation is always the
+  correct one.
 
-  Fields are actually lazy-loaded, which means they are loaded only if accessed. This voids the
-  need to have separate, light version of Content (ContentInfo in Repository API).
-  It also provides you with some additional properties and methods. Example usage from Twig:
+  Content fields are lazy-loaded, which means they are loaded only if accessed. This voids the need
+  to have separate, light version of Content (ContentInfo in Repository API). It also provides you
+  with some additional properties and methods. Example usage from Twig:
 
   .. code-block:: twig
 

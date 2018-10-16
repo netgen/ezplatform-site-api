@@ -22,12 +22,12 @@ their counterparts in eZ Platform's Repository API.
 ``Content``
 -----------
 
-The first difference from Repository Content is that it exist it a single translation. That means it
-contains fields for one translation only. That will always be the translation to be rendered on the
-current siteaccess. You won't need to choose the field in the correct translation, manually or
-through some kind of helper service. There is only one translation: the correct one.
+The first difference from Repository Content is that it exist it a single translation only, meaning
+it contains the fields for only one translation. That will always be the translation to be rendered
+on the siteaccess. You won't need to choose the field in the correct translation, manually or
+through some kind of helper service. The Content's single translation is always the correct one.
 
-Fields are lazy-loaded, which means they are initially not loaded, but they will be transparently
+Content fields are lazy-loaded, which means they are initially not loaded, but will be transparently
 loaded at the point you access them. This voids the need to have separate, lightweight version of
 Content (ContentInfo plays this role in Repository API). It also provides you with some additional
 properties and methods.
@@ -539,11 +539,7 @@ a Pagerfanta instance.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $children = $content->filterChildren(                                          |
-|                                        |         ['articles'],                                                              |
-|                                        |         10,                                                                        |
-|                                        |         2                                                                          |
-|                                        |     );                                                                             |
+|                                        |     $children = $content->filterChildren(['articles'], 10, 2);                     |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
@@ -603,11 +599,7 @@ a Pagerfanta instance.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $siblings = $location->filterSiblings(                                         |
-|                                        |         ['articles'],                                                              |
-|                                        |         10,                                                                        |
-|                                        |         2                                                                          |
-|                                        |     );                                                                             |
+|                                        |     $siblings = $location->filterSiblings(['articles'], 10, 2);                    |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |

@@ -129,7 +129,7 @@ prefixed with ``inner``. Example usage from Twig:
   <h3>Field ID: {{ field.innerField.id }}</h3>
 
 
-For more details see :doc:`Objects documentation page </reference/objects>`.
+For more details see :doc:`Templating </reference/objects>` and :doc:`Objects </reference/objects>` reference pages.
 
 Services
 ~~~~~~~~
@@ -172,7 +172,7 @@ Location. The services will behave as if it does not exist.
   All of the Site API services are read-only. If you need to write to the eZ Platform's content
   repository, use it's existing Repository API.
 
-For more details see :doc:`Services documentation page </reference/services>`.
+For more details see :doc:`Services reference </reference/services>` page.
 
 Integration with eZ Platform
 ----------------------------
@@ -210,7 +210,7 @@ handled by the Site API view configuration. This needs to be explicitly enabled,
     You can use the Site API's view configuration and eZ Platform's view configuration at the same
     time. However, URL aliases can be handled exclusively by the one or the other.
 
-For more details see :doc:`Configuration documentation page </reference/configuration>`.
+For more details see :doc:`Configuration reference </reference/configuration>` page.
 
 Query Types
 -----------
@@ -264,4 +264,4 @@ that in Legacy you used template fetch functions to pull the data into the templ
 Site API Query Types you push the data to the template. This keeps the logic out of the templates
 and gives you better control and overview.
 
-For more details see :doc:`Query Types documentation page </reference/query_types>`.
+For more details see :doc:`Query Types reference </reference/query_types>` page.

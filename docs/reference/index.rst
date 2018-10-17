@@ -6,10 +6,10 @@ Reference
 
     installation
     configuration
-    objects
-    services
     templating
     query_types
+    objects
+    services
     custom_controllers
     migration
 

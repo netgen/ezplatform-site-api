@@ -150,7 +150,7 @@ The API provides you with a set of **read-only** services:
   that is not the configured engine for the repository.
 
   Why? While Solr search engine provides more features and more performance than Legacy search
-  engine, it's a separate system needs to be synchronized with the changes in the database. This
+  engine, it's a separate system needs to be synchronized with changes in the database. This
   synchronization comes with a delay, which can be a problem in some cases.
 
   FilterService gives you access to search that is always up to date, because it uses Legacy search

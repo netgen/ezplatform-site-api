@@ -10,6 +10,7 @@ Reference
     services
     templating
     query_types
+    custom_controllers
     migration
 
 .. include:: /reference/map.rst.inc

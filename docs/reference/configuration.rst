@@ -66,3 +66,6 @@ For example, if using the following configuration:
 Rendering a line view for an article with ``ng_content:viewAction`` would use
 ``Bundle:content/line:article.html.twig`` template, while rendering a line view for an article with
 ``ez_content:viewAction`` would use ``Bundle:content/line:ez_article.html.twig`` template.
+
+It is also possible to use custom controllers, this is documented on
+:doc:`Custom controllers reference</reference/custom_controllers>` documentation page.

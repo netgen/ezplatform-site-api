@@ -190,12 +190,8 @@ Example usage of ``ng_raw_query``:
     You can't execute named queries. They are only available for referencing in concrete query
     configuration for a particular view.
 
-.. note::
-
-    Execution of queries is **not cached**. If you call ``ng_query`` or ``ng_raw_query`` on the same
-    query multiple times, the same query will be executed multiple times. You should store the
-    result in a variable and reuse the variable instead.
-
 .. hint::
 
-    If you need to access the same query result multiple times, store it in a variable.
+    Execution of queries is **not cached**. If you call ``ng_query`` or ``ng_raw_query`` on the same
+    query multiple times, the same query will be executed multiple times. If you need to access the
+    query result multiple times, store it in a variable and access the variable instead.

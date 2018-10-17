@@ -11,13 +11,13 @@ can break the whole package into three main parts:
 Dedicated API layer
 -------------------
 
-As Repository API was designed to be usable for general purpose, it can come as awkward or too
-verbose when used for building websites. Site API implements a dedicated API layer on top of
-eZ Platform Repository API which is designed for developing websites.
+As Repository API was designed to be usable for general purpose, it can come as awkward and too
+verbose when used for building websites. Site API fixes this by implementing a dedicated API layer
+on top of eZ Platform Repository API which is designed for developing websites.
 
-Having a layer that is dedicated for building websites enables us to take an extra step and do
-things you would not typically want to do in Repository API, like lazy loaded properties and
-methods that enable Location tree traversal. With Site API we can do that because:
+Having a dedicated layer enables us to take an extra step and do things you would not typically want
+to do in Repository API. With Site API we can we can implement lazy loaded properties and methods
+that enable content model traversal directly from the entities because:
 
 1. it's a dedicated layer for building websites
 2. | it's not intended to be layered (meaning no different API implementations
@@ -26,20 +26,20 @@ methods that enable Location tree traversal. With Site API we can do that becaus
 Objects
 ~~~~~~~
 
-Site API comes with it's own set of entities and values. These are similar, but still different from
-their counterparts in eZ Platform's Repository API:
+Site API entities and values are similar to their counterparts in eZ Platform's Repository API:
 
 - ``Content``
 
-  The first difference from Repository Content is that it exist it a single translation only,
-  meaning it contains the fields for only one translation. That will always be the translation to be
-  rendered on the siteaccess. You won't need to choose the field in the correct translation,
-  manually or through some kind of helper service. The Content's single translation is always the
-  correct one.
+  The first difference from Repository Content is that it exist in a single translation,
+  meaning it contains the fields for only one translation. That translation will always be the
+  correct one to be rendered, resolved from the language configuration of the siteaccess. You won't
+  need to choose the field in the correct translation, manually or through some kind of helper
+  service. The Content's single translation is always the correct one.
 
   Content fields are lazy-loaded, which means they are loaded only if accessed. This voids the need
-  to have separate, light version of Content (ContentInfo in Repository API). It also provides you
-  with some additional properties and methods. Example usage from Twig:
+  to have a separate, light version of Content (ContentInfo in Repository API). Content object also
+  provides properties and methods to enable access to Content's Locations and relations. Example
+  usage from Twig:
 
   .. code-block:: twig
 
@@ -47,19 +47,24 @@ their counterparts in eZ Platform's Repository API:
     <h2>Parent name: {{ content.mainLocation.parent.content.name }}</h2>
     <h3>Number of Locations: {{ content.locations|length }}</h3>
 
-    {% for field in content.fields %}
-        {% if not field.empty %}
-            {{ ng_render_field(field) }}
-        {% endif %}
-    {% endfor %}
+    {{ ng_render_field(content.fields.title) }}
+
+    <ul>
+        {% for relation in content.fieldRelations('articles') %}
+            <li>{{ relation.title }}</li>
+        {% endfor %}
+    </ul>
 
 - ``ContentInfo``
 
-  The purpose of ``ContentInfo`` object in Repository API is to provide a lightweight version of
-  ``Content`` object, containing only metadata and omitting the fields. Since in Site API
-  ``Content``'s fields are lazy-loaded, there is no real need for ``ContentInfo``. Still, Site API
-  provides it to keep the usage in templates similar to standard eZ Platform templates and through
-  that make the migration/comparison easier. Example usage from Twig:
+  The purpose of ContentInfo object in Repository API is to provide a lightweight version of Content
+  object, containing only metadata (and omitting the fields). Since in Site API Content's fields are
+  lazy-loaded, there is no real need for ContentInfo. Still, Site API provides it to keep the usage
+  in templates similar to standard eZ Platform templates and through that make the migration and
+  comparison easier.
+
+  Site ContentInfo also provides access to data that is in Repository API available only through
+  loading other objects, like ContentType identifier. Example usage from Twig:
 
   .. code-block:: twig
 
@@ -68,14 +73,14 @@ their counterparts in eZ Platform's Repository API:
 
   .. note::
 
-    In Site API is not possible to load ``ContentInfo`` directly.
-    It is only available from ``Content`` and ``Location`` objects.
+    | In Site API it is not possible to load ``ContentInfo`` directly.
+    | It is only available through properties on ``Content`` and ``Location`` objects.
 
 - ``Location``
 
-  Site ``Location`` is similar to Repository Location, but the objects it aggregates are Site API
-  objects instead of Repository objects. It also provides properties and methods to enable simple
-  Location tree traversal (siblings, children, parents, ancestors etc). Example usage from Twig:
+  Site ``Location`` is similar to Repository Location. It provides properties and methods to enable
+  simple Location tree traversal (siblings, children, parents, ancestors etc). Example usage from
+  Twig:
 
   .. code-block:: twig
 
@@ -96,7 +101,7 @@ their counterparts in eZ Platform's Repository API:
 - ``Field``
 
   ``Field`` object aggregates some properties from it's FieldDefinition, like FieldType identifier,
-  or name and description. It also provides ``isEmpty()`` method, which makes simple to check if the
+  name and description. It also implements ``isEmpty()`` method, which makes simple to check if the
   field value is empty, without requiring external helpers. Example usage from Twig:
 
   .. code-block:: twig
@@ -122,6 +127,9 @@ prefixed with ``inner``. Example usage from Twig:
   <h1>Content ID: {{ content.innerContent.id }}</h1>
   <h2>Location ID: {{ location.innerLocation.id }}</h2>
   <h3>Field ID: {{ field.innerField.id }}</h3>
+
+
+For more details see :doc:`Objects documentation page </reference/objects>`.
 
 Services
 ~~~~~~~~
@@ -155,21 +163,23 @@ The API provides you with a set of **read-only** services:
 
 All services return only published Content and handle translations in a completely transparent way.
 Language fallback configuration for the current siteaccess is automatically taken into account and
-you will always get back only what should be rendered on the siteaccess. If the translation is not
-configured for a siteaccess, you won't be able to find or load it -- the system will behave as if it
-does not exist.
+you will always get back only what should be rendered on the siteaccess. If the available
+translation is not configured for a siteaccess, you won't be able to find or load Content or
+Location. The services will behave as if it does not exist.
 
 .. note::
 
   All of the Site API services are read-only. If you need to write to the eZ Platform's content
-  repository, use it's existing Repository API. (link)
+  repository, use it's existing Repository API.
+
+For more details see :doc:`Services documentation page </reference/services>`.
 
 Integration with eZ Platform
 ----------------------------
 
 You can use the Site API services described above as you would normally do it a Symfony application.
-But these are also integrated into eZ Platform's view layer. That means you have Site API version of
-the view configuration, available under ``ngcontent_view`` key:
+But these are also integrated into eZ Platform's view layer. There is a Site API version of the view
+configuration, available under ``ngcontent_view`` key:
 
 .. code-block:: yaml
 
@@ -186,8 +196,7 @@ the view configuration, available under ``ngcontent_view`` key:
 Aside from Query Type configuration described below, this is exactly the same as eZ Platform's view
 configuration under ``content_view`` key. With this you can render a line view for an article by
 executing a request to ``ng_content:viewAction``. However, that does not mean URL aliases will be
-also handled by the Site API view configuration. This needs to be explicitly enabled, per
-siteaccess:
+handled by the Site API view configuration. This needs to be explicitly enabled, per siteaccess:
 
 .. code-block:: yaml
 
@@ -201,15 +210,17 @@ siteaccess:
     You can use the Site API's view configuration and eZ Platform's view configuration at the same
     time. However, URL aliases can be handled exclusively by the one or the other.
 
+For more details see :doc:`Configuration documentation page </reference/configuration>`.
+
 Query Types
 -----------
 
-Query Types feature provides a set of predefined queries that can be configured for a specific view,
-as part of the view configuration under ``ngcontent_view`` key. It also provides a system for
-developing new queries inheriting common functionality.
+Query Types provide a set of predefined queries that can be configured for a specific view, as part
+of the view configuration under ``ngcontent_view`` key. It also provides a system for developing new
+queries inheriting common functionality.
 
-While they can be used from PHP, main intention is to use them from the view configuration. How that
-works is best explained with an example:
+While they can be used from PHP, main intention is to use them from the view configuration. This is
+best explained with an example:
 
 .. code-block:: yaml
 
@@ -232,7 +243,7 @@ works is best explained with an example:
                                         section: restricted
                                         sort: priority desc
 
-Other side of the configuration from above is full view ``folder`` template:
+Other side of the configuration from the example above is full view ``folder`` template:
 
 .. code-block:: twig
 

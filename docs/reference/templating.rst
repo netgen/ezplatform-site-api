@@ -2,8 +2,7 @@ Templating
 ==========
 
 Site API objects are used directly in the templates. Below you will find examples for the most
-common use cases. If you want to find about the all details of Site API objects, you can look
-directly at `their PHP code <https://github.com/netgen/ezplatform-site-api/tree/master/lib/API/Values>`_.
+common use cases. Objects are documented in more detail on :doc:`Objects reference </reference/objects>` documentation page.
 
 Site API implements two Twig functions that are used for content rendering:
 
@@ -25,7 +24,7 @@ Site API implements two Twig functions that are used for content rendering:
 
     <img src="{{ ng_image_alias( image, 'i1140' ).uri }}" />
 
-Both are presented in more detail in the examples below. There are two other Twig functions,
+Both are shown in more detail in the examples below. There are two other Twig functions,
 ``ng_query`` and ``ng_raw_query``. These are used with Query Types and are documented separately on
 :doc:`Query Types documentation page </reference/query_types>`.
 

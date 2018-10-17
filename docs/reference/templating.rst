@@ -4,7 +4,7 @@ Templating
 Site API objects are used directly in the templates. Below you will find examples for the most
 common use cases. Objects are documented in more detail on :doc:`Objects reference </reference/objects>` documentation page.
 
-Site API implements two Twig functions that are used for content rendering:
+Site API provides two Twig functions for content rendering:
 
 - ``ng_render_field``
 
@@ -22,11 +22,11 @@ Site API implements two Twig functions that are used for content rendering:
 
   .. code-block:: twig
 
-    <img src="{{ ng_image_alias( image, 'i1140' ).uri }}" />
+    <img src="{{ ng_image_alias( content.fields.image, 'large' ).uri }}" />
 
 Both are shown in more detail in the examples below. There are two other Twig functions,
 ``ng_query`` and ``ng_raw_query``. These are used with Query Types and are documented separately on
-:doc:`Query Types documentation page </reference/query_types>`.
+:doc:`Query Types reference</reference/query_types>` documentation page.
 
 Basic usage
 -----------

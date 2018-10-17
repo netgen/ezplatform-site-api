@@ -12,8 +12,9 @@ for building websites. It will lower the entry barrier for newcomers and open mo
 development process to **roles other than PHP developer**.
 
 With it, frontend developers, content builders and others will be able to do majority of the work
-related to eZ Platform content modelling independently of PHP developers, without the need to work
-in PHP. They will require only knowledge of Twig templates and view configuration in YAML.
+related to eZ Platform content modelling independently of PHP developers and without the need to
+work with PHP. They will require only knowledge of eZ Platform's content model, Twig templates and
+view configuration in YAML.
 
 If you are new to Site API, read the :doc:`Introduction </introduction/index>` first.
 

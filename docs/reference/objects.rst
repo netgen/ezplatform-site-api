@@ -2,7 +2,19 @@ Objects
 =======
 
 Site API comes with it's own set of entities and values. These are similar, but still different from
-their counterparts in eZ Platform's Repository API.
+their counterparts in eZ Platform's Repository API. Main benefits they provide over them are:
+
+- Content is available in a single translation, this voids the need for various helper services
+- Additional properties otherwise available only through separate entities (like ContentType
+  identifier, FieldType identifier and others)
+- Additional properties and methods that enable simple traversal and filtering of the content model
+  (relations, parent, siblings, children)
+
+.. note::
+
+    Note that content traversal that is achievable through the objects is not complete. It aims to
+    cover only the most common use cases. For more complex use cases :doc:`Query Types </reference/query_types>`
+    should be used.
 
 .. note::
 
@@ -161,7 +173,7 @@ Get the value of the `Field`_ with the given ``$identifier``.
 .. note::
 
     Returned value object depends of the FieldType. Best way to learn about the specific value
-    format is reading the official `FieldType reference documentation <https://doc.ez.no/display/EZP/FieldTypes+reference>`_,
+    format is reading the official `FieldType reference <https://doc.ez.no/display/EZP/FieldTypes+reference>`_ documentation,
     or looking directly at code (for example `the code of TextLine Value <https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/FieldType/TextLine/Value.php>`_).
 
 +----------------------------------------+------------------------------------------------------------------------------------+

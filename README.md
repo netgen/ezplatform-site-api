@@ -2,20 +2,20 @@
 
 <div align="center">
 
-[![Build Status](https://img.shields.io/travis/netgen/ezplatform-site-api.svg?style=flat-square)](https://travis-ci.org/netgen/ezplatform-site-api)
-[![Read the Docs](https://img.shields.io/readthedocs/pip.svg?style=flat-square)](https://docs.netgen.io/projects/site-api/en/latest/)
-[![Code Coverage](https://img.shields.io/codecov/c/github/netgen/ezplatform-site-api.svg?style=flat-square)](https://codecov.io/gh/netgen/ezplatform-site-api)
-[![Quality Score](https://img.shields.io/scrutinizer/g/netgen/ezplatform-site-api.svg?style=flat-square)](https://scrutinizer-ci.com/g/netgen/ezplatform-site-api)
-[![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg?style=flat-square)](https://packagist.org/packages/netgen/ezplatform-site-api)
+[![Build Status](https://img.shields.io/travis/netgen/ezplatform-site-api.svg?style=popout)](https://travis-ci.org/netgen/ezplatform-site-api)
+[![Read the Docs](https://img.shields.io/readthedocs/pip.svg?style=popout)](https://docs.netgen.io/projects/site-api/en/latest/)
+[![Code Coverage](https://img.shields.io/codecov/c/github/netgen/ezplatform-site-api.svg?style=popout)](https://codecov.io/gh/netgen/ezplatform-site-api)
+[![Quality Score](https://img.shields.io/scrutinizer/g/netgen/ezplatform-site-api.svg?style=popout)](https://scrutinizer-ci.com/g/netgen/ezplatform-site-api)
+[![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)
 
 </div>
 
 <div align="center">
 
-[![Latest stable](https://img.shields.io/packagist/v/netgen/ezplatform-site-api.svg?style=flat-square)](https://packagist.org/packages/netgen/ezplatform-site-api)
-[![License](https://img.shields.io/github/license/netgen/ezplatform-site-api.svg?style=flat-square)](https://packagist.org/packages/netgen/ezplatform-site-api)
-[![PHP](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://secure.php.net/)
-[![eZ](https://img.shields.io/badge/eZ%20Platform-%3E%3D%201.0-EF5B2F.svg?style=flat-square)](https://ezplatform.com/)
+[![Latest stable](https://img.shields.io/packagist/v/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)
+[![License](https://img.shields.io/github/license/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)
+[![PHP](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=popout)](https://secure.php.net/)
+[![eZ](https://img.shields.io/badge/eZ%20Platform-%3E%3D%201.0-EF5B2F.svg?style=popout)](https://ezplatform.com/)
 
 </div>
 

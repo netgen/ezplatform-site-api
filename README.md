@@ -1,4 +1,4 @@
-# Netgen's Site API for eZ Platform
+<h1 align="center">Netgen's Site API for eZ Platform</h1>
 
 [![Build Status](https://img.shields.io/travis/netgen/ezplatform-site-api.svg?style=flat-square)](https://travis-ci.org/netgen/ezplatform-site-api)
 [![Read the Docs](https://img.shields.io/readthedocs/pip.svg?style=flat-square)](https://docs.netgen.io/projects/site-api/en/latest/)

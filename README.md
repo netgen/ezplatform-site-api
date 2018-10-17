@@ -29,4 +29,4 @@ related to eZ Platform content modelling independently of PHP developers and wit
 work with PHP. They will require only knowledge of eZ Platform's content model, Twig templates and
 view configuration in YAML.
 
-Find out more on the [documentation site](https://docs.netgen.io/projects/site-api/en/latest/).
+Find out more on the [documentation site](https://docs.netgen.io/projects/site-api).

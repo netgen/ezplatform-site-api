@@ -5,11 +5,11 @@ If you are starting with a new project on top of vanilla eZ Platform, then you'r
 clean slate and of course there is no need to migrate anything. In that case it's enough to :doc:`install </reference/installation>`
 and :doc:`configure </reference/configuration>` the Site API and you can start working with it.
 
-But if that's the case, we also recommend that you look into our `Media Site`_, which is built with
-Site API and provides a comprehensive base for building a web project on eZ Platform.
+If that's the case, we recommend that you look into our `Media Site`_, which is built with Site API
+and will provide you with a comprehensive base for building a web project on eZ Platform.
 
-On the other hand if you want to add the Site API to an existing project or a base site of your own,
-read on to find out about your options.
+On the other hand if you want to add the Site API to an existing project or you have a base site of
+your own, read on to find out about your options.
 
 .. _Media site: https://github.com/netgen/media-site
 

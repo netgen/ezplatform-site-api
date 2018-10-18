@@ -11,7 +11,7 @@ LoadService
 -----------
 
 +--------------------------------+----------------------------------------------+
-| **Fully Qualified Class Name** | ``Netgen\EzPlatformSiteApi\API\LoadService`` |
+| **Instance of**                | ``Netgen\EzPlatformSiteApi\API\LoadService`` |
 +--------------------------------+----------------------------------------------+
 | **Container service ID**       | ``netgen.ezplatform_site.load_service``      |
 +--------------------------------+----------------------------------------------+
@@ -93,7 +93,7 @@ FindService
 -----------
 
 +--------------------------------+----------------------------------------------+
-| **Fully Qualified Class Name** | ``Netgen\EzPlatformSiteApi\API\FindService`` |
+| **Instance of**                | ``Netgen\EzPlatformSiteApi\API\FindService`` |
 +--------------------------------+----------------------------------------------+
 | **Container service ID**       | ``netgen.ezplatform_site.find_service``      |
 +--------------------------------+----------------------------------------------+
@@ -147,7 +147,7 @@ FilterService
 -------------
 
 +--------------------------------+------------------------------------------------+
-| **Fully Qualified Class Name** | ``Netgen\EzPlatformSiteApi\API\FilterService`` |
+| **Instance of**                | ``Netgen\EzPlatformSiteApi\API\FilterService`` |
 +--------------------------------+------------------------------------------------+
 | **Container service ID**       | ``netgen.ezplatform_site.load_service``        |
 +--------------------------------+------------------------------------------------+
@@ -209,7 +209,7 @@ RelationService
 ---------------
 
 +--------------------------------+--------------------------------------------------+
-| **Fully Qualified Class Name** | ``Netgen\EzPlatformSiteApi\API\RelationService`` |
+| **Instance of**                | ``Netgen\EzPlatformSiteApi\API\RelationService`` |
 +--------------------------------+--------------------------------------------------+
 | **Container service ID**       | ``netgen.ezplatform_site.relation_service``      |
 +--------------------------------+--------------------------------------------------+
@@ -280,31 +280,33 @@ Settings
 The purpose of ``Settings`` object is to provide read access to current configuration.
 
 +--------------------------------+-------------------------------------------+
-| **Fully Qualified Class Name** | ``Netgen\EzPlatformSiteApi\API\Settings`` |
+| **Instance of**                | ``Netgen\EzPlatformSiteApi\API\Settings`` |
 +--------------------------------+-------------------------------------------+
-| **Container ID**               | ``netgen.ezplatform_site.settings``       |
+| **Container service ID**       | ``netgen.ezplatform_site.settings``       |
 +--------------------------------+-------------------------------------------+
 
 Properties
 ~~~~~~~~~~
 
-+--------------------------------+
-| **Properties**                 |
-+================================+
-| ``$prioritizedLanguages``      |
-+--------------------------------+
-| ``$useAlwaysAvailable``        |
-+--------------------------------+
-| ``$rootLocationId``            |
-+--------------------------------+
++--------------------------------+-----------------+-------------------------------------------------------------------+
+| Property                       | Type            | Description                                                       |
++================================+=================+===================================================================+
+| ``$prioritizedLanguages``      | ``string[]``    | An array of prioritized languages of the current siteaccess       |
++--------------------------------+-----------------+-------------------------------------------------------------------+
+| ``$useAlwaysAvailable``        | ``bool``        | | Whether always available Content is taken into account          |
+|                                |                 | | when resolving translations                                     |
++--------------------------------+-----------------+-------------------------------------------------------------------+
+| ``$rootLocationId``            | ``string|int``  | Root Location of the current siteaccess                           |
++--------------------------------+-----------------+-------------------------------------------------------------------+
 
 Site
 ----
 
-The purpose of ``SiteService`` is to aggregate all other Site API services.
+The purpose of ``Site`` service is to aggregate all other Site API services in one place. It
+implements a getter method for each of the services described above.
 
-+-------------------------------+----------------------------------------+
-| **Fully Qualified Class Name** | ``Netgen\EzPlatformSiteApi\API\Site`` |
++--------------------------------+---------------------------------------+
+| **Instance of**                | ``Netgen\EzPlatformSiteApi\API\Site`` |
 +--------------------------------+---------------------------------------+
 | **Container service ID**       | ``netgen.ezplatform_site.site``       |
 +--------------------------------+---------------------------------------+
@@ -312,18 +314,16 @@ The purpose of ``SiteService`` is to aggregate all other Site API services.
 Methods
 ~~~~~~~
 
-+--------------------------------+
-| **Methods**                    |
-+================================+
-| ``getLoadService()``           |
-+--------------------------------+
-| ``getFindService()``           |
-+--------------------------------+
-| ``getFilterService()``         |
-+--------------------------------+
-| ``getRelationService()``       |
-+--------------------------------+
-| ``getSettings()``              |
-+--------------------------------+
-
-
++--------------------------------+--------------------------------+
+| Method                         | Returns                        |
++================================+================================+
+| ``getLoadService()``           | `LoadService`_                 |
++--------------------------------+--------------------------------+
+| ``getFindService()``           | `FindService`_                 |
++--------------------------------+--------------------------------+
+| ``getFilterService()``         | `FilterService`_               |
++--------------------------------+--------------------------------+
+| ``getRelationService()``       | `RelationService`_             |
++--------------------------------+--------------------------------+
+| ``getSettings()``              | `Settings`_                    |
++--------------------------------+--------------------------------+

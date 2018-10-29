@@ -139,10 +139,144 @@ You can also notice that it's possible to override parameters from the reference
 is limited to first level keys from the main configuration and also first level keys under the
 ``parameters`` key.
 
-Language expressions
+Parameters with expressions
 --------------------------------------------------------------------------------
 
-TODO
+When defining parameters it's possible to use expressions. These are evaluated by Symfony's
+`Expression Language <https://symfony.com/doc/current/components/expression_language.html>`_
+component, whose syntax is based on Twig and documented `here <https://symfony.com/doc/current/components/expression_language/syntax.html>`_.
+
+Expression strings are recognized by ``@=`` prefix. Following values resolved from the current view
+will be available in expression:
+
+- Site API view object as ``view``
+
+    You can access view object and any `parameters injected into it <https://doc.ez.no/display/EZP/Parameters+injection+in+content+views>`_,
+    for example current page in children query:
+
+    .. code-block:: yaml
+
+        ...
+            queries:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: 10
+                    page: '@=view.getParameter("page")'
+                    parameters:
+                        content_type: 'article'
+                        sort: 'published desc'
+
+- Symfony's Request object as ``request``
+
+    Similar to the above, you could access current page directly from the parameter in the Request object:
+
+    .. code-block:: yaml
+
+        ...
+            queries:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: 10
+                    page: '@=request.query.get("page", 1)'
+                    parameters:
+                        content_type: 'article'
+                        sort: 'published desc'
+
+- :ref:`Site API Content object<content_object>` as ``content``
+
+    Full Content object is available, for example you could store ContentType identifier for the
+    children in a TextLine field ``content_type`` and access it like this:
+
+    .. code-block:: yaml
+
+        ...
+            queries:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: 10
+                    page: 1
+                    parameters:
+                        content_type: '@=content.fields.content_type.value.text'
+                        sort: 'published desc'
+
+- :ref:`Site API Location object<location_object>` as ``location``
+
+    Full Location object is also available, in the following example we use it to find only children
+    of the same ContentType as the parent:
+
+    .. code-block:: yaml
+
+        ...
+            queries:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: 10
+                    page: 1
+                    parameters:
+                        content_type: '@=location.contentInfo.contentTypeIdentifier'
+                        sort: 'published desc'
+
+Several functions are also available for use in expressions. Most of these are provided to access
+the values described above in a more convenient way:
+
+- ``viewParam(name, default)``
+
+    Method ``getParameter()`` on the View object does not support default value fallback and if the
+    requested parameter is not there an exception will be thrown. Function ``viewParam()`` is just a
+    wrapper around it that provides default value fallback:
+
+    .. code-block:: yaml
+
+        ...
+            queries:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: 10
+                    page: '@=viewParam("page", 10)'
+                    parameters:
+                        content_type: 'article'
+                        sort: 'published desc'
+
+- ``queryParam(name, default)``
+
+    This function is just a shortcut to ``GET`` parameters on the Request object:
+
+    .. code-block:: yaml
+
+        ...
+            queries:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: 10
+                    page: '@=queryParam("page", 1)'
+                    parameters:
+                        content_type: 'article'
+                        sort: 'published desc'
+
+
+- ``timestamp(value)``
+
+    This function is used to get a timestamp value, typically used to define time conditions on the
+    query. For example you could use it to fetch only events that have not yet started:
+
+    .. code-block:: yaml
+
+        ...
+            queries:
+                pending_events:
+                    query_type: SiteAPI:Content/Location/Subtree
+                    max_per_page: 10
+                    page: 1
+                    parameters:
+                        content_type: event
+                        field:
+                            start_date:
+                                gt: '@=timestamp("today")'
+
+.. note::
+
+    Function ``timestamp()`` maps directly to the PHP's function `strtotime <https://secure.php.net/manual/en/function.strtotime.php>`_.
+    That means you can pass it any `supported date and time format <https://secure.php.net/manual/en/datetime.formats.php>`_.
 
 Templating
 --------------------------------------------------------------------------------

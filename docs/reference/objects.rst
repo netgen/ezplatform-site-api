@@ -31,6 +31,8 @@ their counterparts in eZ Platform's Repository API. Main benefits they provide o
     :depth: 3
     :local:
 
+.. _content_object:
+
 ``Content``
 -----------
 
@@ -489,6 +491,8 @@ Properties
 +--------------------------+----------------+--------------------------------------------------------------+
 | ``$content``             | `Content`_     | ID of the Content                                            |
 +--------------------------+----------------+--------------------------------------------------------------+
+
+.. _location_object:
 
 ``Location``
 ------------

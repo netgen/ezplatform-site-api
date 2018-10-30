@@ -23,6 +23,41 @@ that enable content model traversal directly from the entities because:
 2. | it's not intended to be layered (meaning no different API implementations
    | like Cache, Permission etc)
 
+Handling multiple languages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The way Site API handles multiple languages was the initial motive for implementing it and deserves
+to be mentioned separately.
+
+Language configuration for a siteaccess consists of a prioritized list of languages. For example,
+you could have a siteaccess with two languages, Croatian language as the most prioritized one and
+English language as a fallback when Croatian translation does not exist:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            cro:
+                languages:
+                    - 'cro-HR'
+                    - 'eng-GB'
+
+The intention here is that the siteaccess should first show content in Croatian language if it's
+available, fallback to English translation when Croatian is not available and ignore any other
+language. However, this is quite hard to implement correctly with vanilla Repository API, even with
+the newest addition of siteaccess-aware Repository layer introduced in eZ Platform 7.2.
+
+With Site API this comes out of the box and you don't have to pay special attention to it. All
+possible ways to get a Content or a Location, whether through loading by ID, as a related Content,
+accessing the field on the parent Location's Content, searching or using methods and properties on
+the Site API objects -- it already respects this configuration. You can depend that you will always
+get back only what can and should be rendered on the current siteaccess and then simply stop caring
+about it, because it just works.
+
+That feature alone reduces cognitive load for developers, frees them from writing tedious
+boilerplate code just to respect the language configuration, avoids ridiculous sanity checks and
+mistakes and makes the overall developer's experience significantly better.
+
 Objects
 ~~~~~~~
 

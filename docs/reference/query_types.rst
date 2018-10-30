@@ -5,7 +5,7 @@ Site API Query Types expand upon Query Type feature from eZ Publish Kernel, usin
 interfaces. That will enable using your existing Query Types, but how Site API integrates them with
 the rest of the system differs from eZ Publish Kernel.
 
-Built-in Query Types
+Built-in Site API Query Types
 --------------------------------------------------------------------------------
 
 A number of generic Query Types is provided out of the box. We can separate these into three groups:

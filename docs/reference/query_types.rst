@@ -70,7 +70,7 @@ Example below shows how described configuration looks in practice:
                                     max_per_page: 10
                                     page: 1
                                     parameters:
-                                        content_type: 'article'
+                                        content_type: 'image'
                                         sort: 'published desc'
                             params:
                                 ...

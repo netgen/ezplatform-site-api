@@ -54,9 +54,9 @@ the Site API objects -- it already respects this configuration. You can depend t
 get back only what can and should be rendered on the current siteaccess and then simply stop caring
 about it, because it just works.
 
-That feature alone reduces cognitive load for developers, frees them from writing tedious
-boilerplate code just to respect the language configuration, avoids ridiculous sanity checks and
-mistakes and makes the overall developer's experience significantly better.
+That feature alone significantly reduces cognitive load for developers, frees them from writing
+tedious boilerplate code just to respect the language configuration, avoids ridiculous sanity checks
+and mistakes and improves the overall developer experience.
 
 Objects
 ~~~~~~~

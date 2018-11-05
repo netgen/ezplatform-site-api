@@ -1,7 +1,18 @@
 Services
 ========
 
-Site API provides hte following services that you can use in you PHP code:
+First thing to know about the Site API services is that all of them handle language configuration in
+a completely transparent way. You can be sure that all objects you work with:
+
+1. can be rendered on the current siteaccess
+2. are loaded in the single correct translation to be rendered on the current siteaccess
+
+This works for both Content and Locations, whether they are obtained through search, loading by the
+ID, as relations or otherwise. If the object doesn't have a translation that can be rendered on a
+siteaccess, you won't be able to load it in the first place. That means you can put the whole
+language logic off your mind and solve real problems instead.
+
+Following services are available:
 
 .. contents::
     :depth: 3

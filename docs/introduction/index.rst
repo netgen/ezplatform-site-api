@@ -228,10 +228,16 @@ configuration, available under ``ngcontent_view`` key:
                             match:
                                 Identifier\ContentType: article
 
-Aside from Query Type configuration described below, this is exactly the same as eZ Platform's view
-configuration under ``content_view`` key. With this you can render a line view for an article by
+Aside from Query Type configuration described below, the format is exactly the same as eZ Platform's
+view configuration under ``content_view`` key. Separate view configuration is also needed because we
+need to handle it with code that will inject Site API objects to the template, instead of standard
+eZ Platform objects. Together with this we provide Site API version of the Content View object,
+which is used by the default Content view controller and :doc:`custom controllers </reference/custom_controllers>`.
+
+With the configuration from above you you will be able to render a line view for an article by
 executing a request to ``ng_content:viewAction``. However, that does not mean URL aliases will be
-handled by the Site API view configuration. This needs to be explicitly enabled, per siteaccess:
+handled by the Site API view configuration as well. This needs to be explicitly enabled, per
+siteaccess:
 
 .. code-block:: yaml
 

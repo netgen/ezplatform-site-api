@@ -28,7 +28,7 @@ branches:
 
 # make sure to update composer to latest available version
 before_install:
-    - echo "memory_limit=-1" >> ~/.phpenv/versions/5.6/etc/conf.d/travis.ini
+    - phpenv config-add travis.php.ini
 
 # install dependencies
 install:

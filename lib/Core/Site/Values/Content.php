@@ -364,7 +364,7 @@ final class Content extends APIContent
     {
         if ($this->innerContent === null) {
             $this->innerContent = $this->repository->sudo(
-                function() {
+                function(Repository $repository) {
                     return $this->contentService->loadContent(
                         $this->id,
                         [$this->languageCode],

@@ -363,10 +363,14 @@ final class Content extends APIContent
     private function getInnerContent()
     {
         if ($this->innerContent === null) {
-            $this->innerContent = $this->contentService->loadContent(
-                $this->id,
-                [$this->languageCode],
-                $this->innerVersionInfo->versionNo
+            $this->innerContent = $this->repository->sudo(
+                function(Repository $repository) {
+                    return $this->contentService->loadContent(
+                        $this->id,
+                        [$this->languageCode],
+                        $this->innerVersionInfo->versionNo
+                    );
+                }
             );
         }
 

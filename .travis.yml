@@ -9,12 +9,16 @@ matrix:
     fast_finish: true
     include:
         - php: 7.1
-          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+          env: CONFIG="phpunit.xml" COVERGAGE="unit" KERNEL_VERSION="^6.0"
         - php: 7.1
-          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration" KERNEL_VERSION="~7.4.3"
         - php: 7.2
           env: CONFIG="phpunit.xml" COVERGAGE="unit"
         - php: 7.2
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration" KERNEL_VERSION="^6.0"
+        - php: 7.3
+          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+        - php: 7.3
           env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
 
 # test only master (+ pull requests)
@@ -24,6 +28,7 @@ branches:
 
 # make sure to update composer to latest available version
 before_install:
+    - ./bin/.travis/configure_dependencies.sh
     - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 # install dependencies

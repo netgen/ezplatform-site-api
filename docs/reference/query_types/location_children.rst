@@ -60,7 +60,7 @@ by 10 per page using URL query parameter ``page``:
 
     <ul>
     {% for document in documents %}
-        <li>{{ document.name }}</li>
+        <li>{{ document.content.name }}</li>
     {% endfor %}
     </ul>
 

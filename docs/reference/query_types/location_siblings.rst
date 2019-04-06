@@ -61,7 +61,7 @@ parameter ``page``:
 
     <ul>
     {% for news in news_list %}
-        <li>{{ news.name }}</li>
+        <li>{{ news.content.name }}</li>
     {% endfor %}
     </ul>
 

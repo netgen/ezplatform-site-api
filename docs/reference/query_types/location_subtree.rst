@@ -66,7 +66,7 @@ date and paginate them by 10 per page using URL query parameter ``page``:
 
     <ul>
     {% for event in events %}
-        <li>{{ event.name }}</li>
+        <li>{{ event.content.name }}</li>
     {% endfor %}
     </ul>
 

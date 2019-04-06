@@ -110,4 +110,18 @@ Inherited Location conditions
 .. include:: /reference/query_types/parameters/common/location/visible.rst.inc
 
 .. include:: /reference/query_types/parameters/common_content_parameters.rst.inc
-.. include:: /reference/query_types/parameters/common_query_parameters.rst.inc
+
+Common query parameters
+--------------------------------------------------------------------------------
+
+.. include:: /reference/query_types/parameters/common/query/limit.rst.inc
+.. include:: /reference/query_types/parameters/common/query/offset.rst.inc
+
+.. include:: /reference/query_types/parameters/common/query/sort/title.rst.inc
+
+- **value type**: ``string``, ``SortClause``
+- **value format**: ``single``, ``array``
+- **required**: ``false``
+- **default**: as is defined on the parent Location (see `location`_  parameter)
+
+.. include:: /reference/query_types/parameters/common/query/sort/body.rst.inc

@@ -173,6 +173,10 @@ class ContentViewBuilder implements ViewBuilder
                 return $repository->getContentService()->loadContentInfo($contentId);
             }
         );
+        
+        if ($location !== null) {
+            $location = $location->innerLocation;    
+        }
 
         if (!$this->canRead($contentInfo, $location)) {
             throw new UnauthorizedException(

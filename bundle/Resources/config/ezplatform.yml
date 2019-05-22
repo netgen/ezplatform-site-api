@@ -1,0 +1,6 @@
+system:
+    default:
+        field_templates:
+            - { template: "@NetgenEzPlatformSiteApi/content_fields.html.twig", priority: 10000 }
+        fielddefinition_settings_templates:
+            - { template: "@NetgenEzPlatformSiteApi/field_definition_settings_templates.html.twig", priority: 10000 }

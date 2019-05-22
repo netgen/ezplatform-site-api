@@ -6,12 +6,18 @@ use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\FieldType\Null\Value as NullValue;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+use RuntimeException;
 
 /**
  * @internal
@@ -42,17 +48,33 @@ final class DomainObjectMapper
     private $repository;
 
     /**
+     * @var bool
+     */
+    private $debug;
+
+    /**
+     * @var \Psr\Log\LoggerInterface|null
+     */
+    private $logger;
+
+    /**
      * @param \Netgen\EzPlatformSiteApi\API\Site $site
      * @param \eZ\Publish\API\Repository\Repository $repository
+     * @param bool $debug
+     * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
         SiteInterface $site,
-        Repository $repository
+        Repository $repository,
+        $debug,
+        LoggerInterface $logger = null
     ) {
         $this->site = $site;
         $this->repository = $repository;
         $this->contentTypeService = $repository->getContentTypeService();
         $this->fieldTypeService = $repository->getFieldTypeService();
+        $this->debug = $debug;
+        $this->logger = $logger === null ? new NullLogger() : $logger;
     }
 
     /**
@@ -86,6 +108,8 @@ final class DomainObjectMapper
      *
      * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
      * @param string $languageCode
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
@@ -136,11 +160,18 @@ final class DomainObjectMapper
      * @param \eZ\Publish\API\Repository\Values\Content\Field $apiField
      * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
     public function mapField(APIField $apiField, SiteContent $content)
     {
         $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
+
+        if (!$fieldDefinition instanceof FieldDefinition) {
+            return $this->getNullField($apiField->fieldDefIdentifier, $content);
+        }
+
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
         $isEmpty = $this->fieldTypeService->getFieldType($fieldTypeIdentifier)->isEmptyValue(
             $apiField->value
@@ -164,6 +195,54 @@ final class DomainObjectMapper
             'innerField' => $apiField,
             'innerFieldDefinition' => $fieldDefinition,
             'isEmpty' => $isEmpty,
+        ]);
+    }
+
+    public function getNullField($identifier, SiteContent $content)
+    {
+        $message = 'nešto je trulo u državi danskoj';
+        $this->logger->critical($message);
+
+        if ($this->debug) {
+            //throw new RuntimeException($message);
+        }
+
+        $apiField = new APIField([
+            'id' => 0,
+            'fieldDefIdentifier' => $identifier,
+            'value' => new NullValue(null),
+            'languageCode' => $content->languageCode,
+            'fieldTypeIdentifier' => 'ngnull',
+        ]);
+
+        $fieldDefinition = new CoreFieldDefinition([
+            'id' => 0,
+            'identifier' => $identifier,
+            'fieldGroup' => $apiField->fieldTypeIdentifier,
+            'position' => 0,
+            'fieldTypeIdentifier' => 'ngnull',
+            'isTranslatable' => false,
+            'isRequired' => false,
+            'isInfoCollector' => false,
+            'defaultValue' => null,
+            'isSearchable' => false,
+            'mainLanguageCode' => $content->languageCode,
+            'fieldSettings' => [],
+            'validatorConfiguration' => [],
+        ]);
+
+        return new Field([
+            'id' => $apiField->id,
+            'fieldDefIdentifier' => $fieldDefinition->identifier,
+            'value' => $apiField->value,
+            'languageCode' => $apiField->languageCode,
+            'fieldTypeIdentifier' => $apiField->fieldTypeIdentifier,
+            'name' => '',
+            'description' => '',
+            'content' => $content,
+            'innerField' => $apiField,
+            'innerFieldDefinition' => $fieldDefinition,
+            'isEmpty' => true,
         ]);
     }
 

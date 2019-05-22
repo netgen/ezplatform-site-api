@@ -7,6 +7,7 @@ use eZ\Publish\API\Repository\SearchService;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSite;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
+use Psr\Log\LoggerInterface;
 
 class Site implements SiteInterface
 {
@@ -71,16 +72,30 @@ class Site implements SiteInterface
     private $repository;
 
     /**
+     * @var bool
+     */
+    private $debug;
+
+    /**
+     * @var \Psr\Log\LoggerInterface|null
+     */
+    private $logger;
+
+    /**
      * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\API\Repository\SearchService $filteringSearchService
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry $relationResolverRegistry
+     * @param bool $debug
+     * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
         BaseSite $settings,
         Repository $repository,
         SearchService $filteringSearchService,
-        RelationResolverRegistry $relationResolverRegistry
+        RelationResolverRegistry $relationResolverRegistry,
+        $debug,
+        LoggerInterface $logger = null
     ) {
         $this->settings = $settings;
         $this->repository = $repository;
@@ -89,6 +104,8 @@ class Site implements SiteInterface
         $this->searchService = $repository->getSearchService();
         $this->filteringSearchService = $filteringSearchService;
         $this->relationResolverRegistry = $relationResolverRegistry;
+        $this->debug = $debug;
+        $this->logger = $logger;
     }
 
     public function getSettings()
@@ -158,7 +175,9 @@ class Site implements SiteInterface
         if ($this->domainObjectMapper === null) {
             $this->domainObjectMapper = new DomainObjectMapper(
                 $this,
-                $this->repository
+                $this->repository,
+                $this->debug,
+                $this->logger
             );
         }
 

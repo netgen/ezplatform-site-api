@@ -53,6 +53,8 @@ services:
             - '@ezpublish.api.repository'
             - '@netgen.ezplatform_site.repository.filtering_search_service'
             - '@netgen.ezplatform_site.plugins.field_type.relation_resolver.registry'
+            - '%kernel.debug%'
+            - '@logger'
         lazy: true
 
     netgen.ezplatform_site.core.filter_service:
@@ -86,3 +88,11 @@ services:
             - '@netgen.ezplatform_site.core.site'
             - getRelationService
         lazy: true
+
+    netgen.ezplatform_site.field_type.null:
+        class: eZ\Publish\Core\FieldType\Null\Type
+        parent: ezpublish.fieldType
+        arguments:
+            - 'ngnull'
+        tags:
+            - { name: ezpublish.fieldType, alias: ngnull }

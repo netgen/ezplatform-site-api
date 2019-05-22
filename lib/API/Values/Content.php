@@ -36,11 +36,11 @@ abstract class Content extends ValueObject
     abstract public function hasField($identifier);
 
     /**
-     * Return Field object for the given field definition $identifier, or null if not found.
+     * Return Field object for the given field definition $identifier.
      *
      * @param string $identifier
      *
-     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Field
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
     abstract public function getField($identifier);
 
@@ -54,29 +54,29 @@ abstract class Content extends ValueObject
     abstract public function hasFieldById($id);
 
     /**
-     * Return Field object for the given field $id, or null if not found.
+     * Return Field object for the given field $id.
      *
      * @param string|int $id
      *
-     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Field
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
     abstract public function getFieldById($id);
 
     /**
-     * Returns a field value for the given field definition identifier, or null if not found.
+     * Returns a field value for the given field definition identifier.
      *
      * @param string $identifier
      *
-     * @return null|\eZ\Publish\SPI\FieldType\Value
+     * @return \eZ\Publish\SPI\FieldType\Value
      */
     abstract public function getFieldValue($identifier);
 
     /**
-     * Returns a field value for the given field $id, or null if not found.
+     * Returns a field value for the given field $id.
      *
      * @param string $id
      *
-     * @return null|\eZ\Publish\SPI\FieldType\Value
+     * @return \eZ\Publish\SPI\FieldType\Value
      */
     abstract public function getFieldValueById($id);
 

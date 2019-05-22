@@ -5,11 +5,14 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Yaml\Yaml;
 
-class NetgenEzPlatformSiteApiExtension extends Extension
+class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExtensionInterface
 {
     public function getAlias()
     {
@@ -31,6 +34,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension
         $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
 
         $configuration = $this->getConfiguration($configs, $container);
+        assert($configuration instanceof  Configuration);
         $config = $this->processConfiguration($configuration, $configs);
 
         $coreFileLocator = new FileLocator(__DIR__ . '/../../lib/Resources/config');
@@ -61,5 +65,14 @@ class NetgenEzPlatformSiteApiExtension extends Extension
             // Setting this through the config file causes issues in eZ kernel 6.11+
             $container->setParameter('ezsettings.default.ngcontent_view', []);
         }
+    }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $configFile = __DIR__ . '/../Resources/config/ezplatform.yml';
+        $config = Yaml::parse(file_get_contents($configFile));
+        $container->addResource(new FileResource($configFile));
+
+        $container->prependExtensionConfig('ezpublish', $config);
     }
 }

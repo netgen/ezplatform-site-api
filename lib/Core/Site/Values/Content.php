@@ -4,11 +4,13 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
+use eZ\Publish\Core\FieldType\Null\Value as NullValue;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -143,6 +145,8 @@ final class Content extends APIContent
      *
      * @param string $property The name of the property to retrieve
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
      * @return mixed
      */
     public function __get($property)
@@ -192,6 +196,9 @@ final class Content extends APIContent
         return parent::__isset($property);
     }
 
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function __debugInfo()
     {
         $this->initializeFields();
@@ -209,6 +216,11 @@ final class Content extends APIContent
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function hasField($identifier)
     {
         $this->initializeFields();
@@ -216,6 +228,11 @@ final class Content extends APIContent
         return isset($this->fields[$identifier]);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function getField($identifier)
     {
         $this->initializeFields();
@@ -224,9 +241,14 @@ final class Content extends APIContent
             return $this->fields[$identifier];
         }
 
-        return null;
+        return $this->domainObjectMapper->getNullField($identifier, $this);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function hasFieldById($id)
     {
         $this->initializeFields();
@@ -234,6 +256,11 @@ final class Content extends APIContent
         return isset($this->fieldsById[$id]);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function getFieldById($id)
     {
         $this->initializeFields();
@@ -245,6 +272,11 @@ final class Content extends APIContent
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function getFieldValue($identifier)
     {
         $this->initializeFields();
@@ -256,6 +288,11 @@ final class Content extends APIContent
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function getFieldValueById($id)
     {
         $this->initializeFields();
@@ -337,6 +374,9 @@ final class Content extends APIContent
         return $pager;
     }
 
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     private function initializeFields()
     {
         if ($this->fields === null) {
@@ -377,6 +417,11 @@ final class Content extends APIContent
         return $this->innerContent;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     private function getContentInfo()
     {
         if ($this->contentInfo === null) {

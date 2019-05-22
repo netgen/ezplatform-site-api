@@ -80,8 +80,7 @@ class FieldRenderingRuntime
         ];
 
         $content = $field->content->innerContent;
-        $contentType = $field->content->contentInfo->innerContentType;
-        $fieldDefinition = $contentType->getFieldDefinition($field->fieldDefIdentifier);
+        $fieldDefinition = $field->innerFieldDefinition;
 
         $params += [
             'field' => $field->innerField,
@@ -89,6 +88,7 @@ class FieldRenderingRuntime
             'contentInfo' => $content->getVersionInfo()->getContentInfo(),
             'versionInfo' => $content->getVersionInfo(),
             'fieldSettings' => $fieldDefinition->getFieldSettings(),
+            'contentTypeIdentifier' => $field->content->contentInfo->contentTypeIdentifier,
         ];
 
         // Adding field type specific parameters if any.

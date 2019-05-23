@@ -24,15 +24,26 @@ final class Settings extends BaseSettings
     private $rootLocationId;
 
     /**
+     * @var bool
+     */
+    private $failOnMissingFields;
+
+    /**
      * @param string[] $prioritizedLanguages
      * @param bool $useAlwaysAvailable
      * @param int|string $rootLocationId
+     * @param bool $failOnMissingFields
      */
-    public function __construct($prioritizedLanguages, $useAlwaysAvailable, $rootLocationId)
-    {
+    public function __construct(
+        $prioritizedLanguages,
+        $useAlwaysAvailable,
+        $rootLocationId,
+        $failOnMissingFields
+    ) {
         $this->prioritizedLanguages = $prioritizedLanguages;
         $this->useAlwaysAvailable = $useAlwaysAvailable;
         $this->rootLocationId = $rootLocationId;
+        $this->failOnMissingFields = $failOnMissingFields;
     }
 
     /**
@@ -51,6 +62,8 @@ final class Settings extends BaseSettings
                 return $this->useAlwaysAvailable;
             case 'rootLocationId':
                 return $this->rootLocationId;
+            case 'failOnMissingFields':
+                return $this->failOnMissingFields;
         }
 
         throw new PropertyNotFoundException($property, get_class($this));
@@ -80,6 +93,7 @@ final class Settings extends BaseSettings
             case 'prioritizedLanguages':
             case 'useAlwaysAvailable':
             case 'rootLocationId':
+            case 'failOnMissingFields':
                 return true;
         }
 

@@ -35,5 +35,9 @@ class Configuration extends SiteAccessConfiguration
             ->booleanNode('use_always_available_fallback')
                 ->info('Controls fallback to main language marked as always available')
             ->end();
+        $systemNode
+            ->booleanNode('fail_on_missing_fields')
+                ->info('Whether to fail on missing Content Fields')
+            ->end();
     }
 }

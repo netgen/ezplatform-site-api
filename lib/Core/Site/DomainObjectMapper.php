@@ -50,30 +50,30 @@ final class DomainObjectMapper
     /**
      * @var bool
      */
-    private $debug;
+    private $failOnMissingFields;
 
     /**
-     * @var \Psr\Log\LoggerInterface|null
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
     /**
      * @param \Netgen\EzPlatformSiteApi\API\Site $site
      * @param \eZ\Publish\API\Repository\Repository $repository
-     * @param bool $debug
+     * @param bool $failOnMissingFields
      * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
         SiteInterface $site,
         Repository $repository,
-        $debug,
+        $failOnMissingFields,
         LoggerInterface $logger = null
     ) {
         $this->site = $site;
         $this->repository = $repository;
         $this->contentTypeService = $repository->getContentTypeService();
         $this->fieldTypeService = $repository->getFieldTypeService();
-        $this->debug = $debug;
+        $this->failOnMissingFields = $failOnMissingFields;
         $this->logger = $logger === null ? new NullLogger() : $logger;
     }
 
@@ -201,10 +201,11 @@ final class DomainObjectMapper
     public function getNullField($identifier, SiteContent $content)
     {
         $message = 'Field "' . $identifier . '" in Content ID:' . $content->id . ' does not exist, "ngnull" field returned instead';
+
         $this->logger->critical($message);
 
-        if ($this->debug) {
-            //throw new RuntimeException($message);
+        if ($this->failOnMissingFields) {
+            throw new RuntimeException($message);
         }
 
         $apiField = new APIField([

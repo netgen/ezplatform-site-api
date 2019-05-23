@@ -54,7 +54,7 @@ services:
             - '@netgen.ezplatform_site.repository.filtering_search_service'
             - '@netgen.ezplatform_site.plugins.field_type.relation_resolver.registry'
             - '%kernel.debug%'
-            - '@logger'
+            - '@?logger'
         lazy: true
 
     netgen.ezplatform_site.core.filter_service:

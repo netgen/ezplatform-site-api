@@ -34,6 +34,11 @@ final class Settings extends BaseSettings
                 );
             case 'rootLocationId':
                 return $this->configResolver->getParameter('content.tree_root.location_id');
+            case 'failOnMissingFields':
+                return $this->configResolver->getParameter(
+                    'fail_on_missing_fields',
+                    'netgen_ez_platform_site_api'
+                );
         }
 
         throw new PropertyNotFoundException($property, get_class($this));
@@ -50,6 +55,7 @@ final class Settings extends BaseSettings
             case 'prioritizedLanguages':
             case 'useAlwaysAvailable':
             case 'rootLocationId':
+            case 'failOnMissingFields':
                 return true;
         }
 

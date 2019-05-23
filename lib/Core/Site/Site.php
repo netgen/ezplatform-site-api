@@ -4,7 +4,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\SearchService;
-use Netgen\EzPlatformSiteApi\API\Settings as BaseSite;
+use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use Psr\Log\LoggerInterface;
@@ -72,11 +72,6 @@ class Site implements SiteInterface
     private $repository;
 
     /**
-     * @var bool
-     */
-    private $debug;
-
-    /**
      * @var \Psr\Log\LoggerInterface|null
      */
     private $logger;
@@ -86,15 +81,13 @@ class Site implements SiteInterface
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\API\Repository\SearchService $filteringSearchService
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry $relationResolverRegistry
-     * @param bool $debug
      * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
-        BaseSite $settings,
+        BaseSettings $settings,
         Repository $repository,
         SearchService $filteringSearchService,
         RelationResolverRegistry $relationResolverRegistry,
-        $debug,
         LoggerInterface $logger = null
     ) {
         $this->settings = $settings;
@@ -104,7 +97,6 @@ class Site implements SiteInterface
         $this->searchService = $repository->getSearchService();
         $this->filteringSearchService = $filteringSearchService;
         $this->relationResolverRegistry = $relationResolverRegistry;
-        $this->debug = $debug;
         $this->logger = $logger;
     }
 
@@ -176,7 +168,7 @@ class Site implements SiteInterface
             $this->domainObjectMapper = new DomainObjectMapper(
                 $this,
                 $this->repository,
-                $this->debug,
+                $this->settings->failOnMissingFields,
                 $this->logger
             );
         }

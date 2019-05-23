@@ -220,7 +220,7 @@ final class DomainObjectMapper
             'identifier' => $identifier,
             'fieldGroup' => $apiField->fieldTypeIdentifier,
             'position' => 0,
-            'fieldTypeIdentifier' => 'ngnull',
+            'fieldTypeIdentifier' => $apiField->fieldTypeIdentifier,
             'isTranslatable' => false,
             'isRequired' => false,
             'isInfoCollector' => false,

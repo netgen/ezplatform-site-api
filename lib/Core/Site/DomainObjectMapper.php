@@ -200,9 +200,9 @@ final class DomainObjectMapper
 
     public function getNullField($identifier, SiteContent $content)
     {
-        $message = 'Field "' . $identifier . '" in Content ID:' . $content->id . ' does not exist, "ngnull" field returned instead';
+        $message = 'Field "' . $identifier . '" in Content with ID "' . $content->id . '" does not exist';
 
-        $this->logger->critical($message);
+        $this->logger->critical($message . ', "ngnull" field will be returned instead');
 
         if ($this->failOnMissingFields) {
             throw new RuntimeException($message);

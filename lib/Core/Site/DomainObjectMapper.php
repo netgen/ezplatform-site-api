@@ -200,7 +200,7 @@ final class DomainObjectMapper
 
     public function getNullField($identifier, SiteContent $content)
     {
-        $message = 'nešto je trulo u državi danskoj';
+        $message = 'Field "' . $identifier . '" in Content ID:' . $content->id . ' does not exist, "ngnull" field returned instead';
         $this->logger->critical($message);
 
         if ($this->debug) {

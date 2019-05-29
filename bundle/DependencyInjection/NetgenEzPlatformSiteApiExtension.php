@@ -19,6 +19,11 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         return 'netgen_ez_platform_site_api';
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration
+     */
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
         return new Configuration($this->getAlias());
@@ -34,7 +39,6 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
 
         $configuration = $this->getConfiguration($configs, $container);
-        assert($configuration instanceof  Configuration);
         $config = $this->processConfiguration($configuration, $configs);
 
         $coreFileLocator = new FileLocator(__DIR__ . '/../../lib/Resources/config');

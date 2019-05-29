@@ -4,13 +4,11 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
-use eZ\Publish\Core\FieldType\Null\Value as NullValue;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -48,7 +46,7 @@ final class Content extends APIContent
     protected $contentInfo;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Fields
      */
     protected $fields;
 
@@ -71,11 +69,6 @@ final class Content extends APIContent
      * @var \eZ\Publish\API\Repository\Values\Content\VersionInfo
      */
     protected $innerVersionInfo;
-
-    /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
-     */
-    private $fieldsById = [];
 
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Site
@@ -121,13 +114,14 @@ final class Content extends APIContent
      */
     private $isInnerOwnerUserInitialized = false;
 
-    public function __construct(array $properties = [])
+    public function __construct(array $properties, $failOnMissingFields, $logger)
     {
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
         $this->contentService = $properties['repository']->getContentService();
         $this->userService = $properties['repository']->getUserService();
         $this->repository = $properties['repository'];
+        $this->fields = new Fields($this, $this->domainObjectMapper, $failOnMissingFields, $logger);
 
         unset(
             $properties['site'],
@@ -153,8 +147,6 @@ final class Content extends APIContent
     {
         switch ($property) {
             case 'fields':
-                $this->initializeFields();
-
                 return $this->fields;
             case 'mainLocation':
                 return $this->getMainLocation();
@@ -201,8 +193,6 @@ final class Content extends APIContent
      */
     public function __debugInfo()
     {
-        $this->initializeFields();
-
         return [
             'id' => $this->id,
             'mainLocationId' => $this->mainLocationId,
@@ -223,9 +213,7 @@ final class Content extends APIContent
      */
     public function hasField($identifier)
     {
-        $this->initializeFields();
-
-        return isset($this->fields[$identifier]);
+        return $this->fields->hasField($identifier);
     }
 
     /**
@@ -235,13 +223,7 @@ final class Content extends APIContent
      */
     public function getField($identifier)
     {
-        $this->initializeFields();
-
-        if ($this->hasField($identifier)) {
-            return $this->fields[$identifier];
-        }
-
-        return $this->domainObjectMapper->getNullField($identifier, $this);
+        return $this->fields->offsetGet($identifier);
     }
 
     /**
@@ -251,9 +233,7 @@ final class Content extends APIContent
      */
     public function hasFieldById($id)
     {
-        $this->initializeFields();
-
-        return isset($this->fieldsById[$id]);
+        return $this->fields->hasFieldById($id);
     }
 
     /**
@@ -263,13 +243,7 @@ final class Content extends APIContent
      */
     public function getFieldById($id)
     {
-        $this->initializeFields();
-
-        if ($this->hasFieldById($id)) {
-            return $this->fieldsById[$id];
-        }
-
-        return null;
+        return $this->fields->getFieldById($id);
     }
 
     /**
@@ -279,13 +253,7 @@ final class Content extends APIContent
      */
     public function getFieldValue($identifier)
     {
-        $this->initializeFields();
-
-        if ($this->hasField($identifier)) {
-            return $this->fields[$identifier]->value;
-        }
-
-        return null;
+        return $this->getField($identifier)->value;
     }
 
     /**
@@ -295,13 +263,7 @@ final class Content extends APIContent
      */
     public function getFieldValueById($id)
     {
-        $this->initializeFields();
-
-        if ($this->hasFieldById($id)) {
-            return $this->fieldsById[$id]->value;
-        }
-
-        return null;
+        $this->getFieldById($id)->value;
     }
 
     public function getLocations($limit = 25)
@@ -372,21 +334,6 @@ final class Content extends APIContent
         $pager->setCurrentPage($currentPage);
 
         return $pager;
-    }
-
-    /**
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     */
-    private function initializeFields()
-    {
-        if ($this->fields === null) {
-            $this->fields = [];
-            foreach ($this->getInnerContent()->getFieldsByLanguage($this->languageCode) as $apiField) {
-                $field = $this->domainObjectMapper->mapField($apiField, $this);
-                $this->fields[$field->fieldDefIdentifier] = $field;
-                $this->fieldsById[$field->id] = $field;
-            }
-        }
     }
 
     private function getMainLocation()

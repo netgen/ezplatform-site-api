@@ -16,7 +16,6 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use RuntimeException;
 
 /**
@@ -53,7 +52,7 @@ final class DomainObjectMapper
     private $failOnMissingFields;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var \Psr\Log\LoggerInterface|null
      */
     private $logger;
 
@@ -74,7 +73,7 @@ final class DomainObjectMapper
         $this->contentTypeService = $repository->getContentTypeService();
         $this->fieldTypeService = $repository->getFieldTypeService();
         $this->failOnMissingFields = $failOnMissingFields;
-        $this->logger = $logger === null ? new NullLogger() : $logger;
+        $this->logger = $logger;
     }
 
     /**
@@ -99,7 +98,9 @@ final class DomainObjectMapper
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
                 'repository' => $this->repository,
-            ]
+            ],
+            $this->failOnMissingFields,
+            $this->logger
         );
     }
 
@@ -169,6 +170,18 @@ final class DomainObjectMapper
         $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
 
         if (!$fieldDefinition instanceof FieldDefinition) {
+            $message = sprintf(
+                'Field "%s" in Content #%s does not have a FieldDefinition',
+                $apiField->fieldDefIdentifier,
+                $content->id
+            );
+
+            if ($this->failOnMissingFields) {
+                throw new RuntimeException($message);
+            }
+
+            $this->logger->critical($message . ', using null field instead');
+
             return $this->getNullField($apiField->fieldDefIdentifier, $content);
         }
 
@@ -200,26 +213,18 @@ final class DomainObjectMapper
 
     public function getNullField($identifier, SiteContent $content)
     {
-        $message = 'Field "' . $identifier . '" in Content with ID "' . $content->id . '" does not exist';
-
-        $this->logger->critical($message . ', "ngnull" field will be returned instead');
-
-        if ($this->failOnMissingFields) {
-            throw new RuntimeException($message);
-        }
-
         $apiField = new APIField([
             'id' => 0,
             'fieldDefIdentifier' => $identifier,
-            'value' => new NullValue(null),
+            'value' => null,
             'languageCode' => $content->languageCode,
             'fieldTypeIdentifier' => 'ngnull',
         ]);
 
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 0,
-            'identifier' => $identifier,
-            'fieldGroup' => $apiField->fieldTypeIdentifier,
+            'identifier' => $apiField->fieldDefIdentifier,
+            'fieldGroup' => '',
             'position' => 0,
             'fieldTypeIdentifier' => $apiField->fieldTypeIdentifier,
             'isTranslatable' => false,
@@ -227,7 +232,7 @@ final class DomainObjectMapper
             'isInfoCollector' => false,
             'defaultValue' => null,
             'isSearchable' => false,
-            'mainLanguageCode' => $content->languageCode,
+            'mainLanguageCode' => $apiField->languageCode,
             'fieldSettings' => [],
             'validatorConfiguration' => [],
         ]);

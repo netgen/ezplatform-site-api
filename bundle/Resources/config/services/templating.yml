@@ -43,3 +43,9 @@ services:
             - '@netgen.ezplatform_site.query_type.query_executor'
         tags:
             - { name: twig.runtime }
+
+    netgen.ezplatform_site.twig.extension.attribute_access:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\AttributeAccessExtension
+        tags:
+            - { name: twig.extension }
+        public: false

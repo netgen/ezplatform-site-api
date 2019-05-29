@@ -16,7 +16,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string $name
  * @property-read string $languageCode
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Field[] $fields
+ * @property-read \Netgen\EzPlatformSiteApi\API\Values\Fields $fields
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content|null $owner
  * @property-read \eZ\Publish\API\Repository\Values\User\User|null $innerOwnerUser

@@ -2,13 +2,13 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\NodeVisitor;
 
-use Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Node\GetAttributeExpression;
+use Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Node\GetAttrExpressionDecorator;
 use Twig\Environment;
 use Twig\Node\Expression\GetAttrExpression;
 use Twig\Node\Node;
 use Twig\NodeVisitor\NodeVisitorInterface;
 
-class GetAttributeExpressionOverride implements NodeVisitorInterface
+class GetAttrExpressionReplacer implements NodeVisitorInterface
 {
     public function enterNode(Node $node, Environment $env)
     {
@@ -16,7 +16,7 @@ class GetAttributeExpressionOverride implements NodeVisitorInterface
             return $node;
         }
 
-        return new GetAttributeExpression($node);
+        return new GetAttrExpressionDecorator($node);
     }
 
     public function leaveNode(Node $node, Environment $env)

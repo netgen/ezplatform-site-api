@@ -44,8 +44,8 @@ services:
         tags:
             - { name: twig.runtime }
 
-    netgen.ezplatform_site.twig.extension.attribute_access:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\AttributeAccessExtension
+    netgen.ezplatform_site.twig.extension.get_attr_expression:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\GetAttrExpressionExtension
         tags:
             - { name: twig.extension }
         public: false

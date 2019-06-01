@@ -12,7 +12,7 @@ class GetAttributeExpressionOverride implements NodeVisitorInterface
 {
     public function enterNode(Node $node, Environment $env)
     {
-        if (!$node instanceof GetAttrExpression) {
+        if (get_class($node) !== GetAttrExpression::class) {
             return $node;
         }
 

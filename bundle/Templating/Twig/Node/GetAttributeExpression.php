@@ -6,13 +6,26 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\Fields;
 use Twig\Compiler;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
-use Twig\Node\Expression\AbstractExpression;
+use Twig\Node\Expression\GetAttrExpression;
+use Twig\Node\Node;
 use Twig\Source;
 use Twig\Template;
 use function twig_get_attribute;
 
-final class GetAttributeExpression extends AbstractExpression
+final class GetAttributeExpression extends GetAttrExpression
 {
+    /**
+     * @var \Twig\Node\Expression\GetAttrExpression
+     */
+    private $expression;
+
+    /** @noinspection MagicMethodsValidityInspection */
+    /** @noinspection PhpMissingParentConstructorInspection */
+    public function __construct(GetAttrExpression $expression)
+    {
+        $this->expression = $expression;
+    }
+
     public function compile(Compiler $compiler)
     {
         $env = $compiler->getEnvironment();
@@ -68,6 +81,95 @@ final class GetAttributeExpression extends AbstractExpression
             ->raw(', ')->repr($this->getNode('node')->getTemplateLine())
             ->raw(')')
         ;
+    }
+
+    public function __toString()
+    {
+        return $this->expression->__toString();
+    }
+
+    public function getTemplateLine()
+    {
+        return $this->expression->getTemplateLine();
+    }
+
+    public function getNodeTag()
+    {
+        return $this->expression->getNodeTag();
+    }
+
+    public function hasAttribute($name)
+    {
+        return $this->expression->hasAttribute($name);
+    }
+
+    public function getAttribute($name)
+    {
+        return $this->expression->getAttribute($name);
+    }
+
+    public function setAttribute($name, $value)
+    {
+        $this->expression->setAttribute($name, $value);
+    }
+
+    public function removeAttribute($name)
+    {
+        $this->expression->removeAttribute($name);
+    }
+
+    public function hasNode($name)
+    {
+        return $this->expression->hasNode($name);
+    }
+
+    public function getNode($name)
+    {
+        return $this->expression->getNode($name);
+    }
+
+    public function setNode($name, Node $node)
+    {
+        $this->expression->setNode($name, $node);
+    }
+
+    public function removeNode($name)
+    {
+        $this->expression->removeNode($name);
+    }
+
+    public function count()
+    {
+        return $this->expression->count();
+    }
+
+    public function getIterator()
+    {
+        return $this->expression->getIterator();
+    }
+
+    /**
+     * {@inheritDoc}
+     * @deprecated
+     */
+    public function setTemplateName($name)
+    {
+        $this->expression->setTemplateName($name);
+    }
+
+    public function getTemplateName()
+    {
+        return $this->expression->getTemplateName();
+    }
+
+    public function setSourceContext(Source $source)
+    {
+        $this->expression->setSourceContext($source);
+    }
+
+    public function getSourceContext()
+    {
+        return $this->expression->getSourceContext();
     }
 
     /**

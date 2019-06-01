@@ -3,7 +3,7 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use ArrayIterator;
-use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\API\Values\Fields as APIField;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
 use Psr\Log\LoggerInterface;
@@ -58,7 +58,7 @@ final class Fields extends APIField
     private $fieldsById = [];
 
     public function __construct(
-        Content $content,
+        APIContent $content,
         DomainObjectMapper $domainObjectMapper,
         $failOnMissingFields,
         LoggerInterface $logger

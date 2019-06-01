@@ -12,18 +12,18 @@ use Twig\Source;
 use Twig\Template;
 use function twig_get_attribute;
 
-final class GetAttributeExpression extends GetAttrExpression
+final class GetAttrExpressionDecorator extends GetAttrExpression
 {
     /**
      * @var \Twig\Node\Expression\GetAttrExpression
      */
-    private $expression;
+    private $decoratedExpression;
 
     /** @noinspection MagicMethodsValidityInspection */
     /** @noinspection PhpMissingParentConstructorInspection */
-    public function __construct(GetAttrExpression $expression)
+    public function __construct(GetAttrExpression $decoratedExpression)
     {
-        $this->expression = $expression;
+        $this->decoratedExpression = $decoratedExpression;
     }
 
     public function compile(Compiler $compiler)
@@ -85,67 +85,67 @@ final class GetAttributeExpression extends GetAttrExpression
 
     public function __toString()
     {
-        return $this->expression->__toString();
+        return $this->decoratedExpression->__toString();
     }
 
     public function getTemplateLine()
     {
-        return $this->expression->getTemplateLine();
+        return $this->decoratedExpression->getTemplateLine();
     }
 
     public function getNodeTag()
     {
-        return $this->expression->getNodeTag();
+        return $this->decoratedExpression->getNodeTag();
     }
 
     public function hasAttribute($name)
     {
-        return $this->expression->hasAttribute($name);
+        return $this->decoratedExpression->hasAttribute($name);
     }
 
     public function getAttribute($name)
     {
-        return $this->expression->getAttribute($name);
+        return $this->decoratedExpression->getAttribute($name);
     }
 
     public function setAttribute($name, $value)
     {
-        $this->expression->setAttribute($name, $value);
+        $this->decoratedExpression->setAttribute($name, $value);
     }
 
     public function removeAttribute($name)
     {
-        $this->expression->removeAttribute($name);
+        $this->decoratedExpression->removeAttribute($name);
     }
 
     public function hasNode($name)
     {
-        return $this->expression->hasNode($name);
+        return $this->decoratedExpression->hasNode($name);
     }
 
     public function getNode($name)
     {
-        return $this->expression->getNode($name);
+        return $this->decoratedExpression->getNode($name);
     }
 
     public function setNode($name, Node $node)
     {
-        $this->expression->setNode($name, $node);
+        $this->decoratedExpression->setNode($name, $node);
     }
 
     public function removeNode($name)
     {
-        $this->expression->removeNode($name);
+        $this->decoratedExpression->removeNode($name);
     }
 
     public function count()
     {
-        return $this->expression->count();
+        return $this->decoratedExpression->count();
     }
 
     public function getIterator()
     {
-        return $this->expression->getIterator();
+        return $this->decoratedExpression->getIterator();
     }
 
     /**
@@ -154,22 +154,22 @@ final class GetAttributeExpression extends GetAttrExpression
      */
     public function setTemplateName($name)
     {
-        $this->expression->setTemplateName($name);
+        $this->decoratedExpression->setTemplateName($name);
     }
 
     public function getTemplateName()
     {
-        return $this->expression->getTemplateName();
+        return $this->decoratedExpression->getTemplateName();
     }
 
     public function setSourceContext(Source $source)
     {
-        $this->expression->setSourceContext($source);
+        $this->decoratedExpression->setSourceContext($source);
     }
 
     public function getSourceContext()
     {
-        return $this->expression->getSourceContext();
+        return $this->decoratedExpression->getSourceContext();
     }
 
     /**

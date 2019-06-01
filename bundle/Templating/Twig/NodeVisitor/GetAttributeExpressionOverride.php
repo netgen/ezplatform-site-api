@@ -12,32 +12,11 @@ class GetAttributeExpressionOverride implements NodeVisitorInterface
 {
     public function enterNode(Node $node, Environment $env)
     {
-        if (get_class($node) !== GetAttrExpression::class) {
+        if (!$node instanceof GetAttrExpression) {
             return $node;
         }
 
-        $nodes = [
-            'node' => $node->getNode('node'),
-            'attribute' => $node->getNode('attribute')
-        ];
-
-        if ($node->hasNode('arguments')) {
-            $nodes['arguments'] = $node->getNode('arguments');
-        }
-
-        $attributes = [
-            'type' => $node->getAttribute('type'),
-            'is_defined_test' => $node->getAttribute('is_defined_test'),
-            'ignore_strict_check' => $node->getAttribute('ignore_strict_check'),
-            'optimizable' => $node->getAttribute('optimizable'),
-        ];
-
-        return new GetAttributeExpression(
-            $nodes,
-            $attributes,
-            $node->getTemplateLine(),
-            $node->getNodeTag()
-        );
+        return new GetAttributeExpression($node);
     }
 
     public function leaveNode(Node $node, Environment $env)

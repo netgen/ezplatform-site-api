@@ -167,20 +167,14 @@ class ContentViewBuilder implements ViewBuilder
      */
     private function loadEmbeddedContent($contentId, Location $location = null)
     {
-        $repositoryLocation = null;
-
         /** @var \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo */
         $contentInfo = $this->repository->sudo(
             function (Repository $repository) use ($contentId) {
                 return $repository->getContentService()->loadContentInfo($contentId);
             }
         );
-        
-        if ($location !== null) {
-            $repositoryLocation = $location->innerLocation;    
-        }
 
-        if (!$this->canRead($contentInfo, $repositoryLocation)) {
+        if (!$this->canRead($contentInfo, $location)) {
             throw new UnauthorizedException(
                 'content', 'read|view_embed',
                 ['contentId' => $contentId, 'locationId' => $location !== null ? $location->id : 'n/a']
@@ -238,7 +232,7 @@ class ContentViewBuilder implements ViewBuilder
     {
         $limitations = ['valueObject' => $contentInfo];
         if (isset($location)) {
-            $limitations['targets'] = $location;
+            $limitations['targets'] = $location->innerLocation;
         }
 
         $readAttribute = new AuthorizationAttribute('content', 'read', $limitations);

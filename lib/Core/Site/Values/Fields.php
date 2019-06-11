@@ -57,11 +57,16 @@ final class Fields extends APIField
      */
     private $fieldsById = [];
 
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
+     */
+    private $fieldsByNumericSequence = [];
+
     public function __construct(
         APIContent $content,
         DomainObjectMapper $domainObjectMapper,
         $failOnMissingFields,
-        LoggerInterface $logger
+        LoggerInterface $logger = null
     ) {
         $this->content = $content;
         $this->domainObjectMapper = $domainObjectMapper;
@@ -90,7 +95,8 @@ final class Fields extends APIField
     {
         $this->initialize();
 
-        return array_key_exists($identifier, $this->fieldsByIdentifier);
+        return array_key_exists($identifier, $this->fieldsByIdentifier)
+            || array_key_exists($identifier, $this->fieldsByNumericSequence);
     }
 
     /**
@@ -118,6 +124,10 @@ final class Fields extends APIField
 
         if (array_key_exists($identifier, $this->fieldsByIdentifier)) {
             return $this->fieldsByIdentifier[$identifier];
+        }
+
+        if (array_key_exists($identifier, $this->fieldsByNumericSequence)) {
+            return $this->fieldsByNumericSequence[$identifier];
         }
 
         $message = sprintf('Field "%s" in Content #%s does not exist', $identifier, $this->content->id);
@@ -212,6 +222,7 @@ final class Fields extends APIField
             $field = $this->domainObjectMapper->mapField($apiField, $content);
             $this->fieldsByIdentifier[$field->fieldDefIdentifier] = $field;
             $this->fieldsById[$field->id] = $field;
+            $this->fieldsByNumericSequence[] = $field;
             $this->iterator = new ArrayIterator($this->fieldsByIdentifier);
         }
 

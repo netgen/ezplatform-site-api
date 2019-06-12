@@ -216,7 +216,7 @@ final class DomainObjectMapper
         $apiField = new APIField([
             'id' => 0,
             'fieldDefIdentifier' => $identifier,
-            'value' => null,
+            'value' => new NullValue(),
             'languageCode' => $content->languageCode,
             'fieldTypeIdentifier' => 'ngnull',
         ]);

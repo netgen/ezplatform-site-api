@@ -199,17 +199,21 @@ class ContentTest extends TestCase
      */
     protected function getMockedContent()
     {
-        return new Content([
-            'site' => $this->getSiteMock(),
-            'domainObjectMapper' => $this->getDomainObjectMapper(),
-            'repository' => $this->getRepositoryMock(),
-            'innerVersionInfo' => new VersionInfo([
-                'contentInfo' => new RepoContentInfo([
-                    'ownerId' => 'ownerId',
-                    'contentTypeId' => 'contentTypeId',
-                ]),
-            ]),
-        ]);
+        return new Content(
+            [
+                'site' => $this->getSiteMock(),
+                'domainObjectMapper' => $this->getDomainObjectMapper(),
+                'repository' => $this->getRepositoryMock(),
+                'innerVersionInfo' => new VersionInfo([
+                    'contentInfo' => new RepoContentInfo([
+                        'ownerId' => 'ownerId',
+                        'contentTypeId' => 'contentTypeId',
+                    ]),
+                ])
+            ],
+            true,
+            null
+        );
     }
 
     /**
@@ -226,7 +230,6 @@ class ContentTest extends TestCase
             ->getMock();
 
         $this->siteMock
-            ->expects($this->any())
             ->method('getLoadService')
             ->willReturn($this->getLoadServiceMock());
 
@@ -244,7 +247,8 @@ class ContentTest extends TestCase
 
         $this->domainObjectMapper = new DomainObjectMapper(
             $this->getSiteMock(),
-            $this->getRepositoryMock()
+            $this->getRepositoryMock(),
+            true
         );
 
         return $this->domainObjectMapper;
@@ -296,7 +300,6 @@ class ContentTest extends TestCase
             ->getMock();
 
         $this->contentTypeServiceMock
-            ->expects($this->any())
             ->method('loadContentType')
             ->with('contentTypeId')
             ->willReturn(new ContentType([
@@ -352,21 +355,10 @@ class ContentTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->repositoryMock->expects($this->any())
-            ->method('getContentService')
-            ->willReturn($this->getContentServiceMock());
-
-        $this->repositoryMock->expects($this->any())
-            ->method('getContentTypeService')
-            ->willReturn($this->getContentTypeServiceMock());
-
-        $this->repositoryMock->expects($this->any())
-            ->method('getFieldTypeService')
-            ->willReturn($this->getFieldTypeServiceMock());
-
-        $this->repositoryMock->expects($this->any())
-            ->method('getUserService')
-            ->willReturn($this->getUserServiceMock());
+        $this->repositoryMock->method('getContentService')->willReturn($this->getContentServiceMock());
+        $this->repositoryMock->method('getContentTypeService')->willReturn($this->getContentTypeServiceMock());
+        $this->repositoryMock->method('getFieldTypeService')->willReturn($this->getFieldTypeServiceMock());
+        $this->repositoryMock->method('getUserService')->willReturn($this->getUserServiceMock());
 
         return $this->repositoryMock;
     }

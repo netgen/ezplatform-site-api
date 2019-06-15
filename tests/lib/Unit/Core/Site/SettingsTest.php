@@ -35,11 +35,17 @@ class SettingsTest extends TestCase
         $this->assertEquals(42, $settings->rootLocationId);
     }
 
-    /**
-     * @expectedException \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
-     */
+    public function testGetFailOnMissingFields()
+    {
+        $settings = $this->getSettingsUnderTest();
+
+        $this->assertEquals(false, $settings->failOnMissingFields);
+    }
+
     public function testGetNonexistentProperty()
     {
+        $this->expectException(PropertyNotFoundException::class);
+
         $settings = $this->getSettingsUnderTest();
 
         $settings->blah;
@@ -66,21 +72,19 @@ class SettingsTest extends TestCase
         $this->assertTrue(isset($settings->rootLocationId));
     }
 
-    /**
-     * @expectedException \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
-     */
     public function testIssetNonexistentProperty()
     {
+        $this->expectException(PropertyNotFoundException::class);
+
         $settings = $this->getSettingsUnderTest();
 
         $this->assertFalse(isset($settings->blah));
     }
 
-    /**
-     * @expectedException \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
-     */
     public function testSet()
     {
+        $this->expectException(PropertyReadOnlyException::class);
+
         $settings = $this->getSettingsUnderTest();
 
         $settings->rootLocationId = 24;
@@ -94,7 +98,8 @@ class SettingsTest extends TestCase
         return new Settings(
             ['cro-HR'],
             true,
-            42
+            42,
+            false
         );
     }
 }

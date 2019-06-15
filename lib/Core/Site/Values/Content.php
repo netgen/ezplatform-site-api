@@ -263,7 +263,7 @@ final class Content extends APIContent
      */
     public function getFieldValueById($id)
     {
-        $this->getFieldById($id)->value;
+        return $this->getFieldById($id)->value;
     }
 
     public function getLocations($limit = 25)

@@ -289,15 +289,17 @@ class FieldsTest extends TestCase
         $this->assertTrue($field->isEmpty());
     }
 
-    public function testDebugDump()
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function testDebugInfo()
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        ob_start();
-        var_dump($fields);
-        $dump = ob_get_clean();
-
-        $this->assertLessThan(8192, strlen($dump));
+        $this->assertEquals(
+            array_values((array)$fields->getIterator()),
+            $fields->__debugInfo()
+        );
     }
 
     /**

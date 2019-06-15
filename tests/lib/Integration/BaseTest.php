@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
+use Netgen\EzPlatformSiteApi\API\Values\Fields;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\API\Values\Field;
 use eZ\Publish\SPI\FieldType\Value;
@@ -17,6 +18,7 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\NullValue;
 use ReflectionProperty;
 
 /**
@@ -144,9 +146,7 @@ class BaseTest extends APIBaseTest
                 'name' => $content->name,
                 'languageCode' => $content->languageCode,
                 'contentInfo' => $content->contentInfo,
-                'fields' => [
-                    'title' => $content->getField('title'),
-                ],
+                'fields' => $content->fields,
                 'mainLocation' => "[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]",
                 'innerContent' => "[An instance of eZ\Publish\API\Repository\Values\Content\Content]",
                 'innerVersionInfo' => "[An instance of eZ\Publish\API\Repository\Values\Content\VersionInfo]"
@@ -227,7 +227,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertFields(Content $content, $data)
     {
-        $this->assertInternalType('array', $content->fields);
+        $this->assertInstanceOf(Fields::class, $content->fields);
         $this->assertCount(count($data['fields']), $content->fields);
 
         foreach ($content->fields as $identifier => $field) {
@@ -256,10 +256,10 @@ class BaseTest extends APIBaseTest
             $this->assertField($content, $identifier, $data['languageCode'], $fieldData);
         }
 
-        $this->assertNull($content->getField('non_existent_field'));
-        $this->assertNull($content->getFieldById('non_existent_field'));
-        $this->assertNull($content->getFieldValue('non_existent_field'));
-        $this->assertNull($content->getFieldValueById('non_existent_field'));
+        $this->assertInstanceOf(Field::class, $content->getField('non_existent_field'));
+        $this->assertInstanceOf(Field::class, $content->getFieldById('non_existent_field'));
+        $this->assertInstanceOf(NullValue::class, $content->getFieldValue('non_existent_field'));
+        $this->assertInstanceOf(NullValue::class, $content->getFieldValueById('non_existent_field'));
     }
 
     protected function assertField(Content $content, $identifier, $languageCode, $data)

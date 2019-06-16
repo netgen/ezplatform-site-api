@@ -24,6 +24,7 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 use Netgen\TagsBundle\API\Repository\Values\Content\Query\Criterion\TagId;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\FieldType\Tags\Value as TagValue;
+use Psr\Log\NullLogger;
 
 /**
  * TagFields Content Relation QueryType test case.
@@ -118,7 +119,8 @@ class TagFieldsTest extends QueryTypeBaseTest
                 'innerContent' => $this->getRepoContent(),
                 'innerVersionInfo' => $this->getRepoVersionInfo(),
             ],
-            true
+            true,
+            new NullLogger()
         );
     }
 

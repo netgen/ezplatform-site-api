@@ -26,6 +26,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 use OutOfBoundsException;
+use Psr\Log\NullLogger;
 
 /**
  * ForwardFields Content Relation QueryType test case.
@@ -111,7 +112,8 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                 'innerContent' => $this->getRepoContent(),
                 'innerVersionInfo' => $this->getRepoVersionInfo(),
             ],
-            true
+            true,
+            new NullLogger()
         );
     }
 

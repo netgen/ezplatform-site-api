@@ -16,6 +16,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
+use Psr\Log\NullLogger;
 
 /**
  * ReverseFields Content Relation QueryType test case.
@@ -57,7 +58,8 @@ class ReverseFieldsTest extends QueryTypeBaseTest
                 'repository' => $this->getRepositoryMock(),
                 'fields' => [],
             ],
-            true
+            true,
+            new NullLogger()
         );
     }
 

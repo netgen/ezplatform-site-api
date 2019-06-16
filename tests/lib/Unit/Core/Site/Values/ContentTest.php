@@ -18,6 +18,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 
 /**
  * Content value unit tests.
@@ -212,7 +213,7 @@ class ContentTest extends TestCase
                 ])
             ],
             true,
-            null
+            new NullLogger()
         );
     }
 
@@ -248,7 +249,8 @@ class ContentTest extends TestCase
         $this->domainObjectMapper = new DomainObjectMapper(
             $this->getSiteMock(),
             $this->getRepositoryMock(),
-            true
+            true,
+            new NullLogger()
         );
 
         return $this->domainObjectMapper;

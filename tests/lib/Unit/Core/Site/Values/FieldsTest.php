@@ -12,6 +12,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\Fields;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use RuntimeException;
 
 /**
@@ -294,7 +295,7 @@ class FieldsTest extends TestCase
                 'innerContent' => $this->getRepoContent(),
             ],
             true,
-            null
+            new NullLogger()
         );
     }
 

@@ -13,6 +13,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
+use Psr\Log\LoggerInterface;
 
 /**
  * @internal hint against API Content instead of this class
@@ -114,7 +115,7 @@ final class Content extends APIContent
      */
     private $isInnerOwnerUserInitialized = false;
 
-    public function __construct(array $properties, $failOnMissingFields, $logger)
+    public function __construct(array $properties, $failOnMissingFields, LoggerInterface $logger)
     {
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];

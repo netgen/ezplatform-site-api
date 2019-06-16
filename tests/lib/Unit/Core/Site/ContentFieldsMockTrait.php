@@ -12,6 +12,7 @@ use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\SPI\FieldType\FieldType;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
+use Psr\Log\NullLogger;
 
 /**
  * Used for mocking Site API Content with Fields.
@@ -103,7 +104,8 @@ trait ContentFieldsMockTrait
         $this->domainObjectMapper = new DomainObjectMapper(
             $this->getSiteMock(),
             $this->getRepositoryMock(),
-            true
+            true,
+            new NullLogger()
         );
 
         return $this->domainObjectMapper;

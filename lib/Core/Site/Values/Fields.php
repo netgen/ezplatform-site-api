@@ -7,7 +7,6 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\API\Values\Fields as APIField;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use RuntimeException;
 
 /**
@@ -66,18 +65,18 @@ final class Fields extends APIField
      * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
      * @param bool $failOnMissingFields
-     * @param \Psr\Log\LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         APIContent $content,
         DomainObjectMapper $domainObjectMapper,
         $failOnMissingFields,
-        LoggerInterface $logger = null
+        LoggerInterface $logger
     ) {
         $this->content = $content;
         $this->domainObjectMapper = $domainObjectMapper;
         $this->failOnMissingFields = $failOnMissingFields;
-        $this->logger = $logger === null ? new NullLogger() : $logger;
+        $this->logger = $logger;
     }
 
     /**

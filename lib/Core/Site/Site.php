@@ -8,6 +8,7 @@ use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class Site implements SiteInterface
 {
@@ -97,7 +98,7 @@ class Site implements SiteInterface
         $this->searchService = $repository->getSearchService();
         $this->filteringSearchService = $filteringSearchService;
         $this->relationResolverRegistry = $relationResolverRegistry;
-        $this->logger = $logger;
+        $this->logger = $logger === null ? new NullLogger() : $logger;
     }
 
     public function getSettings()

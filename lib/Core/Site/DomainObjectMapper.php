@@ -60,13 +60,13 @@ final class DomainObjectMapper
      * @param \Netgen\EzPlatformSiteApi\API\Site $site
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param bool $failOnMissingFields
-     * @param \Psr\Log\LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         SiteInterface $site,
         Repository $repository,
         $failOnMissingFields,
-        LoggerInterface $logger = null
+        LoggerInterface $logger
     ) {
         $this->site = $site;
         $this->repository = $repository;

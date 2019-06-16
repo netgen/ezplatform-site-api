@@ -2,6 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\Content\Relations;
 
+use eZ\Publish\API\Repository\Values\Content\Field as RepoField;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
@@ -13,10 +14,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
-use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\AllTagFields;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Field as SiteField;
+use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 use Netgen\TagsBundle\API\Repository\Values\Content\Query\Criterion\TagId;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
@@ -30,6 +31,8 @@ use Netgen\TagsBundle\Core\FieldType\Tags\Value as TagValue;
  */
 class AllTagFieldsTest extends QueryTypeBaseTest
 {
+    use ContentFieldsMockTrait;
+
     protected function getQueryTypeName()
     {
         return 'SiteAPI:Content/Relations/AllTagFields';
@@ -40,82 +43,102 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         return new AllTagFields();
     }
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
-     */
-    protected function getRepositoryMock()
+    protected function internalGetRepoFields()
     {
-        $repositoryMock = $this
-            ->getMockBuilder(Repository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return [
+            new RepoField([
+                'id' => 1,
+                'fieldDefIdentifier' => 'tags_a',
+                'value' => new TagValue([
+                    new Tag([
+                        'id' => 1,
+                    ]),
+                    new Tag([
+                        'id' => 2,
+                    ]),
+                ]),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'eztags',
+            ]),
+            new RepoField([
+                'id' => 2,
+                'fieldDefIdentifier' => 'tags_b',
+                'value' => new TagValue([
+                    new Tag([
+                        'id' => 3,
+                    ]),
+                    new Tag([
+                        'id' => 4,
+                    ]),
+                ]),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'eztags',
+            ]),
+            new RepoField([
+                'id' => 3,
+                'fieldDefIdentifier' => 'third',
+                'value' => new TagValue([
+                    new Tag([
+                        'id' => 3,
+                    ]),
+                    new Tag([
+                        'id' => 4,
+                    ]),
+                ]),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'ezstring',
+            ]),
+        ];
+    }
 
-        $repositoryMock->expects($this->any())
-            ->method('getContentService')
-            ->willReturn(false);
-
-        $repositoryMock->expects($this->any())
-            ->method('getUserService')
-            ->willReturn(false);
-
-        return $repositoryMock;
+    protected function internalGetRepoFieldDefinitions()
+    {
+        return [
+            new FieldDefinition([
+                'id' => 1,
+                'identifier' => 'tags_a',
+                'fieldTypeIdentifier' => 'eztags',
+            ]),
+            new FieldDefinition([
+                'id' => 2,
+                'identifier' => 'tags_b',
+                'fieldTypeIdentifier' => 'eztags',
+            ]),
+            new FieldDefinition([
+                'id' => 3,
+                'identifier' => 'third',
+                'fieldTypeIdentifier' => 'ezstring',
+            ]),
+        ];
     }
 
     protected function getTestContentWithTags()
     {
-        $contentStub = new Content([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'repository' => $this->getRepositoryMock(),
-            'id' => 42,
-        ]);
-
-        return new Content([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'repository' => $this->getRepositoryMock(),
-            'fields' => [
-                new SiteField([
-                    'fieldTypeIdentifier' => 'eztags',
-                    'content' => $contentStub,
-                    'value' => new TagValue([
-                        new Tag([
-                            'id' => 1,
-                        ]),
-                        new Tag([
-                            'id' => 2,
-                        ]),
-                    ]),
-                ]),
-                new SiteField([
-                    'fieldTypeIdentifier' => 'eztags',
-                    'content' => $contentStub,
-                    'value' => new TagValue([
-                        new Tag([
-                            'id' => 3,
-                        ]),
-                        new Tag([
-                            'id' => 4,
-                        ]),
-                    ]),
-                ]),
-                new SiteField([
-                    'fieldTypeIdentifier' => 'ezstring',
-                ]),
+        return new Content(
+            [
+                'id' => 42,
+                'site' => false,
+                'domainObjectMapper' => $this->getDomainObjectMapper(),
+                'repository' => $this->getRepositoryMock(),
+                'innerContent' => $this->getRepoContent(),
+                'innerVersionInfo' => $this->getRepoVersionInfo(),
             ],
-            'id' => 42,
-        ]);
+            true
+        );
     }
 
     protected function getTestContentWithoutTags()
     {
-        return new Content([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'repository' => $this->getRepositoryMock(),
-            'fields' => [],
-            'id' => 42,
-        ]);
+        return new Content(
+            [
+                'id' => 42,
+                'site' => false,
+                'domainObjectMapper' => $this->getDomainObjectMapper(),
+                'repository' => $this->getRepositoryMock(),
+                'fields' => [],
+            ],
+            true
+        );
     }
 
     protected function getSupportedParameters()

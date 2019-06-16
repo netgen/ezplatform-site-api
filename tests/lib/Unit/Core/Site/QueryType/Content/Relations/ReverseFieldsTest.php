@@ -12,9 +12,9 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
-use eZ\Publish\Core\Repository\Repository;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
+use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 
 /**
@@ -25,6 +25,8 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class ReverseFieldsTest extends QueryTypeBaseTest
 {
+    use ContentFieldsMockTrait;
+
     protected function getQueryTypeName()
     {
         return 'SiteAPI:Content/Relations/ReverseFields';
@@ -35,35 +37,28 @@ class ReverseFieldsTest extends QueryTypeBaseTest
         return new ReverseFields();
     }
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
-     */
-    protected function getRepositoryMock()
+    protected function internalGetRepoFields()
     {
-        $repositoryMock = $this
-            ->getMockBuilder(Repository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return [];
+    }
 
-        $repositoryMock->expects($this->any())
-            ->method('getContentService')
-            ->willReturn(false);
-
-        $repositoryMock->expects($this->any())
-            ->method('getUserService')
-            ->willReturn(false);
-
-        return $repositoryMock;
+    protected function internalGetRepoFieldDefinitions()
+    {
+        return [];
     }
 
     protected function getTestContent()
     {
-        return new Content([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'repository' => $this->getRepositoryMock(),
-            'id' => 42,
-        ]);
+        return new Content(
+            [
+                'id' => 42,
+                'site' => false,
+                'domainObjectMapper' => $this->getDomainObjectMapper(),
+                'repository' => $this->getRepositoryMock(),
+                'fields' => [],
+            ],
+            true
+        );
     }
 
     protected function getSupportedParameters()

@@ -217,7 +217,6 @@ class QueryDefinitionMapperTest extends TestCase
     {
         $queryTypeRegistryMock = $this->getMockBuilder(QueryTypeRegistry::class)->getMock();
         $queryTypeRegistryMock
-            ->expects($this->any())
             ->method('getQueryType')
             ->willReturnMap([
                 ['query_type', $this->getQueryTypeMock()],
@@ -242,7 +241,6 @@ class QueryDefinitionMapperTest extends TestCase
     {
         $queryTypeMock = $this->getMockBuilder(SiteQueryType::class)->getMock();
         $queryTypeMock
-            ->expects($this->any())
             ->method('supportsParameter')
             ->willReturnMap([
                 ['content', true],
@@ -271,14 +269,9 @@ class QueryDefinitionMapperTest extends TestCase
     protected function getViewMock()
     {
         $viewMock = $this->getMockBuilder(ContentView::class)->getMock();
-        $viewMock
-            ->expects($this->any())
-            ->method('getSiteLocation')
-            ->willReturn('location');
-        $viewMock
-            ->expects($this->any())
-            ->method('getSiteContent')
-            ->willReturn('content');
+
+        $viewMock->method('getSiteLocation')->willReturn('location');
+        $viewMock->method('getSiteContent')->willReturn('content');
 
         return $viewMock;
     }

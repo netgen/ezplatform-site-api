@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\QueryType\QueryType;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use InvalidArgumentException;
@@ -258,8 +259,10 @@ class QueryDefinitionMapperTest extends TestCase
     {
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
         $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
+        /** @var \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolverMock */
+        $configResolverMock = $this->getMockBuilder(ConfigResolverInterface::class)->getMock();
 
-        return new ParameterProcessor($requestStack);
+        return new ParameterProcessor($requestStack, $configResolverMock);
     }
 
     /**

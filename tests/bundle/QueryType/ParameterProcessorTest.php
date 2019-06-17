@@ -131,6 +131,10 @@ class ParameterProcessorTest extends TestCase
                 "@=config('four', 40)",
                 4,
             ],
+            [
+                "@=config('three')",
+                null,
+            ],
         ];
     }
 

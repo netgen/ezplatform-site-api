@@ -89,7 +89,7 @@ class ParameterProcessorTest extends TestCase
             ],
             [
                 "@=timestamp('10 September 2000 +5 days')",
-                '968968800',
+                968968800,
             ],
             [
                 "@=configResolver.getParameter('one', 'namespace', 'scope')",

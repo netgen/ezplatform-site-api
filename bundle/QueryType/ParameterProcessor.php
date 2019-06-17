@@ -112,7 +112,7 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'config',
             static function () {},
-            static function ($arguments, $name, $default, $namespace = null, $scope = null) use ($configResolver) {
+            static function ($arguments, $name, $default = null, $namespace = null, $scope = null) use ($configResolver) {
                 if ($configResolver->hasParameter($name, $namespace, $scope)) {
                     return $configResolver->getParameter($name, $namespace, $scope);
                 }

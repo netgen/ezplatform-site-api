@@ -106,5 +106,19 @@ final class ParameterProcessor
                 return strtotime($timeString);
             }
         );
+
+        $configResolver = $this->configResolver;
+
+        $expressionLanguage->register(
+            'config',
+            static function () {},
+            static function ($arguments, $name, $default, $namespace = null, $scope = null) use ($configResolver) {
+                if ($configResolver->hasParameter($name, $namespace, $scope)) {
+                    return $configResolver->getParameter($name, $namespace, $scope);
+                }
+
+                return $default;
+            }
+        );
     }
 }

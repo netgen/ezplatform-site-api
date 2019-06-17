@@ -195,27 +195,22 @@ class ParameterProcessorTest extends TestCase
     protected function getViewMock()
     {
         $viewMock = $this->getMockBuilder(ContentView::class)->getMock();
+
         $viewMock
-            ->expects($this->any())
             ->method('hasParameter')
             ->willReturnMap([
                 ['paramExists', true],
                 ['paramDoesNotExists', false],
             ]);
+
         $viewMock
-            ->expects($this->any())
             ->method('getParameter')
             ->willReturnMap([
                 ['paramExists', 123],
             ]);
-        $viewMock
-            ->expects($this->any())
-            ->method('getSiteLocation')
-            ->willReturn('LOCATION');
-        $viewMock
-            ->expects($this->any())
-            ->method('getSiteContent')
-            ->willReturn('CONTENT');
+
+        $viewMock->method('getSiteLocation')->willReturn('LOCATION');
+        $viewMock->method('getSiteContent')->willReturn('CONTENT');
 
         return $viewMock;
     }

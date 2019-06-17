@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
+use DateTime;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
@@ -43,8 +44,8 @@ class ParameterProcessorTest extends TestCase
                 [123],
             ],
             [
-                new \DateTime('@1'),
-                new \DateTime('@1'),
+                new DateTime('@1'),
+                new DateTime('@1'),
             ],
             [
                 "@=request.query.get('page')",

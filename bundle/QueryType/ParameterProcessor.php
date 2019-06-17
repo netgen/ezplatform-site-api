@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -19,11 +20,18 @@ final class ParameterProcessor
     private $requestStack;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @var  \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
-    public function __construct(RequestStack $requestStack)
+    private $configResolver;
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     */
+    public function __construct(RequestStack $requestStack, ConfigResolverInterface $configResolver)
     {
         $this->requestStack = $requestStack;
+        $this->configResolver = $configResolver;
     }
 
     /**
@@ -53,6 +61,7 @@ final class ParameterProcessor
                 'location' => $view->getSiteLocation(),
                 'content' => $view->getSiteContent(),
                 'request' => $this->requestStack->getCurrentRequest(),
+                'configResolver' => $this->configResolver,
             ]
         );
     }

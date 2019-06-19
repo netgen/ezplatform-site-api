@@ -116,24 +116,16 @@ class ParameterProcessorTest extends TestCase
                 false,
             ],
             [
-                "@=config('one', 10, 'namespace', 'scope')",
+                "@=config('one', 'namespace', 'scope')",
                 1,
             ],
             [
-                "@=config('two', 20, 'namespace', 'scope')",
+                "@=config('two', 'namespace', 'scope')",
                 2,
             ],
             [
-                "@=config('three', 30, 'namespace', 'scope')",
-                30,
-            ],
-            [
-                "@=config('four', 40)",
+                "@=config('four')",
                 4,
-            ],
-            [
-                "@=config('three')",
-                null,
             ],
         ];
     }

@@ -122,7 +122,7 @@ final class ParameterProcessor
                 $request = $arguments['request'];
 
                 if ($request->query->has($name)) {
-                    return (int)$request->query->get($name, $default);
+                    return $request->query->getInt($name, $default);
                 }
 
                 return $default;
@@ -152,7 +152,7 @@ final class ParameterProcessor
                 $request = $arguments['request'];
 
                 if ($request->query->has($name)) {
-                    return (bool)$request->query->get($name, $default);
+                    return $request->query->getBoolean($name, $default);
                 }
 
                 return $default;

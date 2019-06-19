@@ -100,6 +100,66 @@ final class ParameterProcessor
         );
 
         $expressionLanguage->register(
+            'queryParamString',
+            static function () {},
+            static function ($arguments, $name, $default) {
+                /** @var \Symfony\Component\HttpFoundation\Request $request */
+                $request = $arguments['request'];
+
+                if ($request->query->has($name)) {
+                    return (string)$request->query->get($name, $default);
+                }
+
+                return $default;
+            }
+        );
+
+        $expressionLanguage->register(
+            'queryParamInt',
+            static function () {},
+            static function ($arguments, $name, $default) {
+                /** @var \Symfony\Component\HttpFoundation\Request $request */
+                $request = $arguments['request'];
+
+                if ($request->query->has($name)) {
+                    return (int)$request->query->get($name, $default);
+                }
+
+                return $default;
+            }
+        );
+
+        $expressionLanguage->register(
+            'queryParamFloat',
+            static function () {},
+            static function ($arguments, $name, $default) {
+                /** @var \Symfony\Component\HttpFoundation\Request $request */
+                $request = $arguments['request'];
+
+                if ($request->query->has($name)) {
+                    return (float)$request->query->get($name, $default);
+                }
+
+                return $default;
+            }
+        );
+
+        $expressionLanguage->register(
+            'queryParamBool',
+            static function () {},
+            static function ($arguments, $name, $default) {
+                /** @var \Symfony\Component\HttpFoundation\Request $request */
+                $request = $arguments['request'];
+
+                if ($request->query->has($name)) {
+                    return (bool)$request->query->get($name, $default);
+                }
+
+                return $default;
+            }
+        );
+
+        $expressionLanguage->register(
             'timestamp',
             static function () {},
             static function ($arguments, $timeString) {

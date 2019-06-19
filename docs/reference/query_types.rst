@@ -325,7 +325,7 @@ Templating
 
 Configured queries will be available in Twig templates, through ``ng_query`` or ``ng_raw_query``.
 The difference it that the former will return a ``Pagerfanta`` instance, while the latter will
-return an instance of ``SerachResult``. That also means ``ng_query`` will use ``max_per_page`` and
+return an instance of ``SearchResult``. That also means ``ng_query`` will use ``max_per_page`` and
 ``page`` parameters to configure the pager, while ``ng_raw_query`` ignores them and executes the
 configured query directly.
 

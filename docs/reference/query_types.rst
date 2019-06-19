@@ -261,7 +261,7 @@ the values described above in a more convenient way:
 
 - ``queryParam(name, default)``
 
-    This function is just a shortcut to ``GET`` parameters on the Request object:
+    This function is just a shortcut to ``GET`` / query string parameters on the Request object:
 
     .. code-block:: yaml
 
@@ -274,6 +274,26 @@ the values described above in a more convenient way:
                     parameters:
                         content_type: 'article'
                         sort: 'published desc'
+
+    Query string parameters accessed through the Request object will always be of the ``string`` type,
+    which can be a problem if you need to use them for configuration that expects a different scalar type.
+    For that reason separate type-casting getter functions are also provided:
+
+    - ``queryParamInt(name, default)``
+
+        Performs type casting of the found value to ``integer`` type.
+
+    - ``queryParamBool(name, default)``
+
+        Performs type casting of the found value to ``boolean`` type.
+
+    - ``queryParamFloat(name, default)``
+
+        Performs type casting of the found value to ``float`` type.
+
+    - ``queryParamString(name, default)``
+
+        Performs type casting of the found value to ``string`` type.
 
 - ``timestamp(value)``
 

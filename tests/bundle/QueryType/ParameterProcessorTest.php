@@ -14,6 +14,8 @@ class ParameterProcessorTest extends TestCase
 {
     public function providerForTestProcess()
     {
+        $date = new DateTime('@1');
+
         return [
             [
                 null,
@@ -44,8 +46,8 @@ class ParameterProcessorTest extends TestCase
                 [123],
             ],
             [
-                new DateTime('@1'),
-                new DateTime('@1'),
+                $date,
+                $date,
             ],
             [
                 "@=request.query.get('page')",
@@ -127,6 +129,42 @@ class ParameterProcessorTest extends TestCase
                 "@=config('four')",
                 4,
             ],
+            [
+                "@=queryParamInt('integerStringValue', 5)",
+                10,
+            ],
+            [
+                "@=queryParamInt('nonExistent', 5)",
+                5,
+            ],
+            [
+                "@=queryParamBool('booleanStringValue', false)",
+                true,
+            ],
+            [
+                "@=queryParamBool('booleanStringValue2', true)",
+                false,
+            ],
+            [
+                "@=queryParamBool('nonExistent', true)",
+                true,
+            ],
+            [
+                "@=queryParamFloat('floatStringValue', 7.7)",
+                5.7,
+            ],
+            [
+                "@=queryParamFloat('nonExistent', 7.7)",
+                7.7,
+            ],
+            [
+                "@=queryParamString('stringValue', 'yarn')",
+                'strand',
+            ],
+            [
+                "@=queryParamString('nonExistent', 'yarn')",
+                'yarn',
+            ],
         ];
     }
 
@@ -144,13 +182,22 @@ class ParameterProcessorTest extends TestCase
 
         $processedParameter = $parameterProcessor->process($parameter, $viewMock);
 
-        $this->assertEquals($expectedProcessedParameter, $processedParameter);
+        $this->assertSame($expectedProcessedParameter, $processedParameter);
     }
 
     protected function getParameterProcessorUnderTest()
     {
         $requestStack = new RequestStack();
-        $requestStack->push(new Request(['page' => 422]));
+        $requestStack->push(
+            new Request([
+                'page' => 422,
+                'integerStringValue' => '10',
+                'booleanStringValue' => 'true',
+                'booleanStringValue2' => '0',
+                'floatStringValue' => '5.7',
+                'stringValue' => 'strand',
+            ])
+        );
 
         $configResolver = $this->getConfigResolverMock();
 

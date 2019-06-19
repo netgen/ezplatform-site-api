@@ -216,6 +216,28 @@ will be available in expression:
                         content_type: '@=location.contentInfo.contentTypeIdentifier'
                         sort: 'published desc'
 
+- eZ Platform ConfigResolver service as ``configResolver``
+
+    You can access dynamic configuration through eZ Platform's ``ConfigResolver`` service, enabling different query configuration per siteaccess.
+    For example maximum items per page:
+
+    .. code-block:: yaml
+
+        ngsite.eng.max_per_page: 10 # limit to 10 items on English siteaccess
+        ngsite.jpn.max_per_page: 20 # and 20 items on Japanese siteaccess
+
+    .. code-block:: yaml
+
+        ...
+            ng_named_query:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: '@=configResolver.getParameter("max_per_page", "ngsite")'
+                    page: 1
+                    parameters:
+                        content_type: 'article'
+                        sort: 'published desc'
+
 Several functions are also available for use in expressions. Most of these are provided to access
 the values described above in a more convenient way:
 
@@ -253,7 +275,6 @@ the values described above in a more convenient way:
                         content_type: 'article'
                         sort: 'published desc'
 
-
 - ``timestamp(value)``
 
     This function is used to get a timestamp value, typically used to define time conditions on the
@@ -272,6 +293,27 @@ the values described above in a more convenient way:
                         field:
                             start_date:
                                 gt: '@=timestamp("today")'
+
+- ``config(name, namespace = null, scope = null)``
+
+    This function is just a shortcut to ``getParameter()`` method of ``ConfigResolver`` service, described above:
+
+    .. code-block:: yaml
+
+        ngsite.eng.max_per_page: 10 # limit to 10 items on English siteaccess
+        ngsite.jpn.max_per_page: 20 # and 20 items on Japanese siteaccess
+
+    .. code-block:: yaml
+
+        ...
+            ng_named_query:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: '@=config("max_per_page", "ngsite")'
+                    page: 1
+                    parameters:
+                        content_type: 'article'
+                        sort: 'published desc'
 
 .. note::
 

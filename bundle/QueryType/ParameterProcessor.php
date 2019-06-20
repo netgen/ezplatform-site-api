@@ -91,23 +91,39 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParam',
             static function () {},
-            static function ($arguments, $name, $default) {
+            static function ($arguments, $name, $default, array $allowed = null) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
-                return $request->query->get($name, $default);
+                if (!$request->query->has($name)) {
+                    return $default;
+                }
+
+                $value = $request->query->get($name);
+
+                if ($allowed === null || in_array($value, $allowed, true)) {
+                    return $value;
+                }
+
+                return $default;
             }
         );
 
         $expressionLanguage->register(
             'queryParamString',
             static function () {},
-            static function ($arguments, $name, $default) {
+            static function ($arguments, $name, $default, array $allowed = null) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
-                if ($request->query->has($name)) {
-                    return (string)$request->query->get($name, $default);
+                if (!$request->query->has($name)) {
+                    return $default;
+                }
+
+                $value = (string)$request->query->get($name);
+
+                if ($allowed === null || in_array($value, $allowed, true)) {
+                    return $value;
                 }
 
                 return $default;
@@ -117,12 +133,18 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParamInt',
             static function () {},
-            static function ($arguments, $name, $default) {
+            static function ($arguments, $name, $default, array $allowed = null) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
-                if ($request->query->has($name)) {
-                    return $request->query->getInt($name, $default);
+                if (!$request->query->has($name)) {
+                    return $default;
+                }
+
+                $value = $request->query->getInt($name);
+
+                if ($allowed === null || in_array($value, $allowed, true)) {
+                    return $value;
                 }
 
                 return $default;
@@ -132,12 +154,18 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParamFloat',
             static function () {},
-            static function ($arguments, $name, $default) {
+            static function ($arguments, $name, $default, array $allowed = null) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
-                if ($request->query->has($name)) {
-                    return (float)$request->query->get($name, $default);
+                if (!$request->query->has($name)) {
+                    return $default;
+                }
+
+                $value = (float)$request->query->get($name);
+
+                if ($allowed === null || in_array($value, $allowed, true)) {
+                    return $value;
                 }
 
                 return $default;
@@ -147,12 +175,18 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParamBool',
             static function () {},
-            static function ($arguments, $name, $default) {
+            static function ($arguments, $name, $default, array $allowed = null) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
-                if ($request->query->has($name)) {
-                    return $request->query->getBoolean($name, $default);
+                if (!$request->query->has($name)) {
+                    return $default;
+                }
+
+                $value = $request->query->getBoolean($name);
+
+                if ($allowed === null || in_array($value, $allowed, true)) {
+                    return $value;
                 }
 
                 return $default;

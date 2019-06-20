@@ -259,9 +259,12 @@ the values described above in a more convenient way:
                         content_type: 'article'
                         sort: 'published desc'
 
-- ``queryParam(name, default)``
+- ``queryParam(name, default, array allowed = null)``
 
-    This function is just a shortcut to ``GET`` / query string parameters on the Request object:
+    This function is a shortcut to ``GET`` / query string parameters on the Request object.
+    Through optional third parameter ``allowed`` you can define an array of allowed values. This can be
+    useful when you need to limit what is being passed through the query string. For example you can
+    use it to limit filtering by ContentType to articles and news items:
 
     .. code-block:: yaml
 
@@ -272,26 +275,26 @@ the values described above in a more convenient way:
                     max_per_page: 10
                     page: '@=queryParam("page", 1)'
                     parameters:
-                        content_type: 'article'
+                        content_type: '@=queryParam("type", "article", ["article", "news"])'
                         sort: 'published desc'
 
     Query string parameters accessed through the Request object will always be of the ``string`` type,
     which can be a problem if you need to use them for configuration that expects a different scalar type.
     For that reason separate type-casting getter functions are also provided:
 
-    - ``queryParamInt(name, default)``
+    - ``queryParamInt(name, default, array allowed = null)``
 
         Performs type casting of the found value to ``integer`` type.
 
-    - ``queryParamBool(name, default)``
+    - ``queryParamBool(name, default, array allowed = null)``
 
         Performs type casting of the found value to ``boolean`` type.
 
-    - ``queryParamFloat(name, default)``
+    - ``queryParamFloat(name, default, array allowed = null)``
 
         Performs type casting of the found value to ``float`` type.
 
-    - ``queryParamString(name, default)``
+    - ``queryParamString(name, default, allowed = [])``
 
         Performs type casting of the found value to ``string`` type.
 

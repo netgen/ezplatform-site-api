@@ -165,6 +165,66 @@ class ParameterProcessorTest extends TestCase
                 "@=queryParamString('nonExistent', 'yarn')",
                 'yarn',
             ],
+            [
+                "@=queryParam('page', 10, [10, 25, 50])",
+                10,
+            ],
+            [
+                "@=queryParam('page', '11', [10, 25, 50])",
+                '11',
+            ],
+            [
+                "@=queryParam('twentyFive', 10, [10, 25, 50])",
+                25,
+            ],
+            [
+                "@=queryParamInt('integerStringValue', 25, [10, 25, 50])",
+                10,
+            ],
+            [
+                "@=queryParamInt('integerStringValue', '11', [25, 50])",
+                '11',
+            ],
+            [
+                "@=queryParamInt('integerStringValue', 10, [10, 50])",
+                10,
+            ],
+            [
+                "@=queryParamBool('booleanStringValue', false, [true, false])",
+                true,
+            ],
+            [
+                "@=queryParamBool('booleanStringValue', true, [false])",
+                true,
+            ],
+            [
+                "@=queryParamBool('booleanStringValue', 5, [false])",
+                5,
+            ],
+            [
+                "@=queryParamFloat('floatStringValue', 7.7, [5.7, 7.8])",
+                5.7,
+            ],
+            [
+                "@=queryParamFloat('floatStringValue', 7.7, [5.6, 7.8])",
+                7.7,
+            ],
+            [
+                "@=queryParamFloat('floatStringValue', 'seven', [5.6, 7.8])",
+                'seven',
+            ],
+            [
+                "@=queryParamString('stringValue', 'and', ['hand'])",
+                'and',
+            ],
+            [
+                "@=queryParamString('stringValue', 5, ['hand', 'bland'])",
+                5,
+            ],
+            [
+                "@=queryParamString('stringValue', 'and', ['hand', 'strand'])",
+                'strand',
+            ],
         ];
     }
 
@@ -191,6 +251,7 @@ class ParameterProcessorTest extends TestCase
         $requestStack->push(
             new Request([
                 'page' => 422,
+                'twentyFive' => 25,
                 'integerStringValue' => '10',
                 'booleanStringValue' => 'true',
                 'booleanStringValue2' => '0',

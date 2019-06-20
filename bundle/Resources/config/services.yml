@@ -56,6 +56,7 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
         arguments:
             - '@request_stack'
+            - '@ezpublish.config.resolver'
         public: false
 
     netgen.ezplatform_site.query_type.query_definition_mapper:

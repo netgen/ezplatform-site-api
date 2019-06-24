@@ -5,7 +5,7 @@
 [![Build Status](https://img.shields.io/travis/netgen/ezplatform-site-api.svg?style=popout)](https://travis-ci.org/netgen/ezplatform-site-api)
 [![Read the Docs](https://img.shields.io/readthedocs/pip.svg?style=popout)](https://docs.netgen.io/projects/site-api/en/latest/)
 [![Code Coverage](https://img.shields.io/codecov/c/github/netgen/ezplatform-site-api.svg?style=popout)](https://codecov.io/gh/netgen/ezplatform-site-api)
-[![Quality Score](https://img.shields.io/scrutinizer/g/netgen/ezplatform-site-api.svg?style=popout)](https://scrutinizer-ci.com/g/netgen/ezplatform-site-api)
+[![Quality Score](https://scrutinizer-ci.com/g/netgen/ezplatform-site-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/netgen/ezplatform-site-api)
 [![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)
 
 </div>

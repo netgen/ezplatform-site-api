@@ -17,7 +17,8 @@ This Query Type is used to build queries that fetch from the Location subtree.
 +-------------+------------------------------------------------------------------------------+
 | Common      | - `content_type`_                                                            |
 | Content     | - `field`_                                                                   |
-| conditions  | - `publication_date`_                                                        |
+| conditions  | - `is_field_empty`_                                                          |
+|             | - `publication_date`_                                                        |
 |             | - `section`_                                                                 |
 |             | - `state`_                                                                   |
 +-------------+------------------------------------------------------------------------------+

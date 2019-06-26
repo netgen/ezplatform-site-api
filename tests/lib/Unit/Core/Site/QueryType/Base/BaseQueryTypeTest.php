@@ -190,25 +190,37 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                 [
                     'content_type' => 1,
                 ],
+            ],
+            [
                 [
                     'content_type' => [1],
                 ],
+            ],
+            [
                 [
                     'field' => 1,
                 ],
+            ],
+            [
                 [
                     'publication_date' => true,
                 ],
+            ],
+            [
                 [
                     'publication_date' => [false],
                 ],
+            ],
+            [
                 [
                     'limit' => 'five',
                 ],
+            ],
+            [
                 [
                     'offset' => 'ten',
                 ],
-            ]
+            ],
         ];
     }
 

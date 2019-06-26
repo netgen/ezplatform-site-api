@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use InvalidArgumentException;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\IsFieldEmpty;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder;
@@ -362,6 +363,19 @@ class CriteriaBuilderTest extends TestCase
                             new Subtree(['/subroot/tree/', '/poplar/']),
                         ])
                     ),
+                ],
+            ],
+            [
+                [
+                    new CriterionDefinition([
+                        'name' => 'is_field_empty',
+                        'target' => 'video',
+                        'operator' => null,
+                        'value' => false,
+                    ]),
+                ],
+                [
+                    new IsFieldEmpty('video', IsFieldEmpty::IS_NOT_EMPTY),
                 ],
             ],
         ];

@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use InvalidArgumentException;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\IsFieldEmpty;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
 
@@ -87,6 +88,8 @@ final class CriteriaBuilder
                 return $this->buildSubtree($definition);
             case 'visible':
                 return $this->buildVisibility($definition);
+            case 'is_field_empty':
+                return $this->buildIsFieldEmpty($definition);
         }
 
         throw new InvalidArgumentException(
@@ -310,5 +313,19 @@ final class CriteriaBuilder
         $isVisible = $definition->value ? Visibility::VISIBLE : Visibility::HIDDEN;
 
         return new Visibility($isVisible);
+    }
+
+    /**
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return null|IsFieldEmpty
+     */
+    private function buildIsFieldEmpty(CriterionDefinition $definition)
+    {
+        $value = $definition->value ? IsFieldEmpty::IS_EMPTY : IsFieldEmpty::IS_NOT_EMPTY;
+
+        return new IsFieldEmpty($definition->target, $value);
     }
 }

@@ -222,6 +222,7 @@ abstract class Base implements QueryType
         $resolver->setDefined([
             'content_type',
             'field',
+            'is_field_empty',
             'publication_date',
             'section',
             'state',
@@ -235,6 +236,7 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('content_type', ['string', 'array']);
         $resolver->setAllowedTypes('section', ['string', 'array']);
         $resolver->setAllowedTypes('field', ['array']);
+        $resolver->setAllowedTypes('is_field_empty', ['array']);
         $resolver->setAllowedTypes('limit', ['int']);
         $resolver->setAllowedTypes('offset', ['int']);
         $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
@@ -265,6 +267,18 @@ abstract class Base implements QueryType
 
                 foreach ($dates as $date) {
                     if (!is_int($date) && !is_string($date)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+        $resolver->setAllowedValues(
+            'is_field_empty',
+            static function ($isEmptyMap) {
+                foreach ($isEmptyMap as $key => $value) {
+                    if (!is_string($key) || !is_bool($value)) {
                         return false;
                     }
                 }
@@ -306,6 +320,7 @@ abstract class Base implements QueryType
                     break;
                 case 'field':
                 case 'state':
+                case 'is_field_empty':
                     $definitions = $this->getCriterionDefinitionResolver()->resolveTargets($name, $value);
                     break;
                 default:

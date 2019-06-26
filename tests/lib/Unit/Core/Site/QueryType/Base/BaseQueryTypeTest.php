@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\IsFieldEmpty;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 
 /**
@@ -35,6 +36,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
         return [
             'content_type',
             'field',
+            'is_field_empty',
             'publication_date',
             'section',
             'state',
@@ -180,6 +182,24 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                     ],
                 ]),
             ],
+            [
+                [
+                    'is_field_empty' => [
+                        'image' => false,
+                        'video' => true,
+                    ],
+                    'sort' => 'published desc',
+                ],
+                new Query([
+                    'filter' => new LogicalAnd([
+                        new IsFieldEmpty('image', IsFieldEmpty::IS_NOT_EMPTY),
+                        new IsFieldEmpty('video', IsFieldEmpty::IS_EMPTY),
+                    ]),
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_DESC),
+                    ],
+                ]),
+            ],
         ];
     }
 
@@ -221,6 +241,18 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                     'offset' => 'ten',
                 ],
             ],
+            [
+                [
+                    'is_field_empty' => [
+                        'field' => 'not empty',
+                    ],
+                ],
+            ],
+            [
+                [
+                    'is_field_empty' => [true],
+                ],
+            ],
         ];
     }
 
@@ -233,7 +265,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                         'like' => 5,
                     ],
                 ],
-            ]
+            ],
         ];
     }
 

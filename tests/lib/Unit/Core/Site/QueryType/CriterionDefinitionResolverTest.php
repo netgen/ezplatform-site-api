@@ -771,6 +771,26 @@ class CriterionDefinitionResolverTest extends TestCase
                     ]),
                 ],
             ],
+            [
+                [
+                    'image' => true,
+                    'video' => false,
+                ],
+                [
+                    new CriterionDefinition([
+                        'name' => 'test',
+                        'target' => 'image',
+                        'operator' => Operator::EQ,
+                        'value' => true,
+                    ]),
+                    new CriterionDefinition([
+                        'name' => 'test',
+                        'target' => 'video',
+                        'operator' => Operator::EQ,
+                        'value' => false,
+                    ]),
+                ],
+            ],
         ];
     }
 

@@ -101,7 +101,7 @@ final class CriterionDefinitionResolver
         $definitions = [];
 
         foreach ($map as $operator => $value) {
-            if ('not' === $operator) {
+            if ($operator === 'not') {
                 $definitions[] = $this->buildDefinition(
                     'not',
                     null,
@@ -181,7 +181,7 @@ final class CriterionDefinitionResolver
      */
     private function resolveOperator($symbol, $value)
     {
-        if (null === $symbol) {
+        if ($symbol === null) {
             return $this->getOperatorByValueType($value);
         }
 

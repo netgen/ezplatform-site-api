@@ -59,6 +59,7 @@ class SubtreeTest extends QueryTypeBaseTest
         return [
             'content_type',
             'field',
+            'is_field_empty',
             'publication_date',
             'section',
             'state',

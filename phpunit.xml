@@ -3,8 +3,7 @@
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         syntaxCheck="true">
+         convertWarningsToExceptions="true">
     <testsuites>
         <testsuite name="Netgen's Site API for eZ Platform unit tests">
             <directory suffix="Test.php">./tests/bundle/</directory>

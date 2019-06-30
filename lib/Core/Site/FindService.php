@@ -99,33 +99,4 @@ class FindService implements FindServiceInterface
 
         return $searchResult;
     }
-
-    public function findNodes(LocationQuery $query)
-    {
-        @trigger_error('findNodes() is deprecated since version 2.1 and will be removed in 3.0. Use findLocations() instead.', E_USER_DEPRECATED);
-
-        $searchResult = $this->searchService->findLocations(
-            $query,
-            [
-                'languages' => $this->settings->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
-            ]
-        );
-
-        foreach ($searchResult->searchHits as $searchHit) {
-            /** @var \eZ\Publish\API\Repository\Values\Content\Location $location */
-            $location = $searchHit->valueObject;
-            $searchHit->valueObject = $this->domainObjectMapper->mapNode(
-                $location,
-                $this->contentService->loadContent(
-                    $location->contentInfo->id,
-                    [$searchHit->matchedTranslation],
-                    $location->contentInfo->currentVersionNo
-                ),
-                $searchHit->matchedTranslation
-            );
-        }
-
-        return $searchResult;
-    }
 }

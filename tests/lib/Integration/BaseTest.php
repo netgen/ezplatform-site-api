@@ -17,7 +17,6 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use Netgen\EzPlatformSiteApi\API\Values\Node;
 use ReflectionProperty;
 
 /**
@@ -353,10 +352,6 @@ class BaseTest extends APIBaseTest
             $this->fail('This property should not be found');
         } catch (PropertyNotFoundException $e) {
             // Do nothing
-        }
-
-        if ($location instanceof Node) {
-            return;
         }
 
         $this->assertEquals(

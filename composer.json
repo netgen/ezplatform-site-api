@@ -10,13 +10,13 @@
         }
     ],
     "require": {
-        "php": "~5.6|~7.0",
-        "ezsystems/ezpublish-kernel": "^6.0|^7.0",
+        "php": "~7.1",
+        "ezsystems/ezpublish-kernel": "^7.4",
         "netgen/ezplatform-search-extra": "^1.8"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7|^6.0",
-        "matthiasnoback/symfony-dependency-injection-test": "~1.0|~2.0",
+        "phpunit/phpunit": "^7.0",
+        "matthiasnoback/symfony-dependency-injection-test": "~3.0",
         "netgen/tagsbundle": "^3.3"
     },
     "suggest": {

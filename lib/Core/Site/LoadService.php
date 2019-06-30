@@ -73,7 +73,7 @@ class LoadService implements LoadServiceInterface
 
     public function loadContentByRemoteId($remoteId)
     {
-        $contentInfo = $this->loadContentInfoByRemoteId($remoteId);
+        $contentInfo = $this->contentService->loadContentInfoByRemoteId($remoteId);
 
         return $this->loadContent($contentInfo->id);
     }

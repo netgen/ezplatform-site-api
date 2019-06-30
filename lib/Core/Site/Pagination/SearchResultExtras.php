@@ -3,6 +3,8 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination;
 
 /**
+ * @deprecated since version 2.7, to be removed in 3.0. Use SearchResultExtras from netgen/ezplatform-search-extra instead.
+ *
  * Defines access to extra information of the search query result.
  */
 interface SearchResultExtras

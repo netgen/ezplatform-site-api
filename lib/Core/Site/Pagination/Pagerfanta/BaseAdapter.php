@@ -8,6 +8,8 @@ use Netgen\EzPlatformSiteApi\Core\Site\Pagination\SearchResultExtras;
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
+ * @deprecated since version 2.7, to be removed in 3.0. Use BaseAdapter from netgen/ezplatform-search-extra instead.
+ *
  * Base Site API search adapter.
  */
 abstract class BaseAdapter implements AdapterInterface, SearchResultExtras
@@ -47,6 +49,11 @@ abstract class BaseAdapter implements AdapterInterface, SearchResultExtras
      */
     public function __construct(Query $query)
     {
+        @trigger_error(
+            'BaseAdapter is deprecated since version 2.7 and will be removed in 3.0. Use BaseAdapter from netgen/ezplatform-search-extra instead.',
+            E_USER_DEPRECATED
+        );
+
         $this->query = $query;
     }
 

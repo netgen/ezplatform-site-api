@@ -4,6 +4,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use Netgen\EzPlatformSearchExtra\Core\Pagination\Pagerfanta\BaseAdapter;
 use Netgen\EzPlatformSiteApi\API\FindService;
 
 /**

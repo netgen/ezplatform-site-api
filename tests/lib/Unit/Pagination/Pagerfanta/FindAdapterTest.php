@@ -6,10 +6,9 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
+use Netgen\EzPlatformSearchExtra\Core\Pagination\Pagerfanta\Slice;
 use Netgen\EzPlatformSiteApi\API\FindService;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchHitAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FindAdapter;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\Slice;
 use PHPUnit\Framework\TestCase;
 
 /**

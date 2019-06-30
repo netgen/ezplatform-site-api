@@ -74,33 +74,6 @@ class FilterService implements FilterServiceInterface
         return $searchResult;
     }
 
-    public function filterContentInfo(Query $query)
-    {
-        @trigger_error('filterContentInfo() is deprecated since version 2.2 and will be removed in 3.0. Use filterContent() instead.', E_USER_DEPRECATED);
-
-        $searchResult = $this->searchService->findContentInfo(
-            $query,
-            [
-                'languages' => $this->settings->prioritizedLanguages,
-                'useAlwaysAvailable' => $this->settings->useAlwaysAvailable,
-            ]
-        );
-
-        foreach ($searchResult->searchHits as $searchHit) {
-            /** @var \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo */
-            $contentInfo = $searchHit->valueObject;
-            $searchHit->valueObject = $this->domainObjectMapper->mapContentInfo(
-                $this->contentService->loadVersionInfo(
-                    $contentInfo,
-                    $contentInfo->currentVersionNo
-                ),
-                $searchHit->matchedTranslation
-            );
-        }
-
-        return $searchResult;
-    }
-
     public function filterLocations(LocationQuery $query)
     {
         $searchResult = $this->searchService->findLocations(

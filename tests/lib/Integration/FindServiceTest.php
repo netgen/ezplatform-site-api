@@ -6,7 +6,6 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
-use Netgen\EzPlatformSiteApi\API\Values\Node;
 
 /**
  * Test case for the FindService.
@@ -270,132 +269,6 @@ class FindServiceTest extends BaseTest
         $this->assertEquals(0, $searchResult->totalCount);
     }
 
-    /**
-     * Test for the findNodes() method.
-     *
-     * @see \Netgen\EzPlatformSiteApi\API\FindService::findNodes()
-     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
-     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
-     *
-     * @throws \ReflectionException
-     * @throws \ErrorException
-     */
-    public function testFindNodesMatchPrimaryLanguage()
-    {
-        $this->overrideSettings(
-            'prioritizedLanguages',
-            [
-                'eng-GB',
-                'ger-DE',
-            ]
-        );
-
-        $findService = $this->getSite()->getFindService();
-
-        $data = $this->getData('eng-GB');
-        $searchResult = $findService->findNodes(
-            new LocationQuery([
-                'filter' => new ContentId($data['contentId']),
-            ])
-        );
-
-        $this->assertNodeSearchResult($searchResult, $data);
-    }
-
-    /**
-     * Test for the findNodes() method.
-     *
-     * @see \Netgen\EzPlatformSiteApi\API\FindService::findNodes()
-     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
-     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
-     *
-     * @throws \ReflectionException
-     * @throws \ErrorException
-     */
-    public function testFindNodesMatchSecondaryLanguage()
-    {
-        $this->overrideSettings(
-            'prioritizedLanguages',
-            [
-                'eng-US',
-                'ger-DE',
-            ]
-        );
-
-        $findService = $this->getSite()->getFindService();
-
-        $data = $this->getData('ger-DE');
-        $searchResult = $findService->findNodes(
-            new LocationQuery([
-                'filter' => new ContentId($data['contentId']),
-            ])
-        );
-
-        $this->assertNodeSearchResult($searchResult, $data);
-    }
-
-    /**
-     * Test for the findNodes() method.
-     *
-     * @see \Netgen\EzPlatformSiteApi\API\FindService::findNodes()
-     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
-     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
-     *
-     * @throws \ReflectionException
-     * @throws \ErrorException
-     */
-    public function testFindNodesNodesMatchAlwaysAvailableLanguage()
-    {
-        $this->overrideSettings(
-            'prioritizedLanguages',
-            [
-                'eng-US',
-            ]
-        );
-
-        $findService = $this->getSite()->getFindService();
-
-        $data = $this->getData('eng-GB');
-        $searchResult = $findService->findNodes(
-            new LocationQuery([
-                'filter' => new ContentId($data['contentId']),
-            ])
-        );
-
-        $this->assertNodeSearchResult($searchResult, $data);
-    }
-
-    /**
-     * Test for the findNodes() method.
-     *
-     * @see \Netgen\EzPlatformSiteApi\API\FindService::findNodes()
-     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\PrepareFixturesTest::testPrepareTestFixtures
-     * @depends Netgen\EzPlatformSiteApi\Tests\Integration\SiteTest::testGetFindService
-     *
-     * @throws \ReflectionException
-     * @throws \ErrorException
-     */
-    public function testFindNodesTranslationNotMatched()
-    {
-        $this->overrideSettings(
-            'prioritizedLanguages',
-            [
-                'eng-GB',
-                'ger-DE',
-            ]
-        );
-
-        $findService = $this->getSite()->getFindService();
-
-        $searchResult = $findService->findNodes(
-            new LocationQuery([
-                'filter' => new ContentId(52),
-            ])
-        );
-
-        $this->assertEquals(0, $searchResult->totalCount);
-    }
-
     protected function assertContentSearchResult(SearchResult $searchResult, $data)
     {
         $languageCode = $data['languageCode'];
@@ -412,20 +285,5 @@ class FindServiceTest extends BaseTest
         $this->assertSame(1, $searchResult->totalCount);
         $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
         $this->assertLocation($searchResult->searchHits[0]->valueObject, $data);
-    }
-
-    protected function assertNodeSearchResult(SearchResult $searchResult, $data)
-    {
-        $languageCode = $data['languageCode'];
-
-        $this->assertSame(1, $searchResult->totalCount);
-
-        /* @var \Netgen\EzPlatformSiteApi\API\Values\Node */
-        $node = $searchResult->searchHits[0]->valueObject;
-
-        $this->assertInstanceOf(Node::class, $node);
-        $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
-        $this->assertLocation($node, $data);
-        $this->assertContent($node->content, $data);
     }
 }

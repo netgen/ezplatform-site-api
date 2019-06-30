@@ -52,30 +52,4 @@ interface LoadService
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     public function loadLocationByRemoteId($remoteId);
-
-    /**
-     * @deprecated since version 2.1, to be removed in 3.0. Use loadLocation() instead.
-     *
-     * Loads Node object for the given $locationId.
-     *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
-     * @param string|int $locationId
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Node
-     */
-    public function loadNode($locationId);
-
-    /**
-     * @deprecated since version 2.1, to be removed in 3.0. Use loadLocationByRemoteId() instead.
-     *
-     * Loads Node object for the given $remoteId.
-     *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
-     * @param string|int $remoteId
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Node
-     */
-    public function loadNodeByRemoteId($remoteId);
 }

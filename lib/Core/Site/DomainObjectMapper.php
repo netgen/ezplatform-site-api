@@ -3,7 +3,6 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
@@ -13,7 +12,6 @@ use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Node;
 
 /**
  * @internal
@@ -128,27 +126,6 @@ final class DomainObjectMapper
                 'innerVersionInfo' => $versionInfo,
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
-            ]
-        );
-    }
-
-    /**
-     * Maps Repository Content and Location to the Site Node.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     * @param string $languageCode
-     *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Node
-     */
-    public function mapNode(APILocation $location, APIContent $content, $languageCode)
-    {
-        return new Node(
-            [
-                'contentInfo' => $this->mapContentInfo($content->versionInfo, $languageCode),
-                'innerLocation' => $location,
-                'content' => $this->mapContent($content->versionInfo, $languageCode),
-                'site' => $this->site,
             ]
         );
     }

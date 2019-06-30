@@ -2,14 +2,7 @@
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
-use eZ\Publish\API\Repository\Values\Content\LocationQuery;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
-use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
-use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
-use Pagerfanta\Pagerfanta;
 
 final class ContentInfo extends APIContentInfo
 {
@@ -54,11 +47,6 @@ final class ContentInfo extends APIContentInfo
     private $site;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Content
-     */
-    private $internalContent;
-
-    /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private $internalMainLocation;
@@ -84,11 +72,8 @@ final class ContentInfo extends APIContentInfo
      */
     public function __get($property)
     {
-        switch ($property) {
-            case 'mainLocation':
-                return $this->getMainLocation();
-            case 'content':
-                return $this->getContent();
+        if ($property === 'mainLocation') {
+            return $this->getMainLocation();
         }
 
         if (property_exists($this, $property)) {
@@ -149,52 +134,6 @@ final class ContentInfo extends APIContentInfo
             'mainLocation' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]',
             'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
         ];
-    }
-
-    public function getLocations($limit = 25)
-    {
-        @trigger_error('getLocations() is deprecated since version 2.7 and will be removed in 3.0. Use the same method on Content object instead.', E_USER_DEPRECATED);
-
-        return $this->filterLocations($limit)->getIterator();
-    }
-
-    public function filterLocations($maxPerPage = 25, $currentPage = 1)
-    {
-        @trigger_error('filterLocations() is deprecated since version 2.7 and will be removed in 3.0. Use the same method on Content object instead.', E_USER_DEPRECATED);
-
-        $pager = new Pagerfanta(
-            new FilterAdapter(
-                new LocationQuery([
-                    'filter' => new LogicalAnd(
-                        [
-                            new ContentId($this->id),
-                            new Visibility(Visibility::VISIBLE),
-                        ]
-                    ),
-                    'sortClauses' => [
-                        new Path(),
-                    ],
-                ]),
-                $this->site->getFilterService()
-            )
-        );
-
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage($maxPerPage);
-        $pager->setCurrentPage($currentPage);
-
-        return $pager;
-    }
-
-    private function getContent()
-    {
-        @trigger_error('Accessing Content from ContentInfo is deprecated since version 2.7 and will be removed in 3.0. Use the Content object directly instead.', E_USER_DEPRECATED);
-
-        if ($this->internalContent === null) {
-            $this->internalContent = $this->site->getLoadService()->loadContent($this->id);
-        }
-
-        return $this->internalContent;
     }
 
     private function getMainLocation()

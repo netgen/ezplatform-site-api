@@ -36,7 +36,7 @@ abstract class ContentInfo extends ValueObject
     /**
      * Return an array of Locations, limited by optional $limit.
      *
-     * @deprecated since version 2.6, to be removed in 3.0. Use the same method on Content object instead.
+     * @deprecated since version 2.7, to be removed in 3.0. Use the same method on Content object instead.
      *
      * @param int $limit
      *
@@ -47,7 +47,7 @@ abstract class ContentInfo extends ValueObject
     /**
      * Return an array of Locations, limited by optional $maxPerPage and $currentPage.
      *
-     * @deprecated since version 2.6, to be removed in 3.0. Use the same method on Content object instead.
+     * @deprecated since version 2.7, to be removed in 3.0. Use the same method on Content object instead.
      *
      * @param int $maxPerPage
      * @param int $currentPage

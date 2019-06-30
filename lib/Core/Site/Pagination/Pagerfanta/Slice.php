@@ -9,6 +9,8 @@ use IteratorAggregate;
 use RuntimeException;
 
 /**
+ * @deprecated since version 2.7, to be removed in 3.0. Use Slice from netgen/ezplatform-search-extra instead.
+ *
  * Implements IteratorAggregate with access to the array of the SearchHit instances
  * and aggregated ArrayIterator over values contained in them.
  */
@@ -21,6 +23,11 @@ final class Slice implements IteratorAggregate, ArrayAccess
 
     public function __construct(array $searchHits)
     {
+        @trigger_error(
+            'BaseAdapter is deprecated since version 2.7 and will be removed in 3.0. Use Slice from netgen/ezplatform-search-extra instead.',
+            E_USER_DEPRECATED
+        );
+
         $this->searchHits = $searchHits;
     }
 

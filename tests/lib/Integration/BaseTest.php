@@ -180,21 +180,14 @@ class BaseTest extends APIBaseTest
         $this->assertEquals($data['contentTypeName'], $contentInfo->contentTypeName);
         $this->assertEquals($data['contentTypeDescription'], $contentInfo->contentTypeDescription);
         $this->assertEquals($data['languageCode'], $contentInfo->languageCode);
-        $this->assertInstanceOf(Content::class, $contentInfo->content);
         $this->assertInstanceOf(Location::class, $contentInfo->mainLocation);
         $this->assertInstanceOf(ContentInfo::class, $contentInfo->innerContentInfo);
         $this->assertInstanceOf(ContentType::class, $contentInfo->innerContentType);
-
-        $locations = $contentInfo->getLocations();
-        $this->assertInstanceOf(ArrayIterator::class, $locations);
-        $this->assertCount(1, $locations);
-        $this->assertInstanceOf(Location::class, reset($locations));
 
         $this->assertTrue(isset($contentInfo->name));
         $this->assertTrue(isset($contentInfo->contentTypeIdentifier));
         $this->assertTrue(isset($contentInfo->contentTypeName));
         $this->assertTrue(isset($contentInfo->contentTypeDescription));
-        $this->assertTrue(isset($contentInfo->content));
         $this->assertTrue(isset($contentInfo->mainLocation));
         $this->assertFalse(isset($contentInfo->nonExistentProperty));
 

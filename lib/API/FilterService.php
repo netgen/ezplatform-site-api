@@ -25,19 +25,6 @@ interface FilterService
     public function filterContent(Query $query);
 
     /**
-     * @deprecated since version 2.2, to be removed in 3.0. Use filterContent() instead.
-     *
-     * Filters ContentInfo objects for the given $query.
-     *
-     * @see \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
-     */
-    public function filterContentInfo(Query $query);
-
-    /**
      * Filters Location objects for the given $query.
      *
      * @see \Netgen\EzPlatformSiteApi\API\Values\Location

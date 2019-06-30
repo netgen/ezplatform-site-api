@@ -32,34 +32,6 @@ interface LoadService
     public function loadContentByRemoteId($remoteId);
 
     /**
-     * @deprecated since version 2.2, to be removed in 3.0. Use loadContent() instead.
-     *
-     * Loads ContentInfo object for the given $contentId.
-     *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
-     * @param string|int $contentId
-     * @param int $versionNo
-     * @param string $languageCode
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
-     */
-    public function loadContentInfo($contentId, $versionNo = null, $languageCode = null);
-
-    /**
-     * @deprecated since version 2.2, to be removed in 3.0. Use loadContentByRemoteId() instead.
-     *
-     * Loads ContentInfo object for the given $remoteId.
-     *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
-     * @param string|int $remoteId
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
-     */
-    public function loadContentInfoByRemoteId($remoteId);
-
-    /**
      * Loads Location object for the given $locationId.
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException

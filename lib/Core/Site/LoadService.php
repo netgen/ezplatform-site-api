@@ -78,38 +78,6 @@ class LoadService implements LoadServiceInterface
         return $this->loadContent($contentInfo->id);
     }
 
-    public function loadContentInfo($contentId, $versionNo = null, $languageCode = null)
-    {
-        @trigger_error('loadContentInfo() is deprecated since version 2.2 and will be removed in 3.0. Use loadContent() instead.', E_USER_DEPRECATED);
-
-        $versionInfo = $this->contentService->loadVersionInfoById($contentId, $versionNo);
-
-        if ($languageCode === null) {
-            $languageCode = $this->getLanguage(
-                $versionInfo->languageCodes,
-                $versionInfo->contentInfo->mainLanguageCode,
-                $versionInfo->contentInfo->alwaysAvailable
-            );
-
-            if ($languageCode === null) {
-                throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
-            }
-        } elseif (!in_array($languageCode, $versionInfo->languageCodes)) {
-            throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
-        }
-
-        return $this->domainObjectMapper->mapContentInfo($versionInfo, $languageCode);
-    }
-
-    public function loadContentInfoByRemoteId($remoteId)
-    {
-        @trigger_error('loadContentInfoByRemoteId() is deprecated since version 2.2 and will be removed in 3.0. Use loadContentByRemoteId() instead.', E_USER_DEPRECATED);
-
-        $contentInfo = $this->contentService->loadContentInfoByRemoteId($remoteId);
-
-        return $this->loadContentInfo($contentInfo->id);
-    }
-
     public function loadLocation($locationId)
     {
         $location = $this->locationService->loadLocation($locationId);

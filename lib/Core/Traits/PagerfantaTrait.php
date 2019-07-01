@@ -3,6 +3,7 @@
 namespace Netgen\EzPlatformSiteApi\Core\Traits;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
+use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FindAdapter;
 use Pagerfanta\Pagerfanta;
@@ -15,6 +16,11 @@ use Pagerfanta\Pagerfanta;
  */
 trait PagerfantaTrait
 {
+    /**
+     * @return \Netgen\EzPlatformSiteApi\API\Site
+     */
+    abstract protected function getSite(): Site;
+
     /**
      * Return Pagerfanta instance using FilterAdapter for the given $query.
      *

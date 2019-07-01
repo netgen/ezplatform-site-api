@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller as BaseController;
+use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaTrait;
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 
@@ -10,6 +11,14 @@ abstract class Controller extends BaseController
 {
     use SearchResultExtractorTrait;
     use PagerfantaTrait;
+
+    /**
+     * @return \Netgen\EzPlatformSiteApi\API\Site
+     */
+    protected function getSite(): Site
+    {
+        return $this->container->get('netgen.ezplatform_site.site');
+    }
 
     /**
      * Returns the root location object for current siteaccess configuration.

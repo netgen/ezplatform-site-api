@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "~7.1",
-        "ezsystems/ezpublish-kernel": "^7.4",
+        "ezsystems/ezpublish-kernel": "^7.4 || ^8.0",
         "netgen/ezplatform-search-extra": "^1.8"
     },
     "require-dev": {

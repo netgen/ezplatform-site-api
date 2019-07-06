@@ -26,6 +26,7 @@ services:
         # public: false
         arguments:
             - '@ezpublish.fieldType.ezimage.variation_service'
+            - '@?logger'
         tags:
             - { name: twig.runtime }
 

@@ -31,8 +31,14 @@ services:
 
     netgen.ezplatform_site.twig.extension.query:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\QueryExtension
-        arguments:
-            - '@netgen.ezplatform_site.query_type.query_executor'
         tags:
             - { name: twig.extension }
         public: false
+
+    netgen.ezplatform_site.twig.runtime.query:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\QueryRuntime
+        # public: false
+        arguments:
+            - '@netgen.ezplatform_site.query_type.query_executor'
+        tags:
+            - { name: twig.runtime }

@@ -7,6 +7,8 @@ use eZ\Publish\Core\MVC\Exception\SourceImageNotFoundException;
 use eZ\Publish\SPI\Variation\VariationHandler;
 use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\API\Values\Field;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class ImageRuntime
 {
@@ -15,9 +17,17 @@ class ImageRuntime
      */
     private $imageVariationService;
 
-    public function __construct(VariationHandler $imageVariationService)
-    {
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        VariationHandler $imageVariationService,
+        LoggerInterface $logger = null
+    ) {
         $this->imageVariationService = $imageVariationService;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
@@ -30,24 +40,21 @@ class ImageRuntime
      */
     public function getImageVariation(Field $field, $variationName)
     {
+        /** @var \eZ\Publish\Core\FieldType\Image\Value $value */
+        $value = $field->value;
+
         try {
             return $this->imageVariationService->getVariation($field->innerField, $field->content->versionInfo, $variationName);
         } catch (InvalidVariationException $e) {
-            if (isset($this->logger)) {
-                $this->logger->error("Couldn't get variation '{$variationName}' for image with id {$field->value->id}");
-            }
+            $this->logger->error("Couldn't get variation '{$variationName}' for image with id {$value->id}");
         } catch (SourceImageNotFoundException $e) {
-            if (isset($this->logger)) {
-                $this->logger->error(
-                    "Couldn't create variation '{$variationName}' for image with id {$field->value->id} because source image can't be found"
-                );
-            }
+            $this->logger->error(
+                "Couldn't create variation '{$variationName}' for image with id {$value->id} because source image can't be found"
+            );
         } catch (InvalidArgumentException $e) {
-            if (isset($this->logger)) {
-                $this->logger->error(
-                    "Couldn't create variation '{$variationName}' for image with id {$field->value->id} because an image could not be created from the given input"
-                );
-            }
+            $this->logger->error(
+                "Couldn't create variation '{$variationName}' for image with id {$value->id} because an image could not be created from the given input"
+            );
         }
     }
 }

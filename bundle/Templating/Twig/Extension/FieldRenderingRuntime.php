@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
@@ -48,7 +50,7 @@ class FieldRenderingRuntime
      *
      * @return string The HTML markup
      */
-    public function renderField(Field $field, array $params = [])
+    public function renderField(Field $field, array $params = []): string
     {
         $this->fieldBlockRenderer->setTwig($this->environment);
 
@@ -69,7 +71,7 @@ class FieldRenderingRuntime
      *
      * @return array
      */
-    private function getRenderFieldBlockParameters(Field $field, array $params = [])
+    private function getRenderFieldBlockParameters(Field $field, array $params = []): array
     {
         // Merging passed parameters to default ones
         $params += [

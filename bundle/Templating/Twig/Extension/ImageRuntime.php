@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
 use eZ\Publish\API\Repository\Exceptions\InvalidVariationException;
 use eZ\Publish\Core\MVC\Exception\SourceImageNotFoundException;
+use eZ\Publish\SPI\Variation\Values\Variation;
 use eZ\Publish\SPI\Variation\VariationHandler;
 use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\API\Values\Field;
@@ -36,9 +39,9 @@ class ImageRuntime
      * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
      * @param string $variationName
      *
-     * @return \eZ\Publish\SPI\Variation\Values\Variation
+     * @return \eZ\Publish\SPI\Variation\Values\Variation|null
      */
-    public function getImageVariation(Field $field, $variationName)
+    public function getImageVariation(Field $field, $variationName): ?Variation
     {
         /** @var \eZ\Publish\Core\FieldType\Image\Value $value */
         $value = $field->value;

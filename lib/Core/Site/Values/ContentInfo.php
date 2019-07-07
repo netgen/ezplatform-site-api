@@ -96,10 +96,8 @@ final class ContentInfo extends APIContentInfo
      */
     public function __isset($property)
     {
-        switch ($property) {
-            case 'mainLocation':
-            case 'content':
-                return true;
+        if ($property === 'mainLocation') {
+            return true;
         }
 
         if (property_exists($this, $property) || property_exists($this->innerContentInfo, $property)) {
@@ -132,7 +130,6 @@ final class ContentInfo extends APIContentInfo
             'innerContentInfo' => '[An instance of eZ\Publish\API\Repository\Values\Content\ContentInfo]',
             'innerContentType' => '[An instance of eZ\Publish\API\Repository\Values\ContentType\ContentType]',
             'mainLocation' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]',
-            'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
         ];
     }
 

@@ -4,11 +4,9 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use ArrayIterator;
 use eZ\Publish\API\Repository\Values\Content\Field as RepoField;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
 use Netgen\EzPlatformSiteApi\API\Values\Content as RepoContent;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
-use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
 use Netgen\EzPlatformSiteApi\API\Values\Fields as APIFields;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\NullValue;
@@ -230,7 +228,7 @@ final class Fields extends APIFields
         $content = $this->content;
 
         foreach ($content->innerContent->getFieldsByLanguage($content->languageCode) as $apiField) {
-            $field = $this->mapField($apiField, $content);
+            $field = $this->domainObjectMapper->mapField($apiField, $content);
 
             $this->fieldsByIdentifier[$field->fieldDefIdentifier] = $field;
             $this->fieldsById[$field->id] = $field;
@@ -239,37 +237,6 @@ final class Fields extends APIFields
         }
 
         $this->areFieldsInitialized = true;
-    }
-
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Field $apiField
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
-     */
-    private function mapField(RepoField $apiField, SiteContent $content): APIField
-    {
-        $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
-
-        if ($fieldDefinition instanceof FieldDefinition) {
-            return $this->domainObjectMapper->mapField($apiField, $fieldDefinition, $content);
-        }
-
-        $message = sprintf(
-            'Field "%s" in Content #%s does not have a FieldDefinition',
-            $apiField->fieldDefIdentifier,
-            $content->id
-        );
-
-        if ($this->failOnMissingFields) {
-            throw new RuntimeException($message);
-        }
-
-        $this->logger->critical($message . ', using null field instead');
-
-        return $this->getNullField($apiField->fieldDefIdentifier, $content);
     }
 
     private function getNullField(string $identifier, SiteContent $content): Field

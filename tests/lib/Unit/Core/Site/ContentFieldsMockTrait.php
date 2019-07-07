@@ -12,6 +12,7 @@ use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\SPI\FieldType\FieldType;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
+use PHPUnit\Framework\MockObject\MockBuilder;
 use Psr\Log\NullLogger;
 
 /**
@@ -76,7 +77,7 @@ trait ContentFieldsMockTrait
      *
      * @return \PHPUnit\Framework\MockObject\MockBuilder
      */
-    abstract public function getMockBuilder($className);
+    abstract public function getMockBuilder($className): MockBuilder;
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Netgen\EzPlatformSiteApi\API\Site

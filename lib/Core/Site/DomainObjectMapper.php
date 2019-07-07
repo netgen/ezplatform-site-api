@@ -6,7 +6,6 @@ use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;

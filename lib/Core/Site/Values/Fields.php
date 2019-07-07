@@ -272,7 +272,7 @@ final class Fields extends APIFields
         return $this->getNullField($apiField->fieldDefIdentifier, $content);
     }
 
-    public function getNullField(string $identifier, SiteContent $content): Field
+    private function getNullField(string $identifier, SiteContent $content): Field
     {
         $apiField = new RepoField([
             'id' => 0,

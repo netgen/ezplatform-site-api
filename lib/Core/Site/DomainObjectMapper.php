@@ -156,15 +156,15 @@ final class DomainObjectMapper
      * Maps Repository Field to the Site Field.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Field $apiField
-     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
      * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
-    public function mapField(APIField $apiField, FieldDefinition $fieldDefinition, SiteContent $content)
+    public function mapField(APIField $apiField, SiteContent $content)
     {
+        $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
         $isEmpty = $this->fieldTypeService->getFieldType($fieldTypeIdentifier)->isEmptyValue(
             $apiField->value

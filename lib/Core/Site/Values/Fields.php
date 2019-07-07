@@ -3,9 +3,15 @@
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use ArrayIterator;
-use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
-use Netgen\EzPlatformSiteApi\API\Values\Fields as APIField;
+use eZ\Publish\API\Repository\Values\Content\Field as RepoField;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
+use Netgen\EzPlatformSiteApi\API\Values\Content as RepoContent;
+use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
+use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
+use Netgen\EzPlatformSiteApi\API\Values\Fields as APIFields;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\NullValue;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
@@ -14,7 +20,7 @@ use RuntimeException;
  *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\Values\Fields
  */
-final class Fields extends APIField
+final class Fields extends APIFields
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Values\Content
@@ -47,17 +53,17 @@ final class Fields extends APIField
     private $iterator;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
+     * @var APIField[]
      */
     private $fieldsByIdentifier = [];
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
+     * @var APIField[]
      */
     private $fieldsById = [];
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
+     * @var APIField[]
      */
     private $fieldsByNumericSequence = [];
 
@@ -68,7 +74,7 @@ final class Fields extends APIField
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        APIContent $content,
+        RepoContent $content,
         DomainObjectMapper $domainObjectMapper,
         $failOnMissingFields,
         LoggerInterface $logger
@@ -143,7 +149,7 @@ final class Fields extends APIField
 
         $this->logger->critical($message . ', using null field instead');
 
-        return $this->domainObjectMapper->getNullField($identifier, $this->content);
+        return $this->getNullField($identifier, $this->content);
     }
 
     public function offsetSet($identifier, $value)
@@ -199,7 +205,7 @@ final class Fields extends APIField
 
         $this->logger->critical($message . ', using null field instead');
 
-        return $this->domainObjectMapper->getNullField((string)$id, $this->content);
+        return $this->getNullField((string)$id, $this->content);
     }
 
     /**
@@ -224,7 +230,8 @@ final class Fields extends APIField
         $content = $this->content;
 
         foreach ($content->innerContent->getFieldsByLanguage($content->languageCode) as $apiField) {
-            $field = $this->domainObjectMapper->mapField($apiField, $content);
+            $field = $this->mapField($apiField, $content);
+
             $this->fieldsByIdentifier[$field->fieldDefIdentifier] = $field;
             $this->fieldsById[$field->id] = $field;
             $this->fieldsByNumericSequence[] = $field;
@@ -232,5 +239,77 @@ final class Fields extends APIField
         }
 
         $this->areFieldsInitialized = true;
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Field $apiField
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
+     */
+    private function mapField(RepoField $apiField, SiteContent $content): APIField
+    {
+        $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
+
+        if ($fieldDefinition instanceof FieldDefinition) {
+            return $this->domainObjectMapper->mapField($apiField, $fieldDefinition, $content);
+        }
+
+        $message = sprintf(
+            'Field "%s" in Content #%s does not have a FieldDefinition',
+            $apiField->fieldDefIdentifier,
+            $content->id
+        );
+
+        if ($this->failOnMissingFields) {
+            throw new RuntimeException($message);
+        }
+
+        $this->logger->critical($message . ', using null field instead');
+
+        return $this->getNullField($apiField->fieldDefIdentifier, $content);
+    }
+
+    public function getNullField(string $identifier, SiteContent $content): Field
+    {
+        $apiField = new RepoField([
+            'id' => 0,
+            'fieldDefIdentifier' => $identifier,
+            'value' => new NullValue(),
+            'languageCode' => $content->languageCode,
+            'fieldTypeIdentifier' => 'ngnull',
+        ]);
+
+        $fieldDefinition = new CoreFieldDefinition([
+            'id' => 0,
+            'identifier' => $apiField->fieldDefIdentifier,
+            'fieldGroup' => '',
+            'position' => 0,
+            'fieldTypeIdentifier' => $apiField->fieldTypeIdentifier,
+            'isTranslatable' => false,
+            'isRequired' => false,
+            'isInfoCollector' => false,
+            'defaultValue' => null,
+            'isSearchable' => false,
+            'mainLanguageCode' => $apiField->languageCode,
+            'fieldSettings' => [],
+            'validatorConfiguration' => [],
+        ]);
+
+        return new Field([
+            'id' => $apiField->id,
+            'fieldDefIdentifier' => $fieldDefinition->identifier,
+            'value' => $apiField->value,
+            'languageCode' => $apiField->languageCode,
+            'fieldTypeIdentifier' => $apiField->fieldTypeIdentifier,
+            'name' => '',
+            'description' => '',
+            'content' => $content,
+            'innerField' => $apiField,
+            'innerFieldDefinition' => $fieldDefinition,
+            'isEmpty' => true,
+        ]);
     }
 }

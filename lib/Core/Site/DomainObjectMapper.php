@@ -7,16 +7,13 @@ use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\NullValue;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 
 /**
  * @internal
@@ -52,7 +49,7 @@ final class DomainObjectMapper
     private $failOnMissingFields;
 
     /**
-     * @var \Psr\Log\LoggerInterface|null
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
@@ -159,32 +156,15 @@ final class DomainObjectMapper
      * Maps Repository Field to the Site Field.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Field $apiField
+     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
      * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
-    public function mapField(APIField $apiField, SiteContent $content)
+    public function mapField(APIField $apiField, FieldDefinition $fieldDefinition, SiteContent $content)
     {
-        $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
-
-        if (!$fieldDefinition instanceof FieldDefinition) {
-            $message = sprintf(
-                'Field "%s" in Content #%s does not have a FieldDefinition',
-                $apiField->fieldDefIdentifier,
-                $content->id
-            );
-
-            if ($this->failOnMissingFields) {
-                throw new RuntimeException($message);
-            }
-
-            $this->logger->critical($message . ', using null field instead');
-
-            return $this->getNullField($apiField->fieldDefIdentifier, $content);
-        }
-
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
         $isEmpty = $this->fieldTypeService->getFieldType($fieldTypeIdentifier)->isEmptyValue(
             $apiField->value
@@ -208,47 +188,6 @@ final class DomainObjectMapper
             'innerField' => $apiField,
             'innerFieldDefinition' => $fieldDefinition,
             'isEmpty' => $isEmpty,
-        ]);
-    }
-
-    public function getNullField($identifier, SiteContent $content)
-    {
-        $apiField = new APIField([
-            'id' => 0,
-            'fieldDefIdentifier' => $identifier,
-            'value' => new NullValue(),
-            'languageCode' => $content->languageCode,
-            'fieldTypeIdentifier' => 'ngnull',
-        ]);
-
-        $fieldDefinition = new CoreFieldDefinition([
-            'id' => 0,
-            'identifier' => $apiField->fieldDefIdentifier,
-            'fieldGroup' => '',
-            'position' => 0,
-            'fieldTypeIdentifier' => $apiField->fieldTypeIdentifier,
-            'isTranslatable' => false,
-            'isRequired' => false,
-            'isInfoCollector' => false,
-            'defaultValue' => null,
-            'isSearchable' => false,
-            'mainLanguageCode' => $apiField->languageCode,
-            'fieldSettings' => [],
-            'validatorConfiguration' => [],
-        ]);
-
-        return new Field([
-            'id' => $apiField->id,
-            'fieldDefIdentifier' => $fieldDefinition->identifier,
-            'value' => $apiField->value,
-            'languageCode' => $apiField->languageCode,
-            'fieldTypeIdentifier' => $apiField->fieldTypeIdentifier,
-            'name' => '',
-            'description' => '',
-            'content' => $content,
-            'innerField' => $apiField,
-            'innerFieldDefinition' => $fieldDefinition,
-            'isEmpty' => true,
         ]);
     }
 

@@ -73,7 +73,7 @@ class Site implements SiteInterface
     private $repository;
 
     /**
-     * @var \Psr\Log\LoggerInterface|null
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 

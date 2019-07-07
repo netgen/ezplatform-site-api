@@ -53,17 +53,17 @@ final class Fields extends APIFields
     private $iterator;
 
     /**
-     * @var APIField[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
     private $fieldsByIdentifier = [];
 
     /**
-     * @var APIField[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
     private $fieldsById = [];
 
     /**
-     * @var APIField[]
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Field[]
      */
     private $fieldsByNumericSequence = [];
 

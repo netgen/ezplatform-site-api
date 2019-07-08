@@ -69,5 +69,6 @@ class AggregateRepositoryPass implements CompilerPassInterface
         // 3. Overwrite eZ Platform's public top Repository alias
         // to aggregate Repository implementation
         $container->setAlias(self::TopEzRepositoryAliasId, self::AggregateRepositoryId);
+        $container->getAlias(self::TopEzRepositoryAliasId)->setPublic(true);
     }
 }

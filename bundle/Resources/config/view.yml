@@ -43,3 +43,18 @@ services:
             - [setContainer, ["@service_container"]]
             - [setMatchConfig, [$content_view$]]
         public: false
+
+    netgen.ezplatform_site.ngcontent_view_provider.default_configured:
+        class: eZ\Bundle\EzPublishCoreBundle\View\Provider\Configured
+        arguments: ["@netgen.ezplatform_site.ngcontent_view.default_matcher_factory"]
+        tags:
+            - {name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 90}
+        public: false
+
+    netgen.ezplatform_site.ngcontent_view.default_matcher_factory:
+        class: eZ\Bundle\EzPublishCoreBundle\Matcher\ServiceAwareMatcherFactory
+        arguments: ["@ezpublish.api.repository", 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased']
+        calls:
+            - [setContainer, ["@service_container"]]
+            - [setMatchConfig, [$content_view_defaults$]]
+        public: false

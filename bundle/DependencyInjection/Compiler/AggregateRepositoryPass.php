@@ -18,28 +18,28 @@ class AggregateRepositoryPass implements CompilerPassInterface
      *
      * @var string
      */
-    private static $topEzRepositoryAliasId = 'ezpublish.api.repository';
+    private const TopEzRepositoryAliasId = 'ezpublish.api.repository';
 
     /**
      * Out internal service alias ID of the topmost eZ Platform repository (created here).
      *
      * @var string
      */
-    private static $renamedTopEzRepositoryAliasId = 'netgen.ezpublish.api.repository';
+    private const RenamedTopEzRepositoryAliasId = 'netgen.ezpublish.api.repository';
 
     /**
      * Service ID of the Aggregate Repository implementation.
      *
      * @var string
      */
-    private static $aggregateRepositoryId = 'netgen.ezplatform_site.repository.aggregate';
+    private const AggregateRepositoryId = 'netgen.ezplatform_site.repository.aggregate';
 
     /**
      * Service tag used for custom repositories.
      *
      * @var string
      */
-    private static $customRepositoryTag = 'netgen.ezplatform_site.repository';
+    private const CustomRepositoryTag = 'netgen.ezplatform_site.repository';
 
     /**
      * @inheritdoc
@@ -51,8 +51,8 @@ class AggregateRepositoryPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         // 1. Register custom repositories with Aggregate repository
-        $aggregateRepositoryDefinition = $container->findDefinition(static::$aggregateRepositoryId);
-        $customRepositoryTags = $container->findTaggedServiceIds(static::$customRepositoryTag);
+        $aggregateRepositoryDefinition = $container->findDefinition(self::AggregateRepositoryId);
+        $customRepositoryTags = $container->findTaggedServiceIds(self::CustomRepositoryTag);
         $customRepositoryReferences = [];
 
         foreach (array_keys($customRepositoryTags) as $id) {
@@ -61,13 +61,13 @@ class AggregateRepositoryPass implements CompilerPassInterface
 
         $aggregateRepositoryDefinition->replaceArgument(1, $customRepositoryReferences);
 
-        $topEzRepositoryAlias = $container->getAlias(static::$topEzRepositoryAliasId);
+        $topEzRepositoryAlias = $container->getAlias(self::TopEzRepositoryAliasId);
 
         // 2. Re-link eZ Platform's public top Repository alias
-        $container->setAlias(static::$renamedTopEzRepositoryAliasId, (string)$topEzRepositoryAlias);
+        $container->setAlias(self::RenamedTopEzRepositoryAliasId, (string)$topEzRepositoryAlias);
 
         // 3. Overwrite eZ Platform's public top Repository alias
         // to aggregate Repository implementation
-        $container->setAlias(static::$topEzRepositoryAliasId, static::$aggregateRepositoryId);
+        $container->setAlias(self::TopEzRepositoryAliasId, self::AggregateRepositoryId);
     }
 }

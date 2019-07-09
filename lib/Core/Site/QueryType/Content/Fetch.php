@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content;
 
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content;

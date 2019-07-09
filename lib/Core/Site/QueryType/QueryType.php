@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType;
 
 use eZ\Publish\Core\QueryType\QueryType as BaseQueryTypeInterface;

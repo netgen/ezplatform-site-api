@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection;

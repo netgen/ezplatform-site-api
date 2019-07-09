@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\Values;
 
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue;

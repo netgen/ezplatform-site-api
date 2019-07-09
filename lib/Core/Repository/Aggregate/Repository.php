@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Core\Repository\Aggregate;
 
 use eZ\Publish\API\Repository\Repository as RepositoryInterface;

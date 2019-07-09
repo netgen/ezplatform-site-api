@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;

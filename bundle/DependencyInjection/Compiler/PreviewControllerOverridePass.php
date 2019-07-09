@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\Controller\PreviewController;

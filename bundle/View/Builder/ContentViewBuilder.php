@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder;
 
 use eZ\Publish\API\Repository\Repository;

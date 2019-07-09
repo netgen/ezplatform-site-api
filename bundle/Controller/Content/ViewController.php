@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Content;
 
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;

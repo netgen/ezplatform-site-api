@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values\Field;
 
 use eZ\Publish\Core\FieldType\Value;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use eZ\Publish\API\Repository\ContentService;

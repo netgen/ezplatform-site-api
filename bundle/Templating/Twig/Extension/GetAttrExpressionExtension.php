@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\NodeVisitor\GetAttrExpressionReplacer;

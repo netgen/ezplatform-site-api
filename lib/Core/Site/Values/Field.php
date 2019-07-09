@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;

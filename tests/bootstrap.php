@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $file = __DIR__ . '/../vendor/ezsystems/ezpublish-kernel/config.php';
 if (!file_exists($file)) {
     if (!symlink($file . '-DEVELOPMENT', $file)) {

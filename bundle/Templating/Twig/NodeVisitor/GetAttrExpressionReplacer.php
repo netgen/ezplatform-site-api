@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\NodeVisitor;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Node\GetAttrExpressionDecorator;

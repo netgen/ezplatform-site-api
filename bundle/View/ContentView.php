@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;

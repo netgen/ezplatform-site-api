@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\Base;
 
 use eZ\Publish\API\Repository\Values\Content\Query;

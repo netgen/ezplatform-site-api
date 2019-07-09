@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\EzPlatformSiteApi\API;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;

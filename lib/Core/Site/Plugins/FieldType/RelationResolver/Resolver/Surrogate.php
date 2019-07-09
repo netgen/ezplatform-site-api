@@ -8,16 +8,16 @@ use eZ\Publish\SPI\FieldType\Value;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver;
 
 /**
- * Null field type relation Resolver.
+ * Surrogate field type relation Resolver.
  *
- * This resolver will match field type with identifier 'ngnull', returned when nonexistent field is
+ * This resolver will match field type with identifier 'ngsurrogate', returned when nonexistent field is
  * requested from Content.
  */
-class NgNull extends Resolver
+class Surrogate extends Resolver
 {
     protected function getSupportedFieldTypeIdentifier(): string
     {
-        return 'ngnull';
+        return 'ngsurrogate';
     }
 
     protected function getRelationIdsFromValue(Value $value)

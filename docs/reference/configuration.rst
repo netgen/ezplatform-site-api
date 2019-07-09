@@ -91,9 +91,9 @@ By default ``fail_on_missing_fields`` is set to ``%kernel.debug%`` container par
 accessing a nonexistent field in ``dev`` environment will fail and result in a ``RuntimeException``.
 
 On the other hand, when not in debug mode (in ``prod`` environment), the system will not crash, but
-will instead return a special ``ngnull`` type field, which always evaluates as empty and renders to
-an empty string. In this case, a ``critical`` level message will be logged, so you can find and fix
-the problem.
+will instead return a special ``Surrogate`` type field, which always evaluates as empty and renders
+to an empty string. In this case, a ``critical`` level message will be logged, so you can find and
+fix the problem.
 
 .. note::
 

@@ -18,7 +18,7 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\NullValue;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue;
 use ReflectionProperty;
 
 /**
@@ -259,8 +259,8 @@ class BaseTest extends APIBaseTest
 
         $this->assertInstanceOf(Field::class, $content->getField('non_existent_field'));
         $this->assertInstanceOf(Field::class, $content->getFieldById('non_existent_field'));
-        $this->assertInstanceOf(NullValue::class, $content->getFieldValue('non_existent_field'));
-        $this->assertInstanceOf(NullValue::class, $content->getFieldValueById('non_existent_field'));
+        $this->assertInstanceOf(SurrogateValue::class, $content->getFieldValue('non_existent_field'));
+        $this->assertInstanceOf(SurrogateValue::class, $content->getFieldValueById('non_existent_field'));
     }
 
     protected function assertField(Content $content, $identifier, $languageCode, $data)

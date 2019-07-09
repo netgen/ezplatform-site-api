@@ -470,7 +470,7 @@ Checks if the field's value is empty.
 ``isSurrogate``
 ...............
 
-Checks if the field is of ``ngnull`` type, returned when nonexistent field is requested from Content.
+Checks if the field is of ``ngsurrogate`` type, returned when nonexistent field is requested from Content.
 
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Parameters**                         | None                                                                               |

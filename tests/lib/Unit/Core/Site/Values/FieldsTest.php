@@ -147,7 +147,7 @@ class FieldsTest extends TestCase
 
         $this->assertInstanceOf(SiteField::class, $field);
         $this->assertEquals($identifier, $field->fieldDefIdentifier);
-        $this->assertEquals('ngnull', $field->fieldTypeIdentifier);
+        $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
         $this->assertTrue($field->isEmpty());
     }
 
@@ -234,7 +234,7 @@ class FieldsTest extends TestCase
 
         $this->assertInstanceOf(SiteField::class, $field);
         $this->assertEquals((string)$id, $field->fieldDefIdentifier);
-        $this->assertEquals('ngnull', $field->fieldTypeIdentifier);
+        $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
         $this->assertTrue($field->isEmpty());
     }
 

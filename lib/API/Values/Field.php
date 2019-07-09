@@ -26,7 +26,7 @@ abstract class Field extends ValueObject
     abstract public function isEmpty();
 
     /**
-     * Returns whether the field is of 'ngnull' type, returned when nonexistent field is requested from Content.
+     * Returns whether the field is of 'ngsurrogate' type, returned when nonexistent field is requested from Content.
      *
      * @return bool
      */

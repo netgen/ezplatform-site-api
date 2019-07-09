@@ -2,55 +2,55 @@
 
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\Values;
 
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\NullValue;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Null Field value unit tests.
+ * Surrogate Field value unit tests.
  *
  * @group fields
- * @see \Netgen\EzPlatformSiteApi\Core\Site\Values\Field\NullValue
+ * @see \Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue
  */
-class NullValueTest extends TestCase
+class SurrogateValueTest extends TestCase
 {
     public function testConstructWithArbitraryArguments()
     {
-        $value = new NullValue(1, 2, 'three');
+        $value = new SurrogateValue(1, 2, 'three');
 
-        $this->assertInstanceOf(NullValue::class, $value);
+        $this->assertInstanceOf(SurrogateValue::class, $value);
     }
 
     public function testGetPropertyReturnsNull()
     {
-        $value = new NullValue();
+        $value = new SurrogateValue();
 
         $this->assertNull($value->property);
     }
 
     public function testCallMethodReturnsNull()
     {
-        $value = new NullValue();
+        $value = new SurrogateValue();
 
         $this->assertNull($value->method());
     }
 
     public function testCastToStringReturnsEmptyString()
     {
-        $value = new NullValue();
+        $value = new SurrogateValue();
 
         $this->assertEquals('', (string)$value);
     }
 
     public function testCheckingForPropertyReturnsFalse()
     {
-        $value = new NullValue();
+        $value = new SurrogateValue();
 
         $this->assertFalse(isset($value->property));
     }
 
     public function testSettingPropertyDoesNothing()
     {
-        $value = new NullValue();
+        $value = new SurrogateValue();
 
         $value->property = 1;
 
@@ -59,7 +59,7 @@ class NullValueTest extends TestCase
 
     public function testUnsettingPropertyDoesNothing()
     {
-        $value = new NullValue();
+        $value = new SurrogateValue();
 
         unset($value->property);
 

@@ -21,9 +21,9 @@ services:
         tags:
             - { name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ezobjectrelationlist }
 
-    # Resolver for 'ngnull' field type
-    netgen.ezplatform_site.plugins.field_type.relation_resolver.ngnull:
-        class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\NgNull
+    # Resolver for 'ngsurrogate' field type
+    netgen.ezplatform_site.plugins.field_type.relation_resolver.ngsurrogate:
+        class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\Surrogate
         public: false
         tags:
-            - { name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ngnull }
+            - { name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ngsurrogate }

@@ -9,7 +9,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as RepoContent;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\API\Values\Fields as APIFields;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\NullValue;
+use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
@@ -244,9 +244,9 @@ final class Fields extends APIFields
         $apiField = new RepoField([
             'id' => 0,
             'fieldDefIdentifier' => $identifier,
-            'value' => new NullValue(),
+            'value' => new SurrogateValue(),
             'languageCode' => $content->languageCode,
-            'fieldTypeIdentifier' => 'ngnull',
+            'fieldTypeIdentifier' => 'ngsurrogate',
         ]);
 
         $fieldDefinition = new CoreFieldDefinition([

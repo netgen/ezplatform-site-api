@@ -62,7 +62,7 @@ abstract class QueryTypeBaseTest extends TestCase
     {
         $queryType = $this->getQueryTypeUnderTest();
 
-        $this->assertFalse($queryType->supportsParameter(md5(time())));
+        $this->assertFalse($queryType->supportsParameter(md5((string)time())));
     }
 
     public function testGetBaseSupportedParameters()

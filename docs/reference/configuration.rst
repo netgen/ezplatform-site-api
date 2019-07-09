@@ -69,3 +69,32 @@ Rendering a line view for an article with ``ng_content:viewAction`` would use
 
 It is also possible to use custom controllers, this is documented on
 :doc:`Custom controllers reference</reference/custom_controllers>` documentation page.
+
+Handling Content Field inconsistencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes when the content model is changed or for any reason the data is not consistent, it can
+happen that some Content Fields are missing. In case of content model change that is a temporary
+situation lasting while the data is being updated in the background. But even in the case of
+inconsistent database, typically you do not want that to result in site crash.
+
+To account for this Site API provides the following semantic configuration:
+
+.. code-block:: yaml
+
+    netgen_ez_platform_site_api:
+        system:
+            frontend_group:
+                fail_on_missing_fields: true
+
+By default ``fail_on_missing_fields`` is set to ``%kernel.debug%`` container parameter, which means
+accessing a nonexistent field in ``dev`` environment will fail and result in a ``RuntimeException``.
+
+On the other hand, when not in debug mode (in ``prod`` environment), the system will not crash, but
+will instead return a special ``ngnull`` type field, which always evaluates as empty and renders to
+an empty string. In this case, a ``critical`` level message will be logged, so you can find and fix
+the problem.
+
+.. note::
+
+  You can configure ``fail_on_missing_fields`` per siteaccess or siteaccess group.

@@ -277,6 +277,7 @@ final class Fields extends APIFields
             'innerField' => $apiField,
             'innerFieldDefinition' => $fieldDefinition,
             'isEmpty' => true,
+            'isSurrogate' => true,
         ]);
     }
 }

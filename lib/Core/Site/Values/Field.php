@@ -61,13 +61,17 @@ final class Field extends APIField
      */
     private $isEmpty;
 
+    /**
+     * @var bool
+     */
+    private $isSurrogate;
+
     public function __construct(array $properties = [])
     {
-        if (isset($properties['isEmpty'])) {
-            $this->isEmpty = $properties['isEmpty'];
+        $this->isEmpty = $properties['isEmpty'];
+        $this->isSurrogate = $properties['isSurrogate'];
 
-            unset($properties['isEmpty']);
-        }
+        unset($properties['isEmpty'], $properties['isSurrogate']);
 
         parent::__construct($properties);
     }
@@ -92,5 +96,10 @@ final class Field extends APIField
     public function isEmpty()
     {
         return $this->isEmpty;
+    }
+
+    public function isSurrogate(): bool
+    {
+        return $this->isSurrogate;
     }
 }

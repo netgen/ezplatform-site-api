@@ -6,7 +6,6 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
-use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\API\RelationService as RelationServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
@@ -59,13 +58,6 @@ class RelationService implements RelationServiceInterface
         array $contentTypeIdentifiers = []
     ) {
         $content = $this->site->getLoadService()->loadContent($contentId);
-
-        if (!$content->hasField($fieldDefinitionIdentifier)) {
-            throw new InvalidArgumentException(
-                '$fieldDefinitionIdentifier',
-                "Content does not contain a field '{$fieldDefinitionIdentifier}'"
-            );
-        }
 
         $field = $content->getField($fieldDefinitionIdentifier);
         $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);

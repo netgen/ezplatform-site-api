@@ -20,3 +20,10 @@ services:
         public: false
         tags:
             - { name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ezobjectrelationlist }
+
+    # Resolver for 'ngnull' field type
+    netgen.ezplatform_site.plugins.field_type.relation_resolver.ngnull:
+        class: Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\NgNull
+        public: false
+        tags:
+            - { name: netgen.ezplatform_site.plugins.field_type.relation_resolver, identifier: ngnull }

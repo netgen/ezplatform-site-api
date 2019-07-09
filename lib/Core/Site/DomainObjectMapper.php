@@ -187,6 +187,7 @@ final class DomainObjectMapper
             'innerField' => $apiField,
             'innerFieldDefinition' => $fieldDefinition,
             'isEmpty' => $isEmpty,
+            'isSurrogate' => false,
         ]);
     }
 

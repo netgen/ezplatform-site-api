@@ -24,4 +24,11 @@ use eZ\Publish\API\Repository\Values\ValueObject;
 abstract class Field extends ValueObject
 {
     abstract public function isEmpty();
+
+    /**
+     * Returns whether the field is of 'ngnull' type, returned when nonexistent field is requested from Content.
+     *
+     * @return bool
+     */
+    abstract public function isSurrogate(): bool;
 }

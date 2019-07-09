@@ -64,6 +64,7 @@ class BaseTest extends APIBaseTest
                     'fieldTypeIdentifier' => 'ezstring',
                     'value' => $languageCode,
                     'isEmpty' => false,
+                    'isSurrogate' => false,
                 ],
             ],
         ];
@@ -269,6 +270,7 @@ class BaseTest extends APIBaseTest
 
         $this->assertSame($field->id, $field->innerField->id);
         $this->assertSame($data['isEmpty'], $field->isEmpty());
+        $this->assertSame($data['isSurrogate'], $field->isSurrogate());
         $this->assertSame($identifier, $field->fieldDefIdentifier);
         $this->assertSame($data['fieldTypeIdentifier'], $field->fieldTypeIdentifier);
         $this->assertSame($data['name'], $field->name);

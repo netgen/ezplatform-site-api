@@ -84,7 +84,6 @@ class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentValue
      */
     public function testLoadFieldRelation()
     {
@@ -106,7 +105,6 @@ class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentValue
      */
     public function testLoadFieldRelations()
     {
@@ -122,5 +120,25 @@ class RelationServiceTest extends BaseTest
             $this->assertInstanceOf(Content::class, $content);
             $this->assertEquals($relationId, $content->id);
         }
+    }
+
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function testLoadFieldRelationsForNonexistentField(): void
+    {
+        [, , , $testApiContent] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $contentItems = $relationService->loadFieldRelations($testApiContent->id, 'nonexistent');
+
+        $this->assertCount(0, $contentItems);
     }
 }

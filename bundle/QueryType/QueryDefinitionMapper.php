@@ -110,7 +110,7 @@ final class QueryDefinitionMapper
      *
      * @return array
      */
-    private function getNamedQueryConfiguration($name): array
+    private function getNamedQueryConfiguration(string $name): array
     {
         if (array_key_exists($name, $this->namedQueryConfiguration)) {
             return $this->namedQueryConfiguration[$name];
@@ -151,7 +151,7 @@ final class QueryDefinitionMapper
      * @param string $queryTypeName
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      */
-    private function injectSupportedParameters(array &$parameters, $queryTypeName, ContentView $view): void
+    private function injectSupportedParameters(array &$parameters, string $queryTypeName, ContentView $view): void
     {
         $queryType = $this->queryTypeRegistry->getQueryType($queryTypeName);
 

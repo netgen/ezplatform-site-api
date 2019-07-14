@@ -29,7 +29,7 @@ abstract class Location extends Base
         $resolver->setAllowedTypes('parent_location_id', ['int', 'string', 'array']);
         $resolver->setAllowedValues(
             'parent_location_id',
-            static function ($ids) {
+            static function ($ids): bool {
                 if (!is_array($ids)) {
                     return true;
                 }
@@ -47,7 +47,7 @@ abstract class Location extends Base
         $resolver->setAllowedTypes('subtree', ['string', 'array']);
         $resolver->setAllowedValues(
             'subtree',
-            static function ($subtrees) {
+            static function ($subtrees): bool {
                 if (!is_array($subtrees)) {
                     return true;
                 }

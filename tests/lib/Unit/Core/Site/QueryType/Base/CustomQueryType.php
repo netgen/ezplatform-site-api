@@ -38,7 +38,7 @@ class CustomQueryType extends Base
     {
         $this->registerCriterionBuilder(
             'prefabrication_date',
-            function (CriterionDefinition $definition) {
+            function (CriterionDefinition $definition): DateMetadata {
                 return new DateMetadata(
                     DateMetadata::MODIFIED,
                     $definition->operator,
@@ -75,7 +75,7 @@ class CustomQueryType extends Base
         ];
     }
 
-    protected function parseCustomSortString($string): ?SortClause
+    protected function parseCustomSortString(string $string): ?SortClause
     {
         switch ($string) {
             case 'section':

@@ -23,18 +23,18 @@ interface LoadService
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    public function loadContent($contentId, $versionNo = null, $languageCode = null): Content;
+    public function loadContent($contentId, ?int $versionNo = null, ?string $languageCode = null): Content;
 
     /**
      * Loads Content object for the given $remoteId.
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
-     * @param string|int $remoteId
+     * @param string $remoteId
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    public function loadContentByRemoteId($remoteId): Content;
+    public function loadContentByRemoteId(string $remoteId): Content;
 
     /**
      * Loads Location object for the given $locationId.
@@ -52,9 +52,9 @@ interface LoadService
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
-     * @param string|int $remoteId
+     * @param string $remoteId
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    public function loadLocationByRemoteId($remoteId): Location;
+    public function loadLocationByRemoteId(string $remoteId): Location;
 }

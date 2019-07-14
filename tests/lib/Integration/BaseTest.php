@@ -29,7 +29,7 @@ use ReflectionProperty;
  */
 class BaseTest extends APIBaseTest
 {
-    public function getData($languageCode): array
+    public function getData(string $languageCode): array
     {
         return [
             'name' => $languageCode,
@@ -80,7 +80,7 @@ class BaseTest extends APIBaseTest
      * @param string $name
      * @param mixed $value
      */
-    protected function overrideSettings($name, $value): void
+    protected function overrideSettings(string $name, $value): void
     {
         $settings = $this->getSite()->getSettings();
 
@@ -102,12 +102,9 @@ class BaseTest extends APIBaseTest
         return $site;
     }
 
-    protected function assertContent($content, $data): void
+    protected function assertContent(Content $content, array $data): void
     {
         [$name, $contentId, , $locationId] = array_values($data);
-
-        /** @var \Netgen\EzPlatformSiteApi\API\Values\Content|\Netgen\EzPlatformSiteApi\Core\Site\Values\Content $content */
-        $this->assertInstanceOf(Content::class, $content);
 
         $this->assertSame($contentId, $content->id);
         $this->assertSame($locationId, $content->mainLocationId);
@@ -159,12 +156,9 @@ class BaseTest extends APIBaseTest
         );
     }
 
-    protected function assertContentInfo($contentInfo, $data): void
+    protected function assertContentInfo(APIContentInfo $contentInfo, array $data): void
     {
         [$name, $contentId, $contentRemoteId, $locationId] = array_values($data);
-
-        /** @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo|\Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo $contentInfo */
-        $this->assertInstanceOf(APIContentInfo::class, $contentInfo);
 
         $this->assertEquals($contentId, $contentInfo->id);
         $this->assertEquals($contentRemoteId, $contentInfo->remoteId);
@@ -229,7 +223,7 @@ class BaseTest extends APIBaseTest
         );
     }
 
-    protected function assertFields(Content $content, $data): void
+    protected function assertFields(Content $content, array $data): void
     {
         $this->assertInstanceOf(Fields::class, $content->fields);
         $this->assertCount(count($data['fields']), $content->fields);
@@ -266,7 +260,7 @@ class BaseTest extends APIBaseTest
         $this->assertInstanceOf(SurrogateValue::class, $content->getFieldValueById('non_existent_field'));
     }
 
-    protected function assertField(Content $content, $identifier, $languageCode, $data): void
+    protected function assertField(Content $content, string $identifier, string $languageCode, array $data): void
     {
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Field|\Netgen\EzPlatformSiteApi\Core\Site\Values\Field $field */
         $field = $content->getField($identifier);
@@ -312,12 +306,9 @@ class BaseTest extends APIBaseTest
         );
     }
 
-    protected function assertLocation($location, $data): void
+    protected function assertLocation(Location $location, array $data): void
     {
         [, , , $locationId, $locationRemoteId, $parentLocationId] = array_values($data);
-
-        /** @var \Netgen\EzPlatformSiteApi\API\Values\Location|\Netgen\EzPlatformSiteApi\Core\Site\Values\Location  $location */
-        $this->assertInstanceOf(Location::class, $location);
 
         $this->assertEquals($locationId, $location->id);
         $this->assertEquals($locationRemoteId, $location->remoteId);

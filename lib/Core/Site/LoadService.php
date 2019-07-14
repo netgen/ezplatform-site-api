@@ -54,7 +54,7 @@ class LoadService implements LoadServiceInterface
         $this->locationService = $locationService;
     }
 
-    public function loadContent($contentId, $versionNo = null, $languageCode = null): Content
+    public function loadContent($contentId, ?int $versionNo = null, ?string $languageCode = null): Content
     {
         $versionInfo = $this->contentService->loadVersionInfoById($contentId, $versionNo);
         $languageCode = $this->resolveLanguageCode($versionInfo, $languageCode);
@@ -62,7 +62,7 @@ class LoadService implements LoadServiceInterface
         return $this->domainObjectMapper->mapContent($versionInfo, $languageCode);
     }
 
-    public function loadContentByRemoteId($remoteId): Content
+    public function loadContentByRemoteId(string $remoteId): Content
     {
         $contentInfo = $this->contentService->loadContentInfoByRemoteId($remoteId);
 
@@ -76,7 +76,7 @@ class LoadService implements LoadServiceInterface
         return $this->getSiteLocation($location);
     }
 
-    public function loadLocationByRemoteId($remoteId): Location
+    public function loadLocationByRemoteId(string $remoteId): Location
     {
         $location = $this->locationService->loadLocationByRemoteId($remoteId);
 

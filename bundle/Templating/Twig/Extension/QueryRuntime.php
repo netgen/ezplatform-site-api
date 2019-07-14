@@ -56,7 +56,7 @@ class QueryRuntime
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    public function executeRawQuery($context, $name): SearchResult
+    public function executeRawQuery($context, string $name): SearchResult
     {
         return $this->queryExecutor->execute(
             $this->getQueryDefinitionCollection($context)->get($name),

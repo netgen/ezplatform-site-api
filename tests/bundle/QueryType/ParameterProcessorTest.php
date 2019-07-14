@@ -179,8 +179,8 @@ class ParameterProcessorTest extends TestCase
                 10,
             ],
             [
-                "@=queryParamInt('integerStringValue', '11', [25, 50])",
-                '11',
+                "@=queryParamInt('integerStringValue', 11, [25, 50])",
+                11,
             ],
             [
                 "@=queryParamInt('integerStringValue', 10, [10, 50])",
@@ -195,8 +195,8 @@ class ParameterProcessorTest extends TestCase
                 true,
             ],
             [
-                "@=queryParamBool('booleanStringValue', 5, [false])",
-                5,
+                "@=queryParamBool('booleanStringValue', true, [false])",
+                true,
             ],
             [
                 "@=queryParamFloat('floatStringValue', 7.7, [5.7, 7.8])",
@@ -207,16 +207,16 @@ class ParameterProcessorTest extends TestCase
                 7.7,
             ],
             [
-                "@=queryParamFloat('floatStringValue', 'seven', [5.6, 7.8])",
-                'seven',
+                "@=queryParamFloat('floatStringValue', 3, [5.6, 7.8])",
+                3.0,
             ],
             [
                 "@=queryParamString('stringValue', 'and', ['hand'])",
                 'and',
             ],
             [
-                "@=queryParamString('stringValue', 5, ['hand', 'bland'])",
-                5,
+                "@=queryParamString('stringValue', '5', ['hand', 'bland'])",
+                '5',
             ],
             [
                 "@=queryParamString('stringValue', 'and', ['hand', 'strand'])",

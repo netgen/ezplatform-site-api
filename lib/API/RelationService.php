@@ -23,7 +23,7 @@ interface RelationService
      */
     public function loadFieldRelation(
         $contentId,
-        $fieldDefinitionIdentifier,
+        string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): ?Content;
 
@@ -39,7 +39,7 @@ interface RelationService
      */
     public function loadFieldRelations(
         $contentId,
-        $fieldDefinitionIdentifier,
+        string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): array;
 }

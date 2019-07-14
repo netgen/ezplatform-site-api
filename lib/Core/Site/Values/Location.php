@@ -189,12 +189,12 @@ final class Location extends APILocation
         ];
     }
 
-    public function getChildren($limit = 25)
+    public function getChildren(int $limit = 25)
     {
         return $this->filterChildren([], $limit)->getIterator();
     }
 
-    public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1): Pagerfanta
+    public function filterChildren(array $contentTypeIdentifiers = [], int $maxPerPage = 25, int $currentPage = 1): Pagerfanta
     {
         $criteria = [
             new ParentLocationId($this->id),
@@ -222,12 +222,12 @@ final class Location extends APILocation
         return $pager;
     }
 
-    public function getSiblings($limit = 25)
+    public function getSiblings(int $limit = 25)
     {
         return $this->filterSiblings([], $limit)->getIterator();
     }
 
-    public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1): Pagerfanta
+    public function filterSiblings(array $contentTypeIdentifiers = [], int $maxPerPage = 25, int $currentPage = 1): Pagerfanta
     {
         $criteria = [
             new ParentLocationId($this->parentLocationId),

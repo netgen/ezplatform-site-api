@@ -77,7 +77,7 @@ EOT
      *
      * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
      */
-    private function getQueryNode($name): ArrayNodeDefinition
+    private function getQueryNode(string $name): ArrayNodeDefinition
     {
         $queries = new ArrayNodeDefinition($name);
         $queries

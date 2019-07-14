@@ -58,7 +58,7 @@ final class RelationResolverRegistrationPass implements CompilerPassInterface
      * @param string $id
      * @param array $attributes
      */
-    private function registerResolver(Definition $resolverRegistryDefinition, $id, array $attributes): void
+    private function registerResolver(Definition $resolverRegistryDefinition, string $id, array $attributes): void
     {
         foreach ($attributes as $attribute) {
             if (!isset($attribute['identifier'])) {

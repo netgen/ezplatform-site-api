@@ -114,6 +114,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                 'repository' => $this->getRepositoryMock(),
                 'innerContent' => $this->getRepoContent(),
                 'innerVersionInfo' => $this->getRepoVersionInfo(),
+                'languageCode' => 'eng-GB',
             ],
             true,
             new NullLogger()

@@ -24,7 +24,7 @@ final class Settings extends BaseSettings
         $this->configResolver = $configResolver;
     }
 
-    public function __get($property)
+    public function __get(string $property)
     {
         switch ($property) {
             case 'prioritizedLanguages':
@@ -46,12 +46,12 @@ final class Settings extends BaseSettings
         throw new PropertyNotFoundException($property, get_class($this));
     }
 
-    public function __set($property, $value): void
+    public function __set(string $property, $value): void
     {
         throw new PropertyReadOnlyException($property, get_class($this));
     }
 
-    public function __isset($property): bool
+    public function __isset(string $property): bool
     {
         switch ($property) {
             case 'prioritizedLanguages':

@@ -213,7 +213,8 @@ class ContentTest extends TestCase
                         'ownerId' => 'ownerId',
                         'contentTypeId' => 'contentTypeId',
                     ]),
-                ])
+                ]),
+                'languageCode' => 'eng-GB',
             ],
             true,
             new NullLogger()

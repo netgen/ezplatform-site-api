@@ -32,7 +32,7 @@ trait PagerfantaTrait
      *
      * @return \Pagerfanta\Pagerfanta
      */
-    protected function getFilterPager(Query $query, $currentPage, $maxPerPage): Pagerfanta
+    protected function getFilterPager(Query $query, int $currentPage, int $maxPerPage): Pagerfanta
     {
         $adapter = new FilterAdapter($query, $this->getSite()->getFilterService());
         $pager = new Pagerfanta($adapter);
@@ -53,7 +53,7 @@ trait PagerfantaTrait
      *
      * @return \Pagerfanta\Pagerfanta
      */
-    protected function getFindPager(Query $query, $currentPage, $maxPerPage): Pagerfanta
+    protected function getFindPager(Query $query, int $currentPage, int $maxPerPage): Pagerfanta
     {
         $adapter = new FindAdapter($query, $this->getSite()->getFindService());
         $pager = new Pagerfanta($adapter);

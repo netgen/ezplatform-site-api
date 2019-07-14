@@ -79,7 +79,7 @@ class PreviewController extends BasePreviewController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $language
      */
-    protected function injectSiteApiValueObjects(Request $request, $language): void
+    protected function injectSiteApiValueObjects(Request $request, string $language): void
     {
         /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
         /** @var \eZ\Publish\API\Repository\Values\Content\Location $location */
@@ -117,7 +117,7 @@ class PreviewController extends BasePreviewController
      *
      * @return bool
      */
-    protected function isLegacyModeSiteAccess($siteAccessName): bool
+    protected function isLegacyModeSiteAccess(string $siteAccessName): bool
     {
         if (!$this->configResolver->hasParameter('legacy_mode', 'ezsettings', $siteAccessName)) {
             return false;

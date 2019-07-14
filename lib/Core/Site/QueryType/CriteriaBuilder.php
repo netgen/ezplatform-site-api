@@ -254,7 +254,7 @@ final class CriteriaBuilder
     }
 
     /**
-     * @param $valueOrValues
+     * @param mixed $valueOrValues
      *
      * @throws \InvalidArgumentException
      *

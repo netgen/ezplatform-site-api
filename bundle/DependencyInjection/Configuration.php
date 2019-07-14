@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\Configuration as SiteAccessConfiguration;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class Configuration extends SiteAccessConfiguration
@@ -26,7 +27,7 @@ class Configuration extends SiteAccessConfiguration
         return $treeBuilder;
     }
 
-    protected function addConfiguration($rootNode): void
+    protected function addConfiguration(ArrayNodeDefinition $rootNode): void
     {
         $systemNode = $this->generateScopeBaseNode($rootNode);
         $systemNode

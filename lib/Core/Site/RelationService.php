@@ -42,7 +42,7 @@ class RelationService implements RelationServiceInterface
 
     public function loadFieldRelation(
         $contentId,
-        $fieldDefinitionIdentifier,
+        string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): ?Content {
         $relatedContentItems = $this->loadFieldRelations(
@@ -56,7 +56,7 @@ class RelationService implements RelationServiceInterface
 
     public function loadFieldRelations(
         $contentId,
-        $fieldDefinitionIdentifier,
+        string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): array {
         $content = $this->site->getLoadService()->loadContent($contentId);
@@ -121,7 +121,7 @@ class RelationService implements RelationServiceInterface
     {
         $sortedIdList = array_flip($relatedContentIds);
 
-        $sorter = static function (Content $content1, Content $content2) use ($sortedIdList) {
+        $sorter = static function (Content $content1, Content $content2) use ($sortedIdList): int {
             return $sortedIdList[$content1->id] <=> $sortedIdList[$content2->id];
         };
 

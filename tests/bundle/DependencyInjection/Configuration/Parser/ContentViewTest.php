@@ -226,7 +226,7 @@ class ContentViewTest extends AbstractParserTestCase
      * @param array $configurationValues
      * @param string $message
      */
-    public function testInvalid(array $configurationValues, $message): void
+    public function testInvalid(array $configurationValues, string $message): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $message = preg_quote($message, '/');

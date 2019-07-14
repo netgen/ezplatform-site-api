@@ -41,7 +41,7 @@ class ImageRuntime
      *
      * @return \eZ\Publish\SPI\Variation\Values\Variation|null
      */
-    public function getImageVariation(Field $field, $variationName): ?Variation
+    public function getImageVariation(Field $field, string $variationName): ?Variation
     {
         /** @var \eZ\Publish\Core\FieldType\Image\Value $value */
         $value = $field->value;

@@ -123,7 +123,7 @@ final class Content extends APIContent
      */
     private $isInnerOwnerUserInitialized = false;
 
-    public function __construct(array $properties, $failOnMissingFields, LoggerInterface $logger)
+    public function __construct(array $properties, bool $failOnMissingFields, LoggerInterface $logger)
     {
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
@@ -220,7 +220,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function hasField($identifier): bool
+    public function hasField(string $identifier): bool
     {
         return $this->fields->hasField($identifier);
     }
@@ -230,7 +230,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getField($identifier): APIField
+    public function getField(string $identifier): APIField
     {
         return $this->fields->offsetGet($identifier);
     }
@@ -260,7 +260,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getFieldValue($identifier): Value
+    public function getFieldValue(string $identifier): Value
     {
         return $this->getField($identifier)->value;
     }
@@ -275,12 +275,12 @@ final class Content extends APIContent
         return $this->getFieldById($id)->value;
     }
 
-    public function getLocations($limit = 25)
+    public function getLocations(int $limit = 25)
     {
         return $this->filterLocations($limit)->getIterator();
     }
 
-    public function filterLocations($maxPerPage = 25, $currentPage = 1): Pagerfanta
+    public function filterLocations(int $maxPerPage = 25, int $currentPage = 1): Pagerfanta
     {
         $pager = new Pagerfanta(
             new FilterAdapter(
@@ -306,7 +306,7 @@ final class Content extends APIContent
         return $pager;
     }
 
-    public function getFieldRelation($fieldDefinitionIdentifier): ?APIContent
+    public function getFieldRelation(string $fieldDefinitionIdentifier): ?APIContent
     {
         return $this->site->getRelationService()->loadFieldRelation(
             $this->id,
@@ -314,7 +314,7 @@ final class Content extends APIContent
         );
     }
 
-    public function getFieldRelations($fieldDefinitionIdentifier, $limit = 25): array
+    public function getFieldRelations(string $fieldDefinitionIdentifier, int $limit = 25): array
     {
         $relations = $this->site->getRelationService()->loadFieldRelations(
             $this->id,
@@ -325,10 +325,10 @@ final class Content extends APIContent
     }
 
     public function filterFieldRelations(
-        $fieldDefinitionIdentifier,
+        string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
-        $maxPerPage = 25,
-        $currentPage = 1
+        int $maxPerPage = 25,
+        int $currentPage = 1
     ): Pagerfanta {
         $relations = $this->site->getRelationService()->loadFieldRelations(
             $this->id,
@@ -360,7 +360,7 @@ final class Content extends APIContent
     {
         if ($this->innerContent === null) {
             $this->innerContent = $this->repository->sudo(
-                function(Repository $repository) {
+                function (Repository $repository): RepoContent {
                     return $this->contentService->loadContent(
                         $this->id,
                         [$this->languageCode],
@@ -400,10 +400,9 @@ final class Content extends APIContent
         }
 
         $this->owner = $this->repository->sudo(
-            function(Repository $repository) {
+            function(Repository $repository): ?APIContent {
                 try {
-                    return $this->site->getLoadService()
-                        ->loadContent($this->getContentInfo()->ownerId);
+                    return $this->site->getLoadService()->loadContent($this->getContentInfo()->ownerId);
                 } catch (NotFoundException $e) {
                     // Do nothing
                 }

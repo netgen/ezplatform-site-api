@@ -99,11 +99,11 @@ class PrepareFixturesTest extends APIBaseTest
     protected function createContent(
         ContentType $contentType,
         $parentLocationId,
-        $contentRemoteId,
-        $locationRemoteId,
-        $mainLanguageCode,
+        string $contentRemoteId,
+        string $locationRemoteId,
+        string $mainLanguageCode,
         array $languageCodes,
-        $alwaysAvailable = false
+        bool $alwaysAvailable = false
     ): Content {
         $repository = $this->getRepository(false);
 

@@ -77,8 +77,8 @@ final class ParameterProcessor
     {
         $expressionLanguage->register(
             'viewParam',
-            static function () {},
-            static function ($arguments, $name, $default) {
+            static function (): void {},
+            static function (array $arguments, string $name, $default) {
                 /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
                 $view = $arguments['view'];
 
@@ -92,8 +92,8 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'queryParam',
-            static function () {},
-            static function ($arguments, $name, $default, array $allowed = null) {
+            static function (): void {},
+            static function (array $arguments, string $name, $default, array $allowed = null) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -113,8 +113,8 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'queryParamString',
-            static function () {},
-            static function ($arguments, $name, $default, array $allowed = null) {
+            static function (): void {},
+            static function (array $arguments, string $name, string $default, array $allowed = null): string {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -134,8 +134,8 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'queryParamInt',
-            static function () {},
-            static function ($arguments, $name, $default, array $allowed = null) {
+            static function (): void {},
+            static function (array $arguments, string $name, int $default, array $allowed = null): int {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -155,8 +155,8 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'queryParamFloat',
-            static function () {},
-            static function ($arguments, $name, $default, array $allowed = null) {
+            static function (): void {},
+            static function (array $arguments, string $name, float $default, array $allowed = null): float {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -176,8 +176,8 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'queryParamBool',
-            static function () {},
-            static function ($arguments, $name, $default, array $allowed = null) {
+            static function (): void {},
+            static function (array $arguments, string $name, bool $default, array $allowed = null): bool {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -197,8 +197,8 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'timestamp',
-            static function () {},
-            static function ($arguments, $timeString) {
+            static function (): void {},
+            static function (array $arguments, string $timeString) {
                 return strtotime($timeString);
             }
         );
@@ -207,8 +207,8 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'config',
-            static function () {},
-            static function ($arguments, $name, $namespace = null, $scope = null) use ($configResolver) {
+            static function (): void {},
+            static function (array $arguments, string $name, ?string $namespace = null, ?string $scope = null) use ($configResolver) {
                 return $configResolver->getParameter($name, $namespace, $scope);
             }
         );

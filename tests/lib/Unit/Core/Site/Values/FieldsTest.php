@@ -259,7 +259,7 @@ class FieldsTest extends TestCase
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Fields
      */
-    protected function getFieldsUnderTest($failOnMissingFields): Fields
+    protected function getFieldsUnderTest(bool $failOnMissingFields): Fields
     {
         return new Fields(
             $this->getMockedContent(),
@@ -296,6 +296,7 @@ class FieldsTest extends TestCase
                 'repository' => $this->getRepositoryMock(),
                 'innerVersionInfo' => $this->getRepoVersionInfo(),
                 'innerContent' => $this->getRepoContent(),
+                'languageCode' => 'eng-GB',
             ],
             true,
             new NullLogger()

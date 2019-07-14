@@ -126,6 +126,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                 'repository' => $this->getRepositoryMock(),
                 'innerContent' => $this->getRepoContent(),
                 'innerVersionInfo' => $this->getRepoVersionInfo(),
+                'languageCode' => 'eng-GB',
             ],
             true,
             new NullLogger()
@@ -141,6 +142,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                 'domainObjectMapper' => $this->getDomainObjectMapper(),
                 'repository' => $this->getRepositoryMock(),
                 'fields' => [],
+                'languageCode' => 'eng-GB',
             ],
             true,
             new NullLogger()

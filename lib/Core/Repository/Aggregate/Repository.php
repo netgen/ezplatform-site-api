@@ -26,7 +26,6 @@ use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use eZ\Publish\API\Repository\Values\User\UserReference;
-use Closure;
 use RuntimeException;
 
 /**

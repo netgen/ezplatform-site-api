@@ -60,6 +60,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
                 'domainObjectMapper' => $this->getDomainObjectMapper(),
                 'repository' => $this->getRepositoryMock(),
                 'fields' => [],
+                'languageCode' => 'eng-GB',
             ],
             true,
             new NullLogger()

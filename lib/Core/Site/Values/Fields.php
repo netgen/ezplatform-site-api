@@ -78,7 +78,7 @@ final class Fields extends APIFields
     public function __construct(
         RepoContent $content,
         DomainObjectMapper $domainObjectMapper,
-        $failOnMissingFields,
+        bool $failOnMissingFields,
         LoggerInterface $logger
     ) {
         $this->content = $content;
@@ -119,7 +119,7 @@ final class Fields extends APIFields
      *
      * @return bool
      */
-    public function hasField($identifier): bool
+    public function hasField(string $identifier): bool
     {
         $this->initialize();
 

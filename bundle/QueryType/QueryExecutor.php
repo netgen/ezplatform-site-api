@@ -63,7 +63,7 @@ final class QueryExecutor
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
      */
-    public function execute(QueryDefinition $queryDefinition, $usePager)
+    public function execute(QueryDefinition $queryDefinition, bool $usePager)
     {
         $queryType = $this->queryTypeRegistry->getQueryType($queryDefinition->name);
         $query = $queryType->getQuery($queryDefinition->parameters);

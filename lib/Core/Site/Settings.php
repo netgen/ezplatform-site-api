@@ -37,10 +37,10 @@ final class Settings extends BaseSettings
      * @param bool $failOnMissingFields
      */
     public function __construct(
-        $prioritizedLanguages,
-        $useAlwaysAvailable,
+        array $prioritizedLanguages,
+        bool $useAlwaysAvailable,
         $rootLocationId,
-        $failOnMissingFields
+        bool $failOnMissingFields
     ) {
         $this->prioritizedLanguages = $prioritizedLanguages;
         $this->useAlwaysAvailable = $useAlwaysAvailable;
@@ -51,11 +51,11 @@ final class Settings extends BaseSettings
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
      *
-     * @param $property
+     * @param string $property
      *
-     * @return bool|int|string|string[]
+     * @return mixed
      */
-    public function __get($property)
+    public function __get(string $property)
     {
         switch ($property) {
             case 'prioritizedLanguages':
@@ -74,10 +74,10 @@ final class Settings extends BaseSettings
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
      *
-     * @param $property
-     * @param $value
+     * @param string $property
+     * @param mixed $value
      */
-    public function __set($property, $value): void
+    public function __set(string $property, $value): void
     {
         throw new PropertyReadOnlyException($property, get_class($this));
     }
@@ -85,11 +85,11 @@ final class Settings extends BaseSettings
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
      *
-     * @param $property
+     * @param string $property
      *
      * @return bool
      */
-    public function __isset($property): bool
+    public function __isset(string $property): bool
     {
         switch ($property) {
             case 'prioritizedLanguages':

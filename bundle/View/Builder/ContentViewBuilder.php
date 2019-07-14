@@ -145,7 +145,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
      *
-     * @param mixed $contentId
+     * @param string|int $contentId
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
@@ -170,7 +170,7 @@ class ContentViewBuilder implements ViewBuilder
     {
         /** @var \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo */
         $contentInfo = $this->repository->sudo(
-            function (Repository $repository) use ($contentId) {
+            function (Repository $repository) use ($contentId): ContentInfo {
                 return $repository->getContentService()->loadContentInfo($contentId);
             }
         );
@@ -204,10 +204,10 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    private function loadLocation($locationId, $checkVisibility = true): Location
+    private function loadLocation($locationId, bool $checkVisibility = true): Location
     {
         $location = $this->repository->sudo(
-            function (Repository $repository) use ($locationId) {
+            function (Repository $repository) use ($locationId): Location {
                 return $this->site->getLoadService()->loadLocation($locationId);
             }
         );
@@ -252,7 +252,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @return bool
      */
-    private function isEmbed($parameters): bool
+    private function isEmbed(array $parameters): bool
     {
         if ($parameters['_controller'] === 'ng_content:embedAction') {
             return true;

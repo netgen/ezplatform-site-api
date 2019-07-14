@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use Netgen\EzPlatformSiteApi\API\Values\Location as SiteLocation;
@@ -34,7 +35,7 @@ final class Children extends Location
         $resolver->setRequired('location');
         $resolver->setAllowedTypes('location', SiteLocation::class);
 
-        $resolver->setDefault('sort', static function (Options $options) {
+        $resolver->setDefault('sort', static function (Options $options): array {
             /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
             $location = $options['location'];
             return $location->innerLocation->getSortClauses();
@@ -46,7 +47,7 @@ final class Children extends Location
      *
      * @throws \InvalidArgumentException
      */
-    protected function getFilterCriteria(array $parameters)
+    protected function getFilterCriteria(array $parameters): Criterion
     {
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
         $location = $parameters['location'];

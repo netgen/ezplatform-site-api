@@ -63,7 +63,7 @@ final class DomainObjectMapper
     public function __construct(
         SiteInterface $site,
         Repository $repository,
-        $failOnMissingFields,
+        bool $failOnMissingFields,
         LoggerInterface $logger
     ) {
         $this->site = $site;
@@ -82,7 +82,7 @@ final class DomainObjectMapper
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Content
      */
-    public function mapContent(VersionInfo $versionInfo, $languageCode): Content
+    public function mapContent(VersionInfo $versionInfo, string $languageCode): Content
     {
         $contentInfo = $versionInfo->contentInfo;
 
@@ -112,7 +112,7 @@ final class DomainObjectMapper
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo
      */
-    public function mapContentInfo(VersionInfo $versionInfo, $languageCode): ContentInfo
+    public function mapContentInfo(VersionInfo $versionInfo, string $languageCode): ContentInfo
     {
         $contentInfo = $versionInfo->contentInfo;
         $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
@@ -140,7 +140,7 @@ final class DomainObjectMapper
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Location
      */
-    public function mapLocation(RepoLocation $location, VersionInfo $versionInfo, $languageCode): Location
+    public function mapLocation(RepoLocation $location, VersionInfo $versionInfo, string $languageCode): Location
     {
         return new Location(
             [
@@ -193,7 +193,7 @@ final class DomainObjectMapper
         ]);
     }
 
-    private function getTranslatedString($languageCode, $strings)
+    private function getTranslatedString(string $languageCode, array $strings)
     {
         if (array_key_exists($languageCode, $strings)) {
             return $strings[$languageCode];

@@ -41,7 +41,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    public function resolve($name, $parameters): array
+    public function resolve(string $name, $parameters): array
     {
         return $this->resolveForTarget($name, null, $parameters);
     }
@@ -56,7 +56,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    public function resolveTargets($name, array $parameters): array
+    public function resolveTargets(string $name, array $parameters): array
     {
         $definitionsGrouped = [[]];
 
@@ -78,7 +78,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    private function resolveForTarget($name, $target, $parameters): array
+    private function resolveForTarget(string $name, ?string $target, $parameters): array
     {
         if ($this->isOperatorMap($parameters)) {
             return $this->resolveOperatorMap($name, $target, $parameters);
@@ -98,7 +98,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    private function resolveOperatorMap($name, $target, array $map): array
+    private function resolveOperatorMap(string $name, ?string $target, array $map): array
     {
         $definitions = [];
 
@@ -128,7 +128,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
-    private function buildDefinition($name, $target, $operator, $value): CriterionDefinition
+    private function buildDefinition(string $name, ?string $target, ?string $operator, $value): CriterionDefinition
     {
         return new CriterionDefinition([
             'name' => $name,
@@ -181,7 +181,7 @@ final class CriterionDefinitionResolver
      *
      * @return mixed
      */
-    private function resolveOperator($symbol, $value)
+    private function resolveOperator(?string $symbol, $value)
     {
         if ($symbol === null) {
             return $this->getOperatorByValueType($value);
@@ -199,7 +199,7 @@ final class CriterionDefinitionResolver
      *
      * @return mixed
      */
-    private function getOperatorByValueType($value)
+    private function getOperatorByValueType($value): string
     {
         if (is_array($value)) {
             return Operator::IN;

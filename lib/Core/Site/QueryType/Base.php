@@ -136,7 +136,7 @@ abstract class Base implements QueryType
      *
      * @return SortClause|null
      */
-    protected function parseCustomSortString($string): ?SortClause
+    protected function parseCustomSortString(string $string): ?SortClause
     {
         throw new InvalidArgumentException(
             "Sort string '{$string}' was not converted to a SortClause"
@@ -154,7 +154,7 @@ abstract class Base implements QueryType
      * @param string $name
      * @param \Closure $builder
      */
-    final protected function registerCriterionBuilder($name, Closure $builder): void
+    final protected function registerCriterionBuilder(string $name, Closure $builder): void
     {
         $this->registeredCriterionBuilders[$name] = $builder;
     }
@@ -208,7 +208,7 @@ abstract class Base implements QueryType
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface
      */
-    final public function supportsParameter($name): bool
+    final public function supportsParameter(string $name): bool
     {
         return $this->getOptionsResolver()->isDefined($name);
     }
@@ -245,7 +245,7 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
 
-        $identifierValuesCallback = static function ($identifiers) {
+        $identifierValuesCallback = static function ($identifiers): bool {
             if (!is_array($identifiers)) {
                 return true;
             }
@@ -263,7 +263,7 @@ abstract class Base implements QueryType
         $resolver->setAllowedValues('section', $identifierValuesCallback);
         $resolver->setAllowedValues(
             'publication_date',
-            static function ($dates) {
+            static function ($dates): bool {
                 if (!is_array($dates)) {
                     return true;
                 }
@@ -279,7 +279,7 @@ abstract class Base implements QueryType
         );
         $resolver->setAllowedValues(
             'is_field_empty',
-            static function ($isEmptyMap) {
+            static function ($isEmptyMap): bool {
                 foreach ($isEmptyMap as $key => $value) {
                     if (!is_string($key) || !is_bool($value)) {
                         return false;
@@ -435,7 +435,7 @@ abstract class Base implements QueryType
      *
      * @return string|\eZ\Publish\API\Repository\Values\Content\Query\SortClause
      */
-    private function parseSortString($string)
+    private function parseSortString(string $string)
     {
         try {
             return $this->getSortClauseParser()->parse($string);

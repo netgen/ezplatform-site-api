@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DateModified;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
@@ -108,7 +109,7 @@ class SortClauseParserTest extends TestCase
      * @param string $stringDefinition
      * @param \eZ\Publish\API\Repository\Values\Content\Query\SortClause $expectedSortClause
      */
-    public function testParseValid($stringDefinition, $expectedSortClause): void
+    public function testParseValid(string $stringDefinition, SortClause $expectedSortClause): void
     {
         $parser = $this->getParserUnderTest();
 
@@ -149,7 +150,7 @@ class SortClauseParserTest extends TestCase
      * @param string $stringDefinition
      * @param string $message
      */
-    public function testParseInvalid($stringDefinition, $message): void
+    public function testParseInvalid(string $stringDefinition, string $message): void
     {
         $this->expectException(InvalidArgumentException::class);
         $message = preg_quote($message, '/');

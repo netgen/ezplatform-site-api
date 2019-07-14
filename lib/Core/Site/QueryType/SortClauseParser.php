@@ -52,7 +52,7 @@ class SortClauseParser
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause
      */
-    public function parse($definition): SortClause
+    public function parse(string $definition): SortClause
     {
         $values = explode(' ', $definition);
         $direction = $this->getDirection($values);

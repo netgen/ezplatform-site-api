@@ -52,7 +52,7 @@ final class ForwardFields extends Content
         $resolver->setAllowedTypes('relation_field', ['string', 'array']);
         $resolver->setAllowedValues(
             'relation_field',
-            static function ($fields) {
+            static function ($fields): bool {
                 if (!is_array($fields)) {
                     return true;
                 }

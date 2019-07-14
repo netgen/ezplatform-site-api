@@ -36,7 +36,7 @@ class Registry
      * @param string $fieldTypeIdentifier
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver $resolver
      */
-    public function register($fieldTypeIdentifier, Resolver $resolver): void
+    public function register(string $fieldTypeIdentifier, Resolver $resolver): void
     {
         $this->resolverMap[$fieldTypeIdentifier] = $resolver;
     }
@@ -50,7 +50,7 @@ class Registry
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver
      */
-    public function get($fieldTypeIdentifier): Resolver
+    public function get(string $fieldTypeIdentifier): Resolver
     {
         if (isset($this->resolverMap[$fieldTypeIdentifier])) {
             return $this->resolverMap[$fieldTypeIdentifier];

@@ -49,7 +49,7 @@ abstract class Resolver
     abstract protected function getSupportedFieldTypeIdentifier(): string;
 
     /**
-     * Return related Content IDs for the given $field.
+     * Return related Content IDs for the given $field value.
      *
      * @param \eZ\Publish\SPI\FieldType\Value $value
      *

@@ -30,7 +30,7 @@ final class QueryDefinitionCollection
      *
      * @return void
      */
-    public function add($name, QueryDefinition $queryDefinition): void
+    public function add(string $name, QueryDefinition $queryDefinition): void
     {
         $this->queryDefinitionMap[$name] = $queryDefinition;
     }
@@ -40,11 +40,11 @@ final class QueryDefinitionCollection
      *
      * @throws \OutOfBoundsException If no QueryDefinition with given $name is found.
      *
-     * @param $name
+     * @param string $name
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
      */
-    public function get($name): QueryDefinition
+    public function get(string $name): QueryDefinition
     {
         if (array_key_exists($name, $this->queryDefinitionMap)) {
             return $this->queryDefinitionMap[$name];

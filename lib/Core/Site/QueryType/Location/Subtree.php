@@ -53,7 +53,7 @@ final class Subtree extends Location
     {
         $this->registerCriterionBuilder(
             'relative_depth',
-            function (CriterionDefinition $definition, array $parameters) {
+            function (CriterionDefinition $definition, array $parameters): Depth {
                 /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
                 $location = $parameters['location'];
                 $relativeDepth = $this->getRelativeDepthValue(
@@ -61,10 +61,7 @@ final class Subtree extends Location
                     $definition->value
                 );
 
-                return new Depth(
-                    $definition->operator,
-                    $relativeDepth
-                );
+                return new Depth($definition->operator, $relativeDepth);
             }
         );
     }
@@ -75,11 +72,11 @@ final class Subtree extends Location
      *
      * @return int|int[] array
      */
-    private function getRelativeDepthValue($startDepth, $value)
+    private function getRelativeDepthValue(int $startDepth, $value)
     {
         if (is_array($value)) {
             return array_map(
-                static function ($value) use ($startDepth) {
+                static function (int $value) use ($startDepth): int {
                     return $startDepth + $value;
                 },
                 $value
@@ -94,7 +91,7 @@ final class Subtree extends Location
      *
      * @throws \InvalidArgumentException
      */
-    protected function getFilterCriteria(array $parameters)
+    protected function getFilterCriteria(array $parameters): array
     {
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
         $location = $parameters['location'];

@@ -59,7 +59,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         $processor = new ConfigurationProcessor($container, $this->getAlias());
         $processor->mapConfig(
             $config,
-            function ($scopeSettings, $currentScope, ContextualizerInterface $contextualizer) {
+            function ($scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void {
                 foreach ($scopeSettings as $key => $value) {
                     $contextualizer->setContextualParameter($key, $currentScope, $value);
                 }

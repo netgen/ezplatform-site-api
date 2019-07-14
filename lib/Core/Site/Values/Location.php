@@ -15,8 +15,8 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
-use Netgen\EzPlatformSiteApi\API\Values\Content;
-use Netgen\EzPlatformSiteApi\API\Values\ContentInfo;
+use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
+use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Pagerfanta;
@@ -269,7 +269,7 @@ final class Location extends APILocation
         return $this->internalParent;
     }
 
-    private function getContent(): Content
+    private function getContent(): APIContent
     {
         if ($this->internalContent === null) {
             $this->internalContent = $this->domainObjectMapper->mapContent(
@@ -281,7 +281,7 @@ final class Location extends APILocation
         return $this->internalContent;
     }
 
-    private function getContentInfo(): ContentInfo
+    private function getContentInfo(): APIContentInfo
     {
         if ($this->contentInfo === null) {
             $this->contentInfo = $this->domainObjectMapper->mapContentInfo(

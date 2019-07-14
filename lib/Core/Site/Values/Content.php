@@ -15,9 +15,9 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\SPI\FieldType\Value;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
-use Netgen\EzPlatformSiteApi\API\Values\ContentInfo;
-use Netgen\EzPlatformSiteApi\API\Values\Field;
-use Netgen\EzPlatformSiteApi\API\Values\Location;
+use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
+use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
+use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
@@ -230,7 +230,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getField($identifier): Field
+    public function getField($identifier): APIField
     {
         return $this->fields->offsetGet($identifier);
     }
@@ -250,7 +250,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getFieldById($id): Field
+    public function getFieldById($id): APIField
     {
         return $this->fields->getFieldById($id);
     }
@@ -345,7 +345,7 @@ final class Content extends APIContent
         return $pager;
     }
 
-    private function getMainLocation(): ?Location
+    private function getMainLocation(): ?APILocation
     {
         if ($this->internalMainLocation === null && $this->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
@@ -378,7 +378,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    private function getContentInfo(): ContentInfo
+    private function getContentInfo(): APIContentInfo
     {
         if ($this->contentInfo === null) {
             $this->contentInfo = $this->domainObjectMapper->mapContentInfo(

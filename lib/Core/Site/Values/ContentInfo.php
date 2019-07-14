@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
-use Netgen\EzPlatformSiteApi\API\Values\Location;
+use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 
 final class ContentInfo extends APIContentInfo
 {
@@ -136,7 +136,7 @@ final class ContentInfo extends APIContentInfo
         ];
     }
 
-    private function getMainLocation(): ?Location
+    private function getMainLocation(): ?APILocation
     {
         if ($this->internalMainLocation === null && $this->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(

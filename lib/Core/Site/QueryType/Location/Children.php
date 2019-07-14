@@ -34,7 +34,7 @@ final class Children extends Location
         $resolver->setRequired('location');
         $resolver->setAllowedTypes('location', SiteLocation::class);
 
-        $resolver->setDefault('sort', function (Options $options) {
+        $resolver->setDefault('sort', static function (Options $options) {
             /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
             $location = $options['location'];
             return $location->innerLocation->getSortClauses();

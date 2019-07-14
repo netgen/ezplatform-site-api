@@ -245,7 +245,7 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
 
-        $identifierValuesCallback = function ($identifiers) {
+        $identifierValuesCallback = static function ($identifiers) {
             if (!is_array($identifiers)) {
                 return true;
             }
@@ -263,7 +263,7 @@ abstract class Base implements QueryType
         $resolver->setAllowedValues('section', $identifierValuesCallback);
         $resolver->setAllowedValues(
             'publication_date',
-            function ($dates) {
+            static function ($dates) {
                 if (!is_array($dates)) {
                     return true;
                 }

@@ -121,7 +121,7 @@ class RelationService implements RelationServiceInterface
     {
         $sortedIdList = array_flip($relatedContentIds);
 
-        $sorter = function (Content $content1, Content $content2) use ($sortedIdList) {
+        $sorter = static function (Content $content1, Content $content2) use ($sortedIdList) {
             return $sortedIdList[$content1->id] <=> $sortedIdList[$content2->id];
         };
 

@@ -79,7 +79,7 @@ final class Subtree extends Location
     {
         if (is_array($value)) {
             return array_map(
-                function ($value) use ($startDepth) {
+                static function ($value) use ($startDepth) {
                     return $startDepth + $value;
                 },
                 $value

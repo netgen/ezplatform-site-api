@@ -41,7 +41,7 @@ final class TagFields extends Content
         $resolver->setAllowedTypes('relation_field', ['string', 'array']);
         $resolver->setAllowedValues(
             'relation_field',
-            function ($fields) {
+            static function ($fields) {
                 if (!is_array($fields)) {
                     return true;
                 }
@@ -124,7 +124,7 @@ final class TagFields extends Content
 
             /** @var $value \Netgen\TagsBundle\Core\FieldType\Tags\Value */
             $value = $field->value;
-            $tagsIdsGrouped[] = array_map(function (Tag $tag) {return $tag->id;}, $value->tags);
+            $tagsIdsGrouped[] = array_map(static function (Tag $tag) {return $tag->id;}, $value->tags);
         }
 
         return array_merge(...$tagsIdsGrouped);

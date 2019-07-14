@@ -38,7 +38,7 @@ final class ReverseFields extends Content
         $resolver->setAllowedTypes('relation_field', ['string', 'array']);
         $resolver->setAllowedValues(
             'relation_field',
-            function ($fields) {
+            static function ($fields) {
                 if (!is_array($fields)) {
                     return true;
                 }

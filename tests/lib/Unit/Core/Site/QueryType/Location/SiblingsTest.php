@@ -48,7 +48,6 @@ class SiblingsTest extends QueryTypeBaseTest
         $loadServiceMock = $this->getMockBuilder(LoadService::class)->getMock();
         $siteMock = $this->getMockBuilder(Site::class)->getMock();
         $siteMock
-            ->expects($this->any())
             ->method('getLoadService')
             ->willReturn($loadServiceMock);
 
@@ -65,7 +64,6 @@ class SiblingsTest extends QueryTypeBaseTest
         ]);
 
         $loadServiceMock
-            ->expects($this->any())
             ->method('loadLocation')
             ->with(42)
             ->willReturn($parentLocation);

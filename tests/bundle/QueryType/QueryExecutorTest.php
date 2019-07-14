@@ -270,11 +270,9 @@ class QueryExecutorTest extends TestCase
     {
         $filterServiceMock = $this->getMockBuilder(FilterService::class)->getMock();
         $filterServiceMock
-            ->expects($this->any())
             ->method('filterContent')
             ->willReturn($this->getFilterContentResult());
         $filterServiceMock
-            ->expects($this->any())
             ->method('filterLocations')
             ->willReturn($this->getFilterLocationsResult());
 
@@ -288,11 +286,9 @@ class QueryExecutorTest extends TestCase
     {
         $findServiceMock = $this->getMockBuilder(FindService::class)->getMock();
         $findServiceMock
-            ->expects($this->any())
             ->method('findContent')
             ->willReturn($this->getFindContentResult());
         $findServiceMock
-            ->expects($this->any())
             ->method('findLocations')
             ->willReturn($this->getFindLocationsResult());
 
@@ -307,7 +303,6 @@ class QueryExecutorTest extends TestCase
         $queryTypeRegistryMock = $this->getMockBuilder(QueryTypeRegistry::class)->getMock();
 
         $queryTypeRegistryMock
-            ->expects($this->any())
             ->method('getQueryType')
             ->willReturnMap([
                 ['content_query_type', $this->getContentQueryTypeMock()],
@@ -325,7 +320,6 @@ class QueryExecutorTest extends TestCase
     {
         $mock = $this->getMockBuilder(QueryType::class)->getMock();
         $mock
-            ->expects($this->any())
             ->method('getQuery')
             ->willReturn(new Query());
 
@@ -339,7 +333,6 @@ class QueryExecutorTest extends TestCase
     {
         $mock = $this->getMockBuilder(QueryType::class)->getMock();
         $mock
-            ->expects($this->any())
             ->method('getQuery')
             ->willReturn(new LocationQuery());
 
@@ -353,7 +346,6 @@ class QueryExecutorTest extends TestCase
     {
         $mock = $this->getMockBuilder(QueryType::class)->getMock();
         $mock
-            ->expects($this->any())
             ->method('getQuery')
             ->willReturn(new DateTime());
 

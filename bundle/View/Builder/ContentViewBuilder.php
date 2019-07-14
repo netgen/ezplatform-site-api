@@ -170,7 +170,7 @@ class ContentViewBuilder implements ViewBuilder
     {
         /** @var \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo */
         $contentInfo = $this->repository->sudo(
-            function (Repository $repository) use ($contentId): ContentInfo {
+            static function (Repository $repository) use ($contentId): ContentInfo {
                 return $repository->getContentService()->loadContentInfo($contentId);
             }
         );

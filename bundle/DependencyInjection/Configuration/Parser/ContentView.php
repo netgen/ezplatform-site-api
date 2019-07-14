@@ -87,7 +87,7 @@ EOT
                 ->beforeNormalization()
                     // String value is a shortcut to the named query
                     ->ifString()
-                    ->then(function ($v) {return ['named_query' => $v];})
+                    ->then(static function ($v) {return ['named_query' => $v];})
                 ->end()
                 ->children()
                     ->scalarNode('query_type')
@@ -112,7 +112,7 @@ EOT
                     ->end()
                 ->end()
                 ->validate()
-                    ->ifTrue(function ($v) {
+                    ->ifTrue(static function ($v) {
                         return array_key_exists('named_query', $v) && array_key_exists('query_type', $v);
                     })
                     ->thenInvalid(
@@ -120,7 +120,7 @@ EOT
                     )
                 ->end()
                 ->validate()
-                    ->ifTrue(function ($v) {
+                    ->ifTrue(static function ($v) {
                         return !array_key_exists('named_query', $v) && !array_key_exists('query_type', $v);
                     })
                     ->thenInvalid(
@@ -128,8 +128,8 @@ EOT
                     )
                 ->end()
                 ->validate()
-                    ->ifTrue(function ($v) {return array_key_exists('query_type', $v);})
-                    ->then(function ($v) {
+                    ->ifTrue(static function ($v) {return array_key_exists('query_type', $v);})
+                    ->then(static function ($v) {
                         if (!array_key_exists('use_filter', $v)) {
                             $v['use_filter'] = true;
                         }
@@ -151,7 +151,7 @@ EOT
                 ->end()
             ->end()
             ->validate()
-                ->ifTrue(function ($v) {
+                ->ifTrue(static function ($v) {
                     foreach (array_keys($v) as $key) {
                         if (!is_string($key) || !preg_match(Twig_Lexer::REGEX_NAME, $key)) {
                             return true;

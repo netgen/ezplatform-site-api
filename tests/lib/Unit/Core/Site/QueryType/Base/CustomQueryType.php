@@ -38,7 +38,7 @@ class CustomQueryType extends Base
     {
         $this->registerCriterionBuilder(
             'prefabrication_date',
-            function (CriterionDefinition $definition): DateMetadata {
+            static function (CriterionDefinition $definition): DateMetadata {
                 return new DateMetadata(
                     DateMetadata::MODIFIED,
                     $definition->operator,

@@ -49,7 +49,7 @@ class NamedQuery extends View
                 ->end()
             ->end()
             ->validate()
-                ->ifTrue(function ($v) {
+                ->ifTrue(static function ($v) {
                     foreach (array_keys($v) as $key) {
                         if (!is_string($key) || !preg_match(Twig_Lexer::REGEX_NAME, $key)) {
                             return true;

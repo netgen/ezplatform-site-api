@@ -148,7 +148,7 @@ final class CriteriaBuilder
      */
     private function buildIsMainLocation(CriterionDefinition $definition): ?IsMainLocation
     {
-        if (null === $definition->value) {
+        if ($definition->value === null) {
             return null;
         }
 
@@ -168,7 +168,7 @@ final class CriteriaBuilder
     {
         $criteria = $this->build($definition->value);
 
-        if (1 === count($criteria)) {
+        if (count($criteria) === 1) {
             $criteria = reset($criteria);
         } else {
             $criteria = new LogicalAnd($criteria);
@@ -290,7 +290,7 @@ final class CriteriaBuilder
 
         $timestamp = strtotime($value);
 
-        if (false === $timestamp) {
+        if ($timestamp === false) {
             throw new InvalidArgumentException(
                 "'{$value}' is invalid time string"
             );
@@ -308,7 +308,7 @@ final class CriteriaBuilder
      */
     private function buildVisibility(CriterionDefinition $definition): ?Visibility
     {
-        if (null === $definition->value) {
+        if ($definition->value === null) {
             return null;
         }
 

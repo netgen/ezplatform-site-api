@@ -157,7 +157,7 @@ final class CriterionDefinitionResolver
         $isValueCollection = false;
 
         foreach (array_keys($parameters) as $key) {
-            if (array_key_exists($key, self::$operatorMap) || 'not' === $key) {
+            if (array_key_exists($key, self::$operatorMap) || $key === 'not') {
                 $isOperatorMap = true;
             } else {
                 $isValueCollection = true;

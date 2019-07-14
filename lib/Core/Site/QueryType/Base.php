@@ -338,7 +338,7 @@ abstract class Base implements QueryType
 
     private function buildRegisteredCriteria(array $parameters): array
     {
-        if (null === $this->registeredCriterionBuilders) {
+        if ($this->registeredCriterionBuilders === null) {
             $this->registeredCriterionBuilders = [];
             $this->registerCriterionBuilders();
         }
@@ -381,7 +381,7 @@ abstract class Base implements QueryType
         $registeredCriteria = $this->buildRegisteredCriteria($parameters);
         $filterCriteria = $this->getFilterCriteria($parameters);
 
-        if (null === $filterCriteria) {
+        if ($filterCriteria === null) {
             $filterCriteria = [];
         }
 
@@ -395,7 +395,7 @@ abstract class Base implements QueryType
             return null;
         }
 
-        if (1 === count($criteria)) {
+        if (count($criteria) === 1) {
             return $criteria[0];
         }
 

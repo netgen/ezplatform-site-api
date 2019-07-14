@@ -12,9 +12,6 @@ use Pagerfanta\Pagerfanta;
 
 /**
  * Provides methods to build Pagerfanta instance using on FilterAdapter or FindAdapter.
- *
- * Note: expects that SiteAwareTrait is also used.
- * @see \Netgen\EzPlatformSiteApi\Core\Traits\SiteAwareTrait
  */
 trait PagerfantaTrait
 {

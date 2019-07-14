@@ -115,10 +115,11 @@ final class TagFields extends Content
             }
 
             $field = $content->getField($identifier);
+            $fieldType = $field->fieldTypeIdentifier;
 
-            if ($field->fieldTypeIdentifier !== 'eztags') {
+            if ($fieldType !== 'eztags') {
                 throw new InvalidArgumentException(
-                    "Field '{$identifier}' is not of 'eztags' type"
+                    "Field '{$identifier}' is expected to be of 'eztags' type, '{$fieldType}' found"
                 );
             }
 

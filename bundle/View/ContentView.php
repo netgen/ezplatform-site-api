@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
-use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
-use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
+use eZ\Publish\API\Repository\Values\Content\Content as RepoContent;
+use eZ\Publish\API\Repository\Values\Content\Location as RepoLocation;
 use eZ\Publish\Core\MVC\Symfony\View\BaseView;
 use eZ\Publish\Core\MVC\Symfony\View\CachableView;
 use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
@@ -46,7 +46,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
         $this->content = $content;
     }
 
-    public function getContent(): ?APIContent
+    public function getContent(): ?RepoContent
     {
         if (!$this->content instanceof Content) {
             return null;
@@ -60,7 +60,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
         $this->location = $location;
     }
 
-    public function getLocation(): ?APILocation
+    public function getLocation(): ?RepoLocation
     {
         if (!$this->location instanceof Location) {
             return null;
@@ -82,7 +82,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      */
-    public function setContent(APIContent $content): void
+    public function setContent(RepoContent $content): void
     {
         throw new RuntimeException(
             'setContent method cannot be used with Site API content view. Use setSiteContent method instead.'
@@ -92,7 +92,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      */
-    public function setLocation(APILocation $location): void
+    public function setLocation(RepoLocation $location): void
     {
         throw new RuntimeException(
             'setLocation method cannot be used with Site API content view. Use setSiteLocation method instead.'

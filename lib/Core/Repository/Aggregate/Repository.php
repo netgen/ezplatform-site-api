@@ -93,7 +93,7 @@ class Repository implements RepositoryInterface
         );
     }
 
-    public function hasAccess($module, $function, UserReference $user = null): bool
+    public function hasAccess($module, $function, UserReference $user = null)
     {
         return $this->ezRepository->hasAccess($module, $function, $user);
     }

@@ -11,7 +11,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Field;
 use Twig\Environment;
 
 /**
- * Twig extension for content fields rendering (view).
+ * Twig extension runtime for content fields rendering (view).
  */
 class FieldRenderingRuntime
 {

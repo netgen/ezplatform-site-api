@@ -56,7 +56,7 @@ class SearchResultExtractorTraitTest extends BaseTest
 
         $locationValueObjects = $this->stub->extract($searchResult);
 
-        $this->assertInternalType('array', $locationValueObjects);
+        $this->assertIsArray($locationValueObjects);
         $this->assertEmpty($locationValueObjects);
     }
 
@@ -93,7 +93,7 @@ class SearchResultExtractorTraitTest extends BaseTest
 
         $contentValueObjects = $this->stub->extract($searchResult);
 
-        $this->assertInternalType('array', $contentValueObjects);
+        $this->assertIsArray($contentValueObjects);
         $this->assertEmpty($contentValueObjects);
     }
 }

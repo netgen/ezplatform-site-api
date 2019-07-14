@@ -19,6 +19,7 @@ use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 
@@ -30,7 +31,7 @@ use Psr\Log\NullLogger;
 class ContentTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Netgen\EzPlatformSiteApi\API\Site
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
      */
     protected $siteMock;
 
@@ -40,41 +41,41 @@ class ContentTest extends TestCase
     protected $domainObjectMapper;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\ContentService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentService
      */
     protected $contentServiceMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\ContentTypeService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentTypeService
      */
     protected $contentTypeServiceMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\FieldTypeService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\FieldTypeService
      */
     protected $fieldTypeServiceMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Netgen\EzPlatformSiteApi\API\LoadService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\LoadService
      */
     protected $loadServiceMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\UserService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\UserService
      */
     protected $userServiceMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\Repository
      */
     protected $repositoryMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
      */
     protected $queryTypeRegistryMock;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->getSiteMock();
         $this->getDomainObjectMapper();
@@ -85,7 +86,7 @@ class ContentTest extends TestCase
         parent::setUp();
     }
 
-    public function testContentOwnerExists()
+    public function testContentOwnerExists(): void
     {
         $content = $this->getMockedContent();
         $ownerMock = $this->getMockBuilder(APIContent::class)->getMock();
@@ -97,7 +98,7 @@ class ContentTest extends TestCase
         $this->assertSame($ownerMock, $content->owner);
     }
 
-    public function testContentOwnerExistsRepeated()
+    public function testContentOwnerExistsRepeated(): void
     {
         $content = $this->getMockedContent();
         $ownerMock = $this->getMockBuilder(APIContent::class)->getMock();
@@ -110,7 +111,7 @@ class ContentTest extends TestCase
         $this->assertSame($ownerMock, $content->owner);
     }
 
-    public function testContentOwnerDoesNotExist()
+    public function testContentOwnerDoesNotExist(): void
     {
         $content = $this->getMockedContent();
 
@@ -121,7 +122,7 @@ class ContentTest extends TestCase
         $this->assertNull($content->owner);
     }
 
-    public function testContentOwnerDoesNotExistRepeated()
+    public function testContentOwnerDoesNotExistRepeated(): void
     {
         $content = $this->getMockedContent();
 
@@ -133,7 +134,7 @@ class ContentTest extends TestCase
         $this->assertNull($content->owner);
     }
 
-    public function testContentInnerOwnerUserExists()
+    public function testContentInnerOwnerUserExists(): void
     {
         $content = $this->getMockedContent();
         $ownerUserMock = $this->getMockBuilder(User::class)->getMock();
@@ -148,7 +149,7 @@ class ContentTest extends TestCase
         $this->assertSame($ownerUserMock, $content->innerOwnerUser);
     }
 
-    public function testContentInnerOwnerUserExistsRepeated()
+    public function testContentInnerOwnerUserExistsRepeated(): void
     {
         $content = $this->getMockedContent();
         $ownerUserMock = $this->getMockBuilder(User::class)->getMock();
@@ -164,7 +165,7 @@ class ContentTest extends TestCase
         $this->assertSame($ownerUserMock, $content->innerOwnerUser);
     }
 
-    public function testContentInnerOwnerUserDoesNotExist()
+    public function testContentInnerOwnerUserDoesNotExist(): void
     {
         $content = $this->getMockedContent();
 
@@ -180,7 +181,7 @@ class ContentTest extends TestCase
         $this->assertNull($content->innerOwnerUser);
     }
 
-    public function testContentInnerOwnerUserDoesNotExistRepeated()
+    public function testContentInnerOwnerUserDoesNotExistRepeated(): void
     {
         $content = $this->getMockedContent();
 
@@ -200,7 +201,7 @@ class ContentTest extends TestCase
     /**
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    protected function getMockedContent()
+    protected function getMockedContent(): APIContent
     {
         return new Content(
             [
@@ -220,9 +221,9 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Netgen\EzPlatformSiteApi\API\Site
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
      */
-    protected function getSiteMock()
+    protected function getSiteMock(): MockObject
     {
         if (null !== $this->siteMock) {
             return $this->siteMock;
@@ -242,7 +243,7 @@ class ContentTest extends TestCase
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
-    protected function getDomainObjectMapper()
+    protected function getDomainObjectMapper(): DomainObjectMapper
     {
         if (null !== $this->domainObjectMapper) {
             return $this->domainObjectMapper;
@@ -259,9 +260,9 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Netgen\EzPlatformSiteApi\API\LoadService
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\LoadService
      */
-    protected function getLoadServiceMock()
+    protected function getLoadServiceMock(): MockObject
     {
         if (null !== $this->loadServiceMock) {
             return $this->loadServiceMock;
@@ -275,9 +276,9 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\ContentService
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentService
      */
-    protected function getContentServiceMock()
+    protected function getContentServiceMock(): MockObject
     {
         if (null !== $this->contentServiceMock) {
             return $this->contentServiceMock;
@@ -291,9 +292,9 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\ContentTypeService
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentTypeService
      */
-    protected function getContentTypeServiceMock()
+    protected function getContentTypeServiceMock(): MockObject
     {
         if (null !== $this->contentTypeServiceMock) {
             return $this->contentTypeServiceMock;
@@ -314,9 +315,9 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\FieldTypeService
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\FieldTypeService
      */
-    protected function getFieldTypeServiceMock()
+    protected function getFieldTypeServiceMock(): MockObject
     {
         if (null !== $this->fieldTypeServiceMock) {
             return $this->fieldTypeServiceMock;
@@ -330,9 +331,9 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\UserService
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\UserService
      */
-    protected function getUserServiceMock()
+    protected function getUserServiceMock(): MockObject
     {
         if (null !== $this->userServiceMock) {
             return $this->userServiceMock;
@@ -346,9 +347,9 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\Repository
      */
-    protected function getRepositoryMock()
+    protected function getRepositoryMock(): MockObject
     {
         if (null !== $this->repositoryMock) {
             return $this->repositoryMock;

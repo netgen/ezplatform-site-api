@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ReverseFields extends Content
 {
-    public static function getName()
+    public static function getName(): string
     {
         return 'SiteAPI:Content/Relations/ReverseFields';
     }
@@ -27,7 +27,7 @@ final class ReverseFields extends Content
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
             'content',

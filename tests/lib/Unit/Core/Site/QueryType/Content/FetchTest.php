@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Fetch;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 
 /**
@@ -23,17 +24,17 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class FetchTest extends QueryTypeBaseTest
 {
-    protected function getQueryTypeName()
+    protected function getQueryTypeName(): string
     {
         return 'SiteAPI:Content/Fetch';
     }
 
-    protected function getQueryTypeUnderTest()
+    protected function getQueryTypeUnderTest(): QueryType
     {
         return new Fetch();
     }
 
-    protected function getSupportedParameters()
+    protected function getSupportedParameters(): array
     {
         return [
             'content_type',
@@ -48,7 +49,7 @@ class FetchTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQuery()
+    public function providerForTestGetQuery(): array
     {
         return [
             [
@@ -187,7 +188,7 @@ class FetchTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidOptions()
+    public function providerForTestGetQueryWithInvalidOptions(): array
     {
         return [
             [
@@ -228,7 +229,7 @@ class FetchTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidCriteria()
+    public function providerForTestGetQueryWithInvalidCriteria(): array
     {
         return [
             [
@@ -241,7 +242,7 @@ class FetchTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestInvalidSortClauseThrowsException()
+    public function providerForTestInvalidSortClauseThrowsException(): array
     {
         return [
             [

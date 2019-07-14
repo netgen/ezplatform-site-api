@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\Base;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Base;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,17 +16,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BaseQueryType extends Base
 {
-    protected function buildQuery()
+    protected function buildQuery(): Query
     {
         return new Query();
     }
 
-    public static function getName()
+    public static function getName(): string
     {
         return 'Test:Base';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         // do nothing
     }
@@ -35,17 +36,17 @@ class BaseQueryType extends Base
         return null;
     }
 
-    protected function getQueryCriterion(array $parameters)
+    protected function getQueryCriterion(array $parameters): ?Criterion
     {
         return null;
     }
 
-    protected function getFacetBuilders(array $parameters)
+    protected function getFacetBuilders(array $parameters): array
     {
         return [];
     }
 
-    protected function registerCriterionBuilders()
+    protected function registerCriterionBuilders(): void
     {
         // do nothing
     }

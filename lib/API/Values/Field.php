@@ -25,7 +25,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  */
 abstract class Field extends ValueObject
 {
-    abstract public function isEmpty();
+    abstract public function isEmpty(): bool;
 
     /**
      * Returns whether the field is of 'ngsurrogate' type, returned when nonexistent field is requested from Content.

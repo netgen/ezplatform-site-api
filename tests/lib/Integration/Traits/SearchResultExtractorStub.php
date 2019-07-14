@@ -16,7 +16,7 @@ class SearchResultExtractorStub
      *
      * @return \eZ\Publish\API\Repository\Values\ValueObject[]
      */
-    public function extract(SearchResult $searchResult)
+    public function extract(SearchResult $searchResult): array
     {
         return $this->extractValueObjects($searchResult);
     }

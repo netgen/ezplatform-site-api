@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class QueryDefinitionCollectionTest extends TestCase
 {
-    public function testAddAndGetQueryDefinition()
+    public function testAddAndGetQueryDefinition(): void
     {
         $queryDefinitionCollection = $this->getQueryDefinitionCollectionUnderTest();
         $queryDefinition = new QueryDefinition();
@@ -25,7 +25,7 @@ class QueryDefinitionCollectionTest extends TestCase
         );
     }
 
-    public function testGetQueryDefinitionThrowsException()
+    public function testGetQueryDefinitionThrowsException(): void
     {
         $this->expectException(OutOfBoundsException::class);
 
@@ -34,7 +34,7 @@ class QueryDefinitionCollectionTest extends TestCase
         $queryDefinitionCollection->get('jerry');
     }
 
-    protected function getQueryDefinitionCollectionUnderTest()
+    protected function getQueryDefinitionCollectionUnderTest(): QueryDefinitionCollection
     {
         return new QueryDefinitionCollection();
     }

@@ -25,17 +25,17 @@ class SurrogateValue extends Value
         return null;
     }
 
-    public function __set($property, $value)
+    public function __set($property, $value): void
     {
         // do nothing
     }
 
-    public function __isset($property)
+    public function __isset($property): bool
     {
         return false;
     }
 
-    public function __unset($property)
+    public function __unset($property): void
     {
         // do nothing
     }
@@ -45,7 +45,7 @@ class SurrogateValue extends Value
         return null;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return '';
     }

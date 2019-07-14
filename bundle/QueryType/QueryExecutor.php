@@ -6,6 +6,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use Netgen\EzPlatformSiteApi\API\FilterService;
 use Netgen\EzPlatformSiteApi\API\FindService;
@@ -92,7 +93,7 @@ final class QueryExecutor
      *
      * @return \Pagerfanta\Pagerfanta
      */
-    private function getPager(Query $query, QueryDefinition $queryDefinition)
+    private function getPager(Query $query, QueryDefinition $queryDefinition): Pagerfanta
     {
         if ($queryDefinition->useFilter) {
             $adapter = new FilterAdapter($query, $this->filterService);
@@ -117,7 +118,7 @@ final class QueryExecutor
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    private function getLocationResult(LocationQuery $query, QueryDefinition $queryDefinition)
+    private function getLocationResult(LocationQuery $query, QueryDefinition $queryDefinition): SearchResult
     {
         if ($queryDefinition->useFilter) {
             return $this->filterService->filterLocations($query);
@@ -134,7 +135,7 @@ final class QueryExecutor
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    private function getContentResult(Query $query, QueryDefinition $queryDefinition)
+    private function getContentResult(Query $query, QueryDefinition $queryDefinition): SearchResult
     {
         if ($queryDefinition->useFilter) {
             return $this->filterService->filterContent($query);

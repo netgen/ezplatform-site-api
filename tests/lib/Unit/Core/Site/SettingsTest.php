@@ -16,35 +16,35 @@ use PHPUnit\Framework\TestCase;
  */
 class SettingsTest extends TestCase
 {
-    public function testGetPrioritizedLanguages()
+    public function testGetPrioritizedLanguages(): void
     {
         $settings = $this->getSettingsUnderTest();
 
         $this->assertEquals(['cro-HR'], $settings->prioritizedLanguages);
     }
 
-    public function testGetUseAlwaysAvailable()
+    public function testGetUseAlwaysAvailable(): void
     {
         $settings = $this->getSettingsUnderTest();
 
         $this->assertEquals(true, $settings->useAlwaysAvailable);
     }
 
-    public function testGetRootLocationId()
+    public function testGetRootLocationId(): void
     {
         $settings = $this->getSettingsUnderTest();
 
         $this->assertEquals(42, $settings->rootLocationId);
     }
 
-    public function testGetFailOnMissingFields()
+    public function testGetFailOnMissingFields(): void
     {
         $settings = $this->getSettingsUnderTest();
 
         $this->assertEquals(false, $settings->failOnMissingFields);
     }
 
-    public function testGetNonexistentProperty()
+    public function testGetNonexistentProperty(): void
     {
         $this->expectException(PropertyNotFoundException::class);
 
@@ -53,28 +53,28 @@ class SettingsTest extends TestCase
         $settings->blah;
     }
 
-    public function testIssetPrioritizedLanguages()
+    public function testIssetPrioritizedLanguages(): void
     {
         $settings = $this->getSettingsUnderTest();
 
         $this->assertTrue(isset($settings->prioritizedLanguages));
     }
 
-    public function testIssetUseAlwaysAvailable()
+    public function testIssetUseAlwaysAvailable(): void
     {
         $settings = $this->getSettingsUnderTest();
 
         $this->assertTrue(isset($settings->useAlwaysAvailable));
     }
 
-    public function testIssetRootLocationId()
+    public function testIssetRootLocationId(): void
     {
         $settings = $this->getSettingsUnderTest();
 
         $this->assertTrue(isset($settings->rootLocationId));
     }
 
-    public function testIssetNonexistentProperty()
+    public function testIssetNonexistentProperty(): void
     {
         $this->expectException(PropertyNotFoundException::class);
 
@@ -83,7 +83,7 @@ class SettingsTest extends TestCase
         $this->assertFalse(isset($settings->blah));
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $this->expectException(PropertyReadOnlyException::class);
 
@@ -95,7 +95,7 @@ class SettingsTest extends TestCase
     /**
      * @return \Netgen\EzPlatformSiteApi\API\Settings
      */
-    protected function getSettingsUnderTest()
+    protected function getSettingsUnderTest(): \Netgen\EzPlatformSiteApi\Core\Site\Settings
     {
         return new Settings(
             ['cro-HR'],

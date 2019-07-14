@@ -6,6 +6,7 @@ namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
 use InvalidArgumentException;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\ExceptionInterface;
 
@@ -17,14 +18,14 @@ abstract class QueryTypeBaseTest extends TestCase
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType
      */
-    abstract protected function getQueryTypeUnderTest();
+    abstract protected function getQueryTypeUnderTest(): QueryType;
 
     /**
      * @return string
      */
-    abstract protected function getQueryTypeName();
+    abstract protected function getQueryTypeName(): string;
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $queryType = $this->getQueryTypeUnderTest();
 
@@ -37,9 +38,9 @@ abstract class QueryTypeBaseTest extends TestCase
     /**
      * @return string[]
      */
-    abstract protected function getSupportedParameters();
+    abstract protected function getSupportedParameters(): array;
 
-    public function testGetSupportedParameters()
+    public function testGetSupportedParameters(): void
     {
         $queryType = $this->getQueryTypeUnderTest();
 
@@ -49,7 +50,7 @@ abstract class QueryTypeBaseTest extends TestCase
         );
     }
 
-    public function testSupportsParameterReturnsTrue()
+    public function testSupportsParameterReturnsTrue(): void
     {
         $queryType = $this->getQueryTypeUnderTest();
 
@@ -58,14 +59,14 @@ abstract class QueryTypeBaseTest extends TestCase
         }
     }
 
-    public function testSupportsParameterReturnsFalse()
+    public function testSupportsParameterReturnsFalse(): void
     {
         $queryType = $this->getQueryTypeUnderTest();
 
         $this->assertFalse($queryType->supportsParameter(md5((string)time())));
     }
 
-    public function testGetBaseSupportedParameters()
+    public function testGetBaseSupportedParameters(): void
     {
         $queryType = $this->getQueryTypeUnderTest();
         $parameters = $queryType->getSupportedParameters();
@@ -99,7 +100,7 @@ abstract class QueryTypeBaseTest extends TestCase
      * @param array $parameters
      * @param \eZ\Publish\API\Repository\Values\Content\Query $expectedQuery
      */
-    public function testGetQuery(array $parameters, Query $expectedQuery)
+    public function testGetQuery(array $parameters, Query $expectedQuery): void
     {
         $queryType = $this->getQueryTypeUnderTest();
 
@@ -118,7 +119,7 @@ abstract class QueryTypeBaseTest extends TestCase
      *
      * @param array $parameters
      */
-    public function testGetQueryWithInvalidOptions(array $parameters)
+    public function testGetQueryWithInvalidOptions(array $parameters): void
     {
         $this->expectException(ExceptionInterface::class);
 
@@ -134,7 +135,7 @@ abstract class QueryTypeBaseTest extends TestCase
      *
      * @param array $parameters
      */
-    public function testGetQueryWithInvalidCriteria(array $parameters)
+    public function testGetQueryWithInvalidCriteria(array $parameters): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -150,7 +151,7 @@ abstract class QueryTypeBaseTest extends TestCase
      *
      * @param array $parameters
      */
-    public function testInvalidSortClauseThrowsException(array $parameters)
+    public function testInvalidSortClauseThrowsException(array $parameters): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageRegExp(

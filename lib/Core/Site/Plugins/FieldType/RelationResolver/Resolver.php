@@ -28,7 +28,7 @@ abstract class Resolver
      *
      * @return int[]|string[]
      */
-    public function getRelationIds(Field $field)
+    public function getRelationIds(Field $field): array
     {
         if (!$this->accept($field)) {
             $identifier = $this->getSupportedFieldTypeIdentifier();
@@ -46,16 +46,16 @@ abstract class Resolver
      *
      * @return string
      */
-    abstract protected function getSupportedFieldTypeIdentifier();
+    abstract protected function getSupportedFieldTypeIdentifier(): string;
 
     /**
      * Return related Content IDs for the given $field.
      *
      * @param \eZ\Publish\SPI\FieldType\Value $value
      *
-     * @return mixed
+     * @return int[]|string[]
      */
-    abstract protected function getRelationIdsFromValue(Value $value);
+    abstract protected function getRelationIdsFromValue(Value $value): array;
 
     /**
      * Check if the given $field is of the accepted field type.
@@ -64,7 +64,7 @@ abstract class Resolver
      *
      * @return bool
      */
-    protected function accept(Field $field)
+    protected function accept(Field $field): bool
     {
         return $field->fieldTypeIdentifier === $this->getSupportedFieldTypeIdentifier();
     }

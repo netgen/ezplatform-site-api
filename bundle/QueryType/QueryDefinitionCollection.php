@@ -30,7 +30,7 @@ final class QueryDefinitionCollection
      *
      * @return void
      */
-    public function add($name, QueryDefinition $queryDefinition)
+    public function add($name, QueryDefinition $queryDefinition): void
     {
         $this->queryDefinitionMap[$name] = $queryDefinition;
     }
@@ -44,7 +44,7 @@ final class QueryDefinitionCollection
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
      */
-    public function get($name)
+    public function get($name): QueryDefinition
     {
         if (array_key_exists($name, $this->queryDefinitionMap)) {
             return $this->queryDefinitionMap[$name];

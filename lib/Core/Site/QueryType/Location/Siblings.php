@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class Siblings extends Location
 {
-    public static function getName()
+    public static function getName(): string
     {
         return 'SiteAPI:Location/Siblings';
     }
@@ -30,7 +30,7 @@ final class Siblings extends Location
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->remove(['depth', 'parent_location_id', 'subtree']);
         $resolver->setRequired('location');

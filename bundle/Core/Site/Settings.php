@@ -46,12 +46,12 @@ final class Settings extends BaseSettings
         throw new PropertyNotFoundException($property, get_class($this));
     }
 
-    public function __set($property, $value)
+    public function __set($property, $value): void
     {
         throw new PropertyReadOnlyException($property, get_class($this));
     }
 
-    public function __isset($property)
+    public function __isset($property): bool
     {
         switch ($property) {
             case 'prioritizedLanguages':

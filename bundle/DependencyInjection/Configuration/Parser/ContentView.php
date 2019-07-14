@@ -20,7 +20,7 @@ class ContentView extends View
      *
      * @param \Symfony\Component\Config\Definition\Builder\NodeBuilder $nodeBuilder Node just under ezpublish.system.<siteaccess>
      */
-    public function addSemanticConfig(NodeBuilder $nodeBuilder)
+    public function addSemanticConfig(NodeBuilder $nodeBuilder): void
     {
         $nodeBuilder
             ->arrayNode(static::NODE_KEY)
@@ -77,7 +77,7 @@ EOT
      *
      * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
      */
-    private function getQueryNode($name)
+    private function getQueryNode($name): ArrayNodeDefinition
     {
         $queries = new ArrayNodeDefinition($name);
         $queries

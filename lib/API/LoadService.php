@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\EzPlatformSiteApi\API;
 
+use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
+
 /**
  * Load service provides methods for loading entities by their ID.
  */
@@ -20,7 +23,7 @@ interface LoadService
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    public function loadContent($contentId, $versionNo = null, $languageCode = null);
+    public function loadContent($contentId, $versionNo = null, $languageCode = null): Content;
 
     /**
      * Loads Content object for the given $remoteId.
@@ -31,7 +34,7 @@ interface LoadService
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    public function loadContentByRemoteId($remoteId);
+    public function loadContentByRemoteId($remoteId): Content;
 
     /**
      * Loads Location object for the given $locationId.
@@ -42,7 +45,7 @@ interface LoadService
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    public function loadLocation($locationId);
+    public function loadLocation($locationId): Location;
 
     /**
      * Loads Location object for the given $remoteId.
@@ -53,5 +56,5 @@ interface LoadService
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    public function loadLocationByRemoteId($remoteId);
+    public function loadLocationByRemoteId($remoteId): Location;
 }

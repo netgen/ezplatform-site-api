@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\SectionId;
 use eZ\Publish\API\Repository\Values\Content\Query\FacetBuilder\SectionFacetBuilder;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionName;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomQueryTypeTest extends TestCase
 {
-    public function testGetName()
+    public function testGetName(): void
     {
         $queryType = $this->getQueryTypeUnderTest();
 
@@ -33,7 +34,7 @@ class CustomQueryTypeTest extends TestCase
         );
     }
 
-    public function testGetSupportedParameters()
+    public function testGetSupportedParameters(): void
     {
         $queryType = $this->getQueryTypeUnderTest();
 
@@ -54,7 +55,7 @@ class CustomQueryTypeTest extends TestCase
         );
     }
 
-    public function providerForTestGetQuery()
+    public function providerForTestGetQuery(): array
     {
         return [
             [
@@ -143,7 +144,7 @@ class CustomQueryTypeTest extends TestCase
      * @param array $parameters
      * @param \eZ\Publish\API\Repository\Values\Content\Query $expectedQuery
      */
-    public function testGetQuery(array $parameters, Query $expectedQuery)
+    public function testGetQuery(array $parameters, Query $expectedQuery): void
     {
         $queryType = $this->getQueryTypeUnderTest();
 
@@ -155,7 +156,7 @@ class CustomQueryTypeTest extends TestCase
         );
     }
 
-    protected function getQueryTypeUnderTest()
+    protected function getQueryTypeUnderTest(): QueryType
     {
         return new CustomQueryType();
     }

@@ -12,7 +12,7 @@ use Twig\NodeVisitor\NodeVisitorInterface;
 
 class GetAttrExpressionReplacer implements NodeVisitorInterface
 {
-    public function enterNode(Node $node, Environment $env)
+    public function enterNode(Node $node, Environment $env): Node
     {
         if (get_class($node) !== GetAttrExpression::class) {
             return $node;
@@ -21,12 +21,12 @@ class GetAttrExpressionReplacer implements NodeVisitorInterface
         return new GetAttrExpressionDecorator($node);
     }
 
-    public function leaveNode(Node $node, Environment $env)
+    public function leaveNode(Node $node, Environment $env): Node
     {
         return $node;
     }
 
-    public function getPriority()
+    public function getPriority(): int
     {
         return 0;
     }

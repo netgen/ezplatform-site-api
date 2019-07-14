@@ -39,7 +39,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
      */
-    public function build(array $definitions)
+    public function build(array $definitions): array
     {
         $criteria = [];
 
@@ -63,7 +63,7 @@ final class CriteriaBuilder
      *
      * @return null|Criterion
      */
-    private function dispatchBuild(CriterionDefinition $definition)
+    private function dispatchBuild(CriterionDefinition $definition): ?Criterion
     {
         switch ($definition->name) {
             case 'content_type':
@@ -106,7 +106,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier
      */
-    private function buildContentTypeIdentifier(CriterionDefinition $definition)
+    private function buildContentTypeIdentifier(CriterionDefinition $definition): ContentTypeIdentifier
     {
         return new ContentTypeIdentifier($definition->value);
     }
@@ -118,7 +118,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\Depth
      */
-    private function buildDepth(CriterionDefinition $definition)
+    private function buildDepth(CriterionDefinition $definition): Depth
     {
         return new Depth($definition->operator, $definition->value);
     }
@@ -130,7 +130,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Field
      */
-    private function buildField(CriterionDefinition $definition)
+    private function buildField(CriterionDefinition $definition): Field
     {
         return new Field(
             $definition->target,
@@ -146,7 +146,7 @@ final class CriteriaBuilder
      *
      * @return null|IsMainLocation
      */
-    private function buildIsMainLocation(CriterionDefinition $definition)
+    private function buildIsMainLocation(CriterionDefinition $definition): ?IsMainLocation
     {
         if (null === $definition->value) {
             return null;
@@ -164,7 +164,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot
      */
-    private function buildLogicalNot(CriterionDefinition $definition)
+    private function buildLogicalNot(CriterionDefinition $definition): LogicalNot
     {
         $criteria = $this->build($definition->value);
 
@@ -184,7 +184,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId
      */
-    private function buildParentLocationId(CriterionDefinition $definition)
+    private function buildParentLocationId(CriterionDefinition $definition): ParentLocationId
     {
         return new ParentLocationId($definition->value);
     }
@@ -196,7 +196,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\Priority
      */
-    private function buildPriority(CriterionDefinition $definition)
+    private function buildPriority(CriterionDefinition $definition): Priority
     {
         return new Priority($definition->operator, $definition->value);
     }
@@ -208,7 +208,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\DateMetadata
      */
-    private function buildDateMetadataCreated(CriterionDefinition $definition)
+    private function buildDateMetadataCreated(CriterionDefinition $definition): DateMetadata
     {
         return new DateMetadata(
             DateMetadata::CREATED,
@@ -224,7 +224,7 @@ final class CriteriaBuilder
      *
      * @return \Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier
      */
-    private function buildSection(CriterionDefinition $definition)
+    private function buildSection(CriterionDefinition $definition): SectionIdentifier
     {
         return new SectionIdentifier($definition->value);
     }
@@ -236,7 +236,7 @@ final class CriteriaBuilder
      *
      * @return \Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier
      */
-    private function buildObjectState(CriterionDefinition $definition)
+    private function buildObjectState(CriterionDefinition $definition): ObjectStateIdentifier
     {
         return new ObjectStateIdentifier($definition->target, $definition->value);
     }
@@ -248,7 +248,7 @@ final class CriteriaBuilder
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree
      */
-    private function buildSubtree(CriterionDefinition $definition)
+    private function buildSubtree(CriterionDefinition $definition): Subtree
     {
         return new Subtree($definition->value);
     }
@@ -282,7 +282,7 @@ final class CriteriaBuilder
      *
      * @return int
      */
-    private function resolveTimeValue($value)
+    private function resolveTimeValue($value): int
     {
         if (is_int($value)) {
             return $value;
@@ -306,7 +306,7 @@ final class CriteriaBuilder
      *
      * @return null|Visibility
      */
-    private function buildVisibility(CriterionDefinition $definition)
+    private function buildVisibility(CriterionDefinition $definition): ?Visibility
     {
         if (null === $definition->value) {
             return null;
@@ -324,7 +324,7 @@ final class CriteriaBuilder
      *
      * @return null|IsFieldEmpty
      */
-    private function buildIsFieldEmpty(CriterionDefinition $definition)
+    private function buildIsFieldEmpty(CriterionDefinition $definition): IsFieldEmpty
     {
         $value = $definition->value ? IsFieldEmpty::IS_EMPTY : IsFieldEmpty::IS_NOT_EMPTY;
 

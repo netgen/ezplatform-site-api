@@ -8,13 +8,16 @@ use DateTime;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class ParameterProcessorTest extends TestCase
 {
-    public function providerForTestProcess()
+    public function providerForTestProcess(): array
     {
         $date = new DateTime('@1');
 
@@ -82,14 +85,6 @@ class ParameterProcessorTest extends TestCase
             [
                 "@=viewParam('paramDoesNotExists', 1)",
                 1,
-            ],
-            [
-                '@=content',
-                'CONTENT',
-            ],
-            [
-                '@=location',
-                'LOCATION',
             ],
             [
                 "@=timestamp('10 September 2000 +5 days')",
@@ -236,10 +231,9 @@ class ParameterProcessorTest extends TestCase
      * @param mixed $parameter
      * @param mixed $expectedProcessedParameter
      */
-    public function testProcess($parameter, $expectedProcessedParameter)
+    public function testProcess($parameter, $expectedProcessedParameter): void
     {
         $parameterProcessor = $this->getParameterProcessorUnderTest();
-        /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $viewMock */
         $viewMock = $this->getViewMock();
 
         $processedParameter = $parameterProcessor->process($parameter, $viewMock);
@@ -247,7 +241,19 @@ class ParameterProcessorTest extends TestCase
         $this->assertSame($expectedProcessedParameter, $processedParameter);
     }
 
-    protected function getParameterProcessorUnderTest()
+    public function testProcessLanguageExpressionValues(): void
+    {
+        $parameterProcessor = $this->getParameterProcessorUnderTest();
+        $viewMock = $this->getViewMock();
+
+        $this->assertSame($viewMock, $parameterProcessor->process('@=view', $viewMock));
+        $this->assertInstanceOf(Location::class, $parameterProcessor->process('@=location', $viewMock));
+        $this->assertInstanceOf(Content::class, $parameterProcessor->process('@=content', $viewMock));
+        $this->assertInstanceOf(Request::class, $parameterProcessor->process('@=request', $viewMock));
+        $this->assertInstanceOf(ConfigResolverInterface::class, $parameterProcessor->process('@=configResolver', $viewMock));
+    }
+
+    protected function getParameterProcessorUnderTest(): ParameterProcessor
     {
         $requestStack = new RequestStack();
         $requestStack->push(
@@ -270,7 +276,7 @@ class ParameterProcessorTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\MVC\ConfigResolverInterface
      */
-    protected function getConfigResolverMock()
+    protected function getConfigResolverMock(): MockObject
     {
         $configResolverMock = $this->getMockBuilder(ConfigResolverInterface::class)->getMock();
 
@@ -298,7 +304,10 @@ class ParameterProcessorTest extends TestCase
         return $configResolverMock;
     }
 
-    protected function getViewMock()
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
+     */
+    protected function getViewMock(): MockObject
     {
         $viewMock = $this->getMockBuilder(ContentView::class)->getMock();
 
@@ -315,8 +324,11 @@ class ParameterProcessorTest extends TestCase
                 ['paramExists', 123],
             ]);
 
-        $viewMock->method('getSiteLocation')->willReturn('LOCATION');
-        $viewMock->method('getSiteContent')->willReturn('CONTENT');
+        $locationMock = $this->getMockBuilder(Location::class)->getMock();
+        $contentMock = $this->getMockBuilder(Content::class)->getMock();
+
+        $viewMock->method('getSiteLocation')->willReturn($locationMock);
+        $viewMock->method('getSiteContent')->willReturn($contentMock);
 
         return $viewMock;
     }

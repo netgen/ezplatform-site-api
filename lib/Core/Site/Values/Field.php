@@ -78,7 +78,7 @@ final class Field extends APIField
         parent::__construct($properties);
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'id' => $this->id,
@@ -95,7 +95,7 @@ final class Field extends APIField
         ];
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->isEmpty;
     }

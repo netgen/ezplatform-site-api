@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SortClauseParserTest extends TestCase
 {
-    public function providerForTestParseValid()
+    public function providerForTestParseValid(): array
     {
         return [
             [
@@ -108,7 +108,7 @@ class SortClauseParserTest extends TestCase
      * @param string $stringDefinition
      * @param \eZ\Publish\API\Repository\Values\Content\Query\SortClause $expectedSortClause
      */
-    public function testParseValid($stringDefinition, $expectedSortClause)
+    public function testParseValid($stringDefinition, $expectedSortClause): void
     {
         $parser = $this->getParserUnderTest();
 
@@ -117,7 +117,7 @@ class SortClauseParserTest extends TestCase
         $this->assertEquals($sortClause, $expectedSortClause);
     }
 
-    public function providerForTestParseInvalid()
+    public function providerForTestParseInvalid(): array
     {
         return [
             [
@@ -149,7 +149,7 @@ class SortClauseParserTest extends TestCase
      * @param string $stringDefinition
      * @param string $message
      */
-    public function testParseInvalid($stringDefinition, $message)
+    public function testParseInvalid($stringDefinition, $message): void
     {
         $this->expectException(InvalidArgumentException::class);
         $message = preg_quote($message, '/');
@@ -159,7 +159,7 @@ class SortClauseParserTest extends TestCase
         $parser->parse($stringDefinition);
     }
 
-    protected function getParserUnderTest()
+    protected function getParserUnderTest(): SortClauseParser
     {
         return new SortClauseParser();
     }

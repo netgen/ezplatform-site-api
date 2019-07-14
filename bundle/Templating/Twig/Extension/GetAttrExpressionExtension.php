@@ -9,7 +9,7 @@ use Twig\Extension\AbstractExtension;
 
 class GetAttrExpressionExtension extends AbstractExtension
 {
-    public function getNodeVisitors()
+    public function getNodeVisitors(): array
     {
         return [
             new GetAttrExpressionReplacer(),

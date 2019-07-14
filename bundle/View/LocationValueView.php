@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
 use eZ\Publish\Core\MVC\Symfony\View\LocationValueView as BaseLocationValueView;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 
 interface LocationValueView extends BaseLocationValueView
 {
@@ -13,5 +14,5 @@ interface LocationValueView extends BaseLocationValueView
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    public function getSiteLocation();
+    public function getSiteLocation(): ?Location;
 }

@@ -30,7 +30,7 @@ class PrepareFixturesTest extends APIBaseTest
      *
      * @return array
      */
-    public function testPrepareTestFixtures()
+    public function testPrepareTestFixtures(): array
     {
         $contentType = $this->createContentType();
         $container = $this->createContent(
@@ -51,7 +51,7 @@ class PrepareFixturesTest extends APIBaseTest
             ['eng-GB', 'ger-DE'],
             true
         );
-        $sibling = $this->createContent(
+        $this->createContent(
             $contentType,
             $container->contentInfo->mainLocationId,
             'content-remote-id2',
@@ -60,7 +60,7 @@ class PrepareFixturesTest extends APIBaseTest
             ['eng-GB'],
             true
         );
-        $child = $this->createContent(
+        $this->createContent(
             $contentType,
             $content->contentInfo->mainLocationId,
             'content-remote-id3',
@@ -70,10 +70,7 @@ class PrepareFixturesTest extends APIBaseTest
             true
         );
 
-        $this->assertInstanceOf(Content::class, $container);
-        $this->assertInstanceOf(Content::class, $content);
-        $this->assertInstanceOf(Content::class, $sibling);
-        $this->assertInstanceOf(Content::class, $child);
+        $this->addToAssertionCount(1);
 
         return [
             'contentId' => $content->id,
@@ -107,7 +104,7 @@ class PrepareFixturesTest extends APIBaseTest
         $mainLanguageCode,
         array $languageCodes,
         $alwaysAvailable = false
-    ) {
+    ): Content {
         $repository = $this->getRepository(false);
 
         $contentService = $repository->getContentService();
@@ -152,7 +149,7 @@ class PrepareFixturesTest extends APIBaseTest
      *
      * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      */
-    protected function createContentType()
+    protected function createContentType(): ContentType
     {
         $contentTypeService = $this->getRepository(false)->getContentTypeService();
 

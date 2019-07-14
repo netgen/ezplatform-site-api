@@ -66,7 +66,7 @@ class ContentViewBuilder implements ViewBuilder
         $this->viewParametersInjector = $viewParametersInjector;
     }
 
-    public function matches($argument)
+    public function matches($argument): bool
     {
         return is_string($argument) && strpos($argument, 'ng_content:') !== false;
     }
@@ -78,10 +78,9 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @param array $parameters
      *
-     * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView|\eZ\Publish\Core\MVC\Symfony\View\View
-     *         If both contentId and locationId parameters are missing
+     * @return \eZ\Publish\Core\MVC\Symfony\View\View
      */
-    public function buildView(array $parameters)
+    public function buildView(array $parameters): ContentView
     {
         $view = new ContentView(null, [], $parameters['viewType']);
         $view->setIsEmbed($this->isEmbed($parameters));
@@ -150,7 +149,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    private function loadContent($contentId)
+    private function loadContent($contentId): Content
     {
         return $this->site->getLoadService()->loadContent($contentId);
     }
@@ -167,7 +166,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    private function loadEmbeddedContent($contentId, Location $location = null)
+    private function loadEmbeddedContent($contentId, Location $location = null): Content
     {
         /** @var \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo */
         $contentInfo = $this->repository->sudo(
@@ -205,7 +204,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    private function loadLocation($locationId, $checkVisibility = true)
+    private function loadLocation($locationId, $checkVisibility = true): Location
     {
         $location = $this->repository->sudo(
             function (Repository $repository) use ($locationId) {
@@ -230,7 +229,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @return bool
      */
-    private function canRead(ContentInfo $contentInfo, Location $location = null)
+    private function canRead(ContentInfo $contentInfo, Location $location = null): bool
     {
         $limitations = ['valueObject' => $contentInfo];
         if (isset($location)) {
@@ -253,7 +252,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @return bool
      */
-    private function isEmbed($parameters)
+    private function isEmbed($parameters): bool
     {
         if ($parameters['_controller'] === 'ng_content:embedAction') {
             return true;

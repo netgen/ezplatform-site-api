@@ -10,6 +10,8 @@ use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use Netgen\EzPlatformSiteApi\API\LoadService as LoadServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException;
 
 class LoadService implements LoadServiceInterface
@@ -52,7 +54,7 @@ class LoadService implements LoadServiceInterface
         $this->locationService = $locationService;
     }
 
-    public function loadContent($contentId, $versionNo = null, $languageCode = null)
+    public function loadContent($contentId, $versionNo = null, $languageCode = null): Content
     {
         $versionInfo = $this->contentService->loadVersionInfoById($contentId, $versionNo);
 
@@ -73,21 +75,21 @@ class LoadService implements LoadServiceInterface
         return $this->domainObjectMapper->mapContent($versionInfo, $languageCode);
     }
 
-    public function loadContentByRemoteId($remoteId)
+    public function loadContentByRemoteId($remoteId): Content
     {
         $contentInfo = $this->contentService->loadContentInfoByRemoteId($remoteId);
 
         return $this->loadContent($contentInfo->id);
     }
 
-    public function loadLocation($locationId)
+    public function loadLocation($locationId): Location
     {
         $location = $this->locationService->loadLocation($locationId);
 
         return $this->getSiteLocation($location);
     }
 
-    public function loadLocationByRemoteId($remoteId)
+    public function loadLocationByRemoteId($remoteId): Location
     {
         $location = $this->locationService->loadLocationByRemoteId($remoteId);
 
@@ -103,7 +105,7 @@ class LoadService implements LoadServiceInterface
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    private function getSiteLocation(APILocation $location)
+    private function getSiteLocation(APILocation $location): Location
     {
         $versionInfo = $this->contentService->loadVersionInfoById($location->contentInfo->id);
 
@@ -134,7 +136,7 @@ class LoadService implements LoadServiceInterface
      *
      * @return string|null
      */
-    private function getLanguage(array $languageCodes, $mainLanguageCode, $alwaysAvailable)
+    private function getLanguage(array $languageCodes, $mainLanguageCode, $alwaysAvailable): ?string
     {
         $languageCodesSet = array_flip($languageCodes);
 
@@ -160,7 +162,7 @@ class LoadService implements LoadServiceInterface
      *
      * @return array
      */
-    private function getContext(VersionInfo $versionInfo)
+    private function getContext(VersionInfo $versionInfo): array
     {
         return [
             'prioritizedLanguages' => $this->settings->prioritizedLanguages,

@@ -8,6 +8,7 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 
@@ -51,7 +52,7 @@ class FindService implements FindServiceInterface
         $this->contentService = $contentService;
     }
 
-    public function findContent(Query $query)
+    public function findContent(Query $query): SearchResult
     {
         $searchResult = $this->searchService->findContentInfo(
             $query,
@@ -76,7 +77,7 @@ class FindService implements FindServiceInterface
         return $searchResult;
     }
 
-    public function findLocations(LocationQuery $query)
+    public function findLocations(LocationQuery $query): SearchResult
     {
         $searchResult = $this->searchService->findLocations(
             $query,

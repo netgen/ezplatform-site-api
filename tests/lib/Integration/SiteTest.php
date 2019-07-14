@@ -23,13 +23,11 @@ class SiteTest extends BaseTest
      *
      * @see \Netgen\EzPlatformSiteApi\API\Site::getSettings()
      */
-    public function testGetSettings()
+    public function testGetSettings(): void
     {
-        $site = $this->getSite();
-        $this->assertInstanceOf(
-            Settings::class,
-            $site->getSettings()
-        );
+        $this->getSite()->getSettings();
+
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -39,13 +37,11 @@ class SiteTest extends BaseTest
      *
      * @see \Netgen\EzPlatformSiteApi\API\Site::getFilterService()
      */
-    public function testGetFilterService()
+    public function testGetFilterService(): void
     {
-        $site = $this->getSite();
-        $this->assertInstanceOf(
-            FilterService::class,
-            $site->getFilterService()
-        );
+        $this->getSite()->getFilterService();
+
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -55,13 +51,11 @@ class SiteTest extends BaseTest
      *
      * @see \Netgen\EzPlatformSiteApi\API\Site::getFindService()
      */
-    public function testGetFindService()
+    public function testGetFindService(): void
     {
-        $site = $this->getSite();
-        $this->assertInstanceOf(
-            FindService::class,
-            $site->getFindService()
-        );
+        $this->getSite()->getFindService();
+
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -71,12 +65,10 @@ class SiteTest extends BaseTest
      *
      * @see \Netgen\EzPlatformSiteApi\API\Site::getLoadService()
      */
-    public function testGetLoadService()
+    public function testGetLoadService(): void
     {
-        $site = $this->getSite();
-        $this->assertInstanceOf(
-            LoadService::class,
-            $site->getLoadService()
-        );
+        $this->getSite()->getLoadService();
+
+        $this->addToAssertionCount(1);
     }
 }

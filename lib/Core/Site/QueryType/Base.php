@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType;
 
 use Closure;
+use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
@@ -54,7 +55,7 @@ abstract class Base implements QueryType
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         // do nothing
     }
@@ -86,7 +87,7 @@ abstract class Base implements QueryType
      *
      * @return null|Criterion
      */
-    protected function getQueryCriterion(array $parameters)
+    protected function getQueryCriterion(array $parameters): ?Criterion
     {
         return null;
     }
@@ -109,7 +110,7 @@ abstract class Base implements QueryType
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\FacetBuilder[]
      */
-    protected function getFacetBuilders(array $parameters)
+    protected function getFacetBuilders(array $parameters): array
     {
         return [];
     }
@@ -121,7 +122,7 @@ abstract class Base implements QueryType
      *
      * @see registerCriterionBuilder()
      */
-    protected function registerCriterionBuilders()
+    protected function registerCriterionBuilders(): void
     {
         // do nothing
     }
@@ -133,9 +134,9 @@ abstract class Base implements QueryType
      *
      * @param string $string
      *
-     * @return mixed
+     * @return SortClause|null
      */
-    protected function parseCustomSortString($string)
+    protected function parseCustomSortString($string): ?SortClause
     {
         throw new InvalidArgumentException(
             "Sort string '{$string}' was not converted to a SortClause"
@@ -153,7 +154,7 @@ abstract class Base implements QueryType
      * @param string $name
      * @param \Closure $builder
      */
-    final protected function registerCriterionBuilder($name, Closure $builder)
+    final protected function registerCriterionBuilder($name, Closure $builder): void
     {
         $this->registeredCriterionBuilders[$name] = $builder;
     }
@@ -163,7 +164,7 @@ abstract class Base implements QueryType
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query
      */
-    abstract protected function buildQuery();
+    abstract protected function buildQuery(): Query;
 
     /**
      * {@inheritdoc}
@@ -172,7 +173,7 @@ abstract class Base implements QueryType
      * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface|\InvalidArgumentException
      * @throws \RuntimeException
      */
-    final public function getQuery(array $parameters = [])
+    final public function getQuery(array $parameters = []): Query
     {
         $parameters = $this->getOptionsResolver()->resolve($parameters);
         $query = $this->buildQuery();
@@ -197,7 +198,7 @@ abstract class Base implements QueryType
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface
      */
-    final public function getSupportedParameters()
+    final public function getSupportedParameters(): array
     {
         return $this->getOptionsResolver()->getDefinedOptions();
     }
@@ -207,7 +208,7 @@ abstract class Base implements QueryType
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface
      */
-    final public function supportsParameter($name)
+    final public function supportsParameter($name): bool
     {
         return $this->getOptionsResolver()->isDefined($name);
     }
@@ -219,7 +220,7 @@ abstract class Base implements QueryType
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    protected function configureBaseOptions(OptionsResolver $resolver)
+    protected function configureBaseOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined([
             'content_type',
@@ -303,7 +304,7 @@ abstract class Base implements QueryType
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
      */
-    private function buildBaseCriteria(array $parameters)
+    private function buildBaseCriteria(array $parameters): array
     {
         $criteriaGrouped = [[]];
 
@@ -335,7 +336,7 @@ abstract class Base implements QueryType
         return array_merge(...$criteriaGrouped);
     }
 
-    private function buildRegisteredCriteria(array $parameters)
+    private function buildRegisteredCriteria(array $parameters): array
     {
         if (null === $this->registeredCriterionBuilders) {
             $this->registeredCriterionBuilders = [];
@@ -351,7 +352,7 @@ abstract class Base implements QueryType
         return array_merge(...$criteriaGrouped);
     }
 
-    private function buildCriteria(Closure $builder, $name, $parameters)
+    private function buildCriteria(Closure $builder, $name, $parameters): array
     {
         $criteria = [];
 
@@ -374,7 +375,7 @@ abstract class Base implements QueryType
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion|null
      */
-    private function resolveFilterCriteria(array $parameters)
+    private function resolveFilterCriteria(array $parameters): ?Criterion
     {
         $baseCriteria = $this->buildBaseCriteria($parameters);
         $registeredCriteria = $this->buildRegisteredCriteria($parameters);
@@ -410,7 +411,7 @@ abstract class Base implements QueryType
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause[]
      */
-    private function getSortClauses(array $parameters)
+    private function getSortClauses(array $parameters): array
     {
         $sortClauses = [];
 
@@ -452,7 +453,7 @@ abstract class Base implements QueryType
      *
      * @return \Symfony\Component\OptionsResolver\OptionsResolver
      */
-    private function getOptionsResolver()
+    private function getOptionsResolver(): OptionsResolver
     {
         if ($this->optionsResolver === null) {
             $this->optionsResolver = new OptionsResolver();
@@ -463,7 +464,7 @@ abstract class Base implements QueryType
         return $this->optionsResolver;
     }
 
-    private function getCriterionDefinitionResolver()
+    private function getCriterionDefinitionResolver(): CriterionDefinitionResolver
     {
         if ($this->criterionDefinitionResolver === null) {
             $this->criterionDefinitionResolver = new CriterionDefinitionResolver();
@@ -472,7 +473,7 @@ abstract class Base implements QueryType
         return $this->criterionDefinitionResolver;
     }
 
-    private function getCriteriaBuilder()
+    private function getCriteriaBuilder(): CriteriaBuilder
     {
         if ($this->criteriaBuilder === null) {
             $this->criteriaBuilder = new CriteriaBuilder();
@@ -481,7 +482,7 @@ abstract class Base implements QueryType
         return $this->criteriaBuilder;
     }
 
-    private function getSortClauseParser()
+    private function getSortClauseParser(): SortClauseParser
     {
         if ($this->sortClauseParser === null) {
             $this->sortClauseParser = new SortClauseParser();

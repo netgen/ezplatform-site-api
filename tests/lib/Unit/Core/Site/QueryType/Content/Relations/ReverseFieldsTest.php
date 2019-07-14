@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -30,27 +31,27 @@ class ReverseFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 
-    protected function getQueryTypeName()
+    protected function getQueryTypeName(): string
     {
         return 'SiteAPI:Content/Relations/ReverseFields';
     }
 
-    protected function getQueryTypeUnderTest()
+    protected function getQueryTypeUnderTest(): QueryType
     {
         return new ReverseFields();
     }
 
-    protected function internalGetRepoFields()
+    protected function internalGetRepoFields(): array
     {
         return [];
     }
 
-    protected function internalGetRepoFieldDefinitions()
+    protected function internalGetRepoFieldDefinitions(): array
     {
         return [];
     }
 
-    protected function getTestContent()
+    protected function getTestContent(): Content
     {
         return new Content(
             [
@@ -65,7 +66,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
         );
     }
 
-    protected function getSupportedParameters()
+    protected function getSupportedParameters(): array
     {
         return [
             'content_type',
@@ -82,7 +83,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQuery()
+    public function providerForTestGetQuery(): array
     {
         $content = $this->getTestContent();
 
@@ -234,7 +235,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidOptions()
+    public function providerForTestGetQueryWithInvalidOptions(): array
     {
         $content = $this->getTestContent();
 
@@ -290,7 +291,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidCriteria()
+    public function providerForTestGetQueryWithInvalidCriteria(): array
     {
         $content = $this->getTestContent();
 
@@ -307,7 +308,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestInvalidSortClauseThrowsException()
+    public function providerForTestInvalidSortClauseThrowsException(): array
     {
         $content = $this->getTestContent();
 

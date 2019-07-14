@@ -6,6 +6,7 @@ namespace Netgen\EzPlatformSiteApi\API;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 
 /**
  * Find service provides methods for finding entities using eZ Platform Repository Search Query API.
@@ -21,7 +22,7 @@ interface FindService
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    public function findContent(Query $query);
+    public function findContent(Query $query): SearchResult;
 
     /**
      * Finds Location objects for the given $query.
@@ -32,5 +33,5 @@ interface FindService
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    public function findLocations(LocationQuery $query);
+    public function findLocations(LocationQuery $query): SearchResult;
 }

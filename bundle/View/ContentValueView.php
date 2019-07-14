@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView as BaseContentValueView;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
 
 interface ContentValueView extends BaseContentValueView
 {
@@ -13,5 +14,5 @@ interface ContentValueView extends BaseContentValueView
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    public function getSiteContent();
+    public function getSiteContent(): ?Content;
 }

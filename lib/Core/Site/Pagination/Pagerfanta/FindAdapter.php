@@ -6,6 +6,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSearchExtra\Core\Pagination\Pagerfanta\BaseAdapter;
 use Netgen\EzPlatformSiteApi\API\FindService;
 
@@ -32,7 +33,7 @@ final class FindAdapter extends BaseAdapter
         $this->findService = $findService;
     }
 
-    protected function executeQuery(Query $query)
+    protected function executeQuery(Query $query): SearchResult
     {
         if ($query instanceof LocationQuery) {
             return $this->findService->findLocations($query);

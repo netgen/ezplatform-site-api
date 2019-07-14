@@ -73,7 +73,7 @@ final class ParameterProcessor
      *
      * @param \Symfony\Component\ExpressionLanguage\ExpressionLanguage $expressionLanguage
      */
-    private function registerFunctions(ExpressionLanguage $expressionLanguage)
+    private function registerFunctions(ExpressionLanguage $expressionLanguage): void
     {
         $expressionLanguage->register(
             'viewParam',

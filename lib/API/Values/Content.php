@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\API\Values;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
+use eZ\Publish\SPI\FieldType\Value;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Site Content object represents eZ Platform Repository Content object in a current version
@@ -35,7 +37,7 @@ abstract class Content extends ValueObject
      *
      * @return bool
      */
-    abstract public function hasField($identifier);
+    abstract public function hasField($identifier): bool;
 
     /**
      * Return Field object for the given field definition $identifier.
@@ -44,7 +46,7 @@ abstract class Content extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
-    abstract public function getField($identifier);
+    abstract public function getField($identifier): Field;
 
     /**
      * Returns if content has the field with the given field $id.
@@ -53,7 +55,7 @@ abstract class Content extends ValueObject
      *
      * @return bool
      */
-    abstract public function hasFieldById($id);
+    abstract public function hasFieldById($id): bool;
 
     /**
      * Return Field object for the given field $id.
@@ -62,7 +64,7 @@ abstract class Content extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
-    abstract public function getFieldById($id);
+    abstract public function getFieldById($id): Field;
 
     /**
      * Returns a field value for the given field definition identifier.
@@ -71,7 +73,7 @@ abstract class Content extends ValueObject
      *
      * @return \eZ\Publish\SPI\FieldType\Value
      */
-    abstract public function getFieldValue($identifier);
+    abstract public function getFieldValue($identifier): Value;
 
     /**
      * Returns a field value for the given field $id.
@@ -80,7 +82,7 @@ abstract class Content extends ValueObject
      *
      * @return \eZ\Publish\SPI\FieldType\Value
      */
-    abstract public function getFieldValueById($id);
+    abstract public function getFieldValueById($id): Value;
 
     /**
      * Return an array of Locations, limited by optional $limit.
@@ -108,7 +110,7 @@ abstract class Content extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content|null
      */
-    abstract public function getFieldRelation($fieldDefinitionIdentifier);
+    abstract public function getFieldRelation($fieldDefinitionIdentifier): ?Content;
 
     /**
      * Return all related Content from $fieldDefinitionIdentifier.
@@ -118,7 +120,7 @@ abstract class Content extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */
-    abstract public function getFieldRelations($fieldDefinitionIdentifier, $limit = 25);
+    abstract public function getFieldRelations($fieldDefinitionIdentifier, $limit = 25): array;
 
     /**
      * Return related Content from $fieldDefinitionIdentifier field in Content with given $contentId,
@@ -137,5 +139,5 @@ abstract class Content extends ValueObject
         array $contentTypeIdentifiers = [],
         $maxPerPage = 25,
         $currentPage = 1
-    );
+    ): Pagerfanta;
 }

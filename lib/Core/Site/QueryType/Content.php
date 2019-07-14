@@ -12,12 +12,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 abstract class Content extends Base
 {
-    final protected function configureBaseOptions(OptionsResolver $resolver)
+    final protected function configureBaseOptions(OptionsResolver $resolver): void
     {
         parent::configureBaseOptions($resolver);
     }
 
-    protected function buildQuery()
+    protected function buildQuery(): Query
     {
         return new Query();
     }

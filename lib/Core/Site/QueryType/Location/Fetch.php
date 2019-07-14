@@ -13,7 +13,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
  */
 class Fetch extends Location
 {
-    public static function getName()
+    public static function getName(): string
     {
         return 'SiteAPI:Location/Fetch';
     }

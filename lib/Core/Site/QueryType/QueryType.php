@@ -18,5 +18,5 @@ interface QueryType extends BaseQueryTypeInterface
      *
      * @return bool
      */
-    public function supportsParameter($name);
+    public function supportsParameter($name): bool;
 }

@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class Legacy extends CoreLegacySetupFactory
 {
-    public function getServiceContainer()
+    public function getServiceContainer(): ServiceContainer
     {
         if (null === self::$serviceContainer) {
             $config = include __DIR__ . '/../../../../vendor/ezsystems/ezpublish-kernel/config.php';

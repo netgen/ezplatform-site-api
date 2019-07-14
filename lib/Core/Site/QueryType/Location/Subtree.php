@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class Subtree extends Location
 {
-    public static function getName()
+    public static function getName(): string
     {
         return 'SiteAPI:Location/Subtree';
     }
@@ -31,7 +31,7 @@ final class Subtree extends Location
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->remove(['parent_location_id', 'subtree']);
         $resolver->setRequired(['location']);
@@ -49,7 +49,7 @@ final class Subtree extends Location
         ]);
     }
 
-    protected function registerCriterionBuilders()
+    protected function registerCriterionBuilders(): void
     {
         $this->registerCriterionBuilder(
             'relative_depth',
@@ -69,6 +69,12 @@ final class Subtree extends Location
         );
     }
 
+    /**
+     * @param int $startDepth
+     * @param int|int[] $value
+     *
+     * @return int|int[] array
+     */
     private function getRelativeDepthValue($startDepth, $value)
     {
         if (is_array($value)) {

@@ -9,12 +9,14 @@ use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo as RepoContentInfo;
 use eZ\Publish\Core\Repository\Repository as CoreRepository;
 use eZ\Publish\Core\Repository\Values\Content\Content as RepoContent;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\SPI\FieldType\FieldType;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
 use PHPUnit\Framework\MockObject\MockBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 
 /**
@@ -23,7 +25,7 @@ use Psr\Log\NullLogger;
 trait ContentFieldsMockTrait
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Netgen\EzPlatformSiteApi\API\Site
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
      */
     protected $siteMock;
 
@@ -33,17 +35,17 @@ trait ContentFieldsMockTrait
     protected $domainObjectMapper;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\Repository
      */
     protected $repositoryMock;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\VersionInfo
+     * @var \eZ\Publish\Core\Repository\Values\Content\VersionInfo
      */
     protected $repoVersionInfo;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     * @var \eZ\Publish\Core\Repository\Values\Content\Content
      */
     protected $repoContent;
 
@@ -58,12 +60,12 @@ trait ContentFieldsMockTrait
     protected $fieldDefinitions;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\ContentTypeService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentTypeService
      */
     protected $contentTypeServiceMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\FieldTypeService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\FieldTypeService
      */
     protected $fieldTypeServiceMock;
 
@@ -82,9 +84,9 @@ trait ContentFieldsMockTrait
     abstract public function getMockBuilder($className): MockBuilder;
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Netgen\EzPlatformSiteApi\API\Site
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
      */
-    protected function getSiteMock()
+    protected function getSiteMock(): MockObject
     {
         if ($this->siteMock !== null) {
             return $this->siteMock;
@@ -98,7 +100,7 @@ trait ContentFieldsMockTrait
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
-    protected function getDomainObjectMapper()
+    protected function getDomainObjectMapper(): DomainObjectMapper
     {
         if ($this->domainObjectMapper !== null) {
             return $this->domainObjectMapper;
@@ -115,9 +117,9 @@ trait ContentFieldsMockTrait
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\Repository
      */
-    protected function getRepositoryMock()
+    protected function getRepositoryMock(): MockObject
     {
         if ($this->repositoryMock !== null) {
             return $this->repositoryMock;
@@ -145,9 +147,9 @@ trait ContentFieldsMockTrait
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\FieldTypeService
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\FieldTypeService
      */
-    protected function getFieldTypeServiceMock()
+    protected function getFieldTypeServiceMock(): MockObject
     {
         if ($this->fieldTypeServiceMock !== null) {
             return $this->fieldTypeServiceMock;
@@ -168,7 +170,7 @@ trait ContentFieldsMockTrait
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\SPI\FieldType\FieldType
      */
-    protected function getFieldTypeMock()
+    protected function getFieldTypeMock(): MockObject
     {
         if ($this->fieldTypeMock !== null) {
             return $this->fieldTypeMock;
@@ -186,9 +188,9 @@ trait ContentFieldsMockTrait
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\ContentTypeService
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentTypeService
      */
-    protected function getContentTypeServiceMock()
+    protected function getContentTypeServiceMock(): MockObject
     {
         if ($this->contentTypeServiceMock !== null) {
             return $this->contentTypeServiceMock;
@@ -213,7 +215,7 @@ trait ContentFieldsMockTrait
     /**
      * @return \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition[]
      */
-    protected function getRepoFieldDefinitions()
+    protected function getRepoFieldDefinitions(): array
     {
         if ($this->fieldDefinitions !== null) {
             return $this->fieldDefinitions;
@@ -227,12 +229,12 @@ trait ContentFieldsMockTrait
     /**
      * @return \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition[]
      */
-    abstract protected function internalGetRepoFieldDefinitions();
+    abstract protected function internalGetRepoFieldDefinitions(): array;
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Values\Content\Content
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\Repository\Values\Content\Content
      */
-    protected function getRepoContent()
+    protected function getRepoContent(): Content
     {
         if ($this->repoContent !== null) {
             return $this->repoContent;
@@ -251,7 +253,7 @@ trait ContentFieldsMockTrait
     /**
      * @return \eZ\Publish\API\Repository\Values\Content\Field[]
      */
-    protected function getRepoFields()
+    protected function getRepoFields(): array
     {
         if ($this->internalFields !== null) {
             return $this->internalFields;
@@ -265,9 +267,9 @@ trait ContentFieldsMockTrait
     /**
      * @return \eZ\Publish\API\Repository\Values\Content\Field[]
      */
-    abstract public function internalGetRepoFields();
+    abstract public function internalGetRepoFields(): array;
 
-    protected function getRepoVersionInfo()
+    protected function getRepoVersionInfo(): VersionInfo
     {
         if ($this->repoVersionInfo !== null) {
             return $this->repoVersionInfo;

@@ -16,7 +16,7 @@ class Configuration extends SiteAccessConfiguration
         $this->rootNodeName = $rootNodeName;
     }
 
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root($this->rootNodeName);
@@ -26,7 +26,7 @@ class Configuration extends SiteAccessConfiguration
         return $treeBuilder;
     }
 
-    protected function addConfiguration($rootNode)
+    protected function addConfiguration($rootNode): void
     {
         $systemNode = $this->generateScopeBaseNode($rootNode);
         $systemNode

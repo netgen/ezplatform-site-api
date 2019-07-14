@@ -12,15 +12,18 @@ use Netgen\EzPlatformSiteApi\Tests\Integration\BaseTest;
 
 class SearchResultExtractorTraitTest extends BaseTest
 {
+    /**
+     * @var \Netgen\EzPlatformSiteApi\Tests\Integration\Traits\SearchResultExtractorStub
+     */
     protected $stub;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->stub = new SearchResultExtractorStub();
     }
 
-    public function testItExtractsValuesFromLocations()
+    public function testItExtractsValuesFromLocations(): void
     {
         $locationIds = [5, 56];
         $findService = $this->getSite()->getFindService();
@@ -39,7 +42,7 @@ class SearchResultExtractorTraitTest extends BaseTest
         }
     }
 
-    public function testItExtractsValuesFromEmptyLocationSearchResult()
+    public function testItExtractsValuesFromEmptyLocationSearchResult(): void
     {
         $locationIds = [54];
         $findService = $this->getSite()->getFindService();
@@ -57,7 +60,7 @@ class SearchResultExtractorTraitTest extends BaseTest
         $this->assertEmpty($locationValueObjects);
     }
 
-    public function testItExtractsValuesFromContents()
+    public function testItExtractsValuesFromContents(): void
     {
         $contentIds = [4, 54];
         $findService = $this->getSite()->getFindService();
@@ -76,7 +79,7 @@ class SearchResultExtractorTraitTest extends BaseTest
         }
     }
 
-    public function testItExtractsValuesFromEmptyContentSearchResult()
+    public function testItExtractsValuesFromEmptyContentSearchResult(): void
     {
         $contentIds = [52];
         $findService = $this->getSite()->getFindService();

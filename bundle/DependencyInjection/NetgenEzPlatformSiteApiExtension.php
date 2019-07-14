@@ -16,7 +16,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExtensionInterface
 {
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'netgen_ez_platform_site_api';
     }
@@ -26,7 +26,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration
      */
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    public function getConfiguration(array $config, ContainerBuilder $container): Configuration
     {
         return new Configuration($this->getAlias());
     }
@@ -36,7 +36,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
      *
      * @throws \Exception
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
 
@@ -73,7 +73,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         }
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $configFile = __DIR__ . '/../Resources/config/ezplatform.yml';
         $config = Yaml::parse(file_get_contents($configFile));

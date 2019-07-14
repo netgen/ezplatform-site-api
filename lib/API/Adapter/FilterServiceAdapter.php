@@ -87,7 +87,9 @@ final class FilterServiceAdapter implements SearchService
 
         if (!$searchResult->totalCount) {
             throw new NotFoundException('Content', 'findSingle() found no content for given $filter');
-        } elseif ($searchResult->totalCount > 1) {
+        }
+
+        if ($searchResult->totalCount > 1) {
             throw new InvalidArgumentException('totalCount', 'findSingle() found more then one item for given $filter');
         }
 

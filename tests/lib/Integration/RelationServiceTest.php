@@ -28,7 +28,7 @@ class RelationServiceTest extends BaseTest
      *
      * @return array
      */
-    protected function prepareTestContent()
+    protected function prepareTestContent(): array
     {
         $repository = $this->getRepository();
         $contentTypeService = $repository->getContentTypeService();
@@ -87,7 +87,7 @@ class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function testLoadFieldRelation()
+    public function testLoadFieldRelation(): void
     {
         list($identifier, $testApiContent, $testRelationId) = $this->prepareTestContent();
 
@@ -108,7 +108,7 @@ class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function testLoadFieldRelations()
+    public function testLoadFieldRelations(): void
     {
         list($identifier, , , $testApiContent, $testRelationIds) = $this->prepareTestContent();
 

@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class TagFields extends Content
 {
-    public static function getName()
+    public static function getName(): string
     {
         return 'SiteAPI:Content/Relations/TagFields';
     }
@@ -30,7 +30,7 @@ final class TagFields extends Content
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
             'content',
@@ -103,7 +103,7 @@ final class TagFields extends Content
      *
      * @return array
      */
-    private function extractTagIds(SiteContent $content, array $fields)
+    private function extractTagIds(SiteContent $content, array $fields): array
     {
         $tagsIdsGrouped = [[]];
 

@@ -50,7 +50,7 @@ final class QueryDefinitionMapper
      *
      * @param array $configuration
      */
-    public function setNamedQueryConfiguration(array $configuration = null)
+    public function setNamedQueryConfiguration(array $configuration = null): void
     {
         if (null === $configuration) {
             $configuration = [];
@@ -69,7 +69,7 @@ final class QueryDefinitionMapper
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
      */
-    public function map(array $configuration, ContentView $view)
+    public function map(array $configuration, ContentView $view): QueryDefinition
     {
         if (isset($configuration['named_query'])) {
             $namedQueryConfiguration = $this->getNamedQueryConfiguration($configuration['named_query']);
@@ -89,7 +89,7 @@ final class QueryDefinitionMapper
      *
      * @return array
      */
-    private function overrideConfiguration(array $configuration, array $override)
+    private function overrideConfiguration(array $configuration, array $override): array
     {
         $configuration['parameters'] = array_replace(
             $configuration['parameters'],
@@ -110,7 +110,7 @@ final class QueryDefinitionMapper
      *
      * @return array
      */
-    private function getNamedQueryConfiguration($name)
+    private function getNamedQueryConfiguration($name): array
     {
         if (array_key_exists($name, $this->namedQueryConfiguration)) {
             return $this->namedQueryConfiguration[$name];
@@ -129,7 +129,7 @@ final class QueryDefinitionMapper
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
      */
-    private function buildQueryDefinition(array $configuration, ContentView $view)
+    private function buildQueryDefinition(array $configuration, ContentView $view): QueryDefinition
     {
         $parameters = $this->processParameters($configuration['parameters'], $view);
 
@@ -151,7 +151,7 @@ final class QueryDefinitionMapper
      * @param string $queryTypeName
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      */
-    private function injectSupportedParameters(array &$parameters, $queryTypeName, ContentView $view)
+    private function injectSupportedParameters(array &$parameters, $queryTypeName, ContentView $view): void
     {
         $queryType = $this->queryTypeRegistry->getQueryType($queryTypeName);
 

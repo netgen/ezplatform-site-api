@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 
 final class ContentInfo extends APIContentInfo
 {
@@ -96,7 +97,7 @@ final class ContentInfo extends APIContentInfo
      *
      * @return bool
      */
-    public function __isset($property)
+    public function __isset($property): bool
     {
         if ($property === 'mainLocation') {
             return true;
@@ -109,7 +110,7 @@ final class ContentInfo extends APIContentInfo
         return parent::__isset($property);
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'id' => $this->innerContentInfo->id,
@@ -135,7 +136,7 @@ final class ContentInfo extends APIContentInfo
         ];
     }
 
-    private function getMainLocation()
+    private function getMainLocation(): ?Location
     {
         if ($this->internalMainLocation === null && $this->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(

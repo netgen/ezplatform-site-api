@@ -29,7 +29,7 @@ class FilterServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testFilterContentMatchPrimaryLanguage()
+    public function testFilterContentMatchPrimaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -61,7 +61,7 @@ class FilterServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testFilterContentMatchSecondaryLanguage()
+    public function testFilterContentMatchSecondaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -93,7 +93,7 @@ class FilterServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testFilterContentMatchAlwaysAvailableLanguage()
+    public function testFilterContentMatchAlwaysAvailableLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -124,7 +124,7 @@ class FilterServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testFilterContentTranslationNotMatched()
+    public function testFilterContentTranslationNotMatched(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -155,7 +155,7 @@ class FilterServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testFilterLocationsMatchPrimaryLanguage()
+    public function testFilterLocationsMatchPrimaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -187,7 +187,7 @@ class FilterServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testFilterLocationsMatchSecondaryLanguage()
+    public function testFilterLocationsMatchSecondaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -219,7 +219,7 @@ class FilterServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testFilterLocationsMatchAlwaysAvailableLanguage()
+    public function testFilterLocationsMatchAlwaysAvailableLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -250,7 +250,7 @@ class FilterServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testFilterLocationsTranslationNotMatched()
+    public function testFilterLocationsTranslationNotMatched(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -271,7 +271,7 @@ class FilterServiceTest extends BaseTest
         $this->assertEquals(0, $searchResult->totalCount);
     }
 
-    protected function assertContentSearchResult(SearchResult $searchResult, $data)
+    protected function assertContentSearchResult(SearchResult $searchResult, $data): void
     {
         $languageCode = $data['languageCode'];
 
@@ -280,7 +280,7 @@ class FilterServiceTest extends BaseTest
         $this->assertContent($searchResult->searchHits[0]->valueObject, $data);
     }
 
-    protected function assertLocationSearchResult(SearchResult $searchResult, $data)
+    protected function assertLocationSearchResult(SearchResult $searchResult, $data): void
     {
         $languageCode = $data['languageCode'];
 

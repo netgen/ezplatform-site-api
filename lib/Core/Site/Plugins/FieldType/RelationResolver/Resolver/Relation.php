@@ -14,12 +14,12 @@ use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolv
  */
 class Relation extends Resolver
 {
-    protected function getSupportedFieldTypeIdentifier()
+    protected function getSupportedFieldTypeIdentifier(): string
     {
         return 'ezobjectrelation';
     }
 
-    protected function getRelationIdsFromValue(Value $value)
+    protected function getRelationIdsFromValue(Value $value): array
     {
         /** @var \eZ\Publish\Core\FieldType\Relation\Value $value */
         return [$value->destinationContentId];

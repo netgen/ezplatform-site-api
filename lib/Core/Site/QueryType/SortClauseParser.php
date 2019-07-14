@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DateModified;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
@@ -51,7 +52,7 @@ class SortClauseParser
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause
      */
-    public function parse($definition)
+    public function parse($definition): SortClause
     {
         $values = explode(' ', $definition);
         $direction = $this->getDirection($values);
@@ -88,7 +89,7 @@ class SortClauseParser
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause\Field
      */
-    private function buildFieldSortClause(array $values, $direction)
+    private function buildFieldSortClause(array $values, $direction): Field
     {
         if (!array_key_exists(1, $values)) {
             throw new InvalidArgumentException(
@@ -114,7 +115,7 @@ class SortClauseParser
      *
      * @return mixed
      */
-    private function getDirection(array $values)
+    private function getDirection(array $values): string
     {
         $direction = 'asc';
 

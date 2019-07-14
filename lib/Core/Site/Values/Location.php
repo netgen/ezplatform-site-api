@@ -15,6 +15,8 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Pagerfanta;
@@ -147,7 +149,7 @@ final class Location extends APILocation
      *
      * @return bool
      */
-    public function __isset($property)
+    public function __isset($property): bool
     {
         switch ($property) {
             case 'contentInfo':
@@ -164,7 +166,7 @@ final class Location extends APILocation
         return parent::__isset($property);
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'id' => $this->innerLocation->id,
@@ -192,7 +194,7 @@ final class Location extends APILocation
         return $this->filterChildren([], $limit)->getIterator();
     }
 
-    public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)
+    public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1): Pagerfanta
     {
         $criteria = [
             new ParentLocationId($this->id),
@@ -225,7 +227,7 @@ final class Location extends APILocation
         return $this->filterSiblings([], $limit)->getIterator();
     }
 
-    public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1)
+    public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1): Pagerfanta
     {
         $criteria = [
             new ParentLocationId($this->parentLocationId),
@@ -256,7 +258,7 @@ final class Location extends APILocation
         return $pager;
     }
 
-    private function getParent()
+    private function getParent(): APILocation
     {
         if ($this->internalParent === null) {
             $this->internalParent = $this->site->getLoadService()->loadLocation(
@@ -267,7 +269,7 @@ final class Location extends APILocation
         return $this->internalParent;
     }
 
-    private function getContent()
+    private function getContent(): Content
     {
         if ($this->internalContent === null) {
             $this->internalContent = $this->domainObjectMapper->mapContent(
@@ -279,7 +281,7 @@ final class Location extends APILocation
         return $this->internalContent;
     }
 
-    private function getContentInfo()
+    private function getContentInfo(): ContentInfo
     {
         if ($this->contentInfo === null) {
             $this->contentInfo = $this->domainObjectMapper->mapContentInfo(
@@ -298,7 +300,7 @@ final class Location extends APILocation
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause[]
      */
-    private function getSortClauses()
+    private function getSortClauses(): array
     {
         if (!isset(static::$sortFieldMap[$this->sortField])) {
             throw new NotImplementedException(

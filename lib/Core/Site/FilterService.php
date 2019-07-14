@@ -8,6 +8,7 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\FilterService as FilterServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 
@@ -51,7 +52,7 @@ class FilterService implements FilterServiceInterface
         $this->contentService = $contentService;
     }
 
-    public function filterContent(Query $query)
+    public function filterContent(Query $query): SearchResult
     {
         $searchResult = $this->searchService->findContentInfo(
             $query,
@@ -76,7 +77,7 @@ class FilterService implements FilterServiceInterface
         return $searchResult;
     }
 
-    public function filterLocations(LocationQuery $query)
+    public function filterLocations(LocationQuery $query): SearchResult
     {
         $searchResult = $this->searchService->findLocations(
             $query,

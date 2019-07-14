@@ -30,7 +30,7 @@ final class ForwardFields extends Content
         $this->relationResolverRegistry = $relationResolverRegistry;
     }
 
-    public static function getName()
+    public static function getName(): string
     {
         return 'SiteAPI:Content/Relations/ForwardFields';
     }
@@ -41,7 +41,7 @@ final class ForwardFields extends Content
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
             'content',

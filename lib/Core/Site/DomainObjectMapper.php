@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\Content\Field as APIField;
-use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
+use eZ\Publish\API\Repository\Values\Content\Field as RepoField;
+use eZ\Publish\API\Repository\Values\Content\Location as RepoLocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
@@ -82,7 +82,7 @@ final class DomainObjectMapper
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Content
      */
-    public function mapContent(VersionInfo $versionInfo, $languageCode)
+    public function mapContent(VersionInfo $versionInfo, $languageCode): Content
     {
         $contentInfo = $versionInfo->contentInfo;
 
@@ -110,9 +110,9 @@ final class DomainObjectMapper
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo
      */
-    public function mapContentInfo(VersionInfo $versionInfo, $languageCode)
+    public function mapContentInfo(VersionInfo $versionInfo, $languageCode): ContentInfo
     {
         $contentInfo = $versionInfo->contentInfo;
         $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
@@ -138,9 +138,9 @@ final class DomainObjectMapper
      * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
      * @param string $languageCode
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Location
      */
-    public function mapLocation(APILocation $location, VersionInfo $versionInfo, $languageCode)
+    public function mapLocation(RepoLocation $location, VersionInfo $versionInfo, $languageCode): Location
     {
         return new Location(
             [
@@ -161,9 +161,9 @@ final class DomainObjectMapper
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Field
      */
-    public function mapField(APIField $apiField, SiteContent $content)
+    public function mapField(RepoField $apiField, SiteContent $content): Field
     {
         $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;

@@ -8,6 +8,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\SPI\Search\Capable;
@@ -42,7 +43,7 @@ final class FindServiceAdapter implements SearchService
         $this->searchHandler = $searchHandler;
     }
 
-    public function findContent(Query $query, array $languageFilter = [], $filterOnUserPermissions = true)
+    public function findContent(Query $query, array $languageFilter = [], $filterOnUserPermissions = true): SearchResult
     {
         $searchResult = $this->findService->findContent($query);
 
@@ -53,7 +54,7 @@ final class FindServiceAdapter implements SearchService
         return $searchResult;
     }
 
-    public function findContentInfo(Query $query, array $languageFilter = [], $filterOnUserPermissions = true)
+    public function findContentInfo(Query $query, array $languageFilter = [], $filterOnUserPermissions = true): SearchResult
     {
         $searchResult = $this->findService->findContent($query);
 
@@ -64,7 +65,7 @@ final class FindServiceAdapter implements SearchService
         return $searchResult;
     }
 
-    public function findLocations(LocationQuery $query, array $languageFilter = [], $filterOnUserPermissions = true)
+    public function findLocations(LocationQuery $query, array $languageFilter = [], $filterOnUserPermissions = true): SearchResult
     {
         $searchResult = $this->findService->findLocations($query);
 
@@ -92,11 +93,11 @@ final class FindServiceAdapter implements SearchService
         return $searchResult->searchHits[0]->valueObject->innerContent;
     }
 
-    public function suggest($prefix, $fieldPaths = [], $limit = 10, Criterion $filter = null)
+    public function suggest($prefix, $fieldPaths = [], $limit = 10, Criterion $filter = null): void
     {
     }
 
-    public function supports($capabilityFlag)
+    public function supports($capabilityFlag): bool
     {
         if ($this->searchHandler instanceof Capable) {
             return $this->searchHandler->supports($capabilityFlag);

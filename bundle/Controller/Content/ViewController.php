@@ -28,7 +28,7 @@ class ViewController extends Controller
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
-    public function viewAction(ContentView $view)
+    public function viewAction(ContentView $view): ContentView
     {
         return $view;
     }
@@ -41,7 +41,7 @@ class ViewController extends Controller
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
-    public function embedAction(ContentView $view)
+    public function embedAction(ContentView $view): ContentView
     {
         return $view;
     }

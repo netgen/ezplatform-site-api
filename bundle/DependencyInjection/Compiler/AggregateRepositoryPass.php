@@ -50,7 +50,7 @@ class AggregateRepositoryPass implements CompilerPassInterface
      * @throws \Symfony\Component\DependencyInjection\Exception\OutOfBoundsException
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         // 1. Register custom repositories with Aggregate repository
         $aggregateRepositoryDefinition = $container->findDefinition(self::AggregateRepositoryId);

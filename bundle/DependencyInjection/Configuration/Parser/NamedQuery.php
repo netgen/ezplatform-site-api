@@ -15,7 +15,7 @@ class NamedQuery extends View
 {
     const NODE_KEY = 'ng_named_query';
 
-    public function addSemanticConfig(NodeBuilder $nodeBuilder)
+    public function addSemanticConfig(NodeBuilder $nodeBuilder): void
     {
         $nodeBuilder
             ->arrayNode(static::NODE_KEY)

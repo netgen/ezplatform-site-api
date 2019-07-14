@@ -24,6 +24,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Regist
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\Relation;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\RelationList;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ForwardFields;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -40,12 +41,12 @@ class ForwardFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 
-    protected function getQueryTypeName()
+    protected function getQueryTypeName(): string
     {
         return 'SiteAPI:Content/Relations/ForwardFields';
     }
 
-    protected function getQueryTypeUnderTest()
+    protected function getQueryTypeUnderTest(): QueryType
     {
         return new ForwardFields(
             new Registry([
@@ -55,7 +56,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         );
     }
 
-    protected function internalGetRepoFields()
+    protected function internalGetRepoFields(): array
     {
         return [
             new RepoField([
@@ -82,7 +83,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function internalGetRepoFieldDefinitions()
+    protected function internalGetRepoFieldDefinitions(): array
     {
         return [
             new FieldDefinition([
@@ -103,7 +104,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function getTestContent()
+    protected function getTestContent(): Content
     {
         return new Content(
             [
@@ -119,7 +120,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         );
     }
 
-    protected function getSupportedParameters()
+    protected function getSupportedParameters(): array
     {
         return [
             'content_type',
@@ -136,7 +137,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQuery()
+    public function providerForTestGetQuery(): array
     {
         $content = $this->getTestContent();
 
@@ -283,7 +284,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function testGetQueryWithUnsupportedField()
+    public function testGetQueryWithUnsupportedField(): void
     {
         $this->expectException(OutOfBoundsException::class);
 
@@ -298,7 +299,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ]);
     }
 
-    public function testGetQueryWithNonexistentField()
+    public function testGetQueryWithNonexistentField(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -313,7 +314,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ]);
     }
 
-    public function providerForTestGetQueryWithInvalidOptions()
+    public function providerForTestGetQueryWithInvalidOptions(): array
     {
         $content = $this->getTestContent();
 
@@ -376,7 +377,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidCriteria()
+    public function providerForTestGetQueryWithInvalidCriteria(): array
     {
         $content = $this->getTestContent();
 
@@ -393,7 +394,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestInvalidSortClauseThrowsException()
+    public function providerForTestInvalidSortClauseThrowsException(): array
     {
         $content = $this->getTestContent();
 

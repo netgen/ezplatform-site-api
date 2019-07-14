@@ -17,6 +17,7 @@ use Netgen\EzPlatformSiteApi\API\FindService;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FindAdapter;
 use Pagerfanta\Pagerfanta;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -25,7 +26,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteContentFilterQuery()
+    public function testExecuteContentFilterQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
         $result = $executor->execute(
@@ -45,7 +46,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteContentPagedFilterQuery()
+    public function testExecuteContentPagedFilterQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
         $result = $executor->execute(
@@ -69,7 +70,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteContentFindQuery()
+    public function testExecuteContentFindQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
         $result = $executor->execute(
@@ -89,7 +90,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteContentPagedFindQuery()
+    public function testExecuteContentPagedFindQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
         $result = $executor->execute(
@@ -113,7 +114,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteLocationFilterQuery()
+    public function testExecuteLocationFilterQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
         $result = $executor->execute(
@@ -133,7 +134,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteLocationPagedFilterQuery()
+    public function testExecuteLocationPagedFilterQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
         $result = $executor->execute(
@@ -157,7 +158,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteLocationFindQuery()
+    public function testExecuteLocationFindQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
         $result = $executor->execute(
@@ -177,7 +178,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteLocationPagedFindQuery()
+    public function testExecuteLocationPagedFindQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
         $result = $executor->execute(
@@ -201,7 +202,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @throws \Pagerfanta\Exception\Exception
      */
-    public function testExecuteThrowsRuntimeException()
+    public function testExecuteThrowsRuntimeException(): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -221,7 +222,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor
      */
-    protected function getQueryExecutorUnderTest()
+    protected function getQueryExecutorUnderTest(): QueryExecutor
     {
         return new QueryExecutor(
             $this->getQueryTypeRegistryMock(),
@@ -230,7 +231,7 @@ class QueryExecutorTest extends TestCase
         );
     }
 
-    protected function getFilterContentResult()
+    protected function getFilterContentResult(): SearchResult
     {
         return new SearchResult([
             'totalCount' => 100,
@@ -238,7 +239,7 @@ class QueryExecutorTest extends TestCase
         ]);
     }
 
-    protected function getFindContentResult()
+    protected function getFindContentResult(): SearchResult
     {
         return new SearchResult([
             'totalCount' => 100,
@@ -246,7 +247,7 @@ class QueryExecutorTest extends TestCase
         ]);
     }
 
-    protected function getFilterLocationsResult()
+    protected function getFilterLocationsResult(): SearchResult
     {
         return new SearchResult([
             'totalCount' => 100,
@@ -254,7 +255,7 @@ class QueryExecutorTest extends TestCase
         ]);
     }
 
-    protected function getFindLocationsResult()
+    protected function getFindLocationsResult(): SearchResult
     {
         return new SearchResult([
             'totalCount' => 100,
@@ -265,7 +266,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\FilterService
      */
-    protected function getFilterServiceMock()
+    protected function getFilterServiceMock(): MockObject
     {
         $filterServiceMock = $this->getMockBuilder(FilterService::class)->getMock();
         $filterServiceMock
@@ -283,7 +284,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\FindService
      */
-    protected function getFindServiceMock()
+    protected function getFindServiceMock(): MockObject
     {
         $findServiceMock = $this->getMockBuilder(FindService::class)->getMock();
         $findServiceMock
@@ -301,7 +302,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
      */
-    protected function getQueryTypeRegistryMock()
+    protected function getQueryTypeRegistryMock(): MockObject
     {
         $queryTypeRegistryMock = $this->getMockBuilder(QueryTypeRegistry::class)->getMock();
 
@@ -320,7 +321,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getContentQueryTypeMock()
+    protected function getContentQueryTypeMock(): MockObject
     {
         $mock = $this->getMockBuilder(QueryType::class)->getMock();
         $mock
@@ -334,7 +335,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getLocationQueryTypeMock()
+    protected function getLocationQueryTypeMock(): MockObject
     {
         $mock = $this->getMockBuilder(QueryType::class)->getMock();
         $mock
@@ -348,7 +349,7 @@ class QueryExecutorTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getInvalidQueryTypeMock()
+    protected function getInvalidQueryTypeMock(): MockObject
     {
         $mock = $this->getMockBuilder(QueryType::class)->getMock();
         $mock

@@ -29,7 +29,7 @@ class PreviewController extends BasePreviewController
     /**
      * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
      */
-    public function setConfigResolver(ConfigResolverInterface $configResolver)
+    public function setConfigResolver(ConfigResolverInterface $configResolver): void
     {
         $this->configResolver = $configResolver;
     }
@@ -37,7 +37,7 @@ class PreviewController extends BasePreviewController
     /**
      * @param \Netgen\EzPlatformSiteApi\API\LoadService $loadService
      */
-    public function setLoadService(LoadService $loadService)
+    public function setLoadService(LoadService $loadService): void
     {
         $this->loadService = $loadService;
     }
@@ -47,7 +47,7 @@ class PreviewController extends BasePreviewController
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      */
-    protected function getForwardRequest(Location $location, Content $content, SiteAccess $previewSiteAccess, Request $request, $language)
+    protected function getForwardRequest(Location $location, Content $content, SiteAccess $previewSiteAccess, Request $request, $language): Request
     {
         $request = parent::getForwardRequest($location, $content, $previewSiteAccess, $request, $language);
 
@@ -79,7 +79,7 @@ class PreviewController extends BasePreviewController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $language
      */
-    protected function injectSiteApiValueObjects(Request $request, $language)
+    protected function injectSiteApiValueObjects(Request $request, $language): void
     {
         /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
         /** @var \eZ\Publish\API\Repository\Values\Content\Location $location */
@@ -117,7 +117,7 @@ class PreviewController extends BasePreviewController
      *
      * @return bool
      */
-    protected function isLegacyModeSiteAccess($siteAccessName)
+    protected function isLegacyModeSiteAccess($siteAccessName): bool
     {
         if (!$this->configResolver->hasParameter('legacy_mode', 'ezsettings', $siteAccessName)) {
             return false;

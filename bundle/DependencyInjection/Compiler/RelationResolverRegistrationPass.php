@@ -33,7 +33,7 @@ final class RelationResolverRegistrationPass implements CompilerPassInterface
      */
     private $resolverTag = 'netgen.ezplatform_site.plugins.field_type.relation_resolver';
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has($this->resolverRegistryId)) {
             return;
@@ -58,7 +58,7 @@ final class RelationResolverRegistrationPass implements CompilerPassInterface
      * @param string $id
      * @param array $attributes
      */
-    private function registerResolver(Definition $resolverRegistryDefinition, $id, array $attributes)
+    private function registerResolver(Definition $resolverRegistryDefinition, $id, array $attributes): void
     {
         foreach ($attributes as $attribute) {
             if (!isset($attribute['identifier'])) {

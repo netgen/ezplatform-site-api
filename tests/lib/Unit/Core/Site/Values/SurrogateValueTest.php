@@ -15,42 +15,42 @@ use PHPUnit\Framework\TestCase;
  */
 class SurrogateValueTest extends TestCase
 {
-    public function testConstructWithArbitraryArguments()
+    public function testConstructWithArbitraryArguments(): void
     {
         $value = new SurrogateValue(1, 2, 'three');
 
         $this->assertInstanceOf(SurrogateValue::class, $value);
     }
 
-    public function testGetPropertyReturnsNull()
+    public function testGetPropertyReturnsNull(): void
     {
         $value = new SurrogateValue();
 
         $this->assertNull($value->property);
     }
 
-    public function testCallMethodReturnsNull()
+    public function testCallMethodReturnsNull(): void
     {
         $value = new SurrogateValue();
 
         $this->assertNull($value->method());
     }
 
-    public function testCastToStringReturnsEmptyString()
+    public function testCastToStringReturnsEmptyString(): void
     {
         $value = new SurrogateValue();
 
         $this->assertEquals('', (string)$value);
     }
 
-    public function testCheckingForPropertyReturnsFalse()
+    public function testCheckingForPropertyReturnsFalse(): void
     {
         $value = new SurrogateValue();
 
         $this->assertFalse(isset($value->property));
     }
 
-    public function testSettingPropertyDoesNothing()
+    public function testSettingPropertyDoesNothing(): void
     {
         $value = new SurrogateValue();
 
@@ -59,7 +59,7 @@ class SurrogateValueTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    public function testUnsettingPropertyDoesNothing()
+    public function testUnsettingPropertyDoesNothing(): void
     {
         $value = new SurrogateValue();
 

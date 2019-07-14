@@ -20,7 +20,7 @@ class Surrogate extends Resolver
         return 'ngsurrogate';
     }
 
-    protected function getRelationIdsFromValue(Value $value)
+    protected function getRelationIdsFromValue(Value $value): array
     {
         return [];
     }

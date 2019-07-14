@@ -14,33 +14,33 @@ interface Site
      *
      * @return \Netgen\EzPlatformSiteApi\API\Settings
      */
-    public function getSettings();
+    public function getSettings(): Settings;
 
     /**
      * FilterService getter.
      *
      * @return \Netgen\EzPlatformSiteApi\API\FilterService
      */
-    public function getFilterService();
+    public function getFilterService(): FilterService;
 
     /**
      * FindService getter.
      *
      * @return \Netgen\EzPlatformSiteApi\API\FindService
      */
-    public function getFindService();
+    public function getFindService(): FindService;
 
     /**
      * LoadService getter.
      *
      * @return \Netgen\EzPlatformSiteApi\API\LoadService
      */
-    public function getLoadService();
+    public function getLoadService(): LoadService;
 
     /**
      * RelationService getter.
      *
      * @return \Netgen\EzPlatformSiteApi\API\RelationService
      */
-    public function getRelationService();
+    public function getRelationService(): RelationService;
 }

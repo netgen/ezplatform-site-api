@@ -32,7 +32,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CriteriaBuilderTest extends TestCase
 {
-    public function providerForTestBuild()
+    public function providerForTestBuild(): array
     {
         return [
             [
@@ -389,7 +389,7 @@ class CriteriaBuilderTest extends TestCase
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $arguments
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion[] $expectedCriteria
      */
-    public function testBuild(array $arguments, array $expectedCriteria)
+    public function testBuild(array $arguments, array $expectedCriteria): void
     {
         $criteriaBuilder = $this->getCriteriaBuilderUnderTest();
 
@@ -401,7 +401,7 @@ class CriteriaBuilderTest extends TestCase
         );
     }
 
-    public function testBuildUnsupportedCriterionThrowsException()
+    public function testBuildUnsupportedCriterionThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Criterion named 'banana' is not handled");
@@ -415,7 +415,7 @@ class CriteriaBuilderTest extends TestCase
         ]);
     }
 
-    public function testBuildDateMetadataThrowsException()
+    public function testBuildDateMetadataThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'someday' is invalid time string");
@@ -437,7 +437,7 @@ class CriteriaBuilderTest extends TestCase
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
      */
-    protected function getCriteriaBuilderUnderTest()
+    protected function getCriteriaBuilderUnderTest(): CriteriaBuilder
     {
         if (null === $this->criteriaBuilder) {
             $this->criteriaBuilder = new CriteriaBuilder();

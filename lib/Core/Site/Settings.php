@@ -77,7 +77,7 @@ final class Settings extends BaseSettings
      * @param $property
      * @param $value
      */
-    public function __set($property, $value)
+    public function __set($property, $value): void
     {
         throw new PropertyReadOnlyException($property, get_class($this));
     }
@@ -89,7 +89,7 @@ final class Settings extends BaseSettings
      *
      * @return bool
      */
-    public function __isset($property)
+    public function __isset($property): bool
     {
         switch ($property) {
             case 'prioritizedLanguages':

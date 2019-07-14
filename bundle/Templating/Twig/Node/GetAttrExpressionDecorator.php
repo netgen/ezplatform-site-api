@@ -28,7 +28,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         $this->decoratedExpression = $decoratedExpression;
     }
 
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $env = $compiler->getEnvironment();
 
@@ -85,7 +85,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         ;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->decoratedExpression->__toString();
     }
@@ -100,7 +100,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         return $this->decoratedExpression->getNodeTag();
     }
 
-    public function hasAttribute($name)
+    public function hasAttribute($name): bool
     {
         return $this->decoratedExpression->hasAttribute($name);
     }
@@ -110,32 +110,32 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         return $this->decoratedExpression->getAttribute($name);
     }
 
-    public function setAttribute($name, $value)
+    public function setAttribute($name, $value): void
     {
         $this->decoratedExpression->setAttribute($name, $value);
     }
 
-    public function removeAttribute($name)
+    public function removeAttribute($name): void
     {
         $this->decoratedExpression->removeAttribute($name);
     }
 
-    public function hasNode($name)
+    public function hasNode($name): bool
     {
         return $this->decoratedExpression->hasNode($name);
     }
 
-    public function getNode($name)
+    public function getNode($name): Node
     {
         return $this->decoratedExpression->getNode($name);
     }
 
-    public function setNode($name, Node $node)
+    public function setNode($name, Node $node): void
     {
         $this->decoratedExpression->setNode($name, $node);
     }
 
-    public function removeNode($name)
+    public function removeNode($name): void
     {
         $this->decoratedExpression->removeNode($name);
     }
@@ -154,7 +154,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
      * {@inheritDoc}
      * @deprecated
      */
-    public function setTemplateName($name)
+    public function setTemplateName($name): void
     {
         $this->decoratedExpression->setTemplateName($name);
     }
@@ -164,7 +164,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         return $this->decoratedExpression->getTemplateName();
     }
 
-    public function setSourceContext(Source $source)
+    public function setSourceContext(Source $source): void
     {
         $this->decoratedExpression->setSourceContext($source);
     }

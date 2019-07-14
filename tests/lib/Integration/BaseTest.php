@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Field as APIField;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
+use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Fields;
@@ -28,7 +29,7 @@ use ReflectionProperty;
  */
 class BaseTest extends APIBaseTest
 {
-    public function getData($languageCode)
+    public function getData($languageCode): array
     {
         return [
             'name' => $languageCode,
@@ -79,7 +80,7 @@ class BaseTest extends APIBaseTest
      * @param string $name
      * @param mixed $value
      */
-    protected function overrideSettings($name, $value)
+    protected function overrideSettings($name, $value): void
     {
         $settings = $this->getSite()->getSettings();
 
@@ -93,7 +94,7 @@ class BaseTest extends APIBaseTest
      *
      * @return \Netgen\EzPlatformSiteApi\API\Site
      */
-    protected function getSite()
+    protected function getSite(): Site
     {
         /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
         $site = $this->getSetupFactory()->getServiceContainer()->get('netgen.ezplatform_site.site');
@@ -101,7 +102,7 @@ class BaseTest extends APIBaseTest
         return $site;
     }
 
-    protected function assertContent($content, $data)
+    protected function assertContent($content, $data): void
     {
         list($name, $contentId, , $locationId) = array_values($data);
 
@@ -158,7 +159,7 @@ class BaseTest extends APIBaseTest
         );
     }
 
-    protected function assertContentInfo($contentInfo, $data)
+    protected function assertContentInfo($contentInfo, $data): void
     {
         list($name, $contentId, $contentRemoteId, $locationId) = array_values($data);
 
@@ -228,7 +229,7 @@ class BaseTest extends APIBaseTest
         );
     }
 
-    protected function assertFields(Content $content, $data)
+    protected function assertFields(Content $content, $data): void
     {
         $this->assertInstanceOf(Fields::class, $content->fields);
         $this->assertCount(count($data['fields']), $content->fields);
@@ -265,7 +266,7 @@ class BaseTest extends APIBaseTest
         $this->assertInstanceOf(SurrogateValue::class, $content->getFieldValueById('non_existent_field'));
     }
 
-    protected function assertField(Content $content, $identifier, $languageCode, $data)
+    protected function assertField(Content $content, $identifier, $languageCode, $data): void
     {
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Field|\Netgen\EzPlatformSiteApi\Core\Site\Values\Field $field */
         $field = $content->getField($identifier);
@@ -311,7 +312,7 @@ class BaseTest extends APIBaseTest
         );
     }
 
-    protected function assertLocation($location, $data)
+    protected function assertLocation($location, $data): void
     {
         list(, , , $locationId, $locationRemoteId, $parentLocationId) = array_values($data);
 

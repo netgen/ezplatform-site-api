@@ -41,12 +41,12 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
      */
     private $isEmbed = false;
 
-    public function setSiteContent(Content $content)
+    public function setSiteContent(Content $content): void
     {
         $this->content = $content;
     }
 
-    public function getContent()
+    public function getContent(): ?APIContent
     {
         if (!$this->content instanceof Content) {
             return null;
@@ -55,12 +55,12 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
         return $this->content->innerContent;
     }
 
-    public function setSiteLocation(Location $location)
+    public function setSiteLocation(Location $location): void
     {
         $this->location = $location;
     }
 
-    public function getLocation()
+    public function getLocation(): ?APILocation
     {
         if (!$this->location instanceof Location) {
             return null;
@@ -69,12 +69,12 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
         return $this->location->innerLocation;
     }
 
-    public function getSiteContent()
+    public function getSiteContent(): ?Content
     {
         return $this->content;
     }
 
-    public function getSiteLocation()
+    public function getSiteLocation(): ?Location
     {
         return $this->location;
     }
@@ -82,7 +82,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      */
-    public function setContent(APIContent $content)
+    public function setContent(APIContent $content): void
     {
         throw new RuntimeException(
             'setContent method cannot be used with Site API content view. Use setSiteContent method instead.'
@@ -92,7 +92,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      */
-    public function setLocation(APILocation $location)
+    public function setLocation(APILocation $location): void
     {
         throw new RuntimeException(
             'setLocation method cannot be used with Site API content view. Use setSiteLocation method instead.'
@@ -104,7 +104,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
      *
      * @param bool $value
      */
-    public function setIsEmbed($value)
+    public function setIsEmbed($value): void
     {
         $this->isEmbed = (bool)$value;
     }
@@ -113,12 +113,12 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
      * Is the view an embed or not.
      * @return bool True if the view is an embed, false if it is not.
      */
-    public function isEmbed()
+    public function isEmbed(): bool
     {
         return $this->isEmbed;
     }
 
-    protected function getInternalParameters()
+    protected function getInternalParameters(): array
     {
         $parameters = ['content' => $this->content];
         if ($this->location !== null) {

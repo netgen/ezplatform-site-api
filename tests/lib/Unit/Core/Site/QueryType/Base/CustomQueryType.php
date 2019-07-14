@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\Base;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\DateMetadata;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\FullText;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\SectionId;
 use eZ\Publish\API\Repository\Values\Content\Query\FacetBuilder\SectionFacetBuilder;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionName;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Base;
@@ -22,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomQueryType extends Base
 {
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
             'prefabrication_date',
@@ -31,7 +34,7 @@ class CustomQueryType extends Base
         $resolver->setAllowedTypes('prefabrication_date', ['int', 'string', 'array']);
     }
 
-    protected function registerCriterionBuilders()
+    protected function registerCriterionBuilders(): void
     {
         $this->registerCriterionBuilder(
             'prefabrication_date',
@@ -45,34 +48,34 @@ class CustomQueryType extends Base
         );
     }
 
-    protected function getFilterCriteria(array $parameters)
+    protected function getFilterCriteria(array $parameters): SectionId
     {
         return new SectionId(42);
     }
 
-    protected function buildQuery()
+    protected function buildQuery(): Query
     {
         return new LocationQuery();
     }
 
-    public static function getName()
+    public static function getName(): string
     {
         return 'Test:Custom';
     }
 
-    protected function getQueryCriterion(array $parameters)
+    protected function getQueryCriterion(array $parameters): ?Criterion
     {
         return new FullText('one AND two OR three');
     }
 
-    protected function getFacetBuilders(array $parameters)
+    protected function getFacetBuilders(array $parameters): array
     {
         return [
             new SectionFacetBuilder(),
         ];
     }
 
-    protected function parseCustomSortString($string)
+    protected function parseCustomSortString($string): ?SortClause
     {
         switch ($string) {
             case 'section':

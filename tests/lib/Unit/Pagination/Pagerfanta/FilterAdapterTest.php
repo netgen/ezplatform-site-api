@@ -19,11 +19,11 @@ use PHPUnit\Framework\TestCase;
 class FilterAdapterTest extends TestCase
 {
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\FilterService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Netgen\EzPlatformSiteApi\API\FilterService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $filterService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->filterService = $this->getMockBuilder(FilterService::class)
@@ -32,7 +32,7 @@ class FilterAdapterTest extends TestCase
             ->getMock();
     }
 
-    public function testGetNbResults()
+    public function testGetNbResults(): void
     {
         $nbResults = 123;
         $query = new Query(['limit' => 10]);
@@ -52,7 +52,7 @@ class FilterAdapterTest extends TestCase
         $this->assertSame($nbResults, $adapter->getNbResults());
     }
 
-    public function testGetFacets()
+    public function testGetFacets(): void
     {
         $facets = ['facet', 'facet'];
         $query = new Query(['limit' => 10]);
@@ -72,7 +72,7 @@ class FilterAdapterTest extends TestCase
         $this->assertSame($facets, $adapter->getFacets());
     }
 
-    public function testMaxScore()
+    public function testMaxScore(): void
     {
         $maxScore = 100;
         $query = new Query(['limit' => 10]);
@@ -92,7 +92,7 @@ class FilterAdapterTest extends TestCase
         $this->assertSame($maxScore, $adapter->getMaxScore());
     }
 
-    public function testTimeIsNotSet()
+    public function testTimeIsNotSet(): void
     {
         $this->filterService
             ->expects($this->never())
@@ -104,7 +104,7 @@ class FilterAdapterTest extends TestCase
         $this->assertNull($adapter->getTime());
     }
 
-    public function testGetSlice()
+    public function testGetSlice(): void
     {
         $offset = 20;
         $limit = 25;
@@ -144,7 +144,7 @@ class FilterAdapterTest extends TestCase
         $this->assertSame($time, $adapter->getTime());
     }
 
-    public function testLocationQuery()
+    public function testLocationQuery(): void
     {
         $query = new LocationQuery(['performCount' => false]);
 
@@ -158,7 +158,7 @@ class FilterAdapterTest extends TestCase
         $adapter->getSlice(0, 25);
     }
 
-    protected function getAdapter(Query $query)
+    protected function getAdapter(Query $query): FilterAdapter
     {
         return new FilterAdapter($query, $this->filterService);
     }

@@ -50,7 +50,7 @@ class Configured implements ViewProvider
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      */
-    public function getView(View $view)
+    public function getView(View $view): ?View
     {
         if (($configHash = $this->matcherFactory->match($view)) === null) {
             return null;
@@ -65,7 +65,7 @@ class Configured implements ViewProvider
         return $this->getDTO($configHash);
     }
 
-    private function getQueryDefinitionCollection(array $configHash, View $view)
+    private function getQueryDefinitionCollection(array $configHash, View $view): QueryDefinitionCollection
     {
         $queryDefinitionCollection = new QueryDefinitionCollection();
         $queriesConfiguration = $this->getQueriesConfiguration($configHash);
@@ -84,7 +84,7 @@ class Configured implements ViewProvider
         return $queryDefinitionCollection;
     }
 
-    private function getQueriesConfiguration(array $configHash)
+    private function getQueriesConfiguration(array $configHash): array
     {
         if (array_key_exists(ContentViewParser::QUERY_KEY, $configHash)) {
             return $configHash[ContentViewParser::QUERY_KEY];
@@ -102,7 +102,7 @@ class Configured implements ViewProvider
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView
      */
-    private function getDTO(array $viewConfig)
+    private function getDTO(array $viewConfig): CoreContentView
     {
         $dto = new CoreContentView();
         $dto->setConfigHash($viewConfig);

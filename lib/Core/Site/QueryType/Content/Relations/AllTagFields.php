@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class AllTagFields extends Content
 {
-    public static function getName()
+    public static function getName(): string
     {
         return 'SiteAPI:Content/Relations/AllTagFields';
     }
@@ -29,7 +29,7 @@ final class AllTagFields extends Content
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('content');
         $resolver->setAllowedTypes('content', SiteContent::class);
@@ -76,7 +76,7 @@ final class AllTagFields extends Content
      *
      * @return int[]|string[]
      */
-    private function extractTagIds(SiteContent $content)
+    private function extractTagIds(SiteContent $content): array
     {
         $tagsIdsGrouped = [[]];
 

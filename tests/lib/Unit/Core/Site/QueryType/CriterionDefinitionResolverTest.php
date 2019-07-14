@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CriterionDefinitionResolverTest extends TestCase
 {
-    public function providerForTestResolve()
+    public function providerForTestResolve(): array
     {
         return [
             [
@@ -353,7 +353,7 @@ class CriterionDefinitionResolverTest extends TestCase
      * @param mixed $parameters
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $expectedCriterionDefinitions
      */
-    public function testResolve($parameters, array $expectedCriterionDefinitions)
+    public function testResolve($parameters, array $expectedCriterionDefinitions): void
     {
         $criterionDefinitionResolver = $this->getCriterionDefinitionResolverUnderTest();
 
@@ -365,7 +365,7 @@ class CriterionDefinitionResolverTest extends TestCase
         );
     }
 
-    public function providerForTestResolveTargets()
+    public function providerForTestResolveTargets(): array
     {
         return [
             [
@@ -802,7 +802,7 @@ class CriterionDefinitionResolverTest extends TestCase
      * @param mixed $parameters
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $expectedCriterionDefinitions
      */
-    public function testResolveTargets($parameters, array $expectedCriterionDefinitions)
+    public function testResolveTargets($parameters, array $expectedCriterionDefinitions): void
     {
         $criterionDefinitionResolver = $this->getCriterionDefinitionResolverUnderTest();
 
@@ -814,7 +814,7 @@ class CriterionDefinitionResolverTest extends TestCase
         );
     }
 
-    public function testResolveThrowsInvalidArgumentException()
+    public function testResolveThrowsInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -829,7 +829,7 @@ class CriterionDefinitionResolverTest extends TestCase
         );
     }
 
-    public function testResolveTargetsThrowsInvalidArgumentException()
+    public function testResolveTargetsThrowsInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -851,7 +851,7 @@ class CriterionDefinitionResolverTest extends TestCase
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinitionResolver
      */
-    protected function getCriterionDefinitionResolverUnderTest()
+    protected function getCriterionDefinitionResolverUnderTest(): CriterionDefinitionResolver
     {
         if (null === $this->criterionDefinitionResolver) {
             $this->criterionDefinitionResolver = new CriterionDefinitionResolver();

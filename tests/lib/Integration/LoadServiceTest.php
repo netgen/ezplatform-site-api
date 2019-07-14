@@ -27,7 +27,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentMatchPrimaryLanguage()
+    public function testLoadContentMatchPrimaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -56,7 +56,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentMatchSecondaryLanguage()
+    public function testLoadContentMatchSecondaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -85,7 +85,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentMatchAlwaysAvailableLanguage()
+    public function testLoadContentMatchAlwaysAvailableLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -113,7 +113,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentInExplicitVersionAndLanguage()
+    public function testLoadContentInExplicitVersionAndLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -141,7 +141,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentThrowsTranslationNotMatchedException()
+    public function testLoadContentThrowsTranslationNotMatchedException(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -169,7 +169,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentInLanguageThrowsTranslationNotMatchedException()
+    public function testLoadContentInLanguageThrowsTranslationNotMatchedException(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -198,7 +198,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentByRemoteIdMatchPrimaryLanguage()
+    public function testLoadContentByRemoteIdMatchPrimaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -227,7 +227,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentByRemoteIdMatchSecondaryLanguage()
+    public function testLoadContentByRemoteIdMatchSecondaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -256,7 +256,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentByRemoteIdMatchAlwaysAvailableLanguage()
+    public function testLoadContentByRemoteIdMatchAlwaysAvailableLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -284,7 +284,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadContentByRemoteIdThrowsTranslationNotMatchedException()
+    public function testLoadContentByRemoteIdThrowsTranslationNotMatchedException(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -312,7 +312,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadLocationMatchPrimaryLanguage()
+    public function testLoadLocationMatchPrimaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -341,7 +341,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadLocationMatchSecondaryLanguage()
+    public function testLoadLocationMatchSecondaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -370,7 +370,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadLocationMatchAlwaysAvailableLanguage()
+    public function testLoadLocationMatchAlwaysAvailableLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -398,7 +398,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadLocationThrowsTranslationNotMatchedException()
+    public function testLoadLocationThrowsTranslationNotMatchedException(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -426,7 +426,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadLocationByRemoteIdMatchPrimaryLanguage()
+    public function testLoadLocationByRemoteIdMatchPrimaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -455,7 +455,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadLocationByRemoteIdMatchSecondaryLanguage()
+    public function testLoadLocationByRemoteIdMatchSecondaryLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -484,7 +484,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadLocationByRemoteIdMatchAlwaysAvailableLanguage()
+    public function testLoadLocationByRemoteIdMatchAlwaysAvailableLanguage(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',
@@ -512,7 +512,7 @@ class LoadServiceTest extends BaseTest
      * @throws \ReflectionException
      * @throws \ErrorException
      */
-    public function testLoadLocationByRemoteIdThrowsTranslationNotMatchedException()
+    public function testLoadLocationByRemoteIdThrowsTranslationNotMatchedException(): void
     {
         $this->overrideSettings(
             'prioritizedLanguages',

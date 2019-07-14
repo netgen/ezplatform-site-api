@@ -6,12 +6,18 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Values\Content\Content as RepoContent;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
+use eZ\Publish\API\Repository\Values\User\User;
+use eZ\Publish\SPI\FieldType\Value;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
+use Netgen\EzPlatformSiteApi\API\Values\ContentInfo;
+use Netgen\EzPlatformSiteApi\API\Values\Field;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
@@ -175,7 +181,7 @@ final class Content extends APIContent
      *
      * @return bool
      */
-    public function __isset($property)
+    public function __isset($property): bool
     {
         switch ($property) {
             case 'contentInfo':
@@ -194,7 +200,7 @@ final class Content extends APIContent
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'id' => $this->id,
@@ -214,7 +220,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function hasField($identifier)
+    public function hasField($identifier): bool
     {
         return $this->fields->hasField($identifier);
     }
@@ -224,7 +230,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getField($identifier)
+    public function getField($identifier): Field
     {
         return $this->fields->offsetGet($identifier);
     }
@@ -234,7 +240,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function hasFieldById($id)
+    public function hasFieldById($id): bool
     {
         return $this->fields->hasFieldById($id);
     }
@@ -244,7 +250,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getFieldById($id)
+    public function getFieldById($id): Field
     {
         return $this->fields->getFieldById($id);
     }
@@ -254,7 +260,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getFieldValue($identifier)
+    public function getFieldValue($identifier): Value
     {
         return $this->getField($identifier)->value;
     }
@@ -264,7 +270,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getFieldValueById($id)
+    public function getFieldValueById($id): Value
     {
         return $this->getFieldById($id)->value;
     }
@@ -274,7 +280,7 @@ final class Content extends APIContent
         return $this->filterLocations($limit)->getIterator();
     }
 
-    public function filterLocations($maxPerPage = 25, $currentPage = 1)
+    public function filterLocations($maxPerPage = 25, $currentPage = 1): Pagerfanta
     {
         $pager = new Pagerfanta(
             new FilterAdapter(
@@ -300,7 +306,7 @@ final class Content extends APIContent
         return $pager;
     }
 
-    public function getFieldRelation($fieldDefinitionIdentifier)
+    public function getFieldRelation($fieldDefinitionIdentifier): ?APIContent
     {
         return $this->site->getRelationService()->loadFieldRelation(
             $this->id,
@@ -308,7 +314,7 @@ final class Content extends APIContent
         );
     }
 
-    public function getFieldRelations($fieldDefinitionIdentifier, $limit = 25)
+    public function getFieldRelations($fieldDefinitionIdentifier, $limit = 25): array
     {
         $relations = $this->site->getRelationService()->loadFieldRelations(
             $this->id,
@@ -323,7 +329,7 @@ final class Content extends APIContent
         array $contentTypeIdentifiers = [],
         $maxPerPage = 25,
         $currentPage = 1
-    ) {
+    ): Pagerfanta {
         $relations = $this->site->getRelationService()->loadFieldRelations(
             $this->id,
             $fieldDefinitionIdentifier,
@@ -339,7 +345,7 @@ final class Content extends APIContent
         return $pager;
     }
 
-    private function getMainLocation()
+    private function getMainLocation(): ?Location
     {
         if ($this->internalMainLocation === null && $this->mainLocationId !== null) {
             $this->internalMainLocation = $this->site->getLoadService()->loadLocation(
@@ -350,7 +356,7 @@ final class Content extends APIContent
         return $this->internalMainLocation;
     }
 
-    private function getInnerContent()
+    private function getInnerContent(): RepoContent
     {
         if ($this->innerContent === null) {
             $this->innerContent = $this->repository->sudo(
@@ -372,7 +378,7 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    private function getContentInfo()
+    private function getContentInfo(): ContentInfo
     {
         if ($this->contentInfo === null) {
             $this->contentInfo = $this->domainObjectMapper->mapContentInfo(
@@ -385,9 +391,9 @@ final class Content extends APIContent
     }
 
     /**
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content|null
      */
-    private function getOwner()
+    private function getOwner(): ?APIContent
     {
         if ($this->isOwnerInitialized) {
             return $this->owner;
@@ -410,9 +416,9 @@ final class Content extends APIContent
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\User\User
+     * @return \eZ\Publish\API\Repository\Values\User\User|null
      */
-    private function getInnerOwnerUser()
+    private function getInnerOwnerUser(): ?User
     {
         if ($this->isInnerOwnerUserInitialized) {
             return $this->innerOwnerUser;

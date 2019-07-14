@@ -9,11 +9,13 @@ use eZ\Publish\API\Repository\Values\Content\Field as RepoField;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
 use Netgen\EzPlatformSiteApi\API\Values\Content as RepoContent;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
+use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
 use Netgen\EzPlatformSiteApi\API\Values\Fields as APIFields;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use Traversable;
 
 /**
  * @internal do not depend on this implementation, use API Fields instead
@@ -90,7 +92,7 @@ final class Fields extends APIFields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         $this->initialize();
 
@@ -102,7 +104,7 @@ final class Fields extends APIFields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function offsetExists($identifier)
+    public function offsetExists($identifier): bool
     {
         $this->initialize();
 
@@ -117,7 +119,7 @@ final class Fields extends APIFields
      *
      * @return bool
      */
-    public function hasField($identifier)
+    public function hasField($identifier): bool
     {
         $this->initialize();
 
@@ -129,7 +131,7 @@ final class Fields extends APIFields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function offsetGet($identifier)
+    public function offsetGet($identifier): APIField
     {
         $this->initialize();
 
@@ -152,12 +154,12 @@ final class Fields extends APIFields
         return $this->getNullField($identifier, $this->content);
     }
 
-    public function offsetSet($identifier, $value)
+    public function offsetSet($identifier, $value): void
     {
         throw new RuntimeException('Setting the field to the collection is not allowed');
     }
 
-    public function offsetUnset($identifier)
+    public function offsetUnset($identifier): void
     {
         throw new RuntimeException('Unsetting the field from the collection is not allowed');
     }
@@ -167,7 +169,7 @@ final class Fields extends APIFields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function count()
+    public function count(): int
     {
         $this->initialize();
 
@@ -179,7 +181,7 @@ final class Fields extends APIFields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function hasFieldById($id)
+    public function hasFieldById($id): bool
     {
         $this->initialize();
 
@@ -191,7 +193,7 @@ final class Fields extends APIFields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getFieldById($id)
+    public function getFieldById($id): APIField
     {
         if ($this->hasFieldById($id)) {
             return $this->fieldsById[$id];
@@ -211,7 +213,7 @@ final class Fields extends APIFields
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         $this->initialize();
 
@@ -221,7 +223,7 @@ final class Fields extends APIFields
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    private function initialize()
+    private function initialize(): void
     {
         if ($this->areFieldsInitialized) {
             return;

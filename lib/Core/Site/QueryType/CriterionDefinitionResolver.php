@@ -41,7 +41,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    public function resolve($name, $parameters)
+    public function resolve($name, $parameters): array
     {
         return $this->resolveForTarget($name, null, $parameters);
     }
@@ -56,7 +56,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    public function resolveTargets($name, array $parameters)
+    public function resolveTargets($name, array $parameters): array
     {
         $definitionsGrouped = [[]];
 
@@ -78,7 +78,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    private function resolveForTarget($name, $target, $parameters)
+    private function resolveForTarget($name, $target, $parameters): array
     {
         if ($this->isOperatorMap($parameters)) {
             return $this->resolveOperatorMap($name, $target, $parameters);
@@ -98,7 +98,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
-    private function resolveOperatorMap($name, $target, array $map)
+    private function resolveOperatorMap($name, $target, array $map): array
     {
         $definitions = [];
 
@@ -128,7 +128,7 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
-    private function buildDefinition($name, $target, $operator, $value)
+    private function buildDefinition($name, $target, $operator, $value): CriterionDefinition
     {
         return new CriterionDefinition([
             'name' => $name,
@@ -147,7 +147,7 @@ final class CriterionDefinitionResolver
      *
      * @return bool
      */
-    private function isOperatorMap($parameters)
+    private function isOperatorMap($parameters): bool
     {
         if (!is_array($parameters)) {
             return false;
@@ -179,7 +179,7 @@ final class CriterionDefinitionResolver
      * @param string|null $symbol
      * @param mixed $value
      *
-     * @return string
+     * @return mixed
      */
     private function resolveOperator($symbol, $value)
     {

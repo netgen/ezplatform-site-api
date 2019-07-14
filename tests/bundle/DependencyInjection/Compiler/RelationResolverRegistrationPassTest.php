@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -21,7 +21,7 @@ class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
         );
     }
 
-    public function testRegisterResolver()
+    public function testRegisterResolver(): void
     {
         $fieldTypeIdentifier = 'field_type_identifier';
         $serviceId = 'service_id';
@@ -44,7 +44,7 @@ class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
     /**
      * @expectedException \LogicException
      */
-    public function testRegisterResolverWithoutIdentifier()
+    public function testRegisterResolverWithoutIdentifier(): void
     {
         $serviceId = 'service_id';
         $definition = new Definition();
@@ -54,7 +54,7 @@ class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
         $this->compile();
     }
 
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new RelationResolverRegistrationPass());
     }

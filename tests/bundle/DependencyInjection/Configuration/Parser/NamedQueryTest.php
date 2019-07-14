@@ -15,7 +15,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class NamedQueryTest extends AbstractParserTestCase
 {
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [
             new EzPublishCoreExtension([
@@ -29,7 +29,7 @@ class NamedQueryTest extends AbstractParserTestCase
         return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
     }
 
-    public function providerForTestValid()
+    public function providerForTestValid(): array
     {
         return [
             [
@@ -84,7 +84,7 @@ class NamedQueryTest extends AbstractParserTestCase
      *
      * @param array $configurationValues
      */
-    public function testValid(array $configurationValues)
+    public function testValid(array $configurationValues): void
     {
         $this->load([
             'system' => [
@@ -98,7 +98,7 @@ class NamedQueryTest extends AbstractParserTestCase
         $this->assertTrue(true);
     }
 
-    public function providerForTestInvalid()
+    public function providerForTestInvalid(): array
     {
         return [
             [
@@ -161,7 +161,7 @@ class NamedQueryTest extends AbstractParserTestCase
      * @param array $configurationValues
      * @param string $message
      */
-    public function testInvalid(array $configurationValues, $message)
+    public function testInvalid(array $configurationValues, $message): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $message = preg_quote($message, '/');
@@ -176,7 +176,7 @@ class NamedQueryTest extends AbstractParserTestCase
         ]);
     }
 
-    public function providerForTestDefaultValues()
+    public function providerForTestDefaultValues(): array
     {
         return [
             [
@@ -204,7 +204,7 @@ class NamedQueryTest extends AbstractParserTestCase
      * @param array $configurationValues
      * @param array $expectedConfigurationValues
      */
-    public function testDefaultValues(array $configurationValues, array $expectedConfigurationValues)
+    public function testDefaultValues(array $configurationValues, array $expectedConfigurationValues): void
     {
         $this->load([
             'system' => [

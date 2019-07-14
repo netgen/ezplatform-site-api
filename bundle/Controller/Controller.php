@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller as BaseController;
+use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use Netgen\EzPlatformSiteApi\API\Site;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaTrait;
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 
@@ -29,7 +31,7 @@ abstract class Controller extends BaseController
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    public function getRootLocation()
+    public function getRootLocation(): Location
     {
         return $this->getSite()->getLoadService()->loadLocation(
             $this->getSite()->getSettings()->rootLocationId
@@ -39,7 +41,7 @@ abstract class Controller extends BaseController
     /**
      * @return \eZ\Publish\Core\QueryType\QueryTypeRegistry
      */
-    public function getQueryTypeRegistry()
+    public function getQueryTypeRegistry(): QueryTypeRegistry
     {
         return $this->container->get('ezpublish.query_type.registry');
     }

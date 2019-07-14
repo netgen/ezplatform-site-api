@@ -22,7 +22,7 @@ trait SearchResultExtractorTrait
      *
      * @return \eZ\Publish\API\Repository\Values\ValueObject[]
      */
-    protected function extractValueObjects(SearchResult $searchResult)
+    protected function extractValueObjects(SearchResult $searchResult): array
     {
         return array_map(
             function (SearchHit $searchHit) {

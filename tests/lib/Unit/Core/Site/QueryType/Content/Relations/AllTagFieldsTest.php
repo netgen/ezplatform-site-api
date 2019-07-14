@@ -18,6 +18,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\AllTagFields;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -36,17 +37,17 @@ class AllTagFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 
-    protected function getQueryTypeName()
+    protected function getQueryTypeName(): string
     {
         return 'SiteAPI:Content/Relations/AllTagFields';
     }
 
-    protected function getQueryTypeUnderTest()
+    protected function getQueryTypeUnderTest(): QueryType
     {
         return new AllTagFields();
     }
 
-    protected function internalGetRepoFields()
+    protected function internalGetRepoFields(): array
     {
         return [
             new RepoField([
@@ -94,7 +95,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function internalGetRepoFieldDefinitions()
+    protected function internalGetRepoFieldDefinitions(): array
     {
         return [
             new FieldDefinition([
@@ -115,7 +116,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function getTestContentWithTags()
+    protected function getTestContentWithTags(): Content
     {
         return new Content(
             [
@@ -131,7 +132,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         );
     }
 
-    protected function getTestContentWithoutTags()
+    protected function getTestContentWithoutTags(): Content
     {
         return new Content(
             [
@@ -146,7 +147,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         );
     }
 
-    protected function getSupportedParameters()
+    protected function getSupportedParameters(): array
     {
         return [
             'content_type',
@@ -163,7 +164,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQuery()
+    public function providerForTestGetQuery(): array
     {
         $contentWithTags = $this->getTestContentWithTags();
         $contentWithoutTags = $this->getTestContentWithoutTags();
@@ -330,7 +331,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidOptions()
+    public function providerForTestGetQueryWithInvalidOptions(): array
     {
         $content = $this->getTestContentWithTags();
 
@@ -380,7 +381,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidCriteria()
+    public function providerForTestGetQueryWithInvalidCriteria(): array
     {
         $content = $this->getTestContentWithTags();
 
@@ -396,7 +397,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestInvalidSortClauseThrowsException()
+    public function providerForTestInvalidSortClauseThrowsException(): array
     {
         $content = $this->getTestContentWithTags();
 

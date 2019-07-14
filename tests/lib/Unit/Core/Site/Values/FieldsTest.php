@@ -7,11 +7,13 @@ namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\Values;
 use eZ\Publish\API\Repository\Values\Content\Field as RepoField;
 use eZ\Publish\Core\FieldType\Integer\Value;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\API\Values\Field as SiteField;
 use Netgen\EzPlatformSiteApi\API\Values\Fields as APIFields;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Fields;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -32,7 +34,7 @@ class FieldsTest extends TestCase
      */
     private $loggerMock;
 
-    public function testFieldsCanBeCounted()
+    public function testFieldsCanBeCounted(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
@@ -42,7 +44,7 @@ class FieldsTest extends TestCase
     /**
      * @depends testFieldsCanBeCounted
      */
-    public function testFieldsCanBeIterated()
+    public function testFieldsCanBeIterated(): void
     {
         $fields = $this->getFieldsUnderTest(true);
         $i = 1;
@@ -57,7 +59,7 @@ class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testExistenceOfExistingFieldCanBeCheckedByIdentifier()
+    public function testExistenceOfExistingFieldCanBeCheckedByIdentifier(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
@@ -67,42 +69,42 @@ class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testExistenceOfNonExistingFieldCanBeCheckedByIdentifier()
+    public function testExistenceOfNonExistingFieldCanBeCheckedByIdentifier(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
         $this->assertFalse($fields->hasField('fourth'));
     }
 
-    public function testExistenceOfExistingFieldCanBeCheckedAsAnArrayByIdentifier()
+    public function testExistenceOfExistingFieldCanBeCheckedAsAnArrayByIdentifier(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
         $this->assertTrue(isset($fields['first']));
     }
 
-    public function testExistenceOfNonExistingFieldCanBeCheckedAsAnArrayByIdentifier()
+    public function testExistenceOfNonExistingFieldCanBeCheckedAsAnArrayByIdentifier(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
         $this->assertFalse(isset($fields['fourth']));
     }
 
-    public function testExistenceOfExistingFieldCanBeCheckedAsAnArrayByNumericIndex()
+    public function testExistenceOfExistingFieldCanBeCheckedAsAnArrayByNumericIndex(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
         $this->assertTrue(isset($fields[0]));
     }
 
-    public function testExistenceOfNonExistingFieldCanBeCheckedAsAnArrayByNumericIndex()
+    public function testExistenceOfNonExistingFieldCanBeCheckedAsAnArrayByNumericIndex(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
         $this->assertFalse(isset($fields[101]));
     }
 
-    public function testFieldsCanBeAccessedAsAnArrayByNumericIndex()
+    public function testFieldsCanBeAccessedAsAnArrayByNumericIndex(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
@@ -113,7 +115,7 @@ class FieldsTest extends TestCase
         }
     }
 
-    public function testFieldsCanBeAccessedAsAnArrayByIdentifier()
+    public function testFieldsCanBeAccessedAsAnArrayByIdentifier(): void
     {
         $fields = $this->getFieldsUnderTest(true);
         $identifiers = ['first', 'second', 'third'];
@@ -125,7 +127,7 @@ class FieldsTest extends TestCase
         }
     }
 
-    public function testAccessingNonExistentFieldThrowsRuntimeException()
+    public function testAccessingNonExistentFieldThrowsRuntimeException(): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -134,7 +136,7 @@ class FieldsTest extends TestCase
         $fields['fourth'];
     }
 
-    public function testAccessingNonExistentFieldReturnsNullField()
+    public function testAccessingNonExistentFieldReturnsNullField(): void
     {
         $fields = $this->getFieldsUnderTest(false);
         $identifier = 'fourth';
@@ -145,6 +147,7 @@ class FieldsTest extends TestCase
             ->method('critical')
             ->with('Field "fourth" in Content #1 does not exist, using null field instead');
 
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Field $field */
         $field = $fields[$identifier];
 
         $this->assertInstanceOf(SiteField::class, $field);
@@ -153,7 +156,7 @@ class FieldsTest extends TestCase
         $this->assertTrue($field->isEmpty());
     }
 
-    public function testFieldCanNotBeSet()
+    public function testFieldCanNotBeSet(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Setting the field to the collection is not allowed');
@@ -164,7 +167,7 @@ class FieldsTest extends TestCase
         $fields['pekmez'] = 'džem';
     }
 
-    public function testFieldCanNotBeUnset()
+    public function testFieldCanNotBeUnset(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unsetting the field from the collection is not allowed');
@@ -177,7 +180,7 @@ class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testExistenceOfExistingFieldCanBeCheckedById()
+    public function testExistenceOfExistingFieldCanBeCheckedById(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
@@ -187,7 +190,7 @@ class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testExistenceOfNonExistingFieldCanBeCheckedById()
+    public function testExistenceOfNonExistingFieldCanBeCheckedById(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
@@ -197,21 +200,20 @@ class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testExistingFieldCanBeAccessedById()
+    public function testExistingFieldCanBeAccessedById(): void
     {
         $fields = $this->getFieldsUnderTest(true);
         $id = 1;
 
         $field = $fields->getFieldById($id);
 
-        $this->assertInstanceOf(SiteField::class, $field);
         $this->assertEquals($id, $field->id);
     }
 
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testNonExistentFieldCanNotBeAccessedById()
+    public function testNonExistentFieldCanNotBeAccessedById(): void
     {
         $id = 101;
 
@@ -226,7 +228,7 @@ class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testAccessingNonExistentFieldByIdReturnsNullField()
+    public function testAccessingNonExistentFieldByIdReturnsNullField(): void
     {
         $id = 101;
 
@@ -234,7 +236,6 @@ class FieldsTest extends TestCase
 
         $field = $fields->getFieldById($id);
 
-        $this->assertInstanceOf(SiteField::class, $field);
         $this->assertEquals((string)$id, $field->fieldDefIdentifier);
         $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
         $this->assertTrue($field->isEmpty());
@@ -243,7 +244,7 @@ class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testDebugInfo()
+    public function testDebugInfo(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
@@ -258,7 +259,7 @@ class FieldsTest extends TestCase
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Fields
      */
-    protected function getFieldsUnderTest($failOnMissingFields)
+    protected function getFieldsUnderTest($failOnMissingFields): Fields
     {
         return new Fields(
             $this->getMockedContent(),
@@ -271,7 +272,7 @@ class FieldsTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function getLoggerMock()
+    protected function getLoggerMock(): MockObject
     {
         if ($this->loggerMock !== null) {
             return $this->loggerMock;
@@ -285,7 +286,7 @@ class FieldsTest extends TestCase
     /**
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    protected function getMockedContent()
+    protected function getMockedContent(): APIContent
     {
         return new Content(
             [
@@ -301,7 +302,7 @@ class FieldsTest extends TestCase
         );
     }
 
-    protected function internalGetRepoFieldDefinitions()
+    protected function internalGetRepoFieldDefinitions(): array
     {
         return [
             new FieldDefinition([
@@ -319,7 +320,7 @@ class FieldsTest extends TestCase
         ];
     }
 
-    protected function internalGetRepoFields()
+    protected function internalGetRepoFields(): array
     {
         return [
             new RepoField([

@@ -6,6 +6,7 @@ namespace Netgen\EzPlatformSiteApi\API;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 
 /**
  * Filters service provides methods for filters entities using
@@ -24,7 +25,7 @@ interface FilterService
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    public function filterContent(Query $query);
+    public function filterContent(Query $query): SearchResult;
 
     /**
      * Filters Location objects for the given $query.
@@ -35,5 +36,5 @@ interface FilterService
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    public function filterLocations(LocationQuery $query);
+    public function filterLocations(LocationQuery $query): SearchResult;
 }

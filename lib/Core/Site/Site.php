@@ -6,6 +6,10 @@ namespace Netgen\EzPlatformSiteApi\Core\Site;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\SearchService;
+use Netgen\EzPlatformSiteApi\API\FilterService as APIFilterService;
+use Netgen\EzPlatformSiteApi\API\FindService as APIFindService;
+use Netgen\EzPlatformSiteApi\API\LoadService as APILoadService;
+use Netgen\EzPlatformSiteApi\API\RelationService as APIRelationService;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
@@ -103,12 +107,12 @@ class Site implements SiteInterface
         $this->logger = $logger === null ? new NullLogger() : $logger;
     }
 
-    public function getSettings()
+    public function getSettings(): BaseSettings
     {
         return $this->settings;
     }
 
-    public function getFilterService()
+    public function getFilterService(): APIFilterService
     {
         if ($this->filterService === null) {
             $this->filterService = new FilterService(
@@ -122,7 +126,7 @@ class Site implements SiteInterface
         return $this->filterService;
     }
 
-    public function getFindService()
+    public function getFindService(): APIFindService
     {
         if ($this->findService === null) {
             $this->findService = new FindService(
@@ -136,7 +140,7 @@ class Site implements SiteInterface
         return $this->findService;
     }
 
-    public function getLoadService()
+    public function getLoadService(): APILoadService
     {
         if ($this->loadService === null) {
             $this->loadService = new LoadService(
@@ -150,7 +154,7 @@ class Site implements SiteInterface
         return $this->loadService;
     }
 
-    public function getRelationService()
+    public function getRelationService(): APIRelationService
     {
         if ($this->relationService === null) {
             $this->relationService = new RelationService(
@@ -165,7 +169,7 @@ class Site implements SiteInterface
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
-    private function getDomainObjectMapper()
+    private function getDomainObjectMapper(): DomainObjectMapper
     {
         if ($this->domainObjectMapper === null) {
             $this->domainObjectMapper = new DomainObjectMapper(

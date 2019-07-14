@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class Fetch extends Content
 {
-    public static function getName()
+    public static function getName(): string
     {
         return 'SiteAPI:Content/Fetch';
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\API\Values;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Site Location represents location of Site Content object in the content tree.
@@ -51,7 +52,7 @@ abstract class Location extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]|\Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
-    abstract public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1);
+    abstract public function filterChildren(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1): Pagerfanta;
 
     /**
      * Return an array of Location siblings, limited by optional $limit.
@@ -74,5 +75,5 @@ abstract class Location extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]|\Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
-    abstract public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1);
+    abstract public function filterSiblings(array $contentTypeIdentifiers = [], $maxPerPage = 25, $currentPage = 1): Pagerfanta;
 }

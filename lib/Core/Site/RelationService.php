@@ -44,7 +44,7 @@ class RelationService implements RelationServiceInterface
         $contentId,
         $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
-    ) {
+    ): ?Content {
         $relatedContentItems = $this->loadFieldRelations(
             $contentId,
             $fieldDefinitionIdentifier,
@@ -58,7 +58,7 @@ class RelationService implements RelationServiceInterface
         $contentId,
         $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
-    ) {
+    ): array {
         $content = $this->site->getLoadService()->loadContent($contentId);
 
         $field = $content->getField($fieldDefinitionIdentifier);
@@ -84,7 +84,7 @@ class RelationService implements RelationServiceInterface
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Content[]
      */
-    private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers)
+    private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers): array
     {
         if (count($relatedContentIds) === 0) {
             return [];
@@ -117,7 +117,7 @@ class RelationService implements RelationServiceInterface
      * @param array $relatedContentItems
      * @param array $relatedContentIds
      */
-    private function sortByIdOrder(array &$relatedContentItems, array $relatedContentIds)
+    private function sortByIdOrder(array &$relatedContentItems, array $relatedContentIds): void
     {
         $sortedIdList = array_flip($relatedContentIds);
 

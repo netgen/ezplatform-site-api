@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\EzPlatformSiteApi\API;
 
+use Netgen\EzPlatformSiteApi\API\Values\Content;
+
 /**
  * Relation service provides methods for loading relations.
  */
@@ -23,7 +25,7 @@ interface RelationService
         $contentId,
         $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
-    );
+    ): ?Content;
 
     /**
      * Load all related Content from $fieldDefinitionIdentifier field in Content with given
@@ -39,5 +41,5 @@ interface RelationService
         $contentId,
         $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
-    );
+    ): array;
 }

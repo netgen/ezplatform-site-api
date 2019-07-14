@@ -11,7 +11,7 @@ class UrlAliasRouter extends BaseUrlAliasRouter
 {
     const OVERRIDE_VIEW_ACTION = 'ng_content:viewAction';
 
-    public function matchRequest(Request $request)
+    public function matchRequest(Request $request): array
     {
         $parameters = parent::matchRequest($request);
         $overrideViewAction = $this->configResolver->getParameter(

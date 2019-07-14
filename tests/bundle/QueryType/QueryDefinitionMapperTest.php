@@ -12,14 +12,20 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType as SiteQueryType;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class QueryDefinitionMapperTest extends TestCase
 {
-    public function providerForTestMap()
+    public function providerForTestMap(): array
     {
+        $locationMock = $this->getMockBuilder(Location::class)->getMock();
+        $contentMock = $this->getMockBuilder(Content::class)->getMock();
+
         return [
             [
                 [
@@ -49,16 +55,16 @@ class QueryDefinitionMapperTest extends TestCase
                     'page' => 1,
                     'parameters' => [
                         'some' => 'parameters',
-                        'content' => 'A',
-                        'location' => 'B',
+                        'content' => $contentMock,
+                        'location' => $locationMock,
                     ],
                 ],
                 new QueryDefinition([
                     'name' => 'site_query_type',
                     'parameters' => [
                         'some' => 'parameters',
-                        'content' => 'A',
-                        'location' => 'B',
+                        'content' => $contentMock,
+                        'location' => $locationMock,
                     ],
                     'useFilter' => true,
                     'maxPerPage' => 10,
@@ -79,8 +85,8 @@ class QueryDefinitionMapperTest extends TestCase
                     'name' => 'site_query_type',
                     'parameters' => [
                         'some' => 'parameters',
-                        'content' => 'content',
-                        'location' => 'location',
+                        'content' => $contentMock,
+                        'location' => $locationMock,
                     ],
                     'useFilter' => true,
                     'maxPerPage' => 10,
@@ -125,8 +131,8 @@ class QueryDefinitionMapperTest extends TestCase
                             'various' => 'delicacies',
                         ],
                         'salad' => true,
-                        'content' => 'content',
-                        'location' => 'location',
+                        'content' => $contentMock,
+                        'location' => $locationMock,
                         'spoon' => 'soup',
                     ],
                     'useFilter' => false,
@@ -143,7 +149,7 @@ class QueryDefinitionMapperTest extends TestCase
      * @param array $configuration
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $expectedQueryDefinition
      */
-    public function testMap(array $configuration, QueryDefinition $expectedQueryDefinition)
+    public function testMap(array $configuration, QueryDefinition $expectedQueryDefinition): void
     {
         $queryDefinitionMapper = $this->getQueryDefinitionMapperUnderTest();
 
@@ -152,7 +158,7 @@ class QueryDefinitionMapperTest extends TestCase
         $this->assertEquals($expectedQueryDefinition, $queryDefinition);
     }
 
-    public function testMapNonexistentNamedQueryThrowsException()
+    public function testMapNonexistentNamedQueryThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
@@ -175,7 +181,7 @@ class QueryDefinitionMapperTest extends TestCase
         );
     }
 
-    protected function getQueryDefinitionMapperUnderTest()
+    protected function getQueryDefinitionMapperUnderTest(): QueryDefinitionMapper
     {
         $queryDefinitionMapper = new QueryDefinitionMapper(
             $this->getQueryTypeRegistryMock(),
@@ -215,7 +221,7 @@ class QueryDefinitionMapperTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
      */
-    protected function getQueryTypeRegistryMock()
+    protected function getQueryTypeRegistryMock(): MockObject
     {
         $queryTypeRegistryMock = $this->getMockBuilder(QueryTypeRegistry::class)->getMock();
         $queryTypeRegistryMock
@@ -231,7 +237,7 @@ class QueryDefinitionMapperTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getQueryTypeMock()
+    protected function getQueryTypeMock(): MockObject
     {
         return $this->getMockBuilder(QueryType::class)->getMock();
     }
@@ -239,7 +245,7 @@ class QueryDefinitionMapperTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getSiteQueryTypeMock()
+    protected function getSiteQueryTypeMock(): MockObject
     {
         $queryTypeMock = $this->getMockBuilder(SiteQueryType::class)->getMock();
         $queryTypeMock
@@ -255,7 +261,7 @@ class QueryDefinitionMapperTest extends TestCase
     /**
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
      */
-    protected function getParameterProcessor()
+    protected function getParameterProcessor(): ParameterProcessor
     {
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
         $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
@@ -268,12 +274,15 @@ class QueryDefinitionMapperTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
-    protected function getViewMock()
+    protected function getViewMock(): MockObject
     {
         $viewMock = $this->getMockBuilder(ContentView::class)->getMock();
 
-        $viewMock->method('getSiteLocation')->willReturn('location');
-        $viewMock->method('getSiteContent')->willReturn('content');
+        $locationMock = $this->getMockBuilder(Location::class)->getMock();
+        $contentMock = $this->getMockBuilder(Content::class)->getMock();
+
+        $viewMock->method('getSiteLocation')->willReturn($locationMock);
+        $viewMock->method('getSiteContent')->willReturn($contentMock);
 
         return $viewMock;
     }

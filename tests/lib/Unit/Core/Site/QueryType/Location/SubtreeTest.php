@@ -19,6 +19,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\Core\Repository\Values\Content\Location as RepositoryLocation;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Subtree;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 
@@ -29,17 +30,17 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class SubtreeTest extends QueryTypeBaseTest
 {
-    protected function getQueryTypeName()
+    protected function getQueryTypeName(): string
     {
         return 'SiteAPI:Location/Subtree';
     }
 
-    protected function getQueryTypeUnderTest()
+    protected function getQueryTypeUnderTest(): QueryType
     {
         return new Subtree();
     }
 
-    protected function getTestLocation()
+    protected function getTestLocation(): Location
     {
         return new Location([
             'site' => false,
@@ -56,7 +57,7 @@ class SubtreeTest extends QueryTypeBaseTest
         ]);
     }
 
-    protected function getSupportedParameters()
+    protected function getSupportedParameters(): array
     {
         return [
             'content_type',
@@ -78,7 +79,7 @@ class SubtreeTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQuery()
+    public function providerForTestGetQuery(): array
     {
         $location = $this->getTestLocation();
 
@@ -313,7 +314,7 @@ class SubtreeTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidOptions()
+    public function providerForTestGetQueryWithInvalidOptions(): array
     {
         $location = $this->getTestLocation();
 
@@ -363,7 +364,7 @@ class SubtreeTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestGetQueryWithInvalidCriteria()
+    public function providerForTestGetQueryWithInvalidCriteria(): array
     {
         $location = $this->getTestLocation();
 
@@ -379,7 +380,7 @@ class SubtreeTest extends QueryTypeBaseTest
         ];
     }
 
-    public function providerForTestInvalidSortClauseThrowsException()
+    public function providerForTestInvalidSortClauseThrowsException(): array
     {
         $location = $this->getTestLocation();
 

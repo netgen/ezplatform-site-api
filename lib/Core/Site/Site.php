@@ -104,7 +104,7 @@ class Site implements SiteInterface
         $this->searchService = $repository->getSearchService();
         $this->filteringSearchService = $filteringSearchService;
         $this->relationResolverRegistry = $relationResolverRegistry;
-        $this->logger = $logger === null ? new NullLogger() : $logger;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public function getSettings(): BaseSettings

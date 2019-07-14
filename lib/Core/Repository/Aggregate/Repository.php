@@ -219,14 +219,4 @@ class Repository implements RepositoryInterface
     {
         return $this->ezRepository->rollback();
     }
-
-    public function commitEvent($event)
-    {
-        return $this->ezRepository->commitEvent($event);
-    }
-
-    public function createDateTime($timestamp = null)
-    {
-        return $this->ezRepository->createDateTime($timestamp);
-    }
 }

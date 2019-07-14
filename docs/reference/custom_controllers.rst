@@ -23,7 +23,7 @@ it with extending the Site API base controller:
             $content = $view->getSiteContent();
             $location = $view->getSiteLocation();
 
-            $filterService = $this-getSite()->getFilterService();
+            $filterService = $this->getSite()->getFilterService();
 
             $hasRelatedItems = false;
 

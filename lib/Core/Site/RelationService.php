@@ -122,11 +122,7 @@ class RelationService implements RelationServiceInterface
         $sortedIdList = array_flip($relatedContentIds);
 
         $sorter = function (Content $content1, Content $content2) use ($sortedIdList) {
-            if ($content1->id === $content2->id) {
-                return 0;
-            }
-
-            return ($sortedIdList[$content1->id] < $sortedIdList[$content2->id]) ? -1 : 1;
+            return $sortedIdList[$content1->id] <=> $sortedIdList[$content2->id];
         };
 
         usort($relatedContentItems, $sorter);

@@ -57,20 +57,7 @@ class LoadService implements LoadServiceInterface
     public function loadContent($contentId, $versionNo = null, $languageCode = null): Content
     {
         $versionInfo = $this->contentService->loadVersionInfoById($contentId, $versionNo);
-
-        if ($languageCode === null) {
-            $languageCode = $this->getLanguage(
-                $versionInfo->languageCodes,
-                $versionInfo->contentInfo->mainLanguageCode,
-                $versionInfo->contentInfo->alwaysAvailable
-            );
-
-            if ($languageCode === null) {
-                throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
-            }
-        } elseif (!in_array($languageCode, $versionInfo->languageCodes)) {
-            throw new TranslationNotMatchedException($contentId, $this->getContext($versionInfo));
-        }
+        $languageCode = $this->resolveLanguageCode($versionInfo, $languageCode);
 
         return $this->domainObjectMapper->mapContent($versionInfo, $languageCode);
     }
@@ -108,49 +95,54 @@ class LoadService implements LoadServiceInterface
     private function getSiteLocation(APILocation $location): Location
     {
         $versionInfo = $this->contentService->loadVersionInfoById($location->contentInfo->id);
-
-        $languageCode = $this->getLanguage(
-            $versionInfo->languageCodes,
-            $versionInfo->contentInfo->mainLanguageCode,
-            $versionInfo->contentInfo->alwaysAvailable
-        );
-
-        if ($languageCode === null) {
-            throw new TranslationNotMatchedException(
-                $versionInfo->contentInfo->id,
-                $this->getContext($versionInfo)
-            );
-        }
+        $languageCode = $this->resolveLanguageCode($versionInfo);
 
         return $this->domainObjectMapper->mapLocation($location, $versionInfo, $languageCode);
     }
 
     /**
-     * Returns the most prioritized language for the given parameters.
+     * Returns the most prioritized language code for the given parameters.
      *
-     * Will return null if language could not be resolved.
+     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
+     * @param string|null $languageCode
      *
-     * @param string[] $languageCodes
-     * @param string $mainLanguageCode
-     * @param bool $alwaysAvailable
+     * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
      *
-     * @return string|null
+     * @return string
      */
-    private function getLanguage(array $languageCodes, $mainLanguageCode, $alwaysAvailable): ?string
+    private function resolveLanguageCode(VersionInfo $versionInfo, ?string $languageCode = null): string
     {
-        $languageCodesSet = array_flip($languageCodes);
+        if ($languageCode === null) {
+            return $this->resolveLanguageCodeFromConfiguration($versionInfo);
+        }
 
+        if (!in_array($languageCode, $versionInfo->languageCodes, true)) {
+            throw new TranslationNotMatchedException($versionInfo->contentInfo->id, $this->getContext($versionInfo));
+        }
+
+        return $languageCode;
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
+     *
+     * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
+     *
+     * @return string
+     */
+    private function resolveLanguageCodeFromConfiguration(VersionInfo $versionInfo): string
+    {
         foreach ($this->settings->prioritizedLanguages as $languageCode) {
-            if (isset($languageCodesSet[$languageCode])) {
+            if (in_array($languageCode, $versionInfo->languageCodes, true)) {
                 return $languageCode;
             }
         }
 
-        if ($this->settings->useAlwaysAvailable && $alwaysAvailable) {
-            return $mainLanguageCode;
+        if ($this->settings->useAlwaysAvailable && $versionInfo->contentInfo->alwaysAvailable) {
+            return $versionInfo->contentInfo->mainLanguageCode;
         }
 
-        return null;
+        throw new TranslationNotMatchedException($versionInfo->contentInfo->id, $this->getContext($versionInfo));
     }
 
     /**

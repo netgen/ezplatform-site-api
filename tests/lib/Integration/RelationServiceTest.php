@@ -89,7 +89,7 @@ class RelationServiceTest extends BaseTest
      */
     public function testLoadFieldRelation(): void
     {
-        list($identifier, $testApiContent, $testRelationId) = $this->prepareTestContent();
+        [$identifier, $testApiContent, $testRelationId] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $content = $relationService->loadFieldRelation($testApiContent->id, $identifier);
@@ -110,7 +110,7 @@ class RelationServiceTest extends BaseTest
      */
     public function testLoadFieldRelations(): void
     {
-        list($identifier, , , $testApiContent, $testRelationIds) = $this->prepareTestContent();
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier);

@@ -104,7 +104,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertContent($content, $data): void
     {
-        list($name, $contentId, , $locationId) = array_values($data);
+        [$name, $contentId, , $locationId] = array_values($data);
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Content|\Netgen\EzPlatformSiteApi\Core\Site\Values\Content $content */
         $this->assertInstanceOf(Content::class, $content);
@@ -161,7 +161,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertContentInfo($contentInfo, $data): void
     {
-        list($name, $contentId, $contentRemoteId, $locationId) = array_values($data);
+        [$name, $contentId, $contentRemoteId, $locationId] = array_values($data);
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\ContentInfo|\Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo $contentInfo */
         $this->assertInstanceOf(APIContentInfo::class, $contentInfo);
@@ -314,7 +314,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertLocation($location, $data): void
     {
-        list(, , , $locationId, $locationRemoteId, $parentLocationId) = array_values($data);
+        [, , , $locationId, $locationRemoteId, $parentLocationId] = array_values($data);
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Location|\Netgen\EzPlatformSiteApi\Core\Site\Values\Location  $location */
         $this->assertInstanceOf(Location::class, $location);

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser;
 
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\Parser\View;
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\AbstractParser;
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Twig_Lexer;
 
-class ContentView extends View
+class ContentView extends AbstractParser
 {
     const QUERY_KEY = 'queries';
     const NODE_KEY = 'ngcontent_view';
@@ -165,5 +166,15 @@ EOT
                 );
 
         return $queries;
+    }
+
+    public function preMap(array $config, ContextualizerInterface $contextualizer)
+    {
+        $contextualizer->mapConfigArray(static::NODE_KEY, $config, ContextualizerInterface::MERGE_FROM_SECOND_LEVEL);
+    }
+
+    public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
+    {
+        // does nothing
     }
 }

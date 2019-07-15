@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser;
 
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\Parser\View;
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\AbstractParser;
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Twig_Lexer;
 
 /**
  * Named queries configuration.
  */
-class NamedQuery extends View
+class NamedQuery extends AbstractParser
 {
     const NODE_KEY = 'ng_named_query';
 
@@ -61,5 +62,15 @@ class NamedQuery extends View
                 ->thenInvalid(
                     'Query keys must be strings conforming to a valid Twig variable names.'
                 );
+    }
+
+    public function preMap(array $config, ContextualizerInterface $contextualizer)
+    {
+        $contextualizer->mapConfigArray(static::NODE_KEY, $config, ContextualizerInterface::MERGE_FROM_SECOND_LEVEL);
+    }
+
+    public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
+    {
+        // does nothing
     }
 }

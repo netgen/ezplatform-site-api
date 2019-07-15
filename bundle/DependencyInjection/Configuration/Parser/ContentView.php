@@ -8,7 +8,7 @@ use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\AbstractPars
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
-use Twig_Lexer;
+use Twig\Lexer;
 
 class ContentView extends AbstractParser
 {
@@ -154,7 +154,7 @@ EOT
             ->validate()
                 ->ifTrue(static function ($v) {
                     foreach (array_keys($v) as $key) {
-                        if (!is_string($key) || !preg_match(Twig_Lexer::REGEX_NAME, $key)) {
+                        if (!is_string($key) || !preg_match(Lexer::REGEX_NAME, $key)) {
                             return true;
                         }
                     }

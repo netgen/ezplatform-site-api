@@ -7,7 +7,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuratio
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\AbstractParser;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
-use Twig_Lexer;
+use Twig\Lexer;
 
 /**
  * Named queries configuration.
@@ -52,7 +52,7 @@ class NamedQuery extends AbstractParser
             ->validate()
                 ->ifTrue(static function ($v) {
                     foreach (array_keys($v) as $key) {
-                        if (!is_string($key) || !preg_match(Twig_Lexer::REGEX_NAME, $key)) {
+                        if (!is_string($key) || !preg_match(Lexer::REGEX_NAME, $key)) {
                             return true;
                         }
                     }

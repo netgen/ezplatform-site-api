@@ -20,6 +20,8 @@ interface FindService
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     public function findContent(Query $query): SearchResult;
@@ -30,6 +32,8 @@ interface FindService
      * @see \Netgen\EzPlatformSiteApi\API\Values\Location
      *
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */

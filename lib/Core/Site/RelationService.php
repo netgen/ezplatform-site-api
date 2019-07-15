@@ -40,6 +40,11 @@ class RelationService implements RelationServiceInterface
         $this->relationResolverRegistry = $relationResolverRegistry;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     */
     public function loadFieldRelation(
         $contentId,
         string $fieldDefinitionIdentifier,
@@ -54,6 +59,11 @@ class RelationService implements RelationServiceInterface
         return count($relatedContentItems) ? reset($relatedContentItems) : null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     */
     public function loadFieldRelations(
         $contentId,
         string $fieldDefinitionIdentifier,
@@ -77,10 +87,10 @@ class RelationService implements RelationServiceInterface
     /**
      * Return an array of related Content from the given arguments.
      *
-     * @throws \InvalidArgumentException As thrown by the Search API
-     *
      * @param array $relatedContentIds
      * @param array $contentTypeIdentifiers
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Content[]
      */

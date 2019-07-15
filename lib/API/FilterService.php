@@ -23,6 +23,8 @@ interface FilterService
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     public function filterContent(Query $query): SearchResult;
@@ -33,6 +35,8 @@ interface FilterService
      * @see \Netgen\EzPlatformSiteApi\API\Values\Location
      *
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */

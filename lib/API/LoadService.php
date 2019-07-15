@@ -21,6 +21,9 @@ interface LoadService
      * @param int $versionNo
      * @param string $languageCode
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     public function loadContent($contentId, ?int $versionNo = null, ?string $languageCode = null): Content;
@@ -31,6 +34,9 @@ interface LoadService
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
      * @param string $remoteId
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
@@ -43,6 +49,9 @@ interface LoadService
      *
      * @param string|int $locationId
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     public function loadLocation($locationId): Location;
@@ -53,6 +62,9 @@ interface LoadService
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
      * @param string $remoteId
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */

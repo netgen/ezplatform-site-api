@@ -19,6 +19,9 @@ interface RelationService
      * @param $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content|null
      */
     public function loadFieldRelation(
@@ -34,6 +37,9 @@ interface RelationService
      * @param int|string $contentId
      * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */

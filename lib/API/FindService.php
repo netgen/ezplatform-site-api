@@ -10,6 +10,8 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 
 /**
  * Find service provides methods for finding entities using eZ Platform Repository Search Query API.
+ *
+ * Unlike FilterService, FindService uses search engine configured for the repository (Legacy or Solr).
  */
 interface FindService
 {

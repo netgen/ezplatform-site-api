@@ -12,7 +12,7 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
  * Filters service provides methods for filters entities using
  * eZ Platform Repository Search Query API.
  *
- * In difference to FindService, FilterService always uses synchronous search engine.
+ * Unlike FindService, FilterService always uses Legacy search engine.
  */
 interface FilterService
 {

@@ -10,9 +10,12 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class Configuration extends SiteAccessConfiguration
 {
+    /**
+     * @var string
+     */
     protected $rootNodeName;
 
-    public function __construct($rootNodeName)
+    public function __construct(string $rootNodeName)
     {
         $this->rootNodeName = $rootNodeName;
     }

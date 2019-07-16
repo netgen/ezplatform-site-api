@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
-use DateTime;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
@@ -16,28 +15,25 @@ use Netgen\EzPlatformSiteApi\API\FilterService;
 use Netgen\EzPlatformSiteApi\API\FindService;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FindAdapter;
-use Pagerfanta\Pagerfanta;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 
 class QueryExecutorTest extends TestCase
 {
     /**
-     * @throws \Pagerfanta\Exception\Exception
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     public function testExecuteContentFilterQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
-        $result = $executor->execute(
+        $result = $executor->executeRaw(
             new QueryDefinition([
                 'name' => 'content_query_type',
                 'parameters' => ['parameters'],
                 'useFilter' => true,
                 'maxPerPage' => 20,
                 'page' => 2,
-            ]),
-            false
+            ])
         );
 
         $this->assertEquals($this->getFilterContentResult(), $result);
@@ -56,11 +52,9 @@ class QueryExecutorTest extends TestCase
                 'useFilter' => true,
                 'maxPerPage' => 20,
                 'page' => 2,
-            ]),
-            true
+            ])
         );
 
-        $this->assertInstanceOf(Pagerfanta::class, $result);
         $this->assertInstanceOf(FilterAdapter::class, $result->getAdapter());
         $this->assertEquals(20, $result->getMaxPerPage());
         $this->assertEquals(2, $result->getCurrentPage());
@@ -68,20 +62,19 @@ class QueryExecutorTest extends TestCase
     }
 
     /**
-     * @throws \Pagerfanta\Exception\Exception
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     public function testExecuteContentFindQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
-        $result = $executor->execute(
+        $result = $executor->executeRaw(
             new QueryDefinition([
                 'name' => 'content_query_type',
                 'parameters' => ['parameters'],
                 'useFilter' => false,
                 'maxPerPage' => 20,
                 'page' => 2,
-            ]),
-            false
+            ])
         );
 
         $this->assertEquals($this->getFindContentResult(), $result);
@@ -100,11 +93,9 @@ class QueryExecutorTest extends TestCase
                 'useFilter' => false,
                 'maxPerPage' => 20,
                 'page' => 2,
-            ]),
-            true
+            ])
         );
 
-        $this->assertInstanceOf(Pagerfanta::class, $result);
         $this->assertInstanceOf(FindAdapter::class, $result->getAdapter());
         $this->assertEquals(20, $result->getMaxPerPage());
         $this->assertEquals(2, $result->getCurrentPage());
@@ -112,20 +103,19 @@ class QueryExecutorTest extends TestCase
     }
 
     /**
-     * @throws \Pagerfanta\Exception\Exception
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     public function testExecuteLocationFilterQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
-        $result = $executor->execute(
+        $result = $executor->executeRaw(
             new QueryDefinition([
                 'name' => 'location_query_type',
                 'parameters' => ['parameters'],
                 'useFilter' => true,
                 'maxPerPage' => 20,
                 'page' => 2,
-            ]),
-            false
+            ])
         );
 
         $this->assertEquals($this->getFilterLocationsResult(), $result);
@@ -144,11 +134,9 @@ class QueryExecutorTest extends TestCase
                 'useFilter' => true,
                 'maxPerPage' => 20,
                 'page' => 2,
-            ]),
-            true
+            ])
         );
 
-        $this->assertInstanceOf(Pagerfanta::class, $result);
         $this->assertInstanceOf(FilterAdapter::class, $result->getAdapter());
         $this->assertEquals(20, $result->getMaxPerPage());
         $this->assertEquals(2, $result->getCurrentPage());
@@ -156,20 +144,19 @@ class QueryExecutorTest extends TestCase
     }
 
     /**
-     * @throws \Pagerfanta\Exception\Exception
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     public function testExecuteLocationFindQuery(): void
     {
         $executor = $this->getQueryExecutorUnderTest();
-        $result = $executor->execute(
+        $result = $executor->executeRaw(
             new QueryDefinition([
                 'name' => 'location_query_type',
                 'parameters' => ['parameters'],
                 'useFilter' => false,
                 'maxPerPage' => 20,
                 'page' => 2,
-            ]),
-            false
+            ])
         );
 
         $this->assertEquals($this->getFindLocationsResult(), $result);
@@ -188,35 +175,13 @@ class QueryExecutorTest extends TestCase
                 'useFilter' => false,
                 'maxPerPage' => 20,
                 'page' => 2,
-            ]),
-            true
+            ])
         );
 
-        $this->assertInstanceOf(Pagerfanta::class, $result);
         $this->assertInstanceOf(FindAdapter::class, $result->getAdapter());
         $this->assertEquals(20, $result->getMaxPerPage());
         $this->assertEquals(2, $result->getCurrentPage());
         $this->assertTrue($result->getNormalizeOutOfRangePages());
-    }
-
-    /**
-     * @throws \Pagerfanta\Exception\Exception
-     */
-    public function testExecuteThrowsRuntimeException(): void
-    {
-        $this->expectException(RuntimeException::class);
-
-        $executor = $this->getQueryExecutorUnderTest();
-        $executor->execute(
-            new QueryDefinition([
-                'name' => 'invalid_query_type',
-                'parameters' => ['parameters'],
-                'useFilter' => false,
-                'maxPerPage' => 20,
-                'page' => 2,
-            ]),
-            false
-        );
     }
 
     /**
@@ -307,7 +272,6 @@ class QueryExecutorTest extends TestCase
             ->willReturnMap([
                 ['content_query_type', $this->getContentQueryTypeMock()],
                 ['location_query_type', $this->getLocationQueryTypeMock()],
-                ['invalid_query_type', $this->getInvalidQueryTypeMock()],
             ]);
 
         return $queryTypeRegistryMock;
@@ -335,19 +299,6 @@ class QueryExecutorTest extends TestCase
         $mock
             ->method('getQuery')
             ->willReturn(new LocationQuery());
-
-        return $mock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function getInvalidQueryTypeMock(): MockObject
-    {
-        $mock = $this->getMockBuilder(QueryType::class)->getMock();
-        $mock
-            ->method('getQuery')
-            ->willReturn(new DateTime());
 
         return $mock;
     }

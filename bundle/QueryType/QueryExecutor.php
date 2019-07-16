@@ -8,12 +8,12 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
+use Netgen\EzPlatformSearchExtra\Core\Pagination\Pagerfanta\BaseAdapter;
 use Netgen\EzPlatformSiteApi\API\FilterService;
 use Netgen\EzPlatformSiteApi\API\FindService;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FindAdapter;
 use Pagerfanta\Pagerfanta;
-use RuntimeException;
 
 /**
  * QueryExecutor resolves the Query from the QueryDefinition, executes it and returns the result.
@@ -56,51 +56,14 @@ final class QueryExecutor
      * Execute the Query with the given $name and return the result.
      *
      * @throws \Pagerfanta\Exception\Exception
-     * @throws \RuntimeException
      *
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
-     * @param bool $usePager
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult|\Pagerfanta\Pagerfanta
-     */
-    public function execute(QueryDefinition $queryDefinition, bool $usePager)
-    {
-        $queryType = $this->queryTypeRegistry->getQueryType($queryDefinition->name);
-        $query = $queryType->getQuery($queryDefinition->parameters);
-
-        if ($usePager) {
-            return $this->getPager($query, $queryDefinition);
-        }
-
-        if ($query instanceof LocationQuery) {
-            return $this->getLocationResult($query, $queryDefinition);
-        }
-
-        if ($query instanceof Query) {
-            return $this->getContentResult($query, $queryDefinition);
-        }
-
-        throw new RuntimeException('Could not handle given query');
-    }
-
-    /**
-     * Return Pagerfanta instance by the given parameters.
-     *
-     * @throws \Pagerfanta\Exception\Exception
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      *
      * @return \Pagerfanta\Pagerfanta
      */
-    private function getPager(Query $query, QueryDefinition $queryDefinition): Pagerfanta
+    public function execute(QueryDefinition $queryDefinition): Pagerfanta
     {
-        if ($queryDefinition->useFilter) {
-            $adapter = new FilterAdapter($query, $this->filterService);
-        } else {
-            $adapter = new FindAdapter($query, $this->findService);
-        }
-
+        $adapter = $this->getPagerAdapter($queryDefinition);
         $pager = new Pagerfanta($adapter);
 
         $pager->setNormalizeOutOfRangePages(true);
@@ -110,11 +73,44 @@ final class QueryExecutor
         return $pager;
     }
 
+    private function getPagerAdapter(QueryDefinition $queryDefinition): BaseAdapter
+    {
+        $query = $this->getQuery($queryDefinition);
+
+        if ($queryDefinition->useFilter) {
+            return new FilterAdapter($query, $this->filterService);
+        }
+
+        return new FindAdapter($query, $this->findService);
+    }
+
+    /**
+     * Execute the Query with the given $name and return the result.
+     *
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    public function executeRaw(QueryDefinition $queryDefinition): SearchResult
+    {
+        $query = $this->getQuery($queryDefinition);
+
+        if ($query instanceof LocationQuery) {
+            return $this->getLocationResult($query, $queryDefinition);
+        }
+
+        return $this->getContentResult($query, $queryDefinition);
+    }
+
     /**
      * Return search result by the given parameters.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
@@ -133,6 +129,8 @@ final class QueryExecutor
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     private function getContentResult(Query $query, QueryDefinition $queryDefinition): SearchResult
@@ -142,5 +140,12 @@ final class QueryExecutor
         }
 
         return $this->findService->findContent($query);
+    }
+
+    private function getQuery(QueryDefinition $queryDefinition): Query
+    {
+        $queryType = $this->queryTypeRegistry->getQueryType($queryDefinition->name);
+
+        return $queryType->getQuery($queryDefinition->parameters);
     }
 }

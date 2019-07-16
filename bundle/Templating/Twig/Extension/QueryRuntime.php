@@ -42,8 +42,7 @@ class QueryRuntime
     public function executeQuery($context, string $name): Pagerfanta
     {
         return $this->queryExecutor->execute(
-            $this->getQueryDefinitionCollection($context)->get($name),
-            true
+            $this->getQueryDefinitionCollection($context)->get($name)
         );
     }
 
@@ -51,16 +50,15 @@ class QueryRuntime
      * @param $context
      * @param string $name
      *
-     * @throws \Pagerfanta\Exception\Exception
      * @throws \Twig\Error\RuntimeError
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     public function executeRawQuery($context, string $name): SearchResult
     {
-        return $this->queryExecutor->execute(
-            $this->getQueryDefinitionCollection($context)->get($name),
-            false
+        return $this->queryExecutor->executeRaw(
+            $this->getQueryDefinitionCollection($context)->get($name)
         );
     }
 

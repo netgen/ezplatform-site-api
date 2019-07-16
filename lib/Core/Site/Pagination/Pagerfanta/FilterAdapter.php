@@ -33,6 +33,13 @@ final class FilterAdapter extends BaseAdapter
         $this->filterService = $filterService;
     }
 
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
     protected function executeQuery(Query $query): SearchResult
     {
         if ($query instanceof LocationQuery) {

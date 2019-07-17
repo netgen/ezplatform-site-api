@@ -40,7 +40,7 @@ abstract class Location extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
-    abstract public function getChildren(int $limit = 25);
+    abstract public function getChildren(int $limit = 25): array;
 
     /**
      * Return an array of children Locations, filtered by optional
@@ -61,7 +61,7 @@ abstract class Location extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
-    abstract public function getSiblings(int $limit = 25);
+    abstract public function getSiblings(int $limit = 25): array;
 
     /**
      * Return an array of Location siblings, filtered by optional

@@ -91,7 +91,7 @@ abstract class Content extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
-    abstract public function getLocations(int $limit = 25);
+    abstract public function getLocations(int $limit = 25): array;
 
     /**
      * Return an array of Locations, limited by optional $maxPerPage and $currentPage.
@@ -101,7 +101,7 @@ abstract class Content extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]|\Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
-    abstract public function filterLocations(int $maxPerPage = 25, int $currentPage = 1);
+    abstract public function filterLocations(int $maxPerPage = 25, int $currentPage = 1): Pagerfanta;
 
     /**
      * Return single related Content from $fieldDefinitionIdentifier field.

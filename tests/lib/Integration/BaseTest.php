@@ -123,7 +123,7 @@ class BaseTest extends APIBaseTest
         $this->assertInstanceOf(VersionInfo::class, $content->innerVersionInfo);
 
         $locations = $content->getLocations();
-        $this->assertInstanceOf(ArrayIterator::class, $locations);
+        $this->assertIsArray($locations);
         $this->assertCount(1, $locations);
         $this->assertInstanceOf(Location::class, reset($locations));
 

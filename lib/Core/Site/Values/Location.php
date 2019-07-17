@@ -189,9 +189,9 @@ final class Location extends APILocation
         ];
     }
 
-    public function getChildren(int $limit = 25)
+    public function getChildren(int $limit = 25): array
     {
-        return $this->filterChildren([], $limit)->getIterator();
+        return $this->filterChildren([], $limit)->getIterator()->getArrayCopy();
     }
 
     public function filterChildren(array $contentTypeIdentifiers = [], int $maxPerPage = 25, int $currentPage = 1): Pagerfanta
@@ -222,9 +222,9 @@ final class Location extends APILocation
         return $pager;
     }
 
-    public function getSiblings(int $limit = 25)
+    public function getSiblings(int $limit = 25): array
     {
-        return $this->filterSiblings([], $limit)->getIterator();
+        return $this->filterSiblings([], $limit)->getIterator()->getArrayCopy();
     }
 
     public function filterSiblings(array $contentTypeIdentifiers = [], int $maxPerPage = 25, int $currentPage = 1): Pagerfanta

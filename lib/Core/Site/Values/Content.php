@@ -275,9 +275,9 @@ final class Content extends APIContent
         return $this->getFieldById($id)->value;
     }
 
-    public function getLocations(int $limit = 25)
+    public function getLocations(int $limit = 25): array
     {
-        return $this->filterLocations($limit)->getIterator();
+        return $this->filterLocations($limit)->getIterator()->getArrayCopy();
     }
 
     public function filterLocations(int $maxPerPage = 25, int $currentPage = 1): Pagerfanta

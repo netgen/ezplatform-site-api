@@ -167,14 +167,18 @@ final class CriteriaBuilder
     private function buildLogicalNot(CriterionDefinition $definition): LogicalNot
     {
         $criteria = $this->build($definition->value);
+        $criterion = $this->reduceCriteria($criteria);
 
+        return new LogicalNot($criterion);
+    }
+
+    private function reduceCriteria(array $criteria): Criterion
+    {
         if (count($criteria) === 1) {
-            $criteria = reset($criteria);
-        } else {
-            $criteria = new LogicalAnd($criteria);
+            return reset($criteria);
         }
 
-        return new LogicalNot($criteria);
+        return new LogicalAnd($criteria);
     }
 
     /**

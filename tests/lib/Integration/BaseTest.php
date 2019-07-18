@@ -70,6 +70,8 @@ class BaseTest extends APIBaseTest
                     'isSurrogate' => false,
                 ],
             ],
+            'siblingLocationId' => 64,
+            'childLocationId' => 65,
         ];
     }
 
@@ -327,9 +329,20 @@ class BaseTest extends APIBaseTest
         $this->assertInstanceOf(APILocation::class, $location->innerLocation);
         $this->assertInstanceOf(Content::class, $location->content);
 
-        if ($location->parentLocationId !== 1) {
-            $this->assertInstanceOf(Location::class, $location->parent);
-        }
+        $this->assertInstanceOf(Location::class, $location->parent);
+        $this->assertEquals($parentLocationId, $location->parent->id);
+
+        $children = $location->getChildren();
+        $this->assertIsArray($children);
+        $this->assertCount(1, $children);
+        $this->assertInstanceOf(Location::class, $children[0]);
+        $this->assertEquals($data['childLocationId'], $children[0]->id);
+
+        $siblings = $location->getSiblings();
+        $this->assertIsArray($siblings);
+        $this->assertCount(1, $siblings);
+        $this->assertInstanceOf(Location::class, $siblings[0]);
+        $this->assertEquals($data['siblingLocationId'], $siblings[0]->id);
 
         $this->assertTrue(isset($location->contentId));
         $this->assertTrue(isset($location->contentInfo));

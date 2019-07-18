@@ -15,14 +15,13 @@ interface LoadService
     /**
      * Loads Content object for the given $contentId.
      *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
      * @param string|int $contentId
      * @param int $versionNo
      * @param string $languageCode
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
@@ -31,12 +30,11 @@ interface LoadService
     /**
      * Loads Content object for the given $remoteId.
      *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
      * @param string $remoteId
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
@@ -45,12 +43,11 @@ interface LoadService
     /**
      * Loads Location object for the given $locationId.
      *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
      * @param string|int $locationId
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
@@ -59,12 +56,11 @@ interface LoadService
     /**
      * Loads Location object for the given $remoteId.
      *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
      * @param string $remoteId
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */

@@ -37,7 +37,7 @@ interface RelationService
      * @param string|int $contentId
      * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
-     * @param int $limit
+     * @param int|null $limit
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
@@ -48,6 +48,6 @@ interface RelationService
         $contentId,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
-        int $limit = 0
+        ?int $limit = null
     ): array;
 }

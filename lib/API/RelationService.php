@@ -37,6 +37,7 @@ interface RelationService
      * @param string|int $contentId
      * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
+     * @param int $limit
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
@@ -46,6 +47,7 @@ interface RelationService
     public function loadFieldRelations(
         $contentId,
         string $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = []
+        array $contentTypeIdentifiers = [],
+        int $limit = 0
     ): array;
 }

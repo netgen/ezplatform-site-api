@@ -23,6 +23,7 @@ class Configuration extends SiteAccessConfiguration
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
+        /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->root($this->rootNodeName);
 
         $this->addConfiguration($rootNode);

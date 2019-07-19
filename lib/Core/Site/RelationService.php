@@ -87,7 +87,7 @@ class RelationService implements RelationServiceInterface
     }
 
     /**
-     * Return an array of all related Content from the given arguments if $limit is not provided.
+     * Return an array of related Content items, optionally limited by $limit.
      *
      * @param array $relatedContentIds
      * @param array $contentTypeIdentifiers

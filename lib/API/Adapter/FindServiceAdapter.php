@@ -61,7 +61,9 @@ final class FindServiceAdapter implements SearchService
         $searchResult = $this->findService->findContent($query);
 
         foreach ($searchResult->searchHits as $searchHit) {
-            $searchHit->valueObject = $searchHit->valueObject->innerContentInfo;
+            /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $siteContent */
+            $siteContent = $searchHit->valueObject;
+            $searchHit->valueObject = $siteContent->contentInfo->innerContentInfo;
         }
 
         return $searchResult;

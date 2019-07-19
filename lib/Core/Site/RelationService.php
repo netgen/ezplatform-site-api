@@ -68,7 +68,7 @@ class RelationService implements RelationServiceInterface
         $contentId,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
-        int $limit = 0
+        ?int $limit = null
     ): array {
         $content = $this->site->getLoadService()->loadContent($contentId);
 
@@ -91,13 +91,13 @@ class RelationService implements RelationServiceInterface
      *
      * @param array $relatedContentIds
      * @param array $contentTypeIdentifiers
-     * @param int $limit
+     * @param int|null $limit
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Content[]
      */
-    private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers, int $limit = 0): array
+    private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers, ?int $limit = null): array
     {
         if (count($relatedContentIds) === 0) {
             return [];
@@ -121,7 +121,7 @@ class RelationService implements RelationServiceInterface
         /** @var \eZ\Publish\API\Repository\Values\Content\Content[] $contentItems */
         $contentItems = $this->extractValueObjects($searchResult);
 
-        if ($limit !== 0) {
+        if ($limit !== null) {
             return array_slice($contentItems, 0, $limit);
         }
 

@@ -69,7 +69,7 @@ class RelationService implements RelationServiceInterface
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         $limit = 0
-    ) {
+    ): array {
         $content = $this->site->getLoadService()->loadContent($contentId);
 
         $field = $content->getField($fieldDefinitionIdentifier);

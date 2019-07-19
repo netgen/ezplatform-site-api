@@ -43,9 +43,8 @@ it with extending the Site API base controller:
         }
     }
 
-
-Next, register your controller with the DI container. The base controller expects that two setter
-methods are called on instantiation: ``setContainer()`` and ``setSite()``. You can do this manually:
+Next, register your controller with the DI container. The Symfony's base controller expects that
+``setContainer()`` is called on instantiation. You can do this manually:
 
 .. code-block:: yaml
 
@@ -53,7 +52,6 @@ methods are called on instantiation: ``setContainer()`` and ``setSite()``. You c
         class: AppBundle\Controller\DemoController
         calls:
             - [setContainer, ['@service_container']]
-            - [setSite, ['@netgen.ezplatform_site.core.site']]
 
 Or by extending the base definition:
 

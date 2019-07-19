@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\API\Adapter;
 
 use eZ\Publish\API\Repository\SearchService;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -82,7 +83,7 @@ final class FindServiceAdapter implements SearchService
         return $searchResult;
     }
 
-    public function findSingle(Criterion $filter, array $languageFilter = [], $filterOnUserPermissions = true)
+    public function findSingle(Criterion $filter, array $languageFilter = [], $filterOnUserPermissions = true): Content
     {
         $query = new Query();
         $query->filter = $filter;

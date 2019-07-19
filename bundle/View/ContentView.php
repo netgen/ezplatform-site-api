@@ -85,7 +85,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
     public function setContent(RepoContent $content): void
     {
         throw new RuntimeException(
-            'setContent method cannot be used with Site API content view. Use setSiteContent method instead.'
+            'Method setContent() cannot be used with Site API content view. Use setSiteContent() method instead.'
         );
     }
 
@@ -95,7 +95,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
     public function setLocation(RepoLocation $location): void
     {
         throw new RuntimeException(
-            'setLocation method cannot be used with Site API content view. Use setSiteLocation method instead.'
+            'Method setLocation() cannot be used with Site API content view. Use setSiteLocation() method instead.'
         );
     }
 

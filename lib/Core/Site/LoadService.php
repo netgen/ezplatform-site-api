@@ -86,6 +86,8 @@ class LoadService implements LoadServiceInterface
     /**
      * Returns Site Location object for the given Repository $location.
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location

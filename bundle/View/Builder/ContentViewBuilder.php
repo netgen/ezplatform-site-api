@@ -72,13 +72,14 @@ class ContentViewBuilder implements ViewBuilder
     }
 
     /**
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
-     *         If both contentId and locationId parameters are missing
-     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
-     *
      * @param array $parameters
      *
-     * @return \eZ\Publish\Core\MVC\Symfony\View\View
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException If both contentId and locationId parameters are missing
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     * @throws \Exception
+     *
+     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
     public function buildView(array $parameters): ContentView
     {
@@ -143,7 +144,9 @@ class ContentViewBuilder implements ViewBuilder
     /**
      * Loads Content with id $contentId.
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
      * @param string|int $contentId
      *
@@ -160,6 +163,7 @@ class ContentViewBuilder implements ViewBuilder
      * if provided.
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     * @throws \Exception
      *
      * @param string|int $contentId
      * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
@@ -201,6 +205,8 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @param string|int $locationId
      * @param bool $checkVisibility
+     *
+     * @throws \Exception
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */

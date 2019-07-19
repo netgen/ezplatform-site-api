@@ -113,7 +113,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * @param $identifier
+     * @param string $identifier
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *

@@ -15,8 +15,8 @@ interface RelationService
      * Load single related Content from $fieldDefinitionIdentifier field in Content with given
      * $contentId, optionally limited by a list of $contentTypeIdentifiers.
      *
-     * @param $contentId
-     * @param $fieldDefinitionIdentifier
+     * @param string|int $contentId
+     * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -34,7 +34,7 @@ interface RelationService
      * Load all related Content from $fieldDefinitionIdentifier field in Content with given
      * $contentId, optionally limited by a list of $contentTypeIdentifiers and $limit.
      *
-     * @param int|string $contentId
+     * @param string|int $contentId
      * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
      *

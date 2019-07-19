@@ -52,6 +52,12 @@ class FindService implements FindServiceInterface
         $this->contentService = $contentService;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
     public function findContent(Query $query): SearchResult
     {
         $searchResult = $this->searchService->findContentInfo(
@@ -77,6 +83,12 @@ class FindService implements FindServiceInterface
         return $searchResult;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
     public function findLocations(LocationQuery $query): SearchResult
     {
         $searchResult = $this->searchService->findLocations(

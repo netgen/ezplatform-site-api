@@ -31,6 +31,8 @@ abstract class Controller extends BaseController
      * Returns the root location object for current siteaccess configuration.
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */

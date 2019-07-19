@@ -71,6 +71,10 @@ final class ContentInfo extends APIContentInfo
      *
      * @param string $property The name of the property to retrieve
      *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
      * @return mixed
      */
     public function __get($property)
@@ -136,6 +140,13 @@ final class ContentInfo extends APIContentInfo
         ];
     }
 
+    /**
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location|null
+     */
     private function getMainLocation(): ?APILocation
     {
         if ($this->internalMainLocation === null && $this->mainLocationId !== null) {

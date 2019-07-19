@@ -52,6 +52,12 @@ class FilterService implements FilterServiceInterface
         $this->contentService = $contentService;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
     public function filterContent(Query $query): SearchResult
     {
         $searchResult = $this->searchService->findContentInfo(
@@ -77,6 +83,12 @@ class FilterService implements FilterServiceInterface
         return $searchResult;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
     public function filterLocations(LocationQuery $query): SearchResult
     {
         $searchResult = $this->searchService->findLocations(

@@ -21,7 +21,10 @@ abstract class Controller extends BaseController
      */
     protected function getSite(): Site
     {
-        return $this->container->get('netgen.ezplatform_site.site');
+        /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
+        $site = $this->container->get('netgen.ezplatform_site.site');
+
+        return $site;
     }
 
     /**

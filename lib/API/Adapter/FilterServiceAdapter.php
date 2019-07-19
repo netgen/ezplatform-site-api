@@ -99,7 +99,10 @@ final class FilterServiceAdapter implements SearchService
             throw new InvalidArgumentException('totalCount', 'findSingle() found more then one item for given $filter');
         }
 
-        return $searchResult->searchHits[0]->valueObject->innerContent;
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $siteContent */
+        $siteContent = $searchResult->searchHits[0]->valueObject;
+
+        return $siteContent->innerContent;
     }
 
     public function suggest($prefix, $fieldPaths = [], $limit = 10, Criterion $filter = null): void

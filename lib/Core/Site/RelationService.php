@@ -68,7 +68,7 @@ class RelationService implements RelationServiceInterface
         $contentId,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
-        $limit = 0
+        int $limit = 0
     ): array {
         $content = $this->site->getLoadService()->loadContent($contentId);
 
@@ -97,7 +97,7 @@ class RelationService implements RelationServiceInterface
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Content[]
      */
-    private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers, $limit = 0): array
+    private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers, int $limit = 0): array
     {
         if (count($relatedContentIds) === 0) {
             return [];
@@ -114,7 +114,7 @@ class RelationService implements RelationServiceInterface
 
         $query = new Query([
             'filter' => $criteria,
-            'limit' => is_int($limit) && $limit > 0 ? $limit : count($relatedContentIds),
+            'limit' => $limit > 0 ? $limit : count($relatedContentIds),
         ]);
 
         $searchResult = $this->site->getFilterService()->filterContent($query);

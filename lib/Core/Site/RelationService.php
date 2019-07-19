@@ -114,12 +114,16 @@ class RelationService implements RelationServiceInterface
 
         $query = new Query([
             'filter' => $criteria,
-            'limit' => $limit > 0 ? $limit : count($relatedContentIds),
+            'limit' => count($relatedContentIds),
         ]);
 
         $searchResult = $this->site->getFilterService()->filterContent($query);
         /** @var \eZ\Publish\API\Repository\Values\Content\Content[] $contentItems */
         $contentItems = $this->extractValueObjects($searchResult);
+
+        if ($limit !== 0) {
+            return array_slice($contentItems, 0, $limit);
+        }
 
         return $contentItems;
     }

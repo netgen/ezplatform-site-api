@@ -48,7 +48,9 @@ final class FindServiceAdapter implements SearchService
         $searchResult = $this->findService->findContent($query);
 
         foreach ($searchResult->searchHits as $searchHit) {
-            $searchHit->valueObject = $searchHit->valueObject->innerContent;
+            /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $siteContent */
+            $siteContent = $searchHit->valueObject;
+            $searchHit->valueObject = $siteContent->innerContent;
         }
 
         return $searchResult;
@@ -70,7 +72,9 @@ final class FindServiceAdapter implements SearchService
         $searchResult = $this->findService->findLocations($query);
 
         foreach ($searchResult->searchHits as $searchHit) {
-            $searchHit->valueObject = $searchHit->valueObject->innerLocation;
+            /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $siteLocation */
+            $siteLocation = $searchHit->valueObject;
+            $searchHit->valueObject = $siteLocation->innerLocation;
         }
 
         return $searchResult;

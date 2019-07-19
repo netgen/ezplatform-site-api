@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Controller;
 
-use eZ\Bundle\EzPublishCoreBundle\Controller as BaseController;
+use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use eZ\Publish\Core\MVC\Symfony\Templating\GlobalHelper;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaTrait;
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 
 abstract class Controller extends BaseController
 {
@@ -48,6 +51,44 @@ abstract class Controller extends BaseController
      */
     public function getQueryTypeRegistry(): QueryTypeRegistry
     {
-        return $this->container->get('ezpublish.query_type.registry');
+        /** @var \eZ\Publish\Core\QueryType\QueryTypeRegistry $registry */
+        $registry = $this->container->get('ezpublish.query_type.registry');
+
+        return $registry;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Repository
+     */
+    public function getRepository(): Repository
+    {
+        /** @var \eZ\Publish\API\Repository\Repository $repository */
+        $repository = $this->container->get('ezpublish.api.repository');
+
+        return $repository;
+    }
+
+    /**
+     * @return \eZ\Publish\Core\MVC\ConfigResolverInterface
+     */
+    protected function getConfigResolver(): ConfigResolverInterface
+    {
+        /** @var \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver */
+        $configResolver = $this->container->get('ezpublish.config.resolver');
+
+        return $configResolver;
+    }
+
+    /**
+     * Returns the general helper service, exposed in Twig templates as "ezpublish" global variable.
+     *
+     * @return \eZ\Publish\Core\MVC\Symfony\Templating\GlobalHelper
+     */
+    public function getGlobalHelper(): GlobalHelper
+    {
+        /** @var \eZ\Publish\Core\MVC\Symfony\Templating\GlobalHelper $globalHelper */
+        $globalHelper = $this->container->get('ezpublish.templating.global_helper');
+
+        return $globalHelper;
     }
 }

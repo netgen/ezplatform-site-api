@@ -145,7 +145,7 @@ class FieldsTest extends TestCase
         $loggerMock
             ->expects($this->once())
             ->method('critical')
-            ->with('Field "fourth" in Content #1 does not exist, using null field instead');
+            ->with('Field "fourth" in Content #1 does not exist, using surrogate field instead');
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Field $field */
         $field = $fields[$identifier];

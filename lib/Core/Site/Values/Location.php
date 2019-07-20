@@ -308,6 +308,7 @@ final class Location extends APILocation
             );
         }
 
+        /** @var \eZ\Publish\API\Repository\Values\Content\Query\SortClause $sortClause */
         $sortClause = new static::$sortFieldMap[$this->sortField]();
         $sortClause->direction = static::$sortOrderMap[$this->sortOrder];
 

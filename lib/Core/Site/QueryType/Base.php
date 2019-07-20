@@ -170,7 +170,6 @@ abstract class Base implements QueryType
      * {@inheritdoc}
      *
      * @throws \InvalidArgumentException
-     * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface|\InvalidArgumentException
      * @throws \RuntimeException
      */
     final public function getQuery(array $parameters = []): Query
@@ -309,33 +308,49 @@ abstract class Base implements QueryType
         $criteriaGrouped = [[]];
 
         foreach ($parameters as $name => $value) {
-            switch ($name) {
-                case 'content_type':
-                case 'depth':
-                case 'main':
-                case 'parent_location_id':
-                case 'priority':
-                case 'publication_date':
-                case 'section':
-                case 'subtree':
-                case 'visible':
-                    $definitions = $this->getCriterionDefinitionResolver()->resolve($name, $value);
-                    break;
-                case 'field':
-                case 'state':
-                case 'is_field_empty':
-                    $definitions = $this->getCriterionDefinitionResolver()->resolveTargets($name, $value);
-                    break;
-                default:
-                    continue 2;
-            }
+            $definitions = $this->resolveCriterionDefinitions($name, $value);
 
-            $criteriaGrouped[] = $this->getCriteriaBuilder()->build($definitions);
+            if (!empty($definitions)) {
+                $criteriaGrouped[] = $this->getCriteriaBuilder()->build($definitions);
+            }
         }
 
         return array_merge(...$criteriaGrouped);
     }
 
+    /**
+     * @param string $name
+     * @param mixed $parameters
+
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
+     */
+    private function resolveCriterionDefinitions(string $name, $parameters): array
+    {
+        switch ($name) {
+            case 'content_type':
+            case 'depth':
+            case 'main':
+            case 'parent_location_id':
+            case 'priority':
+            case 'publication_date':
+            case 'section':
+            case 'subtree':
+            case 'visible':
+                return $this->getCriterionDefinitionResolver()->resolve($name, $parameters);
+            case 'field':
+            case 'state':
+            case 'is_field_empty':
+                return $this->getCriterionDefinitionResolver()->resolveTargets($name, $parameters);
+        }
+
+        return [];
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
+     */
     private function buildRegisteredCriteria(array $parameters): array
     {
         if ($this->registeredCriterionBuilders === null) {
@@ -352,6 +367,13 @@ abstract class Base implements QueryType
         return array_merge(...$criteriaGrouped);
     }
 
+    /**
+     * @param \Closure $builder
+     * @param $name
+     * @param $parameters
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
+     */
     private function buildCriteria(Closure $builder, $name, $parameters): array
     {
         $criteria = [];

@@ -108,13 +108,12 @@ final class TagFields extends Content
         $tagsIdsGrouped = [[]];
 
         foreach ($fields as $identifier) {
-            if (!$content->hasField($identifier)) {
-                throw new InvalidArgumentException(
-                    "Content does not contain field '{$identifier}'"
-                );
+            $field = $content->getField($identifier);
+
+            if ($field->isSurrogate()) {
+                continue;
             }
 
-            $field = $content->getField($identifier);
             $fieldType = $field->fieldTypeIdentifier;
 
             if ($fieldType !== 'eztags') {
@@ -123,7 +122,7 @@ final class TagFields extends Content
                 );
             }
 
-            /** @var $value \Netgen\TagsBundle\Core\FieldType\Tags\Value */
+            /** @var \Netgen\TagsBundle\Core\FieldType\Tags\Value $value */
             $value = $field->value;
             $tagsIdsGrouped[] = array_map(static function (Tag $tag) {return $tag->id;}, $value->tags);
         }

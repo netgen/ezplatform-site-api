@@ -30,6 +30,7 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 use OutOfBoundsException;
 use Psr\Log\NullLogger;
+use RuntimeException;
 
 /**
  * ForwardFields Content Relation QueryType test case.
@@ -302,7 +303,8 @@ class ForwardFieldsTest extends QueryTypeBaseTest
 
     public function testGetQueryWithNonexistentField(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Field "relations_c" in Content #42 does not exist');
 
         $queryType = $this->getQueryTypeUnderTest();
         $content = $this->getTestContent();

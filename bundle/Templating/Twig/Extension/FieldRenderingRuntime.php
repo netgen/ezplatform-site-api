@@ -7,6 +7,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\MVC\Symfony\FieldType\View\ParameterProviderRegistryInterface;
 use eZ\Publish\Core\MVC\Symfony\Templating\FieldBlockRendererInterface;
+use eZ\Publish\Core\MVC\Symfony\Templating\Twig\FieldBlockRenderer;
 use Netgen\EzPlatformSiteApi\API\Values\Field;
 use Twig\Environment;
 
@@ -21,7 +22,7 @@ class FieldRenderingRuntime
     private $environment;
 
     /**
-     * @var FieldBlockRendererInterface|\eZ\Publish\Core\MVC\Symfony\Templating\Twig\FieldBlockRenderer
+     * @var \eZ\Publish\Core\MVC\Symfony\Templating\Twig\FieldBlockRenderer
      */
     private $fieldBlockRenderer;
 
@@ -32,7 +33,7 @@ class FieldRenderingRuntime
 
     public function __construct(
         Environment $environment,
-        FieldBlockRendererInterface $fieldBlockRenderer,
+        FieldBlockRenderer $fieldBlockRenderer,
         ParameterProviderRegistryInterface $parameterProviderRegistry
     ) {
         $this->environment = $environment;

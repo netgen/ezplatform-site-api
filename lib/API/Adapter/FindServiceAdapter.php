@@ -91,7 +91,7 @@ final class FindServiceAdapter implements SearchService
 
         $searchResult = $this->findService->findContent($query);
 
-        if (!$searchResult->totalCount) {
+        if ($searchResult->totalCount === 0) {
             throw new NotFoundException('Content', 'findSingle() found no content for given $filter');
         }
 

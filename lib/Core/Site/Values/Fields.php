@@ -149,7 +149,7 @@ final class Fields extends APIFields
             throw new RuntimeException($message);
         }
 
-        $this->logger->critical($message . ', using null field instead');
+        $this->logger->critical($message . ', using surrogate field instead');
 
         return $this->getNullField($identifier, $this->content);
     }
@@ -205,7 +205,7 @@ final class Fields extends APIFields
             throw new RuntimeException($message);
         }
 
-        $this->logger->critical($message . ', using null field instead');
+        $this->logger->critical($message . ', using surrogate field instead');
 
         return $this->getNullField((string)$id, $this->content);
     }

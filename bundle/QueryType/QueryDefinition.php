@@ -14,8 +14,8 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string $name QueryType name.
  * @property-read array $parameters An array of configured QueryType options.
  * @property-read bool $useFilter Whether to use FilterService or Find Service.
- * @property-read string $maxPerPage Maximum results per page for Pagerfanta.
- * @property-read string $page Current page for Pagerfanta.
+ * @property-read int $maxPerPage Maximum results per page for Pagerfanta.
+ * @property-read int $page Current page for Pagerfanta.
  *
  * @internal Do not depend on this class, it can be changed without warning.
  */

@@ -28,6 +28,7 @@ use Netgen\TagsBundle\API\Repository\Values\Content\Query\Criterion\TagId;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\FieldType\Tags\Value as TagValue;
 use Psr\Log\NullLogger;
+use RuntimeException;
 
 /**
  * TagFields Content Relation QueryType test case.
@@ -318,7 +319,8 @@ class TagFieldsTest extends QueryTypeBaseTest
 
     public function testGetQueryWithNonexistentField(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Field "ćići" in Content #42 does not exist');
 
         $queryType = $this->getQueryTypeUnderTest();
         $content = $this->getTestContent();

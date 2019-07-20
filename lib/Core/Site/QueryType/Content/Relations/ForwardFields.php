@@ -83,12 +83,6 @@ final class ForwardFields extends Content
         $idsGrouped = [[]];
 
         foreach ($fields as $identifier) {
-            if (!$content->hasField($identifier)) {
-                throw new InvalidArgumentException(
-                    "Content does not contain field '{$identifier}'"
-                );
-            }
-
             $field = $content->getField($identifier);
             $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);
             $idsGrouped[] = $relationResolver->getRelationIds($field);

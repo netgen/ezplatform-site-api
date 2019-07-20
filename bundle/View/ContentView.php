@@ -9,7 +9,6 @@ use eZ\Publish\API\Repository\Values\Content\Location as RepoLocation;
 use eZ\Publish\Core\MVC\Symfony\View\BaseView;
 use eZ\Publish\Core\MVC\Symfony\View\CachableView;
 use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
-use eZ\Publish\Core\MVC\Symfony\View\View;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use RuntimeException;
@@ -17,7 +16,7 @@ use RuntimeException;
 /**
  * Builds ContentView objects.
  */
-class ContentView extends BaseView implements View, ContentValueView, LocationValueView, EmbedView, CachableView
+class ContentView extends BaseView implements ContentValueView, LocationValueView, EmbedView, CachableView
 {
     /**
      * Name of the QueryDefinitionCollection variable injected to the template.
@@ -122,6 +121,7 @@ class ContentView extends BaseView implements View, ContentValueView, LocationVa
     protected function getInternalParameters(): array
     {
         $parameters = ['content' => $this->content];
+
         if ($this->location !== null) {
             $parameters['location'] = $this->location;
         }

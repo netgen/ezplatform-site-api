@@ -173,23 +173,34 @@ final class QueryDefinitionMapper
      *
      * @see \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
      *
-     * @param mixed $parameters
+     * @param array $parameters
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      *
-     * @return array|string
+     * @return array
      */
-    private function processParameters($parameters, ContentView $view)
+    private function processParameters(array $parameters, ContentView $view): array
     {
-        if (!is_array($parameters)) {
-            return $this->parameterProcessor->process($parameters, $view);
-        }
-
         $processedParameters = [];
 
         foreach ($parameters as $name => $subParameters) {
-            $processedParameters[$name] = $this->processParameters($subParameters, $view);
+            $processedParameters[$name] = $this->recursiveProcessParameters($subParameters, $view);
         }
 
         return $processedParameters;
+    }
+
+    /**
+     * @param mixed $parameters
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
+     *
+     * @return mixed
+     */
+    private function recursiveProcessParameters($parameters, ContentView $view)
+    {
+        if (is_array($parameters)) {
+            return $this->processParameters($parameters, $view);
+        }
+
+        return $this->parameterProcessor->process($parameters, $view);
     }
 }

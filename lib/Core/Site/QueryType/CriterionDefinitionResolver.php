@@ -197,7 +197,7 @@ final class CriterionDefinitionResolver
      *
      * @throws \RuntimeException
      *
-     * @return mixed
+     * @return string
      */
     private function getOperatorByValueType($value): string
     {

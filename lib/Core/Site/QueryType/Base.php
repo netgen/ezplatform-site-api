@@ -321,7 +321,7 @@ abstract class Base implements QueryType
     /**
      * @param string $name
      * @param mixed $parameters
-
+     *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
     private function resolveCriterionDefinitions(string $name, $parameters): array

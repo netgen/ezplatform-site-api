@@ -59,5 +59,7 @@ class ImageRuntime
                 "Couldn't create variation '{$variationName}' for image with id {$value->id} because an image could not be created from the given input"
             );
         }
+
+        return null;
     }
 }

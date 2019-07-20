@@ -113,7 +113,7 @@ class SortClauseParser
      *
      * @param string[] $values
      *
-     * @return mixed
+     * @return string
      */
     private function getDirection(array $values): string
     {

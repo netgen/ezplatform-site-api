@@ -17,7 +17,7 @@ use Twig\Environment;
 class FieldRenderingRuntime
 {
     /**
-     * @var \Twig\Environment
+     * @var \Twig\Environment|\Twig_Environment
      */
     private $environment;
 

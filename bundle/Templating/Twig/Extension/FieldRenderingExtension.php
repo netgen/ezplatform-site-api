@@ -12,6 +12,9 @@ use Twig\TwigFunction;
  */
 class FieldRenderingExtension extends AbstractExtension
 {
+    /**
+     * @return \Twig\TwigFunction[]
+     */
     public function getFunctions(): array
     {
         return [

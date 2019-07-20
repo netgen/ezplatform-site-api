@@ -13,6 +13,9 @@ use Twig\TwigFunction;
  */
 class QueryExtension extends AbstractExtension
 {
+    /**
+     * @return \Twig\TwigFunction[]
+     */
     public function getFunctions(): array
     {
         return [

@@ -9,6 +9,9 @@ use Twig\Extension\AbstractExtension;
 
 class GetAttrExpressionExtension extends AbstractExtension
 {
+    /**
+     * @return \Twig\NodeVisitor\NodeVisitorInterface[]
+     */
     public function getNodeVisitors(): array
     {
         return [

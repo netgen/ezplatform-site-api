@@ -9,6 +9,9 @@ use Twig\TwigFunction;
 
 class ImageExtension extends AbstractExtension
 {
+    /**
+     * @return \Twig\TwigFunction[]
+     */
     public function getFunctions(): array
     {
         return [

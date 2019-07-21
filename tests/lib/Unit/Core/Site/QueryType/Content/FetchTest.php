@@ -295,11 +295,6 @@ class FetchTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'publication_date' => [false],
-                ],
-            ],
-            [
-                [
                     'limit' => 'five',
                 ],
             ],

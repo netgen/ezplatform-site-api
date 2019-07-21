@@ -326,13 +326,6 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $content,
                     'relation_field' => 'field',
-                    'publication_date' => [false],
-                ],
-            ],
-            [
-                [
-                    'content' => $content,
-                    'relation_field' => 'field',
                     'limit' => 'five',
                 ],
             ],

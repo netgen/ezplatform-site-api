@@ -274,12 +274,6 @@ class ChildrenTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'publication_date' => [false],
-                ],
-            ],
-            [
-                [
-                    'location' => $location,
                     'limit' => 'five',
                 ],
             ],

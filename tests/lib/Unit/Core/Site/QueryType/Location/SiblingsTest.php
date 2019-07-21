@@ -326,12 +326,6 @@ class SiblingsTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'publication_date' => [false],
-                ],
-            ],
-            [
-                [
-                    'location' => $location,
                     'limit' => 'five',
                 ],
             ],

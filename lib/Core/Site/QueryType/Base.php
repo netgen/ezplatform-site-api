@@ -256,7 +256,6 @@ abstract class Base implements QueryType
             return true;
         };
 
-        $resolver->setAllowedValues('content_type', $identifierValuesCallback);
         $resolver->setAllowedValues('section', $identifierValuesCallback);
         $resolver->setAllowedValues(
             'publication_date',

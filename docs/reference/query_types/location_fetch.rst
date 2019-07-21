@@ -16,7 +16,7 @@ This Query Type is used to build general purpose Location queries.
 | Common      | - `content_type`_                                                            |
 | Content     | - `field`_                                                                   |
 | conditions  | - `is_field_empty`_                                                          |
-|             | - `publication_date`_                                                        |
+|             | - `creation_date`_                                                           |
 |             | - `section`_                                                                 |
 |             | - `state`_                                                                   |
 +-------------+------------------------------------------------------------------------------+

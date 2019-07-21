@@ -80,7 +80,13 @@ final class CriteriaBuilder
                 return $this->buildParentLocationId($definition);
             case 'priority':
                 return $this->buildPriority($definition);
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'publication_date':
+                @trigger_error(
+                    'publication_date is deprecated for removal in 3.0. Use creation_date instead.',
+                    E_USER_DEPRECATED
+                );
+            case 'creation_date':
                 return $this->buildDateMetadataCreated($definition);
             case 'section':
                 return $this->buildSection($definition);

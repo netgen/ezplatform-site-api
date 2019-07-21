@@ -1,7 +1,8 @@
-``publication_date``
-~~~~~~~~~~~~~~~~~~~~
+``creation_date``
+~~~~~~~~~~~~~~~~~
 
-Defines the publication date of the Content as a timestamp.
+Defines the creation (publication) date of the Content as a timestamp or time string as accepted by
+PHP function `strtotime <https://www.php.net/manual/en/function.strtotime.php>`_.
 
 - **value type**: ``integer``
 - **value format**: ``single``, ``array``
@@ -15,7 +16,7 @@ Examples:
 .. code-block:: yaml
 
     # identical to the example below
-    publication_date: 1535117737
+    creation_date: 1535117737
 
 .. code-block:: yaml
 
@@ -25,26 +26,26 @@ Examples:
 .. code-block:: yaml
 
     # identical to the example below
-    publication_date: [1435117737, 1535117737]
+    creation_date: [1435117737, 1535117737]
 
 .. code-block:: yaml
 
-    publication_date:
+    creation_date:
         in: [1435117737, 1535117737]
 
 .. code-block:: yaml
 
     # multiple operators are combined with logical AND
-    publication_date:
+    creation_date:
         gt: '29 June 1991'
         lte: '5 August 1995'
 
 .. code-block:: yaml
 
-    publication_date:
+    creation_date:
         gt: 'today'
 
 .. code-block:: yaml
 
-    publication_date:
+    creation_date:
         between: ['today', '+1 week 2 days 4 hours 2 seconds']

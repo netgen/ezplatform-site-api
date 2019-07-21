@@ -48,6 +48,7 @@ class FetchTest extends QueryTypeBaseTest
             'field',
             'is_field_empty',
             'publication_date',
+            'creation_date',
             'section',
             'state',
             'sort',
@@ -216,7 +217,7 @@ class FetchTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'publication_date' => '4 May 2018',
+                    'creation_date' => '4 May 2018',
                 ],
                 new LocationQuery([
                     'filter' => new DateMetadata(
@@ -244,12 +245,7 @@ class FetchTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'publication_date' => true,
-                ],
-            ],
-            [
-                [
-                    'publication_date' => [false],
+                    'creation_date' => true,
                 ],
             ],
             [
@@ -270,7 +266,7 @@ class FetchTest extends QueryTypeBaseTest
         return [
             [
                 [
-                    'publication_date' => [
+                    'creation_date' => [
                         'like' => 5,
                     ],
                 ],

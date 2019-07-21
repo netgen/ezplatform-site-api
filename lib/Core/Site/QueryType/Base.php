@@ -226,6 +226,7 @@ abstract class Base implements QueryType
             'field',
             'is_field_empty',
             'publication_date',
+            'creation_date',
             'section',
             'state',
         ]);
@@ -242,24 +243,9 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('limit', ['int']);
         $resolver->setAllowedTypes('offset', ['int']);
         $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
+        $resolver->setAllowedTypes('creation_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
 
-        $resolver->setAllowedValues(
-            'publication_date',
-            static function ($dates): bool {
-                if (!is_array($dates)) {
-                    return true;
-                }
-
-                foreach ($dates as $date) {
-                    if (!is_int($date) && !is_string($date)) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        );
         $resolver->setAllowedValues(
             'is_field_empty',
             static function ($isEmptyMap): bool {

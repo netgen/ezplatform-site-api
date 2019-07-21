@@ -215,7 +215,7 @@ class CriteriaBuilderTest extends TestCase
             [
                 [
                     new CriterionDefinition([
-                        'name' => 'publication_date',
+                        'name' => 'creation_date',
                         'target' => null,
                         'operator' => Operator::BETWEEN,
                         'value' => [123, 456],
@@ -424,7 +424,7 @@ class CriteriaBuilderTest extends TestCase
 
         $criteriaBuilder->build([
             new CriterionDefinition([
-                'name' => 'publication_date',
+                'name' => 'creation_date',
                 'target' => null,
                 'operator' => null,
                 'value' => 'someday',

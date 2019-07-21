@@ -76,8 +76,8 @@ class ContentViewRuntime
      *
      * Note that this is experimental. Please report any issues on https://github.com/netgen/ezplatform-site-api/issues
      *
-     * @param string $viewType
      * @param \eZ\Publish\API\Repository\Values\ValueObject $contentOrLocation
+     * @param string $viewType
      * @param array $parameters
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
@@ -87,8 +87,8 @@ class ContentViewRuntime
      * @return string The HTML markup
      */
     public function renderContentView(
-        string $viewType,
         ValueObject $contentOrLocation,
+        string $viewType,
         array $parameters = []
     ): string {
         $content = $this->getContent($contentOrLocation);

@@ -244,22 +244,6 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
 
-        $identifierValuesCallback = static function ($identifiers): bool {
-            if (!is_array($identifiers)) {
-                return true;
-            }
-
-            foreach ($identifiers as $identifier) {
-                if (!is_string($identifier)) {
-                    return false;
-                }
-            }
-
-            return true;
-        };
-
-        $resolver->setAllowedValues('content_type', $identifierValuesCallback);
-        $resolver->setAllowedValues('section', $identifierValuesCallback);
         $resolver->setAllowedValues(
             'publication_date',
             static function ($dates): bool {

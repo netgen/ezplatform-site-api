@@ -265,12 +265,6 @@ class ChildrenTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'content_type' => [1],
-                ],
-            ],
-            [
-                [
-                    'location' => $location,
                     'field' => 1,
                 ],
             ],

@@ -72,7 +72,9 @@ class FetchTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'content_type' => 'article',
+                    'content_type' => [
+                        'eq' => 'article',
+                    ],
                     'sort' => 'published desc',
                 ],
                 new Query([
@@ -84,14 +86,18 @@ class FetchTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'content_type' => 'article',
+                    'content_type' => [
+                        'in' => [
+                            'article',
+                        ],
+                    ],
                     'field' => [],
                     'sort' => [
                         'published asc',
                     ],
                 ],
                 new Query([
-                    'filter' => new ContentTypeIdentifier('article'),
+                    'filter' => new ContentTypeIdentifier(['article']),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
@@ -194,11 +200,6 @@ class FetchTest extends QueryTypeBaseTest
             [
                 [
                     'content_type' => 1,
-                ],
-            ],
-            [
-                [
-                    'content_type' => [1],
                 ],
             ],
             [

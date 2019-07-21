@@ -19,6 +19,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Depth as DepthSortClause;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Priority;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Fetch;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -112,7 +113,7 @@ class FetchTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'content_type' => 'article',
+                    'section' => 'standard',
                     'field' => [],
                     'depth' => 5,
                     'sort' => [
@@ -122,7 +123,7 @@ class FetchTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
-                        new ContentTypeIdentifier('article'),
+                        new SectionIdentifier('standard'),
                         new DepthCriterion(Operator::EQ, 5),
                     ]),
                     'sortClauses' => [
@@ -133,7 +134,9 @@ class FetchTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'content_type' => 'article',
+                    'section' => [
+                        'eq' => 'standard',
+                    ],
                     'field' => [
                         'title' => 'Hello',
                     ],
@@ -141,7 +144,7 @@ class FetchTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
-                        new ContentTypeIdentifier('article'),
+                        new SectionIdentifier('standard'),
                         new Field('title', Operator::EQ, 'Hello'),
                     ]),
                     'sortClauses' => [
@@ -151,7 +154,11 @@ class FetchTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'content_type' => 'article',
+                    'section' => [
+                        'in' => [
+                            'standard',
+                        ],
+                    ],
                     'parent_location_id' => 42,
                     'subtree' => '/1/2/42/',
                     'field' => [
@@ -166,7 +173,7 @@ class FetchTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
-                        new ContentTypeIdentifier('article'),
+                        new SectionIdentifier(['standard']),
                         new ParentLocationId(42),
                         new Subtree('/1/2/42/'),
                         new Field('title', Operator::EQ, 'Hello'),
@@ -228,11 +235,6 @@ class FetchTest extends QueryTypeBaseTest
             [
                 [
                     'content_type' => 1,
-                ],
-            ],
-            [
-                [
-                    'content_type' => [1],
                 ],
             ],
             [

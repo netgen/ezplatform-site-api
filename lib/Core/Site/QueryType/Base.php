@@ -243,22 +243,6 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('state', ['array']);
 
         $resolver->setAllowedValues(
-            'publication_date',
-            function ($dates) {
-                if (!is_array($dates)) {
-                    return true;
-                }
-
-                foreach ($dates as $date) {
-                    if (!is_int($date) && !is_string($date)) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        );
-        $resolver->setAllowedValues(
             'is_field_empty',
             static function ($isEmptyMap) {
                 foreach ($isEmptyMap as $key => $value) {

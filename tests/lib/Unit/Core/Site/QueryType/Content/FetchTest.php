@@ -188,6 +188,90 @@ class FetchTest extends QueryTypeBaseTest
                     ],
                 ]),
             ],
+            [
+                [
+                    'publication_date' => [
+                        'eq' => '4 May 2018',
+                    ],
+                    'sort' => 'published asc',
+                ],
+                new Query([
+                    'filter' => new DateMetadata(
+                        DateMetadata::CREATED,
+                        Operator::EQ,
+                        1525384800
+                    ),
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_ASC),
+                    ],
+                ]),
+            ],
+            [
+                [
+                    'publication_date' => [
+                        'in' => [
+                            '4 May 2018',
+                            '21 July 2019',
+                        ],
+                    ],
+                    'sort' => 'published asc',
+                ],
+                new Query([
+                    'filter' => new DateMetadata(
+                        DateMetadata::CREATED,
+                        Operator::IN,
+                        [
+                            1525384800,
+                            1563660000,
+                        ]
+                    ),
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_ASC),
+                    ],
+                ]),
+            ],
+            [
+                [
+                    'publication_date' => [
+                        'between' => [
+                            '4 May 2018',
+                            '21 July 2019',
+                        ],
+                    ],
+                    'sort' => 'published asc',
+                ],
+                new Query([
+                    'filter' => new DateMetadata(
+                        DateMetadata::CREATED,
+                        Operator::BETWEEN,
+                        [
+                            1525384800,
+                            1563660000,
+                        ]
+                    ),
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_ASC),
+                    ],
+                ]),
+            ],
+            [
+                [
+                    'publication_date' => [
+                        'gte' => '4 May 2018',
+                    ],
+                    'sort' => 'published asc',
+                ],
+                new Query([
+                    'filter' => new DateMetadata(
+                        DateMetadata::CREATED,
+                        Operator::GTE,
+                        1525384800
+                    ),
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_ASC),
+                    ],
+                ]),
+            ],
         ];
     }
 

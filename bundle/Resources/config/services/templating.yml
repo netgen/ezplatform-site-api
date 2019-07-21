@@ -13,7 +13,25 @@ services:
             - '@ezpublish.templating.field_block_renderer'
             - '@ezpublish.fieldType.parameterProviderRegistry'
         tags:
-            - {name: twig.runtime}
+            - { name: twig.runtime }
+
+    netgen.ezplatform_site.twig.extension.content_rendering:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ContentViewExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    netgen.ezplatform_site.twig.runtime.content_rendering:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ContentViewRuntime
+        # public: false
+        arguments:
+            - '@request_stack'
+            - '@controller_resolver'
+            - '@argument_resolver'
+            - '@netgen.ezplatform_site.view_builder.content'
+            - '@ezpublish.view.template_renderer'
+        tags:
+            - { name: twig.runtime }
 
     netgen.ezplatform_site.twig.extension.image:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ImageExtension

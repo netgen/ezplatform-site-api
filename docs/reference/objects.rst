@@ -314,7 +314,7 @@ will be sorted as is defined by the relation field.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
 |                                        |                                                                                    |
-|                                        |     {% set relations = content.fieldRelation('images') %}                          |
+|                                        |     {% set relations = content.fieldRelations('images') %}                         |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 

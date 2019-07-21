@@ -337,12 +337,6 @@ class SubtreeTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'publication_date' => [false],
-                ],
-            ],
-            [
-                [
-                    'location' => $location,
                     'limit' => 'five',
                 ],
             ],

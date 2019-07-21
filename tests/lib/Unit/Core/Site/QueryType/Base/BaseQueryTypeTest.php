@@ -223,11 +223,6 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'publication_date' => [false],
-                ],
-            ],
-            [
-                [
                     'limit' => 'five',
                 ],
             ],

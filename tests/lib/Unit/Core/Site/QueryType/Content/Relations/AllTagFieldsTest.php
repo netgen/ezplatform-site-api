@@ -328,12 +328,6 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'publication_date' => [false],
-                ],
-            ],
-            [
-                [
-                    'content' => $content,
                     'limit' => 'five',
                 ],
             ],

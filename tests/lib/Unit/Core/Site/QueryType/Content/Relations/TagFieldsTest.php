@@ -329,13 +329,6 @@ class TagFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $content,
                     'relation_field' => 'field',
-                    'content_type' => [1],
-                ],
-            ],
-            [
-                [
-                    'content' => $content,
-                    'relation_field' => 'field',
                     'field' => 1,
                 ],
             ],

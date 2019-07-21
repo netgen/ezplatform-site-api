@@ -213,11 +213,6 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'content_type' => [1],
-                ],
-            ],
-            [
-                [
                     'field' => 1,
                 ],
             ],

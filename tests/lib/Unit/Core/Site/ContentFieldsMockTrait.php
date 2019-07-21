@@ -30,7 +30,7 @@ trait ContentFieldsMockTrait
     protected $siteMock;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper[]
      */
     protected $domainObjectMapper;
 
@@ -98,22 +98,24 @@ trait ContentFieldsMockTrait
     }
 
     /**
+     * @param bool $failOnMissingFields
+     *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
-    protected function getDomainObjectMapper(): DomainObjectMapper
+    protected function getDomainObjectMapper(bool $failOnMissingFields = true): DomainObjectMapper
     {
-        if ($this->domainObjectMapper !== null) {
-            return $this->domainObjectMapper;
+        if ($this->domainObjectMapper[$failOnMissingFields] !== null) {
+            return $this->domainObjectMapper[$failOnMissingFields];
         }
 
-        $this->domainObjectMapper = new DomainObjectMapper(
+        $this->domainObjectMapper[$failOnMissingFields] = new DomainObjectMapper(
             $this->getSiteMock(),
             $this->getRepositoryMock(),
-            true,
+            $failOnMissingFields,
             new NullLogger()
         );
 
-        return $this->domainObjectMapper;
+        return $this->domainObjectMapper[$failOnMissingFields];
     }
 
     /**

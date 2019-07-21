@@ -19,10 +19,10 @@ use eZ\Publish\Core\FieldType\Relation\Value as RelationValue;
 use eZ\Publish\Core\FieldType\RelationList\Value as RelationListValue;
 use eZ\Publish\Core\FieldType\TextLine\Value;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\Relation;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\RelationList;
+use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\Surrogate;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ForwardFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
@@ -53,6 +53,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
             new Registry([
                 'ezobjectrelation' => new Relation(),
                 'ezobjectrelationlist' => new RelationList(),
+                'ngsurrogate' => new Surrogate(),
             ])
         );
     }
@@ -105,19 +106,19 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function getTestContent(): Content
+    protected function getTestContent(bool $failOnMissingFields = true): Content
     {
         return new Content(
             [
                 'id' => 42,
                 'site' => false,
-                'domainObjectMapper' => $this->getDomainObjectMapper(),
+                'domainObjectMapper' => $this->getDomainObjectMapper($failOnMissingFields),
                 'repository' => $this->getRepositoryMock(),
                 'innerContent' => $this->getRepoContent(),
                 'innerVersionInfo' => $this->getRepoVersionInfo(),
                 'languageCode' => 'eng-GB',
             ],
-            true,
+            $failOnMissingFields,
             new NullLogger()
         );
     }
@@ -301,7 +302,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
         ]);
     }
 
-    public function testGetQueryWithNonexistentField(): void
+    public function testGetQueryWithNonexistentFieldFails(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Field "relations_c" in Content #42 does not exist');
@@ -315,6 +316,32 @@ class ForwardFieldsTest extends QueryTypeBaseTest
             'content_type' => 'article',
             'sort' => 'published desc',
         ]);
+    }
+
+    public function testGetQueryWithNonexistentFieldDoesNotFail(): void
+    {
+        $queryType = $this->getQueryTypeUnderTest();
+        $content = $this->getTestContent(false);
+
+        $query = $queryType->getQuery([
+            'content' => $content,
+            'relation_field' => ['relations_a', 'relations_c'],
+            'content_type' => 'article',
+            'sort' => 'published desc',
+        ]);
+
+        $this->assertEquals(
+            new Query([
+                'filter' => new LogicalAnd([
+                    new ContentTypeIdentifier('article'),
+                    new ContentId([1, 2, 3]),
+                ]),
+                'sortClauses' => [
+                    new DatePublished(Query::SORT_DESC),
+                ],
+            ]),
+            $query
+        );
     }
 
     public function providerForTestGetQueryWithInvalidOptions(): array

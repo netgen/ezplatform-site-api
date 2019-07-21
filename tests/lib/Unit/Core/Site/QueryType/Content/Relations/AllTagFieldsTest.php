@@ -125,6 +125,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             'field',
             'is_field_empty',
             'publication_date',
+            'creation_date',
             'section',
             'state',
             'sort',
@@ -277,7 +278,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $contentWithTags,
-                    'publication_date' => '4 May 2018',
+                    'creation_date' => '4 May 2018',
                     'sort' => [
                         new DatePublished(Query::SORT_DESC),
                         new ContentName(Query::SORT_ASC),
@@ -322,7 +323,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'publication_date' => true,
+                    'creation_date' => true,
                 ],
             ],
             [
@@ -348,7 +349,7 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'publication_date' => [
+                    'creation_date' => [
                         'like' => 5,
                     ],
                 ],

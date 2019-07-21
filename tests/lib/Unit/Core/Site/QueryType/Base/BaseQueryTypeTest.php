@@ -38,6 +38,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             'field',
             'is_field_empty',
             'publication_date',
+            'creation_date',
             'section',
             'state',
             'sort',
@@ -164,7 +165,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'publication_date' => '4 May 2018',
+                    'creation_date' => '4 May 2018',
                     'sort' => [
                         new DatePublished(Query::SORT_DESC),
                         new ContentName(Query::SORT_ASC),
@@ -218,7 +219,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
             ],
             [
                 [
-                    'publication_date' => true,
+                    'creation_date' => true,
                 ],
             ],
             [
@@ -251,7 +252,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
         return [
             [
                 [
-                    'publication_date' => [
+                    'creation_date' => [
                         'like' => 5,
                     ],
                 ],

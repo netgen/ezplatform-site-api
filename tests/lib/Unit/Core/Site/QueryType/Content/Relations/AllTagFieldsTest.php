@@ -316,12 +316,6 @@ class AllTagFieldsTest extends QueryTypeBaseTest
             [
                 [
                     'content' => $content,
-                    'content_type' => [1],
-                ],
-            ],
-            [
-                [
-                    'content' => $content,
                     'field' => 1,
                 ],
             ],

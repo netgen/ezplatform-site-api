@@ -5,7 +5,7 @@ namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\OptionsResolver\Exception\ExceptionInterface;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 /**
  * Base QueryType test case.
@@ -118,7 +118,7 @@ abstract class QueryTypeBaseTest extends TestCase
      */
     public function testGetQueryWithInvalidOptions(array $parameters)
     {
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(InvalidOptionsException::class);
 
         $queryType = $this->getQueryTypeUnderTest();
 

@@ -12,8 +12,6 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,36 +51,30 @@ class ContentViewRuntime
     private $viewRenderer;
 
     /**
-     * @var \Psr\Log\LoggerInterface|\Psr\Log\NullLogger|null
-     */
-    private $logger;
-
-    /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface $controllerResolver
      * @param \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface $argumentResolver
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder $viewBuilder
      * @param \eZ\Publish\Core\MVC\Symfony\View\Renderer $viewRenderer
-     * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
         RequestStack $requestStack,
         ControllerResolverInterface $controllerResolver,
         ArgumentResolverInterface $argumentResolver,
         ContentViewBuilder $viewBuilder,
-        Renderer $viewRenderer,
-        ?LoggerInterface $logger = null
+        Renderer $viewRenderer
     ) {
         $this->requestStack = $requestStack;
         $this->controllerResolver = $controllerResolver;
         $this->argumentResolver = $argumentResolver;
         $this->viewBuilder = $viewBuilder;
         $this->viewRenderer = $viewRenderer;
-        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
      * Renders the HTML for a given $content.
+     *
+     * Note that this is experimental. Please report any issues on https://github.com/netgen/ezplatform-site-api/issues
      *
      * @param string $viewType
      * @param \eZ\Publish\API\Repository\Values\ValueObject $contentOrLocation
@@ -99,8 +91,6 @@ class ContentViewRuntime
         ValueObject $contentOrLocation,
         array $parameters = []
     ): string {
-        $this->logger->critical('Twig function "ng_view_content" is experimental. Please report any issues on https://github.com/netgen/ezplatform-site-api/issues');
-
         $content = $this->getContent($contentOrLocation);
 
         $view = $this->viewBuilder->buildView([

@@ -273,6 +273,24 @@ class FetchTest extends QueryTypeBaseTest
                     ],
                 ]),
             ],
+            [
+                [
+                    'publication_date' => [
+                        'gte' => '4 May 2018',
+                    ],
+                    'sort' => 'published asc',
+                ],
+                new Query([
+                    'filter' => new DateMetadata(
+                        DateMetadata::CREATED,
+                        Operator::GTE,
+                        1525384800
+                    ),
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_ASC),
+                    ],
+                ]),
+            ],
         ];
     }
 

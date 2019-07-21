@@ -79,6 +79,7 @@ final class CriteriaBuilder
             case 'priority':
                 return $this->buildPriority($definition);
             case 'publication_date':
+            case 'creation_date':
                 return $this->buildDateMetadataCreated($definition);
             case 'section':
                 return $this->buildSection($definition);

@@ -61,6 +61,7 @@ class SubtreeTest extends QueryTypeBaseTest
             'field',
             'is_field_empty',
             'publication_date',
+            'creation_date',
             'section',
             'state',
             'sort',
@@ -294,7 +295,7 @@ class SubtreeTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'publication_date' => '4 May 2018',
+                    'creation_date' => '4 May 2018',
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
@@ -331,7 +332,7 @@ class SubtreeTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'publication_date' => true,
+                    'creation_date' => true,
                 ],
             ],
             [
@@ -357,7 +358,7 @@ class SubtreeTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
-                    'publication_date' => [
+                    'creation_date' => [
                         'like' => 5,
                     ],
                 ],

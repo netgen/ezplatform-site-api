@@ -109,6 +109,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
             'field',
             'is_field_empty',
             'publication_date',
+            'creation_date',
             'section',
             'state',
             'sort',
@@ -242,7 +243,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $content,
                     'relation_field' => ['relations_a', 'relations_b'],
-                    'publication_date' => '4 May 2018',
+                    'creation_date' => '4 May 2018',
                     'sort' => [
                         new DatePublished(Query::SORT_DESC),
                         new ContentName(Query::SORT_ASC),
@@ -319,7 +320,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $content,
                     'relation_field' => 'field',
-                    'publication_date' => true,
+                    'creation_date' => true,
                 ],
             ],
             [
@@ -354,7 +355,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                 [
                     'content' => $content,
                     'relation_field' => ['relations_a', 'relations_b'],
-                    'publication_date' => [
+                    'creation_date' => [
                         'like' => 5,
                     ],
                 ],

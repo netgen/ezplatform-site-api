@@ -303,6 +303,7 @@ abstract class Base implements QueryType
             case 'parent_location_id':
             case 'priority':
             case 'publication_date':
+            case 'creation_date':
             case 'section':
             case 'subtree':
             case 'visible':

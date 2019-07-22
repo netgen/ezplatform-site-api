@@ -51,6 +51,8 @@ final class Siblings extends Location
      * {@inheritdoc}
      *
      * @throws \InvalidArgumentException
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
      */
     protected function getFilterCriteria(array $parameters): array
     {

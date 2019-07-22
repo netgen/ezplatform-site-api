@@ -5,11 +5,11 @@ Defines conditions on whether the Content fields are empty or not.
 
 .. note::
 
-  ``IsEmptyField`` criterion is upported only by Solr search engine, so this condition can be
+  ``IsEmptyField`` criterion is supported only by Solr search engine, so this condition can be
   used only with the ``FindService``. In order to use it configure the query with parameter ``use_filter``
   set to ``false``.
 
-- **value type**: ``boolean``
+- **value type**: ``boolean``, ``null``
 - **value format**: ``single``
 - **operators**: ``eq``
 - **target**: ``string`` Field identifier
@@ -23,3 +23,9 @@ Examples:
     is_field_empty:
         image: false
         video: true
+
+.. code-block:: yaml
+
+    # allow both empty and non-empty fields, which is also the default behaviour
+    is_field_empty:
+        audio: ~

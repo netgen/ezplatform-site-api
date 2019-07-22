@@ -325,6 +325,13 @@ class FetchTest extends QueryTypeBaseTest
                     'offset' => 'ten',
                 ],
             ],
+            [
+                [
+                    'is_field_empty' => [
+                        'audio' => 7,
+                    ],
+                ],
+            ],
         ];
     }
 

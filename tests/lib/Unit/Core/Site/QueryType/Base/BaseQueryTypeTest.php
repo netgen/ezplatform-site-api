@@ -191,6 +191,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                     'is_field_empty' => [
                         'image' => false,
                         'video' => true,
+                        'audio' => null,
                     ],
                     'sort' => 'published desc',
                 ],
@@ -199,6 +200,20 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                         new IsFieldEmpty('image', IsFieldEmpty::IS_NOT_EMPTY),
                         new IsFieldEmpty('video', IsFieldEmpty::IS_EMPTY),
                     ]),
+                    'sortClauses' => [
+                        new DatePublished(Query::SORT_DESC),
+                    ],
+                ]),
+            ],
+            [
+                [
+                    'is_field_empty' => [
+                        'image' => null,
+                    ],
+                    'sort' => 'published desc',
+                ],
+                new Query([
+                    'filter' => null,
                     'sortClauses' => [
                         new DatePublished(Query::SORT_DESC),
                     ],

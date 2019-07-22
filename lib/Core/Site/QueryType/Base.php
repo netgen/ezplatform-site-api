@@ -250,7 +250,7 @@ abstract class Base implements QueryType
             'is_field_empty',
             static function ($isEmptyMap): bool {
                 foreach ($isEmptyMap as $key => $value) {
-                    if (!is_string($key) || !is_bool($value)) {
+                    if (!is_string($key) || ($value !== null && !is_bool($value))) {
                         return false;
                     }
                 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use InvalidArgumentException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
@@ -29,34 +30,28 @@ final class QueryDefinitionMapper
     private $parameterProcessor;
 
     /**
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     */
+    private $configResolver;
+
+    /**
      * @var array
      */
-    private $namedQueryConfiguration = [];
+    private $namedQueryConfiguration;
 
     /**
      * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor $parameterProcessor
+     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
      */
     public function __construct(
         QueryTypeRegistry $queryTypeRegistry,
-        ParameterProcessor $parameterProcessor
+        ParameterProcessor $parameterProcessor,
+        ConfigResolverInterface $configResolver
     ) {
         $this->queryTypeRegistry = $queryTypeRegistry;
         $this->parameterProcessor = $parameterProcessor;
-    }
-
-    /**
-     * Setter for 'ng_named_query' semantic configuration.
-     *
-     * @param array $configuration
-     */
-    public function setNamedQueryConfiguration(array $configuration = null): void
-    {
-        if (null === $configuration) {
-            $configuration = [];
-        }
-
-        $this->namedQueryConfiguration = $configuration;
+        $this->configResolver = $configResolver;
     }
 
     /**
@@ -72,7 +67,7 @@ final class QueryDefinitionMapper
     public function map(array $configuration, ContentView $view): QueryDefinition
     {
         if (isset($configuration['named_query'])) {
-            $namedQueryConfiguration = $this->getNamedQueryConfiguration($configuration['named_query']);
+            $namedQueryConfiguration = $this->getQueryConfigurationByName($configuration['named_query']);
             $configuration = $this->overrideConfiguration($namedQueryConfiguration, $configuration);
         }
 
@@ -110,8 +105,10 @@ final class QueryDefinitionMapper
      *
      * @return array
      */
-    private function getNamedQueryConfiguration(string $name): array
+    private function getQueryConfigurationByName(string $name): array
     {
+        $this->setNamedQueryConfiguration();
+
         if (array_key_exists($name, $this->namedQueryConfiguration)) {
             return $this->namedQueryConfiguration[$name];
         }
@@ -119,6 +116,21 @@ final class QueryDefinitionMapper
         throw new InvalidArgumentException(
             "Could not find query configuration named '{$name}'"
         );
+    }
+
+    private function setNamedQueryConfiguration(): void
+    {
+        if ($this->namedQueryConfiguration !== null) {
+            return;
+        }
+
+        $configuration = $this->configResolver->getParameter('ng_named_query');
+
+        if ($configuration === null) {
+            $configuration = [];
+        }
+
+        $this->namedQueryConfiguration = $configuration;
     }
 
     /**

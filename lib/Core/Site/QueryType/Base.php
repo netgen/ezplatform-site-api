@@ -340,12 +340,12 @@ abstract class Base implements QueryType
 
     /**
      * @param \Closure $builder
-     * @param $name
-     * @param $parameters
+     * @param string $name
+     * @param array $parameters
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
      */
-    private function buildCriteria(Closure $builder, $name, $parameters): array
+    private function buildCriteria(Closure $builder, string $name, array $parameters): array
     {
         $criteria = [];
 

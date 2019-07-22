@@ -24,9 +24,13 @@ Site API provides two Twig functions for content rendering:
 
   .. note::
 
-    This function is not a complete replacement for rendering Content views. Because it does not
-    dispatch MVC events, it's safe to use only for those views that don't depend on them. This
-    should be the case for most of them.
+    This function is not a complete replacement for rendering Content views, since it does not
+    dispatch MVC events from eZ Publish Kernel, like ``MVCEvents::PRE_CONTENT_VIEW``. For that
+    reason it's safe to use only for those views that don't depend on them. This should be the case
+    for most of them.
+
+    Depending on the use case, you might be able to replace usage of MVC events with ``ViewEvents``
+    from eZ Publish Kernel, which **are** dispatched by ``ng_view_content``.
 
   The function accepts four parameters, similar as `parameters available for ez_content:viewAction
   controller <https://doc.ezplatform.com/en/latest/guide/templates/#available-arguments>`_:

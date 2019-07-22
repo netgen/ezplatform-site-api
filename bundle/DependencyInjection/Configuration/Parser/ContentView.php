@@ -12,9 +12,9 @@ use Twig\Lexer;
 
 class ContentView extends AbstractParser
 {
-    const QUERY_KEY = 'queries';
-    const NODE_KEY = 'ngcontent_view';
-    const INFO = 'Template selection settings when displaying a content with Netgen Site API';
+    public const QUERY_KEY = 'queries';
+    public const NODE_KEY = 'ngcontent_view';
+    private const INFO = 'Template selection settings when displaying a content with Netgen Site API';
 
     /**
      * Adds semantic configuration definition.

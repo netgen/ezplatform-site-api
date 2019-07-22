@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UrlAliasRouter extends BaseUrlAliasRouter
 {
-    const OVERRIDE_VIEW_ACTION = 'ng_content:viewAction';
+    public const OVERRIDE_VIEW_ACTION = 'ng_content:viewAction';
 
     public function matchRequest(Request $request): array
     {

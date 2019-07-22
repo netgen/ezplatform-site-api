@@ -192,21 +192,11 @@ abstract class Base implements QueryType
         return $query;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface
-     */
     final public function getSupportedParameters(): array
     {
         return $this->getOptionsResolver()->getDefinedOptions();
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface
-     */
     final public function supportsParameter(string $name): bool
     {
         return $this->getOptionsResolver()->isDefined($name);
@@ -214,8 +204,6 @@ abstract class Base implements QueryType
 
     /**
      * Configure $resolver for the QueryType.
-     *
-     * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
@@ -441,8 +429,6 @@ abstract class Base implements QueryType
 
     /**
      * Builds the resolver and configures it using configureOptions().
-     *
-     * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface
      *
      * @return \Symfony\Component\OptionsResolver\OptionsResolver
      */

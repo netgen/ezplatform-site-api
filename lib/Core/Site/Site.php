@@ -95,7 +95,7 @@ class Site implements SiteInterface
         Repository $repository,
         SearchService $filteringSearchService,
         RelationResolverRegistry $relationResolverRegistry,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->settings = $settings;
         $this->repository = $repository;

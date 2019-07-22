@@ -6,6 +6,78 @@ common use cases. Objects are documented in more detail on :doc:`Objects referen
 
 Site API provides two Twig functions for content rendering:
 
+- ``ng_view_content``
+
+  .. warning::
+
+    Twig function ``ng_view_content`` is considered to be experimental. Once the correct behavior is
+    confirmed in practice, this warning will be removed.
+
+  This function provides a way to render Content view without executing a subrequest. The idea is
+  to avoid bad performance of subrequests in debug mode. Because of profiling that is active in
+  debug mode, having a lots of subrequests on a page can significantly affect performance. Since for
+  a large part of use cases it's not really necessary to render Content views through a subrequest,
+  having an alternative way to render them can improve performance and developer's experience.
+
+  The function can be used for views defined in Site API view configuration and it supports custom
+  controllers.
+
+  .. note::
+
+    This function is not a complete replacement for rendering Content views. Because it does not
+    dispatch MVC events, it's safe to use only for those views that don't depend on them. This
+    should be the case for most of them.
+
+  The function accepts four parameters, similar as `parameters available for ez_content:viewAction
+  controller <https://doc.ezplatform.com/en/latest/guide/templates/#available-arguments>`_:
+
+  1. **required** Content or Location object
+  2. **required** string view identifier (e.g. ``line``, ``block``)
+  3. **optional** array of parameters, with keys as parameter names and corresponding values as
+     parameter values
+
+    Parameters defined through this array will be available as Request attributes and can be passed
+    as arguments to the controller action if defined there. Also, parameter with name ``params`` is
+    recognized as an array of custom view parameters and will be available in the view object and in
+    the rendered template.
+
+  4. **optional** boolean value indicating whether to render the template in the configured layout,
+     by default ``false``
+
+  Example usage:
+
+  .. code-block:: twig
+
+    {{ ng_view_content(
+        content,
+        'line',
+        {
+            'foo': 'bar',
+            'params': {
+                'custom': 'view param'
+            }
+        },
+        false
+    ) }}
+
+  The example above is intended to replace the following Content view render through the subrequest:
+
+  .. code-block:: twig
+
+    {{ render(
+        controller(
+            'ng_content:viewAction', {
+                'contentId': content.id,
+                'viewType': 'line',
+                'layout': false,
+                'foo': 'bar',
+                'params': {
+                    'custom': 'view param'
+                }
+            }
+        )
+    ) }}
+
 - ``ng_render_field``
 
   Similar to ``ez_render_field`` from eZ Platform, this function is used to render the Content's
@@ -24,9 +96,9 @@ Site API provides two Twig functions for content rendering:
 
     <img src="{{ ng_image_alias( content.fields.image, 'large' ).uri }}" />
 
-Both are shown in more detail in the examples below. There are two other Twig functions,
-``ng_query`` and ``ng_raw_query``. These are used with Query Types and are documented separately on
-:doc:`Query Types reference</reference/query_types>` documentation page.
+``ng_render_field`` and ``ng_image_alias`` are shown in more detail in the examples below. There are
+two other Twig functions, ``ng_query`` and ``ng_raw_query``. These are used with Query Types and are
+documented separately on :doc:`Query Types reference</reference/query_types>` documentation page.
 
 Basic usage
 -----------

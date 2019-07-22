@@ -185,37 +185,51 @@ class QueryDefinitionMapperTest extends TestCase
     {
         $queryDefinitionMapper = new QueryDefinitionMapper(
             $this->getQueryTypeRegistryMock(),
-            $this->getParameterProcessor()
+            $this->getParameterProcessor(),
+            $this->getConfigResolverMock()
         );
 
-        $queryDefinitionMapper->setNamedQueryConfiguration([
-            'named_query' => [
-                'query_type' => 'query_type',
-                'use_filter' => true,
-                'max_per_page' => 10,
-                'page' => 1,
-                'parameters' => [
-                    'some' => [
-                        'parameters' => 'and stuff',
-                    ],
-                    'chair' => 'table',
-                ],
-            ],
-            'named_site_query' => [
-                'query_type' => 'site_query_type',
-                'use_filter' => true,
-                'max_per_page' => 10,
-                'page' => 1,
-                'parameters' => [
-                    'some' => [
-                        'parameters' => 'and other stuff',
-                    ],
-                    'spoon' => 'soup',
-                ],
-            ],
-        ]);
-
         return $queryDefinitionMapper;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\MVC\ConfigResolverInterface
+     */
+    protected function getConfigResolverMock(): MockObject
+    {
+        $configResolverMock = $this->getMockBuilder(ConfigResolverInterface::class)->getMock();
+
+        $configResolverMock
+            ->method('getParameter')
+            ->with('ng_named_query')
+            ->willReturn([
+                'named_query' => [
+                    'query_type' => 'query_type',
+                    'use_filter' => true,
+                    'max_per_page' => 10,
+                    'page' => 1,
+                    'parameters' => [
+                        'some' => [
+                            'parameters' => 'and stuff',
+                        ],
+                        'chair' => 'table',
+                    ],
+                ],
+                'named_site_query' => [
+                    'query_type' => 'site_query_type',
+                    'use_filter' => true,
+                    'max_per_page' => 10,
+                    'page' => 1,
+                    'parameters' => [
+                        'some' => [
+                            'parameters' => 'and other stuff',
+                        ],
+                        'spoon' => 'soup',
+                    ],
+                ],
+            ]);
+
+        return $configResolverMock;
     }
 
     /**

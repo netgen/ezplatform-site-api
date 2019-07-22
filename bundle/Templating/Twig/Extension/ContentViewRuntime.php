@@ -113,7 +113,7 @@ class ContentViewRuntime
             return $this->viewRenderer->render($view);
         }
 
-        return $this->renderController($view, $controllerReference);
+        return $this->renderController($view, $controllerReference, ['layout' => $layout] + $parameters);
     }
 
     /**
@@ -154,10 +154,10 @@ class ContentViewRuntime
         throw new LogicException('Given value must be Content or Location instance.');
     }
 
-    private function renderController(ContentView $contentView, ControllerReference $controllerReference): string
+    private function renderController(ContentView $contentView, ControllerReference $controllerReference, array $arguments): string
     {
         $controller = $this->resolveController($controllerReference);
-        $arguments = $this->resolveControllerArguments($contentView, $controller);
+        $arguments = $this->resolveControllerArguments($contentView, $controller, $arguments);
 
         $result = call_user_func_array($controller, $arguments);
 
@@ -187,7 +187,7 @@ class ContentViewRuntime
         return $controller;
     }
 
-    private function resolveControllerArguments(ContentView $contentView, callable $controller): array
+    private function resolveControllerArguments(ContentView $contentView, callable $controller, array $arguments): array
     {
         $request = $this->requestStack->getMasterRequest();
 
@@ -198,6 +198,7 @@ class ContentViewRuntime
         $request = $request->duplicate();
         $request->attributes->set('view', $contentView);
         $request->attributes->add($contentView->getParameters());
+        $request->attributes->add($arguments);
 
         return $this->argumentResolver->getArguments($request, $controller);
     }

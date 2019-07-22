@@ -78,20 +78,14 @@ class ContentView extends BaseView implements ContentValueView, LocationValueVie
         return $this->location;
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     */
-    public function setContent(RepoContent $content): void
+    public function setContent(): void
     {
         throw new RuntimeException(
             'Method setContent() cannot be used with Site API content view. Use setSiteContent() method instead.'
         );
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     */
-    public function setLocation(RepoLocation $location): void
+    public function setLocation(): void
     {
         throw new RuntimeException(
             'Method setLocation() cannot be used with Site API content view. Use setSiteLocation() method instead.'

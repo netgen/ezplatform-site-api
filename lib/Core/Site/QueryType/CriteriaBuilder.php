@@ -330,6 +330,10 @@ final class CriteriaBuilder
      */
     private function buildIsFieldEmpty(CriterionDefinition $definition)
     {
+        if ($definition->value === null) {
+            return null;
+        }
+
         $value = $definition->value ? IsFieldEmpty::IS_EMPTY : IsFieldEmpty::IS_NOT_EMPTY;
 
         return new IsFieldEmpty($definition->target, $value);

@@ -98,7 +98,7 @@ class ContentViewRuntime
             'content' => $content,
             'location' => $this->getLocation($contentOrLocation),
             '_controller' => 'ng_content:viewAction',
-        ]);
+        ] + $parameters);
 
         if (!$this->viewMatched($view)) {
             throw new LogicException("Couldn't match view '{$viewType}' for Content #{$content->id}");

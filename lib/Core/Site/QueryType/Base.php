@@ -248,7 +248,7 @@ abstract class Base implements QueryType
 
         $resolver->setAllowedValues(
             'is_field_empty',
-            static function ($isEmptyMap): bool {
+            static function (array $isEmptyMap): bool {
                 foreach ($isEmptyMap as $key => $value) {
                     if (!is_string($key) || ($value !== null && !is_bool($value))) {
                         return false;

@@ -79,6 +79,7 @@ class ContentViewRuntime
      * @param \eZ\Publish\API\Repository\Values\ValueObject $contentOrLocation
      * @param string $viewType
      * @param array $parameters
+     * @param bool $layout
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
@@ -89,22 +90,22 @@ class ContentViewRuntime
     public function renderContentView(
         ValueObject $contentOrLocation,
         string $viewType,
-        array $parameters = []
+        array $parameters = [],
+        bool $layout = false
     ): string {
         $content = $this->getContent($contentOrLocation);
 
         $view = $this->viewBuilder->buildView([
-            'viewType' => $viewType,
             'content' => $content,
             'location' => $this->getLocation($contentOrLocation),
+            'viewType' => $viewType,
+            'layout' => $layout,
             '_controller' => 'ng_content:viewAction',
         ] + $parameters);
 
         if (!$this->viewMatched($view)) {
             throw new LogicException("Couldn't match view '{$viewType}' for Content #{$content->id}");
         }
-
-        $view->addParameters($parameters);
 
         $controllerReference = $view->getControllerReference();
 
@@ -196,6 +197,7 @@ class ContentViewRuntime
 
         $request = $request->duplicate();
         $request->attributes->set('view', $contentView);
+        $request->attributes->add($contentView->getParameters());
 
         return $this->argumentResolver->getArguments($request, $controller);
     }

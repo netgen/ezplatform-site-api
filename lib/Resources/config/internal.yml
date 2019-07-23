@@ -25,6 +25,7 @@ services:
             - '@ezpublish.spi.search.legacy'
             - '@?ezpublish.search.background_indexer'
             - '@?ezpublish.repository.relation_processor'
+            - '@?eZ\Publish\Core\FieldType\FieldTypeRegistry'
         lazy: true
         public: false
         tags:

@@ -86,6 +86,7 @@ To account for this Site API provides the following semantic configuration:
         system:
             frontend_group:
                 fail_on_missing_fields: true
+                render_missing_field_info: false
 
 By default ``fail_on_missing_fields`` is set to ``%kernel.debug%`` container parameter, which means
 accessing a nonexistent field in ``dev`` environment will fail and result in a ``RuntimeException``.
@@ -95,6 +96,12 @@ will instead return a special ``Surrogate`` type field, which always evaluates a
 to an empty string. In this case, a ``critical`` level message will be logged, so you can find and
 fix the problem.
 
+Second configuration option ``render_missing_field_info`` controls whether ``Surrogate`` field will
+render as an empty string or it will render useful debug information. By default it's value is
+``false``, meaning it will render as an empty string. That behavior is also what you should use in
+the production environment.
+
 .. note::
 
-  You can configure ``fail_on_missing_fields`` per siteaccess or siteaccess group.
+  You can configure both ``render_missing_field_info`` and ``fail_on_missing_fields`` per siteaccess
+  or siteaccess group.

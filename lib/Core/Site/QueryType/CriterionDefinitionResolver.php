@@ -103,19 +103,32 @@ final class CriterionDefinitionResolver
         $definitions = [];
 
         foreach ($map as $operator => $value) {
-            if ($operator === 'not') {
-                $definitions[] = $this->buildDefinition(
-                    'not',
-                    null,
-                    null,
-                    $this->resolveForTarget($name, $target, $value)
-                );
-            } else {
-                $definitions[] = $this->buildDefinition($name, $target, $operator, $value);
-            }
+            $definitions[] = $this->buildDefinitionForOperator($name, $target, $operator, $value);
         }
 
         return $definitions;
+    }
+
+    /**
+     * @param string $name
+     * @param string|null $target
+     * @param string $operator
+     * @param mixed $value
+     *
+     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
+     */
+    private function buildDefinitionForOperator(string $name, ?string $target, string $operator, $value): CriterionDefinition
+    {
+        if ($operator === 'not') {
+            return $this->buildDefinition(
+                'not',
+                null,
+                null,
+                $this->resolveForTarget($name, $target, $value)
+            );
+        }
+
+        return $this->buildDefinition($name, $target, $operator, $value);
     }
 
     /**
@@ -128,8 +141,12 @@ final class CriterionDefinitionResolver
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
-    private function buildDefinition(string $name, ?string $target, ?string $operator, $value): CriterionDefinition
-    {
+    private function buildDefinition(
+        string $name,
+        ?string $target,
+        ?string $operator,
+        $value
+    ): CriterionDefinition {
         return new CriterionDefinition([
             'name' => $name,
             'target' => $target,

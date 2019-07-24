@@ -222,6 +222,6 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
             return $object->hasField($item);
         }
 
-        return $object->offsetGet($item);
+        return $object->getField($item);
     }
 }

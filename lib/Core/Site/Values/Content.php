@@ -406,6 +406,8 @@ final class Content extends APIContent
                 } catch (NotFoundException $e) {
                     // Do nothing
                 }
+
+                return null;
             }
         );
 

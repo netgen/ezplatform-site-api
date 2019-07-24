@@ -145,7 +145,7 @@ final class Fields extends APIFields
 
         $this->logger->critical($message . ', using surrogate field instead');
 
-        return $this->getNullField($identifier, $this->content);
+        return $this->getSurrogateField($identifier, $this->content);
     }
 
     /**
@@ -173,7 +173,7 @@ final class Fields extends APIFields
 
         $this->logger->critical($message . ', using surrogate field instead');
 
-        return $this->getNullField($identifier, $this->content);
+        return $this->getSurrogateField($identifier, $this->content);
     }
 
     public function offsetSet($identifier, $value): void
@@ -229,7 +229,7 @@ final class Fields extends APIFields
 
         $this->logger->critical($message . ', using surrogate field instead');
 
-        return $this->getNullField((string)$id, $this->content);
+        return $this->getSurrogateField((string)$id, $this->content);
     }
 
     /**
@@ -265,7 +265,7 @@ final class Fields extends APIFields
         $this->areFieldsInitialized = true;
     }
 
-    private function getNullField(string $identifier, SiteContent $content): Field
+    private function getSurrogateField(string $identifier, SiteContent $content): Field
     {
         $apiField = new RepoField([
             'id' => 0,

@@ -15,9 +15,10 @@ Site API provides two Twig functions for content rendering:
 
   This function provides a way to render Content view without executing a subrequest. The idea is
   to avoid bad performance of subrequests in debug mode. Because of profiling that is active in
-  debug mode, having a lots of subrequests on a page can significantly affect performance. Since for
-  a large part of use cases it's not really necessary to render Content views through a subrequest,
-  having an alternative way to render them can improve performance and developer's experience.
+  debug mode, having a lots of subrequests on a page can significantly affect performance and memory
+  consumption. Since for a large part of use cases it's not necessary to render Content views
+  through a subrequest, having an alternative way to render them can improve performance and hence
+  developer's experience.
 
   The function can be used for views defined in Site API view configuration and it supports custom
   controllers.

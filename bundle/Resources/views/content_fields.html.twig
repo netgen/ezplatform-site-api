@@ -1,1 +1,5 @@
-{% block ngsurrogate_field %}{% endblock %}
+{% block ngsurrogate_field %}{% apply spaceless %}
+    {% if ezpublish.configResolver.getParameter('render_missing_field_info', 'netgen_ez_platform_site_api') == true %}
+        <span title="Missing field '{{ contentTypeIdentifier }}/{{ field.fieldDefIdentifier }}', Content ID:{{ content.id }}" style="font-size:48px">🐞</span>
+    {% endif %}
+{% endapply %}{% endblock %}

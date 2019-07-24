@@ -46,5 +46,9 @@ class Configuration extends SiteAccessConfiguration
             ->booleanNode('fail_on_missing_fields')
                 ->info('Whether to fail on missing Content Fields')
             ->end();
+        $systemNode
+            ->booleanNode('render_missing_field_info')
+                ->info('Whether to render useful debug information in place of a missing field')
+            ->end();
     }
 }

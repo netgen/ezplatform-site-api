@@ -301,6 +301,8 @@ class BaseTest extends APIBaseTest
                 'description' => $field->description,
                 'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
                 'contentId' => $field->content->id,
+                'isEmpty' => $field->isEmpty(),
+                'isSurrogate' => $field->isSurrogate(),
                 'innerField' => '[An instance of eZ\Publish\API\Repository\Values\Content\Field]',
                 'innerFieldDefinition' => $field->innerFieldDefinition,
             ],

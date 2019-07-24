@@ -90,6 +90,8 @@ final class Field extends APIField
             'description' => $this->description,
             'content' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Content]',
             'contentId' => $this->content->id,
+            'isEmpty' => $this->isEmpty,
+            'isSurrogate' => $this->isSurrogate,
             'innerField' => '[An instance of eZ\Publish\API\Repository\Values\Content\Field]',
             'innerFieldDefinition' => $this->innerFieldDefinition,
         ];

@@ -40,7 +40,6 @@ class FetchTest extends QueryTypeBaseTest
             'content_type',
             'field',
             'is_field_empty',
-            'publication_date',
             'creation_date',
             'section',
             'state',
@@ -261,24 +260,6 @@ class FetchTest extends QueryTypeBaseTest
             [
                 [
                     'creation_date' => [
-                        'gte' => '4 May 2018',
-                    ],
-                    'sort' => 'published asc',
-                ],
-                new Query([
-                    'filter' => new DateMetadata(
-                        DateMetadata::CREATED,
-                        Operator::GTE,
-                        1525384800
-                    ),
-                    'sortClauses' => [
-                        new DatePublished(Query::SORT_ASC),
-                    ],
-                ]),
-            ],
-            [
-                [
-                    'publication_date' => [
                         'gte' => '4 May 2018',
                     ],
                     'sort' => 'published asc',

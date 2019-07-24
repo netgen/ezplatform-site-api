@@ -213,7 +213,6 @@ abstract class Base implements QueryType
             'content_type',
             'field',
             'is_field_empty',
-            'publication_date',
             'creation_date',
             'section',
             'state',
@@ -230,7 +229,6 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('is_field_empty', ['array']);
         $resolver->setAllowedTypes('limit', ['int']);
         $resolver->setAllowedTypes('offset', ['int']);
-        $resolver->setAllowedTypes('publication_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('creation_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
 

@@ -47,7 +47,6 @@ class FetchTest extends QueryTypeBaseTest
             'content_type',
             'field',
             'is_field_empty',
-            'publication_date',
             'creation_date',
             'section',
             'state',

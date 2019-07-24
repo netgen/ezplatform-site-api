@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Location as RepoLocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
+use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field;
@@ -161,9 +162,9 @@ final class DomainObjectMapper
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Field
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
-    public function mapField(RepoField $apiField, SiteContent $content): Field
+    public function mapField(RepoField $apiField, SiteContent $content): APIField
     {
         $fieldDefinition = $content->contentInfo->innerContentType->getFieldDefinition($apiField->fieldDefIdentifier);
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;

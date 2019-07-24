@@ -131,6 +131,28 @@ final class Fields extends APIFields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
+    public function getField(string $identifier): APIField
+    {
+        if ($this->hasField($identifier)) {
+            return $this->fieldsByIdentifier[$identifier];
+        }
+
+        $message = sprintf('Field "%s" in Content #%s does not exist', $identifier, $this->content->id);
+
+        if ($this->failOnMissingFields) {
+            throw new RuntimeException($message);
+        }
+
+        $this->logger->critical($message . ', using surrogate field instead');
+
+        return $this->getNullField($identifier, $this->content);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function offsetGet($identifier): APIField
     {
         $this->initialize();

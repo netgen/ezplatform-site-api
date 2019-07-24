@@ -244,6 +244,50 @@ class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
+    public function testExistingFieldCanBeAccessedByIdentifier(): void
+    {
+        $fields = $this->getFieldsUnderTest(true);
+        $identifier = 'first';
+
+        $field = $fields->getField($identifier);
+
+        $this->assertEquals($identifier, $field->fieldDefIdentifier);
+    }
+
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function testNonExistentFieldCanNotBeAccessedByIdentifier(): void
+    {
+        $identifier = 'fourth';
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(sprintf('Field "%s" in Content #1 does not exist', $identifier));
+
+        $fields = $this->getFieldsUnderTest(true);
+
+        $fields->getField($identifier);
+    }
+
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function testAccessingNonExistentFieldByIdentifierReturnsNullField(): void
+    {
+        $identifier = 'fourth';
+
+        $fields = $this->getFieldsUnderTest(false);
+
+        $field = $fields->getField($identifier);
+
+        $this->assertEquals($identifier, $field->fieldDefIdentifier);
+        $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
+        $this->assertTrue($field->isEmpty());
+    }
+
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function testDebugInfo(): void
     {
         $fields = $this->getFieldsUnderTest(true);

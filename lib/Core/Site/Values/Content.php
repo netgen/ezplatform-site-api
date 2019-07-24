@@ -232,7 +232,7 @@ final class Content extends APIContent
      */
     public function getField(string $identifier): APIField
     {
-        return $this->fields->offsetGet($identifier);
+        return $this->fields->getField($identifier);
     }
 
     /**

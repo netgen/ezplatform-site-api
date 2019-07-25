@@ -6,11 +6,13 @@ eZ Platform Site API changelog
 
 [`2.7.0...2.7.1`](https://github.com/netgen/ezplatform-site-api/compare/2.7.0...2.7.1)
 
+### Added
+* Add `creation_date` as an alias of `publication_date` Query Type parameter (#119)
+
 ### Fixed
 * Service `ezpublish.api.repository` should be public to avoid deprecation notice by @emodric (#108)
 * Allow defining `content_type` and `section` Query Type parameters with explicit operators (#118)
 * Allow defining `publication_date` Query Type parameter with explicit operators (#119)
-* Add `creation_date` as an alias of `publication_date` Query Type parameter (#119)
 * Allow using `null` value for `is_field_empty` Query Type parameter (#120)
 
 ### Deprecated

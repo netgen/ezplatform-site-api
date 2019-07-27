@@ -174,7 +174,7 @@ final class CriterionDefinitionResolver
         $isValueCollection = false;
 
         foreach (array_keys($parameters) as $key) {
-            if (array_key_exists($key, self::$operatorMap) || $key === 'not') {
+            if ($this->isOperator($key)) {
                 $isOperatorMap = true;
             } else {
                 $isValueCollection = true;
@@ -188,6 +188,16 @@ final class CriterionDefinitionResolver
         }
 
         return $isOperatorMap;
+    }
+
+    /**
+     * @param mixed $key
+     *
+     * @return bool
+     */
+    private function isOperator($key): bool
+    {
+        return array_key_exists($key, self::$operatorMap) || $key === 'not';
     }
 
     /**

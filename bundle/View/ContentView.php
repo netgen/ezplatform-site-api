@@ -45,12 +45,8 @@ class ContentView extends BaseView implements ContentValueView, LocationValueVie
         $this->content = $content;
     }
 
-    public function getContent(): ?RepoContent
+    public function getContent(): RepoContent
     {
-        if (!$this->content instanceof Content) {
-            return null;
-        }
-
         return $this->content->innerContent;
     }
 
@@ -68,7 +64,7 @@ class ContentView extends BaseView implements ContentValueView, LocationValueVie
         return $this->location->innerLocation;
     }
 
-    public function getSiteContent(): ?Content
+    public function getSiteContent(): Content
     {
         return $this->content;
     }

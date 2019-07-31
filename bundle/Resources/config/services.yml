@@ -62,3 +62,21 @@ services:
             - '@netgen.ezplatform_site.filter_service'
             - '@netgen.ezplatform_site.find_service'
         public: false
+
+    netgen.ezplatform_site.routing.content_url_alias_router:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\ContentUrlAliasRouter
+        public: false
+        arguments:
+            - "@ezpublish.urlalias_generator"
+            - "@?router.request_context"
+        tags:
+            - { name: router, priority: 200 }
+
+    netgen.ezplatform_site.routing.location_url_alias_router:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\LocationUrlAliasRouter
+        public: false
+        arguments:
+            - "@ezpublish.urlalias_generator"
+            - "@?router.request_context"
+        tags:
+            - { name: router, priority: 200 }

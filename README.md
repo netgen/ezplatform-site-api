@@ -3,7 +3,7 @@
 <div align="center">
 
 [![Build Status](https://img.shields.io/travis/netgen/ezplatform-site-api.svg?style=popout)](https://travis-ci.org/netgen/ezplatform-site-api)
-[![Read the Docs](https://img.shields.io/readthedocs/pip.svg?style=popout)](https://docs.netgen.io/projects/site-api/en/latest/)
+[![Read the Docs](https://img.shields.io/readthedocs/netgen-ezplatform-site-api)](https://docs.netgen.io/projects/site-api/en/latest/)
 [![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)
 [![Latest stable](https://img.shields.io/packagist/v/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)
 [![PHP](https://img.shields.io/badge/PHP-%E2%89%A5%205.6-%238892BF.svg)](https://secure.php.net/)

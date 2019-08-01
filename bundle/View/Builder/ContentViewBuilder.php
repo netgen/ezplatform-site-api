@@ -6,11 +6,10 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
+use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\Base\Exceptions\UnauthorizedException;
-use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute as AuthorizationAttribute;
 use eZ\Publish\Core\MVC\Symfony\View\Builder\ViewBuilder;
 use eZ\Publish\Core\MVC\Symfony\View\Configurator;
 use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
@@ -20,7 +19,6 @@ use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Builds ContentView objects.
@@ -38,11 +36,6 @@ class ContentViewBuilder implements ViewBuilder
     private $repository;
 
     /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
-
-    /**
      * @var \eZ\Publish\Core\MVC\Symfony\View\Configurator
      */
     private $viewConfigurator;
@@ -55,13 +48,11 @@ class ContentViewBuilder implements ViewBuilder
     public function __construct(
         Site $site,
         Repository $repository,
-        AuthorizationCheckerInterface $authorizationChecker,
         Configurator $viewConfigurator,
         ParametersInjector $viewParametersInjector
     ) {
         $this->site = $site;
         $this->repository = $repository;
-        $this->authorizationChecker = $authorizationChecker;
         $this->viewConfigurator = $viewConfigurator;
         $this->viewParametersInjector = $viewParametersInjector;
     }
@@ -172,14 +163,14 @@ class ContentViewBuilder implements ViewBuilder
      */
     private function loadEmbeddedContent($contentId, Location $location = null): Content
     {
-        /** @var \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo */
-        $contentInfo = $this->repository->sudo(
-            static function (Repository $repository) use ($contentId): ContentInfo {
-                return $repository->getContentService()->loadContentInfo($contentId);
+        /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
+        $content = $this->repository->sudo(
+            static function (Repository $repository) use ($contentId): APIContent {
+                return $repository->getContentService()->loadContent($contentId);
             }
         );
 
-        if (!$this->canRead($contentInfo, $location)) {
+        if (!$this->canRead($content, $location)) {
             throw new UnauthorizedException(
                 'content', 'read|view_embed',
                 ['contentId' => $contentId, 'locationId' => $location !== null ? $location->id : 'n/a']
@@ -188,10 +179,8 @@ class ContentViewBuilder implements ViewBuilder
 
         // Check that Content is published, since sudo allows loading unpublished content.
         if (
-            !$contentInfo->published &&
-            !$this->authorizationChecker->isGranted(
-                new AuthorizationAttribute('content', 'versionread', ['valueObject' => $contentInfo])
-            )
+            $content->getVersionInfo()->status !== VersionInfo::STATUS_PUBLISHED
+            && !$this->repository->getPermissionResolver()->canUser('content', 'versionread', $content)
         ) {
             throw new UnauthorizedException('content', 'versionread', ['contentId' => $contentId]);
         }
@@ -230,24 +219,21 @@ class ContentViewBuilder implements ViewBuilder
     /**
      * Checks if a user can read a content, or view it as an embed.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo
-     * @param $location
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return bool
      */
-    private function canRead(ContentInfo $contentInfo, Location $location = null): bool
+    private function canRead(APIContent $content, Location $location = null): bool
     {
-        $limitations = ['valueObject' => $contentInfo];
-        if (isset($location)) {
-            $limitations['targets'] = $location->innerLocation;
-        }
-
-        $readAttribute = new AuthorizationAttribute('content', 'read', $limitations);
-        $viewEmbedAttribute = new AuthorizationAttribute('content', 'view_embed', $limitations);
+        $targets = isset($location) ? [$location->innerLocation] : [];
 
         return
-            $this->authorizationChecker->isGranted($readAttribute) ||
-            $this->authorizationChecker->isGranted($viewEmbedAttribute);
+            $this->repository->getPermissionResolver()->canUser('content', 'read', $content->contentInfo, $targets) ||
+            $this->repository->getPermissionResolver()->canUser('content', 'view_embed', $content->contentInfo, $targets);
     }
 
     /**

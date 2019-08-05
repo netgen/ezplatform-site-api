@@ -4,6 +4,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
@@ -158,14 +159,16 @@ class ContentViewBuilder implements ViewBuilder
      */
     private function loadEmbeddedContent($contentId, Location $location = null)
     {
-        /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
         $content = $this->repository->sudo(
             function (Repository $repository) use ($contentId) {
-                return $repository->getContentService()->loadContent($contentId);
+                return $this->site->getLoadService()->loadContent($contentId);
             }
         );
 
-        if (!$this->canRead($content, $location)) {
+        $versionInfo = $content->versionInfo;
+
+        if (!$this->canRead($versionInfo->contentInfo, $location)) {
             throw new UnauthorizedException(
                 'content', 'read|view_embed',
                 ['contentId' => $contentId, 'locationId' => $location !== null ? $location->id : 'n/a']
@@ -174,13 +177,13 @@ class ContentViewBuilder implements ViewBuilder
 
         // Check that Content is published, since sudo allows loading unpublished content.
         if (
-            $content->getVersionInfo()->status !== VersionInfo::STATUS_PUBLISHED
-            && !$this->repository->getPermissionResolver()->canUser('content', 'versionread', $content)
+            $versionInfo->status !== VersionInfo::STATUS_PUBLISHED
+            && !$this->repository->getPermissionResolver()->canUser('content', 'versionread', $versionInfo)
         ) {
             throw new UnauthorizedException('content', 'versionread', ['contentId' => $contentId]);
         }
 
-        return $this->site->getLoadService()->loadContent($contentId);
+        return $content;
     }
 
     /**
@@ -212,18 +215,18 @@ class ContentViewBuilder implements ViewBuilder
     /**
      * Checks if a user can read a content, or view it as an embed.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo
      * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
      *
      * @return bool
      */
-    private function canRead(APIContent $content, Location $location = null)
+    private function canRead(ContentInfo $contentInfo, Location $location = null)
     {
         $targets = isset($location) ? [$location->innerLocation] : [];
 
         return
-            $this->repository->getPermissionResolver()->canUser('content', 'read', $content->contentInfo, $targets) ||
-            $this->repository->getPermissionResolver()->canUser('content', 'view_embed', $content->contentInfo, $targets);
+            $this->repository->getPermissionResolver()->canUser('content', 'read', $contentInfo, $targets) ||
+            $this->repository->getPermissionResolver()->canUser('content', 'view_embed', $contentInfo, $targets);
     }
 
     /**

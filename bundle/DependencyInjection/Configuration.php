@@ -50,5 +50,10 @@ class Configuration extends SiteAccessConfiguration
             ->booleanNode('render_missing_field_info')
                 ->info('Whether to render useful debug information in place of a missing field')
             ->end();
+        $systemNode
+            ->booleanNode('use_param_converters')
+                ->defaultFalse()
+                ->info('Whether to override default eZ param converters')
+            ->end();
     }
 }

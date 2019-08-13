@@ -12,7 +12,8 @@
     "require": {
         "php": "~7.1",
         "ezsystems/ezpublish-kernel": "^7.4 || ^8.0",
-        "netgen/ezplatform-search-extra": "^1.8"
+        "netgen/ezplatform-search-extra": "^1.8",
+        "sensio/framework-extra-bundle": "^5.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0",

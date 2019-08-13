@@ -30,6 +30,10 @@ class LocationParamConverterTest extends AbstractParamConverterTest
     {
         $config = $this->createConfiguration(self::LOCATION_CLASS);
         $this->assertTrue($this->converter->supports($config));
+    }
+
+    public function testDoesNotSupport(): void
+    {
         $config = $this->createConfiguration(__CLASS__);
         $this->assertFalse($this->converter->supports($config));
         $config = $this->createConfiguration();
@@ -54,6 +58,7 @@ class LocationParamConverterTest extends AbstractParamConverterTest
 
         $this->assertInstanceOf(self::LOCATION_CLASS, $request->attributes->get('location'));
     }
+
     public function testApplyLocationOptionalWithEmptyAttribute(): void
     {
         $request = new Request([], [], [self::PROPERTY_NAME => null]);

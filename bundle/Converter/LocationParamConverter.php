@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Converter;
 
-use eZ\Publish\API\Repository\Values\ValueObject;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 
 class LocationParamConverter extends SiteParamConverter
@@ -19,7 +18,7 @@ class LocationParamConverter extends SiteParamConverter
         return 'locationId';
     }
 
-    protected function loadValueObject(int $id): ValueObject
+    protected function loadValueObject(int $id): Location
     {
         return $this->loadService->loadLocation($id);
     }

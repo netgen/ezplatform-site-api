@@ -80,3 +80,17 @@ services:
             - "@?router.request_context"
         tags:
             - { name: router, priority: 200 }
+
+    netgen.ezplatform_site.param_converter.location:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Converter\ContentParamConverter
+        arguments:
+            - '@netgen.ezplatform_site.site'
+        tags:
+            - { name: request.param_converter, priority: -1 }
+
+    netgen.ezplatform_site.param_converter.content:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Converter\LocationParamConverter
+        arguments:
+            - '@netgen.ezplatform_site.site'
+        tags:
+            - { name: request.param_converter, priority: -1 }

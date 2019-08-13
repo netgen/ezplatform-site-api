@@ -30,13 +30,17 @@ class ContentParamConverterTest extends AbstractParamConverterTest
     {
         $config = $this->createConfiguration(self::CONTENT_CLASS);
         $this->assertTrue($this->converter->supports($config));
+    }
+
+    public function testDoesNotSupport(): void
+    {
         $config = $this->createConfiguration(__CLASS__);
         $this->assertFalse($this->converter->supports($config));
         $config = $this->createConfiguration();
         $this->assertFalse($this->converter->supports($config));
     }
 
-    public function testApplyContent()
+    public function testApplyContent(): void
     {
         $id = 42;
         $valueObject = $this->createMock(Content::class);
@@ -54,7 +58,8 @@ class ContentParamConverterTest extends AbstractParamConverterTest
 
         $this->assertInstanceOf(self::CONTENT_CLASS, $request->attributes->get('content'));
     }
-    public function testApplyContentOptionalWithEmptyAttribute()
+
+    public function testApplyContentOptionalWithEmptyAttribute(): void
     {
         $request = new Request([], [], [self::PROPERTY_NAME => null]);
         $config = $this->createConfiguration(self::CONTENT_CLASS, 'content');

@@ -56,10 +56,6 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         $loader->load('services.yml');
         $loader->load('view.yml');
 
-        if ($configuration['use_param_converters']) {
-            $loader->load('param_converters.yml');
-        }
-
         $processor = new ConfigurationProcessor($container, $this->getAlias());
         $processor->mapConfig(
             $config,

@@ -1,12 +1,85 @@
-{% extends noLayout == true ? viewbaseLayout : pagelayout %}
+{% extends noLayout == true ? viewbaseLayout : '@NetgenEzPlatformSiteApi/pagelayout.html.twig' %}
 {% block content %}
-    <h1>{{ content.name }} [{{ content.contentInfo.contentTypeIdentifier }}]</h1>
+    <style type='text/css'>
+        summary:hover {background: wheat; cursor: pointer;}
+        code {background-color: whitesmoke; padding: 2px; position: relative;}
+        code:not(.empty):hover {cursor: pointer; background-color: lightgreen;}
+        code:not(.empty)::after{
+            content: "click to copy";
+            display:none;
+            white-space: nowrap;
+            background-color: whitesmoke;
+            font-family: sans-serif;
+            font-size: 13px;
+        }
+        code:not(.empty):active::after {content: "copied"}
+        code:not(.empty):hover::after{position: absolute; left: calc(100% + 10px); display: inline}
+    </style>
+    <script type='application/javascript'>
+        function copyText(element) {
+            var aux = document.createElement('input');
+            aux.setAttribute('value', element.innerHTML);
+            document.body.appendChild(aux);
+            aux.select();
+            document.execCommand('copy');
+            document.body.removeChild(aux);
+        }
+    </script>
+
+    <h1>{{ content.name }}</h1>
+
+    <dl>
+        <dt>ID</dt>
+        <dd><code onclick="copyText(this)">{{ content.id }}</code></dd>
+        <dt>Location ID</dt>
+        <dd>
+            {% if location is defined %}
+                <code onclick="copyText(this)">{{ location.id }}</code>
+            {% else %}
+                <code class="empty">[empty]</code>
+            {% endif %}
+        </dd>
+        <dt>Current version</dt>
+        <dd><code onclick="copyText(this)">{{ content.contentInfo.currentVersionNo }}</code></dd>
+        <dt>Content type</dt>
+        <dd><code onclick="copyText(this)">{{ content.contentInfo.contentTypeIdentifier }}</code></dd>
+    </dl>
+
+    <h3>Fields</h3>
+
     {% for identifier, field in content.fields %}
-        <h3>{{ field.name }} [{{ identifier }}/{{ field.fieldTypeIdentifier }}]</h3>
-        {% if not field.isEmpty() %}
-            {{ ng_render_field(field) }}
-        {% else %}
-            <p>Field is empty.</p>
-        {% endif %}
+        <details>
+            <summary>{{ loop.index }}. {{ field.name }}</summary>
+            <blockquote>
+                <dl>
+                    <dt>ID</dt>
+                    <dd><code onclick="copyText(this)">{{ field.id }}</code></dd>
+                    <dt>Field definition ID</dt>
+                    <dd><code onclick="copyText(this)">{{ field.innerFieldDefinition.id }}</code></dd>
+                    <dt>Identifier</dt>
+                    <dd><code onclick="copyText(this)">{{ identifier }}</code></dd>
+                    <dt>Field type identifier</dt>
+                    <dd><code onclick="copyText(this)">{{ field.fieldTypeIdentifier }}</code></dd>
+                    <dt>Description</dt>
+                    <dd>
+                        {% if field.description is not empty %}
+                            {{ field.description|default('<code>[empty]</code>') }}
+                        {% else %}
+                            <code class="empty">[empty]</code>
+                        {% endif %}
+                    </dd>
+                    <dt>Contents</dt>
+                    <dd>
+                        {% if not field.isEmpty() %}
+                            <hr>
+                            {{ ng_render_field(field) }}
+                            <hr>
+                        {% else %}
+                            <code class="empty">[empty]</code>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </blockquote>
+        </details>
     {% endfor %}
 {% endblock %}

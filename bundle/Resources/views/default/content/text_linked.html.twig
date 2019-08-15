@@ -1,0 +1,5 @@
+{% if location is defined %}
+    <a href="{{ path(location) }}">{{ content.name }}</a>
+{% else %}
+    <a href="{{ path(content) }}">{{ content.name }}</a>
+{% endif %}

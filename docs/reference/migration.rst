@@ -46,6 +46,14 @@ expect that things will break. Similar to the point 2. from above will be valid 
 view configuration, available under ``content_view`` key. You will still be able to use it, but only
 through explicit subrequests to eZ Platform's view controller ``ez_content:viewAction``.
 
+In eZ Platform pagelayout is configured separately from content view configuration. The configured
+pagelayout is available in the content view templates as ``pagelayout`` variable, which is usually
+extended in full view templates. When using both views at the same time, you will have to choose
+which one to support with your configured pagelayout - eZ Platform with its Content and Location
+objects, or Site API with its own Content and Location counterparts. Whichever you choose, you can
+support the other one by defining the pagelayout explicitly, instead using it through a configured
+variable.
+
 All Site API objects contain their eZ Platform counterparts. This will enable initial mixing of both
 Site API and vanilla eZ Platform ways of doing things, which means you will be able to migrate your
 project one step at a time.

@@ -1,18 +1,6 @@
 imports:
     - { resource: services/templating.yml }
 
-parameters:
-    # Template defaults for standard eZ Platform installation
-    # By default we don't override URL alias view action, for that reason these are commented out
-    #ezplatform.default_view_templates.content.full: 'NetgenEzPlatformSiteApiBundle:default:content/full.html.twig'
-    #ezsettings.default.pagelayout: 'NetgenEzPlatformSiteApiBundle::pagelayout.html.twig'
-
-    # Defaults for semantic configuration
-    netgen_ez_platform_site_api.default.override_url_alias_view_action: false
-    netgen_ez_platform_site_api.default.use_always_available_fallback: true
-    netgen_ez_platform_site_api.default.fail_on_missing_fields: '%kernel.debug%'
-    netgen_ez_platform_site_api.default.render_missing_field_info: false
-
 services:
     netgen.ezplatform_site.controller.base:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Controller\Controller

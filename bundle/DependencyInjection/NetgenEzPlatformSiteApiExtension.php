@@ -53,6 +53,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
 
         $fileLocator = new FileLocator(__DIR__ . '/../Resources/config');
         $loader = new Loader\YamlFileLoader($container, $fileLocator);
+        $loader->load('default_settings.yml');
         $loader->load('services.yml');
         $loader->load('view.yml');
 

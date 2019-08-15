@@ -53,7 +53,8 @@ class PreviewController extends BasePreviewController
 
         $overrideViewAction = $this->configResolver->getParameter(
             'override_url_alias_view_action',
-            'netgen_ez_platform_site_api'
+            'netgen_ez_platform_site_api',
+            $previewSiteAccess->name
         );
 
         // If the preview siteaccess is configured in legacy_mode

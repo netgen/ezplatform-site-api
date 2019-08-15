@@ -1,14 +1,20 @@
 <!doctype html>
-<html lang="{{ app.request.locale|replace('_', '-') }}">
+<html lang="{{ app.request.locale|replace({'_': '-'}) }}">
 <head>
     <meta charset="utf-8">
     <title>{{ content.name|default( 'Home' ) }}</title>
     <meta name="generator" content="eZ Platform"/>
-    {% if content is defined and content.mainLocationId %}
-        <link rel="canonical" href="{{ path( 'ez_urlalias', {'locationId': content.mainLocationId} ) }}" />
+    {% if content is defined and content.mainLocation is not null %}
+        <link rel="canonical" href="{{ path( content.mainLocation ) }}" />
     {% endif %}
 </head>
 <body>
 {% block content %}{% endblock %}
+<footer>
+    <hr>
+    <p>
+        <a href="https://docs.netgen.io/projects/site-api">Site API documentation</a>
+    </p>
+</footer>
 </body>
 </html>

@@ -1,0 +1,5 @@
+{% set image_field_identifier = ez_content_field_identifier_image_asset() %}
+
+{% if image_field_identifier is not null %}
+    {{ ng_render_field(content.fields[image_field_identifier], {parameters: parameters}) }}
+{% endif %}

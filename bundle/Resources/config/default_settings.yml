@@ -13,7 +13,8 @@ parameters:
     netgen.ezplatform_site.default_view_templates.content.full: 'NetgenEzPlatformSiteApiBundle:default:content/full.html.twig'
     netgen.ezplatform_site.default_view_templates.content.line: 'NetgenEzPlatformSiteApiBundle:default:content/line.html.twig'
     netgen.ezplatform_site.default_view_templates.content.text_linked: 'NetgenEzPlatformSiteApiBundle:default:content/text_linked.html.twig'
-    netgen.ezplatform_site.content_view.image_embed_content_types_identifiers: ['image']
+    # List of content type identifiers to display as image when embedded
+    netgen.ezplatform_site.content_view.image_embed_content_type_identifiers: ['image']
 
     # Default eZ Platform settings
     ezsettings.default.ng_named_query: {}
@@ -30,7 +31,7 @@ parameters:
             image:
                 template: '%netgen.ezplatform_site.default_view_templates.content.embed_image%'
                 match:
-                    Identifier\ContentType: '%netgen.ezplatform_site.content_view.image_embed_content_types_identifiers%'
+                    Identifier\ContentType: '%netgen.ezplatform_site.content_view.image_embed_content_type_identifiers%'
             default:
                 template: "%netgen.ezplatform_site.default_view_templates.content.embed%"
                 match: []

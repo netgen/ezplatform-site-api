@@ -22,7 +22,7 @@ parameters:
     # By default we don't override URL alias view action, for that reason this is commented out
     #ezsettings.default.pagelayout: 'NetgenEzPlatformSiteApiBundle::pagelayout.html.twig'
 
-    ezsettings.default.ng_content_view_defaults:
+    ezsettings.default.ngcontent_view_defaults:
         asset_image:
             default:
                 template: '%netgen.ezplatform_site.default_view_templates.content.asset_image%'

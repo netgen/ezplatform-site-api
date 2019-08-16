@@ -6,13 +6,13 @@ parameters:
     netgen_ez_platform_site_api.default.render_missing_field_info: false
 
     # Default view templates
-    netgen.ezplatform_site.default_view_templates.content.asset_image: 'NetgenEzPlatformSiteApiBundle:default:content/asset_image.html.twig'
-    netgen.ezplatform_site.default_view_templates.content.embed: 'NetgenEzPlatformSiteApiBundle:default:content/embed.html.twig'
-    netgen.ezplatform_site.default_view_templates.content.embed_image: 'NetgenEzPlatformSiteApiBundle:default:content/embed_image.html.twig'
-    netgen.ezplatform_site.default_view_templates.content.embed_inline: 'NetgenEzPlatformSiteApiBundle:default:content/embed_inline.html.twig'
-    netgen.ezplatform_site.default_view_templates.content.full: 'NetgenEzPlatformSiteApiBundle:default:content/full.html.twig'
-    netgen.ezplatform_site.default_view_templates.content.line: 'NetgenEzPlatformSiteApiBundle:default:content/line.html.twig'
-    netgen.ezplatform_site.default_view_templates.content.text_linked: 'NetgenEzPlatformSiteApiBundle:default:content/text_linked.html.twig'
+    netgen.ezplatform_site.default_view_templates.content.asset_image: "@@NetgenEzPlatformSiteApi/default/content/asset_image.html.twig"
+    netgen.ezplatform_site.default_view_templates.content.embed: "@@NetgenEzPlatformSiteApi/default/content/embed.html.twig"
+    netgen.ezplatform_site.default_view_templates.content.embed_image: "@@NetgenEzPlatformSiteApi/default/content/embed_image.html.twig"
+    netgen.ezplatform_site.default_view_templates.content.embed_inline: "@@NetgenEzPlatformSiteApi/default/content/embed_inline.html.twig"
+    netgen.ezplatform_site.default_view_templates.content.full: "@@NetgenEzPlatformSiteApi/default/content/full.html.twig"
+    netgen.ezplatform_site.default_view_templates.content.line: "@@NetgenEzPlatformSiteApi/default/content/line.html.twig"
+    netgen.ezplatform_site.default_view_templates.content.text_linked: "@@NetgenEzPlatformSiteApi/default/content/text_linked.html.twig"
     # List of content type identifiers to display as image when embedded
     netgen.ezplatform_site.content_view.image_embed_content_type_identifiers: ['image']
 
@@ -20,7 +20,7 @@ parameters:
     ezsettings.default.ng_named_query: {}
     ezsettings.default.ngcontent_view: {}
     # By default we don't override URL alias view action, for that reason this is commented out
-    #ezsettings.default.pagelayout: 'NetgenEzPlatformSiteApiBundle::pagelayout.html.twig'
+    #ezsettings.default.pagelayout: '@@NetgenEzPlatformSiteApi/pagelayout.html.twig'
 
     ezsettings.default.ngcontent_view_defaults:
         asset_image:

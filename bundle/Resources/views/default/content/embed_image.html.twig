@@ -1,8 +1,14 @@
-{% set image_field_identifier = ez_content_field_identifier_first_filled_image(content) %}
+{% set image_field = null %}
 
-{% if image_field_identifier is not null %}
+{% for field in content.fields %}
+    {% if image_field is null and field.fieldTypeIdentifier == 'ezimage' and not field.empty %}
+        {% set image_field = field %}
+    {% endif %}
+{% endfor %}
+
+{% if image_field is not null %}
     {{ ng_render_field(
-        content.fields[image_field_identifier],
+        image_field,
         {
             parameters: {
                 alias: objectParameters.size|default('original'),

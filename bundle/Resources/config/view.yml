@@ -45,4 +45,5 @@ services:
             - 'ngcontent_view_defaults'
         calls:
             - [setContainer, ["@service_container"]]
+
         public: false

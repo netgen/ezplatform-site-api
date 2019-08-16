@@ -1,5 +1,11 @@
-{% set image_field_identifier = ez_content_field_identifier_image_asset() %}
+{% set config = ezpublish.configResolver.parameter('fieldtypes.ezimageasset.mappings') %}
+{% set image_field = content.fields[config['content_field_identifier']] %}
 
 {% if image_field_identifier is not null %}
-    {{ ng_render_field(content.fields[image_field_identifier], {parameters: parameters}) }}
+    {{ ng_render_field(
+        image_field,
+        {
+            parameters: parameters|default({'alias': 'original'})|merge({'alternativeText': image_field.value.alternativeText })
+        }
+    ) }}
 {% endif %}

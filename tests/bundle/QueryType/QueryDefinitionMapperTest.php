@@ -290,7 +290,7 @@ class QueryDefinitionMapperTest extends TestCase
      */
     protected function getViewMock(): MockObject
     {
-        $viewMock = $this->getMockBuilder(ContentView::class)->getMock();
+        $viewMock = $this->getMockBuilder(ContentView::class)->disableOriginalConstructor()->getMock();
 
         $locationMock = $this->getMockBuilder(Location::class)->getMock();
         $contentMock = $this->getMockBuilder(Content::class)->getMock();

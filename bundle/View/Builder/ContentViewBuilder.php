@@ -22,7 +22,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Builds ContentView objects.
+ * @see \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
  */
 class ContentViewBuilder implements ViewBuilder
 {
@@ -46,6 +46,11 @@ class ContentViewBuilder implements ViewBuilder
      */
     private $viewParametersInjector;
 
+    /**
+     * @var \eZ\Publish\API\Repository\PermissionResolver
+     */
+    private $permissionResolver;
+
     public function __construct(
         Site $site,
         Repository $repository,
@@ -56,6 +61,7 @@ class ContentViewBuilder implements ViewBuilder
         $this->repository = $repository;
         $this->viewConfigurator = $viewConfigurator;
         $this->viewParametersInjector = $viewParametersInjector;
+        $this->permissionResolver = $repository->getPermissionResolver();
     }
 
     public function matches($argument): bool
@@ -66,66 +72,23 @@ class ContentViewBuilder implements ViewBuilder
     /**
      * @param array $parameters
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException If both contentId and locationId parameters are missing
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
-     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
      * @throws \Exception
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
     public function buildView(array $parameters): ContentView
     {
-        $view = new ContentView(null, [], $parameters['viewType']);
-        $view->setIsEmbed($this->isEmbed($parameters));
+        $isEmbed = $this->isEmbedView($parameters);
+        $viewType = $this->getViewType($parameters, $isEmbed);
+        $maybeLocation = $this->getMaybeLocation($parameters);
+        $content = $this->getContent($parameters, $isEmbed, $maybeLocation);
 
-        if ($view->isEmbed() && $parameters['viewType'] === null) {
-            $view->setViewType(EmbedView::DEFAULT_VIEW_TYPE);
-        }
-
-        if (isset($parameters['locationId'])) {
-            $location = $this->loadLocation($parameters['locationId']);
-        } elseif (isset($parameters['location'])) {
-            $location = $parameters['location'];
-            if (!$location instanceof Location && $location instanceof APILocation) {
-                $location = $this->loadLocation($location->id, false);
-            }
-        } else {
-            $location = null;
-        }
-
-        if (isset($parameters['content'])) {
-            $content = $parameters['content'];
-            if (!$content instanceof Content && $content instanceof APIContent) {
-                $content = $this->loadContent($content->contentInfo->id);
-            }
-        } else {
-            if (isset($parameters['contentId'])) {
-                $contentId = $parameters['contentId'];
-            } elseif (isset($location)) {
-                $contentId = $location->contentInfo->id;
-            } else {
-                throw new InvalidArgumentException(
-                    'Content',
-                    'No content could be loaded from parameters'
-                );
-            }
-
-            $content = $view->isEmbed() ?
-                $this->loadEmbeddedContent($contentId, $location) :
-                $this->loadContent($contentId);
-        }
-
-        $view->setSiteContent($content);
-        if (isset($location)) {
-            if ($location->contentInfo->id !== $content->id) {
-                throw new InvalidArgumentException(
-                    'Location',
-                    'Provided location does not belong to selected content'
-                );
-            }
-
-            $view->setSiteLocation($location);
-        }
+        $view = new ContentView($content, $maybeLocation, $isEmbed, $viewType);
 
         $this->viewParametersInjector->injectViewParameters($view, $parameters);
         $this->viewConfigurator->configure($view);
@@ -133,121 +96,7 @@ class ContentViewBuilder implements ViewBuilder
         return $view;
     }
 
-    /**
-     * Loads Content with id $contentId.
-     *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @param string|int $contentId
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
-     */
-    private function loadContent($contentId): Content
-    {
-        return $this->site->getLoadService()->loadContent($contentId);
-    }
-
-    /**
-     * Loads the embedded content with id $contentId.
-     * Will load the content with sudo(), and check if the user can view_embed this content, for the given location
-     * if provided.
-     *
-     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
-     * @throws \Exception
-     *
-     * @param string|int $contentId
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
-     */
-    private function loadEmbeddedContent($contentId, Location $location = null): Content
-    {
-        /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
-        $content = $this->repository->sudo(
-            function () use ($contentId): Content {
-                return $this->site->getLoadService()->loadContent($contentId);
-            }
-        );
-
-        $versionInfo = $content->versionInfo;
-
-        if (!$this->canRead($versionInfo->contentInfo, $location)) {
-            throw new UnauthorizedException(
-                'content', 'read|view_embed',
-                ['contentId' => $contentId, 'locationId' => $location !== null ? $location->id : 'n/a']
-            );
-        }
-
-        // Check that Content is published, since sudo allows loading unpublished content.
-        if (
-            $versionInfo->status !== VersionInfo::STATUS_PUBLISHED
-            && !$this->repository->getPermissionResolver()->canUser('content', 'versionread', $versionInfo)
-        ) {
-            throw new UnauthorizedException('content', 'versionread', ['contentId' => $contentId]);
-        }
-
-        return $content;
-    }
-
-    /**
-     * Loads a visible Location.
-     * @todo Do we need to handle permissions here ?
-     *
-     * @param string|int $locationId
-     * @param bool $checkVisibility
-     *
-     * @throws \Exception
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
-     */
-    private function loadLocation($locationId, bool $checkVisibility = true): Location
-    {
-        $location = $this->repository->sudo(
-            function (Repository $repository) use ($locationId): Location {
-                return $this->site->getLoadService()->loadLocation($locationId);
-            }
-        );
-
-        if ($checkVisibility && $location->innerLocation->invisible) {
-            throw new NotFoundHttpException(
-                'Location cannot be displayed as it is flagged as invisible.'
-            );
-        }
-
-        return $location;
-    }
-
-    /**
-     * Checks if a user can read a content, or view it as an embed.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
-     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     *
-     * @return bool
-     */
-    private function canRead(ContentInfo $contentInfo, Location $location = null): bool
-    {
-        $targets = isset($location) ? [$location->innerLocation] : [];
-
-        return
-            $this->repository->getPermissionResolver()->canUser('content', 'read', $contentInfo, $targets) ||
-            $this->repository->getPermissionResolver()->canUser('content', 'view_embed', $contentInfo, $targets);
-    }
-
-    /**
-     * Checks if the view is an embed one.
-     * Uses either the controller action (embedAction), or the viewType (embed/embed-inline).
-     *
-     * @param array $parameters The ViewBuilder parameters array
-     *
-     * @return bool
-     */
-    private function isEmbed(array $parameters): bool
+    private function isEmbedView(array $parameters): bool
     {
         if ($parameters['_controller'] === 'ng_content:embedAction') {
             return true;
@@ -258,5 +107,316 @@ class ContentViewBuilder implements ViewBuilder
         }
 
         return false;
+    }
+
+    private function getViewType(array $parameters, bool $isEmbed): string
+    {
+        $viewType = $parameters['viewType'];
+
+        if ($isEmbed && $viewType === null) {
+            return EmbedView::DEFAULT_VIEW_TYPE;
+        }
+
+        return $viewType;
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @throws \Exception
+     * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ResolveException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    private function getMaybeLocation(array $parameters): ?Location
+    {
+        try {
+            return $this->getProvidedLocation($parameters);
+        } catch (ResolveException $e) {
+            // do nothing
+        }
+
+        try {
+            return $this->getLocationById($parameters);
+        } catch (ResolveException $e) {
+            // do nothing
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @throws \Exception
+     * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ResolveException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    private function getProvidedLocation(array $parameters): Location
+    {
+        if (!isset($parameters['location'])) {
+            throw new ResolveException('Location is not provided');
+        }
+
+        $location = $parameters['location'];
+
+        if ($location instanceof APILocation) {
+            return $this->sudoLoadLocation($location->id);
+        }
+
+        return $location;
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @throws \Exception
+     * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ResolveException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    private function getLocationById(array $parameters): Location
+    {
+        if (isset($parameters['locationId'])) {
+            return $this->sudoLoadVisibleLocation($parameters['locationId']);
+        }
+
+        throw new ResolveException('Could not resolve Location ID');
+    }
+
+    /**
+     * @param array $parameters
+     * @param bool $isEmbed
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Location|null $maybeLocation
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    private function getContent(array $parameters, bool $isEmbed, ?Location $maybeLocation): Content
+    {
+        try {
+            return $this->getProvidedContent($parameters);
+        } catch (ResolveException $e) {
+            // do nothing
+        }
+
+        try {
+            return $this->getContentById($parameters, $isEmbed, $maybeLocation);
+        } catch (ResolveException $e) {
+            // do nothing
+        }
+
+        throw new InvalidArgumentException(
+            'Content',
+            'Content could not be loaded from the given parameters'
+        );
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ResolveException
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    private function getProvidedContent(array $parameters): Content
+    {
+        if (!isset($parameters['content'])) {
+            throw new ResolveException('Content is not provided');
+        }
+
+        $content = $parameters['content'];
+
+        if ($content instanceof APIContent) {
+            return $this->loadContent($content->contentInfo->id);
+        }
+
+        return $content;
+    }
+
+    /**
+     * @param array $parameters
+     * @param bool $isEmbed
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Location|null $maybeLocation
+     *
+     * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ResolveException
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    private function getContentById(array $parameters, bool $isEmbed, ?Location $maybeLocation): Content
+    {
+        $contentId = $this->getContentId($parameters, $maybeLocation);
+
+        if ($isEmbed) {
+            return $this->loadEmbeddedContent($contentId, $maybeLocation);
+        }
+
+        return $this->loadContent($contentId);
+    }
+
+    private function getContentId(array $parameters, ?Location $maybeLocation)
+    {
+        if (isset($parameters['contentId'])) {
+            return $parameters['contentId'];
+        }
+
+        if (isset($maybeLocation)) {
+            return $maybeLocation->contentInfo->id;
+        }
+
+        throw new ResolveException('Could not resolve Content ID');
+    }
+
+    /**
+     * @param string|int $contentId
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Location|null $maybeLocation
+     *
+     * @throws \Exception
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    private function loadEmbeddedContent($contentId, ?Location $maybeLocation): Content
+    {
+        $content = $this->sudoLoadContent($contentId);
+        $versionInfo = $content->versionInfo;
+
+        if (!$this->canEmbedContent($versionInfo->contentInfo, $maybeLocation)) {
+            throw new UnauthorizedException(
+                'content',
+                'read|view_embed',
+                [
+                    'contentId' => $contentId,
+                    'locationId' => $maybeLocation->id ?? null,
+                ]
+            );
+        }
+
+        if (!$versionInfo->isPublished() && !$this->canReadVersion($versionInfo)) {
+            throw new UnauthorizedException(
+                'content',
+                'versionread',
+                [
+                    'contentId' => $contentId,
+                    'versionNo' => $versionInfo->versionNo,
+                ]
+            );
+        }
+
+        return $content;
+    }
+
+    /**
+     * @param string|int $contentId
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    private function loadContent($contentId): Content
+    {
+        return $this->site->getLoadService()->loadContent($contentId);
+    }
+
+    /**
+     * @param string|int $contentId
+     *
+     * @throws \Exception
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    private function sudoLoadContent($contentId): Content
+    {
+        return $this->repository->sudo(
+            function () use ($contentId): Content {
+                return $this->site->getLoadService()->loadContent($contentId);
+            }
+        );
+    }
+
+    /**
+     * @todo Do we need to handle permissions here ?
+     *
+     * @param string|int $locationId
+     *
+     * @throws \Exception
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    private function sudoLoadLocation($locationId): Location
+    {
+        return $this->repository->sudo(
+            function () use ($locationId): Location {
+                return $this->site->getLoadService()->loadLocation($locationId);
+            }
+        );
+    }
+
+    /**
+     * @param string|int $locationId
+     *
+     * @throws \Exception
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    private function sudoLoadVisibleLocation($locationId): Location
+    {
+        $location = $this->sudoLoadLocation($locationId);
+
+        if ($location->innerLocation->invisible) {
+            throw new NotFoundHttpException(
+                'Location cannot be viewed because it is flagged as invisible.'
+            );
+        }
+
+        return $location;
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Location $maybeLocation
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
+     * @return bool
+     */
+    private function canEmbedContent(ContentInfo $contentInfo, ?Location $maybeLocation): bool
+    {
+        $targets = isset($maybeLocation) ? [$maybeLocation->innerLocation] : [];
+
+        return
+            $this->permissionResolver->canUser('content', 'read', $contentInfo, $targets) ||
+            $this->permissionResolver->canUser('content', 'view_embed', $contentInfo, $targets);
+
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
+     * @return bool
+     */
+    private function canReadVersion(VersionInfo $versionInfo): bool
+    {
+        return $this->permissionResolver->canUser('content', 'versionread', $versionInfo);
     }
 }

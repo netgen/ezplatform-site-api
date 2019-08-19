@@ -309,7 +309,7 @@ class ParameterProcessorTest extends TestCase
      */
     protected function getViewMock(): MockObject
     {
-        $viewMock = $this->getMockBuilder(ContentView::class)->getMock();
+        $viewMock = $this->getMockBuilder(ContentView::class)->disableOriginalConstructor()->getMock();
 
         $viewMock
             ->method('hasParameter')

@@ -38,7 +38,22 @@ class ContentView extends BaseView implements ContentValueView, LocationValueVie
     /**
      * @var bool
      */
-    private $isEmbed = false;
+    private $isEmbed;
+
+    public function __construct(
+        Content $content,
+        ?Location $maybeLocation = null,
+        bool $isEmbed = false,
+        $viewType = 'full',
+        $templateIdentifier = null,
+        array $parameters = []
+    ) {
+        parent::__construct($templateIdentifier, $parameters, $viewType);
+
+        $this->isEmbed = $isEmbed;
+        $this->content = $content;
+        $this->location = $maybeLocation;
+    }
 
     public function setSiteContent(Content $content): void
     {

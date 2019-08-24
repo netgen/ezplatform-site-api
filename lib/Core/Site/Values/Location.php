@@ -103,11 +103,11 @@ final class Location extends APILocation
         }
 
         if (property_exists($this, $property)) {
-            return $this->$property;
+            return $this->{$property};
         }
 
         if (property_exists($this->innerLocation, $property)) {
-            return $this->innerLocation->$property;
+            return $this->innerLocation->{$property};
         }
 
         return parent::__get($property);

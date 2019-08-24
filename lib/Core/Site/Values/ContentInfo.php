@@ -84,11 +84,11 @@ final class ContentInfo extends APIContentInfo
         }
 
         if (property_exists($this, $property)) {
-            return $this->$property;
+            return $this->{$property};
         }
 
         if (property_exists($this->innerContentInfo, $property)) {
-            return $this->innerContentInfo->$property;
+            return $this->innerContentInfo->{$property};
         }
 
         return parent::__get($property);

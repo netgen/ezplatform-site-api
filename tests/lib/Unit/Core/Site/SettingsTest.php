@@ -95,7 +95,7 @@ class SettingsTest extends TestCase
     /**
      * @return \Netgen\EzPlatformSiteApi\API\Settings
      */
-    protected function getSettingsUnderTest(): \Netgen\EzPlatformSiteApi\Core\Site\Settings
+    protected function getSettingsUnderTest(): Settings
     {
         return new Settings(
             ['cro-HR'],

@@ -7,8 +7,8 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
-use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use Netgen\EzPlatformSiteApi\API\Values\Location as SiteLocation;
+use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

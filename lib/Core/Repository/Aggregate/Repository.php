@@ -24,8 +24,8 @@ use eZ\Publish\API\Repository\URLWildcardService;
 use eZ\Publish\API\Repository\UserPreferenceService;
 use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\API\Repository\Values\User\User;
-use eZ\Publish\API\Repository\Values\ValueObject;
 use eZ\Publish\API\Repository\Values\User\UserReference;
+use eZ\Publish\API\Repository\Values\ValueObject;
 use RuntimeException;
 
 /**

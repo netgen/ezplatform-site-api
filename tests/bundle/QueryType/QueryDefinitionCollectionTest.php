@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
-use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition;
+use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 

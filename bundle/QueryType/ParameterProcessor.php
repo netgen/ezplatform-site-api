@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * ParameterProcessor processes query configuration parameter values using ExpressionLanguage.
  *
- * @internal Do not depend on this service, it can be changed without warning.
+ * @internal do not depend on this service, it can be changed without warning
  */
 final class ParameterProcessor
 {

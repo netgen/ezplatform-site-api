@@ -18,7 +18,7 @@ use Pagerfanta\Pagerfanta;
 /**
  * QueryExecutor resolves the Query from the QueryDefinition, executes it and returns the result.
  *
- * @internal Do not depend on this service, it can be changed without warning.
+ * @internal do not depend on this service, it can be changed without warning
  */
 final class QueryExecutor
 {

@@ -15,8 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Base implementation for QueryTypes.
  *
- * @internal Do not extend this class directly, extend abstract Content and Location
- * query types instead.
+ * @internal do not extend this class directly, extend abstract Content and Location query types instead
  *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location

@@ -15,7 +15,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType as SiteQueryType;
  *
  * @see \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
  *
- * @internal Do not depend on this service, it can be changed without warning.
+ * @internal do not depend on this service, it can be changed without warning
  */
 final class QueryDefinitionMapper
 {
@@ -101,7 +101,7 @@ final class QueryDefinitionMapper
      *
      * @param string $name
      *
-     * @throws \InvalidArgumentException If no such configuration exist.
+     * @throws \InvalidArgumentException if no such configuration exist
      *
      * @return array
      */

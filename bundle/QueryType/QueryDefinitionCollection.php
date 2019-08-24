@@ -11,7 +11,7 @@ use OutOfBoundsException;
  *
  * @see \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
  *
- * @internal Do not depend on this service, it can be changed without warning.
+ * @internal do not depend on this service, it can be changed without warning
  */
 final class QueryDefinitionCollection
 {
@@ -38,7 +38,7 @@ final class QueryDefinitionCollection
     /**
      * Return QueryDefinition by given $name.
      *
-     * @throws \OutOfBoundsException If no QueryDefinition with given $name is found.
+     * @throws \OutOfBoundsException if no QueryDefinition with given $name is found
      *
      * @param string $name
      *

@@ -17,7 +17,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read int $maxPerPage Maximum results per page for Pagerfanta.
  * @property-read int $page Current page for Pagerfanta.
  *
- * @internal Do not depend on this class, it can be changed without warning.
+ * @internal do not depend on this class, it can be changed without warning
  */
 final class QueryDefinition extends ValueObject
 {

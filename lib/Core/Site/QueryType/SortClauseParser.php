@@ -39,7 +39,7 @@ use InvalidArgumentException;
  *  - published asc
  *  - published desc
  *
- * @internal Do not depend on this service, it can be changed without warning.
+ * @internal do not depend on this service, it can be changed without warning
  */
 class SortClauseParser
 {

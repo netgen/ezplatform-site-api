@@ -67,26 +67,6 @@ final class Subtree extends Location
     }
 
     /**
-     * @param int $startDepth
-     * @param int|int[] $value
-     *
-     * @return int|int[] array
-     */
-    private function getRelativeDepthValue(int $startDepth, $value)
-    {
-        if (is_array($value)) {
-            return array_map(
-                static function (int $value) use ($startDepth): int {
-                    return $startDepth + $value;
-                },
-                $value
-            );
-        }
-
-        return $startDepth + $value;
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @throws \InvalidArgumentException
@@ -106,5 +86,25 @@ final class Subtree extends Location
         }
 
         return $criteria;
+    }
+
+    /**
+     * @param int $startDepth
+     * @param int|int[] $value
+     *
+     * @return int|int[] array
+     */
+    private function getRelativeDepthValue(int $startDepth, $value)
+    {
+        if (is_array($value)) {
+            return array_map(
+                static function (int $value) use ($startDepth): int {
+                    return $startDepth + $value;
+                },
+                $value
+            );
+        }
+
+        return $startDepth + $value;
     }
 }

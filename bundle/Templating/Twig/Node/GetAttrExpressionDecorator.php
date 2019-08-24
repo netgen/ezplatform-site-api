@@ -28,6 +28,11 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         $this->decoratedExpression = $decoratedExpression;
     }
 
+    public function __toString(): string
+    {
+        return $this->decoratedExpression->__toString();
+    }
+
     public function compile(Compiler $compiler): void
     {
         $env = $compiler->getEnvironment();
@@ -83,11 +88,6 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
             ->raw(', ')->repr($this->getNode('node')->getTemplateLine())
             ->raw(')')
         ;
-    }
-
-    public function __toString(): string
-    {
-        return $this->decoratedExpression->__toString();
     }
 
     public function getTemplateLine()

@@ -73,6 +73,16 @@ EOT
             ->end();
     }
 
+    public function preMap(array $config, ContextualizerInterface $contextualizer): void
+    {
+        $contextualizer->mapConfigArray(static::NODE_KEY, $config, ContextualizerInterface::MERGE_FROM_SECOND_LEVEL);
+    }
+
+    public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
+    {
+        // does nothing
+    }
+
     /**
      * @param string $name
      *
@@ -166,15 +176,5 @@ EOT
                 );
 
         return $queries;
-    }
-
-    public function preMap(array $config, ContextualizerInterface $contextualizer): void
-    {
-        $contextualizer->mapConfigArray(static::NODE_KEY, $config, ContextualizerInterface::MERGE_FROM_SECOND_LEVEL);
-    }
-
-    public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
-    {
-        // does nothing
     }
 }

@@ -15,19 +15,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class NamedQueryTest extends AbstractParserTestCase
 {
-    protected function getContainerExtensions(): array
-    {
-        return [
-            new EzPublishCoreExtension([
-                new NamedQuery(),
-            ]),
-        ];
-    }
-
-    protected function getMinimalConfiguration()
-    {
-        return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
-    }
 
     public function providerForTestValid(): array
     {
@@ -219,5 +206,18 @@ class NamedQueryTest extends AbstractParserTestCase
             $expectedConfigurationValues,
             'cro'
         );
+    }
+    protected function getContainerExtensions(): array
+    {
+        return [
+            new EzPublishCoreExtension([
+                new NamedQuery(),
+            ]),
+        ];
+    }
+
+    protected function getMinimalConfiguration()
+    {
+        return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
     }
 }

@@ -16,14 +16,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BaseQueryType extends Base
 {
-    protected function buildQuery(): Query
-    {
-        return new Query();
-    }
 
     public static function getName(): string
     {
         return 'Test:Base';
+    }
+    protected function buildQuery(): Query
+    {
+        return new Query();
     }
 
     protected function configureOptions(OptionsResolver $resolver): void

@@ -48,6 +48,42 @@ abstract class Base implements QueryType
     private $registeredCriterionBuilders;
 
     /**
+     * {@inheritdoc}
+     *
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
+     */
+    final public function getQuery(array $parameters = []): Query
+    {
+        $parameters = $this->getOptionsResolver()->resolve($parameters);
+        $query = $this->buildQuery();
+
+        $sortDefinitions = $parameters['sort'];
+        if (!is_array($sortDefinitions)) {
+            $sortDefinitions = [$sortDefinitions];
+        }
+
+        $query->query = $this->getQueryCriterion($parameters);
+        $query->filter = $this->resolveFilterCriteria($parameters);
+        $query->facetBuilders = $this->getFacetBuilders($parameters);
+        $query->sortClauses = $this->getSortClauses($sortDefinitions);
+        $query->limit = $parameters['limit'];
+        $query->offset = $parameters['offset'];
+
+        return $query;
+    }
+
+    final public function getSupportedParameters(): array
+    {
+        return $this->getOptionsResolver()->getDefinedOptions();
+    }
+
+    final public function supportsParameter(string $name): bool
+    {
+        return $this->getOptionsResolver()->isDefined($name);
+    }
+
+    /**
      * Configure options with the given options $resolver.
      *
      * Override this method as needed.
@@ -164,42 +200,6 @@ abstract class Base implements QueryType
      * @return \eZ\Publish\API\Repository\Values\Content\Query
      */
     abstract protected function buildQuery(): Query;
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     */
-    final public function getQuery(array $parameters = []): Query
-    {
-        $parameters = $this->getOptionsResolver()->resolve($parameters);
-        $query = $this->buildQuery();
-
-        $sortDefinitions = $parameters['sort'];
-        if (!is_array($sortDefinitions)) {
-            $sortDefinitions = [$sortDefinitions];
-        }
-
-        $query->query = $this->getQueryCriterion($parameters);
-        $query->filter = $this->resolveFilterCriteria($parameters);
-        $query->facetBuilders = $this->getFacetBuilders($parameters);
-        $query->sortClauses = $this->getSortClauses($sortDefinitions);
-        $query->limit = $parameters['limit'];
-        $query->offset = $parameters['offset'];
-
-        return $query;
-    }
-
-    final public function getSupportedParameters(): array
-    {
-        return $this->getOptionsResolver()->getDefinedOptions();
-    }
-
-    final public function supportsParameter(string $name): bool
-    {
-        return $this->getOptionsResolver()->isDefined($name);
-    }
 
     /**
      * Configure $resolver for the QueryType.

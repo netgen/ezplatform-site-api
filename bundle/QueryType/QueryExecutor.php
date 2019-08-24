@@ -73,17 +73,6 @@ final class QueryExecutor
         return $pager;
     }
 
-    private function getPagerAdapter(QueryDefinition $queryDefinition): BaseAdapter
-    {
-        $query = $this->getQuery($queryDefinition);
-
-        if ($queryDefinition->useFilter) {
-            return new FilterAdapter($query, $this->filterService);
-        }
-
-        return new FindAdapter($query, $this->findService);
-    }
-
     /**
      * Execute the Query with the given $name and return the result.
      *
@@ -102,6 +91,17 @@ final class QueryExecutor
         }
 
         return $this->getContentResult($query, $queryDefinition);
+    }
+
+    private function getPagerAdapter(QueryDefinition $queryDefinition): BaseAdapter
+    {
+        $query = $this->getQuery($queryDefinition);
+
+        if ($queryDefinition->useFilter) {
+            return new FilterAdapter($query, $this->filterService);
+        }
+
+        return new FindAdapter($query, $this->findService);
     }
 
     /**

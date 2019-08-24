@@ -43,104 +43,6 @@ class ForwardFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 
-    protected function getQueryTypeName(): string
-    {
-        return 'SiteAPI:Content/Relations/ForwardFields';
-    }
-
-    protected function getQueryTypeUnderTest(): QueryType
-    {
-        return new ForwardFields(
-            new Registry([
-                'ezobjectrelation' => new Relation(),
-                'ezobjectrelationlist' => new RelationList(),
-                'ngsurrogate' => new Surrogate(),
-            ])
-        );
-    }
-
-    protected function internalGetRepoFields(): array
-    {
-        return [
-            new RepoField([
-                'id' => 1,
-                'fieldDefIdentifier' => 'relations_a',
-                'value' => new RelationListValue([1, 2, 3]),
-                'languageCode' => 'eng-GB',
-                'fieldTypeIdentifier' => 'ezobjectrelationlist',
-            ]),
-            new RepoField([
-                'id' => 2,
-                'fieldDefIdentifier' => 'relations_b',
-                'value' => new RelationValue(4),
-                'languageCode' => 'eng-GB',
-                'fieldTypeIdentifier' => 'ezobjectrelation',
-            ]),
-            new RepoField([
-                'id' => 3,
-                'fieldDefIdentifier' => 'not_relations',
-                'value' => new Value(),
-                'languageCode' => 'eng-GB',
-                'fieldTypeIdentifier' => 'ezstring',
-            ]),
-        ];
-    }
-
-    protected function internalGetRepoFieldDefinitions(): array
-    {
-        return [
-            new FieldDefinition([
-                'id' => 1,
-                'identifier' => 'relations_a',
-                'fieldTypeIdentifier' => 'ezobjectrelationlist',
-            ]),
-            new FieldDefinition([
-                'id' => 2,
-                'identifier' => 'relations_b',
-                'fieldTypeIdentifier' => 'ezobjectrelation',
-            ]),
-            new FieldDefinition([
-                'id' => 3,
-                'identifier' => 'not_relations',
-                'fieldTypeIdentifier' => 'ezstring',
-            ]),
-        ];
-    }
-
-    protected function getTestContent(bool $failOnMissingFields = true): Content
-    {
-        return new Content(
-            [
-                'id' => 42,
-                'site' => false,
-                'domainObjectMapper' => $this->getDomainObjectMapper($failOnMissingFields),
-                'repository' => $this->getRepositoryMock(),
-                'innerContent' => $this->getRepoContent(),
-                'innerVersionInfo' => $this->getRepoVersionInfo(),
-                'languageCode' => 'eng-GB',
-            ],
-            $failOnMissingFields,
-            new NullLogger()
-        );
-    }
-
-    protected function getSupportedParameters(): array
-    {
-        return [
-            'content_type',
-            'field',
-            'is_field_empty',
-            'creation_date',
-            'section',
-            'state',
-            'sort',
-            'limit',
-            'offset',
-            'content',
-            'relation_field',
-        ];
-    }
-
     public function providerForTestGetQuery(): array
     {
         $content = $this->getTestContent();
@@ -423,6 +325,104 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                     'sort' => 'just sort it',
                 ],
             ],
+        ];
+    }
+
+    protected function getQueryTypeName(): string
+    {
+        return 'SiteAPI:Content/Relations/ForwardFields';
+    }
+
+    protected function getQueryTypeUnderTest(): QueryType
+    {
+        return new ForwardFields(
+            new Registry([
+                'ezobjectrelation' => new Relation(),
+                'ezobjectrelationlist' => new RelationList(),
+                'ngsurrogate' => new Surrogate(),
+            ])
+        );
+    }
+
+    protected function internalGetRepoFields(): array
+    {
+        return [
+            new RepoField([
+                'id' => 1,
+                'fieldDefIdentifier' => 'relations_a',
+                'value' => new RelationListValue([1, 2, 3]),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'ezobjectrelationlist',
+            ]),
+            new RepoField([
+                'id' => 2,
+                'fieldDefIdentifier' => 'relations_b',
+                'value' => new RelationValue(4),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'ezobjectrelation',
+            ]),
+            new RepoField([
+                'id' => 3,
+                'fieldDefIdentifier' => 'not_relations',
+                'value' => new Value(),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'ezstring',
+            ]),
+        ];
+    }
+
+    protected function internalGetRepoFieldDefinitions(): array
+    {
+        return [
+            new FieldDefinition([
+                'id' => 1,
+                'identifier' => 'relations_a',
+                'fieldTypeIdentifier' => 'ezobjectrelationlist',
+            ]),
+            new FieldDefinition([
+                'id' => 2,
+                'identifier' => 'relations_b',
+                'fieldTypeIdentifier' => 'ezobjectrelation',
+            ]),
+            new FieldDefinition([
+                'id' => 3,
+                'identifier' => 'not_relations',
+                'fieldTypeIdentifier' => 'ezstring',
+            ]),
+        ];
+    }
+
+    protected function getTestContent(bool $failOnMissingFields = true): Content
+    {
+        return new Content(
+            [
+                'id' => 42,
+                'site' => false,
+                'domainObjectMapper' => $this->getDomainObjectMapper($failOnMissingFields),
+                'repository' => $this->getRepositoryMock(),
+                'innerContent' => $this->getRepoContent(),
+                'innerVersionInfo' => $this->getRepoVersionInfo(),
+                'languageCode' => 'eng-GB',
+            ],
+            $failOnMissingFields,
+            new NullLogger()
+        );
+    }
+
+    protected function getSupportedParameters(): array
+    {
+        return [
+            'content_type',
+            'field',
+            'is_field_empty',
+            'creation_date',
+            'section',
+            'state',
+            'sort',
+            'limit',
+            'offset',
+            'content',
+            'relation_field',
         ];
     }
 }

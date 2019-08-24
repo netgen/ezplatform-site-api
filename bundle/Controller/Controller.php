@@ -20,17 +20,6 @@ abstract class Controller extends BaseController
     use PagerfantaTrait;
 
     /**
-     * @return \Netgen\EzPlatformSiteApi\API\Site
-     */
-    protected function getSite(): Site
-    {
-        /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
-        $site = $this->container->get('netgen.ezplatform_site.site');
-
-        return $site;
-    }
-
-    /**
      * Returns the root location object for current siteaccess configuration.
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
@@ -69,17 +58,6 @@ abstract class Controller extends BaseController
     }
 
     /**
-     * @return \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    protected function getConfigResolver(): ConfigResolverInterface
-    {
-        /** @var \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver */
-        $configResolver = $this->container->get('ezpublish.config.resolver');
-
-        return $configResolver;
-    }
-
-    /**
      * Returns the general helper service, exposed in Twig templates as "ezpublish" global variable.
      *
      * @return \eZ\Publish\Core\MVC\Symfony\Templating\GlobalHelper
@@ -90,5 +68,27 @@ abstract class Controller extends BaseController
         $globalHelper = $this->container->get('ezpublish.templating.global_helper');
 
         return $globalHelper;
+    }
+
+    /**
+     * @return \Netgen\EzPlatformSiteApi\API\Site
+     */
+    protected function getSite(): Site
+    {
+        /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
+        $site = $this->container->get('netgen.ezplatform_site.site');
+
+        return $site;
+    }
+
+    /**
+     * @return \eZ\Publish\Core\MVC\ConfigResolverInterface
+     */
+    protected function getConfigResolver(): ConfigResolverInterface
+    {
+        /** @var \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver */
+        $configResolver = $this->container->get('ezpublish.config.resolver');
+
+        return $configResolver;
     }
 }

@@ -88,6 +88,16 @@ final class Fields extends APIFields
     }
 
     /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function __debugInfo(): array
+    {
+        $this->initialize();
+
+        return array_values($this->fieldsByIdentifier);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -230,16 +240,6 @@ final class Fields extends APIFields
         $this->logger->critical($message . ', using surrogate field instead');
 
         return $this->getSurrogateField((string)$id, $this->content);
-    }
-
-    /**
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     */
-    public function __debugInfo(): array
-    {
-        $this->initialize();
-
-        return array_values($this->fieldsByIdentifier);
     }
 
     /**

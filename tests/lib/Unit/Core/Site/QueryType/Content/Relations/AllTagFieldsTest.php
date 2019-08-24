@@ -38,135 +38,6 @@ class AllTagFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 
-    protected function getQueryTypeName(): string
-    {
-        return 'SiteAPI:Content/Relations/AllTagFields';
-    }
-
-    protected function getQueryTypeUnderTest(): QueryType
-    {
-        return new AllTagFields();
-    }
-
-    protected function internalGetRepoFields(): array
-    {
-        return [
-            new RepoField([
-                'id' => 1,
-                'fieldDefIdentifier' => 'tags_a',
-                'value' => new TagValue([
-                    new Tag([
-                        'id' => 1,
-                    ]),
-                    new Tag([
-                        'id' => 2,
-                    ]),
-                ]),
-                'languageCode' => 'eng-GB',
-                'fieldTypeIdentifier' => 'eztags',
-            ]),
-            new RepoField([
-                'id' => 2,
-                'fieldDefIdentifier' => 'tags_b',
-                'value' => new TagValue([
-                    new Tag([
-                        'id' => 3,
-                    ]),
-                    new Tag([
-                        'id' => 4,
-                    ]),
-                ]),
-                'languageCode' => 'eng-GB',
-                'fieldTypeIdentifier' => 'eztags',
-            ]),
-            new RepoField([
-                'id' => 3,
-                'fieldDefIdentifier' => 'third',
-                'value' => new TagValue([
-                    new Tag([
-                        'id' => 3,
-                    ]),
-                    new Tag([
-                        'id' => 4,
-                    ]),
-                ]),
-                'languageCode' => 'eng-GB',
-                'fieldTypeIdentifier' => 'ezstring',
-            ]),
-        ];
-    }
-
-    protected function internalGetRepoFieldDefinitions(): array
-    {
-        return [
-            new FieldDefinition([
-                'id' => 1,
-                'identifier' => 'tags_a',
-                'fieldTypeIdentifier' => 'eztags',
-            ]),
-            new FieldDefinition([
-                'id' => 2,
-                'identifier' => 'tags_b',
-                'fieldTypeIdentifier' => 'eztags',
-            ]),
-            new FieldDefinition([
-                'id' => 3,
-                'identifier' => 'third',
-                'fieldTypeIdentifier' => 'ezstring',
-            ]),
-        ];
-    }
-
-    protected function getTestContentWithTags(): Content
-    {
-        return new Content(
-            [
-                'id' => 42,
-                'site' => false,
-                'domainObjectMapper' => $this->getDomainObjectMapper(),
-                'repository' => $this->getRepositoryMock(),
-                'innerContent' => $this->getRepoContent(),
-                'innerVersionInfo' => $this->getRepoVersionInfo(),
-                'languageCode' => 'eng-GB',
-            ],
-            true,
-            new NullLogger()
-        );
-    }
-
-    protected function getTestContentWithoutTags(): Content
-    {
-        return new Content(
-            [
-                'id' => 42,
-                'site' => false,
-                'domainObjectMapper' => $this->getDomainObjectMapper(),
-                'repository' => $this->getRepositoryMock(),
-                'fields' => [],
-                'languageCode' => 'eng-GB',
-            ],
-            true,
-            new NullLogger()
-        );
-    }
-
-    protected function getSupportedParameters(): array
-    {
-        return [
-            'content_type',
-            'field',
-            'is_field_empty',
-            'creation_date',
-            'section',
-            'state',
-            'sort',
-            'limit',
-            'offset',
-            'content',
-            'exclude_self',
-        ];
-    }
-
     public function providerForTestGetQuery(): array
     {
         $contentWithTags = $this->getTestContentWithTags();
@@ -399,6 +270,135 @@ class AllTagFieldsTest extends QueryTypeBaseTest
                     'sort' => 'just sort it',
                 ],
             ],
+        ];
+    }
+
+    protected function getQueryTypeName(): string
+    {
+        return 'SiteAPI:Content/Relations/AllTagFields';
+    }
+
+    protected function getQueryTypeUnderTest(): QueryType
+    {
+        return new AllTagFields();
+    }
+
+    protected function internalGetRepoFields(): array
+    {
+        return [
+            new RepoField([
+                'id' => 1,
+                'fieldDefIdentifier' => 'tags_a',
+                'value' => new TagValue([
+                    new Tag([
+                        'id' => 1,
+                    ]),
+                    new Tag([
+                        'id' => 2,
+                    ]),
+                ]),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'eztags',
+            ]),
+            new RepoField([
+                'id' => 2,
+                'fieldDefIdentifier' => 'tags_b',
+                'value' => new TagValue([
+                    new Tag([
+                        'id' => 3,
+                    ]),
+                    new Tag([
+                        'id' => 4,
+                    ]),
+                ]),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'eztags',
+            ]),
+            new RepoField([
+                'id' => 3,
+                'fieldDefIdentifier' => 'third',
+                'value' => new TagValue([
+                    new Tag([
+                        'id' => 3,
+                    ]),
+                    new Tag([
+                        'id' => 4,
+                    ]),
+                ]),
+                'languageCode' => 'eng-GB',
+                'fieldTypeIdentifier' => 'ezstring',
+            ]),
+        ];
+    }
+
+    protected function internalGetRepoFieldDefinitions(): array
+    {
+        return [
+            new FieldDefinition([
+                'id' => 1,
+                'identifier' => 'tags_a',
+                'fieldTypeIdentifier' => 'eztags',
+            ]),
+            new FieldDefinition([
+                'id' => 2,
+                'identifier' => 'tags_b',
+                'fieldTypeIdentifier' => 'eztags',
+            ]),
+            new FieldDefinition([
+                'id' => 3,
+                'identifier' => 'third',
+                'fieldTypeIdentifier' => 'ezstring',
+            ]),
+        ];
+    }
+
+    protected function getTestContentWithTags(): Content
+    {
+        return new Content(
+            [
+                'id' => 42,
+                'site' => false,
+                'domainObjectMapper' => $this->getDomainObjectMapper(),
+                'repository' => $this->getRepositoryMock(),
+                'innerContent' => $this->getRepoContent(),
+                'innerVersionInfo' => $this->getRepoVersionInfo(),
+                'languageCode' => 'eng-GB',
+            ],
+            true,
+            new NullLogger()
+        );
+    }
+
+    protected function getTestContentWithoutTags(): Content
+    {
+        return new Content(
+            [
+                'id' => 42,
+                'site' => false,
+                'domainObjectMapper' => $this->getDomainObjectMapper(),
+                'repository' => $this->getRepositoryMock(),
+                'fields' => [],
+                'languageCode' => 'eng-GB',
+            ],
+            true,
+            new NullLogger()
+        );
+    }
+
+    protected function getSupportedParameters(): array
+    {
+        return [
+            'content_type',
+            'field',
+            'is_field_empty',
+            'creation_date',
+            'section',
+            'state',
+            'sort',
+            'limit',
+            'offset',
+            'content',
+            'exclude_self',
         ];
     }
 }

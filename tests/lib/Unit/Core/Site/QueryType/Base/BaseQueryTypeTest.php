@@ -25,30 +25,6 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class BaseQueryTypeTest extends QueryTypeBaseTest
 {
-    protected function getQueryTypeName(): string
-    {
-        return 'Test:Base';
-    }
-
-    protected function getQueryTypeUnderTest(): QueryType
-    {
-        return new BaseQueryType();
-    }
-
-    protected function getSupportedParameters(): array
-    {
-        return [
-            'content_type',
-            'field',
-            'is_field_empty',
-            'creation_date',
-            'section',
-            'state',
-            'sort',
-            'limit',
-            'offset',
-        ];
-    }
 
     public function providerForTestGetQuery(): array
     {
@@ -286,6 +262,30 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                     'sort' => 'just sort it',
                 ],
             ],
+        ];
+    }
+    protected function getQueryTypeName(): string
+    {
+        return 'Test:Base';
+    }
+
+    protected function getQueryTypeUnderTest(): QueryType
+    {
+        return new BaseQueryType();
+    }
+
+    protected function getSupportedParameters(): array
+    {
+        return [
+            'content_type',
+            'field',
+            'is_field_empty',
+            'creation_date',
+            'section',
+            'state',
+            'sort',
+            'limit',
+            'offset',
         ];
     }
 }

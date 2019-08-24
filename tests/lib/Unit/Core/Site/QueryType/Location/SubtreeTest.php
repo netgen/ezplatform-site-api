@@ -30,54 +30,6 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class SubtreeTest extends QueryTypeBaseTest
 {
-    protected function getQueryTypeName(): string
-    {
-        return 'SiteAPI:Location/Subtree';
-    }
-
-    protected function getQueryTypeUnderTest(): QueryType
-    {
-        return new Subtree();
-    }
-
-    protected function getTestLocation(): Location
-    {
-        return new Location([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'innerVersionInfo' => false,
-            'languageCode' => false,
-            'innerLocation' => new RepositoryLocation([
-                'id' => 42,
-                'pathString' => '/3/5/7/11/',
-                'depth' => 4,
-                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
-                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
-            ]),
-        ]);
-    }
-
-    protected function getSupportedParameters(): array
-    {
-        return [
-            'content_type',
-            'field',
-            'is_field_empty',
-            'creation_date',
-            'section',
-            'state',
-            'sort',
-            'limit',
-            'offset',
-            'depth',
-            'main',
-            'priority',
-            'visible',
-            'location',
-            'exclude_self',
-            'relative_depth',
-        ];
-    }
 
     public function providerForTestGetQuery(): array
     {
@@ -379,6 +331,54 @@ class SubtreeTest extends QueryTypeBaseTest
                     'sort' => 'just sort it',
                 ],
             ],
+        ];
+    }
+    protected function getQueryTypeName(): string
+    {
+        return 'SiteAPI:Location/Subtree';
+    }
+
+    protected function getQueryTypeUnderTest(): QueryType
+    {
+        return new Subtree();
+    }
+
+    protected function getTestLocation(): Location
+    {
+        return new Location([
+            'site' => false,
+            'domainObjectMapper' => false,
+            'innerVersionInfo' => false,
+            'languageCode' => false,
+            'innerLocation' => new RepositoryLocation([
+                'id' => 42,
+                'pathString' => '/3/5/7/11/',
+                'depth' => 4,
+                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
+                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
+            ]),
+        ]);
+    }
+
+    protected function getSupportedParameters(): array
+    {
+        return [
+            'content_type',
+            'field',
+            'is_field_empty',
+            'creation_date',
+            'section',
+            'state',
+            'sort',
+            'limit',
+            'offset',
+            'depth',
+            'main',
+            'priority',
+            'visible',
+            'location',
+            'exclude_self',
+            'relative_depth',
         ];
     }
 }

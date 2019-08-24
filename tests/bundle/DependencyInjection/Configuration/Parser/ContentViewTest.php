@@ -15,19 +15,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ContentViewTest extends AbstractParserTestCase
 {
-    protected function getContainerExtensions(): array
-    {
-        return [
-            new EzPublishCoreExtension([
-                new ContentView(),
-            ]),
-        ];
-    }
-
-    protected function getMinimalConfiguration()
-    {
-        return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
-    }
 
     public function providerForTestValid(): array
     {
@@ -379,5 +366,18 @@ class ContentViewTest extends AbstractParserTestCase
             $expectedConfigurationValues,
             'cro'
         );
+    }
+    protected function getContainerExtensions(): array
+    {
+        return [
+            new EzPublishCoreExtension([
+                new ContentView(),
+            ]),
+        ];
+    }
+
+    protected function getMinimalConfiguration()
+    {
+        return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
     }
 }

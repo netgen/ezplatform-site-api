@@ -26,15 +26,6 @@ abstract class SiteParamConverter implements ParamConverterInterface
         return is_a($configuration->getClass(), $this->getSupportedClass(), true);
     }
 
-    abstract protected function getSupportedClass(): string;
-
-    /**
-     * @return string property name used in the method of the controller needing param conversion
-     */
-    abstract protected function getPropertyName(): string;
-
-    abstract protected function loadValueObject(int $id);
-
     public function apply(Request $request, ParamConverter $configuration): bool
     {
         if (!$request->attributes->has($this->getPropertyName())) {
@@ -49,4 +40,13 @@ abstract class SiteParamConverter implements ParamConverterInterface
 
         return true;
     }
+
+    abstract protected function getSupportedClass(): string;
+
+    /**
+     * @return string property name used in the method of the controller needing param conversion
+     */
+    abstract protected function getPropertyName(): string;
+
+    abstract protected function loadValueObject(int $id);
 }

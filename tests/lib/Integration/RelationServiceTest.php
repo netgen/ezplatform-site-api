@@ -17,65 +17,6 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
  */
 class RelationServiceTest extends BaseTest
 {
-    /**
-     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
-     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
-     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
-     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
-     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return array
-     */
-    protected function prepareTestContent(): array
-    {
-        $repository = $this->getRepository();
-        $contentTypeService = $repository->getContentTypeService();
-        $contentService = $repository->getContentService();
-        $languageCode = 'eng-GB';
-        $relationId = 57;
-        $relationIds = [57, 58];
-        $fieldDefinitionIdentifier = 'relation';
-
-        $contentTypeGroup = $contentTypeService->loadContentTypeGroup(1);
-
-        $contentTypeCreateStruct = $contentTypeService->newContentTypeCreateStruct('test_relation');
-        $contentTypeCreateStruct->mainLanguageCode = $languageCode;
-        $contentTypeCreateStruct->names = [$languageCode => 'Test Relation'];
-        $contentTypeCreateStruct->addFieldDefinition(
-            new FieldDefinitionCreateStruct([
-                'identifier' => $fieldDefinitionIdentifier,
-                'fieldTypeIdentifier' => 'ezobjectrelation',
-            ])
-        );
-        $contentTypeDraft = $contentTypeService->createContentType($contentTypeCreateStruct, [$contentTypeGroup]);
-        $contentTypeService->publishContentTypeDraft($contentTypeDraft);
-
-        $contentCreateStruct = $contentService->newContentCreateStruct($contentTypeDraft, $languageCode);
-        $contentCreateStruct->setField($fieldDefinitionIdentifier, $relationId);
-        $contentDraft = $contentService->createContent($contentCreateStruct);
-        $relationContent = $contentService->publishVersion($contentDraft->versionInfo);
-
-        $contentTypeCreateStruct = $contentTypeService->newContentTypeCreateStruct('test_relation_list');
-        $contentTypeCreateStruct->mainLanguageCode = $languageCode;
-        $contentTypeCreateStruct->names = [$languageCode => 'Test RelationList'];
-        $contentTypeCreateStruct->addFieldDefinition(
-            new FieldDefinitionCreateStruct([
-                'identifier' => $fieldDefinitionIdentifier,
-                'fieldTypeIdentifier' => 'ezobjectrelationlist',
-            ])
-        );
-        $contentTypeDraft = $contentTypeService->createContentType($contentTypeCreateStruct, [$contentTypeGroup]);
-        $contentTypeService->publishContentTypeDraft($contentTypeDraft);
-
-        $contentCreateStruct = $contentService->newContentCreateStruct($contentTypeDraft, $languageCode);
-        $contentCreateStruct->setField($fieldDefinitionIdentifier, $relationIds);
-        $contentDraft = $contentService->createContent($contentCreateStruct);
-        $relationListContent = $contentService->publishVersion($contentDraft->versionInfo);
-
-        return [$fieldDefinitionIdentifier, $relationContent, $relationId, $relationListContent, $relationIds];
-    }
 
     /**
      * @throws \ErrorException
@@ -211,5 +152,64 @@ class RelationServiceTest extends BaseTest
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, 'nonexistent');
 
         $this->assertCount(0, $contentItems);
+    }
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return array
+     */
+    protected function prepareTestContent(): array
+    {
+        $repository = $this->getRepository();
+        $contentTypeService = $repository->getContentTypeService();
+        $contentService = $repository->getContentService();
+        $languageCode = 'eng-GB';
+        $relationId = 57;
+        $relationIds = [57, 58];
+        $fieldDefinitionIdentifier = 'relation';
+
+        $contentTypeGroup = $contentTypeService->loadContentTypeGroup(1);
+
+        $contentTypeCreateStruct = $contentTypeService->newContentTypeCreateStruct('test_relation');
+        $contentTypeCreateStruct->mainLanguageCode = $languageCode;
+        $contentTypeCreateStruct->names = [$languageCode => 'Test Relation'];
+        $contentTypeCreateStruct->addFieldDefinition(
+            new FieldDefinitionCreateStruct([
+                'identifier' => $fieldDefinitionIdentifier,
+                'fieldTypeIdentifier' => 'ezobjectrelation',
+            ])
+        );
+        $contentTypeDraft = $contentTypeService->createContentType($contentTypeCreateStruct, [$contentTypeGroup]);
+        $contentTypeService->publishContentTypeDraft($contentTypeDraft);
+
+        $contentCreateStruct = $contentService->newContentCreateStruct($contentTypeDraft, $languageCode);
+        $contentCreateStruct->setField($fieldDefinitionIdentifier, $relationId);
+        $contentDraft = $contentService->createContent($contentCreateStruct);
+        $relationContent = $contentService->publishVersion($contentDraft->versionInfo);
+
+        $contentTypeCreateStruct = $contentTypeService->newContentTypeCreateStruct('test_relation_list');
+        $contentTypeCreateStruct->mainLanguageCode = $languageCode;
+        $contentTypeCreateStruct->names = [$languageCode => 'Test RelationList'];
+        $contentTypeCreateStruct->addFieldDefinition(
+            new FieldDefinitionCreateStruct([
+                'identifier' => $fieldDefinitionIdentifier,
+                'fieldTypeIdentifier' => 'ezobjectrelationlist',
+            ])
+        );
+        $contentTypeDraft = $contentTypeService->createContentType($contentTypeCreateStruct, [$contentTypeGroup]);
+        $contentTypeService->publishContentTypeDraft($contentTypeDraft);
+
+        $contentCreateStruct = $contentService->newContentCreateStruct($contentTypeDraft, $languageCode);
+        $contentCreateStruct->setField($fieldDefinitionIdentifier, $relationIds);
+        $contentDraft = $contentService->createContent($contentCreateStruct);
+        $relationListContent = $contentService->publishVersion($contentDraft->versionInfo);
+
+        return [$fieldDefinitionIdentifier, $relationContent, $relationId, $relationListContent, $relationIds];
     }
 }

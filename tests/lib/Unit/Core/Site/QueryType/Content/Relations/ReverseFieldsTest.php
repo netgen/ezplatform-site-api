@@ -32,59 +32,6 @@ class ReverseFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 
-    protected function getQueryTypeName(): string
-    {
-        return 'SiteAPI:Content/Relations/ReverseFields';
-    }
-
-    protected function getQueryTypeUnderTest(): QueryType
-    {
-        return new ReverseFields();
-    }
-
-    protected function internalGetRepoFields(): array
-    {
-        return [];
-    }
-
-    protected function internalGetRepoFieldDefinitions(): array
-    {
-        return [];
-    }
-
-    protected function getTestContent(): Content
-    {
-        return new Content(
-            [
-                'id' => 42,
-                'site' => false,
-                'domainObjectMapper' => $this->getDomainObjectMapper(),
-                'repository' => $this->getRepositoryMock(),
-                'fields' => [],
-                'languageCode' => 'eng-GB',
-            ],
-            true,
-            new NullLogger()
-        );
-    }
-
-    protected function getSupportedParameters(): array
-    {
-        return [
-            'content_type',
-            'field',
-            'is_field_empty',
-            'creation_date',
-            'section',
-            'state',
-            'sort',
-            'limit',
-            'offset',
-            'content',
-            'relation_field',
-        ];
-    }
-
     public function providerForTestGetQuery(): array
     {
         $content = $this->getTestContent();
@@ -315,6 +262,59 @@ class ReverseFieldsTest extends QueryTypeBaseTest
                     'sort' => 'just sort it',
                 ],
             ],
+        ];
+    }
+
+    protected function getQueryTypeName(): string
+    {
+        return 'SiteAPI:Content/Relations/ReverseFields';
+    }
+
+    protected function getQueryTypeUnderTest(): QueryType
+    {
+        return new ReverseFields();
+    }
+
+    protected function internalGetRepoFields(): array
+    {
+        return [];
+    }
+
+    protected function internalGetRepoFieldDefinitions(): array
+    {
+        return [];
+    }
+
+    protected function getTestContent(): Content
+    {
+        return new Content(
+            [
+                'id' => 42,
+                'site' => false,
+                'domainObjectMapper' => $this->getDomainObjectMapper(),
+                'repository' => $this->getRepositoryMock(),
+                'fields' => [],
+                'languageCode' => 'eng-GB',
+            ],
+            true,
+            new NullLogger()
+        );
+    }
+
+    protected function getSupportedParameters(): array
+    {
+        return [
+            'content_type',
+            'field',
+            'is_field_empty',
+            'creation_date',
+            'section',
+            'state',
+            'sort',
+            'limit',
+            'offset',
+            'content',
+            'relation_field',
         ];
     }
 }

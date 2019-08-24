@@ -33,73 +33,6 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class SiblingsTest extends QueryTypeBaseTest
 {
-    protected function getQueryTypeName(): string
-    {
-        return 'SiteAPI:Location/Siblings';
-    }
-
-    protected function getQueryTypeUnderTest(): QueryType
-    {
-        return new Siblings();
-    }
-
-    protected function getTestLocation(): Location
-    {
-        $loadServiceMock = $this->getMockBuilder(LoadService::class)->getMock();
-        $siteMock = $this->getMockBuilder(Site::class)->getMock();
-        $siteMock
-            ->method('getLoadService')
-            ->willReturn($loadServiceMock);
-
-        $parentLocation = new Location([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'innerVersionInfo' => false,
-            'languageCode' => false,
-            'innerLocation' => new RepositoryLocation([
-                'id' => 42,
-                'sortField' => RepositoryLocation::SORT_FIELD_DEPTH,
-                'sortOrder' => RepositoryLocation::SORT_ORDER_ASC,
-            ]),
-        ]);
-
-        $loadServiceMock
-            ->method('loadLocation')
-            ->with(42)
-            ->willReturn($parentLocation);
-
-        return new Location([
-            'site' => $siteMock,
-            'domainObjectMapper' => false,
-            'innerVersionInfo' => false,
-            'languageCode' => false,
-            'innerLocation' => new RepositoryLocation([
-                'id' => 24,
-                'parentLocationId' => 42,
-                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
-                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
-            ]),
-        ]);
-    }
-
-    protected function getSupportedParameters(): array
-    {
-        return [
-            'content_type',
-            'field',
-            'is_field_empty',
-            'creation_date',
-            'section',
-            'state',
-            'sort',
-            'limit',
-            'offset',
-            'main',
-            'priority',
-            'visible',
-            'location',
-        ];
-    }
 
     public function providerForTestGetQuery(): array
     {
@@ -366,6 +299,73 @@ class SiblingsTest extends QueryTypeBaseTest
                     'sort' => 'just sort it',
                 ],
             ],
+        ];
+    }
+    protected function getQueryTypeName(): string
+    {
+        return 'SiteAPI:Location/Siblings';
+    }
+
+    protected function getQueryTypeUnderTest(): QueryType
+    {
+        return new Siblings();
+    }
+
+    protected function getTestLocation(): Location
+    {
+        $loadServiceMock = $this->getMockBuilder(LoadService::class)->getMock();
+        $siteMock = $this->getMockBuilder(Site::class)->getMock();
+        $siteMock
+            ->method('getLoadService')
+            ->willReturn($loadServiceMock);
+
+        $parentLocation = new Location([
+            'site' => false,
+            'domainObjectMapper' => false,
+            'innerVersionInfo' => false,
+            'languageCode' => false,
+            'innerLocation' => new RepositoryLocation([
+                'id' => 42,
+                'sortField' => RepositoryLocation::SORT_FIELD_DEPTH,
+                'sortOrder' => RepositoryLocation::SORT_ORDER_ASC,
+            ]),
+        ]);
+
+        $loadServiceMock
+            ->method('loadLocation')
+            ->with(42)
+            ->willReturn($parentLocation);
+
+        return new Location([
+            'site' => $siteMock,
+            'domainObjectMapper' => false,
+            'innerVersionInfo' => false,
+            'languageCode' => false,
+            'innerLocation' => new RepositoryLocation([
+                'id' => 24,
+                'parentLocationId' => 42,
+                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
+                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
+            ]),
+        ]);
+    }
+
+    protected function getSupportedParameters(): array
+    {
+        return [
+            'content_type',
+            'field',
+            'is_field_empty',
+            'creation_date',
+            'section',
+            'state',
+            'sort',
+            'limit',
+            'offset',
+            'main',
+            'priority',
+            'visible',
+            'location',
         ];
     }
 }

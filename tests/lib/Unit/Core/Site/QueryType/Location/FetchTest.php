@@ -31,36 +31,6 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class FetchTest extends QueryTypeBaseTest
 {
-    protected function getQueryTypeName(): string
-    {
-        return 'SiteAPI:Location/Fetch';
-    }
-
-    protected function getQueryTypeUnderTest(): QueryType
-    {
-        return new Fetch();
-    }
-
-    protected function getSupportedParameters(): array
-    {
-        return [
-            'content_type',
-            'field',
-            'is_field_empty',
-            'creation_date',
-            'section',
-            'state',
-            'sort',
-            'limit',
-            'offset',
-            'depth',
-            'main',
-            'parent_location_id',
-            'priority',
-            'subtree',
-            'visible',
-        ];
-    }
 
     public function providerForTestGetQuery(): array
     {
@@ -281,6 +251,36 @@ class FetchTest extends QueryTypeBaseTest
                     'sort' => 'just sort it',
                 ],
             ],
+        ];
+    }
+    protected function getQueryTypeName(): string
+    {
+        return 'SiteAPI:Location/Fetch';
+    }
+
+    protected function getQueryTypeUnderTest(): QueryType
+    {
+        return new Fetch();
+    }
+
+    protected function getSupportedParameters(): array
+    {
+        return [
+            'content_type',
+            'field',
+            'is_field_empty',
+            'creation_date',
+            'section',
+            'state',
+            'sort',
+            'limit',
+            'offset',
+            'depth',
+            'main',
+            'parent_location_id',
+            'priority',
+            'subtree',
+            'visible',
         ];
     }
 }

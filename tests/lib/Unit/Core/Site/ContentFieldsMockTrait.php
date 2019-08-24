@@ -84,6 +84,11 @@ trait ContentFieldsMockTrait
     abstract public function getMockBuilder($className): MockBuilder;
 
     /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Field[]
+     */
+    abstract public function internalGetRepoFields(): array;
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
      */
     protected function getSiteMock(): MockObject
@@ -265,11 +270,6 @@ trait ContentFieldsMockTrait
 
         return $this->internalFields;
     }
-
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Field[]
-     */
-    abstract public function internalGetRepoFields(): array;
 
     protected function getRepoVersionInfo(): VersionInfo
     {

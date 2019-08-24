@@ -28,49 +28,6 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class ChildrenTest extends QueryTypeBaseTest
 {
-    protected function getQueryTypeName(): string
-    {
-        return 'SiteAPI:Location/Children';
-    }
-
-    protected function getQueryTypeUnderTest(): QueryType
-    {
-        return new Children();
-    }
-
-    protected function getTestLocation(): Location
-    {
-        return new Location([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'innerVersionInfo' => false,
-            'languageCode' => false,
-            'innerLocation' => new RepositoryLocation([
-                'id' => 42,
-                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
-                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
-            ]),
-        ]);
-    }
-
-    protected function getSupportedParameters(): array
-    {
-        return [
-            'content_type',
-            'field',
-            'is_field_empty',
-            'creation_date',
-            'section',
-            'state',
-            'sort',
-            'limit',
-            'offset',
-            'main',
-            'priority',
-            'visible',
-            'location',
-        ];
-    }
 
     public function providerForTestGetQuery(): array
     {
@@ -316,6 +273,49 @@ class ChildrenTest extends QueryTypeBaseTest
                     'sort' => 'just sort it',
                 ],
             ],
+        ];
+    }
+    protected function getQueryTypeName(): string
+    {
+        return 'SiteAPI:Location/Children';
+    }
+
+    protected function getQueryTypeUnderTest(): QueryType
+    {
+        return new Children();
+    }
+
+    protected function getTestLocation(): Location
+    {
+        return new Location([
+            'site' => false,
+            'domainObjectMapper' => false,
+            'innerVersionInfo' => false,
+            'languageCode' => false,
+            'innerLocation' => new RepositoryLocation([
+                'id' => 42,
+                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
+                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
+            ]),
+        ]);
+    }
+
+    protected function getSupportedParameters(): array
+    {
+        return [
+            'content_type',
+            'field',
+            'is_field_empty',
+            'creation_date',
+            'section',
+            'state',
+            'sort',
+            'limit',
+            'offset',
+            'main',
+            'priority',
+            'visible',
+            'location',
         ];
     }
 }

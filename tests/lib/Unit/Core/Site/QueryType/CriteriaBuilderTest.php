@@ -33,6 +33,8 @@ use PHPUnit\Framework\TestCase;
  */
 class CriteriaBuilderTest extends TestCase
 {
+
+    protected $criteriaBuilder;
     public function providerForTestBuild(): array
     {
         return [
@@ -432,8 +434,6 @@ class CriteriaBuilderTest extends TestCase
             ]),
         ]);
     }
-
-    protected $criteriaBuilder;
 
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder

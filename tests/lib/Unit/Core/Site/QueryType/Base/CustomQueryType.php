@@ -25,6 +25,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomQueryType extends Base
 {
+
+    public static function getName(): string
+    {
+        return 'Test:Custom';
+    }
     protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
@@ -56,11 +61,6 @@ class CustomQueryType extends Base
     protected function buildQuery(): Query
     {
         return new LocationQuery();
-    }
-
-    public static function getName(): string
-    {
-        return 'Test:Custom';
     }
 
     protected function getQueryCriterion(array $parameters): ?Criterion

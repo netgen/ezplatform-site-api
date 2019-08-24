@@ -19,6 +19,8 @@ use PHPUnit\Framework\TestCase;
  */
 class CriterionDefinitionResolverTest extends TestCase
 {
+
+    protected $criterionDefinitionResolver;
     public function providerForTestResolve(): array
     {
         return [
@@ -846,8 +848,6 @@ class CriterionDefinitionResolverTest extends TestCase
             ]
         );
     }
-
-    protected $criterionDefinitionResolver;
 
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinitionResolver

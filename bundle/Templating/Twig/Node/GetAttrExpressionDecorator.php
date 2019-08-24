@@ -39,9 +39,9 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
             && $this->getAttribute('type') === Template::ARRAY_CALL
             && (!$env->isStrictVariables() || $this->getAttribute('ignore_strict_check'))
         ) {
-            $var = '$'.$compiler->getVarName();
+            $var = '$' . $compiler->getVarName();
             $compiler
-                ->raw('(('.$var.' = ')
+                ->raw('((' . $var . ' = ')
                 ->subcompile($this->getNode('node'))
                 ->raw(') && is_array(')
                 ->raw($var)

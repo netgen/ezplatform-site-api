@@ -20,7 +20,7 @@ final class ContentInfo extends APIContentInfo
     protected $languageCode;
 
     /**
-     * @var string|int
+     * @var int|string
      */
     protected $contentTypeIdentifier;
 
@@ -145,7 +145,7 @@ final class ContentInfo extends APIContentInfo
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location|null
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private function getMainLocation(): ?APILocation
     {

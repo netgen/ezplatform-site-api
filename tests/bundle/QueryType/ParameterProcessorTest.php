@@ -274,7 +274,7 @@ class ParameterProcessorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @return \eZ\Publish\Core\MVC\ConfigResolverInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getConfigResolverMock(): MockObject
     {
@@ -305,7 +305,7 @@ class ParameterProcessorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
+     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getViewMock(): MockObject
     {

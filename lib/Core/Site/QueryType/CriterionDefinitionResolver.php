@@ -73,7 +73,7 @@ final class CriterionDefinitionResolver
      * @throws \InvalidArgumentException
      *
      * @param string $name
-     * @param string|null $target
+     * @param null|string $target
      * @param mixed $parameters
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
@@ -93,7 +93,7 @@ final class CriterionDefinitionResolver
      * Return CriterionDefinition instances for the given Field $target and its operator $map.
      *
      * @param string $name
-     * @param string|null $target
+     * @param null|string $target
      * @param array $map
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
@@ -111,7 +111,7 @@ final class CriterionDefinitionResolver
 
     /**
      * @param string $name
-     * @param string|null $target
+     * @param null|string $target
      * @param string $operator
      * @param mixed $value
      *
@@ -135,8 +135,8 @@ final class CriterionDefinitionResolver
      * Return CriterionDefinition instance from the given arguments.
      *
      * @param string $name
-     * @param string|null $target
-     * @param string|null $operator
+     * @param null|string $target
+     * @param null|string $operator
      * @param mixed $value
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
@@ -203,7 +203,7 @@ final class CriterionDefinitionResolver
     /**
      * Resolve actual operator value from the given arguments.
      *
-     * @param string|null $symbol
+     * @param null|string $symbol
      * @param mixed $value
      *
      * @return mixed

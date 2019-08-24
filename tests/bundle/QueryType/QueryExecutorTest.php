@@ -229,7 +229,7 @@ class QueryExecutorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\FilterService
+     * @return \Netgen\EzPlatformSiteApi\API\FilterService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getFilterServiceMock(): MockObject
     {
@@ -245,7 +245,7 @@ class QueryExecutorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\FindService
+     * @return \Netgen\EzPlatformSiteApi\API\FindService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getFindServiceMock(): MockObject
     {
@@ -261,7 +261,7 @@ class QueryExecutorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
+     * @return \eZ\Publish\Core\QueryType\QueryTypeRegistry|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getQueryTypeRegistryMock(): MockObject
     {

@@ -25,7 +25,7 @@ use Psr\Log\NullLogger;
 trait ContentFieldsMockTrait
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
+     * @var \Netgen\EzPlatformSiteApi\API\Site|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $siteMock;
 
@@ -35,7 +35,7 @@ trait ContentFieldsMockTrait
     protected $domainObjectMapper;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\Repository
+     * @var \eZ\Publish\API\Repository\Repository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $repositoryMock;
 
@@ -60,17 +60,17 @@ trait ContentFieldsMockTrait
     protected $fieldDefinitions;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentTypeService
+     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $contentTypeServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\FieldTypeService
+     * @var \eZ\Publish\API\Repository\FieldTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $fieldTypeServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\SPI\FieldType\FieldType
+     * @var \eZ\Publish\SPI\FieldType\FieldType|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $fieldTypeMock;
 
@@ -89,7 +89,7 @@ trait ContentFieldsMockTrait
     abstract public function internalGetRepoFields(): array;
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
+     * @return \Netgen\EzPlatformSiteApi\API\Site|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getSiteMock(): MockObject
     {
@@ -124,7 +124,7 @@ trait ContentFieldsMockTrait
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\Repository
+     * @return \eZ\Publish\API\Repository\Repository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getRepositoryMock(): MockObject
     {
@@ -154,7 +154,7 @@ trait ContentFieldsMockTrait
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\FieldTypeService
+     * @return \eZ\Publish\API\Repository\FieldTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getFieldTypeServiceMock(): MockObject
     {
@@ -175,7 +175,7 @@ trait ContentFieldsMockTrait
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\SPI\FieldType\FieldType
+     * @return \eZ\Publish\SPI\FieldType\FieldType|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getFieldTypeMock(): MockObject
     {
@@ -195,7 +195,7 @@ trait ContentFieldsMockTrait
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentTypeService
+     * @return \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getContentTypeServiceMock(): MockObject
     {
@@ -239,7 +239,7 @@ trait ContentFieldsMockTrait
     abstract protected function internalGetRepoFieldDefinitions(): array;
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\Repository\Values\Content\Content
+     * @return \eZ\Publish\Core\Repository\Values\Content\Content|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getRepoContent(): Content
     {

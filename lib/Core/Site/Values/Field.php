@@ -9,7 +9,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
 final class Field extends APIField
 {
     /**
-     * @var string|int
+     * @var int|string
      */
     protected $id;
 

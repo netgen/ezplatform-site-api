@@ -280,7 +280,7 @@ final class CriteriaBuilder
     }
 
     /**
-     * @param string|int $value
+     * @param int|string $value
      *
      * @throws \InvalidArgumentException
      *

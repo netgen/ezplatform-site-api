@@ -140,7 +140,7 @@ class ContentViewBuilder implements ViewBuilder
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
-     * @param string|int $contentId
+     * @param int|string $contentId
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
@@ -157,7 +157,7 @@ class ContentViewBuilder implements ViewBuilder
      * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
      * @throws \Exception
      *
-     * @param string|int $contentId
+     * @param int|string $contentId
      * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
@@ -196,7 +196,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @todo Do we need to handle permissions here ?
      *
-     * @param string|int $locationId
+     * @param int|string $locationId
      * @param bool $checkVisibility
      *
      * @throws \Exception

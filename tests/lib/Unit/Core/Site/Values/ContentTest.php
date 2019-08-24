@@ -31,7 +31,7 @@ use Psr\Log\NullLogger;
 class ContentTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
+     * @var \Netgen\EzPlatformSiteApi\API\Site|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $siteMock;
 
@@ -41,37 +41,37 @@ class ContentTest extends TestCase
     protected $domainObjectMapper;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentService
+     * @var \eZ\Publish\API\Repository\ContentService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $contentServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentTypeService
+     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $contentTypeServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\FieldTypeService
+     * @var \eZ\Publish\API\Repository\FieldTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $fieldTypeServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\LoadService
+     * @var \Netgen\EzPlatformSiteApi\API\LoadService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $loadServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\UserService
+     * @var \eZ\Publish\API\Repository\UserService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $userServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\Repository
+     * @var \eZ\Publish\API\Repository\Repository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $repositoryMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
+     * @var \eZ\Publish\Core\QueryType\QueryTypeRegistry|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $queryTypeRegistryMock;
 
@@ -222,7 +222,7 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\Site
+     * @return \Netgen\EzPlatformSiteApi\API\Site|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getSiteMock(): MockObject
     {
@@ -261,7 +261,7 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\EzPlatformSiteApi\API\LoadService
+     * @return \Netgen\EzPlatformSiteApi\API\LoadService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getLoadServiceMock(): MockObject
     {
@@ -277,7 +277,7 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentService
+     * @return \eZ\Publish\API\Repository\ContentService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getContentServiceMock(): MockObject
     {
@@ -293,7 +293,7 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\ContentTypeService
+     * @return \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getContentTypeServiceMock(): MockObject
     {
@@ -316,7 +316,7 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\FieldTypeService
+     * @return \eZ\Publish\API\Repository\FieldTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getFieldTypeServiceMock(): MockObject
     {
@@ -332,7 +332,7 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\UserService
+     * @return \eZ\Publish\API\Repository\UserService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getUserServiceMock(): MockObject
     {
@@ -348,7 +348,7 @@ class ContentTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\Repository
+     * @return \eZ\Publish\API\Repository\Repository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getRepositoryMock(): MockObject
     {

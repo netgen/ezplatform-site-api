@@ -14,8 +14,8 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
  *
  * @property-read string $name
- * @property-read string|null $target
- * @property-read mixed|null $operator
+ * @property-read null|string $target
+ * @property-read null|mixed $operator
  * @property-read mixed $value
  */
 final class CriterionDefinition extends ValueObject
@@ -30,14 +30,14 @@ final class CriterionDefinition extends ValueObject
     /**
      * Optional target.
      *
-     * @var string|null
+     * @var null|string
      */
     protected $target;
 
     /**
      * Optional operator.
      *
-     * @var mixed|null
+     * @var null|mixed
      */
     protected $operator;
 

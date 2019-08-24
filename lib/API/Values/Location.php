@@ -29,7 +29,7 @@ use Pagerfanta\Pagerfanta;
  * @property-read int|string $contentId
  * @property-read \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $parent
+ * @property-read null|\Netgen\EzPlatformSiteApi\API\Values\Location $parent
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
  */
 abstract class Location extends ValueObject

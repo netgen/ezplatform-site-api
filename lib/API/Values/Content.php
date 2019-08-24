@@ -16,15 +16,15 @@ use Pagerfanta\Pagerfanta;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\Content
  *
- * @property-read string|int $id
- * @property-read int|string|null $mainLocationId
+ * @property-read int|string $id
+ * @property-read null|int|string $mainLocationId
  * @property-read string $name
  * @property-read string $languageCode
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property-read \Netgen\EzPlatformSiteApi\API\Values\Fields $fields
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content|null $owner
- * @property-read \eZ\Publish\API\Repository\Values\User\User|null $innerOwnerUser
+ * @property-read null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
+ * @property-read null|\Netgen\EzPlatformSiteApi\API\Values\Content $owner
+ * @property-read null|\eZ\Publish\API\Repository\Values\User\User $innerOwnerUser
  * @property-read \eZ\Publish\API\Repository\Values\Content\Content $innerContent
  * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $innerVersionInfo
  * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
@@ -52,7 +52,7 @@ abstract class Content extends ValueObject
     /**
      * Returns if content has the field with the given field $id.
      *
-     * @param string|int $id
+     * @param int|string $id
      *
      * @return bool
      */
@@ -61,7 +61,7 @@ abstract class Content extends ValueObject
     /**
      * Return Field object for the given field $id.
      *
-     * @param string|int $id
+     * @param int|string $id
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
@@ -79,7 +79,7 @@ abstract class Content extends ValueObject
     /**
      * Returns a field value for the given field $id.
      *
-     * @param string|int $id
+     * @param int|string $id
      *
      * @return \eZ\Publish\SPI\FieldType\Value
      */
@@ -109,7 +109,7 @@ abstract class Content extends ValueObject
      *
      * @param string $fieldDefinitionIdentifier
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content|null
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     abstract public function getFieldRelation(string $fieldDefinitionIdentifier): ?Content;
 

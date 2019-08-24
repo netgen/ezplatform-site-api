@@ -22,12 +22,12 @@ class MatcherFactory extends ServiceAwareMatcherFactory
     private $parameterName;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $namespace;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $scope;
 

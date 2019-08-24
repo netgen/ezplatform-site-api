@@ -39,7 +39,7 @@ class ImageRuntime
      * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
      * @param string $variationName
      *
-     * @return \eZ\Publish\SPI\Variation\Values\Variation|null
+     * @return null|\eZ\Publish\SPI\Variation\Values\Variation
      */
     public function getImageVariation(Field $field, string $variationName): ?Variation
     {

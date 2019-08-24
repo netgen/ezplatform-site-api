@@ -169,7 +169,7 @@ abstract class Base implements QueryType
      *
      * @param string $string
      *
-     * @return SortClause|null
+     * @return null|SortClause
      */
     protected function parseCustomSortString(string $string): ?SortClause
     {
@@ -351,7 +351,7 @@ abstract class Base implements QueryType
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion|null
+     * @return null|\eZ\Publish\API\Repository\Values\Content\Query\Criterion
      */
     private function resolveFilterCriteria(array $parameters): ?Criterion
     {
@@ -411,7 +411,7 @@ abstract class Base implements QueryType
     /**
      * @param string $string
      *
-     * @return string|\eZ\Publish\API\Repository\Values\Content\Query\SortClause
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause|string
      */
     private function parseSortString(string $string)
     {

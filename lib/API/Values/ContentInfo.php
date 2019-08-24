@@ -32,7 +32,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property-read string $contentTypeDescription
  * @property-read \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
+ * @property-read null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
  */
 abstract class ContentInfo extends ValueObject
 {

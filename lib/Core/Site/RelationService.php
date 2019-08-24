@@ -91,7 +91,7 @@ class RelationService implements RelationServiceInterface
      *
      * @param array $relatedContentIds
      * @param array $contentTypeIdentifiers
-     * @param int|null $limit
+     * @param null|int $limit
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *

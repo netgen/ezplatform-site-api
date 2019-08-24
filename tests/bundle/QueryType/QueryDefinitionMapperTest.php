@@ -193,7 +193,7 @@ class QueryDefinitionMapperTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @return \eZ\Publish\Core\MVC\ConfigResolverInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getConfigResolverMock(): MockObject
     {
@@ -233,7 +233,7 @@ class QueryDefinitionMapperTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\Core\QueryType\QueryTypeRegistry
+     * @return \eZ\Publish\Core\QueryType\QueryTypeRegistry|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getQueryTypeRegistryMock(): MockObject
     {
@@ -286,7 +286,7 @@ class QueryDefinitionMapperTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
+     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getViewMock(): MockObject
     {

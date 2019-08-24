@@ -31,12 +31,12 @@ use Psr\Log\LoggerInterface;
 final class Content extends APIContent
 {
     /**
-     * @var string|int
+     * @var int|string
      */
     protected $id;
 
     /**
-     * @var string|int
+     * @var int|string
      */
     protected $mainLocationId;
 
@@ -392,7 +392,7 @@ final class Content extends APIContent
     }
 
     /**
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content|null
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private function getOwner(): ?APIContent
     {
@@ -418,7 +418,7 @@ final class Content extends APIContent
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\User\User|null
+     * @return null|\eZ\Publish\API\Repository\Values\User\User
      */
     private function getInnerOwnerUser(): ?User
     {

@@ -15,7 +15,7 @@ interface LoadService
     /**
      * Loads Content object for the given $contentId.
      *
-     * @param string|int $contentId
+     * @param int|string $contentId
      * @param int $versionNo
      * @param string $languageCode
      *
@@ -43,7 +43,7 @@ interface LoadService
     /**
      * Loads Location object for the given $locationId.
      *
-     * @param string|int $locationId
+     * @param int|string $locationId
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException

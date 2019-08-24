@@ -13,7 +13,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\Field
  *
- * @property-read string|int $id
+ * @property-read int|string $id
  * @property-read string $fieldDefIdentifier
  * @property-read \eZ\Publish\SPI\FieldType\Value $value
  * @property-read string $languageCode

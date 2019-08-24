@@ -88,7 +88,7 @@ class Site implements SiteInterface
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\API\Repository\SearchService $filteringSearchService
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry $relationResolverRegistry
-     * @param \Psr\Log\LoggerInterface|null $logger
+     * @param null|\Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         BaseSettings $settings,

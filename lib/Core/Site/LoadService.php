@@ -106,7 +106,7 @@ class LoadService implements LoadServiceInterface
      * Returns the most prioritized language code for the given parameters.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
-     * @param string|null $languageCode
+     * @param null|string $languageCode
      *
      * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
      *

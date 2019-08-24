@@ -36,7 +36,7 @@ abstract class Fields implements IteratorAggregate, ArrayAccess, Countable
     /**
      * Return whether the collection contains a field with the given $id.
      *
-     * @param string|int $id
+     * @param int|string $id
      *
      * @return bool
      */
@@ -45,7 +45,7 @@ abstract class Fields implements IteratorAggregate, ArrayAccess, Countable
     /**
      * Return the field with the given $id.
      *
-     * @param string|int $id
+     * @param int|string $id
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */

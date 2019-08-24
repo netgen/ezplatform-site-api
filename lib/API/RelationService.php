@@ -15,14 +15,14 @@ interface RelationService
      * Load single related Content from $fieldDefinitionIdentifier field in Content with given
      * $contentId, optionally limited by a list of $contentTypeIdentifiers.
      *
-     * @param string|int $contentId
+     * @param int|string $contentId
      * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content|null
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     public function loadFieldRelation(
         $contentId,
@@ -34,10 +34,10 @@ interface RelationService
      * Load all related Content from $fieldDefinitionIdentifier field in Content with given
      * $contentId, optionally limited by a list of $contentTypeIdentifiers and $limit.
      *
-     * @param string|int $contentId
+     * @param int|string $contentId
      * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
-     * @param int|null $limit
+     * @param null|int $limit
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException

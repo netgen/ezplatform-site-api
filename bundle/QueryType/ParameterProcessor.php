@@ -22,7 +22,7 @@ final class ParameterProcessor
     private $requestStack;
 
     /**
-     * @var  \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
     private $configResolver;
 

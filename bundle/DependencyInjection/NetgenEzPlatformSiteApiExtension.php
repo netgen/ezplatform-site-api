@@ -22,7 +22,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration
      */

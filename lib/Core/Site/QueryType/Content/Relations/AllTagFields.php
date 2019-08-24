@@ -24,7 +24,7 @@ final class AllTagFields extends Content
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException

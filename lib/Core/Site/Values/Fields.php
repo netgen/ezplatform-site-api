@@ -98,7 +98,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
@@ -110,7 +110,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
@@ -137,7 +137,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
@@ -159,7 +159,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
@@ -197,7 +197,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
@@ -209,7 +209,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
@@ -221,7 +221,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */

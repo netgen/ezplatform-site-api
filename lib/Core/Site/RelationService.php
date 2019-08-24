@@ -41,7 +41,7 @@ class RelationService implements RelationServiceInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
@@ -60,7 +60,7 @@ class RelationService implements RelationServiceInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */

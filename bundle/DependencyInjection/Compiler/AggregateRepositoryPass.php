@@ -44,7 +44,7 @@ class AggregateRepositoryPass implements CompilerPassInterface
     private const CustomRepositoryTag = 'netgen.ezplatform_site.repository';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      * @throws \Symfony\Component\DependencyInjection\Exception\OutOfBoundsException

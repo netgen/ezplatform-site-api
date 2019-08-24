@@ -44,7 +44,7 @@ class Configured implements ViewProvider
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * Returns view as a data transfer object.
      *

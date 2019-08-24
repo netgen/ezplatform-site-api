@@ -148,7 +148,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @deprecated
      */

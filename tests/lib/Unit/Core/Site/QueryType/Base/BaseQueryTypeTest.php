@@ -20,6 +20,7 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  * Base QueryType stub test case.
  *
  * @group query-type
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Base
  */
 class BaseQueryTypeTest extends QueryTypeBaseTest

@@ -193,6 +193,7 @@ class ContentViewBuilder implements ViewBuilder
 
     /**
      * Loads a visible Location.
+     *
      * @todo Do we need to handle permissions here ?
      *
      * @param string|int $locationId

@@ -25,6 +25,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * @internal hint against API Content instead of this class
+ *
  * @see \Netgen\EzPlatformSiteApi\API\Values\Content
  */
 final class Content extends APIContent

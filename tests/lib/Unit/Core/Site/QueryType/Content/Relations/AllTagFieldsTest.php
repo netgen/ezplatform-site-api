@@ -31,6 +31,7 @@ use Psr\Log\NullLogger;
  * AllTagFields Content Relation QueryType test case.
  *
  * @group query-type
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\AllTagFields
  */
 class AllTagFieldsTest extends QueryTypeBaseTest

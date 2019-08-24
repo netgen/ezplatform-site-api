@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * Site ContentInfo object provides meta information of the Site Content object.
  *
  * Corresponds to eZ Platform Repository ContentInfo object.
+ *
  * @see \eZ\Publish\API\Repository\Values\Content\ContentInfo
  *
  * @property-read int|string $id

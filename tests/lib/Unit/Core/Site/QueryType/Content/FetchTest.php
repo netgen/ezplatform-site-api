@@ -20,6 +20,7 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  * Fetch Content QueryType test case.
  *
  * @group query-type
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Fetch
  */
 class FetchTest extends QueryTypeBaseTest

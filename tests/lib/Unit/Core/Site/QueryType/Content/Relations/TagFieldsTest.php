@@ -34,6 +34,7 @@ use RuntimeException;
  * TagFields Content Relation QueryType test case.
  *
  * @group query-type
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\TagFields
  */
 class TagFieldsTest extends QueryTypeBaseTest

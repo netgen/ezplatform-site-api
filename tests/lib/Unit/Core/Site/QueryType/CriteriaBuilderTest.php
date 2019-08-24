@@ -28,6 +28,7 @@ use PHPUnit\Framework\TestCase;
  * CriteriaBuilder test case.
  *
  * @group query-type
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
  */
 class CriteriaBuilderTest extends TestCase

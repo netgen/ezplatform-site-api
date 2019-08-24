@@ -21,6 +21,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @group query-type
  * @group sort
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\SortClauseParser
  */
 class SortClauseParserTest extends TestCase

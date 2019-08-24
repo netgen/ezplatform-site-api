@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
  * Surrogate Field value unit tests.
  *
  * @group fields
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue
  */
 class SurrogateValueTest extends TestCase

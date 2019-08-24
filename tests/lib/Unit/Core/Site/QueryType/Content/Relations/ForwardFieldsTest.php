@@ -36,6 +36,7 @@ use RuntimeException;
  * ForwardFields Content Relation QueryType test case.
  *
  * @group query-type
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ForwardFields
  */
 class ForwardFieldsTest extends QueryTypeBaseTest

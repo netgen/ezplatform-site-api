@@ -23,6 +23,7 @@ use RuntimeException;
  * Fields value unit tests.
  *
  * @group fields
+ *
  * @see \Netgen\EzPlatformSiteApi\API\Values\Fields
  */
 class FieldsTest extends TestCase

@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  * CriterionDefinitionResolver test case.
  *
  * @group query-type
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaResolver
  */
 class CriterionDefinitionResolverTest extends TestCase

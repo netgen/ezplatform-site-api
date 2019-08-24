@@ -11,6 +11,7 @@ use Pagerfanta\Pagerfanta;
  * Site Location represents location of Site Content object in the content tree.
  *
  * Corresponds to eZ Platform Repository Location object.
+ *
  * @see \eZ\Publish\API\Repository\Values\Content\Location
  *
  * @property-read int|string $id

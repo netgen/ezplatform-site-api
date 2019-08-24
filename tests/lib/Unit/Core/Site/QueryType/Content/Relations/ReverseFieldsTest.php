@@ -25,6 +25,7 @@ use Psr\Log\NullLogger;
  * ReverseFields Content Relation QueryType test case.
  *
  * @group query-type
+ *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields
  */
 class ReverseFieldsTest extends QueryTypeBaseTest

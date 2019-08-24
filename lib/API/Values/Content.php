@@ -13,6 +13,7 @@ use Pagerfanta\Pagerfanta;
  * and specific language.
  *
  * Corresponds to eZ Platform Repository Content object.
+ *
  * @see \eZ\Publish\API\Repository\Values\Content\Content
  *
  * @property-read string|int $id

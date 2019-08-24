@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * Site Field represents a field of a Site Content object.
  *
  * Corresponds to eZ Platform Repository Field object.
+ *
  * @see \eZ\Publish\API\Repository\Values\Content\Field
  *
  * @property-read string|int $id

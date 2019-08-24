@@ -152,6 +152,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
 
     /**
      * {@inheritDoc}
+     *
      * @deprecated
      */
     public function setTemplateName($name): void

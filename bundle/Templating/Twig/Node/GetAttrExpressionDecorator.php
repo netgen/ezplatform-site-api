@@ -56,8 +56,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
                 ->raw($var)
                 ->raw('[')
                 ->subcompile($this->getNode('attribute'))
-                ->raw('] ?? null) : null)')
-            ;
+                ->raw('] ?? null) : null)');
 
             return;
         }
@@ -71,8 +70,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         $compiler
             ->subcompile($this->getNode('node'))
             ->raw(', ')
-            ->subcompile($this->getNode('attribute'))
-        ;
+            ->subcompile($this->getNode('attribute'));
 
         if ($this->hasNode('arguments')) {
             $compiler->raw(', ')->subcompile($this->getNode('arguments'));
@@ -86,8 +84,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
             ->raw(', ')->repr($this->getAttribute('ignore_strict_check'))
             ->raw(', ')->repr($env->hasExtension(SandboxExtension::class))
             ->raw(', ')->repr($this->getNode('node')->getTemplateLine())
-            ->raw(')')
-        ;
+            ->raw(')');
     }
 
     public function getTemplateLine()

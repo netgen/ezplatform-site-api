@@ -102,7 +102,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                     'field' => [
                         'title' => [
                             'eq' => 'Hello',
-                        ]
+                        ],
                     ],
                     'sort' => new DatePublished(Query::SORT_DESC),
                 ],
@@ -123,7 +123,7 @@ class BaseQueryTypeTest extends QueryTypeBaseTest
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
-                        ]
+                        ],
                     ],
                     'sort' => [
                         'published desc',

@@ -292,7 +292,7 @@ class ContentViewTest extends AbstractParserTestCase
                         'query_name' => [
                             'named_query' => 'named_query',
                             'parameters' => [
-                                'some' => 'value,'
+                                'some' => 'value',
                             ],
                         ],
                     ],
@@ -303,7 +303,7 @@ class ContentViewTest extends AbstractParserTestCase
                         'query_name' => [
                             'named_query' => 'named_query',
                             'parameters' => [
-                                'some' => 'value,'
+                                'some' => 'value',
                             ],
                         ],
                     ],

@@ -87,7 +87,7 @@ class CustomQueryTypeTest extends TestCase
                     'sort' => [
                         'whatever',
                         'section',
-                    ]
+                    ],
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
@@ -113,7 +113,7 @@ class CustomQueryTypeTest extends TestCase
                     'prefabrication_date' => [
                         'eq' => 123,
                         'in' => [123, 456],
-                    ]
+                    ],
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([

@@ -139,7 +139,7 @@ class ChildrenTest extends QueryTypeBaseTest
                     'field' => [
                         'title' => [
                             'eq' => 'Hello',
-                        ]
+                        ],
                     ],
                     'sort' => [
                         'published desc',
@@ -166,7 +166,7 @@ class ChildrenTest extends QueryTypeBaseTest
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
-                        ]
+                        ],
                     ],
                     'sort' => [
                         new DatePublished(Query::SORT_DESC),
@@ -258,7 +258,7 @@ class ChildrenTest extends QueryTypeBaseTest
                         'like' => 5,
                     ],
                 ],
-            ]
+            ],
         ];
     }
 

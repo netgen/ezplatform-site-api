@@ -134,7 +134,7 @@ class FetchTest extends QueryTypeBaseTest
                     'field' => [
                         'title' => [
                             'eq' => 'Hello',
-                        ]
+                        ],
                     ],
                     'sort' => [
                         'published desc',
@@ -163,7 +163,7 @@ class FetchTest extends QueryTypeBaseTest
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
-                        ]
+                        ],
                     ],
                     'sort' => [
                         new DatePublished(Query::SORT_DESC),
@@ -239,7 +239,7 @@ class FetchTest extends QueryTypeBaseTest
                         'like' => 5,
                     ],
                 ],
-            ]
+            ],
         ];
     }
 

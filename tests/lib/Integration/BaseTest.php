@@ -152,7 +152,7 @@ class BaseTest extends APIBaseTest
                 'fields' => $content->fields,
                 'mainLocation' => "[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]",
                 'innerContent' => "[An instance of eZ\Publish\API\Repository\Values\Content\Content]",
-                'innerVersionInfo' => "[An instance of eZ\Publish\API\Repository\Values\Content\VersionInfo]"
+                'innerVersionInfo' => "[An instance of eZ\Publish\API\Repository\Values\Content\VersionInfo]",
             ],
             $content->__debugInfo()
         );

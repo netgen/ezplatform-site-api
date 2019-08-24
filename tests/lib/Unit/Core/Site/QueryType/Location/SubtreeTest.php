@@ -316,7 +316,7 @@ class SubtreeTest extends QueryTypeBaseTest
                         'like' => 5,
                     ],
                 ],
-            ]
+            ],
         ];
     }
 

@@ -388,7 +388,7 @@ class CriterionDefinitionResolverTest extends TestCase
                 [
                     'title' => [
                         'eq' => 'hello',
-                    ]
+                    ],
                 ],
                 [
                     new CriterionDefinition([

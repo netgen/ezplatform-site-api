@@ -118,7 +118,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                     'field' => [
                         'title' => [
                             'eq' => 'Hello',
-                        ]
+                        ],
                     ],
                     'sort' => new DatePublished(Query::SORT_DESC),
                 ],
@@ -142,7 +142,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
-                        ]
+                        ],
                     ],
                     'sort' => [
                         'published desc',
@@ -309,7 +309,7 @@ class ForwardFieldsTest extends QueryTypeBaseTest
                         'like' => 5,
                     ],
                 ],
-            ]
+            ],
         ];
     }
 

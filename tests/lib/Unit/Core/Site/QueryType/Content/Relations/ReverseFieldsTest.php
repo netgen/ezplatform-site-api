@@ -110,7 +110,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
                     'field' => [
                         'title' => [
                             'eq' => 'Hello',
-                        ]
+                        ],
                     ],
                     'sort' => new DatePublished(Query::SORT_DESC),
                 ],
@@ -134,7 +134,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
                         'title' => [
                             'eq' => 'Hello',
                             'gte' => 7,
-                        ]
+                        ],
                     ],
                     'sort' => [
                         'published desc',
@@ -246,7 +246,7 @@ class ReverseFieldsTest extends QueryTypeBaseTest
                         'like' => 5,
                     ],
                 ],
-            ]
+            ],
         ];
     }
 

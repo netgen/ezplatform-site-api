@@ -23,7 +23,7 @@ class NamedQueryTest extends AbstractParserTestCase
                 [
                     'some_key' => [
                         'query_type' => 'query_type',
-                    ]
+                    ],
                 ],
             ],
             [
@@ -92,7 +92,7 @@ class NamedQueryTest extends AbstractParserTestCase
                 [
                     [
                         'query_type' => 'query_type',
-                    ]
+                    ],
                 ],
                 'The attribute "key" must be set',
             ],
@@ -100,7 +100,7 @@ class NamedQueryTest extends AbstractParserTestCase
                 [
                     '123abc' => [
                         'query_type' => 'query_type',
-                    ]
+                    ],
                 ],
                 'Query keys must be strings conforming to a valid Twig variable names',
             ],
@@ -108,7 +108,7 @@ class NamedQueryTest extends AbstractParserTestCase
                 [
                     'some_key' => [
                         'page' => 2,
-                    ]
+                    ],
                 ],
                 'The child node "query_type" at path "ezpublish.system.siteaccess_group.ng_named_query.some_key" must be configured',
             ],
@@ -117,7 +117,7 @@ class NamedQueryTest extends AbstractParserTestCase
                     'some_key' => [
                         'query_type' => 'query_type_name',
                         'parameters' => 'parameters',
-                    ]
+                    ],
                 ],
                 'Expected array, but got string',
             ],
@@ -170,7 +170,7 @@ class NamedQueryTest extends AbstractParserTestCase
                 [
                     'some_key' => [
                         'query_type' => 'query_type',
-                    ]
+                    ],
                 ],
                 [
                     'some_key' => [

@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
-use Netgen\EzPlatformSiteApi\API\FilterService;
-use Netgen\EzPlatformSiteApi\API\FindService;
-use Netgen\EzPlatformSiteApi\API\LoadService;
-use Netgen\EzPlatformSiteApi\API\Settings;
-
 /**
  * Test case for the Site.
  *

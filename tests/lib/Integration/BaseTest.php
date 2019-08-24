@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
-use ArrayIterator;
 use eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException;
 use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;

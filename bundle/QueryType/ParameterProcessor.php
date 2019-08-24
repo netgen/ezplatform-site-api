@@ -122,7 +122,7 @@ final class ParameterProcessor
                     return $default;
                 }
 
-                $value = (string)$request->query->get($name);
+                $value = (string) $request->query->get($name);
 
                 if ($allowed === null || in_array($value, $allowed, true)) {
                     return $value;
@@ -164,7 +164,7 @@ final class ParameterProcessor
                     return $default;
                 }
 
-                $value = (float)$request->query->get($name);
+                $value = (float) $request->query->get($name);
 
                 if ($allowed === null || in_array($value, $allowed, true)) {
                     return $value;

@@ -249,7 +249,7 @@ class BaseTest extends APIBaseTest
 
             $this->assertSame($content, $field->content);
 
-            $this->assertSame($data['fields'][$identifier]['value'], (string)$field->value);
+            $this->assertSame($data['fields'][$identifier]['value'], (string) $field->value);
         }
 
         foreach ($data['fields'] as $identifier => $fieldData) {

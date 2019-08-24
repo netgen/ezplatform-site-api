@@ -237,7 +237,7 @@ class FieldsTest extends TestCase
 
         $field = $fields->getFieldById($id);
 
-        $this->assertEquals((string)$id, $field->fieldDefIdentifier);
+        $this->assertEquals((string) $id, $field->fieldDefIdentifier);
         $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
         $this->assertTrue($field->isEmpty());
     }
@@ -294,7 +294,7 @@ class FieldsTest extends TestCase
         $fields = $this->getFieldsUnderTest(true);
 
         $this->assertEquals(
-            array_values((array)$fields->getIterator()),
+            array_values((array) $fields->getIterator()),
             $fields->__debugInfo()
         );
     }

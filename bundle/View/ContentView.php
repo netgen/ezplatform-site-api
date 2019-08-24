@@ -95,7 +95,7 @@ class ContentView extends BaseView implements ContentValueView, LocationValueVie
      */
     public function setIsEmbed($value): void
     {
-        $this->isEmbed = (bool)$value;
+        $this->isEmbed = (bool) $value;
     }
 
     /**

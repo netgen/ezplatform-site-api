@@ -239,7 +239,7 @@ final class Fields extends APIFields
 
         $this->logger->critical($message . ', using surrogate field instead');
 
-        return $this->getSurrogateField((string)$id, $this->content);
+        return $this->getSurrogateField((string) $id, $this->content);
     }
 
     /**

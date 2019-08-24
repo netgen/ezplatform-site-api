@@ -41,7 +41,7 @@ class SurrogateValueTest extends TestCase
     {
         $value = new SurrogateValue();
 
-        $this->assertEquals('', (string)$value);
+        $this->assertEquals('', (string) $value);
     }
 
     public function testCheckingForPropertyReturnsFalse(): void

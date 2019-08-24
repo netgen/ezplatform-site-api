@@ -123,8 +123,8 @@ final class DomainObjectMapper
                 'name' => $versionInfo->getName($languageCode),
                 'languageCode' => $languageCode,
                 'contentTypeIdentifier' => $contentType->identifier,
-                'contentTypeName' => $this->getTranslatedString($languageCode, (array)$contentType->getNames()),
-                'contentTypeDescription' => $this->getTranslatedString($languageCode, (array)$contentType->getDescriptions()),
+                'contentTypeName' => $this->getTranslatedString($languageCode, (array) $contentType->getNames()),
+                'contentTypeDescription' => $this->getTranslatedString($languageCode, (array) $contentType->getDescriptions()),
                 'innerContentInfo' => $versionInfo->contentInfo,
                 'innerContentType' => $contentType,
                 'site' => $this->site,
@@ -180,11 +180,11 @@ final class DomainObjectMapper
             'fieldTypeIdentifier' => $fieldTypeIdentifier,
             'name' => $this->getTranslatedString(
                 $content->languageCode,
-                (array)$fieldDefinition->getNames()
+                (array) $fieldDefinition->getNames()
             ),
             'description' => $this->getTranslatedString(
                 $content->languageCode,
-                (array)$fieldDefinition->getDescriptions()
+                (array) $fieldDefinition->getDescriptions()
             ),
             'content' => $content,
             'innerField' => $apiField,

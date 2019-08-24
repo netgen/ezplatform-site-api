@@ -853,7 +853,7 @@ class CriterionDefinitionResolverTest extends TestCase
      */
     protected function getCriterionDefinitionResolverUnderTest(): CriterionDefinitionResolver
     {
-        if (null === $this->criterionDefinitionResolver) {
+        if ($this->criterionDefinitionResolver === null) {
             $this->criterionDefinitionResolver = new CriterionDefinitionResolver();
         }
 

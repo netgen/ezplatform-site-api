@@ -439,7 +439,7 @@ class CriteriaBuilderTest extends TestCase
      */
     protected function getCriteriaBuilderUnderTest(): CriteriaBuilder
     {
-        if (null === $this->criteriaBuilder) {
+        if ($this->criteriaBuilder === null) {
             $this->criteriaBuilder = new CriteriaBuilder();
         }
 

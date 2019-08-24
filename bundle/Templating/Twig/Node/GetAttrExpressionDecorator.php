@@ -36,7 +36,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         if (
             $this->getAttribute('optimizable')
             && !$this->getAttribute('is_defined_test')
-            && Template::ARRAY_CALL === $this->getAttribute('type')
+            && $this->getAttribute('type') === Template::ARRAY_CALL
             && (!$env->isStrictVariables() || $this->getAttribute('ignore_strict_check'))
         ) {
             $var = '$'.$compiler->getVarName();

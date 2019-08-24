@@ -226,7 +226,7 @@ class ContentTest extends TestCase
      */
     protected function getSiteMock(): MockObject
     {
-        if (null !== $this->siteMock) {
+        if ($this->siteMock !== null) {
             return $this->siteMock;
         }
 
@@ -246,7 +246,7 @@ class ContentTest extends TestCase
      */
     protected function getDomainObjectMapper(): DomainObjectMapper
     {
-        if (null !== $this->domainObjectMapper) {
+        if ($this->domainObjectMapper !== null) {
             return $this->domainObjectMapper;
         }
 
@@ -265,7 +265,7 @@ class ContentTest extends TestCase
      */
     protected function getLoadServiceMock(): MockObject
     {
-        if (null !== $this->loadServiceMock) {
+        if ($this->loadServiceMock !== null) {
             return $this->loadServiceMock;
         }
 
@@ -281,7 +281,7 @@ class ContentTest extends TestCase
      */
     protected function getContentServiceMock(): MockObject
     {
-        if (null !== $this->contentServiceMock) {
+        if ($this->contentServiceMock !== null) {
             return $this->contentServiceMock;
         }
 
@@ -297,7 +297,7 @@ class ContentTest extends TestCase
      */
     protected function getContentTypeServiceMock(): MockObject
     {
-        if (null !== $this->contentTypeServiceMock) {
+        if ($this->contentTypeServiceMock !== null) {
             return $this->contentTypeServiceMock;
         }
 
@@ -320,7 +320,7 @@ class ContentTest extends TestCase
      */
     protected function getFieldTypeServiceMock(): MockObject
     {
-        if (null !== $this->fieldTypeServiceMock) {
+        if ($this->fieldTypeServiceMock !== null) {
             return $this->fieldTypeServiceMock;
         }
 
@@ -336,7 +336,7 @@ class ContentTest extends TestCase
      */
     protected function getUserServiceMock(): MockObject
     {
-        if (null !== $this->userServiceMock) {
+        if ($this->userServiceMock !== null) {
             return $this->userServiceMock;
         }
 
@@ -352,7 +352,7 @@ class ContentTest extends TestCase
      */
     protected function getRepositoryMock(): MockObject
     {
-        if (null !== $this->repositoryMock) {
+        if ($this->repositoryMock !== null) {
             return $this->repositoryMock;
         }
 

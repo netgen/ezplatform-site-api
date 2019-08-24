@@ -19,7 +19,7 @@ class Legacy extends CoreLegacySetupFactory
 {
     public function getServiceContainer(): ServiceContainer
     {
-        if (null === self::$serviceContainer) {
+        if (self::$serviceContainer === null) {
             $config = include __DIR__ . '/../../../../vendor/ezsystems/ezpublish-kernel/config.php';
             $installDir = $config['install_dir'];
 

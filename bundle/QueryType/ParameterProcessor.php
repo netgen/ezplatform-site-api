@@ -48,7 +48,7 @@ final class ParameterProcessor
      */
     public function process($value, ContentView $view)
     {
-        if (!is_string($value) || 0 !== strpos($value, '@=')) {
+        if (!is_string($value) || strpos($value, '@=') !== 0) {
             return $value;
         }
 

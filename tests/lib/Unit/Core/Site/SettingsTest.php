@@ -29,7 +29,7 @@ final class SettingsTest extends TestCase
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertEquals(true, $settings->useAlwaysAvailable);
+        $this->assertTrue($settings->useAlwaysAvailable);
     }
 
     public function testGetRootLocationId(): void
@@ -43,7 +43,7 @@ final class SettingsTest extends TestCase
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertEquals(false, $settings->failOnMissingFields);
+        $this->assertFalse($settings->failOnMissingFields);
     }
 
     public function testGetNonexistentProperty(): void

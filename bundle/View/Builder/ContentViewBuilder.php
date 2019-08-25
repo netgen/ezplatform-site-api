@@ -175,7 +175,8 @@ class ContentViewBuilder implements ViewBuilder
 
         if (!$this->canRead($versionInfo->contentInfo, $location)) {
             throw new UnauthorizedException(
-                'content', 'read|view_embed',
+                'content',
+                'read|view_embed',
                 ['contentId' => $contentId, 'locationId' => $location !== null ? $location->id : 'n/a']
             );
         }

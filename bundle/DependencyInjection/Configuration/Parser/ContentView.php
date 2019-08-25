@@ -37,7 +37,7 @@ class ContentView extends AbstractParser
                             ->scalarNode('template')->info('Your template path, as MyBundle:subdir:my_template.html.twig')->end()
                             ->scalarNode('controller')
                                 ->info(
-<<<EOT
+                                    <<<EOT
 Use custom controller instead of the default one to display a content matching your rules.
 You can use the controller reference notation supported by Symfony.
 EOT
@@ -53,7 +53,7 @@ EOT
                             ->append($this->getQueryNode(static::QUERY_KEY))
                             ->arrayNode('params')
                                 ->info(
-<<<EOT
+                                    <<<EOT
 Arbitrary params that will be passed in the ContentView object, manageable by ViewProviders.
 Those params will NOT be passed to the resulting view template by default.
 EOT

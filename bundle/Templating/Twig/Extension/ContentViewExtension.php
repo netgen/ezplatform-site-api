@@ -13,7 +13,7 @@ use Twig\TwigFunction;
 class ContentViewExtension extends AbstractExtension
 {
     /**
-     * Note that this function is experimental. Please report any issues on https://github.com/netgen/ezplatform-site-api/issues
+     * Note that this function is experimental. Please report any issues on https://github.com/netgen/ezplatform-site-api/issues.
      *
      * @return \Twig\TwigFunction[]
      */

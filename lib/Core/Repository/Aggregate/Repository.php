@@ -52,7 +52,7 @@ class Repository implements RepositoryInterface
 
     /**
      * Construct repository object from top eZ Platform Repository and
-     * an array of custom Repositories
+     * an array of custom Repositories.
      *
      * @param \eZ\Publish\API\Repository\Repository $ezRepository
      * @param \eZ\Publish\API\Repository\Repository[] $customRepositories

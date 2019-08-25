@@ -14,7 +14,7 @@ trait SiteAwareTrait
     protected $site;
 
     /**
-     * Site setter
+     * Site setter.
      *
      * @param \Netgen\EzPlatformSiteApi\API\Site $site
      */
@@ -24,7 +24,7 @@ trait SiteAwareTrait
     }
 
     /**
-     * Site getter
+     * Site getter.
      *
      * @return \Netgen\EzPlatformSiteApi\API\Site
      */

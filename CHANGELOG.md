@@ -72,7 +72,6 @@ Other:
 ### Fixed
 * Fix draft preview ([#131](https://github.com/netgen/ezplatform-site-api/pull/131))
 * Fix token not found exception in ContentViewBuilder when used to build own exception page by @emodric ([#126](https://github.com/netgen/ezplatform-site-api/pull/126))
-* Fix token not found exception in ContentViewBuilder when used to build own exception page by @emodric ([#126](https://github.com/netgen/ezplatform-site-api/pull/126))
 
 2.7.2 (25.08.2019)
 ------------------

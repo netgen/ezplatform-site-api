@@ -53,7 +53,7 @@ class FieldsTest extends TestCase
         foreach ($fields as $field) {
             $this->assertInstanceOf(APIFields::class, $fields);
             $this->assertEquals($i, $field->id);
-            $i++;
+            ++$i;
         }
     }
 
@@ -109,7 +109,7 @@ class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 3; ++$i) {
             $field = $fields[$i];
             $this->assertInstanceOf(SiteField::class, $field);
             $this->assertEquals($i + 1, $field->id);

@@ -1,6 +1,15 @@
 eZ Platform Site API changelog
 ==============================
 
+2.7.2 (25.08.2019)
+------------------
+
+[`2.7.1...2.7.2`](https://github.com/netgen/ezplatform-site-api/compare/2.7.1...2.7.2)
+
+### Fixed
+* Load VersionInfo instead of a full Content (#127)
+* Token not found exception in ContentViewBuilder by @emodric (#126)
+
 2.7.1 (25.07.2019)
 ------------------
 

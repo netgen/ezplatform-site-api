@@ -12,17 +12,17 @@
 </div>
 
 <p align="center">
-<strong>Site API</strong> is a lightweight layer built on top of eZ Platform's Repository API. Its purpose is to
-simplify the implementation of everyday use cases, remove the boilerplate code and provide better
-<strong>developer experience</strong> for building websites. It lowers the entry barrier for newcomers and opens
-most of the development process to roles other than PHP developer.
+<strong>Netgen Site API</strong> is a productivity layer built for eZ developers, designed to remove
+the need for boilerplate code and make the development of eZ Platform sites more accessible and less
+fallible.
 </p>
 
 <p align="center">
-With it, frontend developers, content builders and others can do most of the work related to
-eZ Platform content modelling independently of PHP developers and without the need to work with PHP.
-They require only knowledge of eZ Platform's content model, Twig templates and view configuration
-in YAML.
+By removing the need to write PHP to solve common problems, Site API enables less technical people
+and other developers beside PHP ones to do more - such as content creators, project managers and
+frontend developers. With its PHP API it also simplifies things for PHP developers, freeing them
+from having to continually reinvent the wheel and giving them more time to spend on the custom
+backend logic.
 </p>
 
 <p align="center">

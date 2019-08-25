@@ -50,7 +50,7 @@ class LocationParamConverterTest extends AbstractParamConverterTest
             ->expects($this->once())
             ->method('loadLocation')
             ->with($id)
-            ->will($this->returnValue($valueObject));
+            ->willReturn($valueObject);
 
         $request = new Request([], [], [self::PROPERTY_NAME => $id]);
 
@@ -68,7 +68,7 @@ class LocationParamConverterTest extends AbstractParamConverterTest
         $config = $this->createConfiguration(self::LOCATION_CLASS, 'location');
         $config->expects($this->once())
             ->method('isOptional')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $this->assertFalse($this->converter->apply($request, $config));
         $this->assertNull($request->attributes->get('location'));

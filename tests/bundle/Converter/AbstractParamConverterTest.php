@@ -31,13 +31,13 @@ abstract class AbstractParamConverterTest extends TestCase
         if ($name !== null) {
             $config->expects($this->any())
                 ->method('getName')
-                ->will($this->returnValue($name));
+                ->willReturn($name);
         }
 
         if ($class !== null) {
             $config->expects($this->any())
                 ->method('getClass')
-                ->will($this->returnValue($class));
+                ->willReturn($class);
         }
 
         return $config;

@@ -46,7 +46,7 @@ class FilterAdapterTest extends TestCase
             ->expects($this->once())
             ->method('filterContent')
             ->with($this->equalTo($countQuery))
-            ->will($this->returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $adapter = $this->getAdapter($query);
 
@@ -66,7 +66,7 @@ class FilterAdapterTest extends TestCase
             ->expects($this->once())
             ->method('filterContent')
             ->with($this->equalTo($countQuery))
-            ->will($this->returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $adapter = $this->getAdapter($query);
 
@@ -86,7 +86,7 @@ class FilterAdapterTest extends TestCase
             ->expects($this->once())
             ->method('filterContent')
             ->with($this->equalTo($countQuery))
-            ->will($this->returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $adapter = $this->getAdapter($query);
 
@@ -133,7 +133,7 @@ class FilterAdapterTest extends TestCase
             ->expects($this->once())
             ->method('filterContent')
             ->with($this->equalTo($searchQuery))
-            ->will($this->returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $adapter = $this->getAdapter($query);
         $slice = $adapter->getSlice($offset, $limit);
@@ -154,7 +154,7 @@ class FilterAdapterTest extends TestCase
             ->expects($this->once())
             ->method('filterLocations')
             ->with($this->equalTo($query))
-            ->will($this->returnValue(new SearchResult()));
+            ->willReturn(new SearchResult());
 
         $adapter = $this->getAdapter($query);
         $adapter->getSlice(0, 25);

@@ -49,9 +49,9 @@ final class Settings extends BaseSettings
     }
 
     /**
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
-     *
      * @param string $property
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
      *
      * @return mixed
      */
@@ -72,10 +72,10 @@ final class Settings extends BaseSettings
     }
 
     /**
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
-     *
      * @param string $property
      * @param mixed $value
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
      */
     public function __set(string $property, $value): void
     {
@@ -83,9 +83,9 @@ final class Settings extends BaseSettings
     }
 
     /**
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
-     *
      * @param string $property
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
      *
      * @return bool
      */

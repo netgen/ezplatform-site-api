@@ -383,9 +383,10 @@ abstract class Base implements QueryType
     /**
      * Return an array of SortClause instances from the given $parameters.
      *
-     * @throws \InvalidArgumentException
      *
      * @param array $parameters
+     *
+     * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause[]
      */

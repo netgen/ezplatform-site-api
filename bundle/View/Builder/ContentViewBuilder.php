@@ -136,11 +136,12 @@ class ContentViewBuilder implements ViewBuilder
     /**
      * Loads Content with id $contentId.
      *
+     *
+     * @param int|string $contentId
+     *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @param int|string $contentId
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
@@ -154,11 +155,12 @@ class ContentViewBuilder implements ViewBuilder
      * Will load the content with sudo(), and check if the user can view_embed this content, for the given location
      * if provided.
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
-     * @throws \Exception
      *
      * @param int|string $contentId
      * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
+     *
+     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     * @throws \Exception
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */

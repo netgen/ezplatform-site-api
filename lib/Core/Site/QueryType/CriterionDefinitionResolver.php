@@ -70,11 +70,12 @@ final class CriterionDefinitionResolver
     /**
      * Return CriterionDefinition instances for the given Field $target and its $parameters.
      *
-     * @throws \InvalidArgumentException
      *
      * @param string $name
      * @param null|string $target
      * @param mixed $parameters
+     *
+     * @throws \InvalidArgumentException
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */

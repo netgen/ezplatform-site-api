@@ -77,11 +77,11 @@ class BaseTest extends APIBaseTest
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \ErrorException
-     *
      * @param string $name
      * @param mixed $value
+     *
+     * @throws \ReflectionException
+     * @throws \ErrorException
      */
     protected function overrideSettings(string $name, $value): void
     {

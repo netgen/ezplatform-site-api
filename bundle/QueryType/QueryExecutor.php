@@ -55,9 +55,10 @@ final class QueryExecutor
     /**
      * Execute the Query with the given $name and return the result.
      *
-     * @throws \Pagerfanta\Exception\Exception
      *
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
+     *
+     * @throws \Pagerfanta\Exception\Exception
      *
      * @return \Pagerfanta\Pagerfanta
      */

@@ -22,9 +22,10 @@ abstract class Resolver
     /**
      * Return related Content IDs for the given $field.
      *
-     * @throws \LogicException If the field can't be handled by the resolver
      *
      * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
+     *
+     * @throws \LogicException If the field can't be handled by the resolver
      *
      * @return int[]|string[]
      */

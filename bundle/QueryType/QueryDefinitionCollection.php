@@ -36,9 +36,10 @@ final class QueryDefinitionCollection
     /**
      * Return QueryDefinition by given $name.
      *
-     * @throws \OutOfBoundsException if no QueryDefinition with given $name is found
      *
      * @param string $name
+     *
+     * @throws \OutOfBoundsException if no QueryDefinition with given $name is found
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
      */

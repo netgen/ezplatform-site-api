@@ -75,10 +75,11 @@ class PreviewController extends BasePreviewController
      * Injects the Site API value objects into request, replacing the original
      * eZ API value objects.
      *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $language
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      */
     protected function injectSiteApiValueObjects(Request $request, string $language): void
     {

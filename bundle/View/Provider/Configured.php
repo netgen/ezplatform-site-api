@@ -97,9 +97,10 @@ class Configured implements ViewProvider
     /**
      * Builds a ContentView object from $viewConfig.
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      *
      * @param array $viewConfig
+     *
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView
      */

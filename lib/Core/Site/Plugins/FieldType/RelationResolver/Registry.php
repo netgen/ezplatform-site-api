@@ -44,9 +44,10 @@ class Registry
     /**
      * Returns Resolver for $fieldTypeIdentifier.
      *
-     * @throws \OutOfBoundsException When there is no resolver for the given $fieldTypeIdentifier
      *
      * @param string $fieldTypeIdentifier
+     *
+     * @throws \OutOfBoundsException When there is no resolver for the given $fieldTypeIdentifier
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver
      */

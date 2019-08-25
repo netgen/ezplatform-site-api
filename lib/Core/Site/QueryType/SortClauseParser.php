@@ -46,9 +46,10 @@ class SortClauseParser
     /**
      * Return new sort clause instance by the given $definition string.
      *
-     * @throws \InvalidArgumentException
      *
      * @param string $definition
+     *
+     * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause
      */
@@ -82,10 +83,11 @@ class SortClauseParser
     /**
      * Build a new Field sort clause from the given arguments.
      *
-     * @throws \InvalidArgumentException
      *
      * @param array $values
      * @param mixed $direction
+     *
+     * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause\Field
      */
@@ -109,9 +111,10 @@ class SortClauseParser
     /**
      * Resolve direction constant value from the given array of $values.
      *
-     * @throws \InvalidArgumentException
      *
      * @param string[] $values
+     *
+     * @throws \InvalidArgumentException
      *
      * @return string
      */

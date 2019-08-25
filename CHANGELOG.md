@@ -5,28 +5,28 @@ Unreleased
 ----------
 
 ### Added
-* Add default view templates (#130)
-* Implement ParamConverters for SiteAPI value objects by @MarioBlazek (#129)
-* Add routers that generate links for Site API Content and Location by @emodric (#125)
-* Add support for eZ Platform v3 by @emodric (#105, #123)
-* Allow null value for is_field_empty option (#120)
-* Allow defining publication_date with explicit operators (#119)
-* Query type condition `creation_date`, replaces `publication_date` (#119)
-* Allow defining content_type and section with explicit operators (#118)
-* Add a way to render Content view without using a subrequest (#117)
-* Refactor base Controller (#115)
-* Implement hinted search result extraction methods (#112)
-* Add default view matcher, configuring the view with fallback templates by @emodric (#109)
-* Add missing logger to ImageRuntime (#106)
-* Prevent site from crashing because of basic Content Field inconsistencies (#94)
-* Introduce limit parameter to loadFieldRelations method by @mivancic (#68)
+* Add default view templates ([#130](https://github.com/netgen/ezplatform-site-api/pull/130))
+* Implement ParamConverters for SiteAPI value objects by @MarioBlazek ([#129](https://github.com/netgen/ezplatform-site-api/pull/129))
+* Add routers that generate links for Site API Content and Location by @emodric ([#125](https://github.com/netgen/ezplatform-site-api/pull/125))
+* Add support for eZ Platform v3 by @emodric ([#105](https://github.com/netgen/ezplatform-site-api/pull/105), [#123](1https://github.com/netgen/ezplatform-site-api/pull/23))
+* Allow null value for is_field_empty option ([#120](https://github.com/netgen/ezplatform-site-api/pull/120))
+* Allow defining publication_date with explicit operators ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
+* Query type condition `creation_date`, replaces `publication_date` ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
+* Allow defining content_type and section with explicit operators ([#118](https://github.com/netgen/ezplatform-site-api/pull/118))
+* Add a way to render Content view without using a subrequest ([#117](https://github.com/netgen/ezplatform-site-api/pull/117))
+* Refactor base Controller ([#115](https://github.com/netgen/ezplatform-site-api/pull/115))
+* Implement hinted search result extraction methods ([#112](https://github.com/netgen/ezplatform-site-api/pull/112))
+* Add default view matcher, configuring the view with fallback templates by @emodric ([#109](https://github.com/netgen/ezplatform-site-api/pull/109))
+* Add missing logger to ImageRuntime ([#106](https://github.com/netgen/ezplatform-site-api/pull/106))
+* Prevent site from crashing because of basic Content Field inconsistencies ([#94](https://github.com/netgen/ezplatform-site-api/pull/94))
+* Introduce limit parameter to loadFieldRelations method by @mivancic ([#68](https://github.com/netgen/ezplatform-site-api/pull/68))
 
 ### Changed
 * Minimum PHP version is raised to 7.1
 * Minimum eZ Platform version is raised to 2.4
-* Allow defining publication date with explicit operators (#119)
-* Implement Twig runtimes and use Twig namespaces by @emodric (#60)
-* Mark services as public/private as needed by @emodric (#59)
+* Allow defining publication date with explicit operators ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
+* Implement Twig runtimes and use Twig namespaces by @emodric ([#60](https://github.com/netgen/ezplatform-site-api/pull/60))
+* Mark services as public/private as needed by @emodric ([#59](https://github.com/netgen/ezplatform-site-api/pull/59))
 
 ### Removed
 This is a major release where all previous deprecations are removed.
@@ -66,13 +66,13 @@ Classes:
 
 Other:
 
-* Query type condition `publication_date` is removed, `creation_date` should be used instead (#119)
-* `content_view` provider for Site API ContentView (#128)
+* Query type condition `publication_date` is removed, `creation_date` should be used instead ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
+* `content_view` provider for Site API ContentView ([#128](https://github.com/netgen/ezplatform-site-api/pull/128))
 
 ### Fixed
-* Fix draft preview (#131)
-* Fix token not found exception in ContentViewBuilder when used to build own exception page by @emodric (#126)
-* Fix token not found exception in ContentViewBuilder when used to build own exception page by @emodric (#126)
+* Fix draft preview ([#131](https://github.com/netgen/ezplatform-site-api/pull/131))
+* Fix token not found exception in ContentViewBuilder when used to build own exception page by @emodric ([#126](https://github.com/netgen/ezplatform-site-api/pull/126))
+* Fix token not found exception in ContentViewBuilder when used to build own exception page by @emodric ([#126](https://github.com/netgen/ezplatform-site-api/pull/126))
 
 2.7.2 (25.08.2019)
 ------------------
@@ -80,8 +80,8 @@ Other:
 [`2.7.1...2.7.2`](https://github.com/netgen/ezplatform-site-api/compare/2.7.1...2.7.2)
 
 ### Fixed
-* Load VersionInfo instead of a full Content (#127)
-* Token not found exception in ContentViewBuilder by @emodric (#126)
+* Load VersionInfo instead of a full Content ([#127](https://github.com/netgen/ezplatform-site-api/pull/127))
+* Token not found exception in ContentViewBuilder by @emodric ([#126](https://github.com/netgen/ezplatform-site-api/pull/126))
 
 2.7.1 (25.07.2019)
 ------------------
@@ -89,33 +89,33 @@ Other:
 [`2.7.0...2.7.1`](https://github.com/netgen/ezplatform-site-api/compare/2.7.0...2.7.1)
 
 ### Added
-* Add `creation_date` as an alias of `publication_date` Query Type parameter (#119)
+* Add `creation_date` as an alias of `publication_date` Query Type parameter ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
 
 ### Fixed
-* Service `ezpublish.api.repository` should be public to avoid deprecation notice by @emodric (#108)
-* Allow defining `content_type` and `section` Query Type parameters with explicit operators (#118)
-* Allow defining `publication_date` Query Type parameter with explicit operators (#119)
-* Allow using `null` value for `is_field_empty` Query Type parameter (#120)
+* Service `ezpublish.api.repository` should be public to avoid deprecation notice by @emodric ([#108](https://github.com/netgen/ezplatform-site-api/pull/108))
+* Allow defining `content_type` and `section` Query Type parameters with explicit operators ([#118](https://github.com/netgen/ezplatform-site-api/pull/118))
+* Allow defining `publication_date` Query Type parameter with explicit operators ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
+* Allow using `null` value for `is_field_empty` Query Type parameter ([#120](https://github.com/netgen/ezplatform-site-api/pull/120))
 
 ### Deprecated
-* `publication_date` Query Type parameter is deprecated for removal in `3.0`, new name `creation_date` should be used instead (#119)
+* `publication_date` Query Type parameter is deprecated for removal in `3.0`, new name `creation_date` should be used instead ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
 
 2.7.0 (30.06.2019)
 ------------------
 
 [`2.6.3...2.7.0`](https://github.com/netgen/ezplatform-site-api/compare/2.6.3...2.7.0)
 
-* Deprecates methods and properties from `ContentInfo` (#87):
+* Deprecates methods and properties from `ContentInfo` ([#87](https://github.com/netgen/ezplatform-site-api/pull/87)):
   * `getLocations()`
   * `getLocations()`
   * `$content`
 
   `ContentInfo` can be accessed through `Content`, loading it independently was deprecated since 2.2. These methods and properties can be obtained from the `Content` object.
-* Adds access to dynamic configuration from query type language expressions (#96)
-* Adds type-casting query string parameter getters to query type language expressions (#97)
-* Adds optional definition of allowed values for query string parameters to query type language expressions (#98)
-* Adds support for `IsEmptyField` criterion in Query Type configuration (#100)
-* Deprecates from Pagerfanta pagination (#101):
+* Adds access to dynamic configuration from query type language expressions ([#96](https://github.com/netgen/ezplatform-site-api/pull/96))
+* Adds type-casting query string parameter getters to query type language expressions ([#97](https://github.com/netgen/ezplatform-site-api/pull/97))
+* Adds optional definition of allowed values for query string parameters to query type language expressions ([#98](https://github.com/netgen/ezplatform-site-api/pull/98))
+* Adds support for `IsEmptyField` criterion in Query Type configuration ([#100](https://github.com/netgen/ezplatform-site-api/pull/100))
+* Deprecates from Pagerfanta pagination ([#101](https://github.com/netgen/ezplatform-site-api/pull/101)):
   * `BaseAdapter`
   * `Slice`
   * `SearchResultExtras`
@@ -127,14 +127,14 @@ Other:
 
 [`2.6.2...2.6.3`](https://github.com/netgen/ezplatform-site-api/compare/2.6.2...2.6.3)
 
-* Fix generating Location targets when checking for read/view_embed permissions (#95)
+* Fix generating Location targets when checking for read/view_embed permissions ([#95](https://github.com/netgen/ezplatform-site-api/pull/95))
 
 2.6.2 (03.05.2019)
 ------------------
 
 [`2.6.1...2.6.2`](https://github.com/netgen/ezplatform-site-api/compare/2.6.1...2.6.2)
 
-* Use instance of Repository Location to check for read permissions by @MarioBlazek (#93)
+* Use instance of Repository Location to check for read permissions by @MarioBlazek ([#93](https://github.com/netgen/ezplatform-site-api/pull/93))
 
 2.6.1 (02.04.2019)
 ------------------
@@ -165,16 +165,16 @@ Other:
 
 [`2.5.3...2.5.4`](https://github.com/netgen/ezplatform-site-api/compare/2.5.3...2.5.4)
 
-* This release fixes a regression introduced in #80 (#82)
+* This release fixes a regression introduced in #80 ([#82](https://github.com/netgen/ezplatform-site-api/pull/82))
 
 2.5.3 (03.08.2018)
 ------------------
 
 [`2.5.2...2.5.3`](https://github.com/netgen/ezplatform-site-api/compare/2.5.2...2.5.3)
 
-* Support for `Section` and `ObjectState` identifiers with QueryTypes (#78)
-* Fixed Pagerfanta adapters not correctly setting `nbResults` by @mivancic (#79)
-* Removed usage of deprecated Pagerfanta adapters by @mivancic (#80)
+* Support for `Section` and `ObjectState` identifiers with QueryTypes ([#78](https://github.com/netgen/ezplatform-site-api/pull/78))
+* Fixed Pagerfanta adapters not correctly setting `nbResults` by @mivancic ([#79](https://github.com/netgen/ezplatform-site-api/pull/79))
+* Removed usage of deprecated Pagerfanta adapters by @mivancic ([#80](https://github.com/netgen/ezplatform-site-api/pull/80))
 
 2.5.2 (29.06.2018)
 ------------------
@@ -188,18 +188,18 @@ Other:
 
 [`2.5.0...2.5.1`](https://github.com/netgen/ezplatform-site-api/compare/2.5.0...2.5.1)
 
-* Added `getBookmarkService()` to aggregate repository by @emodric (#77)
+* Added `getBookmarkService()` to aggregate repository by @emodric ([#77](https://github.com/netgen/ezplatform-site-api/pull/77))
 
 2.5.0 (04.06.2018)
 ------------------
 
 [`2.4.4...2.5.0`](https://github.com/netgen/ezplatform-site-api/compare/2.4.4...2.5.0)
 
-* support for QueryTypes (#70)
-* minor doc correction by @wizhippo (#71)
-* improved test coverage (#73)
-* exposed facets on Pagerfanta adapters by @wizhippo (#74)
-* rewrite of Pagerfanta adapters (#76)
+* support for QueryTypes ([#70](https://github.com/netgen/ezplatform-site-api/pull/70))
+* minor doc correction by @wizhippo ([#71](https://github.com/netgen/ezplatform-site-api/pull/71))
+* improved test coverage ([#73](https://github.com/netgen/ezplatform-site-api/pull/73))
+* exposed facets on Pagerfanta adapters by @wizhippo ([#74](https://github.com/netgen/ezplatform-site-api/pull/74))
+* rewrite of Pagerfanta adapters ([#76](https://github.com/netgen/ezplatform-site-api/pull/76))
 * deprecation of `PagerfantaFindTrait` and old Pagerfanta adapters:
   * `ContentSearchAdapter`
   * `ContentSearchFilterAdapter`
@@ -234,31 +234,31 @@ Other:
 
 [`2.4.0...2.4.1`](https://github.com/netgen/ezplatform-site-api/compare/2.4.0...2.4.1)
 
-* Fix filter service always using anonymous users (#64, #67)
+* Fix filter service always using anonymous users ([#64](https://github.com/netgen/ezplatform-site-api/pull/64), [#67](https://github.com/netgen/ezplatform-site-api/pull/67))
 
 2.4.0 (22.01.2018)
 ------------------
 
 [`2.3.2...2.4.0`](https://github.com/netgen/ezplatform-site-api/compare/2.3.2...2.4.0)
 
-* Implemented Pagerfanta trait (#52)
-* Removed support for PHP 5.5 (#65)
-* Enabled PHPUnit 6 for tests (#63)
-* Improvements to docs (#62)
+* Implemented Pagerfanta trait ([#52](https://github.com/netgen/ezplatform-site-api/pull/52))
+* Removed support for PHP 5.5 ([#65](https://github.com/netgen/ezplatform-site-api/pull/65))
+* Enabled PHPUnit 6 for tests ([#63](https://github.com/netgen/ezplatform-site-api/pull/63))
+* Improvements to docs ([#62](https://github.com/netgen/ezplatform-site-api/pull/62))
 
 2.3.2 (02.02.2018)
 ------------------
 
 [`2.3.1...2.3.2`](https://github.com/netgen/ezplatform-site-api/compare/2.3.1...2.3.2)
 
-* Fix filter service always using anonymous users (#64, #67)
+* Fix filter service always using anonymous users ([#64](https://github.com/netgen/ezplatform-site-api/pull/64), [#67](https://github.com/netgen/ezplatform-site-api/pull/67))
 
 2.3.1 (17.01.2018)
 ------------------
 
 [`2.3.0...2.3.1`](https://github.com/netgen/ezplatform-site-api/compare/2.3.0...2.3.1)
 
-* Fix anonymous users do not have access to content.owner property (#61, #66)
+* Fix anonymous users do not have access to content.owner property ([#61](https://github.com/netgen/ezplatform-site-api/pull/61), [#66](https://github.com/netgen/ezplatform-site-api/pull/66))
 
 2.3.0 (14.12.2017)
 ------------------
@@ -267,20 +267,20 @@ Other:
 
 * `Content`, `ContentInfo`, `Field` and `Location` now implement `__debugInfo()` method that controls which
   properties are shown when the object is dumped. Through it, recursion and tree traversal are avoided,
-  which will provide cleaner output when dumping the objects for debugging purpose. (#50)
-* Content now implements `$owner` and `$innerOwnerUser` lazy-loaded properties. (#51)
-* More tests by @MarioBlazek (#53)
-* We now support eZ Platform Kernel 7.0 beta by @emodric (#54)
-* Some regular expressions to ease migration by @MarioBlazek (#55)
-* Adapters from eZ Platform Kernel `SearchService` interface to `FindService` and `FilterService` by @emodric (#57)
-* Support for simple forward relations with `RelationsService` and new methods on `Content` object (#42)
+  which will provide cleaner output when dumping the objects for debugging purpose. ([#50](https://github.com/netgen/ezplatform-site-api/pull/50))
+* Content now implements `$owner` and `$innerOwnerUser` lazy-loaded properties. ([#51](https://github.com/netgen/ezplatform-site-api/pull/51))
+* More tests by @MarioBlazek ([#53](https://github.com/netgen/ezplatform-site-api/pull/53))
+* We now support eZ Platform Kernel 7.0 beta by @emodric ([#54](https://github.com/netgen/ezplatform-site-api/pull/54))
+* Some regular expressions to ease migration by @MarioBlazek ([#55](https://github.com/netgen/ezplatform-site-api/pull/55))
+* Adapters from eZ Platform Kernel `SearchService` interface to `FindService` and `FilterService` by @emodric ([#57](https://github.com/netgen/ezplatform-site-api/pull/57))
+* Support for simple forward relations with `RelationsService` and new methods on `Content` object ([#42](https://github.com/netgen/ezplatform-site-api/pull/42))
 
 2.2.1 (02.02.2018)
 ------------------
 
 [`2.2.0...2.2.1`](https://github.com/netgen/ezplatform-site-api/compare/2.2.0...2.2.1)
 
-* * Fix filter service always using anonymous users (#64, #67)
+* * Fix filter service always using anonymous users ([#64](https://github.com/netgen/ezplatform-site-api/pull/64), [#67](https://github.com/netgen/ezplatform-site-api/pull/67))
 
 2.2.0 (05.10.2017)
 ------------------
@@ -313,7 +313,7 @@ if accessed
 
 [`2.1.1...2.1.2`](https://github.com/netgen/ezplatform-site-api/compare/2.1.1...2.1.2)
 
-* Fix filter service always using anonymous users (#64, #67)
+* Fix filter service always using anonymous users ([#64](https://github.com/netgen/ezplatform-site-api/pull/64), [#67](https://github.com/netgen/ezplatform-site-api/pull/67))
 
 2.1.1 (07.09.2017)
 ------------------

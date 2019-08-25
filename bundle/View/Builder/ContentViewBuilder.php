@@ -60,7 +60,7 @@ class ContentViewBuilder implements ViewBuilder
 
     public function matches($argument): bool
     {
-        return is_string($argument) && strpos($argument, 'ng_content:') !== false;
+        return \is_string($argument) && \strpos($argument, 'ng_content:') !== false;
     }
 
     /**
@@ -255,7 +255,7 @@ class ContentViewBuilder implements ViewBuilder
             return true;
         }
 
-        if (in_array($parameters['viewType'], ['embed', 'embed-inline'])) {
+        if (\in_array($parameters['viewType'], ['embed', 'embed-inline'])) {
             return true;
         }
 

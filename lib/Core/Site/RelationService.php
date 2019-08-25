@@ -56,7 +56,7 @@ class RelationService implements RelationServiceInterface
             $contentTypeIdentifiers
         );
 
-        return count($relatedContentItems) ? reset($relatedContentItems) : null;
+        return \count($relatedContentItems) ? \reset($relatedContentItems) : null;
     }
 
     /**
@@ -99,7 +99,7 @@ class RelationService implements RelationServiceInterface
      */
     private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers, ?int $limit = null): array
     {
-        if (count($relatedContentIds) === 0) {
+        if (\count($relatedContentIds) === 0) {
             return [];
         }
 
@@ -114,7 +114,7 @@ class RelationService implements RelationServiceInterface
 
         $query = new Query([
             'filter' => $criteria,
-            'limit' => count($relatedContentIds),
+            'limit' => \count($relatedContentIds),
         ]);
 
         $searchResult = $this->site->getFilterService()->filterContent($query);
@@ -122,7 +122,7 @@ class RelationService implements RelationServiceInterface
         $contentItems = $this->extractValueObjects($searchResult);
 
         if ($limit !== null) {
-            return array_slice($contentItems, 0, $limit);
+            return \array_slice($contentItems, 0, $limit);
         }
 
         return $contentItems;
@@ -136,12 +136,12 @@ class RelationService implements RelationServiceInterface
      */
     private function sortByIdOrder(array &$relatedContentItems, array $relatedContentIds): void
     {
-        $sortedIdList = array_flip($relatedContentIds);
+        $sortedIdList = \array_flip($relatedContentIds);
 
         $sorter = static function (Content $content1, Content $content2) use ($sortedIdList): int {
             return $sortedIdList[$content1->id] <=> $sortedIdList[$content2->id];
         };
 
-        usort($relatedContentItems, $sorter);
+        \usort($relatedContentItems, $sorter);
     }
 }

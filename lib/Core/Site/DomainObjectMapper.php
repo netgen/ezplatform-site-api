@@ -196,7 +196,7 @@ final class DomainObjectMapper
 
     private function getTranslatedString(string $languageCode, array $strings)
     {
-        if (array_key_exists($languageCode, $strings)) {
+        if (\array_key_exists($languageCode, $strings)) {
             return $strings[$languageCode];
         }
 

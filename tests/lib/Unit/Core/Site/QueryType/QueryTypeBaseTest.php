@@ -48,7 +48,7 @@ abstract class QueryTypeBaseTest extends TestCase
     {
         $queryType = $this->getQueryTypeUnderTest();
 
-        $this->assertFalse($queryType->supportsParameter(md5((string) time())));
+        $this->assertFalse($queryType->supportsParameter(\md5((string) \time())));
     }
 
     public function testGetBaseSupportedParameters(): void
@@ -68,11 +68,11 @@ abstract class QueryTypeBaseTest extends TestCase
             'offset',
         ];
 
-        $this->assertGreaterThanOrEqual(count($expectedParameters), count($parameters));
-        $parameterSet = array_flip($parameters);
+        $this->assertGreaterThanOrEqual(\count($expectedParameters), \count($parameters));
+        $parameterSet = \array_flip($parameters);
 
         foreach ($expectedParameters as $expectedParameter) {
-            $this->assertTrue(array_key_exists($expectedParameter, $parameterSet));
+            $this->assertTrue(\array_key_exists($expectedParameter, $parameterSet));
             $this->assertTrue($queryType->supportsParameter($expectedParameter));
         }
     }

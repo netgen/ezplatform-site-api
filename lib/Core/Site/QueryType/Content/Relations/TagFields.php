@@ -108,9 +108,9 @@ final class TagFields extends Content
 
             /** @var \Netgen\TagsBundle\Core\FieldType\Tags\Value $value */
             $value = $field->value;
-            $tagsIdsGrouped[] = array_map(static function (Tag $tag) {return $tag->id;}, $value->tags);
+            $tagsIdsGrouped[] = \array_map(static function (Tag $tag) {return $tag->id;}, $value->tags);
         }
 
-        return array_merge(...$tagsIdsGrouped);
+        return \array_merge(...$tagsIdsGrouped);
     }
 }

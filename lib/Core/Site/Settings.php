@@ -68,7 +68,7 @@ final class Settings extends BaseSettings
                 return $this->failOnMissingFields;
         }
 
-        throw new PropertyNotFoundException($property, get_class($this));
+        throw new PropertyNotFoundException($property, \get_class($this));
     }
 
     /**
@@ -79,7 +79,7 @@ final class Settings extends BaseSettings
      */
     public function __set(string $property, $value): void
     {
-        throw new PropertyReadOnlyException($property, get_class($this));
+        throw new PropertyReadOnlyException($property, \get_class($this));
     }
 
     /**
@@ -99,6 +99,6 @@ final class Settings extends BaseSettings
                 return true;
         }
 
-        throw new PropertyNotFoundException($property, get_class($this));
+        throw new PropertyNotFoundException($property, \get_class($this));
     }
 }

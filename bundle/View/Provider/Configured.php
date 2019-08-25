@@ -87,7 +87,7 @@ class Configured implements ViewProvider
 
     private function getQueriesConfiguration(array $configHash): array
     {
-        if (array_key_exists(ContentViewParser::QUERY_KEY, $configHash)) {
+        if (\array_key_exists(ContentViewParser::QUERY_KEY, $configHash)) {
             return $configHash[ContentViewParser::QUERY_KEY];
         }
 
@@ -116,7 +116,7 @@ class Configured implements ViewProvider
             $dto->setControllerReference(new ControllerReference($viewConfig['controller']));
         }
 
-        if (isset($viewConfig['params']) && is_array($viewConfig['params'])) {
+        if (isset($viewConfig['params']) && \is_array($viewConfig['params'])) {
             $dto->addParameters($viewConfig['params']);
         }
 

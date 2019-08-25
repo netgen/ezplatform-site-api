@@ -94,7 +94,7 @@ final class Fields extends APIFields
     {
         $this->initialize();
 
-        return array_values($this->fieldsByIdentifier);
+        return \array_values($this->fieldsByIdentifier);
     }
 
     /**
@@ -118,8 +118,8 @@ final class Fields extends APIFields
     {
         $this->initialize();
 
-        return array_key_exists($identifier, $this->fieldsByIdentifier)
-            || array_key_exists($identifier, $this->fieldsByNumericSequence);
+        return \array_key_exists($identifier, $this->fieldsByIdentifier)
+            || \array_key_exists($identifier, $this->fieldsByNumericSequence);
     }
 
     /**
@@ -133,7 +133,7 @@ final class Fields extends APIFields
     {
         $this->initialize();
 
-        return array_key_exists($identifier, $this->fieldsByIdentifier);
+        return \array_key_exists($identifier, $this->fieldsByIdentifier);
     }
 
     /**
@@ -147,7 +147,7 @@ final class Fields extends APIFields
             return $this->fieldsByIdentifier[$identifier];
         }
 
-        $message = sprintf('Field "%s" in Content #%s does not exist', $identifier, $this->content->id);
+        $message = \sprintf('Field "%s" in Content #%s does not exist', $identifier, $this->content->id);
 
         if ($this->failOnMissingFields) {
             throw new RuntimeException($message);
@@ -167,15 +167,15 @@ final class Fields extends APIFields
     {
         $this->initialize();
 
-        if (array_key_exists($identifier, $this->fieldsByIdentifier)) {
+        if (\array_key_exists($identifier, $this->fieldsByIdentifier)) {
             return $this->fieldsByIdentifier[$identifier];
         }
 
-        if (array_key_exists($identifier, $this->fieldsByNumericSequence)) {
+        if (\array_key_exists($identifier, $this->fieldsByNumericSequence)) {
             return $this->fieldsByNumericSequence[$identifier];
         }
 
-        $message = sprintf('Field "%s" in Content #%s does not exist', $identifier, $this->content->id);
+        $message = \sprintf('Field "%s" in Content #%s does not exist', $identifier, $this->content->id);
 
         if ($this->failOnMissingFields) {
             throw new RuntimeException($message);
@@ -205,7 +205,7 @@ final class Fields extends APIFields
     {
         $this->initialize();
 
-        return count($this->fieldsByIdentifier);
+        return \count($this->fieldsByIdentifier);
     }
 
     /**
@@ -217,7 +217,7 @@ final class Fields extends APIFields
     {
         $this->initialize();
 
-        return array_key_exists($id, $this->fieldsById);
+        return \array_key_exists($id, $this->fieldsById);
     }
 
     /**
@@ -231,7 +231,7 @@ final class Fields extends APIFields
             return $this->fieldsById[$id];
         }
 
-        $message = sprintf('Field #%s in Content #%s does not exist', $id, $this->content->id);
+        $message = \sprintf('Field #%s in Content #%s does not exist', $id, $this->content->id);
 
         if ($this->failOnMissingFields) {
             throw new RuntimeException($message);

@@ -217,7 +217,7 @@ class ContentViewTest extends AbstractParserTestCase
     public function testInvalid(array $configurationValues, string $message): void
     {
         $this->expectException(InvalidConfigurationException::class);
-        $message = preg_quote($message, '/');
+        $message = \preg_quote($message, '/');
         $this->expectExceptionMessageRegExp("/{$message}/");
 
         $this->load([
@@ -380,6 +380,6 @@ class ContentViewTest extends AbstractParserTestCase
 
     protected function getMinimalConfiguration()
     {
-        return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
+        return Yaml::parse(\file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
     }
 }

@@ -26,7 +26,7 @@ trait SearchResultExtractorTrait
      */
     protected function extractValueObjects(SearchResult $searchResult): array
     {
-        return array_map(
+        return \array_map(
             static function (SearchHit $searchHit) {
                 return $searchHit->valueObject;
             },
@@ -43,7 +43,7 @@ trait SearchResultExtractorTrait
      */
     protected function extractContentItems(SearchResult $searchResult): array
     {
-        return array_map(
+        return \array_map(
             static function (SearchHit $searchHit): Content {
                 /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
                 $content = $searchHit->valueObject;
@@ -63,7 +63,7 @@ trait SearchResultExtractorTrait
      */
     protected function extractLocations(SearchResult $searchResult): array
     {
-        return array_map(
+        return \array_map(
             static function (SearchHit $searchHit): Location {
                 /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
                 $location = $searchHit->valueObject;

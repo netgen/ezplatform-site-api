@@ -96,8 +96,8 @@ final class Subtree extends Location
      */
     private function getRelativeDepthValue(int $startDepth, $value)
     {
-        if (is_array($value)) {
-            return array_map(
+        if (\is_array($value)) {
+            return \array_map(
                 static function (int $value) use ($startDepth): int {
                     return $startDepth + $value;
                 },

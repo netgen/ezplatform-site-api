@@ -54,12 +54,12 @@ class SortClauseParser
      */
     public function parse(string $definition): SortClause
     {
-        $values = explode(' ', $definition);
+        $values = \explode(' ', $definition);
         $direction = $this->getDirection($values);
-        $values = explode('/', $values[0]);
+        $values = \explode('/', $values[0]);
         $type = $values[0];
 
-        switch (strtolower($type)) {
+        switch (\strtolower($type)) {
             case 'depth':
                 return new Depth($direction);
             case 'field':
@@ -91,13 +91,13 @@ class SortClauseParser
      */
     private function buildFieldSortClause(array $values, $direction): Field
     {
-        if (!array_key_exists(1, $values)) {
+        if (!\array_key_exists(1, $values)) {
             throw new InvalidArgumentException(
                 'Field sort clause requires ContentType identifier'
             );
         }
 
-        if (!array_key_exists(2, $values)) {
+        if (!\array_key_exists(2, $values)) {
             throw new InvalidArgumentException(
                 'Field sort clause requires FieldDefinition identifier'
             );
@@ -119,11 +119,11 @@ class SortClauseParser
     {
         $direction = 'asc';
 
-        if (array_key_exists(1, $values)) {
+        if (\array_key_exists(1, $values)) {
             $direction = $values[1];
         }
 
-        switch (strtolower($direction)) {
+        switch (\strtolower($direction)) {
             case 'asc':
                 return Query::SORT_ASC;
             case 'desc':

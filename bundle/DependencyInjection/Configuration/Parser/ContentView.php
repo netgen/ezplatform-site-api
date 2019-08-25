@@ -124,7 +124,7 @@ EOT
                 ->end()
                 ->validate()
                     ->ifTrue(static function ($v): bool {
-                        return array_key_exists('named_query', $v) && array_key_exists('query_type', $v);
+                        return \array_key_exists('named_query', $v) && \array_key_exists('query_type', $v);
                     })
                     ->thenInvalid(
                         'You cannot use both "named_query" and "query_type" at the same time.'
@@ -132,28 +132,28 @@ EOT
                 ->end()
                 ->validate()
                     ->ifTrue(static function ($v): bool {
-                        return !array_key_exists('named_query', $v) && !array_key_exists('query_type', $v);
+                        return !\array_key_exists('named_query', $v) && !\array_key_exists('query_type', $v);
                     })
                     ->thenInvalid(
                         'One of "named_query" or "query_type" must be set.'
                     )
                 ->end()
                 ->validate()
-                    ->ifTrue(static function ($v): bool {return array_key_exists('query_type', $v);})
+                    ->ifTrue(static function ($v): bool {return \array_key_exists('query_type', $v);})
                     ->then(static function ($v): array {
-                        if (!array_key_exists('use_filter', $v)) {
+                        if (!\array_key_exists('use_filter', $v)) {
                             $v['use_filter'] = true;
                         }
 
-                        if (!array_key_exists('max_per_page', $v)) {
+                        if (!\array_key_exists('max_per_page', $v)) {
                             $v['max_per_page'] = 25;
                         }
 
-                        if (!array_key_exists('page', $v)) {
+                        if (!\array_key_exists('page', $v)) {
                             $v['page'] = 1;
                         }
 
-                        if (!array_key_exists('parameters', $v)) {
+                        if (!\array_key_exists('parameters', $v)) {
                             $v['parameters'] = [];
                         }
 
@@ -163,8 +163,8 @@ EOT
             ->end()
             ->validate()
                 ->ifTrue(static function ($v): bool {
-                    foreach (array_keys($v) as $key) {
-                        if (!is_string($key) || !preg_match(Lexer::REGEX_NAME, $key)) {
+                    foreach (\array_keys($v) as $key) {
+                        if (!\is_string($key) || !\preg_match(Lexer::REGEX_NAME, $key)) {
                             return true;
                         }
                     }

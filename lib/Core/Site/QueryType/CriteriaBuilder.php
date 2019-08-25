@@ -174,8 +174,8 @@ final class CriteriaBuilder
 
     private function reduceCriteria(array $criteria): Criterion
     {
-        if (count($criteria) === 1) {
-            return reset($criteria);
+        if (\count($criteria) === 1) {
+            return \reset($criteria);
         }
 
         return new LogicalAnd($criteria);
@@ -266,7 +266,7 @@ final class CriteriaBuilder
      */
     private function resolveTimeValues($valueOrValues)
     {
-        if (!is_array($valueOrValues)) {
+        if (!\is_array($valueOrValues)) {
             return $this->resolveTimeValue($valueOrValues);
         }
 
@@ -288,11 +288,11 @@ final class CriteriaBuilder
      */
     private function resolveTimeValue($value): int
     {
-        if (is_int($value)) {
+        if (\is_int($value)) {
             return $value;
         }
 
-        $timestamp = strtotime($value);
+        $timestamp = \strtotime($value);
 
         if ($timestamp === false) {
             throw new InvalidArgumentException(

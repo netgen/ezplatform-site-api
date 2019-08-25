@@ -104,8 +104,8 @@ class Repository implements RepositoryInterface
 
     public function getBookmarkService(): BookmarkService
     {
-        if (!method_exists($this->ezRepository, 'getBookmarkService')) {
-            throw new RuntimeException(sprintf('getBookmarkService method does not exist in %s class', get_class($this->ezRepository)));
+        if (!\method_exists($this->ezRepository, 'getBookmarkService')) {
+            throw new RuntimeException(\sprintf('getBookmarkService method does not exist in %s class', \get_class($this->ezRepository)));
         }
 
         return $this->ezRepository->getBookmarkService();
@@ -113,8 +113,8 @@ class Repository implements RepositoryInterface
 
     public function getNotificationService(): NotificationService
     {
-        if (!method_exists($this->ezRepository, 'getNotificationService')) {
-            throw new RuntimeException(sprintf('getNotificationService method does not exist in %s class', get_class($this->ezRepository)));
+        if (!\method_exists($this->ezRepository, 'getNotificationService')) {
+            throw new RuntimeException(\sprintf('getNotificationService method does not exist in %s class', \get_class($this->ezRepository)));
         }
 
         return $this->ezRepository->getNotificationService();
@@ -122,8 +122,8 @@ class Repository implements RepositoryInterface
 
     public function getUserPreferenceService(): UserPreferenceService
     {
-        if (!method_exists($this->ezRepository, 'getUserPreferenceService')) {
-            throw new RuntimeException(sprintf('getUserPreferenceService method does not exist in %s class', get_class($this->ezRepository)));
+        if (!\method_exists($this->ezRepository, 'getUserPreferenceService')) {
+            throw new RuntimeException(\sprintf('getUserPreferenceService method does not exist in %s class', \get_class($this->ezRepository)));
         }
 
         return $this->ezRepository->getUserPreferenceService();

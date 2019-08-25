@@ -43,12 +43,12 @@ final class Settings extends BaseSettings
                 );
         }
 
-        throw new PropertyNotFoundException($property, get_class($this));
+        throw new PropertyNotFoundException($property, \get_class($this));
     }
 
     public function __set(string $property, $value): void
     {
-        throw new PropertyReadOnlyException($property, get_class($this));
+        throw new PropertyReadOnlyException($property, \get_class($this));
     }
 
     public function __isset(string $property): bool
@@ -61,6 +61,6 @@ final class Settings extends BaseSettings
                 return true;
         }
 
-        throw new PropertyNotFoundException($property, get_class($this));
+        throw new PropertyNotFoundException($property, \get_class($this));
     }
 }

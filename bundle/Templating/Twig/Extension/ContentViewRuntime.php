@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
-use function call_user_func_array;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use eZ\Publish\Core\MVC\Symfony\View\Renderer;
 use LogicException;
@@ -159,7 +158,7 @@ class ContentViewRuntime
         $controller = $this->resolveController($controllerReference);
         $arguments = $this->resolveControllerArguments($contentView, $controller, $arguments);
 
-        $result = call_user_func_array($controller, $arguments);
+        $result = \call_user_func_array($controller, $arguments);
 
         if ($result instanceof ContentView) {
             return $this->viewRenderer->render($result);
@@ -180,7 +179,7 @@ class ContentViewRuntime
 
         if ($controller === false) {
             throw new NotFoundHttpException(
-                sprintf('Unable to find the controller "%s".', $controllerReference->controller)
+                \sprintf('Unable to find the controller "%s".', $controllerReference->controller)
             );
         }
 

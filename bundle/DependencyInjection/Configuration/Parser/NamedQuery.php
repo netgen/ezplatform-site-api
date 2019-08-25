@@ -51,8 +51,8 @@ class NamedQuery extends AbstractParser
             ->end()
             ->validate()
                 ->ifTrue(static function ($v): bool {
-                    foreach (array_keys($v) as $key) {
-                        if (!is_string($key) || !preg_match(Lexer::REGEX_NAME, $key)) {
+                    foreach (\array_keys($v) as $key) {
+                        if (!\is_string($key) || !\preg_match(Lexer::REGEX_NAME, $key)) {
                             return true;
                         }
                     }

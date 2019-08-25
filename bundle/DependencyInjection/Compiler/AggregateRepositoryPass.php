@@ -57,7 +57,7 @@ class AggregateRepositoryPass implements CompilerPassInterface
         $customRepositoryTags = $container->findTaggedServiceIds(self::CustomRepositoryTag);
         $customRepositoryReferences = [];
 
-        foreach (array_keys($customRepositoryTags) as $id) {
+        foreach (\array_keys($customRepositoryTags) as $id) {
             $customRepositoryReferences[] = new Reference($id);
         }
 

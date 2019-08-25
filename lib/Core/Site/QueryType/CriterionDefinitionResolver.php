@@ -64,7 +64,7 @@ final class CriterionDefinitionResolver
             $definitionsGrouped[] = $this->resolveForTarget($name, $target, $params);
         }
 
-        return array_merge(...$definitionsGrouped);
+        return \array_merge(...$definitionsGrouped);
     }
 
     /**
@@ -166,14 +166,14 @@ final class CriterionDefinitionResolver
      */
     private function isOperatorMap($parameters): bool
     {
-        if (!is_array($parameters)) {
+        if (!\is_array($parameters)) {
             return false;
         }
 
         $isOperatorMap = false;
         $isValueCollection = false;
 
-        foreach (array_keys($parameters) as $key) {
+        foreach (\array_keys($parameters) as $key) {
             if ($this->isOperator($key)) {
                 $isOperatorMap = true;
             } else {
@@ -197,7 +197,7 @@ final class CriterionDefinitionResolver
      */
     private function isOperator($key): bool
     {
-        return array_key_exists($key, self::$operatorMap) || $key === 'not';
+        return \array_key_exists($key, self::$operatorMap) || $key === 'not';
     }
 
     /**
@@ -228,7 +228,7 @@ final class CriterionDefinitionResolver
      */
     private function getOperatorByValueType($value): string
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return Operator::IN;
         }
 

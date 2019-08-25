@@ -75,7 +75,7 @@ class QueryRuntime
     {
         $variableName = ContentView::QUERY_DEFINITION_COLLECTION_NAME;
 
-        if (is_array($context) && array_key_exists($variableName, $context)) {
+        if (\is_array($context) && \array_key_exists($variableName, $context)) {
             return $context[$variableName];
         }
 

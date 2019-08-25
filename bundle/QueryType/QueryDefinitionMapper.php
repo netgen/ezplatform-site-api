@@ -86,14 +86,14 @@ final class QueryDefinitionMapper
      */
     private function overrideConfiguration(array $configuration, array $override): array
     {
-        $configuration['parameters'] = array_replace(
+        $configuration['parameters'] = \array_replace(
             $configuration['parameters'],
             $override['parameters']
         );
 
         unset($override['parameters']);
 
-        return array_replace($configuration, $override);
+        return \array_replace($configuration, $override);
     }
 
     /**
@@ -109,7 +109,7 @@ final class QueryDefinitionMapper
     {
         $this->setNamedQueryConfiguration();
 
-        if (array_key_exists($name, $this->namedQueryConfiguration)) {
+        if (\array_key_exists($name, $this->namedQueryConfiguration)) {
             return $this->namedQueryConfiguration[$name];
         }
 
@@ -171,11 +171,11 @@ final class QueryDefinitionMapper
             return;
         }
 
-        if (!array_key_exists('content', $parameters) && $queryType->supportsParameter('content')) {
+        if (!\array_key_exists('content', $parameters) && $queryType->supportsParameter('content')) {
             $parameters['content'] = $view->getSiteContent();
         }
 
-        if (!array_key_exists('location', $parameters) && $queryType->supportsParameter('location')) {
+        if (!\array_key_exists('location', $parameters) && $queryType->supportsParameter('location')) {
             $parameters['location'] = $view->getSiteLocation();
         }
     }
@@ -209,7 +209,7 @@ final class QueryDefinitionMapper
      */
     private function recursiveProcessParameters($parameters, ContentView $view)
     {
-        if (is_array($parameters)) {
+        if (\is_array($parameters)) {
             return $this->processParameters($parameters, $view);
         }
 

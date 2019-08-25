@@ -87,7 +87,7 @@ class BaseTest extends APIBaseTest
     {
         $settings = $this->getSite()->getSettings();
 
-        $property = new ReflectionProperty(get_class($settings), $name);
+        $property = new ReflectionProperty(\get_class($settings), $name);
         $property->setAccessible(true);
         $property->setValue($settings, $value);
     }
@@ -107,7 +107,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertContent(Content $content, array $data): void
     {
-        [$name, $contentId, , $locationId] = array_values($data);
+        [$name, $contentId, , $locationId] = \array_values($data);
 
         $this->assertSame($contentId, $content->id);
         $this->assertSame($locationId, $content->mainLocationId);
@@ -128,7 +128,7 @@ class BaseTest extends APIBaseTest
         $locations = $content->getLocations();
         $this->assertIsArray($locations);
         $this->assertCount(1, $locations);
-        $this->assertInstanceOf(Location::class, reset($locations));
+        $this->assertInstanceOf(Location::class, \reset($locations));
 
         $this->assertTrue(isset($content->id));
         $this->assertTrue(isset($content->name));
@@ -161,7 +161,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertContentInfo(APIContentInfo $contentInfo, array $data): void
     {
-        [$name, $contentId, $contentRemoteId, $locationId] = array_values($data);
+        [$name, $contentId, $contentRemoteId, $locationId] = \array_values($data);
 
         $this->assertEquals($contentId, $contentInfo->id);
         $this->assertEquals($contentRemoteId, $contentInfo->remoteId);
@@ -229,7 +229,7 @@ class BaseTest extends APIBaseTest
     protected function assertFields(Content $content, array $data): void
     {
         $this->assertInstanceOf(Fields::class, $content->fields);
-        $this->assertCount(count($data['fields']), $content->fields);
+        $this->assertCount(\count($data['fields']), $content->fields);
 
         foreach ($content->fields as $identifier => $field) {
             $this->assertInstanceOf(Field::class, $field);
@@ -313,7 +313,7 @@ class BaseTest extends APIBaseTest
 
     protected function assertLocation(Location $location, array $data): void
     {
-        [, , , $locationId, $locationRemoteId, $parentLocationId] = array_values($data);
+        [, , , $locationId, $locationRemoteId, $parentLocationId] = \array_values($data);
 
         $this->assertEquals($locationId, $location->id);
         $this->assertEquals($locationRemoteId, $location->remoteId);

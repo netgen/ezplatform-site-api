@@ -57,7 +57,7 @@ class RelationServiceTest extends BaseTest
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier);
 
-        $this->assertEquals(count($testRelationIds), count($contentItems));
+        $this->assertEquals(\count($testRelationIds), \count($contentItems));
 
         foreach ($testRelationIds as $index => $relationId) {
             $content = $contentItems[$index];
@@ -83,7 +83,7 @@ class RelationServiceTest extends BaseTest
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier, ['landing_page']);
 
-        $this->assertEquals(1, count($contentItems));
+        $this->assertEquals(1, \count($contentItems));
 
         $this->assertInstanceOf(Content::class, $contentItems[0]);
         $this->assertEquals($testRelationIds[0], $contentItems[0]->id);
@@ -106,7 +106,7 @@ class RelationServiceTest extends BaseTest
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier, [], 1);
 
-        $this->assertEquals(1, count($contentItems));
+        $this->assertEquals(1, \count($contentItems));
 
         $this->assertInstanceOf(Content::class, $contentItems[0]);
         $this->assertEquals($testRelationIds[0], $contentItems[0]->id);
@@ -129,7 +129,7 @@ class RelationServiceTest extends BaseTest
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier, ['feedback_form'], 1);
 
-        $this->assertEquals(1, count($contentItems));
+        $this->assertEquals(1, \count($contentItems));
 
         $this->assertInstanceOf(Content::class, $contentItems[0]);
         $this->assertEquals($testRelationIds[1], $contentItems[0]->id);

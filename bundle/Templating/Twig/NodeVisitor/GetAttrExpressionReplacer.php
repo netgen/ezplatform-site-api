@@ -14,7 +14,7 @@ class GetAttrExpressionReplacer implements NodeVisitorInterface
 {
     public function enterNode(Node $node, Environment $env): Node
     {
-        if (get_class($node) !== GetAttrExpression::class) {
+        if (\get_class($node) !== GetAttrExpression::class) {
             return $node;
         }
 

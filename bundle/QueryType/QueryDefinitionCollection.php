@@ -44,7 +44,7 @@ final class QueryDefinitionCollection
      */
     public function get(string $name): QueryDefinition
     {
-        if (array_key_exists($name, $this->queryDefinitionMap)) {
+        if (\array_key_exists($name, $this->queryDefinitionMap)) {
             return $this->queryDefinitionMap[$name];
         }
 

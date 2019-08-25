@@ -38,7 +38,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
+        $activatedBundles = \array_keys($container->getParameter('kernel.bundles'));
 
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
@@ -47,7 +47,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         $coreLoader = new Loader\YamlFileLoader($container, $coreFileLocator);
         $coreLoader->load('services.yml');
 
-        if (in_array('NetgenTagsBundle', $activatedBundles, true)) {
+        if (\in_array('NetgenTagsBundle', $activatedBundles, true)) {
             $coreLoader->load('query_types/netgen_tags_dependant.yml');
         }
 
@@ -77,7 +77,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
     public function prepend(ContainerBuilder $container): void
     {
         $configFile = __DIR__ . '/../Resources/config/ezplatform.yml';
-        $config = Yaml::parse(file_get_contents($configFile));
+        $config = Yaml::parse(\file_get_contents($configFile));
         $container->addResource(new FileResource($configFile));
 
         $container->prependExtensionConfig('ezpublish', $config);

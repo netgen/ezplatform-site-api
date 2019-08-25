@@ -32,7 +32,7 @@ class TranslationNotMatchedException extends APITranslationNotMatchedException i
         $this->setParameters(
             [
                 '%contentId%' => $contentId,
-                '%context%' => var_export($context, true),
+                '%context%' => \var_export($context, true),
             ]
         );
 

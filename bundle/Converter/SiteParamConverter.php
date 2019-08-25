@@ -23,7 +23,7 @@ abstract class SiteParamConverter implements ParamConverterInterface
 
     public function supports(ParamConverter $configuration): bool
     {
-        return is_a($configuration->getClass(), $this->getSupportedClass(), true);
+        return \is_a($configuration->getClass(), $this->getSupportedClass(), true);
     }
 
     public function apply(Request $request, ParamConverter $configuration): bool

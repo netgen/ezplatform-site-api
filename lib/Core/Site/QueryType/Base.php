@@ -59,7 +59,7 @@ abstract class Base implements QueryType
         $query = $this->buildQuery();
 
         $sortDefinitions = $parameters['sort'];
-        if (!is_array($sortDefinitions)) {
+        if (!\is_array($sortDefinitions)) {
             $sortDefinitions = [$sortDefinitions];
         }
 
@@ -235,7 +235,7 @@ abstract class Base implements QueryType
             'is_field_empty',
             static function (array $isEmptyMap): bool {
                 foreach ($isEmptyMap as $key => $value) {
-                    if (!is_string($key) || ($value !== null && !is_bool($value))) {
+                    if (!\is_string($key) || ($value !== null && !\is_bool($value))) {
                         return false;
                     }
                 }
@@ -270,7 +270,7 @@ abstract class Base implements QueryType
             }
         }
 
-        return array_merge(...$criteriaGrouped);
+        return \array_merge(...$criteriaGrouped);
     }
 
     /**
@@ -320,7 +320,7 @@ abstract class Base implements QueryType
             $criteriaGrouped[] = $this->buildCriteria($builder, $name, $parameters);
         }
 
-        return array_merge(...$criteriaGrouped);
+        return \array_merge(...$criteriaGrouped);
     }
 
     /**
@@ -334,7 +334,7 @@ abstract class Base implements QueryType
     {
         $criteria = [];
 
-        if (array_key_exists($name, $parameters)) {
+        if (\array_key_exists($name, $parameters)) {
             $definitions = $this->getCriterionDefinitionResolver()->resolve($name, $parameters[$name]);
 
             foreach ($definitions as $definition) {
@@ -367,13 +367,13 @@ abstract class Base implements QueryType
             $filterCriteria = [$filterCriteria];
         }
 
-        $criteria = array_merge($baseCriteria, $registeredCriteria, $filterCriteria);
+        $criteria = \array_merge($baseCriteria, $registeredCriteria, $filterCriteria);
 
         if (empty($criteria)) {
             return null;
         }
 
-        if (count($criteria) === 1) {
+        if (\count($criteria) === 1) {
             return $criteria[0];
         }
 
@@ -394,11 +394,11 @@ abstract class Base implements QueryType
         $sortClauses = [];
 
         foreach ($parameters as $parameter) {
-            if (is_string($parameter)) {
+            if (\is_string($parameter)) {
                 $parameter = $this->parseSortString($parameter);
             }
 
-            if (is_string($parameter)) {
+            if (\is_string($parameter)) {
                 $parameter = $this->parseCustomSortString($parameter);
             }
 

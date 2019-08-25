@@ -118,7 +118,7 @@ class LoadService implements LoadServiceInterface
             return $this->resolveLanguageCodeFromConfiguration($versionInfo);
         }
 
-        if (!in_array($languageCode, $versionInfo->languageCodes, true)) {
+        if (!\in_array($languageCode, $versionInfo->languageCodes, true)) {
             throw new TranslationNotMatchedException($versionInfo->contentInfo->id, $this->getContext($versionInfo));
         }
 
@@ -135,7 +135,7 @@ class LoadService implements LoadServiceInterface
     private function resolveLanguageCodeFromConfiguration(VersionInfo $versionInfo): string
     {
         foreach ($this->settings->prioritizedLanguages as $languageCode) {
-            if (in_array($languageCode, $versionInfo->languageCodes, true)) {
+            if (\in_array($languageCode, $versionInfo->languageCodes, true)) {
                 return $languageCode;
             }
         }

@@ -41,7 +41,7 @@ class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertEquals(3, count($fields));
+        $this->assertEquals(3, \count($fields));
     }
 
     /**
@@ -265,7 +265,7 @@ class FieldsTest extends TestCase
         $identifier = 'fourth';
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(sprintf('Field "%s" in Content #1 does not exist', $identifier));
+        $this->expectExceptionMessage(\sprintf('Field "%s" in Content #1 does not exist', $identifier));
 
         $fields = $this->getFieldsUnderTest(true);
 
@@ -296,7 +296,7 @@ class FieldsTest extends TestCase
         $fields = $this->getFieldsUnderTest(true);
 
         $this->assertEquals(
-            array_values((array) $fields->getIterator()),
+            \array_values((array) $fields->getIterator()),
             $fields->__debugInfo()
         );
     }

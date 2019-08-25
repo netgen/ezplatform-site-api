@@ -48,7 +48,7 @@ final class ParameterProcessor
      */
     public function process($value, ContentView $view)
     {
-        if (!is_string($value) || strpos($value, '@=') !== 0) {
+        if (!\is_string($value) || \strpos($value, '@=') !== 0) {
             return $value;
         }
 
@@ -57,7 +57,7 @@ final class ParameterProcessor
         $this->registerFunctions($language);
 
         return $language->evaluate(
-            substr($value, 2),
+            \substr($value, 2),
             [
                 'view' => $view,
                 'location' => $view->getSiteLocation(),
@@ -103,7 +103,7 @@ final class ParameterProcessor
 
                 $value = $request->query->get($name);
 
-                if ($allowed === null || in_array($value, $allowed, true)) {
+                if ($allowed === null || \in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -124,7 +124,7 @@ final class ParameterProcessor
 
                 $value = (string) $request->query->get($name);
 
-                if ($allowed === null || in_array($value, $allowed, true)) {
+                if ($allowed === null || \in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -145,7 +145,7 @@ final class ParameterProcessor
 
                 $value = $request->query->getInt($name);
 
-                if ($allowed === null || in_array($value, $allowed, true)) {
+                if ($allowed === null || \in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -166,7 +166,7 @@ final class ParameterProcessor
 
                 $value = (float) $request->query->get($name);
 
-                if ($allowed === null || in_array($value, $allowed, true)) {
+                if ($allowed === null || \in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -187,7 +187,7 @@ final class ParameterProcessor
 
                 $value = $request->query->getBoolean($name);
 
-                if ($allowed === null || in_array($value, $allowed, true)) {
+                if ($allowed === null || \in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -199,7 +199,7 @@ final class ParameterProcessor
             'timestamp',
             static function (): void {},
             static function (array $arguments, string $timeString) {
-                return strtotime($timeString);
+                return \strtotime($timeString);
             }
         );
 

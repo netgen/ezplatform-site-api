@@ -71,7 +71,7 @@ final class ForwardFields extends Content
             $idsGrouped[] = $relationResolver->getRelationIds($field);
         }
 
-        $relatedContentIds = array_merge(...$idsGrouped);
+        $relatedContentIds = \array_merge(...$idsGrouped);
 
         if (empty($relatedContentIds)) {
             return new MatchNone();

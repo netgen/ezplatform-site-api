@@ -35,8 +35,8 @@ use PHPUnit\Framework\TestCase;
  */
 class CriteriaBuilderTest extends TestCase
 {
-
     protected $criteriaBuilder;
+
     public function providerForTestBuild(): array
     {
         return [

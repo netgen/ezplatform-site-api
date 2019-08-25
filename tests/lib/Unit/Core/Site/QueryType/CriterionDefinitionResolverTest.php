@@ -21,8 +21,8 @@ use PHPUnit\Framework\TestCase;
  */
 class CriterionDefinitionResolverTest extends TestCase
 {
-
     protected $criterionDefinitionResolver;
+
     public function providerForTestResolve(): array
     {
         return [

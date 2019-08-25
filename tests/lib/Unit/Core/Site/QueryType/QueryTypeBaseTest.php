@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
  */
 abstract class QueryTypeBaseTest extends TestCase
 {
-
     public function testGetName(): void
     {
         $queryType = $this->getQueryTypeUnderTest();
@@ -148,6 +147,7 @@ abstract class QueryTypeBaseTest extends TestCase
 
         $queryType->getQuery($parameters);
     }
+
     /**
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType
      */

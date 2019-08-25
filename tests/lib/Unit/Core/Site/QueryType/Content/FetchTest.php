@@ -27,7 +27,6 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class FetchTest extends QueryTypeBaseTest
 {
-
     public function providerForTestGetQuery(): array
     {
         return [
@@ -318,6 +317,7 @@ class FetchTest extends QueryTypeBaseTest
             ],
         ];
     }
+
     protected function getQueryTypeName(): string
     {
         return 'SiteAPI:Content/Fetch';

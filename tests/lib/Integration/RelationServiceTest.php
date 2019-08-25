@@ -19,7 +19,6 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
  */
 class RelationServiceTest extends BaseTest
 {
-
     /**
      * @throws \ErrorException
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
@@ -155,6 +154,7 @@ class RelationServiceTest extends BaseTest
 
         $this->assertCount(0, $contentItems);
     }
+
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException

@@ -17,7 +17,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ContentViewTest extends AbstractParserTestCase
 {
-
     public function providerForTestValid(): array
     {
         return [
@@ -369,6 +368,7 @@ class ContentViewTest extends AbstractParserTestCase
             'cro'
         );
     }
+
     protected function getContainerExtensions(): array
     {
         return [

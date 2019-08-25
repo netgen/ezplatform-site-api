@@ -146,7 +146,6 @@ trait ContentFieldsMockTrait
         $fieldTypeServiceMock = $this->getFieldTypeServiceMock();
         $this->repositoryMock->method('getFieldTypeService')->willReturn($fieldTypeServiceMock);
 
-
         $this->repositoryMock->method('getContentService')->willReturn(false);
         $this->repositoryMock->method('getUserService')->willReturn(false);
 

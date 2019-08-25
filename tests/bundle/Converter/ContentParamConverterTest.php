@@ -26,7 +26,6 @@ class ContentParamConverterTest extends AbstractParamConverterTest
     {
         $this->loadServiceMock = $this->createMock(LoadService::class);
         $this->converter = new ContentParamConverter($this->loadServiceMock);
-
     }
 
     public function testSupports(): void

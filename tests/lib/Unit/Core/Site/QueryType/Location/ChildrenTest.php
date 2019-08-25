@@ -30,7 +30,6 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  */
 class ChildrenTest extends QueryTypeBaseTest
 {
-
     public function providerForTestGetQuery(): array
     {
         $location = $this->getTestLocation();
@@ -277,6 +276,7 @@ class ChildrenTest extends QueryTypeBaseTest
             ],
         ];
     }
+
     protected function getQueryTypeName(): string
     {
         return 'SiteAPI:Location/Children';

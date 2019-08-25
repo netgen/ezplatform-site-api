@@ -26,7 +26,6 @@ class LocationParamConverterTest extends AbstractParamConverterTest
     {
         $this->loadServiceMock = $this->createMock(LoadService::class);
         $this->converter = new LocationParamConverter($this->loadServiceMock);
-
     }
 
     public function testSupports(): void

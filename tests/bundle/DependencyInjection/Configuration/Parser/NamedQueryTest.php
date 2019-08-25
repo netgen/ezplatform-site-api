@@ -17,7 +17,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class NamedQueryTest extends AbstractParserTestCase
 {
-
     public function providerForTestValid(): array
     {
         return [
@@ -209,6 +208,7 @@ class NamedQueryTest extends AbstractParserTestCase
             'cro'
         );
     }
+
     protected function getContainerExtensions(): array
     {
         return [

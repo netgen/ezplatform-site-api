@@ -401,7 +401,7 @@ final class Content extends APIContent
         }
 
         $this->owner = $this->repository->sudo(
-            function(Repository $repository): ?APIContent {
+            function (Repository $repository): ?APIContent {
                 try {
                     return $this->site->getLoadService()->loadContent($this->getContentInfo()->ownerId);
                 } catch (NotFoundException $e) {

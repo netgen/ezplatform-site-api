@@ -13,10 +13,10 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinitionResolver
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
  *
- * @property-read string $name
- * @property-read null|string $target
- * @property-read null|mixed $operator
- * @property-read mixed $value
+ * @property string $name
+ * @property null|string $target
+ * @property null|mixed $operator
+ * @property mixed $value
  */
 final class CriterionDefinition extends ValueObject
 {

@@ -13,26 +13,26 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\ContentInfo
  *
- * @property-read int|string $id
- * @property-read int|string $contentTypeId
- * @property-read int|string $sectionId
- * @property-read int $currentVersionNo
- * @property-read bool $published
- * @property-read int|string $ownerId
- * @property-read \DateTime $modificationDate
- * @property-read \DateTime $publishedDate
- * @property-read bool $alwaysAvailable
- * @property-read string $remoteId
- * @property-read string $mainLanguageCode
- * @property-read int|string $mainLocationId
- * @property-read string $name
- * @property-read string $languageCode
- * @property-read string $contentTypeIdentifier
- * @property-read string $contentTypeName
- * @property-read string $contentTypeDescription
- * @property-read \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
- * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
- * @property-read null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
+ * @property int|string $id
+ * @property int|string $contentTypeId
+ * @property int|string $sectionId
+ * @property int $currentVersionNo
+ * @property bool $published
+ * @property int|string $ownerId
+ * @property \DateTime $modificationDate
+ * @property \DateTime $publishedDate
+ * @property bool $alwaysAvailable
+ * @property string $remoteId
+ * @property string $mainLanguageCode
+ * @property int|string $mainLocationId
+ * @property string $name
+ * @property string $languageCode
+ * @property string $contentTypeIdentifier
+ * @property string $contentTypeName
+ * @property string $contentTypeDescription
+ * @property \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
+ * @property \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
+ * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
  */
 abstract class ContentInfo extends ValueObject
 {

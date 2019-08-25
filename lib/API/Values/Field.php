@@ -13,16 +13,16 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\Field
  *
- * @property-read int|string $id
- * @property-read string $fieldDefIdentifier
- * @property-read \eZ\Publish\SPI\FieldType\Value $value
- * @property-read string $languageCode
- * @property-read string $fieldTypeIdentifier
- * @property-read string $name
- * @property-read string $description
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
- * @property-read \eZ\Publish\API\Repository\Values\Content\Field $innerField
- * @property-read \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $innerFieldDefinition
+ * @property int|string $id
+ * @property string $fieldDefIdentifier
+ * @property \eZ\Publish\SPI\FieldType\Value $value
+ * @property string $languageCode
+ * @property string $fieldTypeIdentifier
+ * @property string $name
+ * @property string $description
+ * @property \Netgen\EzPlatformSiteApi\API\Values\Content $content
+ * @property \eZ\Publish\API\Repository\Values\Content\Field $innerField
+ * @property \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $innerFieldDefinition
  */
 abstract class Field extends ValueObject
 {

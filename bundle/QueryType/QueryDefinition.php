@@ -11,11 +11,11 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  *
  * @see \eZ\Publish\Core\QueryType\QueryType
  *
- * @property-read string $name QueryType name.
- * @property-read array $parameters An array of configured QueryType options.
- * @property-read bool $useFilter Whether to use FilterService or Find Service.
- * @property-read int $maxPerPage Maximum results per page for Pagerfanta.
- * @property-read int $page Current page for Pagerfanta.
+ * @property string $name QueryType name.
+ * @property array $parameters An array of configured QueryType options.
+ * @property bool $useFilter Whether to use FilterService or Find Service.
+ * @property int $maxPerPage Maximum results per page for Pagerfanta.
+ * @property int $page Current page for Pagerfanta.
  *
  * @internal do not depend on this class, it can be changed without warning
  */

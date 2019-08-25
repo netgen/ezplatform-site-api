@@ -14,23 +14,23 @@ use Pagerfanta\Pagerfanta;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\Location
  *
- * @property-read int|string $id
- * @property-read int $status
- * @property-read int $priority
- * @property-read bool $hidden
- * @property-read bool $invisible
- * @property-read string $remoteId
- * @property-read int|string $parentLocationId
- * @property-read string $pathString
- * @property-read int[] $path
- * @property-read int $depth
- * @property-read int $sortField
- * @property-read int $sortOrder
- * @property-read int|string $contentId
- * @property-read \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
- * @property-read null|\Netgen\EzPlatformSiteApi\API\Values\Location $parent
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Content $content
+ * @property int|string $id
+ * @property int $status
+ * @property int $priority
+ * @property bool $hidden
+ * @property bool $invisible
+ * @property string $remoteId
+ * @property int|string $parentLocationId
+ * @property string $pathString
+ * @property int[] $path
+ * @property int $depth
+ * @property int $sortField
+ * @property int $sortOrder
+ * @property int|string $contentId
+ * @property \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
+ * @property \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
+ * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $parent
+ * @property \Netgen\EzPlatformSiteApi\API\Values\Content $content
  */
 abstract class Location extends ValueObject
 {

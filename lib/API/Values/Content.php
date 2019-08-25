@@ -16,18 +16,18 @@ use Pagerfanta\Pagerfanta;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\Content
  *
- * @property-read int|string $id
- * @property-read null|int|string $mainLocationId
- * @property-read string $name
- * @property-read string $languageCode
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
- * @property-read \Netgen\EzPlatformSiteApi\API\Values\Fields $fields
- * @property-read null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
- * @property-read null|\Netgen\EzPlatformSiteApi\API\Values\Content $owner
- * @property-read null|\eZ\Publish\API\Repository\Values\User\User $innerOwnerUser
- * @property-read \eZ\Publish\API\Repository\Values\Content\Content $innerContent
- * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $innerVersionInfo
- * @property-read \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
+ * @property int|string $id
+ * @property null|int|string $mainLocationId
+ * @property string $name
+ * @property string $languageCode
+ * @property \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
+ * @property \Netgen\EzPlatformSiteApi\API\Values\Fields $fields
+ * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
+ * @property null|\Netgen\EzPlatformSiteApi\API\Values\Content $owner
+ * @property null|\eZ\Publish\API\Repository\Values\User\User $innerOwnerUser
+ * @property \eZ\Publish\API\Repository\Values\Content\Content $innerContent
+ * @property \eZ\Publish\API\Repository\Values\Content\VersionInfo $innerVersionInfo
+ * @property \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
  */
 abstract class Content extends ValueObject
 {

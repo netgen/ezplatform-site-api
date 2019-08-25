@@ -28,7 +28,6 @@ final class QueryDefinitionCollection
      * @param string $name
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      *
-     * @return void
      */
     public function add(string $name, QueryDefinition $queryDefinition): void
     {

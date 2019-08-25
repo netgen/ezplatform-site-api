@@ -8,7 +8,7 @@ Unreleased
 * Add default view templates ([#130](https://github.com/netgen/ezplatform-site-api/pull/130))
 * Implement ParamConverters for SiteAPI value objects by @MarioBlazek ([#129](https://github.com/netgen/ezplatform-site-api/pull/129))
 * Add routers that generate links for Site API Content and Location by @emodric ([#125](https://github.com/netgen/ezplatform-site-api/pull/125))
-* Add support for eZ Platform v3 by @emodric ([#105](https://github.com/netgen/ezplatform-site-api/pull/105), [#123](1https://github.com/netgen/ezplatform-site-api/pull/23))
+* Add support for eZ Platform v3 by @emodric ([#105](https://github.com/netgen/ezplatform-site-api/pull/105), [#123](https://github.com/netgen/ezplatform-site-api/pull/23))
 * Allow null value for is_field_empty option ([#120](https://github.com/netgen/ezplatform-site-api/pull/120))
 * Allow defining publication_date with explicit operators ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
 * Query type condition `creation_date`, replaces `publication_date` ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))

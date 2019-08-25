@@ -12,9 +12,9 @@
 </div>
 
 <p align="center">
-<strong>Netgen Site API</strong> is a productivity layer built for eZ developers, designed to remove
-the need for boilerplate code and make the development of eZ Platform sites more accessible and less
-fallible.
+<strong>Netgen's Site API</strong> is a productivity layer built for eZ developers, designed to
+remove the need for boilerplate code and make the development of eZ Platform sites more accessible
+and less fallible.
 </p>
 
 <p align="center">

@@ -25,7 +25,7 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  *
  * @internal
  */
-class FetchTest extends QueryTypeBaseTest
+final class FetchTest extends QueryTypeBaseTest
 {
     public function providerForTestGetQuery(): array
     {

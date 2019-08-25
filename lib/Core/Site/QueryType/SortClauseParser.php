@@ -41,7 +41,7 @@ use InvalidArgumentException;
  *
  * @internal do not depend on this service, it can be changed without warning
  */
-class SortClauseParser
+final class SortClauseParser
 {
     /**
      * Return new sort clause instance by the given $definition string.

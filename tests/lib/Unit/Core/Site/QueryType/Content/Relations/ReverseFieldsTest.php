@@ -30,7 +30,7 @@ use Psr\Log\NullLogger;
  *
  * @internal
  */
-class ReverseFieldsTest extends QueryTypeBaseTest
+final class ReverseFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 

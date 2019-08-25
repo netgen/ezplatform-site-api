@@ -17,7 +17,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
  *
  * @internal
  */
-class RelationServiceTest extends BaseTest
+final class RelationServiceTest extends BaseTest
 {
     /**
      * @throws \ErrorException

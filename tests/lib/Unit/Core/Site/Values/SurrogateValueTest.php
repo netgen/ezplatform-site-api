@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class SurrogateValueTest extends TestCase
+final class SurrogateValueTest extends TestCase
 {
     public function testConstructWithArbitraryArguments(): void
     {

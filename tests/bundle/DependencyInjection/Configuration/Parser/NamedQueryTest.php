@@ -15,7 +15,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @internal
  */
-class NamedQueryTest extends AbstractParserTestCase
+final class NamedQueryTest extends AbstractParserTestCase
 {
     public function providerForTestValid(): array
     {

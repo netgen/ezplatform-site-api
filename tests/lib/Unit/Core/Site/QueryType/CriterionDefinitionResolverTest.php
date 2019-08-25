@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class CriterionDefinitionResolverTest extends TestCase
+final class CriterionDefinitionResolverTest extends TestCase
 {
     protected $criterionDefinitionResolver;
 

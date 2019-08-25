@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @internal
  */
-class LocationParamConverterTest extends AbstractParamConverterTest
+final class LocationParamConverterTest extends AbstractParamConverterTest
 {
     const PROPERTY_NAME = 'locationId';
     const LOCATION_CLASS = Location::class;

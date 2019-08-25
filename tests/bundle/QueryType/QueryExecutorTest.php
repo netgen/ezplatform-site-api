@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  */
-class QueryExecutorTest extends TestCase
+final class QueryExecutorTest extends TestCase
 {
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException

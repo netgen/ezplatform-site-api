@@ -41,7 +41,7 @@ use RuntimeException;
  *
  * @internal
  */
-class ForwardFieldsTest extends QueryTypeBaseTest
+final class ForwardFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 

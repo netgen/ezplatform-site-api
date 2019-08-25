@@ -30,7 +30,7 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  *
  * @internal
  */
-class SubtreeTest extends QueryTypeBaseTest
+final class SubtreeTest extends QueryTypeBaseTest
 {
     public function providerForTestGetQuery(): array
     {

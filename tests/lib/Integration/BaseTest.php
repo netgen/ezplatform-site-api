@@ -28,7 +28,7 @@ use ReflectionProperty;
  *
  * @internal
  */
-class BaseTest extends APIBaseTest
+abstract class BaseTest extends APIBaseTest
 {
     public function getData(string $languageCode): array
     {

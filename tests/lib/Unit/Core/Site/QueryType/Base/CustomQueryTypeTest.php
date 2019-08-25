@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class CustomQueryTypeTest extends TestCase
+final class CustomQueryTypeTest extends TestCase
 {
     public function testGetName(): void
     {

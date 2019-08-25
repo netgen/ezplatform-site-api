@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * @internal
  */
-class QueryDefinitionMapperTest extends TestCase
+final class QueryDefinitionMapperTest extends TestCase
 {
     public function providerForTestMap(): array
     {

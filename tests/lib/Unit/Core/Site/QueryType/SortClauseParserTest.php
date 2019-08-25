@@ -26,7 +26,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class SortClauseParserTest extends TestCase
+final class SortClauseParserTest extends TestCase
 {
     public function providerForTestParseValid(): array
     {

@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Definition;
 /**
  * @internal
  */
-class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
+final class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
 {
     protected function setUp(): void
     {

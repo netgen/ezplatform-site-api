@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * @internal
  */
-class ParameterProcessorTest extends TestCase
+final class ParameterProcessorTest extends TestCase
 {
     public function providerForTestProcess(): array
     {

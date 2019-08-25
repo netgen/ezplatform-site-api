@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class FindAdapterTest extends TestCase
+final class FindAdapterTest extends TestCase
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\API\FindService|\PHPUnit\Framework\MockObject\MockObject

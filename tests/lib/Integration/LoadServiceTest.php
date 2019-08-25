@@ -16,7 +16,7 @@ use Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException;
  *
  * @internal
  */
-class LoadServiceTest extends BaseTest
+final class LoadServiceTest extends BaseTest
 {
     /**
      * Test for the loadContent() method.

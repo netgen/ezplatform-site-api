@@ -30,7 +30,7 @@ use Psr\Log\NullLogger;
  *
  * @internal
  */
-class ContentTest extends TestCase
+final class ContentTest extends TestCase
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\API\Site|\PHPUnit\Framework\MockObject\MockObject

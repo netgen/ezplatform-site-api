@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class FilterAdapterTest extends TestCase
+final class FilterAdapterTest extends TestCase
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\API\FilterService|\PHPUnit\Framework\MockObject\MockObject

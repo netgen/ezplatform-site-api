@@ -28,7 +28,7 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  *
  * @internal
  */
-class ChildrenTest extends QueryTypeBaseTest
+final class ChildrenTest extends QueryTypeBaseTest
 {
     public function providerForTestGetQuery(): array
     {

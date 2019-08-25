@@ -33,7 +33,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class CriteriaBuilderTest extends TestCase
+final class CriteriaBuilderTest extends TestCase
 {
     protected $criteriaBuilder;
 

@@ -19,7 +19,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
  *
  * @internal
  */
-class PrepareFixturesTest extends APIBaseTest
+final class PrepareFixturesTest extends APIBaseTest
 {
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException

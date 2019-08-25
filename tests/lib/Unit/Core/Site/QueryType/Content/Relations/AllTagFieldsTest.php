@@ -36,7 +36,7 @@ use Psr\Log\NullLogger;
  *
  * @internal
  */
-class AllTagFieldsTest extends QueryTypeBaseTest
+final class AllTagFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 

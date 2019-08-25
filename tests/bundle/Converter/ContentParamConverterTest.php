@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @internal
  */
-class ContentParamConverterTest extends AbstractParamConverterTest
+final class ContentParamConverterTest extends AbstractParamConverterTest
 {
     const PROPERTY_NAME = 'contentId';
     const CONTENT_CLASS = Content::class;

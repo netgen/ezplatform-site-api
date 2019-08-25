@@ -15,7 +15,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @internal
  */
-class ContentViewTest extends AbstractParserTestCase
+final class ContentViewTest extends AbstractParserTestCase
 {
     public function providerForTestValid(): array
     {

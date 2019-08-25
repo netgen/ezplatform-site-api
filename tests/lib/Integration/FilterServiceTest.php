@@ -19,7 +19,7 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
  *
  * @internal
  */
-class FilterServiceTest extends BaseTest
+final class FilterServiceTest extends BaseTest
 {
     /**
      * Test for the findContent() method.

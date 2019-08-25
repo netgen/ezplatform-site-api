@@ -28,7 +28,7 @@ use RuntimeException;
  *
  * @internal
  */
-class FieldsTest extends TestCase
+final class FieldsTest extends TestCase
 {
     use ContentFieldsMockTrait;
 

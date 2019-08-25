@@ -13,7 +13,7 @@ namespace Netgen\EzPlatformSiteApi\Tests\Integration;
  *
  * @internal
  */
-class SiteTest extends BaseTest
+final class SiteTest extends BaseTest
 {
     /**
      * Test for the getSettings() method.

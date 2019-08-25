@@ -39,7 +39,7 @@ use RuntimeException;
  *
  * @internal
  */
-class TagFieldsTest extends QueryTypeBaseTest
+final class TagFieldsTest extends QueryTypeBaseTest
 {
     use ContentFieldsMockTrait;
 

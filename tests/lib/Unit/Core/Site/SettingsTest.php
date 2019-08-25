@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class SettingsTest extends TestCase
+final class SettingsTest extends TestCase
 {
     public function testGetPrioritizedLanguages(): void
     {

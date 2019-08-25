@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  */
-class QueryDefinitionCollectionTest extends TestCase
+final class QueryDefinitionCollectionTest extends TestCase
 {
     public function testAddAndGetQueryDefinition(): void
     {

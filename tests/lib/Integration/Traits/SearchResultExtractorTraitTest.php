@@ -13,7 +13,7 @@ use Netgen\EzPlatformSiteApi\Tests\Integration\BaseTest;
 /**
  * @internal
  */
-class SearchResultExtractorTraitTest extends BaseTest
+final class SearchResultExtractorTraitTest extends BaseTest
 {
     /**
      * @var \Netgen\EzPlatformSiteApi\Tests\Integration\Traits\SearchResultExtractorStub

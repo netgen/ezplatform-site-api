@@ -33,7 +33,7 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  *
  * @internal
  */
-class SiblingsTest extends QueryTypeBaseTest
+final class SiblingsTest extends QueryTypeBaseTest
 {
     public function providerForTestGetQuery(): array
     {

@@ -43,7 +43,6 @@ class FieldRenderingRuntime
     /**
      * Renders the HTML for a given field.
      *
-     *
      * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
      * @param array $params An array of parameters to pass to the field view
      *

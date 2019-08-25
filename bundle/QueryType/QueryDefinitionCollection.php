@@ -36,7 +36,6 @@ final class QueryDefinitionCollection
     /**
      * Return QueryDefinition by given $name.
      *
-     *
      * @param string $name
      *
      * @throws \OutOfBoundsException if no QueryDefinition with given $name is found

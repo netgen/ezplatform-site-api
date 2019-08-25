@@ -46,7 +46,6 @@ class SortClauseParser
     /**
      * Return new sort clause instance by the given $definition string.
      *
-     *
      * @param string $definition
      *
      * @throws \InvalidArgumentException
@@ -83,7 +82,6 @@ class SortClauseParser
     /**
      * Build a new Field sort clause from the given arguments.
      *
-     *
      * @param array $values
      * @param mixed $direction
      *
@@ -110,7 +108,6 @@ class SortClauseParser
 
     /**
      * Resolve direction constant value from the given array of $values.
-     *
      *
      * @param string[] $values
      *

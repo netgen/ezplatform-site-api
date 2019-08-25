@@ -86,7 +86,6 @@ class LoadService implements LoadServiceInterface
     /**
      * Returns Site Location object for the given Repository $location.
      *
-     *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException

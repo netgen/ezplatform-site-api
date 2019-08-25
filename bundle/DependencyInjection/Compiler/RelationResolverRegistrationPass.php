@@ -52,7 +52,6 @@ final class RelationResolverRegistrationPass implements CompilerPassInterface
     /**
      * Add method call to register resolver with given $id with resolver registry.
      *
-     *
      * @param \Symfony\Component\DependencyInjection\Definition $resolverRegistryDefinition
      * @param string $id
      * @param array $attributes

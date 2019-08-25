@@ -70,7 +70,6 @@ final class CriterionDefinitionResolver
     /**
      * Return CriterionDefinition instances for the given Field $target and its $parameters.
      *
-     *
      * @param string $name
      * @param null|string $target
      * @param mixed $parameters

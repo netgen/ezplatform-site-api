@@ -75,7 +75,6 @@ class PreviewController extends BasePreviewController
      * Injects the Site API value objects into request, replacing the original
      * eZ API value objects.
      *
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $language
      *

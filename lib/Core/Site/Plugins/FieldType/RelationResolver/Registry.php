@@ -44,7 +44,6 @@ class Registry
     /**
      * Returns Resolver for $fieldTypeIdentifier.
      *
-     *
      * @param string $fieldTypeIdentifier
      *
      * @throws \OutOfBoundsException When there is no resolver for the given $fieldTypeIdentifier

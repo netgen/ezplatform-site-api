@@ -136,7 +136,6 @@ class ContentViewBuilder implements ViewBuilder
     /**
      * Loads Content with id $contentId.
      *
-     *
      * @param int|string $contentId
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
@@ -154,7 +153,6 @@ class ContentViewBuilder implements ViewBuilder
      * Loads the embedded content with id $contentId.
      * Will load the content with sudo(), and check if the user can view_embed this content, for the given location
      * if provided.
-     *
      *
      * @param int|string $contentId
      * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location

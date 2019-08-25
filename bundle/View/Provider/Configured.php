@@ -97,7 +97,6 @@ class Configured implements ViewProvider
     /**
      * Builds a ContentView object from $viewConfig.
      *
-     *
      * @param array $viewConfig
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType

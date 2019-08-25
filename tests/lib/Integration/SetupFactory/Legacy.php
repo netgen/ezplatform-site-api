@@ -23,7 +23,7 @@ class Legacy extends CoreLegacySetupFactory
             $config = include __DIR__ . '/../../../../vendor/ezsystems/ezpublish-kernel/config.php';
             $installDir = $config['install_dir'];
 
-            /* @var \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder */
+            /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder */
             $containerBuilder = include $config['container_builder_path'];
             $containerBuilder->addCompilerPass(new RelationResolverRegistrationPass());
             $containerBuilder->addCompilerPass(new AggregateRepositoryPass());

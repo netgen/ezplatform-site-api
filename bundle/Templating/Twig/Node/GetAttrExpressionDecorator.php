@@ -22,6 +22,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
     private $decoratedExpression;
 
     /** @noinspection MagicMethodsValidityInspection */
+
     /** @noinspection PhpMissingParentConstructorInspection */
     public function __construct(GetAttrExpression $decoratedExpression)
     {

@@ -1,8 +1,10 @@
 eZ Platform Site API changelog
 ==============================
 
-Unreleased
-----------
+3.0.0 (25.08.2019)
+------------------
+
+[`2.7.2...3.0.0`](https://github.com/netgen/ezplatform-site-api/compare/2.7.2...3.0.0)
 
 ### Added
 * Add default view templates ([#130](https://github.com/netgen/ezplatform-site-api/pull/130))

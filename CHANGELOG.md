@@ -35,13 +35,13 @@ Methods:
 
 * `Netgen\EzPlatformSiteApi\API\FilterService::filterContentInfo()`
 * `Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()`
-* `Netgen\EzPlatformSiteApi\API\FindService::findNodes()`
 * `Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()`
 * `Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfoByRemoteId()`
-* `Netgen\EzPlatformSiteApi\API\LoadService::loadNode()`
-* `Netgen\EzPlatformSiteApi\API\LoadService::loadNodeByRemoteId()`
 * `Netgen\EzPlatformSiteApi\API\Values\ContentInfo::getLocations()`
 * `Netgen\EzPlatformSiteApi\API\Values\ContentInfo::filterLocations()`
+* `Netgen\EzPlatformSiteApi\API\FindService::findNodes()`
+* `Netgen\EzPlatformSiteApi\API\LoadService::loadNode()`
+* `Netgen\EzPlatformSiteApi\API\LoadService::loadNodeByRemoteId()`
 
 Traits:
 

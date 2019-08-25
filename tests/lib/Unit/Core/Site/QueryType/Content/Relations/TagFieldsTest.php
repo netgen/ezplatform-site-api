@@ -185,7 +185,7 @@ class TagFieldsTest extends QueryTypeBaseTest
                             1525384800
                         ),
                         new TagId([1, 2, 3, 4]),
-                        new LogicalNot(New ContentId(42)),
+                        new LogicalNot(new ContentId(42)),
                     ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_DESC),

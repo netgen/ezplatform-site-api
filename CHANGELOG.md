@@ -1,6 +1,79 @@
 eZ Platform Site API changelog
 ==============================
 
+Unreleased
+----------
+
+### Added
+* Add default view templates (#130)
+* Implement ParamConverters for SiteAPI value objects by @MarioBlazek (#129)
+* Add routers that generate links for Site API Content and Location by @emodric (#125)
+* Add support for eZ Platform v3 by @emodric (#105, #123)
+* Allow null value for is_field_empty option (#120)
+* Allow defining publication_date with explicit operators (#119)
+* Query type condition `creation_date`, replaces `publication_date` (#119)
+* Allow defining content_type and section with explicit operators (#118)
+* Add a way to render Content view without using a subrequest (#117)
+* Refactor base Controller (#115)
+* Implement hinted search result extraction methods (#112)
+* Add default view matcher, configuring the view with fallback templates by @emodric (#109)
+* Add missing logger to ImageRuntime (#106)
+* Prevent site from crashing because of basic Content Field inconsistencies (#94)
+* Introduce limit parameter to loadFieldRelations method by @mivancic (#68)
+
+### Changed
+* Minimum PHP version is raised to 7.1
+* Minimum eZ Platform version is raised to 2.4
+* Allow defining publication date with explicit operators (#119)
+* Implement Twig runtimes and use Twig namespaces by @emodric (#60)
+* Mark services as public/private as needed by @emodric (#59)
+
+### Removed
+This is a major release where all previous deprecations are removed.
+
+Methods:
+
+* `Netgen\EzPlatformSiteApi\API\FilterService::filterContentInfo()`
+* `Netgen\EzPlatformSiteApi\API\FindService::findContentInfo()`
+* `Netgen\EzPlatformSiteApi\API\FindService::findNodes()`
+* `Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfo()`
+* `Netgen\EzPlatformSiteApi\API\LoadService::loadContentInfoByRemoteId()`
+* `Netgen\EzPlatformSiteApi\API\LoadService::loadNode()`
+* `Netgen\EzPlatformSiteApi\API\LoadService::loadNodeByRemoteId()`
+* `Netgen\EzPlatformSiteApi\API\Values\ContentInfo::getLocations()`
+* `Netgen\EzPlatformSiteApi\API\Values\ContentInfo::filterLocations()`
+
+Traits:
+
+* `Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaFindTrait`
+
+Classes:
+
+* `Netgen\EzPlatformSiteApi\API\Values\Node`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\BaseAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentInfoSearchAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentInfoSearchHitAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchFilterAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\ContentSearchHitAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchFilterAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\LocationSearchHitAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\NodeSearchHitAdapter`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\Slice`
+* `Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\SearchResultExtras`
+
+Other:
+
+* Query type condition `publication_date` is removed, `creation_date` should be used instead (#119)
+* `content_view` provider for Site API ContentView (#128)
+
+### Fixed
+* Fix draft preview (#131)
+* Fix token not found exception in ContentViewBuilder when used to build own exception page by @emodric (#126)
+* Fix token not found exception in ContentViewBuilder when used to build own exception page by @emodric (#126)
+
 2.7.2 (25.08.2019)
 ------------------
 

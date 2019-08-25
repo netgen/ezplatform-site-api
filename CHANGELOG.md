@@ -12,16 +12,16 @@ eZ Platform Site API changelog
 * Add routers that generate links for Site API Content and Location by @emodric ([#125](https://github.com/netgen/ezplatform-site-api/pull/125))
 * Add support for eZ Platform v3 by @emodric ([#105](https://github.com/netgen/ezplatform-site-api/pull/105), [#123](https://github.com/netgen/ezplatform-site-api/pull/123))
 * Allow null value for is_field_empty option ([#120](https://github.com/netgen/ezplatform-site-api/pull/120))
-* Allow defining publication_date with explicit operators ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
+* Allow defining publication date with explicit operators ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
 * Query type condition `creation_date`, replaces `publication_date` ([#119](https://github.com/netgen/ezplatform-site-api/pull/119))
-* Allow defining content_type and section with explicit operators ([#118](https://github.com/netgen/ezplatform-site-api/pull/118))
+* Allow defining content type and section with explicit operators ([#118](https://github.com/netgen/ezplatform-site-api/pull/118))
 * Add a way to render Content view without using a subrequest ([#117](https://github.com/netgen/ezplatform-site-api/pull/117))
 * Refactor base Controller ([#115](https://github.com/netgen/ezplatform-site-api/pull/115))
 * Implement hinted search result extraction methods ([#112](https://github.com/netgen/ezplatform-site-api/pull/112))
 * Add default view matcher, configuring the view with fallback templates by @emodric ([#109](https://github.com/netgen/ezplatform-site-api/pull/109))
 * Add missing logger to ImageRuntime ([#106](https://github.com/netgen/ezplatform-site-api/pull/106))
 * Prevent site from crashing because of basic Content Field inconsistencies ([#94](https://github.com/netgen/ezplatform-site-api/pull/94))
-* Introduce limit parameter to loadFieldRelations method by @mivancic ([#68](https://github.com/netgen/ezplatform-site-api/pull/68))
+* Introduce limit parameter to `loadFieldRelations()` method by @mivancic ([#68](https://github.com/netgen/ezplatform-site-api/pull/68))
 
 ### Changed
 * Minimum PHP version is raised to 7.1

@@ -1,6 +1,102 @@
 eZ Platform Site API changelog
 ==============================
 
+2.7.2 (25.08.2019)
+------------------
+
+[`2.7.1...2.7.2`](https://github.com/netgen/ezplatform-site-api/compare/2.7.1...2.7.2)
+
+### Fixed
+* Load VersionInfo instead of a full Content (#127)
+* Token not found exception in ContentViewBuilder by @emodric (#126)
+
+2.7.1 (25.07.2019)
+------------------
+
+[`2.7.0...2.7.1`](https://github.com/netgen/ezplatform-site-api/compare/2.7.0...2.7.1)
+
+### Added
+* Add `creation_date` as an alias of `publication_date` Query Type parameter (#119)
+
+### Fixed
+* Service `ezpublish.api.repository` should be public to avoid deprecation notice by @emodric (#108)
+* Allow defining `content_type` and `section` Query Type parameters with explicit operators (#118)
+* Allow defining `publication_date` Query Type parameter with explicit operators (#119)
+* Allow using `null` value for `is_field_empty` Query Type parameter (#120)
+
+### Deprecated
+* `publication_date` Query Type parameter is deprecated for removal in `3.0`, new name `creation_date` should be used instead (#119)
+
+2.7.0 (30.06.2019)
+------------------
+
+* Deprecates methods and properties from `ContentInfo` (#87):
+  * `getLocations()`
+  * `getLocations()`
+  * `$content`
+
+  `ContentInfo` can be accessed through `Content`, loading it independently was deprecated since 2.2. These methods and properties can be obtained from the `Content` object.
+* Adds access to dynamic configuration from query type language expressions (#96)
+* Adds type-casting query string parameter getters to query type language expressions (#97)
+* Adds optional definition of allowed values for query string parameters to query type language expressions (#98)
+* Adds support for `IsEmptyField` criterion in Query Type configuration (#100)
+* Deprecates from Pagerfanta pagination (#101):
+  * `BaseAdapter`
+  * `Slice`
+  * `SearchResultExtras`
+
+  These have been moved to [netgen/ezplatform-search-extra](https://github.com/netgen/ezplatform-search-extra). Existing `FilterAdapter` and `FindAdapter` will continue working as before.
+
+2.6.3 (03.06.2019)
+------------------
+
+* Fix generating Location targets when checking for read/view_embed permissions (#95)
+
+2.6.2 (03.05.2019)
+------------------
+
+* Use instance of Repository Location to check for read permissions by @MarioBlazek (#93)
+
+2.6.1 (02.04.2019)
+------------------
+
+* Use `sudo()` to lazy load `Content::$innerContent` in #90
+* Support for eZ Platform `2.5` in #92
+
+2.6.0 (19.01.2019)
+------------------
+
+* refactored tests for easier maintenance
+* new Read the Docs documentation site at https://docs.netgen.io/projects/site-api
+* bumped `netgen/ezplatform-search-extra` to `1.5` for `Loading` implementation of the result extractor, which prevents edge-case errors when Solr index is not up to date (https://github.com/netgen/ezplatform-search-extra/pull/15)
+
+2.5.5 (18.09.2018)
+------------------
+
+* added `getUserPreferenceService()` to aggregate repository by @emodric (7bd14c01d9192407e60085364de69dcec9dc6d8e)
+
+2.5.4 (03.08.2018)
+------------------
+
+* This release fixes a regression introduced in #80 (#82)
+
+2.5.3 (03.08.2018)
+------------------
+
+* Support for `Section` and `ObjectState` identifiers with QueryTypes (#78)
+* Fixed Pagerfanta adapters not correctly setting `nbResults` by @mivancic (#79)
+* Removed usage of deprecated Pagerfanta adapters by @mivancic (#80)
+
+2.5.2 (29.06.2018)
+------------------
+
+* Added `getNotificationService()` to aggregate repository by @emodric (41151c51de1379b774a0ca95445aa8872c93a26d)
+
+2.5.1 (16.06.2018)
+------------------
+
+* Added `getBookmarkService()` to aggregate repository by @emodric (#77)
+
 2.5.0 (04.06.2018)
 ------------------
 

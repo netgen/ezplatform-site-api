@@ -16,6 +16,8 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
  *
  * @group integration
  * @group filter
+ *
+ * @internal
  */
 class FilterServiceTest extends BaseTest
 {

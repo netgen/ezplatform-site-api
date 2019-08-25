@@ -25,6 +25,8 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  * Location Children QueryType test case.
  *
  * @group query-type
+ *
+ * @internal
  */
 class ChildrenTest extends QueryTypeBaseTest
 {

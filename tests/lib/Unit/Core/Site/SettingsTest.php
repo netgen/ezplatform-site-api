@@ -13,6 +13,8 @@ use PHPUnit\Framework\TestCase;
  * Settings value unit tests.
  *
  * @see \Netgen\EzPlatformSiteApi\API\Settings
+ *
+ * @internal
  */
 class SettingsTest extends TestCase
 {

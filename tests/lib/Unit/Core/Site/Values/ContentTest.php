@@ -27,6 +27,8 @@ use Psr\Log\NullLogger;
  * Content value unit tests.
  *
  * @see \Netgen\EzPlatformSiteApi\API\Values\Content
+ *
+ * @internal
  */
 class ContentTest extends TestCase
 {

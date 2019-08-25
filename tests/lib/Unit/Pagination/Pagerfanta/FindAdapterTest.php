@@ -15,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @group pager
+ *
+ * @internal
  */
 class FindAdapterTest extends TestCase
 {

@@ -16,6 +16,8 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
  * @group load
  * @group find
  * @group filter
+ *
+ * @internal
  */
 class PrepareFixturesTest extends APIBaseTest
 {

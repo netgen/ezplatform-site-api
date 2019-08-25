@@ -9,6 +9,9 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 class QueryDefinitionCollectionTest extends TestCase
 {
     public function testAddAndGetQueryDefinition(): void

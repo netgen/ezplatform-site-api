@@ -27,6 +27,8 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  * Location Subtree QueryType test case.
  *
  * @group query-type
+ *
+ * @internal
  */
 class SubtreeTest extends QueryTypeBaseTest
 {

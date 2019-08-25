@@ -23,6 +23,8 @@ use PHPUnit\Framework\TestCase;
  * @group sort
  *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\SortClauseParser
+ *
+ * @internal
  */
 class SortClauseParserTest extends TestCase
 {

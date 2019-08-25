@@ -13,6 +13,8 @@ use Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException;
  *
  * @group integration
  * @group load
+ *
+ * @internal
  */
 class LoadServiceTest extends BaseTest
 {

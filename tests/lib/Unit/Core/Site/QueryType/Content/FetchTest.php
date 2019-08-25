@@ -22,6 +22,8 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  * @group query-type
  *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Fetch
+ *
+ * @internal
  */
 class FetchTest extends QueryTypeBaseTest
 {

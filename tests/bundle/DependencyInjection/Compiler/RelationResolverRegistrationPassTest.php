@@ -9,6 +9,9 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\RelationR
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
+/**
+ * @internal
+ */
 class RelationResolverRegistrationPassTest extends AbstractCompilerPassTestCase
 {
     protected function setUp(): void

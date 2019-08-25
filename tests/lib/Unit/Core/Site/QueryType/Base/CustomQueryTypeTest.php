@@ -21,6 +21,8 @@ use PHPUnit\Framework\TestCase;
  * Custom QueryType test case.
  *
  * @group query-type
+ *
+ * @internal
  */
 class CustomQueryTypeTest extends TestCase
 {

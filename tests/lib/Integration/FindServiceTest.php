@@ -16,6 +16,8 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
  *
  * @group integration
  * @group find
+ *
+ * @internal
  */
 class FindServiceTest extends BaseTest
 {

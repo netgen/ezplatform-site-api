@@ -38,6 +38,8 @@ use RuntimeException;
  * @group query-type
  *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ForwardFields
+ *
+ * @internal
  */
 class ForwardFieldsTest extends QueryTypeBaseTest
 {

@@ -10,6 +10,9 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Tests\Integration\BaseTest;
 
+/**
+ * @internal
+ */
 class SearchResultExtractorTraitTest extends BaseTest
 {
     /**

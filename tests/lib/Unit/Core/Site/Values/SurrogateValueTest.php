@@ -13,6 +13,8 @@ use PHPUnit\Framework\TestCase;
  * @group fields
  *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue
+ *
+ * @internal
  */
 class SurrogateValueTest extends TestCase
 {

@@ -14,6 +14,8 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
  *
  * @group integration
  * @group relation
+ *
+ * @internal
  */
 class RelationServiceTest extends BaseTest
 {

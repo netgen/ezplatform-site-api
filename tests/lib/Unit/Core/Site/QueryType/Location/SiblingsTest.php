@@ -30,6 +30,8 @@ use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
  * Location Siblings QueryType test case.
  *
  * @group query-type
+ *
+ * @internal
  */
 class SiblingsTest extends QueryTypeBaseTest
 {

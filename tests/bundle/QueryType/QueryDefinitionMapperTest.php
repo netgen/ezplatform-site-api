@@ -19,6 +19,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * @internal
+ */
 class QueryDefinitionMapperTest extends TestCase
 {
     public function providerForTestMap(): array

@@ -27,6 +27,8 @@ use Psr\Log\NullLogger;
  * @group query-type
  *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields
+ *
+ * @internal
  */
 class ReverseFieldsTest extends QueryTypeBaseTest
 {

@@ -25,6 +25,8 @@ use RuntimeException;
  * @group fields
  *
  * @see \Netgen\EzPlatformSiteApi\API\Values\Fields
+ *
+ * @internal
  */
 class FieldsTest extends TestCase
 {

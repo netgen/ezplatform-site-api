@@ -10,6 +10,8 @@ namespace Netgen\EzPlatformSiteApi\Tests\Integration;
  * @see \Netgen\EzPlatformSiteApi\API\Site
  *
  * @group site
+ *
+ * @internal
  */
 class SiteTest extends BaseTest
 {

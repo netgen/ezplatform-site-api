@@ -9,6 +9,9 @@ use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @internal
+ */
 class ContentParamConverterTest extends AbstractParamConverterTest
 {
     const PROPERTY_NAME = 'contentId';

@@ -9,6 +9,9 @@ use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @internal
+ */
 class LocationParamConverterTest extends AbstractParamConverterTest
 {
     const PROPERTY_NAME = 'locationId';

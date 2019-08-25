@@ -25,6 +25,8 @@ use ReflectionProperty;
 
 /**
  * Base class for API integration tests.
+ *
+ * @internal
  */
 class BaseTest extends APIBaseTest
 {

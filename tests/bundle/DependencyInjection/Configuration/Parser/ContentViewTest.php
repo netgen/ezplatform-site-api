@@ -12,6 +12,8 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * @group config
+ *
+ * @internal
  */
 class ContentViewTest extends AbstractParserTestCase
 {

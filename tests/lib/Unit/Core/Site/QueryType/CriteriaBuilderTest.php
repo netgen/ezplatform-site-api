@@ -30,6 +30,8 @@ use PHPUnit\Framework\TestCase;
  * @group query-type
  *
  * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
+ *
+ * @internal
  */
 class CriteriaBuilderTest extends TestCase
 {

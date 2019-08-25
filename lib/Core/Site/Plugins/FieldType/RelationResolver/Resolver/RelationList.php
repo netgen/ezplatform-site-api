@@ -21,7 +21,7 @@ class RelationList extends Resolver
 
     protected function getRelationIdsFromValue(Value $value): array
     {
-        /** @var \eZ\Publish\Core\FieldType\RelationList\Value $value */
+        /* @var \eZ\Publish\Core\FieldType\RelationList\Value $value */
         return $value->destinationContentIds;
     }
 }

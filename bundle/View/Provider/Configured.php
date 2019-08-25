@@ -76,7 +76,7 @@ class Configured implements ViewProvider
                 $this->queryDefinitionMapper->map(
                     $queryConfiguration,
                     // Service is dispatched by the configured view class, so this should be safe
-                    /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
+                    /* @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
                     $view
                 )
             );

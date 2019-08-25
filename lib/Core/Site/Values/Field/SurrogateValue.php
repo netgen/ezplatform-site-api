@@ -14,8 +14,8 @@ use eZ\Publish\Core\FieldType\Value;
  */
 class SurrogateValue extends Value
 {
-    /** @noinspection MagicMethodsValidityInspection */
-    /** @noinspection PhpMissingParentConstructorInspection */
+    /* @noinspection MagicMethodsValidityInspection */
+    /* @noinspection PhpMissingParentConstructorInspection */
     public function __construct()
     {
     }

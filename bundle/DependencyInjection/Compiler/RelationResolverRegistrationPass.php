@@ -44,7 +44,7 @@ final class RelationResolverRegistrationPass implements CompilerPassInterface
         $resolvers = $container->findTaggedServiceIds($this->resolverTag);
 
         foreach ($resolvers as $id => $attributes) {
-            /** @var array $attributes */
+            /* @var array $attributes */
             $this->registerResolver($resolverRegistryDefinition, $id, $attributes);
         }
     }

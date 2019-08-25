@@ -166,7 +166,7 @@ class FieldsTest extends TestCase
 
         $fields = $this->getFieldsUnderTest(true);
 
-        /** @noinspection OnlyWritesOnParameterInspection */
+        /* @noinspection OnlyWritesOnParameterInspection */
         $fields['pekmez'] = 'džem';
     }
 

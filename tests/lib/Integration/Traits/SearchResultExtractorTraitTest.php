@@ -20,7 +20,7 @@ class SearchResultExtractorTraitTest extends BaseTest
      */
     protected $stub;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->stub = new SearchResultExtractorStub();

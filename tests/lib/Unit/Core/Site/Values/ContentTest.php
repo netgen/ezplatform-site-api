@@ -77,7 +77,7 @@ class ContentTest extends TestCase
      */
     protected $queryTypeRegistryMock;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->getSiteMock();
         $this->getDomainObjectMapper();

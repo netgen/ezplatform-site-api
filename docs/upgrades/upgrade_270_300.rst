@@ -16,8 +16,8 @@ Since ``Content`` object lazy-loads its ``Fields``, it is no longer necessary to
 retain similarity with vanilla eZ Platform, but it's only accessible from the ``Content`` object and
 all methods to load it separately are hereby removed. Upgrade by loading ``Content`` instead.
 
-Removed methods for acessing ``Locations`` from ``ContentInfo``
----------------------------------------------------------------
+Removed methods for accessing ``Locations`` from ``ContentInfo``
+----------------------------------------------------------------
 
 * ``Netgen\EzPlatformSiteApi\API\Values\ContentInfo::getLocations()``
 * ``Netgen\EzPlatformSiteApi\API\Values\ContentInfo::filterLocations()``

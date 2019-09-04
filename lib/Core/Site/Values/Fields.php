@@ -94,7 +94,7 @@ final class Fields extends APIFields
     {
         $this->initialize();
 
-        return \array_values($this->fieldsByIdentifier);
+        return $this->fieldsByIdentifier;
     }
 
     /**

@@ -296,7 +296,7 @@ final class FieldsTest extends TestCase
         $fields = $this->getFieldsUnderTest(true);
 
         $this->assertEquals(
-            \array_values((array) $fields->getIterator()),
+            (array) $fields->getIterator(),
             $fields->__debugInfo()
         );
     }

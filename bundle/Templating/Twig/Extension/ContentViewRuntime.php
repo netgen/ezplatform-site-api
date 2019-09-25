@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\ValueObject;
@@ -52,24 +54,32 @@ class ContentViewRuntime
     private $viewRenderer;
 
     /**
+     * @var \eZ\Publish\API\Repository\LocationService
+     */
+    private $locationService;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface $controllerResolver
      * @param \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface $argumentResolver
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder $viewBuilder
      * @param \eZ\Publish\Core\MVC\Symfony\View\Renderer $viewRenderer
+     * @param \eZ\Publish\API\Repository\LocationService $locationService
      */
     public function __construct(
         RequestStack $requestStack,
         ControllerResolverInterface $controllerResolver,
         ArgumentResolverInterface $argumentResolver,
         ContentViewBuilder $viewBuilder,
-        Renderer $viewRenderer
+        Renderer $viewRenderer,
+        LocationService $locationService
     ) {
         $this->requestStack = $requestStack;
         $this->controllerResolver = $controllerResolver;
         $this->argumentResolver = $argumentResolver;
         $this->viewBuilder = $viewBuilder;
         $this->viewRenderer = $viewRenderer;
+        $this->locationService = $locationService;
     }
 
     /**
@@ -154,8 +164,13 @@ class ContentViewRuntime
         }
 
         if ($contentOrLocation instanceof APIContent) {
-            // View builder will take care of loading the main location
-            return null;
+            // View builder will not load the main location if it is not provided,
+            // this makes sure it is available to the template
+            try {
+                return $this->locationService->loadLocation($contentOrLocation->contentInfo->mainLocationId);
+            } catch (NotFoundException $e) {
+                return null;
+            }
         }
 
         throw new LogicException('Given value must be Content or Location instance.');

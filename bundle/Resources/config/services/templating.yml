@@ -30,6 +30,7 @@ services:
             - '@argument_resolver'
             - '@netgen.ezplatform_site.view_builder.content'
             - '@ezpublish.view.template_renderer'
+            - '@ezpublish.api.service.location'
         tags:
             - { name: twig.runtime }
 

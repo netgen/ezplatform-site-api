@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
@@ -164,13 +163,13 @@ class ContentViewRuntime
         }
 
         if ($contentOrLocation instanceof APIContent) {
-            // View builder will not load the main location if it is not provided,
-            // this makes sure it is available to the template
-            try {
-                return $this->locationService->loadLocation($contentOrLocation->contentInfo->mainLocationId);
-            } catch (NotFoundException $e) {
+            if ($contentOrLocation->contentInfo->mainLocationId === null) {
                 return null;
             }
+
+            // View builder will not load the main location if it is not provided,
+            // this makes sure it is available to the template
+            return $this->locationService->loadLocation((int) $contentOrLocation->contentInfo->mainLocationId);
         }
 
         throw new LogicException('Given value must be Content or Location instance.');

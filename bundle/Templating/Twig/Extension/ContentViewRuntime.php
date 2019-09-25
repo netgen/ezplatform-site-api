@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
+use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use eZ\Publish\Core\MVC\Symfony\View\Renderer;
 use LogicException;
@@ -127,27 +129,33 @@ class ContentViewRuntime
         return !empty($contentView->getConfigHash());
     }
 
-    private function getContent(ValueObject $contentOrLocation): Content
+    private function getContent(ValueObject $contentOrLocation): ValueObject
     {
-        if ($contentOrLocation instanceof Content) {
+        if ($contentOrLocation instanceof Content || $contentOrLocation instanceof APIContent) {
             return $contentOrLocation;
         }
 
-        if ($contentOrLocation instanceof Location) {
+        if ($contentOrLocation instanceof Location || $contentOrLocation instanceof APILocation) {
+            // eZ location also has a lazy loaded "content" property
             return $contentOrLocation->content;
         }
 
         throw new LogicException('Given value must be Content or Location instance.');
     }
 
-    private function getLocation(ValueObject $contentOrLocation): ?Location
+    private function getLocation(ValueObject $contentOrLocation): ?ValueObject
     {
-        if ($contentOrLocation instanceof Location) {
+        if ($contentOrLocation instanceof Location || $contentOrLocation instanceof APILocation) {
             return $contentOrLocation;
         }
 
         if ($contentOrLocation instanceof Content) {
             return $contentOrLocation->mainLocation;
+        }
+
+        if ($contentOrLocation instanceof APIContent) {
+            // View builder will take care of loading the main location
+            return null;
         }
 
         throw new LogicException('Given value must be Content or Location instance.');

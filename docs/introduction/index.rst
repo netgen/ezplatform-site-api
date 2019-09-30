@@ -224,7 +224,7 @@ configuration, available under ``ngcontent_view`` key:
                 ngcontent_view:
                     line:
                         article:
-                            template: "NetgenSiteBundle:content/line:article.html.twig"
+                            template: "@NetgenSite/content/line/article.html.twig"
                             match:
                                 Identifier\ContentType: article
 

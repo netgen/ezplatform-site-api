@@ -34,7 +34,7 @@ class ContentView extends AbstractParser
                     ->info("View selection rulesets, grouped by view type. Key is the view type (e.g. 'full', 'line', ...)")
                     ->arrayPrototype()
                         ->children()
-                            ->scalarNode('template')->info('Your template path, as MyBundle:subdir:my_template.html.twig')->end()
+                            ->scalarNode('template')->info('Your template path, as @App/my_template.html.twig')->end()
                             ->scalarNode('controller')
                                 ->info(
                                     <<<'EOT'

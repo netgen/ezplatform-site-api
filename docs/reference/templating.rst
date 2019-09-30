@@ -219,7 +219,7 @@ Working with Content fields
     {{
         ng_render_field(
             content.fields.title,
-            { 'template': 'AcmeTestBundle:fields:my_field_template.html.twig' }
+            { 'template': '@AcmeTest/field/my_field_template.html.twig' }
         )
     }}
 

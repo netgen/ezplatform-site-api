@@ -12,9 +12,9 @@ use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaTrait;
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-abstract class Controller extends BaseController
+abstract class Controller extends AbstractController
 {
     use SearchResultExtractorTrait;
     use PagerfantaTrait;

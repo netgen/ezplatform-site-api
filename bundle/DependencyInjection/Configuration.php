@@ -22,9 +22,16 @@ class Configuration extends SiteAccessConfiguration
 
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->root($this->rootNodeName);
+        $treeBuilder = new TreeBuilder($this->rootNodeName);
+
+        // Keep compatibility with symfony/config < 4.2
+        if (!\method_exists($treeBuilder, 'getRootNode')) {
+            /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
+            $rootNode = $treeBuilder->root($this->rootNodeName);
+        } else {
+            /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
+            $rootNode = $treeBuilder->getRootNode();
+        }
 
         $this->addConfiguration($rootNode);
 

@@ -20,6 +20,7 @@ services:
     netgen.ezplatform_site.ngcontent_view.matcher_factory:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Matcher\MatcherFactory
         arguments:
+            - '@?eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry'
             - '@ezpublish.api.repository'
             - 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased'
             - '@ezpublish.config.resolver'
@@ -39,6 +40,7 @@ services:
     netgen.ezplatform_site.ngcontent_view.default_matcher_factory:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Matcher\MatcherFactory
         arguments:
+            - '@?eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry'
             - '@ezpublish.api.repository'
             - 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased'
             - '@ezpublish.config.resolver'

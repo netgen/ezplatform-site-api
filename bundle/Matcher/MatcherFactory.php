@@ -18,7 +18,7 @@ class MatcherFactory extends ClassNameMatcherFactory
     use ContainerAwareTrait;
 
     /**
-     * @var \eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry|null
+     * @var null|\eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry
      */
     private $viewMatcherRegistry;
 
@@ -60,34 +60,34 @@ class MatcherFactory extends ClassNameMatcherFactory
         parent::__construct($repository, $relativeNamespace);
     }
 
-    /**
-     * @param string $matcherIdentifier
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return ViewMatcherInterface|MatcherInterface
-     */
-    protected function getMatcher($matcherIdentifier)
-    {
-        if ($this->viewMatcherRegistry !== null && strpos($matcherIdentifier, '@') === 0) {
-            return $this->viewMatcherRegistry->getMatcher(substr($matcherIdentifier, 1));
-        }
-
-        if ($this->container->has($matcherIdentifier)) {
-            /** @var ViewMatcherInterface|MatcherInterface $matcher */
-            $matcher = $this->container->get($matcherIdentifier);
-
-            return $matcher;
-        }
-
-        return parent::getMatcher($matcherIdentifier);
-    }
-
     public function match(View $view): ?array
     {
         $matchConfig = $this->configResolver->getParameter($this->parameterName, $this->namespace, $this->scope);
         $this->setMatchConfig($matchConfig);
 
         return parent::match($view);
+    }
+
+    /**
+     * @param string $matcherIdentifier
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return MatcherInterface|ViewMatcherInterface
+     */
+    protected function getMatcher($matcherIdentifier)
+    {
+        if ($this->viewMatcherRegistry !== null && \strpos($matcherIdentifier, '@') === 0) {
+            return $this->viewMatcherRegistry->getMatcher(\substr($matcherIdentifier, 1));
+        }
+
+        if ($this->container->has($matcherIdentifier)) {
+            /** @var MatcherInterface|ViewMatcherInterface $matcher */
+            $matcher = $this->container->get($matcherIdentifier);
+
+            return $matcher;
+        }
+
+        return parent::getMatcher($matcherIdentifier);
     }
 }

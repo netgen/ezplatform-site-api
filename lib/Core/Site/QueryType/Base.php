@@ -213,6 +213,7 @@ abstract class Base implements QueryType
             'field',
             'is_field_empty',
             'creation_date',
+            'modification_date',
             'section',
             'state',
         ]);
@@ -229,6 +230,7 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('limit', ['int']);
         $resolver->setAllowedTypes('offset', ['int']);
         $resolver->setAllowedTypes('creation_date', ['int', 'string', 'array']);
+        $resolver->setAllowedTypes('modification_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
 
         $resolver->setAllowedValues(
@@ -289,6 +291,7 @@ abstract class Base implements QueryType
             case 'priority':
             case 'publication_date':
             case 'creation_date':
+            case 'modification_date':
             case 'section':
             case 'subtree':
             case 'visible':

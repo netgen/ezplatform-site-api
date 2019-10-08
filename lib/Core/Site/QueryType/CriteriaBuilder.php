@@ -82,6 +82,8 @@ final class CriteriaBuilder
                 return $this->buildPriority($definition);
             case 'creation_date':
                 return $this->buildDateMetadataCreated($definition);
+            case 'modification_date':
+                return $this->buildDateMetadataModified($definition);
             case 'section':
                 return $this->buildSection($definition);
             case 'state':
@@ -216,6 +218,22 @@ final class CriteriaBuilder
     {
         return new DateMetadata(
             DateMetadata::CREATED,
+            $definition->operator,
+            $this->resolveTimeValues($definition->value)
+        );
+    }
+
+    /**
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\DateMetadata
+     */
+    private function buildDateMetadataModified(CriterionDefinition $definition): DateMetadata
+    {
+        return new DateMetadata(
+            DateMetadata::MODIFIED,
             $definition->operator,
             $this->resolveTimeValues($definition->value)
         );

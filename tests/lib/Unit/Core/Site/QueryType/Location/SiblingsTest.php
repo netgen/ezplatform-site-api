@@ -187,6 +187,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 [
                     'location' => $location,
                     'content_type' => 'article',
+                    'modification_date' => '4 May 2018',
                     'field' => [
                         'title' => [
                             'eq' => 'Hello',
@@ -201,6 +202,11 @@ final class SiblingsTest extends QueryTypeBaseTest
                 new LocationQuery([
                     'filter' => new LogicalAnd([
                         new ContentTypeIdentifier('article'),
+                        new DateMetadata(
+                            DateMetadata::MODIFIED,
+                            Operator::EQ,
+                            1525384800
+                        ),
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
                         new ParentLocationId(42),
@@ -359,6 +365,7 @@ final class SiblingsTest extends QueryTypeBaseTest
             'field',
             'is_field_empty',
             'creation_date',
+            'modification_date',
             'section',
             'state',
             'sort',

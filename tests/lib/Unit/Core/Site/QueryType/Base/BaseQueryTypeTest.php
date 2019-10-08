@@ -11,6 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Field;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DateModified;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\IsFieldEmpty;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
@@ -165,6 +166,22 @@ final class BaseQueryTypeTest extends QueryTypeBaseTest
             ],
             [
                 [
+                    'modification_date' => '8 October 2019',
+                    'sort' => 'modified desc',
+                ],
+                new Query([
+                    'filter' => new DateMetadata(
+                        DateMetadata::MODIFIED,
+                        Operator::EQ,
+                        1570485600
+                    ),
+                    'sortClauses' => [
+                        new DateModified(Query::SORT_DESC),
+                    ],
+                ]),
+            ],
+            [
+                [
                     'is_field_empty' => [
                         'image' => false,
                         'video' => true,
@@ -283,6 +300,7 @@ final class BaseQueryTypeTest extends QueryTypeBaseTest
             'field',
             'is_field_empty',
             'creation_date',
+            'modification_date',
             'section',
             'state',
             'sort',

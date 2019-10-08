@@ -12,6 +12,10 @@ matrix:
           env: CONFIG="phpunit.xml" COVERGAGE="unit" KERNEL_VERSION="~7.4.4"
         - php: 7.1
           env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration" KERNEL_VERSION="~7.4.4"
+        - php: 7.1
+          env: CONFIG="phpunit.xml" COVERGAGE="unit" KERNEL_VERSION="~7.5.5"
+        - php: 7.1
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration" KERNEL_VERSION="~7.5.5"
         - php: 7.2
           env: CONFIG="phpunit.xml" COVERGAGE="unit"
         - php: 7.2

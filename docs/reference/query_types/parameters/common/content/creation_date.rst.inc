@@ -1,8 +1,8 @@
 ``creation_date``
 ~~~~~~~~~~~~~~~~~
 
-Defines the creation (publication) date of the Content as a timestamp or time string as accepted by
-PHP function `strtotime <https://www.php.net/manual/en/function.strtotime.php>`_.
+Defines the creation (first publication) date of the Content as a timestamp or time string as
+accepted by PHP function `strtotime <https://www.php.net/manual/en/function.strtotime.php>`_.
 
 - **value type**: ``integer``
 - **value format**: ``single``, ``array``

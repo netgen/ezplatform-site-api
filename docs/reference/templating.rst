@@ -367,7 +367,9 @@ Content Field relations
 
     <ul>
     {% for article in related_articles %}
-        <a href="{{ path(article) }}">{{ article.name }}</a>
+        <li>
+            <a href="{{ path(article) }}">{{ article.name }}</a>
+        </li>
     {% endfor %}
     </ul>
 
@@ -388,7 +390,9 @@ Content Field relations
 
     <ul>
     {% for article in articles %}
-        <a href="{{ path(article) }}">{{ article.name }}</a>
+        <li>
+            <a href="{{ path(article) }}">{{ article.name }}</a>
+        </li>
     {% endfor %}
     </ul>
 
@@ -411,7 +415,9 @@ Location children
 
     <ul>
     {% for child in children %}
-        <a href="{{ path(child) }}">{{ child.name }}</a>
+        <li>
+            <a href="{{ path(child) }}">{{ child.name }}</a>
+        </li>
     {% endfor %}
     </ul>
 
@@ -434,7 +440,9 @@ Location children
 
     <ul>
     {% for document in documents %}
-        <a href="{{ path(document) }}">{{ document.name }}</a>
+        <li>
+            <a href="{{ path(document) }}">{{ document.name }}</a>
+        </li>
     {% endfor %}
     </ul>
 
@@ -457,7 +465,9 @@ Location siblings
 
     <ul>
     {% for sibling in siblings %}
-        <a href="{{ path(sibling) }}">{{ sibling.name }}</a>
+        <li>
+            <a href="{{ path(sibling) }}">{{ sibling.name }}</a>
+        </li>
     {% endfor %}
     </ul>
 
@@ -480,7 +490,9 @@ Location siblings
 
     <ul>
     {% for article in articles %}
-        <a href="{{ path(articles) }}">{{ articles.name }}</a>
+        <li>
+            <a href="{{ path(articles) }}">{{ articles.name }}</a>
+        </li>
     {% endfor %}
     </ul>
 

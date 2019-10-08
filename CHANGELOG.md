@@ -1,10 +1,10 @@
 eZ Platform Site API changelog
 ==============================
 
-Unreleased
-----------
+3.0.3 (08.10.2019)
+------------------
 
-[`3.0.2...master`](https://github.com/netgen/ezplatform-site-api/compare/3.0.2...master)
+[`3.0.2...3.0.3`](https://github.com/netgen/ezplatform-site-api/compare/3.0.2...3.0.3)
 
 * Use Twig notation for template paths by @emodric ([#134](https://github.com/netgen/ezplatform-site-api/pull/134))
 * Fix deprecations on Symfony 3.4 and 4.0 by @emodric ([#136](https://github.com/netgen/ezplatform-site-api/pull/136))

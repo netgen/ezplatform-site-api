@@ -1,6 +1,32 @@
 eZ Platform Site API changelog
 ==============================
 
+Unreleased
+----------
+
+[`3.0.2...master`](https://github.com/netgen/ezplatform-site-api/compare/3.0.2...master)
+
+* Use Twig notation for template paths by @emodric ([#134](https://github.com/netgen/ezplatform-site-api/pull/134))
+* Fix deprecations on Symfony 3.4 and 4.0 by @emodric ([#136](https://github.com/netgen/ezplatform-site-api/pull/136))
+* Kernel v3 compatibility ([#137](https://github.com/netgen/ezplatform-site-api/pull/137))
+* Travis build is migrated to travis-ci.com by @emodric ([#138](https://github.com/netgen/ezplatform-site-api/pull/138))
+
+3.0.2 (25.09.2019)
+------------------
+
+[`3.0.1...3.0.2`](https://github.com/netgen/ezplatform-site-api/compare/3.0.1...3.0.2)
+
+### Added
+* Allow eZ value objects when rendering content without subrequests by @emodric (#133)
+
+3.0.1 (04.09.2019)
+------------------
+
+[`3.0.0...3.0.1`](https://github.com/netgen/ezplatform-site-api/compare/3.0.0...3.0.1)
+
+### Changed
+* Dump fields by identifier (https://github.com/netgen/ezplatform-site-api/commit/c9b377b0c9e424333c3fcb1abc3c96478918de76)
+
 3.0.0 (25.08.2019)
 ------------------
 

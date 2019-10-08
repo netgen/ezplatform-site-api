@@ -13,6 +13,7 @@ This Query Type is used to build fetch Content that relates to the given Content
 | Content     | - `field`_                                                                                   |
 | conditions  | - `is_field_empty`_                                                                          |
 |             | - `creation_date`_                                                                           |
+|             | - `modification_date`_                                                                       |
 |             | - `section`_                                                                                 |
 |             | - `state`_                                                                                   |
 +-------------+----------------------------------------------------------------------------------------------+

@@ -369,6 +369,7 @@ final class SubtreeTest extends QueryTypeBaseTest
             'field',
             'is_field_empty',
             'creation_date',
+            'modification_date',
             'section',
             'state',
             'sort',

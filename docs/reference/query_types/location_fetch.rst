@@ -17,6 +17,7 @@ This Query Type is used to build general purpose Location queries.
 | Content     | - `field`_                                                                   |
 | conditions  | - `is_field_empty`_                                                          |
 |             | - `creation_date`_                                                           |
+|             | - `modification_date`_                                                       |
 |             | - `section`_                                                                 |
 |             | - `state`_                                                                   |
 +-------------+------------------------------------------------------------------------------+

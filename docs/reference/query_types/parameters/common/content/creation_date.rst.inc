@@ -48,4 +48,4 @@ Examples:
 .. code-block:: yaml
 
     creation_date:
-        between: ['today', '+1 week 2 days 4 hours 2 seconds']
+        between: ['-1 week 2 days 4 hours 2 seconds', 'today']

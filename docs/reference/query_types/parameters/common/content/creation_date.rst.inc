@@ -20,7 +20,7 @@ Examples:
 
 .. code-block:: yaml
 
-    depth:
+    creation_date:
         eq: 1535117737
 
 .. code-block:: yaml

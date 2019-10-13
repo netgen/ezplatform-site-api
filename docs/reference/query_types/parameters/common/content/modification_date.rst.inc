@@ -4,7 +4,7 @@
 Defines the modification (last publication) date of the Content as a timestamp or time string as
 accepted by PHP function `strtotime <https://www.php.net/manual/en/function.strtotime.php>`_.
 
-- **value type**: ``integer``
+- **value type**: ``integer``, ``string``
 - **value format**: ``single``, ``array``
 - **operators**: ``eq``, ``in``, ``gt``, ``gte``, ``lt``, ``lte``, ``between``
 - **target**: none

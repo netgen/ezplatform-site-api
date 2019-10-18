@@ -14,6 +14,9 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
+use Netgen\EzPlatformSiteApi\Event\RenderContentEvent;
+use Netgen\EzPlatformSiteApi\Event\SiteApiEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,6 +61,11 @@ class ContentViewRuntime
     private $locationService;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface $controllerResolver
      * @param \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface $argumentResolver
@@ -71,7 +79,8 @@ class ContentViewRuntime
         ArgumentResolverInterface $argumentResolver,
         ContentViewBuilder $viewBuilder,
         Renderer $viewRenderer,
-        LocationService $locationService
+        LocationService $locationService,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->requestStack = $requestStack;
         $this->controllerResolver = $controllerResolver;
@@ -79,6 +88,7 @@ class ContentViewRuntime
         $this->viewBuilder = $viewBuilder;
         $this->viewRenderer = $viewRenderer;
         $this->locationService = $locationService;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -120,10 +130,14 @@ class ContentViewRuntime
         $controllerReference = $view->getControllerReference();
 
         if ($controllerReference === null || $controllerReference->controller === 'ng_content:viewAction') {
-            return $this->viewRenderer->render($view);
+            $renderedContent = $this->viewRenderer->render($view);
+        } else {
+            $renderedContent = $this->renderController($view, $controllerReference, ['layout' => $layout] + $parameters);
         }
 
-        return $this->renderController($view, $controllerReference, ['layout' => $layout] + $parameters);
+        $this->eventDispatcher->dispatch(SiteApiEvents::RENDER_CONTENT, new RenderContentEvent($view));
+
+        return $renderedContent;
     }
 
     /**

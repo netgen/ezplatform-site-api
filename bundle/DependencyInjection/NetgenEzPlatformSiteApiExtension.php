@@ -57,6 +57,14 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         $loader->load('services.yml');
         $loader->load('view.yml');
 
+        if (!$container->hasParameter('ezsettings.default.ngcontent_view')) {
+            $container->setParameter('ezsettings.default.ngcontent_view', []);
+        }
+
+        if (!$container->hasParameter('ezsettings.default.ng_named_query')) {
+            $container->setParameter('ezsettings.default.ng_named_query', []);
+        }
+
         $processor = new ConfigurationProcessor($container, $this->getAlias());
         $processor->mapConfig(
             $config,

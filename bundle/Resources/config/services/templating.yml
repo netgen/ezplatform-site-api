@@ -31,6 +31,7 @@ services:
             - '@netgen.ezplatform_site.view_builder.content'
             - '@ezpublish.view.template_renderer'
             - '@ezpublish.api.service.location'
+            - '@event_dispatcher'
         tags:
             - { name: twig.runtime }
 

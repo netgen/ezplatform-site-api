@@ -1,6 +1,15 @@
 eZ Platform Site API changelog
 ==============================
 
+
+3.0.4 (23.10.2019)
+------------------
+
+[`3.0.3...3.0.4`](https://github.com/netgen/ezplatform-site-api/compare/3.0.3...3.0.4)
+
+* Content render events by @emodric ([#141](https://github.com/netgen/ezplatform-site-api/pull/141))
+* Reset ezsettings parameters only if they do not exist by @emodric ([#142](https://github.com/netgen/ezplatform-site-api/pull/142))
+
 3.0.3 (08.10.2019)
 ------------------
 

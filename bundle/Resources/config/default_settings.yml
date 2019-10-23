@@ -17,8 +17,6 @@ parameters:
     netgen.ezplatform_site.content_view.image_embed_content_type_identifiers: ['image']
 
     # Default eZ Platform settings
-    ezsettings.default.ng_named_query: {}
-    ezsettings.default.ngcontent_view: {}
     # By default we don't override URL alias view action, for that reason this is commented out
     #ezsettings.default.pagelayout: '@@NetgenEzPlatformSiteApi/pagelayout.html.twig'
 

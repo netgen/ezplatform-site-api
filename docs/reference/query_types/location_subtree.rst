@@ -180,7 +180,7 @@ Examples:
 
 .. code-block:: yaml
 
-    depth:
+    relative_depth:
         between: [2, 4]
 
 Inherited Location conditions

@@ -153,27 +153,27 @@ Examples:
 .. code-block:: yaml
 
     # identical to the example below
-    depth: 2
+    relative_depth: 2
 
 .. code-block:: yaml
 
-    depth:
+    relative_depth:
         eq: 2
 
 .. code-block:: yaml
 
     # identical to the example below
-    depth: [2, 3]
+    relative_depth: [2, 3]
 
 .. code-block:: yaml
 
-    depth:
+    relative_depth:
         in: [2, 3]
 
 .. code-block:: yaml
 
     # multiple operators are combined with logical AND
-    depth:
+    relative_depth:
         in: [2, 3]
         gt: 1
         lte: 3

@@ -70,6 +70,15 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         );
     }
 
+    public function prepend(ContainerBuilder $container): void
+    {
+        $configFile = __DIR__ . '/../Resources/config/ezplatform.yml';
+        $config = Yaml::parse(\file_get_contents($configFile));
+        $container->addResource(new FileResource($configFile));
+
+        $container->prependExtensionConfig('ezpublish', $config);
+    }
+
     /**
      * Default values must be set conditionally because eZ Kernel bundles are usually activated
      * before this extension is ran. In that case the values that were already processed and merged
@@ -86,14 +95,5 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         if (!$container->hasParameter('ezsettings.default.ng_named_query')) {
             $container->setParameter('ezsettings.default.ng_named_query', []);
         }
-    }
-
-    public function prepend(ContainerBuilder $container): void
-    {
-        $configFile = __DIR__ . '/../Resources/config/ezplatform.yml';
-        $config = Yaml::parse(\file_get_contents($configFile));
-        $container->addResource(new FileResource($configFile));
-
-        $container->prependExtensionConfig('ezpublish', $config);
     }
 }

@@ -74,12 +74,6 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
                 }
             }
         );
-
-        if (!$container->hasParameter('ezsettings.default.ngcontent_view')) {
-            // Default value for ngcontent_view template rules
-            // Setting this through the config file causes issues in eZ kernel 6.11+
-            $container->setParameter('ezsettings.default.ngcontent_view', []);
-        }
     }
 
     public function prepend(ContainerBuilder $container): void

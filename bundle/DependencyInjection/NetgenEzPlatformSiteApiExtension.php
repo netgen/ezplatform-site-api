@@ -57,13 +57,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
         $loader->load('services.yml');
         $loader->load('view.yml');
 
-        if (!$container->hasParameter('ezsettings.default.ngcontent_view')) {
-            $container->setParameter('ezsettings.default.ngcontent_view', []);
-        }
-
-        if (!$container->hasParameter('ezsettings.default.ng_named_query')) {
-            $container->setParameter('ezsettings.default.ng_named_query', []);
-        }
+        $this->setDefaultValuesIfNeeded($container);
 
         $processor = new ConfigurationProcessor($container, $this->getAlias());
         $processor->mapConfig(
@@ -74,6 +68,24 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
                 }
             }
         );
+    }
+
+    /**
+     * Default values must be set conditionally because eZ Kernel bundles are usually activated
+     * before this extension is ran. In that case the values that were already processed and merged
+     * to the container would be overwritten with the default value.
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    private function setDefaultValuesIfNeeded(ContainerBuilder $container): void
+    {
+        if (!$container->hasParameter('ezsettings.default.ngcontent_view')) {
+            $container->setParameter('ezsettings.default.ngcontent_view', []);
+        }
+
+        if (!$container->hasParameter('ezsettings.default.ng_named_query')) {
+            $container->setParameter('ezsettings.default.ng_named_query', []);
+        }
     }
 
     public function prepend(ContainerBuilder $container): void

@@ -57,5 +57,108 @@ class Configuration extends SiteAccessConfiguration
             ->booleanNode('render_missing_field_info')
                 ->info('Whether to render useful debug information in place of a missing field')
             ->end();
+        /** @noinspection NullPointerExceptionInspection */
+        $systemNode
+            ->arrayNode('named_object')
+                ->info('Named objects')
+                ->children()
+                    ->arrayNode('content')
+                        ->info('Content items by name')
+                        ->useAttributeAsKey('name')
+                        ->normalizeKeys(false)
+                        ->arrayPrototype()
+                            ->info('Content ID or remote ID')
+                            ->beforeNormalization()
+                                ->ifTrue(static function ($v) {return !\is_array($v);})
+                                ->then(
+                                    static function ($v) {
+                                        if (\is_int($v)) {
+                                            return ['id' => $v];
+                                        }
+
+                                        return ['remote_id' => $v];
+                                    }
+                                )
+                            ->end()
+                            ->children()
+                                ->integerNode('id')
+                                    ->info('Content ID')
+                                ->end()
+                                ->scalarNode('remote_id')
+                                    ->info('Content remote ID')
+                                    ->validate()
+                                        ->ifTrue(static function ($v) {return !is_string($v);})
+                                        ->thenInvalid('Content remote ID value must be of string type.')
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('location')
+                        ->info('Locations items by name')
+                        ->useAttributeAsKey('name')
+                        ->normalizeKeys(false)
+                        ->arrayPrototype()
+                            ->info('Location ID or remote ID')
+                            ->beforeNormalization()
+                                ->ifTrue(static function ($v) {return !\is_array($v);})
+                                ->then(
+                                    static function ($v) {
+                                        if (\is_int($v)) {
+                                            return ['id' => $v];
+                                        }
+
+                                        return ['remote_id' => $v];
+                                    }
+                                )
+                            ->end()
+                            ->children()
+                                ->integerNode('id')
+                                    ->info('Location ID')
+                                ->end()
+                                ->scalarNode('remote_id')
+                                    ->info('Location remote ID')
+                                    ->validate()
+                                        ->ifTrue(static function ($v) {return !is_string($v);})
+                                        ->thenInvalid('Location remote ID value must be of string type.')
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('tag')
+                        ->info('Tags by name')
+                        ->useAttributeAsKey('name')
+                        ->normalizeKeys(false)
+                        ->arrayPrototype()
+                            ->info('Tag ID or remote ID')
+                            ->beforeNormalization()
+                                ->ifTrue(static function ($v) {return !\is_array($v);})
+                                ->then(
+                                    static function ($v) {
+                                        if (\is_int($v)) {
+                                            return ['id' => $v];
+                                        }
+
+                                        return ['remote_id' => $v];
+                                    }
+                                )
+                            ->end()
+                            ->children()
+                                ->integerNode('id')
+                                    ->info('Tag ID')
+                                ->end()
+                                ->scalarNode('remote_id')
+                                    ->info('Tag remote ID')
+                                    ->validate()
+                                        ->ifTrue(static function ($v) {return !is_string($v);})
+                                        ->thenInvalid('Tag remote ID value must be of string type.')
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 }

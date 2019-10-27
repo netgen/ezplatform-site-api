@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -27,13 +28,18 @@ final class ParameterProcessor
     private $configResolver;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider
      */
-    public function __construct(RequestStack $requestStack, ConfigResolverInterface $configResolver)
-    {
+    private $namedObjectProvider;
+
+    public function __construct(
+        RequestStack $requestStack,
+        ConfigResolverInterface $configResolver,
+        Provider $namedObjectProvider
+    ) {
         $this->requestStack = $requestStack;
         $this->configResolver = $configResolver;
+        $this->namedObjectProvider = $namedObjectProvider;
     }
 
     /**
@@ -64,6 +70,7 @@ final class ParameterProcessor
                 'content' => $view->getSiteContent(),
                 'request' => $this->requestStack->getCurrentRequest(),
                 'configResolver' => $this->configResolver,
+                'namedObject' => $this->namedObjectProvider,
             ]
         );
     }
@@ -210,6 +217,32 @@ final class ParameterProcessor
             static function (): void {},
             static function (array $arguments, string $name, ?string $namespace = null, ?string $scope = null) use ($configResolver) {
                 return $configResolver->getParameter($name, $namespace, $scope);
+            }
+        );
+
+        $namedObjectProvider = $this->namedObjectProvider;
+
+        $expressionLanguage->register(
+            'namedContent',
+            static function (): void {},
+            static function (array $arguments, string $name) use ($namedObjectProvider) {
+                return $namedObjectProvider->getContent($name);
+            }
+        );
+
+        $expressionLanguage->register(
+            'namedLocation',
+            static function (): void {},
+            static function (array $arguments, string $name) use ($namedObjectProvider) {
+                return $namedObjectProvider->getLocation($name);
+            }
+        );
+
+        $expressionLanguage->register(
+            'namedTag',
+            static function (): void {},
+            static function (array $arguments, string $name) use ($namedObjectProvider) {
+                return $namedObjectProvider->getTag($name);
             }
         );
     }

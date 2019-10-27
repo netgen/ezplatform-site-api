@@ -22,7 +22,7 @@
         "netgen/tagsbundle": "^3.3"
     },
     "suggest": {
-        "netgen/tagsbundle": "Allows using Tag relation Query Types"
+        "netgen/tagsbundle": "Allows using Tag relation Query Types and named Tag objects"
     },
     "autoload": {
         "psr-4": {

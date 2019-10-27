@@ -1,0 +1,15 @@
+services:
+    netgen.ezplatform_site.named_object.provider:
+        alias: netgen.ezplatform_site.named_object.provider.caching
+
+    netgen.ezplatform_site.named_object.provider.caching:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider\Caching
+        arguments:
+            - '@netgen.ezplatform_site.named_object.provider.loading'
+
+    netgen.ezplatform_site.named_object.provider.loading:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider\Loading
+        arguments:
+            - '@netgen.ezplatform_site.load_service'
+            - '@eztags.api.service.tags'
+            - '@ezpublish.config.resolver'

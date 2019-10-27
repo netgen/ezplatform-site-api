@@ -1,5 +1,5 @@
 imports:
-    - { resource: services/templating.yml }
+    - { resource: services/*.yml }
 
 services:
     netgen.ezplatform_site.controller.base:
@@ -33,6 +33,7 @@ services:
         arguments:
             - '@request_stack'
             - '@ezpublish.config.resolver'
+            - '@netgen.ezplatform_site.named_object.provider'
         public: false
 
     netgen.ezplatform_site.query_type.query_definition_mapper:

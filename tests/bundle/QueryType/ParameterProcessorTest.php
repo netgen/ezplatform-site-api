@@ -6,10 +6,12 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
 use DateTime;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -225,6 +227,18 @@ final class ParameterProcessorTest extends TestCase
                 "@=queryParamString('stringValue', 'and', ['hand', 'strand'])",
                 'strand',
             ],
+            [
+                "@=namedContent('pterodaktilivojka')",
+                $this->getContentMock(),
+            ],
+            [
+                "@=namedLocation('grozdana')",
+                $this->getLocationMock(),
+            ],
+            [
+                "@=namedTag('radoslava')",
+                $this->getTagMock(),
+            ],
         ];
     }
 
@@ -272,8 +286,9 @@ final class ParameterProcessorTest extends TestCase
         );
 
         $configResolver = $this->getConfigResolverMock();
+        $namedObjectProvider = $this->getNamedObjectProviderMock();
 
-        return new ParameterProcessor($requestStack, $configResolver);
+        return new ParameterProcessor($requestStack, $configResolver, $namedObjectProvider);
     }
 
     /**
@@ -308,6 +323,40 @@ final class ParameterProcessorTest extends TestCase
     }
 
     /**
+     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getNamedObjectProviderMock(): MockObject
+    {
+        $namedObjectProviderMock = $this->getMockBuilder(Provider::class)->getMock();
+
+        $getContentMap = [
+            ['pterodaktilivojka', $this->getContentMock()],
+        ];
+
+        $namedObjectProviderMock
+            ->method('getContent')
+            ->willReturnMap($getContentMap);
+
+        $getLocationMap = [
+            ['grozdana', $this->getLocationMock()],
+        ];
+
+        $namedObjectProviderMock
+            ->method('getLocation')
+            ->willReturnMap($getLocationMap);
+
+        $getTagMap = [
+            ['radoslava', $this->getTagMock()],
+        ];
+
+        $namedObjectProviderMock
+            ->method('getTag')
+            ->willReturnMap($getTagMap);
+
+        return $namedObjectProviderMock;
+    }
+
+    /**
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getViewMock(): MockObject
@@ -334,5 +383,38 @@ final class ParameterProcessorTest extends TestCase
         $viewMock->method('getSiteContent')->willReturn($contentMock);
 
         return $viewMock;
+    }
+
+    protected function getContentMock(): MockObject
+    {
+        static $contentMock;
+
+        if ($contentMock === null) {
+            $contentMock = $this->getMockBuilder(Content::class)->getMock();
+        }
+
+        return $contentMock;
+    }
+
+    protected function getLocationMock(): MockObject
+    {
+        static $locationMock;
+
+        if ($locationMock === null) {
+            $locationMock = $this->getMockBuilder(Location::class)->getMock();
+        }
+
+        return $locationMock;
+    }
+
+    protected function getTagMock(): MockObject
+    {
+        static $tagMock;
+
+        if ($tagMock === null) {
+            $tagMock = $this->getMockBuilder(Tag::class)->getMock();
+        }
+
+        return $tagMock;
     }
 }

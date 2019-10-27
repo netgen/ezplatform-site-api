@@ -7,6 +7,7 @@ Unreleased
 [`3.0.4...master`](https://github.com/netgen/ezplatform-site-api/compare/3.0.4...master)
 
 * NGSTACK-250: `modification_date` query type condition (#140)
+* NGSTACK-336: Named Objects
 
 3.0.4 (23.10.2019)
 ------------------

@@ -4,6 +4,7 @@ parameters:
     netgen_ez_platform_site_api.default.use_always_available_fallback: true
     netgen_ez_platform_site_api.default.fail_on_missing_fields: '%kernel.debug%'
     netgen_ez_platform_site_api.default.render_missing_field_info: false
+    netgen_ez_platform_site_api.default.named_object: []
 
     # Default view templates
     netgen.ezplatform_site.default_view_templates.content.asset_image: "@@NetgenEzPlatformSiteApi/default/content/asset_image.html.twig"

@@ -8,6 +8,7 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\QueryType\QueryType;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use InvalidArgumentException;
+use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper;
@@ -284,8 +285,10 @@ final class QueryDefinitionMapperTest extends TestCase
         $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         /** @var \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolverMock */
         $configResolverMock = $this->getMockBuilder(ConfigResolverInterface::class)->getMock();
+        /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider $namedObjectProviderMock */
+        $namedObjectProviderMock = $this->getMockBuilder(Provider::class)->getMock();
 
-        return new ParameterProcessor($requestStack, $configResolverMock);
+        return new ParameterProcessor($requestStack, $configResolverMock, $namedObjectProviderMock);
     }
 
     /**

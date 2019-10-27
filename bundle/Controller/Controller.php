@@ -8,6 +8,7 @@ use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\Templating\GlobalHelper;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
+use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Traits\PagerfantaTrait;
@@ -90,5 +91,13 @@ abstract class Controller extends AbstractController
         $configResolver = $this->container->get('ezpublish.config.resolver');
 
         return $configResolver;
+    }
+
+    protected function getNamedObjectProvider(): Provider
+    {
+        /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider $namedObjectProvider */
+        $namedObjectProvider = $this->container->get('netgen.ezplatform_site.named_object.provider');
+
+        return $namedObjectProvider;
     }
 }

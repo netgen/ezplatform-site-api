@@ -26,5 +26,5 @@ backend logic.
 </p>
 
 <p align="center">
-Find out more on the <a href="https://docs.netgen.io/projects/site-api">documentation site</a>.
+Find out more on the <a href="https://docs.netgen.io/projects/site-api">documentation site</a> and join <a href="https://ezcommunity.slack.com/messages/CMWJL1V1P">#ez-site-api</a> channel on eZ Community Slack.
 </p>

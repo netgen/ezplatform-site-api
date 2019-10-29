@@ -7,6 +7,8 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\View;
 use eZ\Publish\Core\MVC\Symfony\View\Renderer;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use LogicException;
+use Netgen\Bundle\EzPlatformSiteApiBundle\Event\RenderViewEvent;
+use Netgen\Bundle\EzPlatformSiteApiBundle\Events;
 use Netgen\EzPlatformSiteApi\Event\RenderContentEvent;
 use Netgen\EzPlatformSiteApi\Event\SiteApiEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -71,6 +73,7 @@ final class ViewRenderer
         $renderedContent = $this->doRender($view, $parameters, $layout);
 
         $this->eventDispatcher->dispatch(SiteApiEvents::RENDER_CONTENT, new RenderContentEvent($view));
+        $this->eventDispatcher->dispatch(Events::NG_VIEW_CONTENT_RENDER, new RenderViewEvent($view));
 
         return $renderedContent;
     }

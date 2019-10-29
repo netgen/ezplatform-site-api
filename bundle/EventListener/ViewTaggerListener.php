@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\EventListener;
 
 use EzSystems\PlatformHttpCacheBundle\ResponseTagger\ResponseTagger;
-use Netgen\EzPlatformSiteApi\Event\RenderContentEvent;
-use Netgen\EzPlatformSiteApi\Event\SiteApiEvents;
+use Netgen\Bundle\EzPlatformSiteApiBundle\Event\RenderViewEvent;
+use Netgen\Bundle\EzPlatformSiteApiBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class ContentTaggerListener implements EventSubscriberInterface
+/**
+ * @uses \Netgen\Bundle\EzPlatformSiteApiBundle\Events::NG_VIEW_CONTENT_RENDER
+ */
+final class ViewTaggerListener implements EventSubscriberInterface
 {
     /**
      * @var \EzSystems\PlatformHttpCacheBundle\ResponseTagger\ResponseTagger
@@ -23,10 +26,10 @@ final class ContentTaggerListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return [SiteApiEvents::RENDER_CONTENT => 'onRenderContent'];
+        return [Events::NG_VIEW_CONTENT_RENDER => 'onRenderView'];
     }
 
-    public function onRenderContent(RenderContentEvent $event): void
+    public function onRenderView(RenderViewEvent $event): void
     {
         $this->responseTagger->tag($event->getView());
     }

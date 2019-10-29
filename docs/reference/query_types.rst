@@ -308,7 +308,7 @@ the values described above in a more convenient way:
         ...
             queries:
                 pending_events:
-                    query_type: SiteAPI:Content/Location/Subtree
+                    query_type: SiteAPI:Location/Subtree
                     max_per_page: 10
                     page: 1
                     parameters:

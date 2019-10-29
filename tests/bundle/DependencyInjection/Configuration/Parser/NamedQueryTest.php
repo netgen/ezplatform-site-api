@@ -103,7 +103,7 @@ final class NamedQueryTest extends AbstractParserTestCase
                         'query_type' => 'query_type',
                     ],
                 ],
-                'Query keys must be strings conforming to a valid Twig variable names',
+                'Query key must be a string conforming to a valid Twig variable name',
             ],
             [
                 [

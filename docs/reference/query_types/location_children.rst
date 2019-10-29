@@ -46,7 +46,7 @@ by 10 per page using URL query parameter ``page``:
                                 Identifier\ContentType: folder
                             queries:
                                 children_documents:
-                                    query_type: SiteAPI:Content/Location/Children
+                                    query_type: SiteAPI:Location/Children
                                     max_per_page: 10
                                     page: '@=queryParam("page", 1)'
                                     parameters:

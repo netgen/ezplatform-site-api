@@ -46,7 +46,7 @@ parameter ``page``:
                                 Identifier\ContentType: article
                             queries:
                                 news_siblings:
-                                    query_type: SiteAPI:Content/Location/Siblings
+                                    query_type: SiteAPI:Location/Siblings
                                     max_per_page: 10
                                     page: '@=queryParam("page", 1)'
                                     parameters:

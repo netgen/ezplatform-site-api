@@ -4,7 +4,7 @@ Templating
 Site API objects are used directly in the templates. Below you will find examples for the most
 common use cases. Objects are documented in more detail on :doc:`Objects reference </reference/objects>` documentation page.
 
-Site API provides two Twig functions for content rendering:
+Site API provides three Twig functions for content rendering:
 
 - ``ng_view_content``
 

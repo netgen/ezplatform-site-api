@@ -48,7 +48,7 @@ date and paginate them by 10 per page using URL query parameter ``page``:
                                 Identifier\ContentType: calendar
                             queries:
                                 pending_events:
-                                    query_type: SiteAPI:Content/Location/Subtree
+                                    query_type: SiteAPI:Location/Subtree
                                     max_per_page: 10
                                     page: '@=queryParam("page", 1)'
                                     parameters:

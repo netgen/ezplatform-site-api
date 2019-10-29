@@ -57,6 +57,17 @@ class Configuration extends SiteAccessConfiguration
             ->booleanNode('render_missing_field_info')
                 ->info('Whether to render useful debug information in place of a missing field')
             ->end();
+
+        $keyValidator = static function ($v): bool {
+            foreach (\array_keys($v) as $key) {
+                if (!\is_string($key) || !\preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/A', $key)) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
         /** @noinspection NullPointerExceptionInspection */
         $systemNode
             ->arrayNode('named_object')
@@ -93,6 +104,10 @@ class Configuration extends SiteAccessConfiguration
                                 ->end()
                             ->end()
                         ->end()
+                        ->validate()
+                            ->ifTrue($keyValidator)
+                            ->thenInvalid('Content name must be a string conforming to a valid Twig variable name.')
+                        ->end()
                     ->end()
                     ->arrayNode('location')
                         ->info('Locations items by name')
@@ -125,6 +140,10 @@ class Configuration extends SiteAccessConfiguration
                                 ->end()
                             ->end()
                         ->end()
+                        ->validate()
+                            ->ifTrue($keyValidator)
+                            ->thenInvalid('Location name must be a string conforming to a valid Twig variable name.')
+                        ->end()
                     ->end()
                     ->arrayNode('tag')
                         ->info('Tags by name')
@@ -156,6 +175,10 @@ class Configuration extends SiteAccessConfiguration
                                     ->end()
                                 ->end()
                             ->end()
+                        ->end()
+                        ->validate()
+                            ->ifTrue($keyValidator)
+                            ->thenInvalid('Tag name must be a string conforming to a valid Twig variable name.')
                         ->end()
                     ->end()
                 ->end()

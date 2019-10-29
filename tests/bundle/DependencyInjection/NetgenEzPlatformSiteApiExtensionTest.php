@@ -7,8 +7,14 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\DependencyInjection;
 use Generator;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\NetgenEzPlatformSiteApiExtension;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 
+/**
+ * @group config
+ *
+ * @internal
+ */
 class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
 {
     /**
@@ -276,5 +282,72 @@ class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
                 'tag' => [],
             ]
         );
+    }
+
+    public function getNamedObjectInvalidConfigurations(): array
+    {
+        return [
+            [
+                [
+                    'the-object' => 12,
+                ],
+            ],
+            [
+                [
+                    'an object' => 12,
+                ],
+            ],
+            [
+                [
+                    '123object' => 12,
+                ],
+            ],
+            [
+                [
+                    'the:object' => 12,
+                ],
+            ],
+            [
+                [
+                    'object?' => 12,
+                ],
+            ],
+        ];
+    }
+
+    public function providerForTestNamedObjectInvalidConfiguration(): Generator
+    {
+        $names = $this->getNamedObjectConfigurationNames();
+        $configurations = $this->getNamedObjectInvalidConfigurations();
+
+        foreach ($names as $name) {
+            foreach ($configurations as $configuration) {
+                yield [
+                    $name,
+                    $configuration,
+                ];
+            }
+        }
+    }
+
+    /**
+     * @dataProvider providerForTestNamedObjectInvalidConfiguration
+     *
+     * @param string $name
+     * @param array $configuration
+     */
+    public function testNamedObjectInvalidConfiguration(string $name, array $configuration): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+
+        $this->load([
+            'system' => [
+                'frontend_group' => [
+                    'named_object' => [
+                        $name => $configuration,
+                    ],
+                ],
+            ],
+        ]);
     }
 }

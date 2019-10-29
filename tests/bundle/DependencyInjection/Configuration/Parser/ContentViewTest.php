@@ -147,14 +147,14 @@ final class ContentViewTest extends AbstractParserTestCase
                     'match' => ['config'],
                     'queries' => [0 => 'query'],
                 ],
-                'Query keys must be strings conforming to a valid Twig variable names',
+                'Query key must be a string conforming to a valid Twig variable name',
             ],
             [
                 [
                     'match' => ['config'],
                     'queries' => ['123abc' => 'query'],
                 ],
-                'Query keys must be strings conforming to a valid Twig variable names',
+                'Query key must be a string conforming to a valid Twig variable name',
             ],
             [
                 [

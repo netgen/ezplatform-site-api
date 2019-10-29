@@ -2,17 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Netgen\EzPlatformSiteApi\Event;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\Event;
 
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * @deprecated since 3.1, to be removed in 4.0. Use RenderViewEvent instead.
- *
- * @see \Netgen\Bundle\EzPlatformSiteApiBundle\Event\RenderViewEvent
- */
-class RenderContentEvent extends Event
+final class RenderViewEvent extends Event
 {
     /**
      * View object that was rendered.

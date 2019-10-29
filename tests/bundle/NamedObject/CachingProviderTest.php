@@ -18,6 +18,8 @@ use RuntimeException;
  */
 final class CachingProviderTest extends TestCase
 {
+    protected $mockedProvider;
+
     public function testHasContentReturnsTrue(): void
     {
         $providerMock = $this->getProviderMock();
@@ -30,6 +32,7 @@ final class CachingProviderTest extends TestCase
 
         $this->assertTrue($provider->hasContent('apple'));
     }
+
     public function testHasContentReturnsFalse(): void
     {
         $providerMock = $this->getProviderMock();
@@ -87,6 +90,7 @@ final class CachingProviderTest extends TestCase
 
         $this->assertTrue($provider->hasLocation('apple'));
     }
+
     public function testHasLocationReturnsFalse(): void
     {
         $providerMock = $this->getProviderMock();
@@ -144,6 +148,7 @@ final class CachingProviderTest extends TestCase
 
         $this->assertTrue($provider->hasTag('apple'));
     }
+
     public function testHasTagReturnsFalse(): void
     {
         $providerMock = $this->getProviderMock();
@@ -193,8 +198,6 @@ final class CachingProviderTest extends TestCase
     {
         return new Caching($mockerProvider);
     }
-
-    protected $mockedProvider;
 
     /**
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider|\PHPUnit\Framework\MockObject\MockObject

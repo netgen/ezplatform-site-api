@@ -76,7 +76,7 @@ class Configuration extends SiteAccessConfiguration
             return ['remote_id' => $v];
         };
 
-        /** @noinspection NullPointerExceptionInspection */
+        /* @noinspection NullPointerExceptionInspection */
         $systemNode
             ->arrayNode('named_object')
                 ->info('Named objects')
@@ -98,7 +98,7 @@ class Configuration extends SiteAccessConfiguration
                                 ->scalarNode('remote_id')
                                     ->info('Content remote ID')
                                     ->validate()
-                                        ->ifTrue(static function ($v) {return !is_string($v);})
+                                        ->ifTrue(static function ($v) {return !\is_string($v);})
                                         ->thenInvalid('Content remote ID value must be of string type.')
                                     ->end()
                                 ->end()
@@ -126,7 +126,7 @@ class Configuration extends SiteAccessConfiguration
                                 ->scalarNode('remote_id')
                                     ->info('Location remote ID')
                                     ->validate()
-                                        ->ifTrue(static function ($v) {return !is_string($v);})
+                                        ->ifTrue(static function ($v) {return !\is_string($v);})
                                         ->thenInvalid('Location remote ID value must be of string type.')
                                     ->end()
                                 ->end()
@@ -154,7 +154,7 @@ class Configuration extends SiteAccessConfiguration
                                 ->scalarNode('remote_id')
                                     ->info('Tag remote ID')
                                     ->validate()
-                                        ->ifTrue(static function ($v) {return !is_string($v);})
+                                        ->ifTrue(static function ($v) {return !\is_string($v);})
                                         ->thenInvalid('Tag remote ID value must be of string type.')
                                     ->end()
                                 ->end()

@@ -20,6 +20,8 @@ use RuntimeException;
  */
 final class LoadingProviderTest extends TestCase
 {
+    protected $providerUnderTest;
+
     public function testHasContentReturnsTrue(): void
     {
         $provider = $this->getProviderUnderTest();
@@ -231,8 +233,6 @@ final class LoadingProviderTest extends TestCase
 
         $provider->getTag('fig');
     }
-
-    protected $providerUnderTest;
 
     protected function getProviderUnderTest(): Loading
     {

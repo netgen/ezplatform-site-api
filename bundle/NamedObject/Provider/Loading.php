@@ -60,7 +60,7 @@ final class Loading extends Provider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -91,7 +91,7 @@ final class Loading extends Provider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -122,7 +122,7 @@ final class Loading extends Provider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException

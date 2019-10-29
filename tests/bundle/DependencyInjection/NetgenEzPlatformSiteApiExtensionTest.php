@@ -15,7 +15,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
  *
  * @internal
  */
-class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
+final class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @var \Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\NetgenEzPlatformSiteApiExtension
@@ -29,16 +29,6 @@ class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
         parent::setUp();
 
         $this->setParameter('kernel.bundles', []);
-    }
-
-    protected function getContainerExtensions(): array
-    {
-        return [$this->extension];
-    }
-
-    protected function getMinimalConfiguration(): array
-    {
-        return [];
     }
 
     public function getBooleanConfigurationNames(): array
@@ -74,7 +64,7 @@ class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
                 yield [
                     $name,
                     $valuePair[0],
-                    $valuePair[1]
+                    $valuePair[1],
                 ];
             }
         }
@@ -123,7 +113,7 @@ class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
             foreach ($values as $value) {
                 yield [
                     $name,
-                    $value
+                    $value,
                 ];
             }
         }
@@ -247,7 +237,7 @@ class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
                 yield [
                     $name,
                     $valuePair[0],
-                    $valuePair[1]
+                    $valuePair[1],
                 ];
             }
         }
@@ -349,5 +339,15 @@ class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCase
                 ],
             ],
         ]);
+    }
+
+    protected function getContainerExtensions(): array
+    {
+        return [$this->extension];
+    }
+
+    protected function getMinimalConfiguration(): array
+    {
+        return [];
     }
 }

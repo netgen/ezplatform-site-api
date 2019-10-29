@@ -68,6 +68,14 @@ class Configuration extends SiteAccessConfiguration
             return false;
         };
 
+        $idMapper = static function ($v) {
+            if (\is_int($v)) {
+                return ['id' => $v];
+            }
+
+            return ['remote_id' => $v];
+        };
+
         /** @noinspection NullPointerExceptionInspection */
         $systemNode
             ->arrayNode('named_object')
@@ -81,15 +89,7 @@ class Configuration extends SiteAccessConfiguration
                             ->info('Content ID or remote ID')
                             ->beforeNormalization()
                                 ->ifTrue(static function ($v) {return !\is_array($v);})
-                                ->then(
-                                    static function ($v) {
-                                        if (\is_int($v)) {
-                                            return ['id' => $v];
-                                        }
-
-                                        return ['remote_id' => $v];
-                                    }
-                                )
+                                ->then($idMapper)
                             ->end()
                             ->children()
                                 ->integerNode('id')
@@ -117,15 +117,7 @@ class Configuration extends SiteAccessConfiguration
                             ->info('Location ID or remote ID')
                             ->beforeNormalization()
                                 ->ifTrue(static function ($v) {return !\is_array($v);})
-                                ->then(
-                                    static function ($v) {
-                                        if (\is_int($v)) {
-                                            return ['id' => $v];
-                                        }
-
-                                        return ['remote_id' => $v];
-                                    }
-                                )
+                                ->then($idMapper)
                             ->end()
                             ->children()
                                 ->integerNode('id')
@@ -153,15 +145,7 @@ class Configuration extends SiteAccessConfiguration
                             ->info('Tag ID or remote ID')
                             ->beforeNormalization()
                                 ->ifTrue(static function ($v) {return !\is_array($v);})
-                                ->then(
-                                    static function ($v) {
-                                        if (\is_int($v)) {
-                                            return ['id' => $v];
-                                        }
-
-                                        return ['remote_id' => $v];
-                                    }
-                                )
+                                ->then($idMapper)
                             ->end()
                             ->children()
                                 ->integerNode('id')

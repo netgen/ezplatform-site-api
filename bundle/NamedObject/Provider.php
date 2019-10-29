@@ -18,7 +18,7 @@ abstract class Provider
      *
      * @return bool
      */
-    abstract public function hasContent(string $name): bool ;
+    abstract public function hasContent(string $name): bool;
 
     /**
      * @param string $name

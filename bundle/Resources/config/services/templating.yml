@@ -80,6 +80,6 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\NamedObjectRuntime
         # public: false
         arguments:
-            - '@netgen.ezplatform_site.named_object.provider'
+            - '@netgen.ezplatform_site.named_object_provider'
         tags:
             - { name: twig.runtime }

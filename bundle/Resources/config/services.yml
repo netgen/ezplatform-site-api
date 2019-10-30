@@ -33,7 +33,7 @@ services:
         arguments:
             - '@request_stack'
             - '@ezpublish.config.resolver'
-            - '@netgen.ezplatform_site.named_object.provider'
+            - '@netgen.ezplatform_site.named_object_provider'
         public: false
 
     netgen.ezplatform_site.query_type.query_definition_mapper:

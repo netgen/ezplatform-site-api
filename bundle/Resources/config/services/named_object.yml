@@ -1,13 +1,13 @@
 services:
-    netgen.ezplatform_site.named_object.provider:
-        alias: netgen.ezplatform_site.named_object.provider.caching
+    netgen.ezplatform_site.named_object_provider:
+        alias: netgen.ezplatform_site.named_object_provider.caching
 
-    netgen.ezplatform_site.named_object.provider.caching:
+    netgen.ezplatform_site.named_object_provider.caching:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider\Caching
         arguments:
-            - '@netgen.ezplatform_site.named_object.provider.loading'
+            - '@netgen.ezplatform_site.named_object_provider.loading'
 
-    netgen.ezplatform_site.named_object.provider.loading:
+    netgen.ezplatform_site.named_object_provider.loading:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider\Loading
         arguments:
             - '@netgen.ezplatform_site.load_service'

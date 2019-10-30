@@ -255,7 +255,7 @@ final class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCa
         $this->load([
             'system' => [
                 'frontend_group' => [
-                    'named_object' => [
+                    'named_objects' => [
                         $name => $config,
                     ],
                 ],
@@ -263,7 +263,7 @@ final class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCa
         ]);
 
         $this->assertContainerBuilderHasParameter(
-            'netgen_ez_platform_site_api.frontend_group.named_object',
+            'netgen_ez_platform_site_api.frontend_group.named_objects',
             [
                 $name => $expectedValue,
             ] + [
@@ -333,7 +333,7 @@ final class NetgenEzPlatformSiteApiExtensionTest extends AbstractExtensionTestCa
         $this->load([
             'system' => [
                 'frontend_group' => [
-                    'named_object' => [
+                    'named_objects' => [
                         $name => $configuration,
                     ],
                 ],

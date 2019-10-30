@@ -78,7 +78,7 @@ class Configuration extends SiteAccessConfiguration
 
         /* @noinspection NullPointerExceptionInspection */
         $systemNode
-            ->arrayNode('named_object')
+            ->arrayNode('named_objects')
                 ->info('Named objects')
                 ->children()
                     ->arrayNode('content')

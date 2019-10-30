@@ -196,7 +196,7 @@ final class Loading extends Provider
             return;
         }
 
-        $configuration = $this->configResolver->getParameter('named_object', 'netgen_ez_platform_site_api');
+        $configuration = $this->configResolver->getParameter('named_objects', 'netgen_ez_platform_site_api');
 
         $this->configuration = $configuration ?? [];
     }

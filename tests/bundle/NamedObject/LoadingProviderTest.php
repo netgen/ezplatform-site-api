@@ -336,7 +336,7 @@ final class LoadingProviderTest extends TestCase
 
         $getParameterMap = [
             [
-                'named_object',
+                'named_objects',
                 'netgen_ez_platform_site_api',
                 null,
                 [

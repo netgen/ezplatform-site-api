@@ -26,10 +26,10 @@ final class ViewTaggerListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return [Events::NG_VIEW_CONTENT_RENDER => 'onRenderView'];
+        return [Events::NG_VIEW_CONTENT_RENDER_VIEW => 'onNgViewContentRenderView'];
     }
 
-    public function onRenderView(RenderViewEvent $event): void
+    public function onNgViewContentRenderView(RenderViewEvent $event): void
     {
         $this->responseTagger->tag($event->getView());
     }

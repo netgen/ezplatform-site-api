@@ -135,7 +135,7 @@ Site API entities and values are similar to their counterparts in eZ Platform's 
 
 - ``Field``
 
-  ``Field`` object aggregates some properties from it's FieldDefinition, like FieldType identifier,
+  ``Field`` object aggregates some properties from its FieldDefinition, like FieldType identifier,
   name and description. It also implements ``isEmpty()`` method, which makes simple to check if the
   field value is empty, without requiring external helpers. Example usage from Twig:
 
@@ -205,7 +205,7 @@ Location. The services will behave as if it does not exist.
 .. note::
 
   All of the Site API services are read-only. If you need to write to the eZ Platform's content
-  repository, use it's existing Repository API.
+  repository, use its existing Repository API.
 
 For more details see :doc:`Services reference </reference/services>` page.
 

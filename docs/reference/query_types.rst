@@ -5,6 +5,12 @@ Site API Query Types expand upon Query Type feature from eZ Publish Kernel, usin
 interfaces. That will enable using your existing Query Types, but how Site API integrates them with
 the rest of the system differs from eZ Publish Kernel.
 
+**Content on this page:**
+
+.. contents::
+    :depth: 3
+    :local:
+
 Built-in Site API Query Types
 --------------------------------------------------------------------------------
 
@@ -144,159 +150,236 @@ Parameters with expressions
 
 When defining parameters it's possible to use expressions. These are evaluated by Symfony's
 `Expression Language <https://symfony.com/doc/current/components/expression_language.html>`_
-component, whose syntax is based on Twig and documented `here <https://symfony.com/doc/current/components/expression_language/syntax.html>`_.
+component, whose syntax is based on Twig and is documented `here <https://symfony.com/doc/current/components/expression_language/syntax.html>`_.
 
-Expression strings are recognized by ``@=`` prefix. Following values resolved from the current view
-will be available in expression:
+Expression strings are recognized by ``@=`` prefix. Following sections describe available objects,
+services and functions.
 
-- Site API view object as ``view``
+View object
+~~~~~~~~~~~
 
-    You can access view object and any `parameters injected into it <https://doc.ez.no/display/EZP/Parameters+injection+in+content+views>`_,
-    for example current page in children query:
+Site API View object is available as ``view``. You can access any `parameters injected into it <https://doc.ez.no/display/EZP/Parameters+injection+in+content+views>`_,
+for example current page value in children query:
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        ...
-            queries:
-                children:
-                    query_type: 'SiteAPI:Location/Children'
-                    max_per_page: 10
-                    page: '@=view.getParameter("page")'
-                    parameters:
-                        content_type: 'article'
-                        sort: 'published desc'
+    ...
+        queries:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: 10
+                page: '@=view.getParameter("page")'
+                parameters:
+                    content_type: 'article'
+                    sort: 'published desc'
 
-- Symfony's Request object as ``request``
+Method ``getParameter()`` on the View object does not support default value fallback, so if the
+requested parameter is not there an exception will be thrown. Function ``viewParam(name, default)``
+is a wrapper around it that provides a default value fallback:
 
-    Similar to the above, you could access current page directly from the parameter in the Request object:
+.. code-block:: yaml
 
-    .. code-block:: yaml
+    ...
+        queries:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: 10
+                page: '@=viewParam("page", 10)'
+                parameters:
+                    content_type: 'article'
+                    sort: 'published desc'
 
-        ...
-            queries:
-                children:
-                    query_type: 'SiteAPI:Location/Children'
-                    max_per_page: 10
-                    page: '@=request.query.get("page", 1)'
-                    parameters:
-                        content_type: 'article'
-                        sort: 'published desc'
+Request object
+~~~~~~~~~~~~~~
 
-- :ref:`Site API Content object<content_object>` as ``content``
+Symfony's Request object is available as ``request``. For example, you can access current page
+directly from the parameter in the Request object:
 
-    Full Content object is available, for example you could store ContentType identifier for the
-    children in a TextLine field ``content_type`` and access it like this:
+.. code-block:: yaml
 
-    .. code-block:: yaml
+    ...
+        queries:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: 10
+                page: '@=request.query.get("page", 1)'
+                parameters:
+                    content_type: 'article'
+                    sort: 'published desc'
 
-        ...
-            queries:
-                children:
-                    query_type: 'SiteAPI:Location/Children'
-                    max_per_page: 10
-                    page: 1
-                    parameters:
-                        content_type: '@=content.fields.content_type.value.text'
-                        sort: 'published desc'
+Several functions relating to the Request object are also available. These provide access to the
+Request values in a more convenient way. First of these is:
 
-- :ref:`Site API Location object<location_object>` as ``location``
+``queryParam(name, default, array allowed = null)``
 
-    Full Location object is also available, in the following example we use it to find only children
-    of the same ContentType as the parent:
+This function is a shortcut to ``GET`` / query string parameters on the Request object.
+Through optional third parameter ``allowed`` you can define an array of allowed values. This can be
+useful when you need to limit what is being passed through the query string. For example you can
+use it to limit filtering by ContentType to articles and news items:
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        ...
-            queries:
-                children:
-                    query_type: 'SiteAPI:Location/Children'
-                    max_per_page: 10
-                    page: 1
-                    parameters:
-                        content_type: '@=location.contentInfo.contentTypeIdentifier'
-                        sort: 'published desc'
+    ...
+        queries:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: 10
+                page: '@=queryParam("page", 1)'
+                parameters:
+                    content_type: '@=queryParam("type", "article", ["article", "news"])'
+                    sort: 'published desc'
 
-- eZ Platform ConfigResolver service as ``configResolver``
+Query string parameters accessed through the Request object will always be of the ``string`` type,
+which can be a problem if you need to use them for configuration that expects a different scalar type.
+For that reason separate type-casting getter functions are also provided:
 
-    You can access dynamic configuration through eZ Platform's ``ConfigResolver`` service, enabling different query configuration per siteaccess.
-    For example maximum items per page:
+- ``queryParamInt(name, default, array allowed = null)``
 
-    .. code-block:: yaml
+    Performs type casting of the found value to ``integer`` type.
 
-        ngsite.eng.max_per_page: 10 # limit to 10 items on English siteaccess
-        ngsite.jpn.max_per_page: 20 # and 20 items on Japanese siteaccess
+- ``queryParamBool(name, default, array allowed = null)``
 
-    .. code-block:: yaml
+    Performs type casting of the found value to ``boolean`` type.
 
-        ...
-            ng_named_query:
-                children:
-                    query_type: 'SiteAPI:Location/Children'
-                    max_per_page: '@=configResolver.getParameter("max_per_page", "ngsite")'
-                    page: 1
-                    parameters:
-                        content_type: 'article'
-                        sort: 'published desc'
+- ``queryParamFloat(name, default, array allowed = null)``
 
-Several functions are also available for use in expressions. Most of these are provided to access
-the values described above in a more convenient way:
+    Performs type casting of the found value to ``float`` type.
 
-- ``viewParam(name, default)``
+- ``queryParamString(name, default, allowed = [])``
 
-    Method ``getParameter()`` on the View object does not support default value fallback and if the
-    requested parameter is not there an exception will be thrown. Function ``viewParam()`` is just a
-    wrapper around it that provides default value fallback:
+    Performs type casting of the found value to ``string`` type.
 
-    .. code-block:: yaml
+Content and Location objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        ...
-            queries:
-                children:
-                    query_type: 'SiteAPI:Location/Children'
-                    max_per_page: 10
-                    page: '@=viewParam("page", 10)'
-                    parameters:
-                        content_type: 'article'
-                        sort: 'published desc'
+:ref:`Site API Content object<content_object>` is available as ``content``. For example you could
+store ContentType identifier for the children in a TextLine field ``content_type`` and access it
+like this:
 
-- ``queryParam(name, default, array allowed = null)``
+.. code-block:: yaml
 
-    This function is a shortcut to ``GET`` / query string parameters on the Request object.
-    Through optional third parameter ``allowed`` you can define an array of allowed values. This can be
-    useful when you need to limit what is being passed through the query string. For example you can
-    use it to limit filtering by ContentType to articles and news items:
+    ...
+        queries:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: 10
+                page: 1
+                parameters:
+                    content_type: '@=content.fields.content_type.value.text'
+                    sort: 'published desc'
 
-    .. code-block:: yaml
+:ref:`Site API Location object<location_object>` is available as ``location``. In the following
+example we use it to find only children of the same ContentType as the parent:
 
-        ...
-            queries:
-                children:
-                    query_type: 'SiteAPI:Location/Children'
-                    max_per_page: 10
-                    page: '@=queryParam("page", 1)'
-                    parameters:
-                        content_type: '@=queryParam("type", "article", ["article", "news"])'
-                        sort: 'published desc'
+.. code-block:: yaml
 
-    Query string parameters accessed through the Request object will always be of the ``string`` type,
-    which can be a problem if you need to use them for configuration that expects a different scalar type.
-    For that reason separate type-casting getter functions are also provided:
+    ...
+        queries:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: 10
+                page: 1
+                parameters:
+                    content_type: '@=location.contentInfo.contentTypeIdentifier'
+                    sort: 'published desc'
 
-    - ``queryParamInt(name, default, array allowed = null)``
+Configuration
+~~~~~~~~~~~~~
 
-        Performs type casting of the found value to ``integer`` type.
+eZ Platform ConfigResolver service is available as ``configResolver``. Through it you can access
+dynamic (per siteaccess) configuration, for example maximum items per page:
 
-    - ``queryParamBool(name, default, array allowed = null)``
+.. code-block:: yaml
 
-        Performs type casting of the found value to ``boolean`` type.
+    ngsite.eng.max_per_page: 10 # limit to 10 items on English siteaccess
+    ngsite.jpn.max_per_page: 20 # and 20 items on Japanese siteaccess
 
-    - ``queryParamFloat(name, default, array allowed = null)``
+.. code-block:: yaml
 
-        Performs type casting of the found value to ``float`` type.
+    ...
+        ng_named_query:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: '@=configResolver.getParameter("max_per_page", "ngsite")'
+                page: 1
+                parameters:
+                    content_type: 'article'
+                    sort: 'published desc'
 
-    - ``queryParamString(name, default, allowed = [])``
+Function ``config(name, namespace = null, scope = null)`` is a shortcut to ``getParameter()`` method
+of ``ConfigResolver`` service:
 
-        Performs type casting of the found value to ``string`` type.
+.. code-block:: yaml
+
+    ngsite.eng.max_per_page: 10 # limit to 10 items on English siteaccess
+    ngsite.jpn.max_per_page: 20 # and 20 items on Japanese siteaccess
+
+.. code-block:: yaml
+
+    ...
+        ng_named_query:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: '@=config("max_per_page", "ngsite")'
+                page: 1
+                parameters:
+                    content_type: 'article'
+                    sort: 'published desc'
+
+.. _named_object_query_types:
+
+Named Objects
+~~~~~~~~~~~~~
+
+Named objects feature provides a way to configure specific objects (``Content``, ``Location`` and
+``Tag``) by name and ID, and a way to access them by name from PHP, Twig and Query Type
+configuration. Site API NamedObjectProvider service is available as ``namedObject``. Its purpose is
+providing access to configured named objects.
+
+.. note::
+
+    Configuration of named objects is documented in more detail :ref:`on the Configuration page<named_object_configuration>`.
+    Usage of named objects from PHP is :ref:`documented on the Services page<named_object_php>`.
+
+The following example shows how to configure named query that will fetch top categories (Locations
+of type ``category`` found below the root Location):
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                named_objects:
+                    location:
+                        homepage: 2
+
+.. code-block:: yaml
+
+    ...
+        ng_named_query:
+            top_categories:
+                query_type: 'SiteAPI:Location/Children'
+                parameters:
+                    location: '@=namedObject.location("homepage")'
+                    content_type: 'category'
+                    sort: 'name desc'
+
+Shortcut functions are available for accessing each type of named object directly:
+
+- ``namedContent(name)``
+
+    Provides access to named Content.
+
+- ``namedLocation(name)``
+
+    Provides access to named Location.
+
+- ``namedTag(name)``
+
+    Provides access to named Tag.
+
+Miscellaneous
+~~~~~~~~~~~~~
 
 - ``timestamp(value)``
 
@@ -317,31 +400,10 @@ the values described above in a more convenient way:
                             start_date:
                                 gt: '@=timestamp("today")'
 
-- ``config(name, namespace = null, scope = null)``
+    .. note::
 
-    This function is just a shortcut to ``getParameter()`` method of ``ConfigResolver`` service, described above:
-
-    .. code-block:: yaml
-
-        ngsite.eng.max_per_page: 10 # limit to 10 items on English siteaccess
-        ngsite.jpn.max_per_page: 20 # and 20 items on Japanese siteaccess
-
-    .. code-block:: yaml
-
-        ...
-            ng_named_query:
-                children:
-                    query_type: 'SiteAPI:Location/Children'
-                    max_per_page: '@=config("max_per_page", "ngsite")'
-                    page: 1
-                    parameters:
-                        content_type: 'article'
-                        sort: 'published desc'
-
-.. note::
-
-    Function ``timestamp()`` maps directly to the PHP's function `strtotime <https://secure.php.net/manual/en/function.strtotime.php>`_.
-    That means you can pass it any `supported date and time format <https://secure.php.net/manual/en/datetime.formats.php>`_.
+        Function ``timestamp()`` maps directly to the PHP's function `strtotime <https://secure.php.net/manual/en/function.strtotime.php>`_.
+        That means it accepts any date and time format `supported by that function <https://secure.php.net/manual/en/datetime.formats.php>`_.
 
 Templating
 --------------------------------------------------------------------------------

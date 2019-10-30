@@ -81,6 +81,5 @@ services:
         # public: false
         arguments:
             - '@netgen.ezplatform_site.named_object.provider'
-            - '@?logger'
         tags:
             - { name: twig.runtime }

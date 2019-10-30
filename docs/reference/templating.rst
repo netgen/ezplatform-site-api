@@ -4,6 +4,15 @@ Templating
 Site API objects are used directly in the templates. Below you will find examples for the most
 common use cases. Objects are documented in more detail on :doc:`Objects reference </reference/objects>` documentation page.
 
+**Content on this page:**
+
+.. contents::
+    :depth: 1
+    :local:
+
+Content rendering
+-----------------
+
 Site API provides three Twig functions for content rendering:
 
 - ``ng_view_content``
@@ -196,7 +205,7 @@ Working with Content fields
   To render a field in vanilla eZ Platform you would use
   `ez_render_field <https://doc.ezplatform.com/en/2.2/guide/twig_functions_reference/#ez_render_field>`_ function, which
   does that using the `configured template block <https://doc.ezplatform.com/en/2.2/guide/templates/#using-the-field-types-template-block>`_.
-  For the same purpose and using the same templates, Site API provides it's own function
+  For the same purpose and using the same templates, Site API provides its own function
   ``ng_render_field``. It has two parameters:
 
   1. **required** Field object
@@ -497,3 +506,59 @@ Location siblings
     </ul>
 
     {{ pagerfanta( articles, 'twitter_bootstrap' ) }}
+
+.. _named_object_template:
+
+Working with Named Objects
+--------------------------
+
+Named objects feature provides a way to configure specific objects (``Content``, ``Location`` and
+``Tag``) by name and ID, and a way to access them by name from PHP, Twig and Query Type
+configuration. Site API NamedObjectProvider service is available as ``namedObject``. Its purpose is
+providing access to configured named objects.
+
+.. note::
+
+    Configuration of named objects is documented in more detail :ref:`on the Configuration page<named_object_configuration>`.
+    Usage of named objects from PHP is :ref:`documented on the Services page<named_object_php>`.
+
+A following named object configuration is given:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                named_objects:
+                    content:
+                        certificate: 3
+                    location:
+                        homepage: 2
+                    tag:
+                        colors: 4
+
+Three functions for accessing named objects are available, one for each object type:
+
+- ``ng_named_content``
+
+  Provides access to named Content object. Example usage:
+
+  .. code-block:: twig
+
+    {% set certificate = ng_named_content('certificate') %}
+
+- ``ng_named_location``
+
+  Provides access to named Location object. Example usage:
+
+  .. code-block:: twig
+
+    {% set homepage = ng_named_location('homepage') %}
+
+- ``ng_named_tag``
+
+  Provides access to named Tag object. Example usage:
+
+  .. code-block:: twig
+
+    {% set colors = ng_named_tag('colors') %}

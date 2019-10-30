@@ -65,14 +65,6 @@ class ContentViewRuntime
      */
     private $eventDispatcher;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface $controllerResolver
-     * @param \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface $argumentResolver
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder $viewBuilder
-     * @param \eZ\Publish\Core\MVC\Symfony\View\Renderer $viewRenderer
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     */
     public function __construct(
         RequestStack $requestStack,
         ControllerResolverInterface $controllerResolver,

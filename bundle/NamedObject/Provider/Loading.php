@@ -130,7 +130,7 @@ final class Loading extends Provider
     public function getTag(string $name): Tag
     {
         if ($this->tagsService === null) {
-            throw new RuntimeException('Missing Netgen TagsBundle package (netgen/TagsBundle)');
+            throw new RuntimeException('Missing Netgen TagsBundle package (netgen/tagsbundle)');
         }
 
         $tagId = $this->getTagId($name);

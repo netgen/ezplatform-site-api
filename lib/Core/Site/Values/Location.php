@@ -172,21 +172,7 @@ final class Location extends APILocation
             $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
         }
 
-        $pager = new Pagerfanta(
-            new FilterAdapter(
-                new LocationQuery([
-                    'filter' => new LogicalAnd($criteria),
-                    'sortClauses' => $this->innerLocation->getSortClauses(),
-                ]),
-                $this->site->getFilterService()
-            )
-        );
-
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage($maxPerPage);
-        $pager->setCurrentPage($currentPage);
-
-        return $pager;
+        return $this->getFilterPager($criteria, $maxPerPage, $currentPage);
     }
 
     public function getSiblings(int $limit = 25): array
@@ -208,6 +194,11 @@ final class Location extends APILocation
             $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
         }
 
+        return $this->getFilterPager($criteria, $maxPerPage, $currentPage);
+    }
+
+    private function getFilterPager(array $criteria, int $maxPerPage = 25, int $currentPage = 1): Pagerfanta
+    {
         $pager = new Pagerfanta(
             new FilterAdapter(
                 new LocationQuery([

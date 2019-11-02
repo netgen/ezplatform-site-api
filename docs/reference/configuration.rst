@@ -174,7 +174,10 @@ fix the problem.
 Second configuration option ``render_missing_field_info`` controls whether ``Surrogate`` field will
 render as an empty string or it will render useful debug information. By default its value is
 ``false``, meaning it will render as an empty string. That behavior is also what you should use in
-the production environment.
+the production environment. Setting this option to ``true`` can be useful in debug mode, together
+with setting ``fail_on_missing_fields`` to ``false``, as that will provide a visual cue about the
+missing field without the page crashing and without the need to go into the web debug toolbar to
+find the logged message.
 
 .. note::
 

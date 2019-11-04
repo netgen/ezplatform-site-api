@@ -1,13 +1,13 @@
 eZ Platform Site API changelog
 ==============================
 
-Unreleased
-----------
+3.1.0 (04.11.2019)
+------------------
 
-[`3.0.5...master`](https://github.com/netgen/ezplatform-site-api/compare/3.0.5...master)
+[`3.0.5...3.1.0`](https://github.com/netgen/ezplatform-site-api/compare/3.0.5...3.1.0)
 
-* NGSTACK-250: `modification_date` query type condition (#140)
-* NGSTACK-336: Named Objects
+* NGSTACK-250: `modification_date` query type condition ([#140](https://github.com/netgen/ezplatform-site-api/pull/140))
+* NGSTACK-336: Named Objects ([#145](https://github.com/netgen/ezplatform-site-api/pull/145))
 
 3.0.5 (04.11.2019)
 ------------------

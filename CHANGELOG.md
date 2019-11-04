@@ -4,10 +4,17 @@ eZ Platform Site API changelog
 Unreleased
 ----------
 
-[`3.0.4...master`](https://github.com/netgen/ezplatform-site-api/compare/3.0.4...master)
+[`3.0.5...master`](https://github.com/netgen/ezplatform-site-api/compare/3.0.5...master)
 
 * NGSTACK-250: `modification_date` query type condition (#140)
 * NGSTACK-336: Named Objects
+
+3.0.5 (04.11.2019)
+------------------
+
+[`3.0.4...3.0.5`](https://github.com/netgen/ezplatform-site-api/compare/3.0.4...3.0.5)
+
+* Remove configuration for the default full view ([#144](https://github.com/netgen/ezplatform-site-api/pull/144))
 
 3.0.4 (23.10.2019)
 ------------------

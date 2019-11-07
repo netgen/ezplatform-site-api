@@ -13,8 +13,22 @@ services:
         arguments:
             - '@netgen.ezplatform_site.ngcontent_view.matcher_factory'
             - '@netgen.ezplatform_site.query_type.query_definition_mapper'
+            - '@netgen.ezplatform_site.redirect_resolver'
         tags:
             - { name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 110 }
+        public: false
+
+    netgen.ezplatform_site.redirect_resolver:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\Resolver
+        arguments:
+            - '@netgen.ezplatform_site.redirect.parameter_processor'
+            - '@router'
+
+    netgen.ezplatform_site.redirect.parameter_processor:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\ParameterProcessor
+        arguments:
+            - '@ezpublish.config.resolver'
+            - '@netgen.ezplatform_site.named_object_provider'
         public: false
 
     netgen.ezplatform_site.ngcontent_view.matcher_factory:

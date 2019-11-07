@@ -12,20 +12,13 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 final class ParameterProcessor
 {
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    private $configResolver;
-
-    /**
      * @var \Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider
      */
     private $namedObjectProvider;
 
     public function __construct(
-        ConfigResolverInterface $configResolver,
         Provider $namedObjectProvider
     ) {
-        $this->configResolver = $configResolver;
         $this->namedObjectProvider = $namedObjectProvider;
     }
 
@@ -54,7 +47,6 @@ final class ParameterProcessor
             [
                 'location' => $view->getSiteLocation(),
                 'content' => $view->getSiteContent(),
-                'configResolver' => $this->configResolver,
                 'namedObject' => $this->namedObjectProvider,
             ]
         );
@@ -67,16 +59,6 @@ final class ParameterProcessor
      */
     private function registerFunctions(ExpressionLanguage $expressionLanguage): void
     {
-        $configResolver = $this->configResolver;
-
-        $expressionLanguage->register(
-            'config',
-            static function (): void {},
-            static function (array $arguments, string $name, ?string $namespace = null, ?string $scope = null) use ($configResolver) {
-                return $configResolver->getParameter($name, $namespace, $scope);
-            }
-        );
-
         $namedObjectProvider = $this->namedObjectProvider;
 
         $expressionLanguage->register(

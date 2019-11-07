@@ -64,15 +64,6 @@ final class Resolver
             return $this->router->generate($value);
         }
 
-        if (is_int($value) || is_string($value)) {
-            return $this->router->generate(
-                'ez_urlalias',
-                [
-                    'locationId' => $value
-                ]
-            );
-        }
-
         return '/';
     }
 }

@@ -23,11 +23,11 @@ services:
         arguments:
             - '@netgen.ezplatform_site.redirect.parameter_processor'
             - '@router'
+        public: false
 
     netgen.ezplatform_site.redirect.parameter_processor:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\ParameterProcessor
         arguments:
-            - '@ezpublish.config.resolver'
             - '@netgen.ezplatform_site.named_object_provider'
         public: false
 

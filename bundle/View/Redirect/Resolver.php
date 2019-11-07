@@ -45,6 +45,14 @@ final class Resolver
      */
     public function resolveTarget(RedirectConfiguration $redirectConfig, ContentView $view): string
     {
+        // simple string means it's a symfony route
+        if (\strpos($redirectConfig->getTarget(), '@=') !== 0) {
+            return $this->router->generate(
+                $redirectConfig->getTarget(),
+                $redirectConfig->getTargetParameters()
+            );
+        }
+
         $value = $this->parameterProcessor->process(
             $redirectConfig->getTarget(),
             $view

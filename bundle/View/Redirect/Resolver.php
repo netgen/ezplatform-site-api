@@ -38,30 +38,23 @@ final class Resolver
     /**
      * Builds a path to the redirect target.
      *
-     * Value from configuration can be:
-     *      - SiteAPI location
-     *      - SiteAPI content
-     *      - location id fetched from config resolver
-     *
-     * @param string $redirectConfig
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\RedirectConfiguration $redirectConfig
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      *
      * @return string
      */
-    public function resolveTarget(string $redirectConfig, ContentView $view): string
+    public function resolveTarget(RedirectConfiguration $redirectConfig, ContentView $view): string
     {
-        $value = $this->parameterProcessor->process($redirectConfig, $view);
-
-        if (is_array($value)) {
-            if (count($value) < 1) {
-                return '/';
-            }
-
-            $value = reset($value);
-        }
+        $value = $this->parameterProcessor->process(
+            $redirectConfig->getTarget(),
+            $view
+        );
 
         if ($value instanceof Location || $value instanceof Content) {
-            return $this->router->generate($value);
+            return $this->router->generate(
+                $value,
+                $redirectConfig->getTargetParameters()
+            );
         }
 
         return '/';

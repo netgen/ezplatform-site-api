@@ -9,10 +9,10 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentView as CoreContentView;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use eZ\Publish\Core\MVC\Symfony\View\ViewProvider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView as ContentViewParser;
-use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\RedirectConfiguration;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\Resolver;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
@@ -120,23 +120,7 @@ class Configured implements ViewProvider
         $dto = new CoreContentView();
         $dto->setConfigHash($viewConfig);
 
-        if (isset($viewConfig['permanent_redirect']) || isset($viewConfig['temporary_redirect'])) {
-            $dto->setControllerReference(
-                new ControllerReference(
-                    sprintf('%s::%s', RedirectController::class, 'urlRedirectAction')
-                )
-            );
-
-            $config = isset($viewConfig['permanent_redirect']) ? $viewConfig['permanent_redirect'] : $viewConfig['temporary_redirect'];
-            $path = $this->redirectResolver->resolveTarget($config, $view);
-
-            $dto->addParameters(
-                [
-                    'path' => $path,
-                    'permanent' => isset($viewConfig['permanent_redirect'])
-                ]
-            );
-        }
+        $this->processRedirects($dto, $viewConfig, $view);
 
         if (isset($viewConfig['template'])) {
             $dto->setTemplateIdentifier($viewConfig['template']);
@@ -151,5 +135,33 @@ class Configured implements ViewProvider
         }
 
         return $dto;
+    }
+
+    private function processRedirects(CoreContentView $dto, array $viewConfig, ContentView $view)
+    {
+        if (!isset($viewConfig['redirect']) && !isset($viewConfig['permanent_redirect']) && !isset($viewConfig['temporary_redirect'])) {
+            return;
+        }
+
+        $dto->setControllerReference(
+            new ControllerReference(
+                sprintf('%s::%s', RedirectController::class, 'urlRedirectAction')
+            )
+        );
+
+        if (isset($viewConfig['redirect'])) {
+            $redirectConfig = RedirectConfiguration::fromConfigurationArray($viewConfig['redirect']);
+        } else if (isset($viewConfig['permanent_redirect'])) {
+            $redirectConfig = new RedirectConfiguration($viewConfig['permanent_redirect'], [], true);
+        } else if (isset($viewConfig['temporary_redirect'])) {
+            $redirectConfig = new RedirectConfiguration($viewConfig['temporary_redirect'], [], false);
+        }
+
+        $dto->addParameters(
+            [
+                'path' => $this->redirectResolver->resolveTarget($redirectConfig, $view),
+                'permanent' => $redirectConfig->isPermanent()
+            ]
+        );
     }
 }

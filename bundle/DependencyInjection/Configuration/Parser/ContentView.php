@@ -44,6 +44,21 @@ EOT
                                 )
                                 ->example('MyBundle:MyControllerClass:view')
                             ->end()
+                            ->arrayNode('redirect') // @todo: add validation
+                                ->children()
+                                    ->scalarNode('target')
+                                        ->isRequired()
+                                        ->cannotBeEmpty()
+                                    ->end()
+                                    ->scalarNode('permanent')
+                                        ->defaultFalse()
+                                    ->end()
+                                    ->arrayNode('target_parameters')
+                                        ->useAttributeAsKey('key')
+                                        ->variablePrototype()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
                             ->scalarNode('permanent_redirect')
                             ->info(
                                 <<<'EOT'
@@ -83,6 +98,30 @@ EOT
                                 ->useAttributeAsKey('key')
                                 ->variablePrototype()->end()
                             ->end()
+                        ->end()
+                        ->validate()
+                            ->ifTrue(static function ($v): bool {
+                                if  (\array_key_exists('redirect', $v)) {
+                                    return \array_key_exists('controller', $v) || \array_key_exists('template', $v);
+                                }
+
+                                return false;
+                            })
+                            ->thenInvalid(
+                                'You cannot use both redirect and controller/template configuration at the same time.'
+                            )
+                        ->end()
+                        ->validate()
+                            ->ifTrue(static function ($v): bool {
+                                if  (\array_key_exists('redirect', $v)) {
+                                    return \array_key_exists('temporary_redirect', $v) || \array_key_exists('permanent_redirect', $v);
+                                }
+
+                                return false;
+                            })
+                            ->thenInvalid(
+                                'You cannot use both expanded and shortcut redirect configuration at the same time.'
+                            )
                         ->end()
                         ->validate()
                             ->ifTrue(static function ($v): bool {

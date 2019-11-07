@@ -44,6 +44,22 @@ EOT
                                 )
                                 ->example('MyBundle:MyControllerClass:view')
                             ->end()
+                            ->scalarNode('permanent_redirect')
+                            ->info(
+                                <<<'EOT'
+Set up permanent redirect. You can use the expression language here as well.
+EOT
+                            )
+                            ->example('@=location.parent')
+                            ->end()
+                            ->scalarNode('temporary_redirect')
+                            ->info(
+                                <<<'EOT'
+Set up temporary redirect. You can use the expression language here as well.
+EOT
+                            )
+                            ->example('@=location.parent')
+                            ->end()
                             ->arrayNode('match')
                                 ->info('Condition matchers configuration')
                                 ->isRequired()
@@ -67,6 +83,26 @@ EOT
                                 ->useAttributeAsKey('key')
                                 ->variablePrototype()->end()
                             ->end()
+                        ->end()
+                        ->validate()
+                            ->ifTrue(static function ($v): bool {
+                                return \array_key_exists('temporary_redirect', $v) && \array_key_exists('permanent_redirect', $v);
+                            })
+                            ->thenInvalid(
+                                'You cannot use both "temporary_redirect" and "permanent_redirect" at the same time.'
+                            )
+                        ->end()
+                        ->validate()
+                            ->ifTrue(static function ($v): bool {
+                                if (\array_key_exists('temporary_redirect', $v) || \array_key_exists('permanent_redirect', $v)) {
+                                    return \array_key_exists('controller', $v) || \array_key_exists('template', $v);
+                                }
+
+                                return false;
+                            })
+                            ->thenInvalid(
+                                'You cannot use both redirect and controller/template configuration at the same time.'
+                            )
                         ->end()
                     ->end()
                 ->end()

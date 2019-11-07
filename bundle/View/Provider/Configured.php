@@ -9,9 +9,12 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentView as CoreContentView;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use eZ\Publish\Core\MVC\Symfony\View\ViewProvider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView as ContentViewParser;
+use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\Resolver;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 
 /**
@@ -32,15 +35,23 @@ class Configured implements ViewProvider
     private $queryDefinitionMapper;
 
     /**
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\Resolver
+     */
+    private $redirectResolver;
+
+    /**
      * @param \eZ\Publish\Core\MVC\Symfony\Matcher\MatcherFactoryInterface $matcherFactory
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper $queryDefinitionMapper
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\Resolver
      */
     public function __construct(
         MatcherFactoryInterface $matcherFactory,
-        QueryDefinitionMapper $queryDefinitionMapper
+        QueryDefinitionMapper $queryDefinitionMapper,
+        Resolver $redirectResolver
     ) {
         $this->matcherFactory = $matcherFactory;
         $this->queryDefinitionMapper = $queryDefinitionMapper;
+        $this->redirectResolver = $redirectResolver;
     }
 
     /**
@@ -62,7 +73,7 @@ class Configured implements ViewProvider
         ]);
 
         // Return DTO so that Configurator can set the data back to the $view
-        return $this->getDTO($configHash);
+        return $this->getDTO($configHash, $view);
     }
 
     private function getQueryDefinitionCollection(array $configHash, View $view): QueryDefinitionCollection
@@ -98,15 +109,34 @@ class Configured implements ViewProvider
      * Builds a ContentView object from $viewConfig.
      *
      * @param array $viewConfig
+     * @param ContentView $view
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView
      */
-    private function getDTO(array $viewConfig): CoreContentView
+    private function getDTO(array $viewConfig, ContentView $view): CoreContentView
     {
         $dto = new CoreContentView();
         $dto->setConfigHash($viewConfig);
+
+        if (isset($viewConfig['permanent_redirect']) || isset($viewConfig['temporary_redirect'])) {
+            $dto->setControllerReference(
+                new ControllerReference(
+                    'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction'
+                )
+            );
+
+            $config = isset($viewConfig['permanent_redirect']) ? $viewConfig['permanent_redirect'] : $viewConfig['temporary_redirect'];
+            $path = $this->redirectResolver->resolveTarget($config, $view);
+
+            $dto->addParameters(
+                [
+                    'path' => $path,
+                    'permanent' => isset($viewConfig['permanent_redirect'])
+                ]
+            );
+        }
 
         if (isset($viewConfig['template'])) {
             $dto->setTemplateIdentifier($viewConfig['template']);

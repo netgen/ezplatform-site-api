@@ -346,7 +346,7 @@ of type ``category`` found below the root Location):
 
 .. code-block:: yaml
 
-    ezpublish:
+    netgen_ez_platform_site_api:
         system:
             frontend_group:
                 named_objects:
@@ -355,14 +355,16 @@ of type ``category`` found below the root Location):
 
 .. code-block:: yaml
 
-    ...
-        ng_named_query:
-            top_categories:
-                query_type: 'SiteAPI:Location/Children'
-                parameters:
-                    location: '@=namedObject.location("homepage")'
-                    content_type: 'category'
-                    sort: 'name desc'
+    ezpublish:
+        system:
+            frontend_group:
+                ng_named_query:
+                    top_categories:
+                        query_type: 'SiteAPI:Location/Children'
+                        parameters:
+                            location: '@=namedObject.getLocation("homepage")'
+                            content_type: 'category'
+                            sort: 'name desc'
 
 Shortcut functions are available for accessing each type of named object directly:
 

@@ -96,7 +96,7 @@ Example configuration:
 
 .. code-block:: yaml
 
-    ezpublish:
+    netgen_ez_platform_site_api:
         system:
             frontend_group:
                 named_object:
@@ -118,7 +118,7 @@ full syntax equivalent to the above would be:
 
 .. code-block:: yaml
 
-    ezpublish:
+    netgen_ez_platform_site_api:
         system:
             frontend_group:
                 named_object:

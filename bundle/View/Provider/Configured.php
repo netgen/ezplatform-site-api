@@ -123,7 +123,7 @@ class Configured implements ViewProvider
         if (isset($viewConfig['permanent_redirect']) || isset($viewConfig['temporary_redirect'])) {
             $dto->setControllerReference(
                 new ControllerReference(
-                    'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction'
+                    sprintf('%s::%s', RedirectController::class, 'urlRedirectAction')
                 )
             );
 

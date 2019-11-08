@@ -8,6 +8,7 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 final class Resolver
@@ -56,7 +57,8 @@ final class Resolver
 
         return $this->router->generate(
             $redirectConfig->getTarget(),
-            $redirectConfig->getTargetParameters()
+            $redirectConfig->getTargetParameters(),
+            $redirectConfig->isAbsolute() ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH
         );
     }
 
@@ -70,7 +72,8 @@ final class Resolver
         if ($value instanceof Location || $value instanceof Content || $value instanceof Tag) {
             return $this->router->generate(
                 $value,
-                $redirectConfig->getTargetParameters()
+                $redirectConfig->getTargetParameters(),
+                $redirectConfig->isAbsolute() ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH
             );
         }
 

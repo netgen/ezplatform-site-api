@@ -44,7 +44,8 @@ class ContentView extends AbstractParser
 
                                 $v['redirect'] = [
                                     'target' => $value,
-                                    'permanent' => $permanent
+                                    'permanent' => $permanent,
+                                    'absolute' => false,
                                 ];
 
                                 unset($v['permanent_redirect'], $v['temporary_redirect']);
@@ -70,6 +71,9 @@ EOT
                                         ->cannotBeEmpty()
                                     ->end()
                                     ->booleanNode('permanent')
+                                        ->defaultFalse()
+                                    ->end()
+                                    ->booleanNode('absolute')
                                         ->defaultFalse()
                                     ->end()
                                     ->arrayNode('target_parameters')

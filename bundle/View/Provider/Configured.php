@@ -139,7 +139,7 @@ class Configured implements ViewProvider
 
     private function processRedirects(CoreContentView $dto, array $viewConfig, ContentView $view)
     {
-        if (!isset($viewConfig['redirect']) && !isset($viewConfig['permanent_redirect']) && !isset($viewConfig['temporary_redirect'])) {
+        if (!isset($viewConfig['redirect'])) {
             return;
         }
 
@@ -149,7 +149,7 @@ class Configured implements ViewProvider
             )
         );
 
-        $redirectConfig = $this->createRedirectConfiguration($viewConfig);
+        $redirectConfig = RedirectConfiguration::fromConfigurationArray($viewConfig['redirect']);
 
         $dto->addParameters(
             [
@@ -157,16 +157,5 @@ class Configured implements ViewProvider
                 'permanent' => $redirectConfig->isPermanent(),
             ]
         );
-    }
-
-    private function createRedirectConfiguration(array $viewConfig): RedirectConfiguration
-    {
-        if (isset($viewConfig['redirect'])) {
-            return RedirectConfiguration::fromConfigurationArray($viewConfig['redirect']);
-        }
-
-        return isset($viewConfig['permanent_redirect']) ?
-            new RedirectConfiguration($viewConfig['permanent_redirect'], [], true) :
-            new RedirectConfiguration($viewConfig['temporary_redirect'], [], false);
     }
 }

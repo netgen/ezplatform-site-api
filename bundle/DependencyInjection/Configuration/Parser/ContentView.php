@@ -33,6 +33,28 @@ class ContentView extends AbstractParser
                     ->normalizeKeys(false)
                     ->info("View selection rulesets, grouped by view type. Key is the view type (e.g. 'full', 'line', ...)")
                     ->arrayPrototype()
+                        ->beforeNormalization()
+                            ->ifTrue(function($v) {
+                                return \array_key_exists('permanent_redirect', $v) || \array_key_exists('temporary_redirect', $v);
+                            })
+                            ->then(function($v) {
+                                $value = \array_key_exists('permanent_redirect', $v) ? $v['permanent_redirect'] : $v['temporary_redirect'];
+                                $permanent = \array_key_exists('permanent_redirect', $v);
+
+                                $v['redirect'] = [
+                                    'target' => $value,
+                                    'permanent' => $permanent
+                                ];
+
+                                if ($permanent) {
+                                    unset($v['permanent_redirect']);
+                                } else {
+                                    unset($v['temporary_redirect']);
+                                }
+
+                                return $v;
+                            })
+                        ->end()
                         ->children()
                             ->scalarNode('template')->info('Your template path, as @App/my_template.html.twig')->end()
                             ->scalarNode('controller')

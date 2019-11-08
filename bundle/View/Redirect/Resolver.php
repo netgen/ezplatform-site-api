@@ -46,11 +46,11 @@ final class Resolver
      */
     public function resolveTarget(RedirectConfiguration $redirectConfig, ContentView $view): string
     {
-        if (\strpos($redirectConfig->getTarget(), '@=') === 0) {
+        if (\mb_stripos($redirectConfig->getTarget(), '@=') === 0) {
             return $this->processExpression($redirectConfig, $view);
         }
 
-        if (\strpos($redirectConfig->getTarget(), 'http') === 0) {
+        if (\mb_stripos($redirectConfig->getTarget(), 'http') === 0) {
             return $this->processUrl($redirectConfig);
         }
 
@@ -83,9 +83,9 @@ final class Resolver
 
         $queryStringArray = [];
         foreach ($redirectConfig->getTargetParameters() as $key => $value) {
-            $queryStringArray[] = urlencode($key).'='.urlencode($value);
+            $queryStringArray[] = \urlencode($key) . '=' . \urlencode($value);
         }
 
-        return count($queryStringArray) > 0 ? $url.'?'.implode('&', $queryStringArray) : $url;
+        return \count($queryStringArray) > 0 ? $url . '?' . \implode('&', $queryStringArray) : $url;
     }
 }

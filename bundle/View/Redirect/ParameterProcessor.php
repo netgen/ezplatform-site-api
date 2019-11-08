@@ -33,7 +33,7 @@ final class ParameterProcessor
      */
     public function process($value, ContentView $view)
     {
-        if (!\is_string($value) || \strpos($value, '@=') !== 0) {
+        if (!\is_string($value) || \mb_stripos($value, '@=') !== 0) {
             return $value;
         }
 
@@ -82,5 +82,4 @@ final class ParameterProcessor
             }
         );
     }
-
 }

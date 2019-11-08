@@ -50,7 +50,7 @@ EOT
                                         ->isRequired()
                                         ->cannotBeEmpty()
                                     ->end()
-                                    ->scalarNode('permanent')
+                                    ->booleanNode('permanent')
                                         ->defaultFalse()
                                     ->end()
                                     ->arrayNode('target_parameters')

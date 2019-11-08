@@ -149,13 +149,7 @@ class Configured implements ViewProvider
             )
         );
 
-        if (isset($viewConfig['redirect'])) {
-            $redirectConfig = RedirectConfiguration::fromConfigurationArray($viewConfig['redirect']);
-        } else if (isset($viewConfig['permanent_redirect'])) {
-            $redirectConfig = new RedirectConfiguration($viewConfig['permanent_redirect'], [], true);
-        } else if (isset($viewConfig['temporary_redirect'])) {
-            $redirectConfig = new RedirectConfiguration($viewConfig['temporary_redirect'], [], false);
-        }
+        $redirectConfig = $this->createRedirectConfiguration($viewConfig);
 
         $dto->addParameters(
             [
@@ -163,5 +157,17 @@ class Configured implements ViewProvider
                 'permanent' => $redirectConfig->isPermanent()
             ]
         );
+    }
+
+    private function createRedirectConfiguration(array $viewConfig): RedirectConfiguration
+    {
+        if (isset($viewConfig['redirect'])) {
+            return RedirectConfiguration::fromConfigurationArray($viewConfig['redirect']);
+        }
+
+        return isset($viewConfig['permanent_redirect']) ?
+            new RedirectConfiguration($viewConfig['permanent_redirect'], [], true) :
+            new RedirectConfiguration($viewConfig['temporary_redirect'], [], false)
+        ;
     }
 }

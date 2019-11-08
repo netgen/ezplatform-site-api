@@ -84,11 +84,7 @@ final class Resolver
     {
         $url = $redirectConfig->getTarget();
 
-        $queryStringArray = [];
-        foreach ($redirectConfig->getTargetParameters() as $key => $value) {
-            $queryStringArray[] = \urlencode($key) . '=' . \urlencode($value);
-        }
-
-        return \count($queryStringArray) > 0 ? $url . '?' . \implode('&', $queryStringArray) : $url;
+        return \count($redirectConfig->getTargetParameters()) > 0 ?
+            $url . '?' . \http_build_query($redirectConfig->getTargetParameters()) : $url;
     }
 }

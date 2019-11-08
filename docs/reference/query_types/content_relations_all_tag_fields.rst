@@ -98,17 +98,17 @@ Examples:
 .. code-block:: yaml
 
     # this is also automatically set when using from view builder configuration
-    location: '@=content'
+    content: '@=content'
 
 .. code-block:: yaml
 
     # fetch relations from Content's main Location parent Location's Content
-    location: '@=content.mainLocation.parent.content'
+    content: '@=content.mainLocation.parent.content'
 
 .. code-block:: yaml
 
     # fetch relations from Content's main Location parent Location's parent Location's Content
-    location: '@=content.mainLocation.parent.parent.content'
+    content: '@=content.mainLocation.parent.parent.content'
 
 ``exclude_self``
 ~~~~~~~~~~~~~~~~

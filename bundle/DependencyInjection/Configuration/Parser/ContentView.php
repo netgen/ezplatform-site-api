@@ -39,7 +39,7 @@ class ContentView extends AbstractParser
                                     && !\array_key_exists('redirect', $v);
                             })
                             ->then(function($v) {
-                                $value = \array_key_exists('permanent_redirect', $v) ? $v['permanent_redirect'] : $v['temporary_redirect'];
+                                $value = $v['permanent_redirect'] ?? $v['temporary_redirect'];
                                 $permanent = \array_key_exists('permanent_redirect', $v);
 
                                 $v['redirect'] = [

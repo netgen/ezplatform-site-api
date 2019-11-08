@@ -46,14 +46,22 @@ final class Resolver
      */
     public function resolveTarget(RedirectConfiguration $redirectConfig, ContentView $view): string
     {
-        // simple string means it's a symfony route
-        if (\strpos($redirectConfig->getTarget(), '@=') !== 0) {
-            return $this->router->generate(
-                $redirectConfig->getTarget(),
-                $redirectConfig->getTargetParameters()
-            );
+        if (\strpos($redirectConfig->getTarget(), '@=') === 0) {
+            return $this->processExpression($redirectConfig, $view);
         }
 
+        if (\strpos($redirectConfig->getTarget(), 'http') === 0) {
+            return $this->processUrl($redirectConfig);
+        }
+
+        return $this->router->generate(
+            $redirectConfig->getTarget(),
+            $redirectConfig->getTargetParameters()
+        );
+    }
+
+    private function processExpression(RedirectConfiguration $redirectConfig, ContentView $view): string
+    {
         $value = $this->parameterProcessor->process(
             $redirectConfig->getTarget(),
             $view
@@ -67,5 +75,17 @@ final class Resolver
         }
 
         return '/';
+    }
+
+    private function processUrl(RedirectConfiguration $redirectConfig): string
+    {
+        $url = $redirectConfig->getTarget();
+
+        $queryStringArray = [];
+        foreach ($redirectConfig->getTargetParameters() as $key => $value) {
+            $queryStringArray[] = urlencode($key).'='.urlencode($value);
+        }
+
+        return count($queryStringArray) > 0 ? $url.'?'.implode('&', $queryStringArray) : $url;
     }
 }

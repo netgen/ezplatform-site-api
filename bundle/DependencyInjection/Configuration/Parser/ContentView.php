@@ -35,7 +35,8 @@ class ContentView extends AbstractParser
                     ->arrayPrototype()
                         ->beforeNormalization()
                             ->ifTrue(function($v) {
-                                return \array_key_exists('permanent_redirect', $v) || \array_key_exists('temporary_redirect', $v);
+                                return (\array_key_exists('permanent_redirect', $v) xor \array_key_exists('temporary_redirect', $v))
+                                    && !\array_key_exists('redirect', $v);
                             })
                             ->then(function($v) {
                                 $value = \array_key_exists('permanent_redirect', $v) ? $v['permanent_redirect'] : $v['temporary_redirect'];
@@ -46,11 +47,7 @@ class ContentView extends AbstractParser
                                     'permanent' => $permanent
                                 ];
 
-                                if ($permanent) {
-                                    unset($v['permanent_redirect']);
-                                } else {
-                                    unset($v['temporary_redirect']);
-                                }
+                                unset($v['permanent_redirect'], $v['temporary_redirect']);
 
                                 return $v;
                             })

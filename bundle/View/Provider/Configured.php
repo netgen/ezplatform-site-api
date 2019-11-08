@@ -145,7 +145,7 @@ class Configured implements ViewProvider
 
         $dto->setControllerReference(
             new ControllerReference(
-                sprintf('%s::%s', RedirectController::class, 'urlRedirectAction')
+                \sprintf('%s::%s', RedirectController::class, 'urlRedirectAction')
             )
         );
 
@@ -154,7 +154,7 @@ class Configured implements ViewProvider
         $dto->addParameters(
             [
                 'path' => $this->redirectResolver->resolveTarget($redirectConfig, $view),
-                'permanent' => $redirectConfig->isPermanent()
+                'permanent' => $redirectConfig->isPermanent(),
             ]
         );
     }
@@ -167,7 +167,6 @@ class Configured implements ViewProvider
 
         return isset($viewConfig['permanent_redirect']) ?
             new RedirectConfiguration($viewConfig['permanent_redirect'], [], true) :
-            new RedirectConfiguration($viewConfig['temporary_redirect'], [], false)
-        ;
+            new RedirectConfiguration($viewConfig['temporary_redirect'], [], false);
     }
 }

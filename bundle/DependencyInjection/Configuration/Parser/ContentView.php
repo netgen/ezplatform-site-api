@@ -101,7 +101,7 @@ EOT
                         ->end()
                         ->validate()
                             ->ifTrue(static function ($v): bool {
-                                if  (\array_key_exists('redirect', $v)) {
+                                if (\array_key_exists('redirect', $v)) {
                                     return \array_key_exists('controller', $v) || \array_key_exists('template', $v);
                                 }
 
@@ -113,7 +113,7 @@ EOT
                         ->end()
                         ->validate()
                             ->ifTrue(static function ($v): bool {
-                                if  (\array_key_exists('redirect', $v)) {
+                                if (\array_key_exists('redirect', $v)) {
                                     return \array_key_exists('temporary_redirect', $v) || \array_key_exists('permanent_redirect', $v);
                                 }
 

@@ -7,6 +7,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Symfony\Component\Routing\RouterInterface;
 
 final class Resolver
@@ -58,7 +59,7 @@ final class Resolver
             $view
         );
 
-        if ($value instanceof Location || $value instanceof Content) {
+        if ($value instanceof Location || $value instanceof Content || $value instanceof Tag) {
             return $this->router->generate(
                 $value,
                 $redirectConfig->getTargetParameters()

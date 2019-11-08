@@ -75,6 +75,14 @@ final class ParameterProcessor
                 return $namedObjectProvider->getLocation($name);
             }
         );
+
+        $expressionLanguage->register(
+            'namedTag',
+            static function (): void {},
+            static function (array $arguments, string $name) use ($namedObjectProvider) {
+                return $namedObjectProvider->getTag($name);
+            }
+        );
     }
 
 }

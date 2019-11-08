@@ -58,29 +58,27 @@ final class ParameterProcessor
      */
     private function registerFunctions(ExpressionLanguage $expressionLanguage): void
     {
-        $namedObjectProvider = $this->namedObjectProvider;
-
         $expressionLanguage->register(
             'namedContent',
-            static function (): void {},
-            static function (array $arguments, string $name) use ($namedObjectProvider) {
-                return $namedObjectProvider->getContent($name);
+            function (): void {},
+            function (array $arguments, string $name) {
+                return $this->namedObjectProvider->getContent($name);
             }
         );
 
         $expressionLanguage->register(
             'namedLocation',
-            static function (): void {},
-            static function (array $arguments, string $name) use ($namedObjectProvider) {
-                return $namedObjectProvider->getLocation($name);
+            function (): void {},
+            function (array $arguments, string $name) {
+                return $this->namedObjectProvider->getLocation($name);
             }
         );
 
         $expressionLanguage->register(
             'namedTag',
-            static function (): void {},
-            static function (array $arguments, string $name) use ($namedObjectProvider) {
-                return $namedObjectProvider->getTag($name);
+            function (): void {},
+            function (array $arguments, string $name) {
+                return $this->namedObjectProvider->getTag($name);
             }
         );
     }

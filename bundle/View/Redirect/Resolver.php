@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect;
 
+use Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
+use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -55,11 +59,15 @@ final class Resolver
             return $redirectConfig->getTarget();
         }
 
-        return $this->router->generate(
-            $redirectConfig->getTarget(),
-            $redirectConfig->getTargetParameters(),
-            $redirectConfig->isAbsolute() ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH
-        );
+        try {
+            return $this->router->generate(
+                $redirectConfig->getTarget(),
+                $redirectConfig->getTargetParameters(),
+                $redirectConfig->isAbsolute() ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH
+            );
+        } catch (RouteNotFoundException | MissingMandatoryParametersException | InvalidParameterException $exception) {
+            throw new InvalidRedirectConfiguration($redirectConfig->getTarget());
+        }
     }
 
     private function processExpression(RedirectConfiguration $redirectConfig, ContentView $view): string
@@ -77,6 +85,10 @@ final class Resolver
             );
         }
 
-        return '/';
+        if (is_string($value) && \mb_stripos($value, 'http') === 0) {
+            return $value;
+        }
+
+        throw new InvalidRedirectConfiguration($redirectConfig->getTarget());
     }
 }

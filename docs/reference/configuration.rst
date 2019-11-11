@@ -39,7 +39,7 @@ admin or intranet interface.
 Site API Content views
 ~~~~~~~~~~~~~~~~~~~~~~
 
-One you enable ``override_url_alias_view_action`` for a siteaccess, all your **full view** templates
+Once you enable ``override_url_alias_view_action`` for a siteaccess, all your **full view** templates
 and controllers will need to use Site API to keep working. They will be resolved from Site API view
 configuration, available under ``ngcontent_view`` key. That means Content and Location variables
 inside Twig templates will be instances of Site API Content and Location value objects, ``$view``
@@ -82,6 +82,96 @@ Rendering a line view for an article with ``ng_content:viewAction`` would use
 
 It is also possible to use custom controllers, this is documented on
 :doc:`Custom controllers reference</reference/custom_controllers>` documentation page.
+
+Redirections
+~~~~~~~~~~~~~
+
+With Site API, it's also possible to configure redirects directly from the view configuration.
+You can set up temporary or permanent redirect to either ``Content``, ``Location``, ``Tag``, Symfony route or any full url.
+
+For the target configuration you can use expression language, meaning it is easily possible to redirect, for example,
+to the parent of the current location, or to the named object.
+
+Example configuration:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ngcontent_view:
+                    container:
+                        redirect:
+                            target: "@=location.parent"
+                            target_parameters:
+                                foo: bar
+                            permanent: false
+                        match:
+                            Identifier\ContentType: container
+                    article:
+                        redirect:
+                            target: "@=namedObject.getLocation('homepage')"
+                            target_parameters:
+                                foo: bar
+                            permanent: true
+                            siteaccess: cro
+                            absolute: true
+                        match:
+                            Identifier\ContentType: article
+                    category:
+                        redirect:
+                            target: '@=location.getChildren(1)[0]'
+                            permanent: true
+                        match:
+                            Identifier\ContentType: category
+                    news:
+                        redirect:
+                            target: 'login'
+                            target_parameters:
+                                foo: bar
+                            permanent: false
+                        match:
+                            Identifier\ContentType: news
+                    blog:
+                        redirect:
+                            target: 'https://netgen.io'
+                        match:
+                            Identifier\ContentType: blog
+
+There also shortcuts available for simplified configuration:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ngcontent_view:
+                    container:
+                        temporary_redirect: "@=namedObject.getTag('running')"
+                        match:
+                            Identifier\ContentType: container
+                    category:
+                        permanent_redirect: "@=content.getFieldRelation('internal_redirect')"
+                        match:
+                            Identifier\ContentType: container
+
+.. note::
+
+    Configuration of named objects is documented in more detail below.
+
+Shortcut functions are available for accessing each type of named object directly:
+
+- ``namedContent(name)``
+
+    Provides access to named Content.
+
+- ``namedLocation(name)``
+
+    Provides access to named Location.
+
+- ``namedTag(name)``
+
+    Provides access to named Tag.
 
 .. _named_object_configuration:
 

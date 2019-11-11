@@ -19,12 +19,12 @@ final class RedirectConfiguration
     /**
      * @var bool
      */
-    private $permanent = false;
+    private $permanent;
 
     /**
      * @var bool
      */
-    private $absolute = false;
+    private $absolute;
 
     public function __construct(string $target, array $targetParameters, bool $permanent, bool $absolute)
     {

@@ -39,11 +39,6 @@ final class QueryDefinitionMapper
      */
     private $namedQueryConfiguration;
 
-    /**
-     * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor $parameterProcessor
-     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
-     */
     public function __construct(
         QueryTypeRegistry $queryTypeRegistry,
         ParameterProcessor $parameterProcessor,

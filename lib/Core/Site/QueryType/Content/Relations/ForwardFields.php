@@ -21,9 +21,6 @@ final class ForwardFields extends Content
      */
     private $relationResolverRegistry;
 
-    /**
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry $relationResolverRegistry
-     */
     public function __construct(RelationResolverRegistry $relationResolverRegistry)
     {
         $this->relationResolverRegistry = $relationResolverRegistry;

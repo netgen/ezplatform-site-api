@@ -36,12 +36,6 @@ class LoadService implements LoadServiceInterface
      */
     private $locationService;
 
-    /**
-     * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     */
     public function __construct(
         BaseSettings $settings,
         DomainObjectMapper $domainObjectMapper,

@@ -22,10 +22,6 @@ final class FindAdapter extends BaseAdapter
      */
     private $findService;
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
-     * @param \Netgen\EzPlatformSiteApi\API\FindService $findService
-     */
     public function __construct(Query $query, FindService $findService)
     {
         parent::__construct($query);

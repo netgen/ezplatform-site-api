@@ -39,11 +39,6 @@ class Configured implements ViewProvider
      */
     private $redirectResolver;
 
-    /**
-     * @param \eZ\Publish\Core\MVC\Symfony\Matcher\MatcherFactoryInterface $matcherFactory
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper $queryDefinitionMapper
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\Resolver
-     */
     public function __construct(
         MatcherFactoryInterface $matcherFactory,
         QueryDefinitionMapper $queryDefinitionMapper,

@@ -22,10 +22,6 @@ final class FilterAdapter extends BaseAdapter
      */
     private $filterService;
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
-     * @param \Netgen\EzPlatformSiteApi\API\FilterService $filterService
-     */
     public function __construct(Query $query, FilterService $filterService)
     {
         parent::__construct($query);

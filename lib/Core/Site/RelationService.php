@@ -28,10 +28,6 @@ class RelationService implements RelationServiceInterface
      */
     private $relationResolverRegistry;
 
-    /**
-     * @param \Netgen\EzPlatformSiteApi\API\Site $site
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry $relationResolverRegistry
-     */
     public function __construct(
         SiteInterface $site,
         RelationResolverRegistry $relationResolverRegistry

@@ -26,14 +26,6 @@ final class RedirectConfiguration
      */
     private $absolute = false;
 
-    /**
-     * RedirectConfiguration constructor.
-     *
-     * @param string $target
-     * @param array $targetParameters
-     * @param bool $permanent
-     * @param bool $absolute
-     */
     public function __construct(string $target, array $targetParameters, bool $permanent, bool $absolute)
     {
         $this->target = $target;

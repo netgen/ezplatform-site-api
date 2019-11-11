@@ -37,11 +37,6 @@ final class QueryExecutor
      */
     private $findService;
 
-    /**
-     * @param \eZ\Publish\Core\QueryType\QueryTypeRegistry $queryTypeRegistry
-     * @param \Netgen\EzPlatformSiteApi\API\FilterService $filterService
-     * @param \Netgen\EzPlatformSiteApi\API\FindService $findService
-     */
     public function __construct(
         QueryTypeRegistry $queryTypeRegistry,
         FilterService $filterService,

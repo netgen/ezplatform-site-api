@@ -27,12 +27,6 @@ final class Resolver
      */
     private $router;
 
-    /**
-     * Resolver constructor.
-     *
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\ParameterProcessor $parameterProcessor
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     */
     public function __construct(
         ParameterProcessor $parameterProcessor,
         RouterInterface $router

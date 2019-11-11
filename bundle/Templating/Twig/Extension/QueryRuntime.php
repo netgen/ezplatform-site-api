@@ -22,9 +22,6 @@ class QueryRuntime
      */
     private $queryExecutor;
 
-    /**
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor $queryExecutor
-     */
     public function __construct(QueryExecutor $queryExecutor)
     {
         $this->queryExecutor = $queryExecutor;

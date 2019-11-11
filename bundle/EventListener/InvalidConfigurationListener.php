@@ -31,13 +31,6 @@ final class InvalidConfigurationListener implements EventSubscriberInterface
      */
     private $configResolver;
 
-    /**
-     * InvalidConfigurationListener constructor.
-     *
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
-     * @param null|\Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
         ConfigResolverInterface $configResolver,

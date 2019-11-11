@@ -34,12 +34,6 @@ class FindService implements FindServiceInterface
      */
     private $contentService;
 
-    /**
-     * @param \Netgen\EzPlatformSiteApi\API\Settings $settings
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
-     * @param \eZ\Publish\API\Repository\SearchService $searchService
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     */
     public function __construct(
         BaseSettings $settings,
         DomainObjectMapper $domainObjectMapper,

@@ -69,12 +69,6 @@ final class Fields extends APIFields
      */
     private $fieldsByNumericSequence = [];
 
-    /**
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper $domainObjectMapper
-     * @param bool $failOnMissingFields
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         RepoContent $content,
         DomainObjectMapper $domainObjectMapper,

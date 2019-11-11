@@ -92,7 +92,7 @@ EOT
                             ->end()
                             ->scalarNode('temporary_redirect')
                                 ->info(
-                                <<<'EOT'
+                                    <<<'EOT'
 Set up temporary redirect. You can use the expression language here as well.
 EOT
                                 )

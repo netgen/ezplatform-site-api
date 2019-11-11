@@ -60,7 +60,7 @@ final class ParameterProcessor
     {
         $expressionLanguage->register(
             'namedContent',
-            function (): void {},
+            static function (): void {},
             function (array $arguments, string $name) {
                 return $this->namedObjectProvider->getContent($name);
             }
@@ -68,7 +68,7 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'namedLocation',
-            function (): void {},
+            static function (): void {},
             function (array $arguments, string $name) {
                 return $this->namedObjectProvider->getLocation($name);
             }
@@ -76,7 +76,7 @@ final class ParameterProcessor
 
         $expressionLanguage->register(
             'namedTag',
-            function (): void {},
+            static function (): void {},
             function (array $arguments, string $name) {
                 return $this->namedObjectProvider->getTag($name);
             }

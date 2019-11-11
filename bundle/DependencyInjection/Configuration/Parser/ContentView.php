@@ -34,11 +34,11 @@ class ContentView extends AbstractParser
                     ->info("View selection rulesets, grouped by view type. Key is the view type (e.g. 'full', 'line', ...)")
                     ->arrayPrototype()
                         ->beforeNormalization()
-                            ->ifTrue(function($v) {
+                            ->ifTrue(static function ($v) {
                                 return (\array_key_exists('permanent_redirect', $v) xor \array_key_exists('temporary_redirect', $v))
                                     && !\array_key_exists('redirect', $v);
                             })
-                            ->then(function($v) {
+                            ->then(static function ($v) {
                                 $value = $v['permanent_redirect'] ?? $v['temporary_redirect'];
                                 $permanent = \array_key_exists('permanent_redirect', $v);
 
@@ -83,20 +83,20 @@ EOT
                                 ->end()
                             ->end()
                             ->scalarNode('permanent_redirect')
-                            ->info(
-                                <<<'EOT'
+                                ->info(
+                                    <<<'EOT'
 Set up permanent redirect. You can use the expression language here as well.
 EOT
-                            )
-                            ->example('@=location.parent')
+                                )
+                                ->example('@=location.parent')
                             ->end()
                             ->scalarNode('temporary_redirect')
-                            ->info(
+                                ->info(
                                 <<<'EOT'
 Set up temporary redirect. You can use the expression language here as well.
 EOT
-                            )
-                            ->example('@=location.parent')
+                                )
+                                ->example('@=location.parent')
                             ->end()
                             ->arrayNode('match')
                                 ->info('Condition matchers configuration')

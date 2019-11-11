@@ -24,19 +24,19 @@ final class InvalidConfigurationListener implements EventSubscriberInterface
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    protected $urlGenerator;
+    private $urlGenerator;
 
     /**
      * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
-    protected $configResolver;
+    private $configResolver;
 
     /**
      * InvalidConfigurationListener constructor.
      *
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
-     * @param \Psr\Log\LoggerInterface|null $logger
+     * @param null|\Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
@@ -47,7 +47,6 @@ final class InvalidConfigurationListener implements EventSubscriberInterface
         $this->configResolver = $configResolver;
         $this->logger = $logger ?: new NullLogger();
     }
-
 
     public static function getSubscribedEvents(): array
     {

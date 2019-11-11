@@ -52,7 +52,7 @@ final class Resolver
         }
 
         if (\mb_stripos($redirectConfig->getTarget(), 'http') === 0) {
-            return $this->processUrl($redirectConfig);
+            return $redirectConfig->getTarget();
         }
 
         return $this->router->generate(
@@ -78,13 +78,5 @@ final class Resolver
         }
 
         return '/';
-    }
-
-    private function processUrl(RedirectConfiguration $redirectConfig): string
-    {
-        $url = $redirectConfig->getTarget();
-
-        return \count($redirectConfig->getTargetParameters()) > 0 ?
-            $url . '?' . \http_build_query($redirectConfig->getTargetParameters()) : $url;
     }
 }

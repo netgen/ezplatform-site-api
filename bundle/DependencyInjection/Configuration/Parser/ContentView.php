@@ -64,7 +64,7 @@ EOT
                                 )
                                 ->example('MyBundle:MyControllerClass:view')
                             ->end()
-                            ->arrayNode('redirect') // @todo: add validation
+                            ->arrayNode('redirect')
                                 ->children()
                                     ->scalarNode('target')
                                         ->isRequired()

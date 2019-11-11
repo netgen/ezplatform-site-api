@@ -28,7 +28,7 @@ class QueryRuntime
     }
 
     /**
-     * @param $context
+     * @param mixed $context
      * @param string $name
      *
      * @throws \Pagerfanta\Exception\Exception
@@ -44,7 +44,7 @@ class QueryRuntime
     }
 
     /**
-     * @param $context
+     * @param mixed $context
      * @param string $name
      *
      * @throws \Twig\Error\RuntimeError

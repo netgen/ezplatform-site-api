@@ -90,3 +90,13 @@ services:
             - '@ezplatform.view_cache.response_tagger.dispatcher'
         tags:
             - { name: kernel.event_subscriber }
+
+    netgen.ezplatform_site.event_listener.invalid_configuration:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\InvalidConfigurationListener
+        public: false
+        arguments:
+            - '@router'
+            - '@ezpublish.config.resolver'
+            - '@?logger'
+        tags:
+            - { name: kernel.event_subscriber }

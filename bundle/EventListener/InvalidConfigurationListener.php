@@ -34,11 +34,11 @@ final class InvalidConfigurationListener implements EventSubscriberInterface
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
         ConfigResolverInterface $configResolver,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->configResolver = $configResolver;
-        $this->logger = $logger ?: new NullLogger();
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public static function getSubscribedEvents(): array

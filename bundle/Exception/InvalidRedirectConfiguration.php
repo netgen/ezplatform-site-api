@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Exception;
 
-use Throwable;
-
 final class InvalidRedirectConfiguration extends \Exception
 {
     public function __construct(string $target)

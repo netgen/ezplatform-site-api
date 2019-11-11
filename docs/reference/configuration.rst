@@ -113,8 +113,8 @@ Example configuration:
                             target: "@=namedObject.getLocation('homepage')"
                             target_parameters:
                                 foo: bar
+                                siteaccess: cro
                             permanent: true
-                            siteaccess: cro
                             absolute: true
                         match:
                             Identifier\ContentType: article

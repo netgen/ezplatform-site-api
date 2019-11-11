@@ -18,7 +18,7 @@ use Symfony\Component\Routing\RouterInterface;
 final class Resolver
 {
     /**
-     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\ParameterProcessor
      */
     private $parameterProcessor;
 

@@ -93,9 +93,9 @@ class ContentViewRuntime
      * @param array $parameters
      * @param bool $layout
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
-     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
      * @return string The HTML markup
      */
@@ -158,6 +158,14 @@ class ContentViewRuntime
         throw new LogicException('Given value must be Content or Location instance.');
     }
 
+    /**
+     * @param \eZ\Publish\API\Repository\Values\ValueObject $contentOrLocation
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return null|\eZ\Publish\API\Repository\Values\ValueObject
+     */
     private function getLocation(ValueObject $contentOrLocation): ?ValueObject
     {
         if ($contentOrLocation instanceof Location || $contentOrLocation instanceof APILocation) {

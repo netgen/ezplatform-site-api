@@ -85,7 +85,7 @@ final class Resolver
             );
         }
 
-        if (is_string($value) && \mb_stripos($value, 'http') === 0) {
+        if (\is_string($value) && \mb_stripos($value, 'http') === 0) {
             return $value;
         }
 

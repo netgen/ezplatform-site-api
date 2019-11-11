@@ -210,39 +210,35 @@ final class ParameterProcessor
             }
         );
 
-        $configResolver = $this->configResolver;
-
         $expressionLanguage->register(
             'config',
             static function (): void {},
-            static function (array $arguments, string $name, ?string $namespace = null, ?string $scope = null) use ($configResolver) {
-                return $configResolver->getParameter($name, $namespace, $scope);
+            function (array $arguments, string $name, ?string $namespace = null, ?string $scope = null) {
+                return $this->configResolver->getParameter($name, $namespace, $scope);
             }
         );
-
-        $namedObjectProvider = $this->namedObjectProvider;
 
         $expressionLanguage->register(
             'namedContent',
             static function (): void {},
-            static function (array $arguments, string $name) use ($namedObjectProvider) {
-                return $namedObjectProvider->getContent($name);
+            function (array $arguments, string $name) {
+                return $this->namedObjectProvider->getContent($name);
             }
         );
 
         $expressionLanguage->register(
             'namedLocation',
             static function (): void {},
-            static function (array $arguments, string $name) use ($namedObjectProvider) {
-                return $namedObjectProvider->getLocation($name);
+            function (array $arguments, string $name) {
+                return $this->namedObjectProvider->getLocation($name);
             }
         );
 
         $expressionLanguage->register(
             'namedTag',
             static function (): void {},
-            static function (array $arguments, string $name) use ($namedObjectProvider) {
-                return $namedObjectProvider->getTag($name);
+            function (array $arguments, string $name) {
+                return $this->namedObjectProvider->getTag($name);
             }
         );
     }

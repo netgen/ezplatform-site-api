@@ -42,7 +42,7 @@ final class RedirectConfiguration
         $this->absolute = $absolute;
     }
 
-    public static function fromConfigurationArray($config): RedirectConfiguration
+    public static function fromConfigurationArray(array $config): RedirectConfiguration
     {
         $target = $config['target'];
         $targetParameters = $config['target_parameters'];

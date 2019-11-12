@@ -1,6 +1,13 @@
 eZ Platform Site API changelog
 ==============================
 
+Unreleased
+----------
+
+[`3.1.0...master`](https://github.com/netgen/ezplatform-site-api/compare/3.1.0...master)
+
+* NGSTACK-347: enable redirects through content view configuration by @iherak ([#147](https://github.com/netgen/ezplatform-site-api/pull/147))
+
 3.1.0 (04.11.2019)
 ------------------
 

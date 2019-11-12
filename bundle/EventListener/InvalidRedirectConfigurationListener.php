@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final class InvalidConfigurationListener implements EventSubscriberInterface
+final class InvalidRedirectConfigurationListener implements EventSubscriberInterface
 {
     /**
      * @var \Psr\Log\LoggerInterface

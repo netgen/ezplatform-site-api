@@ -7,11 +7,11 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-final class InvalidConfigurationListenerPass implements CompilerPassInterface
+final class InvalidRedirectConfigurationListenerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('netgen.ezplatform_site.event_listener.invalid_configuration')) {
+        if (!$container->hasDefinition('netgen.ezplatform_site.event_listener.invalid_redirect_configuration')) {
             return;
         }
 
@@ -19,6 +19,6 @@ final class InvalidConfigurationListenerPass implements CompilerPassInterface
             return;
         }
 
-        $container->removeDefinition('netgen.ezplatform_site.event_listener.invalid_configuration');
+        $container->removeDefinition('netgen.ezplatform_site.event_listener.invalid_redirect_configuration');
     }
 }

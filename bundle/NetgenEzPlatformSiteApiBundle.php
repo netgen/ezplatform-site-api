@@ -6,7 +6,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle;
 
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\AggregateRepositoryPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\DefaultViewActionOverridePass;
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\InvalidConfigurationListenerPass;
+use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\InvalidRedirectConfigurationListenerPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\PreviewControllerOverridePass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\RelationResolverRegistrationPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\ViewBuilderRegistrationPass;
@@ -26,7 +26,7 @@ class NetgenEzPlatformSiteApiBundle extends Bundle
         $container->addCompilerPass(new PreviewControllerOverridePass());
         $container->addCompilerPass(new RelationResolverRegistrationPass());
         $container->addCompilerPass(new ViewBuilderRegistrationPass());
-        $container->addCompilerPass(new InvalidConfigurationListenerPass());
+        $container->addCompilerPass(new InvalidRedirectConfigurationListenerPass());
 
         /** @var \eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension $coreExtension */
         $coreExtension = $container->getExtension('ezpublish');

@@ -91,8 +91,8 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    netgen.ezplatform_site.event_listener.invalid_configuration:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\InvalidConfigurationListener
+    netgen.ezplatform_site.event_listener.invalid_redirect_configuration:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\InvalidRedirectConfigurationListener
         public: false
         arguments:
             - '@router'

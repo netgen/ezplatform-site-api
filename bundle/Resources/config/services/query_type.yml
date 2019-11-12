@@ -1,0 +1,24 @@
+services:
+    netgen.ezplatform_site.query_type.parameter_processor:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
+        arguments:
+            - '@request_stack'
+            - '@ezpublish.config.resolver'
+            - '@netgen.ezplatform_site.named_object_provider'
+        public: false
+
+    netgen.ezplatform_site.query_type.query_definition_mapper:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper
+        arguments:
+            - '@ezpublish.query_type.registry'
+            - '@netgen.ezplatform_site.query_type.parameter_processor'
+            - '@ezpublish.config.resolver'
+        public: false
+
+    netgen.ezplatform_site.query_type.query_executor:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor
+        arguments:
+            - '@ezpublish.query_type.registry'
+            - '@netgen.ezplatform_site.filter_service'
+            - '@netgen.ezplatform_site.find_service'
+        public: false

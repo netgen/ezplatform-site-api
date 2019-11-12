@@ -54,13 +54,17 @@ class Configured implements ViewProvider
      *
      * Returns view as a data transfer object.
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     public function getView(View $view): ?View
     {
         if (($configHash = $this->matcherFactory->match($view)) === null) {
             return null;
         }
+
+        // Service is dispatched by the configured view class, so this should be safe
+        /* @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
 
         // We can set the collection directly to the view, no need to go through DTO
         $view->addParameters([
@@ -71,7 +75,7 @@ class Configured implements ViewProvider
         return $this->getDTO($configHash, $view);
     }
 
-    private function getQueryDefinitionCollection(array $configHash, View $view): QueryDefinitionCollection
+    private function getQueryDefinitionCollection(array $configHash, ContentView $view): QueryDefinitionCollection
     {
         $queryDefinitionCollection = new QueryDefinitionCollection();
         $queriesConfiguration = $this->getQueriesConfiguration($configHash);
@@ -79,12 +83,7 @@ class Configured implements ViewProvider
         foreach ($queriesConfiguration as $variableName => $queryConfiguration) {
             $queryDefinitionCollection->add(
                 $variableName,
-                $this->queryDefinitionMapper->map(
-                    $queryConfiguration,
-                    // Service is dispatched by the configured view class, so this should be safe
-                    /* @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
-                    $view
-                )
+                $this->queryDefinitionMapper->map($queryConfiguration, $view)
             );
         }
 
@@ -106,7 +105,8 @@ class Configured implements ViewProvider
      * @param array $viewConfig
      * @param ContentView $view
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView
      */
@@ -132,7 +132,14 @@ class Configured implements ViewProvider
         return $dto;
     }
 
-    private function processRedirects(CoreContentView $dto, array $viewConfig, ContentView $view)
+    /**
+     * @param \eZ\Publish\Core\MVC\Symfony\View\ContentView $dto
+     * @param array $viewConfig
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
+     *
+     * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration
+     */
+    private function processRedirects(CoreContentView $dto, array $viewConfig, ContentView $view): void
     {
         if (!isset($viewConfig['redirect'])) {
             return;

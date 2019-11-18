@@ -11,5 +11,5 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider\Loading
         arguments:
             - '@netgen.ezplatform_site.load_service'
-            - '@eztags.api.service.tags'
+            - '@?eztags.api.service.tags'
             - '@ezpublish.config.resolver'

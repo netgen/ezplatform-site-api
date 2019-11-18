@@ -1,10 +1,17 @@
 eZ Platform Site API changelog
 ==============================
 
-Unreleased
-----------
+3.2.1 (18.11.2019)
+------------------
 
-[`3.1.0...master`](https://github.com/netgen/ezplatform-site-api/compare/3.1.0...master)
+[`3.2.0...3.2.1`](https://github.com/netgen/ezplatform-site-api/compare/3.2.0...3.2.1)
+
+* Make `TagsService` argument optional
+
+3.2.0 (12.11.2019)
+------------------
+
+[`3.1.0...3.2.0`](https://github.com/netgen/ezplatform-site-api/compare/3.1.0...3.2.0)
 
 * NGSTACK-347: enable redirects through content view configuration by @iherak ([#147](https://github.com/netgen/ezplatform-site-api/pull/147))
 

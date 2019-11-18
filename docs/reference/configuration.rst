@@ -189,7 +189,7 @@ Example configuration:
     netgen_ez_platform_site_api:
         system:
             frontend_group:
-                named_object:
+                named_objects:
                     content:
                         certificate: 42
                         site_info: 'abc123'
@@ -211,7 +211,7 @@ full syntax equivalent to the above would be:
     netgen_ez_platform_site_api:
         system:
             frontend_group:
-                named_object:
+                named_objects:
                     content:
                         certificate:
                             id: 42

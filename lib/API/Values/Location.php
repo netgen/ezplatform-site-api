@@ -58,7 +58,7 @@ abstract class Location extends ValueObject
     /**
      * Return first child, limited by optional $contentTypeIdentifier.
      *
-     * @param string|null $contentTypeIdentifier
+     * @param null|string $contentTypeIdentifier
      *
      * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
      */

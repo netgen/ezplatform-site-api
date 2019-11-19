@@ -341,6 +341,10 @@ abstract class BaseTest extends APIBaseTest
         $this->assertInstanceOf(Location::class, $children[0]);
         $this->assertEquals($data['childLocationId'], $children[0]->id);
 
+        $firstChild = $location->getFirstChild();
+        $this->assertInstanceOf(Location::class, $firstChild);
+        $this->assertEquals($data['childLocationId'], $firstChild->id);
+
         $siblings = $location->getSiblings();
         $this->assertIsArray($siblings);
         $this->assertCount(1, $siblings);

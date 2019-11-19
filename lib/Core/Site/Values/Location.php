@@ -175,6 +175,23 @@ final class Location extends APILocation
         return $this->getFilterPager($criteria, $maxPerPage, $currentPage);
     }
 
+    public function getFirstChild(?string $contentTypeIdentifier = null): ?APILocation
+    {
+        $contentTypeIdentifiers = [];
+
+        if ($contentTypeIdentifier !== null) {
+            $contentTypeIdentifiers = [$contentTypeIdentifier];
+        }
+
+        $pager = $this->filterChildren($contentTypeIdentifiers, 1);
+
+        if ($pager->count() > 0) {
+            return $pager->getIterator()->current();
+        }
+
+        return null;
+    }
+
     public function getSiblings(int $limit = 25): array
     {
         return $this->filterSiblings([], $limit)->getIterator()->getArrayCopy();

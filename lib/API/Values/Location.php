@@ -56,6 +56,15 @@ abstract class Location extends ValueObject
     abstract public function filterChildren(array $contentTypeIdentifiers = [], int $maxPerPage = 25, int $currentPage = 1): Pagerfanta;
 
     /**
+     * Return first child, limited by optional $contentTypeIdentifier.
+     *
+     * @param string|null $contentTypeIdentifier
+     *
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    abstract public function getFirstChild(?string $contentTypeIdentifier = null): ?Location;
+
+    /**
      * Return an array of Location siblings, limited by optional $limit.
      *
      * @param int $limit

@@ -4,6 +4,18 @@ Templating
 Site API objects are used directly in the templates. Below you will find examples for the most
 common use cases. Objects are documented in more detail on :doc:`Objects reference </reference/objects>` documentation page.
 
+.. note::
+
+  If you are using PHPStorm, you can type hint Site API Content and Location objects by adding the
+  following snippet to your template:
+
+  .. code-block:: twig
+
+    {# content \Netgen\EzPlatformSiteApi\API\Values\Content #}
+    {# location \Netgen\EzPlatformSiteApi\API\Values\Location #}
+
+  With that, you will get autocompletion and Cmd/Ctrl-click navigation through the Twig code.
+
 **Content on this page:**
 
 .. contents::

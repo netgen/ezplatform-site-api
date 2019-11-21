@@ -558,6 +558,33 @@ children returned and defaults to ``25``.
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 
+``getFirstChild``
+.................
+
+Get the first child of the Location.
+
+First child will be returned from children sorted as is defined by their parent Location, which is
+the Location the method is called on. The single optional parameter of this method is
+``$contentTypeIdentifier``, which returned Location must match.
+
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Parameters**                         | ``?string $contentTypeIdentifier = null``                                          |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Returns**                            | First child `Location`_ or ``null`` if there are no children Locations             |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Sorting method**                     | As is defined by the Location                                                      |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example in PHP**                     | .. code-block:: php                                                                |
+|                                        |                                                                                    |
+|                                        |     $firstChild = $location->getFirstChild('article');                             |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example in Twig**                    | .. code-block:: twig                                                               |
+|                                        |                                                                                    |
+|                                        |     {% set first_child = location.firstChild('article') %}                         |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+
 ``filterChildren``
 ..................
 

@@ -430,6 +430,32 @@ Location children
     {% endfor %}
     </ul>
 
+- **Accessing the first child of a Location**
+
+  This is done by calling the method ``getFirstChild()``, also available as ``firstChild()`` in
+  Twig. It has one optional parameter, which is a ContentType identifier that returned Location must
+  match. In our example, the ContentType identifier is ``blog_post``. Returned Location will be
+  the first one from the children Locations sorted as is defined by their parent Location, which is
+  the Location the method is called on.
+
+  .. code-block:: twig
+
+    {% set first_child = location.firstChild('blog_post') %}
+
+    {% if first_child is not null %}
+        <p>
+            First blog post, as sorted by the parent Location:
+            <a href="{{ path(first_child) }}">{{ first_child.content.name }}</a>
+        </p>
+    {% else %}
+        <p>There are no blog posts under this Location</p>
+    {% endif %}
+
+  .. note::
+
+    If the Location doesn't contain any children, optionally limited by the the given ContentType,
+    the method will return ``null``. Make sure to check if that's the case.
+
 - **Filtering through Location's children**
 
   This is done by calling the method ``filterChildren()``, which returns a Pagerfanta instance

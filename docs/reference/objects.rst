@@ -154,7 +154,7 @@ Get the `Field`_ with the given ``$id``.
 +----------------------------------------+-----------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                         |
 |                                        |                                                                             |
-|                                        |     $field = $content->getFieldById(42));                                   |
+|                                        |     $field = $content->getFieldById(42);                                    |
 |                                        |                                                                             |
 +----------------------------------------+-----------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                        |
@@ -185,7 +185,7 @@ Get the value of the `Field`_ with the given ``$identifier``.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $value = $content->getFieldValue('title'));                                    |
+|                                        |     $value = $content->getFieldValue('title');                                     |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
@@ -210,7 +210,7 @@ Get the value of the `Field`_ with the given ``$id``.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $value = $content->getFieldValueById(42));                                     |
+|                                        |     $value = $content->getFieldValueById(42);                                      |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
@@ -234,7 +234,7 @@ string (a string with materialized IDs, e.g. ``/1/2/45/67/``).
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $locations = $content->locations(10));                                         |
+|                                        |     $locations = $content->locations(10);                                          |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
@@ -261,7 +261,7 @@ sorted their path string (a string with materialized IDs, e.g. ``/1/2/45/67/``).
 +----------------------------------------+--------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                          |
 |                                        |                                                              |
-|                                        |     $locations = $content->filterLocations(10, 2));          |
+|                                        |     $locations = $content->filterLocations(10, 2);           |
 |                                        |                                                              |
 +----------------------------------------+--------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                         |
@@ -284,7 +284,7 @@ Used to get a single field relation from the `Field`_ with the given ``$identifi
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $relation = $content->getFieldRelation('author'));                             |
+|                                        |     $relation = $content->getFieldRelation('author');                              |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
@@ -309,7 +309,7 @@ will be sorted as is defined by the relation field.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $relations = $content->getFieldRelations('images', 10));                       |
+|                                        |     $relations = $content->getFieldRelations('images', 10);                        |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
@@ -549,7 +549,7 @@ children returned and defaults to ``25``.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $children = $location->getChildren(10));                                       |
+|                                        |     $children = $location->getChildren(10);                                        |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |

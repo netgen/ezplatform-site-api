@@ -10,8 +10,7 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\Controller\Content\PreviewController as BasePreviewController;
 use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter;
-use Netgen\EzPlatformSiteApi\API\LoadService;
-use Netgen\EzPlatformSiteApi\Core\Site\Values\Location as SiteLocation;
+use Netgen\EzPlatformSiteApi\Core\Site\Site;
 use Symfony\Component\HttpFoundation\Request;
 
 class PreviewController extends BasePreviewController
@@ -22,9 +21,9 @@ class PreviewController extends BasePreviewController
     protected $configResolver;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\LoadService
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\Site
      */
-    protected $loadService;
+    protected $site;
 
     /**
      * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
@@ -34,18 +33,17 @@ class PreviewController extends BasePreviewController
         $this->configResolver = $configResolver;
     }
 
-    /**
-     * @param \Netgen\EzPlatformSiteApi\API\LoadService $loadService
-     */
-    public function setLoadService(LoadService $loadService): void
+    public function setSite(Site $site): void
     {
-        $this->loadService = $loadService;
+        $this->site = $site;
     }
 
     /**
      * {@inheritdoc}
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
     protected function getForwardRequest(Location $location, Content $content, SiteAccess $previewSiteAccess, Request $request, $language): Request
     {
@@ -79,6 +77,8 @@ class PreviewController extends BasePreviewController
      * @param string $language
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
     protected function injectSiteApiValueObjects(Request $request, string $language): void
     {
@@ -87,19 +87,20 @@ class PreviewController extends BasePreviewController
         $content = $request->attributes->get('content');
         $location = $request->attributes->get('location');
 
-        $siteContent = $this->loadService->loadContent(
+        $siteContent = $this->site->getLoadService()->loadContent(
             $content->id,
             $content->versionInfo->versionNo,
             $language
         );
 
         if (!$location->isDraft()) {
-            $siteLocation = $this->loadService->loadLocation($location->id);
+            $siteLocation = $this->site->getLoadService()->loadLocation($location->id);
         } else {
-            $siteLocation = new SiteLocation([
-                'contentInfo' => $siteContent->contentInfo,
-                'innerLocation' => $location,
-            ]);
+            $siteLocation = $this->site->getDomainObjectMapper()->mapLocation(
+                $location,
+                $content->versionInfo,
+                $language
+            );
         }
 
         $requestParams = $request->attributes->get('params');

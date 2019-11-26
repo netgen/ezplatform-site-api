@@ -160,7 +160,7 @@ class Site implements SiteInterface
     }
 
     /**
-     * @internal For Site API internal use only.
+     * @internal for Site API internal use only
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */

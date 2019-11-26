@@ -13,27 +13,29 @@ class PreviewControllerOverridePass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('ezpublish.controller.content.preview.core')) {
+        $corePreviewControllerServiceId = 'ezpublish.controller.content.preview.core';
+
+        if (!$container->hasDefinition($corePreviewControllerServiceId)) {
             return;
         }
 
         $container
-            ->findDefinition('ezpublish.controller.content.preview.core')
+            ->findDefinition($corePreviewControllerServiceId)
             ->setClass(PreviewController::class)
             ->addMethodCall(
                 'setConfigResolver',
                 [new Reference('ezpublish.config.resolver')]
             )
             ->addMethodCall(
-                'setLoadService',
-                [new Reference('netgen.ezplatform_site.load_service')]
+                'setSite',
+                [new Reference('netgen.ezplatform_site.core.site')]
             );
 
         // Resetting the alias to the original value
         // to disable legacy bridge taking over the preview controller
         $container->setAlias(
             'ezpublish.controller.content.preview',
-            'ezpublish.controller.content.preview.core'
+            $corePreviewControllerServiceId
         );
     }
 }

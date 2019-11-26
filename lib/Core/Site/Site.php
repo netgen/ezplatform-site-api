@@ -160,9 +160,11 @@ class Site implements SiteInterface
     }
 
     /**
+     * @internal For Site API internal use only.
+     *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
-    private function getDomainObjectMapper(): DomainObjectMapper
+    public function getDomainObjectMapper(): DomainObjectMapper
     {
         if ($this->domainObjectMapper === null) {
             $this->domainObjectMapper = new DomainObjectMapper(

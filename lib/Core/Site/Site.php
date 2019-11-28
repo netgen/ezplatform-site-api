@@ -16,6 +16,12 @@ use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Regist
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
+/**
+ * @internal
+ *
+ * Hint against API interface instead of this service:
+ * @see \Netgen\EzPlatformSiteApi\API\Site
+ */
 class Site implements SiteInterface
 {
     /**

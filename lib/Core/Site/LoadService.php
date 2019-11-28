@@ -14,6 +14,12 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException;
 
+/**
+ * @internal
+ *
+ * Hint against API interface instead of this service:
+ * @see \Netgen\EzPlatformSiteApi\API\LoadService
+ */
 class LoadService implements LoadServiceInterface
 {
     /**

@@ -1,6 +1,13 @@
 eZ Platform Site API changelog
 ==============================
 
+3.2.2 (28.11.2019)
+------------------
+
+[`3.2.1...3.2.2`](https://github.com/netgen/ezplatform-site-api/compare/3.2.1...3.2.2)
+
+* Fix preview of the unpublished Content ([#149](https://github.com/netgen/ezplatform-site-api/pull/149))
+
 3.2.1 (18.11.2019)
 ------------------
 

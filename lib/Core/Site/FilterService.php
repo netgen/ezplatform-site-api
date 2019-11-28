@@ -13,9 +13,12 @@ use Netgen\EzPlatformSiteApi\API\FilterService as FilterServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 
 /**
+ * @final
+ *
  * @internal
  *
  * Hint against API interface instead of this service:
+ *
  * @see \Netgen\EzPlatformSiteApi\API\FilterService
  */
 class FilterService implements FilterServiceInterface

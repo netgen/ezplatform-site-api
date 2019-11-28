@@ -15,9 +15,12 @@ use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Regist
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 
 /**
+ * @final
+ *
  * @internal
  *
  * Hint against API interface instead of this service:
+ *
  * @see \Netgen\EzPlatformSiteApi\API\RelationService
  */
 class RelationService implements RelationServiceInterface

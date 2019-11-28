@@ -16,6 +16,12 @@ use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Regist
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
+/**
+ * @internal
+ *
+ * Hint against API interface instead of this service:
+ * @see \Netgen\EzPlatformSiteApi\API\Site
+ */
 class Site implements SiteInterface
 {
     /**
@@ -160,9 +166,11 @@ class Site implements SiteInterface
     }
 
     /**
+     * @internal for Site API internal use only
+     *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
      */
-    private function getDomainObjectMapper(): DomainObjectMapper
+    public function getDomainObjectMapper(): DomainObjectMapper
     {
         if ($this->domainObjectMapper === null) {
             $this->domainObjectMapper = new DomainObjectMapper(

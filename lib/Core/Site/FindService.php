@@ -12,6 +12,12 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\EzPlatformSiteApi\API\FindService as FindServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 
+/**
+ * @internal
+ *
+ * Hint against API interface instead of this service:
+ * @see \Netgen\EzPlatformSiteApi\API\FindService
+ */
 class FindService implements FindServiceInterface
 {
     /**

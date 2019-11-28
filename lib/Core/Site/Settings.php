@@ -8,6 +8,12 @@ use eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException;
 use eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException;
 use Netgen\EzPlatformSiteApi\API\Settings as BaseSettings;
 
+/**
+ * @internal
+ *
+ * Hint against API abstract class instead of this service:
+ * @see \Netgen\EzPlatformSiteApi\API\Settings
+ */
 final class Settings extends BaseSettings
 {
     /**

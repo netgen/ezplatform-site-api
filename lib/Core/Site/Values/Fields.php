@@ -20,7 +20,7 @@ use Traversable;
 /**
  * @internal do not depend on this implementation, use API Fields instead
  *
- * @see \Netgen\EzPlatformSiteApi\Core\Site\Values\Fields
+ * @see \Netgen\EzPlatformSiteApi\API\Values\Fields
  */
 final class Fields extends APIFields
 {

@@ -123,8 +123,7 @@ class RelationService implements RelationServiceInterface
         ]);
 
         $searchResult = $this->site->getFilterService()->filterContent($query);
-        /** @var \eZ\Publish\API\Repository\Values\Content\Content[] $contentItems */
-        $contentItems = $this->extractValueObjects($searchResult);
+        $contentItems = $this->extractContentItems($searchResult);
 
         if ($limit !== null) {
             return \array_slice($contentItems, 0, $limit);

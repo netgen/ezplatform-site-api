@@ -96,7 +96,7 @@ abstract class Controller extends AbstractController
     protected function getNamedObjectProvider(): Provider
     {
         /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider $namedObjectProvider */
-        $namedObjectProvider = $this->container->get('netgen.ezplatform_site.named_object.provider');
+        $namedObjectProvider = $this->container->get('netgen.ezplatform_site.named_object_provider');
 
         return $namedObjectProvider;
     }

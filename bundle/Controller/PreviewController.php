@@ -10,6 +10,7 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\Controller\Content\PreviewController as BasePreviewController;
 use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter;
+use Netgen\EzPlatformSiteApi\API\Values\Location as SiteLocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Site;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,9 +46,39 @@ class PreviewController extends BasePreviewController
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    protected function getForwardRequest(Location $location, Content $content, SiteAccess $previewSiteAccess, Request $request, $language): Request
-    {
+    protected function getForwardRequest(
+        Location $location,
+        Content $content,
+        SiteAccess $previewSiteAccess,
+        Request $request,
+        $language
+    ): Request {
         $request = parent::getForwardRequest($location, $content, $previewSiteAccess, $request, $language);
+
+        $this->injectAttributes($request, $previewSiteAccess, $language);
+
+        return $request;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \eZ\Publish\Core\MVC\Symfony\SiteAccess $previewSiteAccess
+     * @param string $languageCode
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    protected function injectAttributes(Request $request, SiteAccess $previewSiteAccess, string $languageCode): void
+    {
+        // If the preview siteaccess is configured in legacy_mode
+        // we forward to the LegacyKernelController.
+        // For compatibility with eZ Publish Legacy
+        if ($this->isLegacyModeSiteAccess($previewSiteAccess->name)) {
+            $request->attributes->set('_controller', 'ezpublish_legacy.controller:indexAction');
+
+            return;
+        }
 
         $overrideViewAction = $this->configResolver->getParameter(
             'override_url_alias_view_action',
@@ -55,18 +86,11 @@ class PreviewController extends BasePreviewController
             $previewSiteAccess->name
         );
 
-        // If the preview siteaccess is configured in legacy_mode
-        // we forward to the LegacyKernelController.
-        // For compatibility with eZ Publish Legacy
-        if ($this->isLegacyModeSiteAccess($previewSiteAccess->name)) {
-            $request->attributes->set('_controller', 'ezpublish_legacy.controller:indexAction');
-        } elseif ($overrideViewAction) {
+        if ($overrideViewAction) {
             $request->attributes->set('_controller', UrlAliasRouter::OVERRIDE_VIEW_ACTION);
 
-            $this->injectSiteApiValueObjects($request, $language);
+            $this->injectSiteApiValueObjects($request, $languageCode);
         }
-
-        return $request;
     }
 
     /**
@@ -74,13 +98,13 @@ class PreviewController extends BasePreviewController
      * eZ API value objects.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $language
+     * @param string $languageCode
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    protected function injectSiteApiValueObjects(Request $request, string $language): void
+    protected function injectSiteApiValueObjects(Request $request, string $languageCode): void
     {
         /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
         /** @var \eZ\Publish\API\Repository\Values\Content\Location $location */
@@ -90,18 +114,9 @@ class PreviewController extends BasePreviewController
         $siteContent = $this->site->getLoadService()->loadContent(
             $content->id,
             $content->versionInfo->versionNo,
-            $language
+            $languageCode
         );
-
-        if (!$location->isDraft()) {
-            $siteLocation = $this->site->getLoadService()->loadLocation($location->id);
-        } else {
-            $siteLocation = $this->site->getDomainObjectMapper()->mapLocation(
-                $location,
-                $content->versionInfo,
-                $language
-            );
-        }
+        $siteLocation = $this->getSiteLocation($content, $location, $languageCode);
 
         $requestParams = $request->attributes->get('params');
         $requestParams['content'] = $siteContent;
@@ -110,6 +125,30 @@ class PreviewController extends BasePreviewController
         $request->attributes->set('content', $siteContent);
         $request->attributes->set('location', $siteLocation);
         $request->attributes->set('params', $requestParams);
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param string $languageCode
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    protected function getSiteLocation(Content $content, Location $location, string $languageCode): SiteLocation
+    {
+        if ($location->isDraft()) {
+            return $this->site->getDomainObjectMapper()->mapLocation(
+                $location,
+                $content->versionInfo,
+                $languageCode
+            );
+        }
+
+        return $this->site->getLoadService()->loadLocation($location->id);
     }
 
     /**

@@ -18,6 +18,13 @@ final class LocationParamConverter extends SiteParamConverter
         return 'locationId';
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
     protected function loadValueObject(int $id): Location
     {
         return $this->loadService->loadLocation($id);

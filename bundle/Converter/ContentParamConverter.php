@@ -18,6 +18,13 @@ final class ContentParamConverter extends SiteParamConverter
         return 'contentId';
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
     protected function loadValueObject(int $id): Content
     {
         return $this->loadService->loadContent($id);

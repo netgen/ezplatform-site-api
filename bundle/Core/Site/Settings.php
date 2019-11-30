@@ -21,6 +21,13 @@ final class Settings extends BaseSettings
         $this->configResolver = $configResolver;
     }
 
+    /**
+     * @param string $property
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
+     *
+     * @return mixed
+     */
     public function __get(string $property)
     {
         switch ($property) {
@@ -43,11 +50,24 @@ final class Settings extends BaseSettings
         throw new PropertyNotFoundException($property, \get_class($this));
     }
 
+    /**
+     * @param string $property
+     * @param $value
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
+     */
     public function __set(string $property, $value): void
     {
         throw new PropertyReadOnlyException($property, \get_class($this));
     }
 
+    /**
+     * @param string $property
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
+     *
+     * @return bool
+     */
     public function __isset(string $property): bool
     {
         switch ($property) {

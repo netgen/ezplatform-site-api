@@ -61,7 +61,7 @@ class RelationService implements RelationServiceInterface
             $contentTypeIdentifiers
         );
 
-        return \count($relatedContentItems) ? \reset($relatedContentItems) : null;
+        return $relatedContentItems[0] ?? null;
     }
 
     /**

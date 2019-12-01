@@ -261,6 +261,16 @@ final class Content extends APIContent
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
+    public function getFirstSetField(string $firstIdentifier, string ...$otherIdentifiers): APIField
+    {
+        return $this->fields->getFirstSetField($firstIdentifier, ...$otherIdentifiers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function getFieldValue(string $identifier): Value
     {
         return $this->getField($identifier)->value;

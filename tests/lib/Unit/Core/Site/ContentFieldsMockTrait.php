@@ -188,7 +188,7 @@ trait ContentFieldsMockTrait
 
         $this->fieldTypeMock
             ->method('isEmptyValue')
-            ->willReturn(false);
+            ->willReturnCallback(static function ($field) {return empty($field->value);});
 
         return $this->fieldTypeMock;
     }

@@ -237,6 +237,45 @@ final class Fields extends APIFields
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function getFirstSetField(string $firstIdentifier,  string ...$otherIdentifiers): APIField
+    {
+        $identifiers = \array_merge([$firstIdentifier], $otherIdentifiers);
+        $fields = $this->getAvailableFields($identifiers);
+
+        foreach ($fields as $field) {
+            if (!$field->isEmpty()) {
+                return $field;
+            }
+        }
+
+        return $fields[0] ?? $this->getSurrogateField($firstIdentifier, $this->content);
+    }
+
+    /**
+     * @param string[] $identifiers
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Field[]
+     */
+    private function getAvailableFields(array $identifiers): array
+    {
+        $fields = [];
+
+        foreach ($identifiers as $identifier) {
+            if ($this->hasField($identifier)) {
+                $fields[] = $this->getField($identifier);
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
     private function initialize(): void

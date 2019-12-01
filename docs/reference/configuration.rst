@@ -235,6 +235,8 @@ Accessing named objects
 - access from Twig is :ref:`documented on Templating page<named_object_template>`
 - access from Query Type configuration is :ref:`documented on Query Types page<named_object_query_types>`
 
+.. _content_field_inconsistencies:
+
 Content Field inconsistencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

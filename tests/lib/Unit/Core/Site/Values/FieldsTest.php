@@ -291,6 +291,62 @@ final class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
+    public function testFirstSetFieldReturnsFirstField(): void
+    {
+        $identifier = 'first';
+
+        $fields = $this->getFieldsUnderTest(false);
+
+        $field = $fields->getFirstSetField($identifier, 'second', 'third', 'fourth');
+
+        $this->assertEquals($identifier, $field->fieldDefIdentifier);
+    }
+
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function testFirstSetFieldReturnsFirstNonEmptyField(): void
+    {
+        $fields = $this->getFieldsUnderTest(false);
+
+        $field = $fields->getFirstSetField('1st', 'second', 'third', 'fourth');
+
+        $this->assertEquals('third', $field->fieldDefIdentifier);
+    }
+
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function testFirstSetFieldReturnsThirdField(): void
+    {
+        $identifier = 'third';
+
+        $fields = $this->getFieldsUnderTest(false);
+
+        $field = $fields->getFirstSetField('1st', '2nd', $identifier, 'fourth');
+
+        $this->assertEquals($identifier, $field->fieldDefIdentifier);
+    }
+
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function testFirstSetFieldReturnsSurrogateField(): void
+    {
+        $identifier = '1st';
+
+        $fields = $this->getFieldsUnderTest(false);
+
+        $field = $fields->getFirstSetField($identifier, '2nd', '3rd', '4th');
+
+        $this->assertEquals($identifier, $field->fieldDefIdentifier);
+        $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
+        $this->assertTrue($field->isEmpty());
+    }
+
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function testDebugInfo(): void
     {
         $fields = $this->getFieldsUnderTest(true);
@@ -381,7 +437,7 @@ final class FieldsTest extends TestCase
             new RepoField([
                 'id' => 2,
                 'fieldDefIdentifier' => 'second',
-                'value' => new Value(2),
+                'value' => new Value(),
                 'languageCode' => 'eng-GB',
                 'fieldTypeIdentifier' => 'ezinteger',
             ]),

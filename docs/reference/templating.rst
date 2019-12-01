@@ -171,7 +171,8 @@ Working with Content fields
     Content's fields are lazy-loaded, which means they will be transparently loaded only at the
     point you access them.
 
-  The most convenient way to access a Content field in Twig is using the dot notation:
+  The most convenient way to access a Content field in Twig is from the ``fields`` property on the
+  Content object, using the dot notation:
 
   .. code-block:: twig
 
@@ -184,7 +185,7 @@ Working with Content fields
     {% set title_field = content.fields['title'] %}
 
   Or by calling ``getField()`` method on the Content object, also available as ``field()`` in Twig,
-  which requires Field identifier as argument:
+  which requires Field identifier as the argument:
 
   .. code-block:: twig
 
@@ -199,6 +200,31 @@ Working with Content fields
     {% if content.hasField('title') %}
         <p>Content has a 'title' field</p>
     {% endif %}
+
+- **Choosing first existing and non-empty Field**
+
+  You can choose first existing and non-empty Field from the multiple Field identifiers with
+  ``getFirstSetField()`` method on the Content object, also available as ``firstSetField`` in Twig:
+
+  .. code-block:: twig
+
+    {{ ng_render_field(content.firstSetField('title', 'short_title', 'name')) }}
+
+  .. note::
+
+    If no Fields are found on the Content object, a :ref:`surrogate type field<content_field_inconsistencies>`
+    will be returned. If all found Fields are empty, the first found Field will be returned.
+
+  .. note::
+
+    If returned Field can be of one of multiple FieldTypes (if identifiers for multiple FieldTypes
+    are given), accessing the value directly would be ambiguous. In that case it's best to use this
+    method together with ``ng_render_field`` Twig function, as is shown in the example above.
+
+  .. note::
+
+    At least one Field identifier must be given to this method, but any number of additional
+    identifiers can be provided.
 
 - **Displaying Field's metadata**
 

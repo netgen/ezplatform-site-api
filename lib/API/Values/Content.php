@@ -68,6 +68,19 @@ abstract class Content extends ValueObject
     abstract public function getFieldById($id): Field;
 
     /**
+     * Return the first existing and non-empty field.
+     *
+     * If no field is found in the Content, a surrogate field will be returned.
+     * If all found fields are empty, the first found field will be returned.
+     *
+     * @param string $firstIdentifier
+     * @param string ...$otherIdentifiers
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
+     */
+    abstract public function getFirstSetField(string $firstIdentifier, string ...$otherIdentifiers): Field;
+
+    /**
      * Returns a field value for the given field definition identifier.
      *
      * @param string $identifier

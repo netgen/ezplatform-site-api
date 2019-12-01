@@ -50,4 +50,17 @@ abstract class Fields implements IteratorAggregate, ArrayAccess, Countable
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
     abstract public function getFieldById($id): Field;
+
+    /**
+     * Return first existing and non-empty field by the given $firstIdentifier and $identifiers.
+     *
+     * If no field is found in the Content, a surrogate field will be returned.
+     * If all found fields are empty, the first found field will be returned.
+     *
+     * @param string $firstIdentifier
+     * @param string ...$otherIdentifiers
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
+     */
+    abstract public function getFirstSetField(string $firstIdentifier, string ...$otherIdentifiers): Field;
 }

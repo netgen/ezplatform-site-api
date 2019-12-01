@@ -100,7 +100,7 @@ class RelationService implements RelationServiceInterface
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content[]
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */
     private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers, ?int $limit = null): array
     {

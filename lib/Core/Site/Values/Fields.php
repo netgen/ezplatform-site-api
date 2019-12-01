@@ -237,11 +237,11 @@ final class Fields extends APIFields
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function getFirstSetField(string $firstIdentifier,  string ...$otherIdentifiers): APIField
+    public function getFirstSetField(string $firstIdentifier, string ...$otherIdentifiers): APIField
     {
         $identifiers = \array_merge([$firstIdentifier], $otherIdentifiers);
         $fields = $this->getAvailableFields($identifiers);

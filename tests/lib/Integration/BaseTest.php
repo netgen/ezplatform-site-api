@@ -238,11 +238,11 @@ abstract class BaseTest extends APIBaseTest
 
             $fieldById = $content->getFieldById($field->id);
             $fieldByIdentifier = $content->getField($identifier);
-            $fieldByFirstSetField = $content->getFirstNonEmptyField($identifier);
+            $fieldByFirstNonEmptyField = $content->getFirstNonEmptyField($identifier);
 
             $this->assertSame($field, $fieldById);
             $this->assertSame($field, $fieldByIdentifier);
-            $this->assertSame($field, $fieldByFirstSetField);
+            $this->assertSame($field, $fieldByFirstNonEmptyField);
 
             $fieldValueById = $content->getFieldValueById($field->id);
             $fieldValueByIdentifier = $content->getFieldValue($identifier);

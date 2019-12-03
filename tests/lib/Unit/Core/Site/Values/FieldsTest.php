@@ -291,7 +291,7 @@ final class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testFirstSetFieldReturnsFirstField(): void
+    public function testFirstNonEmptyFieldReturnsFirstField(): void
     {
         $identifier = 'first';
 
@@ -305,7 +305,7 @@ final class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testFirstSetFieldReturnsFirstNonEmptyField(): void
+    public function testFirstNonEmptyFieldReturnsFirstNonEmptyField(): void
     {
         $fields = $this->getFieldsUnderTest(false);
 
@@ -317,7 +317,7 @@ final class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testFirstSetFieldReturnsThirdField(): void
+    public function testFirstNonEmptyFieldReturnsThirdField(): void
     {
         $identifier = 'third';
 
@@ -331,7 +331,7 @@ final class FieldsTest extends TestCase
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    public function testFirstSetFieldReturnsSurrogateField(): void
+    public function testFirstNonEmptyFieldReturnsSurrogateField(): void
     {
         $identifier = '1st';
 

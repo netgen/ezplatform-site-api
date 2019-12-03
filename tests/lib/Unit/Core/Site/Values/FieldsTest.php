@@ -297,7 +297,7 @@ final class FieldsTest extends TestCase
 
         $fields = $this->getFieldsUnderTest(false);
 
-        $field = $fields->getFirstSetField($identifier, 'second', 'third', 'fourth');
+        $field = $fields->getFirstNonEmptyField($identifier, 'second', 'third', 'fourth');
 
         $this->assertEquals($identifier, $field->fieldDefIdentifier);
     }
@@ -309,7 +309,7 @@ final class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(false);
 
-        $field = $fields->getFirstSetField('1st', 'second', 'third', 'fourth');
+        $field = $fields->getFirstNonEmptyField('1st', 'second', 'third', 'fourth');
 
         $this->assertEquals('third', $field->fieldDefIdentifier);
     }
@@ -323,7 +323,7 @@ final class FieldsTest extends TestCase
 
         $fields = $this->getFieldsUnderTest(false);
 
-        $field = $fields->getFirstSetField('1st', '2nd', $identifier, 'fourth');
+        $field = $fields->getFirstNonEmptyField('1st', '2nd', $identifier, 'fourth');
 
         $this->assertEquals($identifier, $field->fieldDefIdentifier);
     }
@@ -337,7 +337,7 @@ final class FieldsTest extends TestCase
 
         $fields = $this->getFieldsUnderTest(false);
 
-        $field = $fields->getFirstSetField($identifier, '2nd', '3rd', '4th');
+        $field = $fields->getFirstNonEmptyField($identifier, '2nd', '3rd', '4th');
 
         $this->assertEquals($identifier, $field->fieldDefIdentifier);
         $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);

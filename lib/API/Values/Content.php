@@ -78,7 +78,7 @@ abstract class Content extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
-    abstract public function getFirstSetField(string $firstIdentifier, string ...$otherIdentifiers): Field;
+    abstract public function getFirstNonEmptyField(string $firstIdentifier, string ...$otherIdentifiers): Field;
 
     /**
      * Returns a field value for the given field definition identifier.

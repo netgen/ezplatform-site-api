@@ -62,5 +62,5 @@ abstract class Fields implements IteratorAggregate, ArrayAccess, Countable
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
-    abstract public function getFirstSetField(string $firstIdentifier, string ...$otherIdentifiers): Field;
+    abstract public function getFirstNonEmptyField(string $firstIdentifier, string ...$otherIdentifiers): Field;
 }

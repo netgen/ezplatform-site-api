@@ -204,11 +204,12 @@ Working with Content fields
 - **Choosing first existing and non-empty Field**
 
   You can choose first existing and non-empty Field from the multiple Field identifiers with
-  ``getFirstSetField()`` method on the Content object, also available as ``firstSetField`` in Twig:
+  ``getFirstNonEmptyField()`` method on the Content object, also available as ``getFirstNonEmptyField``
+  in Twig:
 
   .. code-block:: twig
 
-    {{ ng_render_field(content.firstSetField('title', 'short_title', 'name')) }}
+    {{ ng_render_field(content.getFirstNonEmptyField('title', 'short_title', 'name')) }}
 
   .. note::
 

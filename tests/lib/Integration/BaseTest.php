@@ -238,7 +238,7 @@ abstract class BaseTest extends APIBaseTest
 
             $fieldById = $content->getFieldById($field->id);
             $fieldByIdentifier = $content->getField($identifier);
-            $fieldByFirstSetField = $content->getFirstSetField($identifier);
+            $fieldByFirstSetField = $content->getFirstNonEmptyField($identifier);
 
             $this->assertSame($field, $fieldById);
             $this->assertSame($field, $fieldByIdentifier);
@@ -263,7 +263,7 @@ abstract class BaseTest extends APIBaseTest
         $this->assertInstanceOf(Field::class, $content->getFieldById('non_existent_field'));
         $this->assertInstanceOf(SurrogateValue::class, $content->getFieldValue('non_existent_field'));
         $this->assertInstanceOf(SurrogateValue::class, $content->getFieldValueById('non_existent_field'));
-        $this->assertInstanceOf(SurrogateValue::class, $content->getFirstSetField('non_existent_field')->value);
+        $this->assertInstanceOf(SurrogateValue::class, $content->getFirstNonEmptyField('non_existent_field')->value);
     }
 
     protected function assertField(Content $content, string $identifier, string $languageCode, array $data): void

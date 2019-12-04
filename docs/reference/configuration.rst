@@ -28,7 +28,7 @@ for a specific siteaccess with the following semantic configuration:
                 override_url_alias_view_action: true
 
 Here ``frontend_group`` is the siteaccess group (or a siteaccess) for which you want to activate the
-Site API. This switch is useful if you have a siteaccess that can't use the it, for example a custom
+Site API. This switch is useful if you have a siteaccess that can't use it, for example a custom
 admin or intranet interface.
 
 .. note::

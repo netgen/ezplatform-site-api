@@ -7,6 +7,7 @@ Unreleased
 [`3.2.2...master`](https://github.com/netgen/ezplatform-site-api/compare/3.2.2...master)
 
 * Add `Location::getFirstChild()` method ([#148](https://github.com/netgen/ezplatform-site-api/pull/148))
+* Add `Content::getFirstNonEmptyField()` method ([#150](https://github.com/netgen/ezplatform-site-api/pull/150))
 * Fix service ID for named object provider (https://github.com/netgen/ezplatform-site-api/commit/4ee25ebc26b801aececd55b198e7c1dad7ef2bce)
 
 3.2.2 (28.11.2019)

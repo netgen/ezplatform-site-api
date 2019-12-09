@@ -12,7 +12,7 @@ class BaseOptions extends AbstractParser
 {
     public function addSemanticConfig(NodeBuilder $nodeBuilder): void
     {
-        /** @noinspection NullPointerExceptionInspection */
+        /* @noinspection NullPointerExceptionInspection */
         $nodeBuilder
             ->booleanNode('ng_fallback_to_secondary_content_view')
                 ->info('Controls fallback content view rendering between Site API and eZ Platform')

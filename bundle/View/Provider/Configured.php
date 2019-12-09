@@ -67,8 +67,7 @@ class Configured implements ViewProvider
     public function getView(View $view): ?View
     {
         // Service is dispatched by the configured view class, so this should be safe
-        /* @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
-
+        /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
         if (($configHash = $this->matcherFactory->match($view)) === null) {
             return $this->contentViewFallbackResolver->getEzPlatformFallbackDto();
         }

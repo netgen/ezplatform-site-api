@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @internal
  *
- * Renders View object using any controller without executing a subrequest.
+ * Renders View object using any controller without executing a subrequest
  *
  * @see \eZ\Publish\Core\MVC\Symfony\View\View
  */

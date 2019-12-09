@@ -69,12 +69,12 @@ final class EzContentViewRuntime
         $location = $this->getLocation($value);
 
         $view = $this->viewBuilder->buildView([
-                'content' => $content,
-                'location' => $location,
-                'viewType' => $viewType,
-                'layout' => $layout,
-                '_controller' => 'ng_content:viewAction',
-            ] + $parameters);
+            'content' => $content,
+            'location' => $location,
+            'viewType' => $viewType,
+            'layout' => $layout,
+            '_controller' => 'ng_content:viewAction',
+        ] + $parameters);
 
         if (!$this->viewMatched($view)) {
             throw new LogicException(

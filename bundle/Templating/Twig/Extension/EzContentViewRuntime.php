@@ -8,20 +8,20 @@ use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\ValueObject;
+use eZ\Publish\Core\MVC\Symfony\View\Builder\ContentViewBuilder;
+use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use LogicException;
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder;
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ViewRenderer;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 
 /**
- * Twig extension runtime for Site API content view rendering.
+ * Twig extension runtime for eZ Platform content view rendering.
  */
-class ContentViewRuntime
+final class EzContentViewRuntime
 {
     /**
-     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder
+     * @var \eZ\Publish\Core\MVC\Symfony\View\Builder\ContentViewBuilder
      */
     private $viewBuilder;
 
@@ -69,12 +69,12 @@ class ContentViewRuntime
         $location = $this->getLocation($value);
 
         $view = $this->viewBuilder->buildView([
-            'content' => $content,
-            'location' => $location,
-            'viewType' => $viewType,
-            'layout' => $layout,
-            '_controller' => 'ng_content:viewAction',
-        ] + $parameters);
+                'content' => $content,
+                'location' => $location,
+                'viewType' => $viewType,
+                'layout' => $layout,
+                '_controller' => 'ng_content:viewAction',
+            ] + $parameters);
 
         if (!$this->viewMatched($view)) {
             throw new LogicException(
@@ -87,13 +87,21 @@ class ContentViewRuntime
 
     private function getContent(ValueObject $value): ValueObject
     {
-        if ($value instanceof Content || $value instanceof APIContent) {
+        if ($value instanceof Content) {
+            return $value->innerContent;
+        }
+
+        if ($value instanceof APIContent) {
             return $value;
         }
 
-        if ($value instanceof Location || $value instanceof APILocation) {
+        if ($value instanceof Location) {
+            return $value->content->innerContent;
+        }
+
+        if ($value instanceof APILocation) {
             // eZ location also has a lazy loaded "content" property
-            return $value->content;
+            return $value->getContent();
         }
 
         throw new LogicException('Given value must be Content or Location instance.');
@@ -109,12 +117,16 @@ class ContentViewRuntime
      */
     private function getLocation(ValueObject $value): ?ValueObject
     {
-        if ($value instanceof Location || $value instanceof APILocation) {
+        if ($value instanceof Location) {
+            return $value->innerLocation;
+        }
+
+        if ($value instanceof APILocation) {
             return $value;
         }
 
         if ($value instanceof Content) {
-            return $value->mainLocation ?? null;
+            return $value->mainLocation->innerLocation ?? null;
         }
 
         if ($value instanceof APIContent) {
@@ -133,7 +145,7 @@ class ContentViewRuntime
     /**
      * This is the only way to check if the view actually matched?
      *
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $contentView
+     * @param \eZ\Publish\Core\MVC\Symfony\View\ContentView $contentView
      *
      * @return bool
      */

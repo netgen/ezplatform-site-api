@@ -1,0 +1,4 @@
+parameters:
+    # Content view fallback templates
+    netgen.ezplatform_site.content_view_fallback.to_ez_platform: '@@NetgenEzPlatformSiteApi/content_view_fallback/to_ez_platform.html.twig'
+    netgen.ezplatform_site.content_view_fallback.to_site_api: '@@NetgenEzPlatformSiteApi/content_view_fallback/to_site_api.html.twig'

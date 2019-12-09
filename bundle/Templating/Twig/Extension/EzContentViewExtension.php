@@ -8,9 +8,9 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 /**
- * Twig extension for Site API content view rendering.
+ * Twig extension for eZ Platform content view rendering.
  */
-class ContentViewExtension extends AbstractExtension
+class EzContentViewExtension extends AbstractExtension
 {
     /**
      * @return \Twig\TwigFunction[]
@@ -19,8 +19,8 @@ class ContentViewExtension extends AbstractExtension
     {
         return [
             new TwigFunction(
-                'ng_view_content',
-                [ContentViewRuntime::class, 'renderContentView'],
+                'ng_ez_view_content',
+                [EzContentViewRuntime::class, 'renderContentView'],
                 ['is_safe' => ['html']]
             ),
         ];

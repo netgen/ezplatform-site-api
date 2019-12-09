@@ -25,13 +25,25 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\ContentViewRuntime
         # public: false
         arguments:
-            - '@request_stack'
-            - '@controller_resolver'
-            - '@argument_resolver'
             - '@netgen.ezplatform_site.view_builder.content'
-            - '@ezpublish.view.template_renderer'
+            - '@netgen.ezplatform_site.view_renderer'
             - '@ezpublish.api.service.location'
-            - '@event_dispatcher'
+        tags:
+            - { name: twig.runtime }
+
+    netgen.ezplatform_site.twig.extension.ez_content_rendering:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\EzContentViewExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    netgen.ezplatform_site.twig.runtime.ez_content_rendering:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension\EzContentViewRuntime
+        # public: false
+        arguments:
+            - '@ezpublish.view_builder.content'
+            - '@netgen.ezplatform_site.view_renderer'
+            - '@ezpublish.api.service.location'
         tags:
             - { name: twig.runtime }
 

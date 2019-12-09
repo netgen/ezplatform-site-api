@@ -1,0 +1,13 @@
+{% if ezpublish.configResolver.getParameter('ng_fallback_with_subrequest') == true %}
+    {{ render(
+        controller(
+            'ez_content:viewAction', {
+                'content': content.innerContent,
+                'location': location.innerLocation,
+                'viewType': view_type
+            }
+        )
+    ) }}
+{% else %}
+    {{ ng_ez_view_content(location|default(content), view_type) }}
+{% endif %}

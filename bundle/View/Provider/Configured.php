@@ -39,14 +39,21 @@ class Configured implements ViewProvider
      */
     private $redirectResolver;
 
+    /**
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\ContentViewFallbackResolver
+     */
+    private $contentViewFallbackResolver;
+
     public function __construct(
         MatcherFactoryInterface $matcherFactory,
         QueryDefinitionMapper $queryDefinitionMapper,
-        Resolver $redirectResolver
+        Resolver $redirectResolver,
+        ContentViewFallbackResolver $contentViewFallbackResolver
     ) {
         $this->matcherFactory = $matcherFactory;
         $this->queryDefinitionMapper = $queryDefinitionMapper;
         $this->redirectResolver = $redirectResolver;
+        $this->contentViewFallbackResolver = $contentViewFallbackResolver;
     }
 
     /**
@@ -59,12 +66,12 @@ class Configured implements ViewProvider
      */
     public function getView(View $view): ?View
     {
-        if (($configHash = $this->matcherFactory->match($view)) === null) {
-            return null;
-        }
-
         // Service is dispatched by the configured view class, so this should be safe
         /* @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
+
+        if (($configHash = $this->matcherFactory->match($view)) === null) {
+            return $this->contentViewFallbackResolver->getEzPlatformFallbackDto();
+        }
 
         // We can set the collection directly to the view, no need to go through DTO
         $view->addParameters([

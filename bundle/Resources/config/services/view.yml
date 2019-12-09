@@ -8,15 +8,34 @@ services:
             - '@ezpublish.view.configurator'
             - '@ezpublish.view.view_parameters.injector.dispatcher'
 
+    # deprecated since 3.3, used aliased service
     netgen.ezplatform_site.ngcontent_view_provider.configured:
+        alias: netgen.ezplatform_site.view_provider.ngcontent_configured
+
+    netgen.ezplatform_site.view_provider.ngcontent_configured:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\Configured
         arguments:
             - '@netgen.ezplatform_site.ngcontent_view.matcher_factory'
             - '@netgen.ezplatform_site.query_type.query_definition_mapper'
             - '@netgen.ezplatform_site.redirect_resolver'
+            - '@netgen.ezplatform_site.view_provider.content_view_fallback_resolver'
         tags:
             - { name: ezpublish.view_provider, type: 'Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView', priority: 110 }
         public: false
+
+    netgen.ezplatform_site.view_provider.content_view_fallback_resolver:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\ContentViewFallbackResolver
+        arguments:
+            - '@ezpublish.config.resolver'
+            - '%netgen.ezplatform_site.content_view_fallback.to_ez_platform%'
+            - '%netgen.ezplatform_site.content_view_fallback.to_site_api%'
+
+    netgen.ezplatform_site.content_view_provider.core_override:
+        decorates: ezpublish.content_view_provider.configured
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\CoreOverride
+        arguments:
+            - '@ezpublish.content_view.matcher_factory'
+            - '@netgen.ezplatform_site.view_provider.content_view_fallback_resolver'
 
     netgen.ezplatform_site.redirect_resolver:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\Resolver
@@ -62,3 +81,12 @@ services:
         calls:
             - [setContainer, ["@service_container"]]
         public: false
+
+    netgen.ezplatform_site.view_renderer:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\ViewRenderer
+        arguments:
+            - '@request_stack'
+            - '@controller_resolver'
+            - '@argument_resolver'
+            - '@ezpublish.view.template_renderer'
+            - '@event_dispatcher'

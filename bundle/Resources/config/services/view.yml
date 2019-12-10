@@ -10,9 +10,9 @@ services:
 
     # deprecated since 3.3, used aliased service
     netgen.ezplatform_site.ngcontent_view_provider.configured:
-        alias: netgen.ezplatform_site.view_provider.ngcontent_configured
+        alias: netgen.ezplatform_site.content_view_provider.ngcontent_configured
 
-    netgen.ezplatform_site.view_provider.ngcontent_configured:
+    netgen.ezplatform_site.content_view_provider.ngcontent_configured:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\Configured
         arguments:
             - '@netgen.ezplatform_site.ngcontent_view.matcher_factory'

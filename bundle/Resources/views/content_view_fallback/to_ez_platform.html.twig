@@ -9,5 +9,5 @@
         )
     ) }}
 {% else %}
-    {{ ng_ez_view_content(location|default(content), view_type) }}
+    {{ ng_ez_view_content(location.innerLocation|default(content.innerContent), view_type) }}
 {% endif %}

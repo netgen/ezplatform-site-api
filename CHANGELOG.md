@@ -6,8 +6,12 @@ Unreleased
 
 [`3.2.2...master`](https://github.com/netgen/ezplatform-site-api/compare/3.2.2...master)
 
+### Added
 * Add `Location::getFirstChild()` method ([#148](https://github.com/netgen/ezplatform-site-api/pull/148))
 * Add `Content::getFirstNonEmptyField()` method ([#150](https://github.com/netgen/ezplatform-site-api/pull/150))
+* NGSTACK-371: implement fallback between eZ and Site API content views ([#152](https://github.com/netgen/ezplatform-site-api/pull/152))
+
+### Fixed
 * Fix service ID for named object provider (https://github.com/netgen/ezplatform-site-api/commit/4ee25ebc26b801aececd55b198e7c1dad7ef2bce)
 
 3.2.2 (28.11.2019)
@@ -15,6 +19,7 @@ Unreleased
 
 [`3.2.1...3.2.2`](https://github.com/netgen/ezplatform-site-api/compare/3.2.1...3.2.2)
 
+### Fixed
 * Fix preview of the unpublished Content ([#149](https://github.com/netgen/ezplatform-site-api/pull/149))
 
 3.2.1 (18.11.2019)
@@ -22,6 +27,7 @@ Unreleased
 
 [`3.2.0...3.2.1`](https://github.com/netgen/ezplatform-site-api/compare/3.2.0...3.2.1)
 
+### Fixed
 * Make `TagsService` argument optional
 
 3.2.0 (12.11.2019)
@@ -29,6 +35,7 @@ Unreleased
 
 [`3.1.0...3.2.0`](https://github.com/netgen/ezplatform-site-api/compare/3.1.0...3.2.0)
 
+### Added
 * NGSTACK-347: enable redirects through content view configuration by @iherak ([#147](https://github.com/netgen/ezplatform-site-api/pull/147))
 
 3.1.0 (04.11.2019)
@@ -36,6 +43,7 @@ Unreleased
 
 [`3.0.5...3.1.0`](https://github.com/netgen/ezplatform-site-api/compare/3.0.5...3.1.0)
 
+### Added
 * NGSTACK-250: `modification_date` query type condition ([#140](https://github.com/netgen/ezplatform-site-api/pull/140))
 * NGSTACK-336: Named Objects ([#145](https://github.com/netgen/ezplatform-site-api/pull/145))
 
@@ -44,6 +52,7 @@ Unreleased
 
 [`3.0.4...3.0.5`](https://github.com/netgen/ezplatform-site-api/compare/3.0.4...3.0.5)
 
+### Fixed
 * Remove configuration for the default full view ([#144](https://github.com/netgen/ezplatform-site-api/pull/144))
 
 3.0.4 (23.10.2019)
@@ -51,6 +60,7 @@ Unreleased
 
 [`3.0.3...3.0.4`](https://github.com/netgen/ezplatform-site-api/compare/3.0.3...3.0.4)
 
+### Fixed
 * Content render events by @emodric ([#141](https://github.com/netgen/ezplatform-site-api/pull/141))
 * Reset ezsettings parameters only if they do not exist by @emodric ([#142](https://github.com/netgen/ezplatform-site-api/pull/142))
 
@@ -59,6 +69,7 @@ Unreleased
 
 [`3.0.2...3.0.3`](https://github.com/netgen/ezplatform-site-api/compare/3.0.2...3.0.3)
 
+### Fixed
 * Use Twig notation for template paths by @emodric ([#134](https://github.com/netgen/ezplatform-site-api/pull/134))
 * Fix deprecations on Symfony 3.4 and 4.0 by @emodric ([#136](https://github.com/netgen/ezplatform-site-api/pull/136))
 * Kernel v3 compatibility ([#137](https://github.com/netgen/ezplatform-site-api/pull/137))

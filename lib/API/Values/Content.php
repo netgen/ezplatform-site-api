@@ -21,7 +21,7 @@ use Pagerfanta\Pagerfanta;
  * @property string $name
  * @property string $languageCode
  * @property \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
- * @property \Netgen\EzPlatformSiteApi\API\Values\Fields $fields
+ * @property \Netgen\EzPlatformSiteApi\API\Values\Fields|\Netgen\EzPlatformSiteApi\API\Values\Field[] $fields
  * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
  * @property null|\Netgen\EzPlatformSiteApi\API\Values\Content $owner
  * @property null|\eZ\Publish\API\Repository\Values\User\User $innerOwnerUser

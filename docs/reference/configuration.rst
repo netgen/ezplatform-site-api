@@ -33,8 +33,8 @@ admin or intranet interface.
 
 .. note::
 
-  To use Site API view configuration automatically on pages rendered from eZ Platform URL aliases,
-  you need to enable it manually per siteaccess.
+    To use Site API view configuration automatically on pages rendered from eZ Platform URL aliases,
+    you need to enable it manually per siteaccess.
 
 Site API Content views
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -48,8 +48,12 @@ so on.
 
 If needed you can still use ``content_view`` rules. This will allow you to have both Site API
 template override rules as well as original eZ Platform template override rules, so you can rewrite
-your templates bit by bit. You can decide which one to use by calling either
+your templates bit by bit. You can decide which one to use by directly rendering either
 ``ng_content:viewAction`` or ``ez_content:viewAction`` controller.
+
+It's also possible to configure fallback between Site API and eZ Platform views. With it, if the
+rule is not matched in one view configuration, the fallback mechanism will try to match it in the
+other. Find out more about that in the following section.
 
 .. tip::
 
@@ -83,8 +87,81 @@ Rendering a line view for an article with ``ng_content:viewAction`` would use
 It is also possible to use custom controllers, this is documented on
 :doc:`Custom controllers reference</reference/custom_controllers>` documentation page.
 
+Content View fallback
+~~~~~~~~~~~~~~~~~~~~~
+
+You can configure fallback between Site API and eZ Platform views. Fallback can be controlled
+through two configuration options (showing default values):
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ng_fallback_to_secondary_content_view: false
+                ng_fallback_with_subrequest: true
+
+- ``ng_fallback_to_secondary_content_view``
+
+    With this option you control whether **automatic fallback** will be used. By default, automatic
+    fallback is disabled. Secondary content view means the fallback can be used both from Site API
+    to eZ Platform views, and from eZ Platform to Site API content views. Which one will be used is
+    defined by ``override_url_alias_view_action`` configuration documented above.
+
+- ``ng_fallback_with_subrequest``
+
+    With this option you can control whether the fallback will use a subrequest (default), or Twig
+    functions that can render content view without a subrequest. That applies both to automatic and
+    manually configured fallback. Rendering views without a subrequest is faster in debug mode,
+    where profiling is turned on. Depending on the number of views used on a page, performance
+    improvement when not using subrequest can be significant.
+
+.. note::
+
+    For backward compatibility reasons, ``ng_fallback_to_secondary_content_view`` is turned on and
+    ``ng_fallback_with_subrequest`` is turned off, but in next major release that will be reversed
+    by default.
+
+You can also configure fallback manually, per view. This is done by configuring a view to render one
+of two special templates, depending if the fallback is from Site API to eZ Platform views or the
+opposite.
+
+- ``@NetgenEzPlatformSiteApi/content_view_fallback/to_ez_platform.html.twig``
+
+    This template is used for fallback from Site API to eZ Platform views. In the following example
+    it's used to configure fallback for ``line`` view of ``article`` ContentType:
+
+    .. code-block:: yaml
+
+        ezpublish:
+            system:
+                frontend_group:
+                    ngcontent_view:
+                        line:
+                            article:
+                                template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_ez_platform.html.twig'
+                                match:
+                                    Identifier\ContentType: article
+
+- ``@NetgenEzPlatformSiteApi/content_view_fallback/to_site_api.html.twig``
+
+    This template is used for fallback from eZ Platform to Site API views. In the following example
+    it's used to configure fallback for all ``full`` views:
+
+    .. code-block:: yaml
+
+        ezpublish:
+            system:
+                frontend_group:
+                    content_view:
+                        full:
+                            catch_all:
+                                template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_site_api.html.twig'
+                                match:
+                                    Identifier\ContentType: ~
+
 Redirections
-~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 With Site API, it's also possible to configure redirects directly from the view configuration.
 You can set up temporary or permanent redirect to either ``Content``, ``Location``, ``Tag``, Symfony route or any full url.
@@ -273,5 +350,5 @@ find the logged message.
 
 .. note::
 
-  You can configure both ``render_missing_field_info`` and ``fail_on_missing_fields`` per siteaccess
-  or siteaccess group.
+    You can configure both ``render_missing_field_info`` and ``fail_on_missing_fields`` per
+    siteaccess or siteaccess group.

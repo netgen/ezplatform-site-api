@@ -87,6 +87,8 @@ Rendering a line view for an article with ``ng_content:viewAction`` would use
 It is also possible to use custom controllers, this is documented on
 :doc:`Custom controllers reference</reference/custom_controllers>` documentation page.
 
+.. _content_view_fallback_configuration:
+
 Content View fallback
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -128,37 +130,37 @@ opposite.
 
 - ``@NetgenEzPlatformSiteApi/content_view_fallback/to_ez_platform.html.twig``
 
-    This template is used for fallback from Site API to eZ Platform views. In the following example
-    it's used to configure fallback for ``line`` view of ``article`` ContentType:
+  This template is used for fallback from Site API to eZ Platform views. In the following example
+  it's used to configure fallback for ``line`` view of ``article`` ContentType:
 
-    .. code-block:: yaml
+  .. code-block:: yaml
 
-        ezpublish:
-            system:
-                frontend_group:
-                    ngcontent_view:
-                        line:
-                            article:
-                                template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_ez_platform.html.twig'
-                                match:
-                                    Identifier\ContentType: article
+      ezpublish:
+          system:
+              frontend_group:
+                  ngcontent_view:
+                      line:
+                          article:
+                              template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_ez_platform.html.twig'
+                              match:
+                                  Identifier\ContentType: article
 
 - ``@NetgenEzPlatformSiteApi/content_view_fallback/to_site_api.html.twig``
 
-    This template is used for fallback from eZ Platform to Site API views. In the following example
-    it's used to configure fallback for all ``full`` views:
+  This template is used for fallback from eZ Platform to Site API views. In the following example
+  it's used to configure fallback for all ``full`` views:
 
-    .. code-block:: yaml
+  .. code-block:: yaml
 
-        ezpublish:
-            system:
-                frontend_group:
-                    content_view:
-                        full:
-                            catch_all:
-                                template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_site_api.html.twig'
-                                match:
-                                    Identifier\ContentType: ~
+      ezpublish:
+          system:
+              frontend_group:
+                  content_view:
+                      full:
+                          catch_all:
+                              template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_site_api.html.twig'
+                              match:
+                                  Identifier\ContentType: ~
 
 Redirections
 ~~~~~~~~~~~~

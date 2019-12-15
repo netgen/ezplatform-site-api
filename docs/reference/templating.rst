@@ -29,109 +29,109 @@ Site API provides four Twig functions for content rendering:
 
 - ``ng_view_content`` and ``ng_ez_view_content``
 
-    These two functions provide a way to render Content view without executing a subrequest. Because
-    of profiling that is active in debug mode, having a lots of subrequests on a page can
-    significantly affect performance and memory consumption. Since for a large part of use cases
-    it's not necessary to render Content views through a subrequest, having an alternative way to
-    render them can improve performance and hence   developer's experience.
+  These two functions provide a way to render Content view without executing a subrequest. Because
+  of profiling that is active in debug mode, having a lots of subrequests on a page can
+  significantly affect performance and memory consumption. Since for a large part of use cases
+  it's not necessary to render Content views through a subrequest, having an alternative way to
+  render them can improve performance and hence   developer's experience.
 
-    Both functions support custom controllers. ``ng_view_content`` can be used for views defined in
-    Site API view configuration under ``ngcontent_view`` configuration node, and
-    ``ng_ez_view_content`` can be used for views defined in eZ Platform view configuration under
-    ``content_view`` configuration node.
+  Both functions support custom controllers. ``ng_view_content`` can be used for views defined in
+  Site API view configuration under ``ngcontent_view`` configuration node, and
+  ``ng_ez_view_content`` can be used for views defined in eZ Platform view configuration under
+  ``content_view`` configuration node.
 
-    .. note::
+  .. note::
 
-        The functions are not a complete replacement for rendering Content views, since it does not
-        dispatch MVC events from eZ Publish Kernel, like ``MVCEvents::PRE_CONTENT_VIEW``. For that
-        reason it's safe to use only for those views that don't depend on them. However, that should
-        be the case for most of them.
+      The functions are not a complete replacement for rendering Content views, since it does not
+      dispatch MVC events from eZ Publish Kernel, like ``MVCEvents::PRE_CONTENT_VIEW``. For that
+      reason it's safe to use only for those views that don't depend on them. However, that should
+      be the case for most of them.
 
-        Depending on the use case, you might be able to replace usage of MVC events with
-        ``ViewEvents`` from eZ Publish Kernel, which **are** dispatched by the functions.
+      Depending on the use case, you might be able to replace usage of MVC events with
+      ``ViewEvents`` from eZ Publish Kernel, which **are** dispatched by the functions.
 
-    The functions accept four parameters, similar as `parameters available for ez_content:viewAction
-    controller <https://doc.ezplatform.com/en/latest/guide/templates/#available-arguments>`_:
+  The functions accept four parameters, similar as `parameters available for ez_content:viewAction
+  controller <https://doc.ezplatform.com/en/latest/guide/templates/#available-arguments>`_:
 
-    1. **required** Content or Location object
-    2. **required** string view identifier (e.g. ``line``, ``block``)
-    3. **optional** array of parameters, with keys as parameter names and corresponding values as parameter values
+  1. **required** Content or Location object
+  2. **required** string view identifier (e.g. ``line``, ``block``)
+  3. **optional** array of parameters, with keys as parameter names and corresponding values as parameter values
 
-      Parameters defined through this array will be available as Request attributes and can be
-      passed as arguments to the controller action if defined there. Also, parameter with name
-      ``params`` is recognized as an array of custom view parameters and will be available in the
-      view object and in the rendered template.
+    Parameters defined through this array will be available as Request attributes and can be
+    passed as arguments to the controller action if defined there. Also, parameter with name
+    ``params`` is recognized as an array of custom view parameters and will be available in the
+    view object and in the rendered template.
 
-    4. **optional** boolean value indicating whether to render the template in the configured
+  4. **optional** boolean value indicating whether to render the template in the configured
         layout, by default ``false``
 
-    Example usage of ``ng_view_content``:
+  Example usage of ``ng_view_content``:
 
-        .. code-block:: twig
+      .. code-block:: twig
 
-            {{ ng_view_content(
-                content,
-                'line',
-                {
-                    'foo': 'bar',
-                    'params': {
-                        'custom': 'view param'
-                    }
-                },
-                false
-            ) }}
+          {{ ng_view_content(
+              content,
+              'line',
+              {
+                  'foo': 'bar',
+                  'params': {
+                      'custom': 'view param'
+                  }
+              },
+              false
+          ) }}
 
-    The example above is intended to replace the following Content view render through the subrequest:
+  The example above is intended to replace the following Content view render through the subrequest:
 
-        .. code-block:: twig
+      .. code-block:: twig
 
-            {{ render(
-                controller(
-                    'ng_content:viewAction', {
-                        'contentId': content.id,
-                        'viewType': 'line',
-                        'layout': false,
-                        'foo': 'bar',
-                        'params': {
-                            'custom': 'view param'
-                        }
-                    }
-                )
-            ) }}
+          {{ render(
+              controller(
+                  'ng_content:viewAction', {
+                      'contentId': content.id,
+                      'viewType': 'line',
+                      'layout': false,
+                      'foo': 'bar',
+                      'params': {
+                          'custom': 'view param'
+                      }
+                  }
+              )
+          ) }}
 
-    Example usage of ``ng_ez_view_content``:
+  Example usage of ``ng_ez_view_content``:
 
-        .. code-block:: twig
+      .. code-block:: twig
 
-            {{ ng_ez_view_content(
-                content,
-                'line',
-                {
-                    'foo': 'bar',
-                    'params': {
-                        'custom': 'view param'
-                    }
-                },
-                false
-            ) }}
+          {{ ng_ez_view_content(
+              content,
+              'line',
+              {
+                  'foo': 'bar',
+                  'params': {
+                      'custom': 'view param'
+                  }
+              },
+              false
+          ) }}
 
-    The example above is intended to replace the following Content view render through the subrequest:
+  The example above is intended to replace the following Content view render through the subrequest:
 
-        .. code-block:: twig
+      .. code-block:: twig
 
-            {{ render(
-                controller(
-                    'ez_content:viewAction', {
-                        'contentId': content.id,
-                        'viewType': 'line',
-                        'layout': false,
-                        'foo': 'bar',
-                        'params': {
-                            'custom': 'view param'
-                        }
-                    }
-                )
-            ) }}
+          {{ render(
+              controller(
+                  'ez_content:viewAction', {
+                      'contentId': content.id,
+                      'viewType': 'line',
+                      'layout': false,
+                      'foo': 'bar',
+                      'params': {
+                          'custom': 'view param'
+                      }
+                  }
+              )
+          ) }}
 
 - ``ng_render_field``
 

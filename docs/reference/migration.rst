@@ -27,8 +27,9 @@ At this point, you can:
 
 2. use Site API's view :doc:`configuration </reference/configuration>`, available under
    ``ngcontent_view`` key. You need to know that eZ Platform URL alias routes still won't be handled
-   through it at this point. Until you explicitly turn that on for a siteaccess, you can only use it
-   by making a subrequest to Site API's Content view controller ``ng_content:viewAction``.
+   through it at this point. Until you explicitly turn that on for a siteaccess or configure view
+   fallback, you can only use it by making a subrequest to Site API's Content view controller
+   ``ng_content:viewAction``.
 
 Handling eZ Platform URL alias routes through Site API's view configuration has to be enabled per
 siteaccess, with the following configuration:
@@ -43,8 +44,25 @@ siteaccess, with the following configuration:
 Once you do this, all URL alias routes on the siteaccess will be handled through Site API's view
 configuration. That means you will need to migrate or adapt all full view templates, otherwise
 expect that things will break. Similar to the point 2. from above will be valid for eZ Platform's
-view configuration, available under ``content_view`` key. You will still be able to use it, but only
-through explicit subrequests to eZ Platform's view controller ``ez_content:viewAction``.
+view configuration, available under ``content_view`` key. You will still be able to use it, but
+unless you configure view fallback, that will be possible only through explicit subrequests to eZ
+Platform's view controller ``ez_content:viewAction``.
+
+You can configure automatic :ref:`view fallback<content_view_fallback_configuration>`, from Site API
+(if ``override_url_alias_view_action`` is enabled) to eZ Platform, and from eZ Platform (when
+``override_url_alias_view_action`` is disabled) to Site API. This is controlled through the
+``ng_fallback_to_secondary_content_view`` configuration option:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ng_fallback_to_secondary_content_view: false
+
+If you are introducing Site API into an existing project, configuring automatic view fallback will
+enable having a fully functional site from the beginning. If needed, it's also possible to configure
+fallback manually, per content view.
 
 In eZ Platform pagelayout is configured separately from content view configuration. The configured
 pagelayout is available in the content view templates as ``pagelayout`` variable, which is usually
@@ -55,8 +73,8 @@ support the other one by defining the pagelayout explicitly, instead using it th
 variable.
 
 All Site API objects contain their eZ Platform counterparts. This will enable initial mixing of both
-Site API and vanilla eZ Platform ways of doing things, which means you will be able to migrate your
-project one step at a time.
+Site API and vanilla eZ Platform ways of doing things. Coupled with content view fallback, you will
+be able to migrate your project one step at a time.
 
 Knowing all that gives you quite some flexibility in choosing exactly how you want to adapt your
 project to use Site API.

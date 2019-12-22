@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
-use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\ValueObject;
@@ -30,19 +29,10 @@ class ContentViewRuntime
      */
     private $viewRenderer;
 
-    /**
-     * @var \eZ\Publish\API\Repository\LocationService
-     */
-    private $locationService;
-
-    public function __construct(
-        ContentViewBuilder $viewBuilder,
-        ViewRenderer $viewRenderer,
-        LocationService $locationService
-    ) {
+    public function __construct(ContentViewBuilder $viewBuilder, ViewRenderer $viewRenderer)
+    {
         $this->viewBuilder = $viewBuilder;
         $this->viewRenderer = $viewRenderer;
-        $this->locationService = $locationService;
     }
 
     /**
@@ -68,13 +58,18 @@ class ContentViewRuntime
         $content = $this->getContent($value);
         $location = $this->getLocation($value);
 
-        $view = $this->viewBuilder->buildView([
+        $baseParameters = [
             'content' => $content,
-            'location' => $location,
             'viewType' => $viewType,
             'layout' => $layout,
             '_controller' => 'ng_content:viewAction',
-        ] + $parameters);
+        ];
+
+        if ($location !== null) {
+            $baseParameters['location'] = $location;
+        }
+
+        $view = $this->viewBuilder->buildView($baseParameters + $parameters);
 
         if (!$this->viewMatched($view)) {
             throw new LogicException(
@@ -96,38 +91,16 @@ class ContentViewRuntime
             return $value->content;
         }
 
-        throw new LogicException('Given value must be Content or Location instance.');
+        throw new LogicException('Given value must be Content or Location instance');
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\ValueObject $value
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return null|\eZ\Publish\API\Repository\Values\ValueObject
-     */
     private function getLocation(ValueObject $value): ?ValueObject
     {
         if ($value instanceof Location || $value instanceof APILocation) {
             return $value;
         }
 
-        if ($value instanceof Content) {
-            return $value->mainLocation ?? null;
-        }
-
-        if ($value instanceof APIContent) {
-            if ($value->contentInfo->mainLocationId === null) {
-                return null;
-            }
-
-            // View builder will not load the main location if it is not provided,
-            // this makes sure it is available to the template
-            return $this->locationService->loadLocation((int) $value->contentInfo->mainLocationId);
-        }
-
-        throw new LogicException('Given value must be Content or Location instance.');
+        return null;
     }
 
     /**

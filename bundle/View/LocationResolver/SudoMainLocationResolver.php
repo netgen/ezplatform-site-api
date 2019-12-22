@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationResolver;
 
 use Exception;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationResolver;
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 
-class SudoMainLocationProvider extends LocationProvider
+class SudoMainLocationResolver extends LocationResolver
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository

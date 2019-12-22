@@ -1,12 +1,12 @@
 services:
-    netgen.ezplatform_site.view.location_provider.sudo_main_location_provider:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider\SudoMainLocationProvider
+    netgen.ezplatform_site.view.location_resolver.sudo_main_location_resolver:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationResolver\SudoMainLocationResolver
         arguments:
             - '@ezpublish.api.repository'
             - '@netgen.ezplatform_site.load_service'
 
-    netgen.ezplatform_site.view.location_provider:
-        alias: netgen.ezplatform_site.view.location_provider.sudo_main_location_provider
+    netgen.ezplatform_site.view.location_resolver:
+        alias: netgen.ezplatform_site.view.location_resolver.sudo_main_location_resolver
 
     netgen.ezplatform_site.view_builder.content:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder
@@ -16,7 +16,7 @@ services:
             - '@ezpublish.api.repository'
             - '@ezpublish.view.configurator'
             - '@ezpublish.view.view_parameters.injector.dispatcher'
-            - '@netgen.ezplatform_site.view.location_provider'
+            - '@netgen.ezplatform_site.view.location_resolver'
 
     # deprecated since 3.3, used aliased service
     netgen.ezplatform_site.ngcontent_view_provider.configured:

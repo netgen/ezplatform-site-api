@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationResolver;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\ContentInfoLocationLoader;
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationResolver;
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 
-class CoreAdapterProvider extends LocationProvider
+class CoreAdapterResolver extends LocationResolver
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository

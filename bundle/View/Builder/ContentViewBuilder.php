@@ -17,7 +17,7 @@ use eZ\Publish\Core\MVC\Symfony\View\Configurator;
 use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
 use eZ\Publish\Core\MVC\Symfony\View\ParametersInjector;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationResolver;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
@@ -49,22 +49,22 @@ class ContentViewBuilder implements ViewBuilder
     private $viewParametersInjector;
 
     /**
-     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationResolver
      */
-    private $locationProvider;
+    private $locationResolver;
 
     public function __construct(
         Site $site,
         Repository $repository,
         Configurator $viewConfigurator,
         ParametersInjector $viewParametersInjector,
-        LocationProvider $locationProvider
+        LocationResolver $locationResolver
     ) {
         $this->site = $site;
         $this->repository = $repository;
         $this->viewConfigurator = $viewConfigurator;
         $this->viewParametersInjector = $viewParametersInjector;
-        $this->locationProvider = $locationProvider;
+        $this->locationResolver = $locationResolver;
     }
 
     public function matches($argument): bool
@@ -128,7 +128,7 @@ class ContentViewBuilder implements ViewBuilder
 
         if ($location === null) {
             try {
-                $location = $this->locationProvider->getLocation($content);
+                $location = $this->locationResolver->getLocation($content);
             } catch (NotFoundException $e) {
                 // do nothing
             }

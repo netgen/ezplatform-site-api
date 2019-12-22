@@ -10,7 +10,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Location;
 /**
  * Provides Location for the Content View when it's not explicitly given.
  */
-abstract class LocationProvider
+abstract class LocationResolver
 {
     /**
      * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content

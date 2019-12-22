@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
@@ -16,6 +17,7 @@ use eZ\Publish\Core\MVC\Symfony\View\Configurator;
 use eZ\Publish\Core\MVC\Symfony\View\EmbedView;
 use eZ\Publish\Core\MVC\Symfony\View\ParametersInjector;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
@@ -46,16 +48,23 @@ class ContentViewBuilder implements ViewBuilder
      */
     private $viewParametersInjector;
 
+    /**
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider
+     */
+    private $locationProvider;
+
     public function __construct(
         Site $site,
         Repository $repository,
         Configurator $viewConfigurator,
-        ParametersInjector $viewParametersInjector
+        ParametersInjector $viewParametersInjector,
+        LocationProvider $locationProvider
     ) {
         $this->site = $site;
         $this->repository = $repository;
         $this->viewConfigurator = $viewConfigurator;
         $this->viewParametersInjector = $viewParametersInjector;
+        $this->locationProvider = $locationProvider;
     }
 
     public function matches($argument): bool
@@ -66,9 +75,9 @@ class ContentViewBuilder implements ViewBuilder
     /**
      * @param array $parameters
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException If both contentId and locationId parameters are missing
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
-     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Exception
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
@@ -78,7 +87,7 @@ class ContentViewBuilder implements ViewBuilder
         $view = new ContentView(null, [], $parameters['viewType']);
         $view->setIsEmbed($this->isEmbed($parameters));
 
-        if ($view->isEmbed() && $parameters['viewType'] === null) {
+        if ($parameters['viewType'] === null && $view->isEmbed()) {
             $view->setViewType(EmbedView::DEFAULT_VIEW_TYPE);
         }
 
@@ -116,6 +125,15 @@ class ContentViewBuilder implements ViewBuilder
         }
 
         $view->setSiteContent($content);
+
+        if ($location === null) {
+            try {
+                $location = $this->locationProvider->getLocation($content);
+            } catch (NotFoundException $e) {
+                // do nothing
+            }
+        }
+
         if (isset($location)) {
             if ($location->contentInfo->id !== $content->id) {
                 throw new InvalidArgumentException(
@@ -157,7 +175,7 @@ class ContentViewBuilder implements ViewBuilder
      * @param int|string $contentId
      * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Exception
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content
@@ -173,7 +191,7 @@ class ContentViewBuilder implements ViewBuilder
 
         $versionInfo = $content->versionInfo;
 
-        if (!$this->canRead($versionInfo->contentInfo, $location)) {
+        if (!$this->canReadOrViewEmbed($versionInfo->contentInfo, $location)) {
             throw new UnauthorizedException(
                 'content',
                 'read|view_embed',
@@ -232,7 +250,7 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @return bool
      */
-    private function canRead(ContentInfo $contentInfo, Location $location = null): bool
+    private function canReadOrViewEmbed(ContentInfo $contentInfo, Location $location = null): bool
     {
         $targets = isset($location) ? [$location->innerLocation] : [];
 

@@ -124,6 +124,12 @@ through two configuration options (showing default values):
     ``ng_fallback_with_subrequest`` is turned off, but in next major release that will be reversed
     by default.
 
+.. note::
+
+    When fallback is enabled default templates for the primary view will not be used. Otherwise the
+    fallback would never happen, because the primary view would always use default templates instead
+    of falling back to the secondary view.
+
 You can also configure fallback manually, per view. This is done by configuring a view to render one
 of two special templates, depending if the fallback is from Site API to eZ Platform views or the
 opposite.

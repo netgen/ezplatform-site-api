@@ -27,7 +27,6 @@ services:
         arguments:
             - '@netgen.ezplatform_site.view_builder.content'
             - '@netgen.ezplatform_site.view_renderer'
-            - '@ezpublish.api.service.location'
         tags:
             - { name: twig.runtime }
 
@@ -43,7 +42,6 @@ services:
         arguments:
             - '@ezpublish.view_builder.content'
             - '@netgen.ezplatform_site.view_renderer'
-            - '@ezpublish.api.service.location'
         tags:
             - { name: twig.runtime }
 

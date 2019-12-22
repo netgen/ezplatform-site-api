@@ -39,7 +39,7 @@ class CoreAdapterProvider extends LocationProvider
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws \Exception
      */

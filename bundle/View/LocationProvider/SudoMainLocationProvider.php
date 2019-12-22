@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider;
 
+use Exception;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
-use Exception;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\LocationProvider;
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
@@ -24,7 +24,7 @@ class SudoMainLocationProvider extends LocationProvider
      */
     private $loadService;
 
-    public function __construct(Repository $repository,  LoadService $loadService)
+    public function __construct(Repository $repository, LoadService $loadService)
     {
         $this->repository = $repository;
         $this->loadService = $loadService;

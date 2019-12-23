@@ -10,6 +10,7 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\InvalidRe
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\PreviewControllerOverridePass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\RelationResolverRegistrationPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\ViewBuilderRegistrationPass;
+use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\XmlTextFieldTypePass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\BaseOptions;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\NamedQuery;
@@ -24,10 +25,11 @@ class NetgenEzPlatformSiteApiBundle extends Bundle
 
         $container->addCompilerPass(new AggregateRepositoryPass());
         $container->addCompilerPass(new DefaultViewActionOverridePass());
+        $container->addCompilerPass(new InvalidRedirectConfigurationListenerPass());
         $container->addCompilerPass(new PreviewControllerOverridePass());
         $container->addCompilerPass(new RelationResolverRegistrationPass());
         $container->addCompilerPass(new ViewBuilderRegistrationPass());
-        $container->addCompilerPass(new InvalidRedirectConfigurationListenerPass());
+        $container->addCompilerPass(new XmlTextFieldTypePass());
 
         /** @var \eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension $coreExtension */
         $coreExtension = $container->getExtension('ezpublish');

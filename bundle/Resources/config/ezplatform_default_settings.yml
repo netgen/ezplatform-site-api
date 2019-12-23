@@ -14,9 +14,20 @@ parameters:
     # By default we don't override URL alias view action, for that reason this is commented out
     #ezsettings.default.pagelayout: '@@NetgenEzPlatformSiteApi/pagelayout.html.twig'
 
+    ezsettings.default.fieldtypes.ezrichtext.embed.content:
+        template: "@@NetgenEzPlatformSiteApi/field_type/ezrichtext/embed/content.html.twig"
+    ezsettings.default.fieldtypes.ezrichtext.embed.content_inline:
+        template: "@@NetgenEzPlatformSiteApi/field_type/ezrichtext/embed/content_inline.html.twig"
+    ezsettings.default.fieldtypes.ezrichtext.embed.location:
+        template: "@@NetgenEzPlatformSiteApi/field_type/ezrichtext/embed/location.html.twig"
+    ezsettings.default.fieldtypes.ezrichtext.embed.location_inline:
+        template: "@@NetgenEzPlatformSiteApi/field_type/ezrichtext/embed/location_inline.html.twig"
+
     # Default Site API settings under eZ Platform 'ezpublish/system' configuration node
     ezsettings.default.ng_fallback_to_secondary_content_view: false
-    ezsettings.default.ng_fallback_with_subrequest: true
+    ezsettings.default.ng_fallback_without_subrequest: false
+    ezsettings.default.ng_richtext_embed_without_subrequest: false
+    ezsettings.default.ng_xmltext_embed_without_subrequest: false
     ezsettings.default.ng_named_query: []
     ezsettings.default.ngcontent_view: []
     ezsettings.default.ngcontent_view_defaults:

@@ -1,4 +1,9 @@
-{% if ezpublish.configResolver.getParameter('ng_fallback_with_subrequest') == true %}
+{# content \Netgen\EzPlatformSiteApi\API\Values\Content #}
+{# location \Netgen\EzPlatformSiteApi\API\Values\Location #}
+
+{% if ezpublish.configResolver.getParameter('ng_fallback_without_subrequest') == true %}
+    {{ ng_view_content(location|default(content), view_type) }}
+{% else %}
     {{ render(
         controller(
             'ng_content:viewAction', {
@@ -8,6 +13,4 @@
             }
         )
     ) }}
-{% else %}
-    {{ ng_view_content(location|default(content), view_type) }}
 {% endif %}

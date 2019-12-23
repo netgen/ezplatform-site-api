@@ -60,7 +60,7 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
@@ -111,7 +111,7 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
                     $embedContent = $this->renderContentEmbed($content, $view, $parameters);
                 } catch (APINotFoundException $e) {
                     $this->logger->error(
-                        sprintf('While generating embed for xmltext, could not locate content with ID %d', $contentId)
+                        \sprintf('While generating embed for xmltext, could not locate content with ID %d', $contentId)
                     );
                 }
             } elseif ($locationId) {
@@ -133,7 +133,7 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
                     $embedContent = $this->renderLocationEmbed($location, $view, $parameters);
                 } catch (APINotFoundException $e) {
                     $this->logger->error(
-                        sprintf('While generating embed for xmltext, could not locate location with ID %d', $locationId)
+                        \sprintf('While generating embed for xmltext, could not locate location with ID %d', $locationId)
                     );
                 }
             }

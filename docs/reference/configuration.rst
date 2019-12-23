@@ -101,7 +101,7 @@ through two configuration options (showing default values):
         system:
             frontend_group:
                 ng_fallback_to_secondary_content_view: false
-                ng_fallback_with_subrequest: true
+                ng_fallback_without_subrequest: false
 
 - ``ng_fallback_to_secondary_content_view``
 
@@ -110,7 +110,7 @@ through two configuration options (showing default values):
     to eZ Platform views, and from eZ Platform to Site API content views. Which one will be used is
     defined by ``override_url_alias_view_action`` configuration documented above.
 
-- ``ng_fallback_with_subrequest``
+- ``ng_fallback_without_subrequest``
 
     With this option you can control whether the fallback will use a subrequest (default), or Twig
     functions that can render content view without a subrequest. That applies both to automatic and
@@ -120,9 +120,9 @@ through two configuration options (showing default values):
 
 .. note::
 
-    For backward compatibility reasons, ``ng_fallback_to_secondary_content_view`` is turned on and
-    ``ng_fallback_with_subrequest`` is turned off, but in next major release that will be reversed
-    by default.
+    For backward compatibility reasons, ``ng_fallback_to_secondary_content_view`` and
+    ``ng_fallback_without_subrequest`` are turned off, but in next major release that will be
+    reversed by default.
 
 .. note::
 

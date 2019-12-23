@@ -18,15 +18,27 @@ class BaseOptions extends AbstractParser
             ->end();
 
         $nodeBuilder
-            ->booleanNode('ng_fallback_with_subrequest')
+            ->booleanNode('ng_fallback_without_subrequest')
                 ->info('Controls whether secondary content view fallback should use a subrequest')
+            ->end();
+
+        $nodeBuilder
+            ->booleanNode('ng_richtext_embed_without_subrequest')
+            ->info('Controls whether RichText and XmlText embed rendering should use a subrequest')
+            ->end();
+
+        $nodeBuilder
+            ->booleanNode('ng_xmltext_embed_without_subrequest')
+            ->info('Controls whether RichText and XmlText embed rendering should use a subrequest')
             ->end();
     }
 
     public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
     {
         $this->contextualize('ng_fallback_to_secondary_content_view', $scopeSettings, $currentScope, $contextualizer);
-        $this->contextualize('ng_fallback_with_subrequest', $scopeSettings, $currentScope, $contextualizer);
+        $this->contextualize('ng_fallback_without_subrequest', $scopeSettings, $currentScope, $contextualizer);
+        $this->contextualize('ng_richtext_embed_without_subrequest', $scopeSettings, $currentScope, $contextualizer);
+        $this->contextualize('ng_xmltext_embed_without_subrequest', $scopeSettings, $currentScope, $contextualizer);
     }
 
     private function contextualize(

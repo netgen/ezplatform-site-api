@@ -1,0 +1,34 @@
+{% set params = { "objectParameters": {} } %}
+{% if embedParams.config is defined  %}
+    {% set params = params|merge( { "objectParameters": embedParams.config } ) %}
+{% endif %}
+{% if embedParams.link is defined  %}
+    {% set params = params|merge( { "linkParameters": embedParams.link } ) %}
+{% endif %}
+{% if embedParams.dataAttributes is defined %}
+    {# Note: intentionally using here new convention for parameter names #}
+    {% set data_attributes_str = ' ' ~ embedParams.dataAttributes|ez_data_attributes_serialize %}
+    {# Note: passing data attributes as param for 3rd party overridden embed views #}
+    {% set params = params|merge( { "data_attributes": embedParams.dataAttributes } ) %}
+{% else %}
+    {% set data_attributes_str = '' %}
+{% endif %}
+
+<div {% if embedParams.anchor is defined %}id="{{ embedParams.anchor }}"{% endif %} class="{% if embedParams.align is defined %}align-{{ embedParams.align }}{% endif %}{% if embedParams.class is defined %} {{ embedParams.class }}{% endif %}"{{ data_attributes_str|raw }}>
+    {{ fos_httpcache_tag('relation-' ~ embedParams.id) }}
+    {% if ezpublish.configResolver.getParameter('ng_richtext_embed_without_subrequest') == true %}
+        {{ ng_view_content_embedded(embedParams.viewType, params|merge( { "contentId": embedParams.id } )) }}
+    {% else %}
+        {{ render(
+            controller(
+                "ng_content:embedAction",
+                {
+                    "contentId": embedParams.id,
+                    "viewType": embedParams.viewType,
+                    "params": params,
+                    "layout": false
+                }
+            )
+        ) }}
+    {% endif %}
+</div>

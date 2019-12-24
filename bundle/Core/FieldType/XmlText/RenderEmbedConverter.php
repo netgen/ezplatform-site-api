@@ -164,7 +164,7 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
             return $this->renderContentEmbedWithoutSubrequest($content, $viewType, $parameters);
         }
 
-        return $this->fragmentHandler->render(
+        return (string)$this->fragmentHandler->render(
             new ControllerReference(
                 'ng_content:embedAction',
                 [
@@ -226,7 +226,7 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
             return $this->renderLocationEmbedWithoutSubrequest($location, $view, $parameters);
         }
 
-        return $this->fragmentHandler->render(
+        return (string)$this->fragmentHandler->render(
             new ControllerReference(
                 'ng_content:embedAction',
                 [

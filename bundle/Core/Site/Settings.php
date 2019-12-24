@@ -52,7 +52,7 @@ final class Settings extends BaseSettings
 
     /**
      * @param string $property
-     * @param $value
+     * @param mixed $value
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
      */

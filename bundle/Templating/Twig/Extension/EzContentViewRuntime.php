@@ -79,7 +79,7 @@ final class EzContentViewRuntime
         return $this->viewRenderer->render($view, $parameters, $layout);
     }
 
-    private function getContent(ValueObject $value): ValueObject
+    private function getContent(ValueObject $value): APIContent
     {
         if ($value instanceof Content) {
             return $value->innerContent;

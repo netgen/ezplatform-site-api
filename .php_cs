@@ -19,6 +19,7 @@ return PhpCsFixer\Config::create()
         'multiline_whitespace_before_semicolons' => ['strategy' => 'no_multi_line'],
         'native_function_invocation' => true,
         'no_alias_functions' => true,
+        'no_superfluous_phpdoc_tags' => false,
         'no_unset_on_property' => false,
         'php_unit_method_casing' => false,
         'php_unit_strict' => false,

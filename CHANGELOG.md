@@ -10,8 +10,11 @@ Unreleased
 * Add `Location::getFirstChild()` method ([#148](https://github.com/netgen/ezplatform-site-api/pull/148))
 * Add `Content::getFirstNonEmptyField()` method ([#150](https://github.com/netgen/ezplatform-site-api/pull/150))
 * NGSTACK-371: implement fallback between eZ and Site API content views ([#152](https://github.com/netgen/ezplatform-site-api/pull/152))
+* Implement Content View Location resolver ([#153](https://github.com/netgen/ezplatform-site-api/pull/153))
+* NGSTACK-354: implement support for XmlText and RichText embed rendering ([#155](https://github.com/netgen/ezplatform-site-api/pull/155))
 
 ### Fixed
+* Fix type in configuration by @joezg ([#151](https://github.com/netgen/ezplatform-site-api/pull/151))
 * Fix service ID for named object provider (https://github.com/netgen/ezplatform-site-api/commit/4ee25ebc26b801aececd55b198e7c1dad7ef2bce)
 
 3.2.2 (28.11.2019)

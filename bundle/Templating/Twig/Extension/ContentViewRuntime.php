@@ -55,6 +55,7 @@ class ContentViewRuntime
         array $parameters = [],
         bool $layout = false
     ): string {
+        /** @var Content|APIContent $content */
         $content = $this->getContent($value);
         $location = $this->getLocation($value);
 

@@ -15,13 +15,13 @@ parameters:
     #ezsettings.default.pagelayout: '@@NetgenEzPlatformSiteApi/pagelayout.html.twig'
 
     ezsettings.default.fieldtypes.ezrichtext.embed.content:
-        template: "@@NetgenEzPlatformSiteApi/field_type/ezrichtext/embed/content.html.twig"
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/content.html.twig"
     ezsettings.default.fieldtypes.ezrichtext.embed.content_inline:
-        template: "@@NetgenEzPlatformSiteApi/field_type/ezrichtext/embed/content_inline.html.twig"
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/content_inline.html.twig"
     ezsettings.default.fieldtypes.ezrichtext.embed.location:
-        template: "@@NetgenEzPlatformSiteApi/field_type/ezrichtext/embed/location.html.twig"
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/location.html.twig"
     ezsettings.default.fieldtypes.ezrichtext.embed.location_inline:
-        template: "@@NetgenEzPlatformSiteApi/field_type/ezrichtext/embed/location_inline.html.twig"
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/location_inline.html.twig"
 
     # Default Site API settings under eZ Platform 'ezpublish/system' configuration node
     ezsettings.default.ng_fallback_to_secondary_content_view: false

@@ -57,7 +57,7 @@ class ContentUrlAliasRouter implements ChainedRouterInterface, RequestMatcherInt
             throw new RouteNotFoundException('Could not match route');
         }
 
-        if (empty($name->mainLocationId)) {
+        if ($name->mainLocation === null) {
             throw new LogicException('Cannot generate an UrlAlias route for content without main location.');
         }
 

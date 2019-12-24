@@ -100,7 +100,7 @@ final class ViewRenderer
         }
 
         if ($result instanceof Response) {
-            return $result->getContent();
+            return (string)$result->getContent();
         }
 
         throw new LogicException('Controller result must be ContentView or Response instance');

@@ -68,8 +68,11 @@ class Configured implements ViewProvider
     {
         // Service is dispatched by the configured view class, so this should be safe
         /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
-        if (($configHash = $this->matcherFactory->match($view)) === null) {
-            return $this->contentViewFallbackResolver->getEzPlatformFallbackDto();
+
+        $configHash = $this->matcherFactory->match($view);
+
+        if ($configHash === null) {
+            return $this->contentViewFallbackResolver->getEzPlatformFallbackDto($view);
         }
 
         // We can set the collection directly to the view, no need to go through DTO

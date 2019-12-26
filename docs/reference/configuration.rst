@@ -127,8 +127,11 @@ through two configuration options (showing default values):
 .. note::
 
     When fallback is enabled default templates for the primary view will not be used. Otherwise the
-    fallback would never happen, because the primary view would always use default templates instead
-    of falling back to the secondary view.
+    fallback would never happen, because the primary view would always use the default templates
+    instead of falling back to the secondary view. Similarly, when falling back to the secondary
+    view, if its view configuration doesn't match, the default template of the secondary view will
+    be rendered.
+
 
 You can also configure fallback manually, per view. This is done by configuring a view to render one
 of two special templates, depending if the fallback is from Site API to eZ Platform views or the

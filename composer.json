@@ -20,6 +20,7 @@
         "phpunit/phpunit": "^7.0",
         "matthiasnoback/symfony-dependency-injection-test": "~3.0",
         "netgen/tagsbundle": "^3.3",
+        "ezsystems/ezplatform-richtext": "^1.1",
         "ezsystems/ezplatform-xmltext-fieldtype": "~1.8"
     },
     "suggest": {

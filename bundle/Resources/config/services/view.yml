@@ -37,8 +37,10 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\ContentViewFallbackResolver
         arguments:
             - '@ezpublish.config.resolver'
-            - '%netgen.ezplatform_site.content_view_fallback.to_ez_platform%'
-            - '%netgen.ezplatform_site.content_view_fallback.to_site_api%'
+            - '%netgen.ezplatform_site.content_view_fallback.to_ez_platform.embed%'
+            - '%netgen.ezplatform_site.content_view_fallback.to_ez_platform.view%'
+            - '%netgen.ezplatform_site.content_view_fallback.to_site_api.embed%'
+            - '%netgen.ezplatform_site.content_view_fallback.to_site_api.view%'
 
     netgen.ezplatform_site.content_view_provider.core_override:
         decorates: ezpublish.content_view_provider.configured

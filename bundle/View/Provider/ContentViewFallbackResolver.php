@@ -6,6 +6,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider;
 
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
+use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView as SiteContentView;
 
 final class ContentViewFallbackResolver
 {
@@ -17,49 +18,75 @@ final class ContentViewFallbackResolver
     /**
      * @var string
      */
-    private $toEzPlatformFallbackTemplate;
+    private $toEzPlatformEmbedFallbackTemplate;
 
     /**
      * @var string
      */
-    private $toSiteApiFallbackTemplate;
+    private $toEzPlatformViewFallbackTemplate;
+
+    /**
+     * @var string
+     */
+    private $toSiteApiEmbedFallbackTemplate;
+
+    /**
+     * @var string
+     */
+    private $toSiteApiViewFallbackTemplate;
 
     public function __construct(
         ConfigResolverInterface $configResolver,
-        string $toEzPlatformFallbackTemplate,
-        string $toSiteApiFallbackTemplate
+        string $toEzPlatformEmbedFallbackTemplate,
+        string $toEzPlatformViewFallbackTemplate,
+        string $toSiteApiEmbedFallbackTemplate,
+        string $toSiteApiViewFallbackTemplate
     ) {
         $this->configResolver = $configResolver;
-        $this->toEzPlatformFallbackTemplate = $toEzPlatformFallbackTemplate;
-        $this->toSiteApiFallbackTemplate = $toSiteApiFallbackTemplate;
+        $this->toEzPlatformEmbedFallbackTemplate = $toEzPlatformEmbedFallbackTemplate;
+        $this->toEzPlatformViewFallbackTemplate = $toEzPlatformViewFallbackTemplate;
+        $this->toSiteApiEmbedFallbackTemplate = $toSiteApiEmbedFallbackTemplate;
+        $this->toSiteApiViewFallbackTemplate = $toSiteApiViewFallbackTemplate;
     }
 
     /**
+     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
+     *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView
      */
-    public function getEzPlatformFallbackDto(): ?ContentView
+    public function getEzPlatformFallbackDto(SiteContentView $view): ?ContentView
     {
-        if ($this->isEzPlatformFallbackEnabled()) {
-            return new ContentView($this->toEzPlatformFallbackTemplate, [], '_ng_fallback');
+        if (!$this->isEzPlatformFallbackEnabled()) {
+            return null;
         }
 
-        return null;
+        if ($view->isEmbed()) {
+            return new ContentView($this->toEzPlatformEmbedFallbackTemplate);
+        }
+
+        return new ContentView($this->toEzPlatformViewFallbackTemplate);
     }
 
     /**
+     * @param \eZ\Publish\Core\MVC\Symfony\View\ContentView $view
+     *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView
      */
-    public function getSiteApiFallbackDto(): ?ContentView
+    public function getSiteApiFallbackDto(ContentView $view): ?ContentView
     {
-        if ($this->isSiteApiFallbackEnabled()) {
-            return new ContentView($this->toSiteApiFallbackTemplate, [], '_ng_fallback');
+        if (!$this->isSiteApiFallbackEnabled()) {
+            return null;
         }
 
-        return null;
+        if ($view->isEmbed()) {
+            return new ContentView($this->toSiteApiEmbedFallbackTemplate);
+        }
+
+        return new ContentView($this->toSiteApiViewFallbackTemplate);
     }
 
     private function isEzPlatformFallbackEnabled(): bool

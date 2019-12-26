@@ -33,7 +33,6 @@ final class CoreOverride extends CoreConfigured
     {
         // Service is dispatched by the configured view class, so this should be safe
         /** @var \eZ\Publish\Core\MVC\Symfony\View\ContentView $view */
-
         $configHash = $this->matcherFactory->match($view);
 
         if ($configHash === null) {

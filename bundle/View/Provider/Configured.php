@@ -68,7 +68,6 @@ class Configured implements ViewProvider
     {
         // Service is dispatched by the configured view class, so this should be safe
         /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view */
-
         $configHash = $this->matcherFactory->match($view);
 
         if ($configHash === null) {

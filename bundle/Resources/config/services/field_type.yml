@@ -1,0 +1,20 @@
+parameters:
+    # RichText embed templates parameter namespace
+    netgen.ezplatform_site.ezrichtext.embed.namespace: ng_fieldtypes.ezrichtext.embed
+
+services:
+    netgen.ezplatform_site.ezrichtext.renderer:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Core\FieldType\RichText\Renderer
+        decorates: ezrichtext.renderer
+        arguments:
+            - '@ezpublish.api.repository'
+            - '@security.authorization_checker'
+            - '@ezpublish.config.resolver'
+            - '@templating'
+            - '%ezrichtext.tag.namespace%'
+            - '%ezrichtext.style.namespace%'
+            - '%ezrichtext.embed.namespace%'
+            - '%netgen.ezplatform_site.ezrichtext.embed.namespace%'
+            - '@?logger'
+            - '%ezplatform.ezrichtext.custom_tags%'
+            - '%ezplatform.ezrichtext.custom_styles%'

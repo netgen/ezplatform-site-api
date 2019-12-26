@@ -14,14 +14,26 @@ parameters:
     # By default we don't override URL alias view action, for that reason this is commented out
     #ezsettings.default.pagelayout: '@@NetgenEzPlatformSiteApi/pagelayout.html.twig'
 
-    ezsettings.default.fieldtypes.ezrichtext.embed.content:
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.content:
         template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/content.html.twig"
-    ezsettings.default.fieldtypes.ezrichtext.embed.content_inline:
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.content_denied:
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/content_denied.html.twig"
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.content_inline:
         template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/content_inline.html.twig"
-    ezsettings.default.fieldtypes.ezrichtext.embed.location:
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.content_inline_denied:
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/content_inline_denied.html.twig"
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.default:
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/default.html.twig"
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.default_inline:
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/default_inline.html.twig"
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.location:
         template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/location.html.twig"
-    ezsettings.default.fieldtypes.ezrichtext.embed.location_inline:
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.location_denied:
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/location_denied.html.twig"
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.location_inline:
         template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/location_inline.html.twig"
+    ezsettings.default.ng_fieldtypes.ezrichtext.embed.location_inline_denied:
+        template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/location_inline_denied.html.twig"
 
     # Default Site API settings under eZ Platform 'ezpublish/system' configuration node
     ezsettings.default.ng_fallback_to_secondary_content_view: false

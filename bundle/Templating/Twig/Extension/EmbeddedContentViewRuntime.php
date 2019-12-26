@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
-use LogicException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder;
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ViewRenderer;
 
 /**
@@ -54,28 +52,6 @@ class EmbeddedContentViewRuntime
 
         $view = $this->viewBuilder->buildView($baseParameters + $parameters);
 
-        if (!$this->viewMatched($view)) {
-            throw new LogicException(
-                \sprintf(
-                    'Could not match embed view "%s" for Content #%d',
-                    $viewType,
-                    $view->getSiteContent()->id
-                )
-            );
-        }
-
         return $this->viewRenderer->render($view, $parameters, false);
-    }
-
-    /**
-     * This is the only way to check if the view actually matched?
-     *
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $contentView
-     *
-     * @return bool
-     */
-    private function viewMatched(ContentView $contentView): bool
-    {
-        return !empty($contentView->getConfigHash());
     }
 }

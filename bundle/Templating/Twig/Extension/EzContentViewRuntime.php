@@ -8,7 +8,6 @@ use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use eZ\Publish\Core\MVC\Symfony\View\Builder\ContentViewBuilder;
-use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use LogicException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ViewRenderer;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
@@ -70,12 +69,6 @@ final class EzContentViewRuntime
 
         $view = $this->viewBuilder->buildView($baseParameters + $parameters);
 
-        if (!$this->viewMatched($view)) {
-            throw new LogicException(
-                \sprintf('Could not match view "%s" for Content #%d', $viewType, $content->id)
-            );
-        }
-
         return $this->viewRenderer->render($view, $parameters, $layout);
     }
 
@@ -117,17 +110,5 @@ final class EzContentViewRuntime
         }
 
         return null;
-    }
-
-    /**
-     * This is the only way to check if the view actually matched?
-     *
-     * @param \eZ\Publish\Core\MVC\Symfony\View\ContentView $contentView
-     *
-     * @return bool
-     */
-    private function viewMatched(ContentView $contentView): bool
-    {
-        return !empty($contentView->getConfigHash());
     }
 }

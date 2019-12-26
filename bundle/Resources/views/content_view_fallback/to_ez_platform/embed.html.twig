@@ -1,0 +1,16 @@
+{# content \Netgen\EzPlatformSiteApi\API\Values\Content #}
+{# location \Netgen\EzPlatformSiteApi\API\Values\Location #}
+
+{% if ezpublish.configResolver.getParameter('ng_fallback_without_subrequest') == true %}
+    {{ ng_ez_view_content_embedded(view_type, { "content": content.innerContent, "location": location.innerLocation }) }}
+{% else %}
+    with subrequest {{ render(
+        controller(
+            'ez_content:embedAction', {
+                'content': content.innerContent,
+                'location': location.innerLocation,
+                'viewType': view_type
+            }
+        )
+    ) }}
+{% endif %}

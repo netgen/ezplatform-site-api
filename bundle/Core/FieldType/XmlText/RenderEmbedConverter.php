@@ -10,9 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo as APIVersionInfo;
 use eZ\Publish\Core\Base\Exceptions\UnauthorizedException;
 use eZ\Publish\Core\FieldType\XmlText\Converter\EmbedToHtml5 as BaseEmbedToHtml5;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use LogicException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\Builder\ContentViewBuilder;
-use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ViewRenderer;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
@@ -226,12 +224,6 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
         $parameters = $baseParameters + $parameters;
         $view = $this->viewBuilder->buildView($parameters);
 
-        if (!$this->viewMatched($view)) {
-            throw new LogicException(
-                \sprintf('Could not match view "%s" for Content #%d', $viewType, $content->id)
-            );
-        }
-
         return $this->viewRenderer->render($view, $parameters, false);
     }
 
@@ -290,24 +282,6 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
         $parameters = $baseParameters + $parameters;
         $view = $this->viewBuilder->buildView($parameters);
 
-        if (!$this->viewMatched($view)) {
-            throw new LogicException(
-                \sprintf('Could not match view "%s" for Content #%d', $viewType, $location->content->id)
-            );
-        }
-
         return $this->viewRenderer->render($view, $parameters, false);
-    }
-
-    /**
-     * This is the only way to check if the view actually matched?
-     *
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $contentView
-     *
-     * @return bool
-     */
-    private function viewMatched(ContentView $contentView): bool
-    {
-        return !empty($contentView->getConfigHash());
     }
 }

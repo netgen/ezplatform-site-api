@@ -24,6 +24,7 @@ use Symfony\Component\HttpKernel\Controller\ControllerReference;
  * Converts embedded elements from internal XmlText representation to HTML5.
  *
  * Overrides the built in converter to allow rendering embedded content with Site API controller.
+ * The service is activated through the compiler pass depending on XmlText field type being installed.
  */
 class RenderEmbedConverter extends BaseEmbedToHtml5
 {
@@ -68,6 +69,31 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
      * @throws \Exception
      */
     protected function processTag(DOMDocument $xmlDoc, $tagName): void
+    {
+        $overrideViewAction = $this->configResolver->getParameter(
+            'override_url_alias_view_action',
+            'netgen_ez_platform_site_api'
+        );
+
+        if ($overrideViewAction) {
+            $this->internalProcessTag($xmlDoc, $tagName);
+
+            return;
+        }
+
+        parent::processTag($xmlDoc, $tagName);
+    }
+
+    /**
+     * @param \DOMDocument $xmlDoc
+     * @param string $tagName
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     */
+    protected function internalProcessTag(DOMDocument $xmlDoc, string $tagName): void
     {
         $this->logger = $this->logger ?: new NullLogger();
         $permissionResolver = $this->repository->getPermissionResolver();

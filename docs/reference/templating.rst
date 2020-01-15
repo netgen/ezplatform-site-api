@@ -620,7 +620,7 @@ A following named object configuration is given:
 
 .. code-block:: yaml
 
-    ezpublish:
+    netgen_ez_platform_site_api:
         system:
             frontend_group:
                 named_objects:

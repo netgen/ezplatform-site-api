@@ -13,6 +13,7 @@
         "php": "~7.1",
         "ezsystems/ezpublish-kernel": "^7.4 || ^8.0",
         "ezsystems/ezplatform-http-cache": ">=0.8, <1.0 || ^1.0",
+        "ezsystems/ezplatform-richtext": "^1.1",
         "netgen/ezplatform-search-extra": "^1.8",
         "sensio/framework-extra-bundle": "^5.2"
     },
@@ -20,7 +21,6 @@
         "phpunit/phpunit": "^7.0",
         "matthiasnoback/symfony-dependency-injection-test": "~3.0",
         "netgen/tagsbundle": "^3.3",
-        "ezsystems/ezplatform-richtext": "^1.1",
         "ezsystems/ezplatform-xmltext-fieldtype": "~1.8"
     },
     "suggest": {

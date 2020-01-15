@@ -11,6 +11,7 @@ Unreleased
 * Add `Content::getFirstNonEmptyField()` method ([#150](https://github.com/netgen/ezplatform-site-api/pull/150))
 * NGSTACK-371: implement fallback between eZ and Site API content views ([#152](https://github.com/netgen/ezplatform-site-api/pull/152))
 * Implement Content View Location resolver ([#153](https://github.com/netgen/ezplatform-site-api/pull/153))
+* eZ Platform v3 support: missing argument from EZP-30882 by @wizhippo ([#154](https://github.com/netgen/ezplatform-site-api/pull/154))
 * NGSTACK-354: implement support for XmlText and RichText embed rendering ([#155](https://github.com/netgen/ezplatform-site-api/pull/155))
 
 ### Fixed

@@ -4,7 +4,7 @@ eZ Platform Site API changelog
 Unreleased
 ----------
 
-[`3.2.2...master`](https://github.com/netgen/ezplatform-site-api/compare/3.2.2...master)
+[`3.2.2...3.3.0`](https://github.com/netgen/ezplatform-site-api/compare/3.2.2...3.3.0)
 
 ### Added
 * Add `Location::getFirstChild()` method ([#148](https://github.com/netgen/ezplatform-site-api/pull/148))

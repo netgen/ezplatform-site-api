@@ -15,6 +15,7 @@ Unreleased
 * NGSTACK-354: implement support for XmlText and RichText embed rendering ([#155](https://github.com/netgen/ezplatform-site-api/pull/155))
 
 ### Fixed
+* Fix preview of the non-published Content ([#149](https://github.com/netgen/ezplatform-site-api/pull/149))
 * Fix typo in configuration by @joezg ([#151](https://github.com/netgen/ezplatform-site-api/pull/151))
 * Fix service ID for named object provider (https://github.com/netgen/ezplatform-site-api/commit/4ee25ebc26b801aececd55b198e7c1dad7ef2bce)
 

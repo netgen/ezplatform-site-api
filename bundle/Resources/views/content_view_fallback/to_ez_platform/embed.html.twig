@@ -2,14 +2,14 @@
 {# location \Netgen\EzPlatformSiteApi\API\Values\Location #}
 
 {% if ezpublish.configResolver.getParameter('ng_fallback_without_subrequest') == true %}
-    {{ ng_ez_view_content_embedded(view_type, { "content": content.innerContent, "location": location.innerLocation }) }}
+    {{ ng_ez_view_content_embedded(app.request.attributes.get('viewType'), { "content": content.innerContent, "location": location.innerLocation }) }}
 {% else %}
     {{ render(
         controller(
             'ez_content:embedAction', {
                 'content': content.innerContent,
                 'location': location.innerLocation,
-                'viewType': view_type
+                'viewType': app.request.attributes.get('viewType')
             }
         )
     ) }}

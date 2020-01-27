@@ -126,7 +126,7 @@ class Configured implements ViewProvider
         $this->processRedirects($dto, $viewConfig, $view);
 
         if (isset($viewConfig['template'])) {
-            $dto->setTemplateIdentifier($viewConfig['template']);
+            $dto->setTemplateIdentifier($this->replaceTemplateIdentifierVariables($viewConfig['template'], $view));
         }
 
         if (isset($viewConfig['controller'])) {
@@ -138,6 +138,13 @@ class Configured implements ViewProvider
         }
 
         return $dto;
+    }
+
+    private function replaceTemplateIdentifierVariables(string $identifier, ContentView $view): string
+    {
+        $contentTypeIdentifier = $view->getSiteContent()->contentInfo->contentTypeIdentifier;
+
+        return \preg_replace('/{content_type}/', $contentTypeIdentifier, $identifier) ?? $identifier;
     }
 
     /**

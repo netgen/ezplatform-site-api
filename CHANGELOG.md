@@ -1,8 +1,16 @@
 eZ Platform Site API changelog
 ==============================
 
-Unreleased
-----------
+3.3.1 (27.02.2020)
+------------------
+
+[`3.3.0...3.3.1`](https://github.com/netgen/ezplatform-site-api/compare/3.3.0...3.3.1)
+
+### Fixed
+* Use view type from the `app.request` (https://github.com/netgen/ezplatform-site-api/commit/86f3f73141d79a177eeade701ff7733fa6aa4dd2)
+
+3.3.0 (15.02.2020)
+------------------
 
 [`3.2.2...3.3.0`](https://github.com/netgen/ezplatform-site-api/compare/3.2.2...3.3.0)
 

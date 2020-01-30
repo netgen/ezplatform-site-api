@@ -6,6 +6,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\DependencyInjection\Config
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension;
 use eZ\Bundle\EzPublishCoreBundle\Tests\DependencyInjection\Configuration\Parser\AbstractParserTestCase;
+use InvalidArgumentException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Yaml\Yaml;
@@ -113,6 +114,11 @@ final class ContentViewTest extends AbstractParserTestCase
                     ],
                 ],
             ],
+            [
+                [
+                    'extends' => 'full/throttle',
+                ],
+            ],
         ];
     }
 
@@ -127,6 +133,11 @@ final class ContentViewTest extends AbstractParserTestCase
             'system' => [
                 'siteaccess_group' => [
                     'ngcontent_view' => [
+                        'full' => [
+                            'throttle' => [
+                                'match' => [],
+                            ],
+                        ],
                         'some_view' => [
                             'some_key' => $configurationValues,
                         ],
@@ -147,6 +158,7 @@ final class ContentViewTest extends AbstractParserTestCase
                     'match' => ['config'],
                     'queries' => [0 => 'query'],
                 ],
+                InvalidConfigurationException::class,
                 'Query key must be a string conforming to a valid Twig variable name',
             ],
             [
@@ -154,6 +166,7 @@ final class ContentViewTest extends AbstractParserTestCase
                     'match' => ['config'],
                     'queries' => ['123abc' => 'query'],
                 ],
+                InvalidConfigurationException::class,
                 'Query key must be a string conforming to a valid Twig variable name',
             ],
             [
@@ -167,6 +180,7 @@ final class ContentViewTest extends AbstractParserTestCase
                         ],
                     ],
                 ],
+                InvalidConfigurationException::class,
                 'One of "named_query" or "query_type" must be set',
             ],
             [
@@ -179,6 +193,7 @@ final class ContentViewTest extends AbstractParserTestCase
                         ],
                     ],
                 ],
+                InvalidConfigurationException::class,
                 'Expected array, but got string',
             ],
             [
@@ -191,6 +206,7 @@ final class ContentViewTest extends AbstractParserTestCase
                         ],
                     ],
                 ],
+                InvalidConfigurationException::class,
                 'Expected scalar, but got array',
             ],
             [
@@ -203,7 +219,29 @@ final class ContentViewTest extends AbstractParserTestCase
                         ],
                     ],
                 ],
+                InvalidConfigurationException::class,
                 'You cannot use both "named_query" and "query_type" at the same time',
+            ],
+            [
+                [
+                    'template' => 'ten/plates.json.twig',
+                ],
+                InvalidArgumentException::class,
+                'When view configuration is not extending another, match key is required',
+            ],
+            [
+                [
+                    'extends' => 'snowball/earth',
+                ],
+                InvalidConfigurationException::class,
+                'In spare/ribs: extended view configuration "snowball/earth" was not found',
+            ],
+            [
+                [
+                    'extends' => 'steaks/everywhere',
+                ],
+                InvalidConfigurationException::class,
+                'In spare/ribs: only one level of view configuration inheritance is allowed, steaks/everywhere already extends potato/chips',
             ],
         ];
     }
@@ -212,20 +250,31 @@ final class ContentViewTest extends AbstractParserTestCase
      * @dataProvider providerForTestInvalid
      *
      * @param array $configurationValues
-     * @param string $message
+     * @param string $exceptionClass
+     * @param string $exceptionMessage
      */
-    public function testInvalid(array $configurationValues, string $message): void
+    public function testInvalid(array $configurationValues, string $exceptionClass, string $exceptionMessage): void
     {
-        $this->expectException(InvalidConfigurationException::class);
-        $message = \preg_quote($message, '/');
-        $this->expectExceptionMessageRegExp("/{$message}/");
+        $this->expectException($exceptionClass);
+        $exceptionMessage = \preg_quote($exceptionMessage, '/');
+        $this->expectExceptionMessageRegExp("/{$exceptionMessage}/");
 
         $this->load([
             'system' => [
                 'siteaccess_group' => [
                     'ngcontent_view' => [
-                        'some_view' => [
-                            'some_key' => $configurationValues,
+                        'potato' => [
+                            'chips' => [
+                                'match' => null,
+                            ],
+                        ],
+                        'steaks' => [
+                            'everywhere' => [
+                                'extends' => 'potato/chips',
+                            ],
+                        ],
+                        'spare' => [
+                            'ribs' => $configurationValues,
                         ],
                     ],
                 ],

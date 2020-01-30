@@ -8,6 +8,7 @@ use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\AbstractPars
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Twig\Lexer;
 
 class ContentView extends AbstractParser
@@ -53,7 +54,16 @@ class ContentView extends AbstractParser
                                 return $v;
                             })
                         ->end()
+                        ->beforeNormalization()
+                            ->ifTrue(static function ($v): bool {
+                                return !\array_key_exists('match', $v) && !\array_key_exists('extends', $v);
+                            })
+                            ->thenInvalid(
+                                'When view configuration is not extending another, match key is required'
+                            )
+                        ->end()
                         ->children()
+                            ->scalarNode('extends')->info('Extended view type/name, for example full/article')->end()
                             ->scalarNode('template')->info('Your template path, as @App/my_template.html.twig')->end()
                             ->scalarNode('controller')
                                 ->info(
@@ -100,7 +110,6 @@ EOT
                             ->end()
                             ->arrayNode('match')
                                 ->info('Condition matchers configuration')
-                                ->isRequired()
                                 ->useAttributeAsKey('key')
                                 ->variablePrototype()->end()
                             ->end()
@@ -171,14 +180,60 @@ EOT
             ->end();
     }
 
-    public function preMap(array $config, ContextualizerInterface $contextualizer): void
-    {
-        $contextualizer->mapConfigArray(static::NODE_KEY, $config, ContextualizerInterface::MERGE_FROM_SECOND_LEVEL);
-    }
-
     public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
     {
-        // does nothing
+        foreach ($scopeSettings['ngcontent_view'] as $viewType => &$viewConfigs) {
+            foreach ($viewConfigs as $name => &$viewConfig) {
+                $this->extendViewConfig(
+                    $viewConfig,
+                    $viewType . '/' . $name,
+                    $scopeSettings['ngcontent_view']
+                );
+            }
+        }
+    }
+
+    public function postMap(array $config, ContextualizerInterface $contextualizer): void
+    {
+        $contextualizer->mapConfigArray(
+            static::NODE_KEY,
+            $config,
+            ContextualizerInterface::MERGE_FROM_SECOND_LEVEL
+        );
+    }
+
+    private function extendViewConfig(&$config, string $viewPath, array $viewConfigs): void
+    {
+        if (!\array_key_exists('extends', $config)) {
+            return;
+        }
+
+        [$extendedViewType, $extendedName] = explode('/', $config['extends'] . '/');
+
+        if (!isset($viewConfigs[$extendedViewType][$extendedName])) {
+            throw new InvalidConfigurationException(
+                \sprintf(
+                    'In %s: extended view configuration "%s" was not found',
+                    $viewPath,
+                    $config['extends']
+                )
+            );
+        }
+
+        $baseConfig = $viewConfigs[$extendedViewType][$extendedName];
+
+        if (\array_key_exists('extends', $baseConfig)) {
+            throw new InvalidConfigurationException(
+                \sprintf(
+                    'In %s: only one level of view configuration inheritance is allowed, %s already extends %s',
+                    $viewPath,
+                    $extendedViewType . '/' . $extendedName,
+                    $baseConfig['extends']
+                )
+            );
+        }
+
+        $config = \array_replace($baseConfig, $config);
     }
 
     /**

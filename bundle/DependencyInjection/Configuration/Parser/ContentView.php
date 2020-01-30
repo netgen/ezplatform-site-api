@@ -208,7 +208,7 @@ EOT
             return;
         }
 
-        [$extendedViewType, $extendedName] = explode('/', $config['extends'] . '/');
+        [$extendedViewType, $extendedName] = \explode('/', $config['extends'] . '/');
 
         if (!isset($viewConfigs[$extendedViewType][$extendedName])) {
             throw new InvalidConfigurationException(

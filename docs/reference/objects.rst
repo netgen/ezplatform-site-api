@@ -113,7 +113,7 @@ Get the `Field`_ with the given ``$identifier``.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
 |                                        |                                                                                    |
-|                                        |     {{ set field = content.field('title') }}                                       |
+|                                        |     {% set field = content.field('title') %}                                       |
 |                                        |                                                                                    |
 +----------------------------------------+------------------------------------------------------------------------------------+
 
@@ -373,8 +373,8 @@ Properties
 |                     |                     |                                                                             |
 |                     |                     | .. code-block:: twig                                                        |
 |                     |                     |                                                                             |
-|                     |                     |     {{ set field = content.fields.title }}                                  |
-|                     |                     |     {{ set field = content.fields['title'] }}                               |
+|                     |                     |     {% set field = content.fields.title %}                                  |
+|                     |                     |     {% set field = content.fields['title'] %}                               |
 |                     |                     |                                                                             |
 +---------------------+---------------------+-----------------------------------------------------------------------------+
 | ``$mainLocation``   | `Location`_         | Optional Location object                                                    |

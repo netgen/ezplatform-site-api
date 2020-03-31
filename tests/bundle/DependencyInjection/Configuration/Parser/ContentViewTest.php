@@ -150,6 +150,183 @@ final class ContentViewTest extends AbstractParserTestCase
         $this->assertTrue(true);
     }
 
+    public function providerForTextExtends(): array
+    {
+        return [
+            [
+                [
+                    'extends' => 'base/one',
+                ],
+                [
+                    'match' => [],
+                    'queries' => [],
+                    'params' => ['params'],
+                    'extends' => 'base/one',
+                ],
+            ],
+            [
+                [
+                    'extends' => 'base/two',
+                ],
+                [
+                    'match' => [],
+                    'queries' => [
+                        'query' => [
+                            'query_type' => 'test',
+                            'parameters' => [],
+                            'use_filter' => true,
+                            'max_per_page' => 25,
+                            'page' => 1,
+                        ],
+                    ],
+                    'params' => [],
+                    'extends' => 'base/two',
+                ],
+            ],
+            [
+                [
+                    'extends' => 'base/three',
+                ],
+                [
+                    'template' => 'template',
+                    'match' => ['match'],
+                    'queries' => [],
+                    'params' => [],
+                    'extends' => 'base/three',
+                ],
+            ],
+            [
+                [
+                    'match' => ['selen'],
+                    'params' => ['petrusimen'],
+                    'extends' => 'base/one',
+                ],
+                [
+                    'match' => ['selen'],
+                    'queries' => [],
+                    'params' => ['petrusimen'],
+                    'extends' => 'base/one',
+                ],
+            ],
+            [
+                [
+                    'queries' => [
+                        'query' => [
+                            'query_type' => 'blušć',
+                        ],
+                    ],
+                    'extends' => 'base/two',
+                ],
+                [
+                    'match' => [],
+                    'queries' => [
+                        'query' => [
+                            'query_type' => 'blušć',
+                            'parameters' => [],
+                            'use_filter' => true,
+                            'max_per_page' => 25,
+                            'page' => 1,
+                        ],
+                    ],
+                    'params' => [],
+                    'extends' => 'base/two',
+                ],
+            ],
+            [
+                [
+                    'template' => 'pazdej',
+                    'extends' => 'base/three',
+                ],
+                [
+                    'template' => 'pazdej',
+                    'match' => ['match'],
+                    'queries' => [],
+                    'params' => [],
+                    'extends' => 'base/three',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @group xxx
+     * @dataProvider providerForTextExtends
+     *
+     * @param array $configurationValues
+     * @param array $expectedValues
+     */
+    public function testExtends(array $configurationValues, array $expectedValues): void
+    {
+        $baseConfig = [
+            'system' => [
+                'siteaccess_group' => [
+                    'ngcontent_view' => [
+                        'base' => [
+                            'one' => [
+                                'match' => [],
+                                'params' => ['params'],
+                            ],
+                            'two' => [
+                                'match' => null,
+                                'queries' => [
+                                    'query' => [
+                                        'query_type' => 'test',
+                                    ],
+                                ],
+                            ],
+                            'three' => [
+                                'template' => 'template',
+                                'match' => ['match'],
+                            ],
+                        ],
+                        'tested_view' => [
+                            'tested_name' => $configurationValues,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->load($baseConfig);
+
+        $expectedValues = [
+            'base' => [
+                'one' => [
+                    'match' => [],
+                    'queries' => [],
+                    'params' => ['params'],
+                ],
+                'two' => [
+                    'match' => [],
+                    'queries' => [
+                        'query' => [
+                            'query_type' => 'test',
+                            'parameters' => [],
+                            'use_filter' => true,
+                            'max_per_page' => 25,
+                            'page' => 1,
+                        ],
+                    ],
+                    'params' => [],
+                ],
+                'three' => [
+                    'template' => 'template',
+                    'match' => ['match'],
+                    'queries' => [],
+                    'params' => [],
+                ],
+            ],
+            'tested_view' => [
+                'tested_name' => $expectedValues,
+            ],
+        ];
+
+        $this->assertContainerBuilderHasParameter('ezsettings.cro.ngcontent_view', $expectedValues);
+
+        // Avoid detecting risky tests
+        $this->assertTrue(true);
+    }
+
     public function providerForTestInvalid(): array
     {
         return [

@@ -16,6 +16,9 @@ class ContentView extends AbstractParser
     public const QUERY_KEY = 'queries';
     public const NODE_KEY = 'ngcontent_view';
     private const INFO = 'Template selection settings when displaying a content with Netgen Site API';
+    private const DEFAULT_MATCH_VALUE = ['NG_DEFAULT_MATCH_VALUE'];
+    private const DEFAULT_QUERIES_VALUE = ['NG_DEFAULT_QUERIES_VALUE'];
+    private const DEFAULT_PARAMS_VALUE = ['NG_DEFAULT_PARAMS_VALUE'];
 
     /**
      * Adds semantic configuration definition.
@@ -110,6 +113,7 @@ EOT
                             ->end()
                             ->arrayNode('match')
                                 ->info('Condition matchers configuration')
+                                ->defaultValue(self::DEFAULT_MATCH_VALUE)
                                 ->useAttributeAsKey('key')
                                 ->variablePrototype()->end()
                             ->end()
@@ -127,6 +131,7 @@ EOT
                                         'osTypes' => ['osx', 'linux', 'windows'],
                                     ]
                                 )
+                                ->defaultValue(self::DEFAULT_PARAMS_VALUE)
                                 ->useAttributeAsKey('key')
                                 ->variablePrototype()->end()
                             ->end()
@@ -205,8 +210,12 @@ EOT
     private function extendViewConfig(&$config, string $viewPath, array $viewConfigs): void
     {
         if (!\array_key_exists('extends', $config)) {
+            $this->restoreDefaultValues($config);
+
             return;
         }
+
+        $this->unsetDefaultValues($config);
 
         [$extendedViewType, $extendedName] = \explode('/', $config['extends'] . '/');
 
@@ -233,7 +242,43 @@ EOT
             );
         }
 
-        $config = \array_replace($baseConfig, $config);
+        $replacedConfig = \array_replace($baseConfig, $config);
+
+        if ($replacedConfig === null) {
+            throw new InvalidConfigurationException('Could not replace extended config');
+        }
+
+        $config = $replacedConfig;
+    }
+
+    private function restoreDefaultValues(array &$config): void
+    {
+        if ($config['match'] === self::DEFAULT_MATCH_VALUE) {
+            $config['match'] = [];
+        }
+
+        if ($config['queries'] === self::DEFAULT_QUERIES_VALUE) {
+            $config['queries'] = [];
+        }
+
+        if ($config['params'] === self::DEFAULT_PARAMS_VALUE) {
+            $config['params'] = [];
+        }
+    }
+
+    private function unsetDefaultValues(array &$config): void
+    {
+        if ($config['match'] === self::DEFAULT_MATCH_VALUE) {
+            unset($config['match']);
+        }
+
+        if ($config['queries'] === self::DEFAULT_QUERIES_VALUE) {
+            unset($config['queries']);
+        }
+
+        if ($config['params'] === self::DEFAULT_PARAMS_VALUE) {
+            unset($config['params']);
+        }
     }
 
     /**
@@ -246,6 +291,7 @@ EOT
         $queries = new ArrayNodeDefinition($name);
         $queries
             ->info('Query configuration')
+            ->defaultValue(self::DEFAULT_QUERIES_VALUE)
             ->useAttributeAsKey('key')
             ->arrayPrototype()
                 ->beforeNormalization()

@@ -1,7 +1,25 @@
 eZ Platform Site API changelog
 ==============================
 
-3.3.1 (27.02.2020)
+3.4.1 (31.03.2020)
+------------------
+
+[`3.4.0...3.4.1`](https://github.com/netgen/ezplatform-site-api/compare/3.4.0...3.4.1)
+
+### Fixed
+* Documentation fixes by @leohajder ([#158](https://github.com/netgen/ezplatform-site-api/pull/158))
+* NGSTACK-410: fix extended config not overriding default values ([#159](https://github.com/netgen/ezplatform-site-api/pull/159))
+
+3.4.0 (03.02.2020)
+------------------
+
+[`3.3.1...3.4.0`](https://github.com/netgen/ezplatform-site-api/compare/3.3.1...3.4.0)
+
+### Added
+* NGSTACK-377: variables in template identifier configuration (#156)
+* NGSTACK-389: implement view configuration inheritance (#157)
+
+3.3.1 (27.01.2020)
 ------------------
 
 [`3.3.0...3.3.1`](https://github.com/netgen/ezplatform-site-api/compare/3.3.0...3.3.1)
@@ -9,7 +27,7 @@ eZ Platform Site API changelog
 ### Fixed
 * Use view type from the `app.request` (https://github.com/netgen/ezplatform-site-api/commit/86f3f73141d79a177eeade701ff7733fa6aa4dd2)
 
-3.3.0 (15.02.2020)
+3.3.0 (15.01.2020)
 ------------------
 
 [`3.2.2...3.3.0`](https://github.com/netgen/ezplatform-site-api/compare/3.2.2...3.3.0)

@@ -1,10 +1,10 @@
 General purpose Content fetch
 ================================================================================
 
-This Query Type is used to build general purpose Location queries.
+This Query Type is used to build general purpose Content queries.
 
 +-------------+------------------------------------------------------------------------------+
-| Identifier  | ``SiteAPI:Location/Fetch``                                                   |
+| Identifier  | ``SiteAPI:Content/Fetch``                                                   |
 +-------------+------------------------------------------------------------------------------+
 | Common      | - `content_type`_                                                            |
 | Content     | - `field`_                                                                   |

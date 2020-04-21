@@ -2,7 +2,7 @@
 {# location \Netgen\EzPlatformSiteApi\API\Values\Location #}
 
 {% if location is defined %}
-    <a href="{{ path(location) }}">{{ content.name }}</a>
+    <a href="{{ ez_path(location) }}">{{ content.name }}</a>
 {% else %}
-    <a href="{{ path(content) }}">{{ content.name }}</a>
+    <a href="{{ ez_path(content) }}">{{ content.name }}</a>
 {% endif %}

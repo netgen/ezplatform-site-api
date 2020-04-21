@@ -70,7 +70,7 @@ final class ViewRenderer
     {
         $renderedContent = $this->doRender($view, $parameters, $layout);
 
-        $this->eventDispatcher->dispatch(SiteApiEvents::RENDER_CONTENT, new RenderContentEvent($view));
+        $this->eventDispatcher->dispatch(new RenderContentEvent($view), SiteApiEvents::RENDER_CONTENT);
 
         return $renderedContent;
     }

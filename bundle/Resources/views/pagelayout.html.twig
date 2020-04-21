@@ -5,7 +5,7 @@
     <title>{{ content.name|default( 'Home' ) }}</title>
     <meta name="generator" content="eZ Platform"/>
     {% if content is defined and content.mainLocation is not null %}
-        <link rel="canonical" href="{{ path( content.mainLocation ) }}" />
+        <link rel="canonical" href="{{ ez_path( content.mainLocation ) }}" />
     {% endif %}
 </head>
 <body>

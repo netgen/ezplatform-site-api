@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Node;
 
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Fields;
+use Traversable;
 use Twig\Compiler;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
@@ -88,52 +89,52 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
             ->raw(')');
     }
 
-    public function getTemplateLine()
+    public function getTemplateLine(): int
     {
         return $this->decoratedExpression->getTemplateLine();
     }
 
-    public function getNodeTag()
+    public function getNodeTag(): ?string
     {
         return $this->decoratedExpression->getNodeTag();
     }
 
-    public function hasAttribute($name): bool
+    public function hasAttribute(string $name): bool
     {
         return $this->decoratedExpression->hasAttribute($name);
     }
 
-    public function getAttribute($name)
+    public function getAttribute(string $name)
     {
         return $this->decoratedExpression->getAttribute($name);
     }
 
-    public function setAttribute($name, $value): void
+    public function setAttribute(string $name, $value): void
     {
         $this->decoratedExpression->setAttribute($name, $value);
     }
 
-    public function removeAttribute($name): void
+    public function removeAttribute(string $name): void
     {
         $this->decoratedExpression->removeAttribute($name);
     }
 
-    public function hasNode($name): bool
+    public function hasNode(string $name): bool
     {
         return $this->decoratedExpression->hasNode($name);
     }
 
-    public function getNode($name): Node
+    public function getNode(string $name): Node
     {
         return $this->decoratedExpression->getNode($name);
     }
 
-    public function setNode($name, Node $node): void
+    public function setNode(string $name, Node $node): void
     {
         $this->decoratedExpression->setNode($name, $node);
     }
 
-    public function removeNode($name): void
+    public function removeNode(string $name): void
     {
         $this->decoratedExpression->removeNode($name);
     }
@@ -143,7 +144,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         return $this->decoratedExpression->count();
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return $this->decoratedExpression->getIterator();
     }
@@ -158,7 +159,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         $this->decoratedExpression->setTemplateName($name);
     }
 
-    public function getTemplateName()
+    public function getTemplateName(): ?string
     {
         return $this->decoratedExpression->getTemplateName();
     }
@@ -168,7 +169,7 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
         $this->decoratedExpression->setSourceContext($source);
     }
 
-    public function getSourceContext()
+    public function getSourceContext(): ?Source
     {
         return $this->decoratedExpression->getSourceContext();
     }

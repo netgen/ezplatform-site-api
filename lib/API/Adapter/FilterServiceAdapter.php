@@ -44,7 +44,7 @@ final class FilterServiceAdapter implements SearchService
         $this->searchHandler = $searchHandler;
     }
 
-    public function findContent(Query $query, array $languageFilter = [], $filterOnUserPermissions = true): SearchResult
+    public function findContent(Query $query, array $languageFilter = [], bool $filterOnUserPermissions = true): SearchResult
     {
         $searchResult = $this->filterService->filterContent($query);
 
@@ -57,7 +57,7 @@ final class FilterServiceAdapter implements SearchService
         return $searchResult;
     }
 
-    public function findContentInfo(Query $query, array $languageFilter = [], $filterOnUserPermissions = true): SearchResult
+    public function findContentInfo(Query $query, array $languageFilter = [], bool $filterOnUserPermissions = true): SearchResult
     {
         $searchResult = $this->filterService->filterContent($query);
 
@@ -70,7 +70,7 @@ final class FilterServiceAdapter implements SearchService
         return $searchResult;
     }
 
-    public function findLocations(LocationQuery $query, array $languageFilter = [], $filterOnUserPermissions = true): SearchResult
+    public function findLocations(LocationQuery $query, array $languageFilter = [], bool $filterOnUserPermissions = true): SearchResult
     {
         $searchResult = $this->filterService->filterLocations($query);
 
@@ -83,7 +83,7 @@ final class FilterServiceAdapter implements SearchService
         return $searchResult;
     }
 
-    public function findSingle(Criterion $filter, array $languageFilter = [], $filterOnUserPermissions = true): Content
+    public function findSingle(Criterion $filter, array $languageFilter = [], bool $filterOnUserPermissions = true): Content
     {
         $query = new Query();
         $query->filter = $filter;
@@ -105,11 +105,11 @@ final class FilterServiceAdapter implements SearchService
         return $siteContent->innerContent;
     }
 
-    public function suggest($prefix, $fieldPaths = [], $limit = 10, Criterion $filter = null): void
+    public function suggest(string $prefix, array $fieldPaths = [], int $limit = 10, Criterion $filter = null): void
     {
     }
 
-    public function supports($capabilityFlag): bool
+    public function supports(int $capabilityFlag): bool
     {
         if ($this->searchHandler instanceof Capable) {
             return $this->searchHandler->supports($capabilityFlag);

@@ -8,8 +8,6 @@ use eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\Matcher\ClassNameMatcherFactory;
-use eZ\Publish\Core\MVC\Symfony\Matcher\MatcherInterface;
-use eZ\Publish\Core\MVC\Symfony\Matcher\ViewMatcherInterface;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -73,7 +71,7 @@ class MatcherFactory extends ClassNameMatcherFactory
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *
-     * @return MatcherInterface|ViewMatcherInterface
+     * @return \eZ\Publish\Core\MVC\Symfony\Matcher\ViewMatcherInterface
      */
     protected function getMatcher($matcherIdentifier)
     {
@@ -82,7 +80,7 @@ class MatcherFactory extends ClassNameMatcherFactory
         }
 
         if ($this->container->has($matcherIdentifier)) {
-            /** @var MatcherInterface|ViewMatcherInterface $matcher */
+            /** @var \eZ\Publish\Core\MVC\Symfony\Matcher\ViewMatcherInterface $matcher */
             $matcher = $this->container->get($matcherIdentifier);
 
             return $matcher;

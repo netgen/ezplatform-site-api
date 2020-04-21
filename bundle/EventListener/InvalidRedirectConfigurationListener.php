@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\EventListener;
 
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use eZ\Publish\Core\MVC\Symfony\Routing\UrlAliasRouter;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -46,9 +47,9 @@ final class InvalidRedirectConfigurationListener implements EventSubscriberInter
         return [KernelEvents::EXCEPTION => 'onKernelException'];
     }
 
-    public function onKernelException(GetResponseForExceptionEvent $event): void
+    public function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
 
         if (!$exception instanceof InvalidRedirectConfiguration) {
             return;
@@ -59,7 +60,7 @@ final class InvalidRedirectConfigurationListener implements EventSubscriberInter
         $rootLocationId = $this->configResolver->getParameter('content.tree_root.location_id');
         $event->setResponse(
             new RedirectResponse(
-                $this->urlGenerator->generate('ez_urlalias', ['locationId' => $rootLocationId]),
+                $this->urlGenerator->generate(UrlAliasRouter::URL_ALIAS_ROUTE_NAME, ['locationId' => $rootLocationId]),
                 RedirectResponse::HTTP_FOUND
             )
         );

@@ -44,25 +44,23 @@ class ContentUrlAliasRouter implements ChainedRouterInterface, RequestMatcherInt
 
     /**
      * Generates a URL for Site API Content object or ContentInfo object, from the given parameters.
-     *
-     * @param mixed $name
-     * @param mixed $parameters
-     * @param mixed $referenceType
-     *
-     * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
-        if (!$name instanceof Content && !$name instanceof ContentInfo) {
+        if (!$this->supportsObject($parameters[RouteObjectInterface::ROUTE_OBJECT] ?? null)) {
             throw new RouteNotFoundException('Could not match route');
         }
 
-        if ($name->mainLocation === null) {
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Content|\Netgen\EzPlatformSiteApi\API\Values\ContentInfo $content */
+        $content = $parameters[RouteObjectInterface::ROUTE_OBJECT];
+        unset($parameters[RouteObjectInterface::ROUTE_OBJECT]);
+
+        if ($content->mainLocation === null) {
             throw new LogicException('Cannot generate an UrlAlias route for content without main location.');
         }
 
         return $this->generator->generate(
-            $name->mainLocation->innerLocation,
+            $content->mainLocation->innerLocation,
             $parameters,
             $referenceType
         );
@@ -84,14 +82,23 @@ class ContentUrlAliasRouter implements ChainedRouterInterface, RequestMatcherInt
         return $this->requestContext;
     }
 
-    public function match($pathinfo): array
+    public function match(string $pathinfo): array
     {
         throw new RuntimeException("The ContentUrlAliasRouter doesn't support the match() method.");
     }
 
     public function supports($name): bool
     {
-        return $name instanceof Content || $name instanceof ContentInfo;
+        if (is_object($name)) {
+            return $this->supportsObject($name);
+        }
+
+        return $name === '' || $name === 'cmf_routing_object';
+    }
+
+    public function supportsObject(?object $object): bool
+    {
+        return $object instanceof Content || $object instanceof ContentInfo;
     }
 
     public function getRouteDebugMessage($name, array $parameters = []): string

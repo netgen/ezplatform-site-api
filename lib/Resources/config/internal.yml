@@ -6,32 +6,28 @@ parameters:
     netgen.ezplatform_site.fail_on_missing_fields: false
 
 services:
-    # Services tagged with 'netgen.ezplatform_site.repository' are registered to this one
-    # through a compiler pass
-    netgen.ezplatform_site.repository.aggregate:
-        class: Netgen\EzPlatformSiteApi\Core\Repository\Aggregate\Repository
-        arguments:
-            - '@netgen.ezpublish.api.repository'
-            - []
-        public: false
-
     netgen.ezplatform_site.repository.inner:
         class: eZ\Publish\Core\Repository\Repository
         factory:
             - '@ezpublish.api.repository.factory'
             - buildRepository
         arguments:
-            - '@ezpublish.api.persistence_handler'
-            - '@ezpublish.spi.search.legacy'
-            - '@?ezpublish.search.background_indexer'
-            - '@?ezpublish.repository.relation_processor'
-            - '@?eZ\Publish\Core\FieldType\FieldTypeRegistry'
-            - '@?eZ\Publish\Core\Repository\User\PasswordHashService'
-            - '@?eZ\Publish\Core\Repository\Strategy\ContentThumbnail\ThumbnailChainStrategy'
+            - "@ezpublish.api.persistence_handler"
+            - "@ezpublish.spi.search.legacy"
+            - '@ezpublish.search.background_indexer'
+            - '@ezpublish.repository.relation_processor'
+            - '@eZ\Publish\Core\FieldType\FieldTypeRegistry'
+            - '@eZ\Publish\Core\Repository\User\PasswordHashService'
+            - '@eZ\Publish\Core\Repository\Strategy\ContentThumbnail\ThumbnailChainStrategy'
+            - '@eZ\Publish\Core\Repository\ProxyFactory\ProxyDomainMapperFactory'
+            - '@eZ\Publish\Core\Repository\Mapper\ContentDomainMapper'
+            - '@eZ\Publish\Core\Repository\Mapper\ContentTypeDomainMapper'
+            - '@eZ\Publish\Core\Repository\Mapper\RoleDomainMapper'
+            - '@eZ\Publish\Core\Repository\Permission\LimitationService'
+            - '@eZ\Publish\API\Repository\PermissionService'
+            - '%languages%'
         lazy: true
         public: false
-        tags:
-            - {name: netgen.ezplatform_site.repository}
 
     netgen.ezplatform_site.repository.filtering_search_service:
         class: eZ\Publish\Core\Repository\SearchService

@@ -10,7 +10,7 @@ services:
             - '@ezpublish.api.repository'
             - '@security.authorization_checker'
             - '@ezpublish.config.resolver'
-            - '@templating'
+            - '@twig'
             - '%ezrichtext.tag.namespace%'
             - '%ezrichtext.style.namespace%'
             - '%ezrichtext.embed.namespace%'

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Event;
 
 use eZ\Publish\Core\MVC\Symfony\View\View;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 final class RenderContentEvent extends Event
 {

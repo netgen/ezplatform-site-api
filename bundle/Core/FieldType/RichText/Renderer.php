@@ -9,7 +9,7 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use EzSystems\EzPlatformRichTextBundle\eZ\RichText\Renderer as CoreRenderer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class Renderer extends CoreRenderer
 {
@@ -19,7 +19,7 @@ class Renderer extends CoreRenderer
         Repository $repository,
         AuthorizationCheckerInterface $authorizationChecker,
         ConfigResolverInterface $configResolver,
-        EngineInterface $templateEngine,
+        Environment $twig,
         $tagConfigurationNamespace,
         $styleConfigurationNamespace,
         $embedConfigurationNamespace,
@@ -32,7 +32,7 @@ class Renderer extends CoreRenderer
             $repository,
             $authorizationChecker,
             $configResolver,
-            $templateEngine,
+            $twig,
             $tagConfigurationNamespace,
             $styleConfigurationNamespace,
             $embedConfigurationNamespace,

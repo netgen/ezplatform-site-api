@@ -42,21 +42,19 @@ class LocationUrlAliasRouter implements ChainedRouterInterface, RequestMatcherIn
 
     /**
      * Generates a URL for Site API Location object, from the given parameters.
-     *
-     * @param mixed $name
-     * @param mixed $parameters
-     * @param mixed $referenceType
-     *
-     * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
-        if (!$name instanceof Location) {
+        if (!$this->supportsObject($parameters[RouteObjectInterface::ROUTE_OBJECT] ?? null)) {
             throw new RouteNotFoundException('Could not match route');
         }
 
+        /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
+        $location = $parameters[RouteObjectInterface::ROUTE_OBJECT];
+        unset($parameters[RouteObjectInterface::ROUTE_OBJECT]);
+
         return $this->generator->generate(
-            $name->innerLocation,
+            $location->innerLocation,
             $parameters,
             $referenceType
         );
@@ -78,14 +76,23 @@ class LocationUrlAliasRouter implements ChainedRouterInterface, RequestMatcherIn
         return $this->requestContext;
     }
 
-    public function match($pathinfo): array
+    public function match(string $pathinfo): array
     {
         throw new RuntimeException("The ContentUrlAliasRouter doesn't support the match() method.");
     }
 
     public function supports($name): bool
     {
-        return $name instanceof Location;
+        if (is_object($name)) {
+            return $this->supportsObject($name);
+        }
+
+        return $name === '' || $name === 'cmf_routing_object';
+    }
+
+    public function supportsObject(?object $object): bool
+    {
+        return $object instanceof Location;
     }
 
     public function getRouteDebugMessage($name, array $parameters = []): string

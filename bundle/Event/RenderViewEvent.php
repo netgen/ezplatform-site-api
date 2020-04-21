@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Event;
 
 use eZ\Publish\Core\MVC\Symfony\View\View;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class RenderViewEvent extends Event
 {

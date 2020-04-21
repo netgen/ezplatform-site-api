@@ -9,6 +9,7 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -83,8 +84,8 @@ final class Resolver
 
         if ($value instanceof Location || $value instanceof Content || $value instanceof Tag) {
             return $this->router->generate(
-                $value,
-                $redirectConfig->getTargetParameters(),
+                '',
+                [RouteObjectInterface::ROUTE_OBJECT => $value] + $redirectConfig->getTargetParameters(),
                 $redirectConfig->isAbsolute() ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH
             );
         }

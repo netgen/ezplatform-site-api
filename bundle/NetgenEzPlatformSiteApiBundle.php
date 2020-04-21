@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle;
 
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\AggregateRepositoryPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\DefaultViewActionOverridePass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\InvalidRedirectConfigurationListenerPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\PreviewControllerOverridePass;
@@ -23,7 +22,6 @@ class NetgenEzPlatformSiteApiBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new AggregateRepositoryPass());
         $container->addCompilerPass(new DefaultViewActionOverridePass());
         $container->addCompilerPass(new InvalidRedirectConfigurationListenerPass());
         $container->addCompilerPass(new PreviewControllerOverridePass());

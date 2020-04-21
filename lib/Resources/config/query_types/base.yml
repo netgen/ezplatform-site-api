@@ -6,19 +6,19 @@ services:
         arguments:
             - '@netgen.ezplatform_site.plugins.field_type.relation_resolver.registry'
         tags:
-            - {name: ezpublish.query_type}
+            - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.content.relations.reverse_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields
         tags:
-            - {name: ezpublish.query_type}
+            - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.content.fetch:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Fetch
         tags:
-            - {name: ezpublish.query_type}
+            - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.location.children:
@@ -26,7 +26,7 @@ services:
         arguments:
             - '@logger'
         tags:
-            - {name: ezpublish.query_type}
+            - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.location.siblings:
@@ -34,17 +34,17 @@ services:
         arguments:
             - '@logger'
         tags:
-            - {name: ezpublish.query_type}
+            - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.location.subtree:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Subtree
         tags:
-            - {name: ezpublish.query_type}
+            - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.location.fetch:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Fetch
         tags:
-            - {name: ezpublish.query_type}
+            - {name: ezplatform.query_type}
         public: false

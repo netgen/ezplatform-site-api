@@ -160,7 +160,7 @@ FilterService
 +--------------------------------+------------------------------------------------+
 | **Instance of**                | ``Netgen\EzPlatformSiteApi\API\FilterService`` |
 +--------------------------------+------------------------------------------------+
-| **Container service ID**       | ``netgen.ezplatform_site.load_service``        |
+| **Container service ID**       | ``netgen.ezplatform_site.filter_service``      |
 +--------------------------------+------------------------------------------------+
 
 The purpose of the ``FindService`` is to find Content and Locations by using eZ Platform's

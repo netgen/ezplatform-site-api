@@ -63,7 +63,7 @@ Site API provides four Twig functions for content rendering:
     view object and in the rendered template.
 
   4. **optional** boolean value indicating whether to render the template in the configured
-        layout, by default ``false``
+     layout, by default ``false``
 
   Example usage of ``ng_view_content``:
 

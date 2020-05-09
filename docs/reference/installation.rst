@@ -3,7 +3,7 @@ Installation
 
 To install Site API first add it as a dependency to your project:
 
-.. code-block:: shell
+.. code-block:: console
 
     composer require netgen/ezplatform-site-api
 

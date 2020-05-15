@@ -12,7 +12,7 @@ eZ Platform Site API changelog
 ### Fixed
 * Documentation fixes by @zulicek
 * Documentation fixes by @leohajder ([#160](https://github.com/netgen/ezplatform-site-api/pull/160))
-* NGSTACK-413: Fix checking if Relation value is empty ([#161](https://github.com/netgen/ezplatform-site-api/pull/161))
+* NGSTACK-413: Fix checking if Relation value is empty by @RandyCupic ([#161](https://github.com/netgen/ezplatform-site-api/pull/161))
 
 3.4.1 (31.03.2020)
 ------------------

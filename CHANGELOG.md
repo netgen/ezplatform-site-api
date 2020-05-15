@@ -1,6 +1,19 @@
 eZ Platform Site API changelog
 ==============================
 
+3.4.2 (15.05.2020)
+------------------
+
+[`3.4.1...3.4.2`](https://github.com/netgen/ezplatform-site-api/compare/3.4.1...3.4.2)
+
+### Added
+* Copy button on documentation code and configuration examples
+
+### Fixed
+* Documentation fixes by @zulicek
+* Documentation fixes by @leohajder ([#160](https://github.com/netgen/ezplatform-site-api/pull/160))
+* NGSTACK-413: Fix checking if Relation value is empty ([#161](https://github.com/netgen/ezplatform-site-api/pull/161))
+
 3.4.1 (31.03.2020)
 ------------------
 

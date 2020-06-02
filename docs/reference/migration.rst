@@ -29,7 +29,7 @@ At this point, you can:
    ``ngcontent_view`` key. You need to know that eZ Platform URL alias routes still won't be handled
    through it at this point. Until you explicitly turn that on for a siteaccess or configure view
    fallback, you can only use it by making a subrequest to Site API's Content view controller
-   ``ng_content:viewAction``.
+   ``ng_content::viewAction``.
 
 Handling eZ Platform URL alias routes through Site API's view configuration has to be enabled per
 siteaccess, with the following configuration:
@@ -46,7 +46,7 @@ configuration. That means you will need to migrate or adapt all full view templa
 expect that things will break. Similar to the point 2. from above will be valid for eZ Platform's
 view configuration, available under ``content_view`` key. You will still be able to use it, but
 unless you configure view fallback, that will be possible only through explicit subrequests to eZ
-Platform's view controller ``ez_content:viewAction``.
+Platform's view controller ``ez_content::viewAction``.
 
 You can configure automatic :ref:`view fallback<content_view_fallback_configuration>`, from Site API
 (if ``override_url_alias_view_action`` is enabled) to eZ Platform, and from eZ Platform (when

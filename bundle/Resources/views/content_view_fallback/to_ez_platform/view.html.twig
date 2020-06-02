@@ -6,7 +6,7 @@
 {% else %}
     {{ render(
         controller(
-            'ez_content:viewAction', {
+            'ez_content::viewAction', {
                 'content': content.innerContent,
                 'location': location.innerLocation,
                 'viewType': app.request.attributes.get('viewType')

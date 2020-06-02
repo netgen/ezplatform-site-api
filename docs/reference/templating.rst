@@ -50,7 +50,7 @@ Site API provides four Twig functions for content rendering:
       Depending on the use case, you might be able to replace usage of MVC events with
       ``ViewEvents`` from eZ Publish Kernel, which **are** dispatched by the functions.
 
-  The functions accept four parameters, similar as `parameters available for ez_content:viewAction
+  The functions accept four parameters, similar as `parameters available for ez_content::viewAction
   controller <https://doc.ezplatform.com/en/latest/guide/templates/#available-arguments>`_:
 
   1. **required** Content or Location object
@@ -87,7 +87,7 @@ Site API provides four Twig functions for content rendering:
 
           {{ render(
               controller(
-                  'ng_content:viewAction', {
+                  'ng_content::viewAction', {
                       'contentId': content.id,
                       'viewType': 'line',
                       'layout': false,
@@ -121,7 +121,7 @@ Site API provides four Twig functions for content rendering:
 
           {{ render(
               controller(
-                  'ez_content:viewAction', {
+                  'ez_content::viewAction', {
                       'contentId': content.id,
                       'viewType': 'line',
                       'layout': false,

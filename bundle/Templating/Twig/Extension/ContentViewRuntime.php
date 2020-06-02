@@ -62,7 +62,7 @@ class ContentViewRuntime
             'content' => $content,
             'viewType' => $viewType,
             'layout' => $layout,
-            '_controller' => 'ng_content:viewAction',
+            '_controller' => 'ng_content::viewAction',
         ];
 
         if ($location !== null) {

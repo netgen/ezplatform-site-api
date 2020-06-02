@@ -6,7 +6,7 @@
 {% else %}
     {{ render(
         controller(
-            'ng_content:viewAction', {
+            'ng_content::viewAction', {
                 'contentId': content.id,
                 'locationId': location.id,
                 'viewType': app.request.attributes.get('viewType')

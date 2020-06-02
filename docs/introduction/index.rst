@@ -235,7 +235,7 @@ eZ Platform objects. Together with this we provide Site API version of the Conte
 which is used by the default Content view controller and :doc:`custom controllers </reference/custom_controllers>`.
 
 With the configuration from above you you will be able to render a line view for an article by
-executing a request to ``ng_content:viewAction``. However, that does not mean URL aliases will be
+executing a request to ``ng_content::viewAction``. However, that does not mean URL aliases will be
 handled by the Site API view configuration as well. This needs to be explicitly enabled, per
 siteaccess:
 

@@ -6,7 +6,7 @@ Site API has its own view configuration, available under ``ngcontent_view`` key.
 exactly the same as eZ Platform's default view configuration under ``content_view`` key. You can use
 this configuration right after the installation, but note that it won't be used for full views
 rendered for eZ Platform URL aliases right away. Until you configure that, it will be used only when
-calling its controller explicitly with ``ng_content:viewAction``.
+calling its controller explicitly with ``ng_content::viewAction``.
 
 **Content on this page:**
 
@@ -49,7 +49,7 @@ so on.
 If needed you can still use ``content_view`` rules. This will allow you to have both Site API
 template override rules as well as original eZ Platform template override rules, so you can rewrite
 your templates bit by bit. You can decide which one to use by directly rendering either
-``ng_content:viewAction`` or ``ez_content:viewAction`` controller.
+``ng_content::viewAction`` or ``ez_content::viewAction`` controller.
 
 It's also possible to configure fallback between Site API and eZ Platform views. With it, if the
 rule is not matched in one view configuration, the fallback mechanism will try to match it in the
@@ -80,9 +80,9 @@ For example, if using the following configuration:
                             match:
                                 Identifier\ContentType: article
 
-Rendering a line view for an article with ``ng_content:viewAction`` would use
+Rendering a line view for an article with ``ng_content::viewAction`` would use
 ``@App/content/line/article.html.twig`` template, while rendering a line view for an article with
-``ez_content:viewAction`` would use ``@App/content/line/ez_article.html.twig`` template.
+``ez_content::viewAction`` would use ``@App/content/line/ez_article.html.twig`` template.
 
 It is also possible to use custom controllers, this is documented on
 :doc:`Custom controllers reference</reference/custom_controllers>` documentation page.

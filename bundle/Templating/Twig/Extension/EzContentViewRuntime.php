@@ -60,7 +60,7 @@ final class EzContentViewRuntime
             'content' => $content,
             'viewType' => $viewType,
             'layout' => $layout,
-            '_controller' => 'ez_content:viewAction',
+            '_controller' => 'ez_content::viewAction',
         ];
 
         if ($location !== null) {

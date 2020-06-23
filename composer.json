@@ -11,9 +11,9 @@
     ],
     "require": {
         "php": "^7.3",
-        "ezsystems/ezplatform-kernel": "^1.0",
-        "ezsystems/ezplatform-http-cache": "^2.0",
-        "ezsystems/ezplatform-richtext": "^2.0",
+        "ezsystems/ezplatform-kernel": "^1.1",
+        "ezsystems/ezplatform-http-cache": "^2.1",
+        "ezsystems/ezplatform-richtext": "^2.1",
         "netgen/ezplatform-search-extra": "^1.11",
         "sensio/framework-extra-bundle": "^5.5"
     },

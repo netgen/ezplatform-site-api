@@ -23,6 +23,8 @@ services:
             - '@eZ\Publish\Core\Repository\Mapper\ContentDomainMapper'
             - '@eZ\Publish\Core\Repository\Mapper\ContentTypeDomainMapper'
             - '@eZ\Publish\Core\Repository\Mapper\RoleDomainMapper'
+            - '@eZ\Publish\Core\Repository\Mapper\ContentMapper'
+            - '@eZ\Publish\SPI\Repository\Validator\ContentValidator'
             - '@eZ\Publish\Core\Repository\Permission\LimitationService'
             - '@eZ\Publish\API\Repository\PermissionService'
             - '%languages%'

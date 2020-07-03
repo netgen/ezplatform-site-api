@@ -125,3 +125,4 @@ services:
             - '@?logger'
         tags:
             - { name: twig.runtime }
+            - { name: monolog.logger, channel: ngsiteapi }

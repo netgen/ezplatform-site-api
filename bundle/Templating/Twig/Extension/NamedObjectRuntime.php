@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
+use eZ\Publish\Core\Base\Exceptions\UnauthorizedException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
@@ -35,13 +36,17 @@ class NamedObjectRuntime
         return null;
     }
 
-    public function getNamedLocation(string $name): ?Location
+        public function getNamedLocation(string $name): ?Location
     {
-        if ($this->namedObjectProvider->hasLocation($name)) {
-            return $this->namedObjectProvider->getLocation($name);
-        }
+        try {
+            if ($this->namedObjectProvider->hasLocation($name)) {
+                return $this->namedObjectProvider->getLocation($name);
+            }
 
-        return null;
+            return null;
+        } catch (UnauthorizedException $e) {
+            return null;
+        }
     }
 
     public function getNamedTag(string $name): ?Tag

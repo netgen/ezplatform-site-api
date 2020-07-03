@@ -121,5 +121,7 @@ services:
         # public: false
         arguments:
             - '@netgen.ezplatform_site.named_object_provider'
+            - '@logger'
+            - '%kernel.debug%'
         tags:
             - { name: twig.runtime }

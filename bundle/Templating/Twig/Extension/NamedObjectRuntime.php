@@ -30,14 +30,14 @@ class NamedObjectRuntime
     private $isDebug;
 
     /**
-     * @var \Psr\Log\LoggerInterface|null
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
     public function __construct(
         Provider $specialObjectProvider,
         bool $isDebug,
-        ?LoggerInterface $logger
+        ?LoggerInterface $logger = null
     ) {
         $this->namedObjectProvider = $specialObjectProvider;
         $this->isDebug = $isDebug;

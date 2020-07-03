@@ -10,6 +10,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * NamedObjectExtension runtime.
@@ -24,23 +25,23 @@ class NamedObjectRuntime
     private $namedObjectProvider;
 
     /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @var bool
      */
     private $isDebug;
 
+    /**
+     * @var \Psr\Log\LoggerInterface|null
+     */
+    private $logger;
+
     public function __construct(
         Provider $specialObjectProvider,
-        LoggerInterface $logger,
-        bool $isDebug
+        bool $isDebug,
+        ?LoggerInterface $logger
     ) {
         $this->namedObjectProvider = $specialObjectProvider;
-        $this->logger = $logger;
         $this->isDebug = $isDebug;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public function getNamedContent(string $name): ?Content
@@ -51,7 +52,7 @@ class NamedObjectRuntime
             }
         } catch (UnauthorizedException $e) {
             if ($this->isDebug) {
-                $this->logger->critical($e->getMessage());
+                $this->logger->debug($e->getMessage());
             }
         }
 
@@ -66,7 +67,7 @@ class NamedObjectRuntime
             }
         } catch (UnauthorizedException $e) {
             if ($this->isDebug) {
-                $this->logger->critical($e->getMessage());
+                $this->logger->debug($e->getMessage());
             }
         }
 
@@ -81,7 +82,7 @@ class NamedObjectRuntime
             }
         } catch (UnauthorizedException $e) {
             if ($this->isDebug) {
-                $this->logger->critical($e->getMessage());
+                $this->logger->debug($e->getMessage());
             }
         }
 

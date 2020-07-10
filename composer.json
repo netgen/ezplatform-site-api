@@ -23,6 +23,8 @@
         "netgen/tagsbundle": "^4.0",
         "ezsystems/ezplatform-xmltext-fieldtype": "^2.0"
     },
+    "minimum-stability": "rc",
+    "prefer-stable": true,
     "suggest": {
         "netgen/tagsbundle": "Allows using Tag relation Query Types and named Tag objects"
     },

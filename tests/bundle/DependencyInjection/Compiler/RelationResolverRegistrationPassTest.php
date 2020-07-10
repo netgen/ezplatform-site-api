@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\DependencyInjection\Compiler;
 
+use LogicException;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\RelationResolverRegistrationPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -44,11 +45,10 @@ final class RelationResolverRegistrationPassTest extends AbstractCompilerPassTes
         );
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testRegisterResolverWithoutIdentifier(): void
     {
+        $this->expectException(LogicException::class);
+
         $serviceId = 'service_id';
         $definition = new Definition();
         $definition->addTag('netgen.ezplatform_site.plugins.field_type.relation_resolver');

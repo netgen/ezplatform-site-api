@@ -17,6 +17,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\AllTagFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
@@ -333,9 +334,9 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function internalGetRepoFieldDefinitions(): array
+    protected function internalGetRepoFieldDefinitions(): FieldDefinitionCollection
     {
-        return [
+        return new FieldDefinitionCollection([
             new FieldDefinition([
                 'id' => 1,
                 'identifier' => 'tags_a',
@@ -351,7 +352,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 'identifier' => 'third',
                 'fieldTypeIdentifier' => 'ezstring',
             ]),
-        ];
+        ]);
     }
 
     protected function getTestContentWithTags(): Content

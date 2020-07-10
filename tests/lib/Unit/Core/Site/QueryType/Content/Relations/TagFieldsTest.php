@@ -18,6 +18,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\Core\FieldType\TextLine\Value;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
 use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\TagFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
@@ -387,9 +388,9 @@ final class TagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function internalGetRepoFieldDefinitions(): array
+    protected function internalGetRepoFieldDefinitions(): FieldDefinitionCollection
     {
-        return [
+        return new FieldDefinitionCollection([
             new FieldDefinition([
                 'id' => 1,
                 'identifier' => 'tags_a',
@@ -405,7 +406,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 'identifier' => 'not_tags',
                 'fieldTypeIdentifier' => 'ezstring',
             ]),
-        ];
+        ]);
     }
 
     protected function getTestContent(bool $failOnMissingFields = true): Content

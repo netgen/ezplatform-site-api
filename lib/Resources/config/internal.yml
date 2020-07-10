@@ -27,6 +27,8 @@ services:
             - '@eZ\Publish\SPI\Repository\Validator\ContentValidator'
             - '@eZ\Publish\Core\Repository\Permission\LimitationService'
             - '@eZ\Publish\API\Repository\PermissionService'
+            - '@eZ\Publish\Core\Persistence\Legacy\Filter\Handler\ContentFilteringHandler'
+            - '@eZ\Publish\Core\Persistence\Legacy\Filter\Handler\LocationFilteringHandler'
             - '%languages%'
         lazy: true
         public: false

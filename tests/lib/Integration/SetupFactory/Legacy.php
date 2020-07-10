@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Tests\Integration\SetupFactory;
 
 use eZ\Publish\API\Repository\Tests\SetupFactory\Legacy as CoreLegacySetupFactory;
+use eZ\Publish\Core\Base\Container\Compiler\Search\FieldRegistryPass;
 use eZ\Publish\Core\Base\ServiceContainer;
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\AggregateRepositoryPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\RelationResolverRegistrationPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -26,7 +26,7 @@ class Legacy extends CoreLegacySetupFactory
             /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder */
             $containerBuilder = include $config['container_builder_path'];
             $containerBuilder->addCompilerPass(new RelationResolverRegistrationPass());
-            $containerBuilder->addCompilerPass(new AggregateRepositoryPass());
+            $containerBuilder->addCompilerPass(new FieldRegistryPass());
 
             /* @var \Symfony\Component\DependencyInjection\Loader\YamlFileLoader $loader */
             $loader->load('search_engines/legacy.yml');

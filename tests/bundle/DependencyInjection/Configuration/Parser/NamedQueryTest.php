@@ -218,7 +218,7 @@ final class NamedQueryTest extends AbstractParserTestCase
         ];
     }
 
-    protected function getMinimalConfiguration()
+    protected function getMinimalConfiguration(): array
     {
         return Yaml::parse(\file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
     }

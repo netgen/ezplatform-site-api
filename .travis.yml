@@ -8,21 +8,13 @@ matrix:
     # mark as finished before allow_failures are run
     fast_finish: true
     include:
-        - php: 7.1
-          env: CONFIG="phpunit.xml" COVERGAGE="unit" KERNEL_VERSION="~7.4.4"
-        - php: 7.1
-          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration" KERNEL_VERSION="~7.4.4"
-        - php: 7.1
-          env: CONFIG="phpunit.xml" COVERGAGE="unit" KERNEL_VERSION="~7.5.5"
-        - php: 7.1
-          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration" KERNEL_VERSION="~7.5.5"
-        - php: 7.2
+        - php: 7.3
           env: CONFIG="phpunit.xml" COVERGAGE="unit"
-        - php: 7.2
+        - php: 7.3
           env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
-        - php: 7.3
+        - php: 7.4
           env: CONFIG="phpunit.xml" COVERGAGE="unit"
-        - php: 7.3
+        - php: 7.4
           env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
 
 # test only master (+ pull requests)

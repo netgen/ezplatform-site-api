@@ -131,7 +131,7 @@ final class ContentViewTest extends AbstractParserTestCase
     {
         $this->load([
             'system' => [
-                'siteaccess_group' => [
+                'ezdemo_group' => [
                     'ngcontent_view' => [
                         'full' => [
                             'throttle' => [
@@ -259,7 +259,7 @@ final class ContentViewTest extends AbstractParserTestCase
     {
         $baseConfig = [
             'system' => [
-                'siteaccess_group' => [
+                'ezdemo_group' => [
                     'ngcontent_view' => [
                         'base' => [
                             'one' => [
@@ -321,7 +321,7 @@ final class ContentViewTest extends AbstractParserTestCase
             ],
         ];
 
-        $this->assertContainerBuilderHasParameter('ezsettings.cro.ngcontent_view', $expectedValues);
+        $this->assertContainerBuilderHasParameter('ezsettings.ezdemo_site.ngcontent_view', $expectedValues);
 
         // Avoid detecting risky tests
         $this->assertTrue(true);
@@ -434,11 +434,11 @@ final class ContentViewTest extends AbstractParserTestCase
     {
         $this->expectException($exceptionClass);
         $exceptionMessage = \preg_quote($exceptionMessage, '/');
-        $this->expectExceptionMessageRegExp("/{$exceptionMessage}/");
+        $this->matchesRegularExpression("/{$exceptionMessage}/");
 
         $this->load([
             'system' => [
-                'siteaccess_group' => [
+                'ezdemo_group' => [
                     'ngcontent_view' => [
                         'potato' => [
                             'chips' => [
@@ -573,7 +573,7 @@ final class ContentViewTest extends AbstractParserTestCase
     {
         $this->load([
             'system' => [
-                'siteaccess_group' => [
+                'ezdemo_group' => [
                     'ngcontent_view' => [
                         'some_view' => [
                             'some_key' => $configurationValues,
@@ -591,7 +591,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $this->assertConfigResolverParameterValue(
             'ngcontent_view',
             $expectedConfigurationValues,
-            'cro'
+            'ezdemo_site'
         );
     }
 

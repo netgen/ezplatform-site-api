@@ -7,6 +7,7 @@ namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\Values;
 use eZ\Publish\API\Repository\Values\Content\Field as RepoField;
 use eZ\Publish\Core\FieldType\Integer\Value;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\API\Values\Field as SiteField;
 use Netgen\EzPlatformSiteApi\API\Values\Fields as APIFields;
@@ -406,22 +407,25 @@ final class FieldsTest extends TestCase
         );
     }
 
-    protected function internalGetRepoFieldDefinitions(): array
+    protected function internalGetRepoFieldDefinitions(): FieldDefinitionCollection
     {
-        return [
+        return new FieldDefinitionCollection([
             new FieldDefinition([
                 'id' => 1,
                 'identifier' => 'first',
+                'fieldTypeIdentifier' => 'ezinteger',
             ]),
             new FieldDefinition([
                 'id' => 2,
                 'identifier' => 'second',
+                'fieldTypeIdentifier' => 'ezinteger',
             ]),
             new FieldDefinition([
                 'id' => 3,
                 'identifier' => 'third',
+                'fieldTypeIdentifier' => 'ezinteger',
             ]),
-        ];
+        ]);
     }
 
     protected function internalGetRepoFields(): array

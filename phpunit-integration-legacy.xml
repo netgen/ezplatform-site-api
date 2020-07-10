@@ -19,7 +19,6 @@
             <file>tests/lib/Integration/LoadServiceTest.php</file>
             <file>tests/lib/Integration/RelationServiceTest.php</file>
             <file>tests/lib/Integration/Traits/SearchResultExtractorTraitTest.php</file>
-            <file>tests/lib/Integration/Traits/PagerfantaFindTraitTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

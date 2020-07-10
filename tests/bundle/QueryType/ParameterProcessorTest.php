@@ -237,7 +237,7 @@ final class ParameterProcessorTest extends TestCase
             ],
             [
                 "@=namedTag('radoslava')",
-                $this->getTagMock(),
+                $this->getTag(),
             ],
         ];
     }
@@ -346,7 +346,7 @@ final class ParameterProcessorTest extends TestCase
             ->willReturnMap($getLocationMap);
 
         $getTagMap = [
-            ['radoslava', $this->getTagMock()],
+            ['radoslava', $this->getTag()],
         ];
 
         $namedObjectProviderMock
@@ -407,14 +407,14 @@ final class ParameterProcessorTest extends TestCase
         return $locationMock;
     }
 
-    protected function getTagMock(): MockObject
+    protected function getTag(): Tag
     {
-        static $tagMock;
+        static $tag;
 
-        if ($tagMock === null) {
-            $tagMock = $this->getMockBuilder(Tag::class)->getMock();
+        if ($tag === null) {
+            $tag = new Tag();
         }
 
-        return $tagMock;
+        return $tag;
     }
 }

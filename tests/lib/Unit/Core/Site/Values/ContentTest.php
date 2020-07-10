@@ -14,6 +14,7 @@ use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Repository\Repository as CoreRepository;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
@@ -145,7 +146,7 @@ final class ContentTest extends TestCase
             ->userServiceMock
             ->expects($this->once())
             ->method('loadUser')
-            ->with('ownerId')
+            ->with(14)
             ->willReturn($ownerUserMock);
 
         $this->assertSame($ownerUserMock, $content->innerOwnerUser);
@@ -160,7 +161,7 @@ final class ContentTest extends TestCase
             ->userServiceMock
             ->expects($this->once())
             ->method('loadUser')
-            ->with('ownerId')
+            ->with(14)
             ->willReturn($ownerUserMock);
 
         $this->assertSame($ownerUserMock, $content->innerOwnerUser);
@@ -175,9 +176,9 @@ final class ContentTest extends TestCase
             ->userServiceMock
             ->expects($this->once())
             ->method('loadUser')
-            ->with('ownerId')
+            ->with(14)
             ->willThrowException(
-                new NotFoundException('User', 'ownerId')
+                new NotFoundException('User', 14)
             );
 
         $this->assertNull($content->innerOwnerUser);
@@ -191,9 +192,9 @@ final class ContentTest extends TestCase
             ->userServiceMock
             ->expects($this->once())
             ->method('loadUser')
-            ->with('ownerId')
+            ->with(14)
             ->willThrowException(
-                new NotFoundException('User', 'ownerId')
+                new NotFoundException('User', 14)
             );
 
         $this->assertNull($content->innerOwnerUser);
@@ -212,8 +213,8 @@ final class ContentTest extends TestCase
                 'repository' => $this->getRepositoryMock(),
                 'innerVersionInfo' => new VersionInfo([
                     'contentInfo' => new RepoContentInfo([
-                        'ownerId' => 'ownerId',
-                        'contentTypeId' => 'contentTypeId',
+                        'ownerId' => 14,
+                        'contentTypeId' => 42,
                     ]),
                 ]),
                 'languageCode' => 'eng-GB',
@@ -309,9 +310,9 @@ final class ContentTest extends TestCase
 
         $this->contentTypeServiceMock
             ->method('loadContentType')
-            ->with('contentTypeId')
+            ->with(42)
             ->willReturn(new ContentType([
-                'fieldDefinitions' => [],
+                'fieldDefinitions' => new FieldDefinitionCollection(),
             ]));
 
         return $this->contentTypeServiceMock;

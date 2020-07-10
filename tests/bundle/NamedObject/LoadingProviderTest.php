@@ -190,7 +190,7 @@ final class LoadingProviderTest extends TestCase
 
         $tag = $provider->getTag('apple');
 
-        $this->assertSame($this->getTagMock(), $tag);
+        $this->assertSame(42, $tag->id);
     }
 
     /**
@@ -217,7 +217,7 @@ final class LoadingProviderTest extends TestCase
 
         $tag = $provider->getTag('pear');
 
-        $this->assertSame($this->getTagMock(), $tag);
+        $this->assertSame('abc', $tag->remoteId);
     }
 
     /**
@@ -308,7 +308,7 @@ final class LoadingProviderTest extends TestCase
             ->method('loadTag')
             ->willReturnCallback(function ($id) {
                 if ($id === 42) {
-                    return $this->getTagMock();
+                    return new Tag(['id' => 42]);
                 }
 
                 throw new RuntimeException('tag not found');
@@ -318,7 +318,7 @@ final class LoadingProviderTest extends TestCase
             ->method('loadTagByRemoteId')
             ->willReturnCallback(function ($id) {
                 if ($id === 'abc') {
-                    return $this->getTagMock();
+                    return new Tag(['remoteId' => 'abc']);
                 }
 
                 throw new RuntimeException('tag not found');
@@ -387,16 +387,5 @@ final class LoadingProviderTest extends TestCase
         }
 
         return $locationMock;
-    }
-
-    protected function getTagMock(): MockObject
-    {
-        static $tagMock;
-
-        if ($tagMock === null) {
-            $tagMock = $this->getMockBuilder(Tag::class)->getMock();
-        }
-
-        return $tagMock;
     }
 }

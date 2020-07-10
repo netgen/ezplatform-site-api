@@ -76,7 +76,7 @@ final class NamedQueryTest extends AbstractParserTestCase
     {
         $this->load([
             'system' => [
-                'siteaccess_group' => [
+                'ezdemo_group' => [
                     'ng_named_query' => $configurationValues,
                 ],
             ],
@@ -111,7 +111,7 @@ final class NamedQueryTest extends AbstractParserTestCase
                         'page' => 2,
                     ],
                 ],
-                'The child node "query_type" at path "ezpublish.system.siteaccess_group.ng_named_query.some_key" must be configured',
+                'The child node "query_type" at path "ezpublish.system.ezdemo_group.ng_named_query.some_key" must be configured',
             ],
             [
                 [
@@ -153,11 +153,11 @@ final class NamedQueryTest extends AbstractParserTestCase
     {
         $this->expectException(InvalidConfigurationException::class);
         $message = \preg_quote($message, '/');
-        $this->expectExceptionMessageRegExp("/{$message}/");
+        $this->matchesRegularExpression("/{$message}/");
 
         $this->load([
             'system' => [
-                'siteaccess_group' => [
+                'ezdemo_group' => [
                     'ng_named_query' => $configurationValues,
                 ],
             ],
@@ -196,7 +196,7 @@ final class NamedQueryTest extends AbstractParserTestCase
     {
         $this->load([
             'system' => [
-                'siteaccess_group' => [
+                'ezdemo_group' => [
                     'ng_named_query' => $configurationValues,
                 ],
             ],
@@ -205,7 +205,7 @@ final class NamedQueryTest extends AbstractParserTestCase
         $this->assertConfigResolverParameterValue(
             'ng_named_query',
             $expectedConfigurationValues,
-            'cro'
+            'ezdemo_site'
         );
     }
 

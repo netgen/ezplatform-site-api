@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
 use eZ\Publish\Core\FieldType\Relation\Value as RelationValue;
 use eZ\Publish\Core\FieldType\RelationList\Value as RelationListValue;
 use eZ\Publish\Core\FieldType\TextLine\Value;
@@ -373,9 +374,9 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function internalGetRepoFieldDefinitions(): array
+    protected function internalGetRepoFieldDefinitions(): FieldDefinitionCollection
     {
-        return [
+        return new FieldDefinitionCollection([
             new FieldDefinition([
                 'id' => 1,
                 'identifier' => 'relations_a',
@@ -391,7 +392,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 'identifier' => 'not_relations',
                 'fieldTypeIdentifier' => 'ezstring',
             ]),
-        ];
+        ]);
     }
 
     protected function getTestContent(bool $failOnMissingFields = true): Content

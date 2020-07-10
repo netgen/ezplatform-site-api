@@ -63,7 +63,7 @@ Site API provides four Twig functions for content rendering:
     view object and in the rendered template.
 
   4. **optional** boolean value indicating whether to render the template in the configured
-        layout, by default ``false``
+     layout, by default ``false``
 
   Example usage of ``ng_view_content``:
 
@@ -493,7 +493,7 @@ Location children
     <ul>
     {% for child in children %}
         <li>
-            <a href="{{ path(child) }}">{{ child.name }}</a>
+            <a href="{{ path(child) }}">{{ child.content.name }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -544,7 +544,7 @@ Location children
     <ul>
     {% for document in documents %}
         <li>
-            <a href="{{ path(document) }}">{{ document.name }}</a>
+            <a href="{{ path(document) }}">{{ document.content.name }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -569,7 +569,7 @@ Location siblings
     <ul>
     {% for sibling in siblings %}
         <li>
-            <a href="{{ path(sibling) }}">{{ sibling.name }}</a>
+            <a href="{{ path(sibling) }}">{{ sibling.content.name }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -594,7 +594,7 @@ Location siblings
     <ul>
     {% for article in articles %}
         <li>
-            <a href="{{ path(articles) }}">{{ articles.name }}</a>
+            <a href="{{ path(articles) }}">{{ articles.content.name }}</a>
         </li>
     {% endfor %}
     </ul>

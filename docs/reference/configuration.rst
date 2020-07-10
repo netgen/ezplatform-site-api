@@ -168,8 +168,7 @@ opposite.
                       full:
                           catch_all:
                               template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_site_api.html.twig'
-                              match:
-                                  Identifier\ContentType: ~
+                              match: ~
 
 Redirections
 ~~~~~~~~~~~~

@@ -3,9 +3,9 @@ Installation
 
 To install Site API first add it as a dependency to your project:
 
-.. code-block:: shell
+.. code-block:: console
 
-    $ composer require netgen/ezplatform-site-api
+    composer require netgen/ezplatform-site-api
 
 Once Site API is installed, activate the bundle in ``app/AppKernel.php`` file by adding it to the
 ``$bundles`` array in ``registerBundles()`` method, together with other required bundles:

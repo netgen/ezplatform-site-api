@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Templating\Twig\Extension;
 
+use eZ\Publish\Core\Base\Exceptions\UnauthorizedException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * NamedObjectExtension runtime.
@@ -21,15 +24,36 @@ class NamedObjectRuntime
      */
     private $namedObjectProvider;
 
-    public function __construct(Provider $specialObjectProvider)
-    {
+    /**
+     * @var bool
+     */
+    private $isDebug;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        Provider $specialObjectProvider,
+        bool $isDebug,
+        ?LoggerInterface $logger = null
+    ) {
         $this->namedObjectProvider = $specialObjectProvider;
+        $this->isDebug = $isDebug;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public function getNamedContent(string $name): ?Content
     {
-        if ($this->namedObjectProvider->hasContent($name)) {
-            return $this->namedObjectProvider->getContent($name);
+        try {
+            if ($this->namedObjectProvider->hasContent($name)) {
+                return $this->namedObjectProvider->getContent($name);
+            }
+        } catch (UnauthorizedException $e) {
+            if ($this->isDebug) {
+                $this->logger->debug($e->getMessage());
+            }
         }
 
         return null;
@@ -37,8 +61,14 @@ class NamedObjectRuntime
 
     public function getNamedLocation(string $name): ?Location
     {
-        if ($this->namedObjectProvider->hasLocation($name)) {
-            return $this->namedObjectProvider->getLocation($name);
+        try {
+            if ($this->namedObjectProvider->hasLocation($name)) {
+                return $this->namedObjectProvider->getLocation($name);
+            }
+        } catch (UnauthorizedException $e) {
+            if ($this->isDebug) {
+                $this->logger->debug($e->getMessage());
+            }
         }
 
         return null;
@@ -46,8 +76,14 @@ class NamedObjectRuntime
 
     public function getNamedTag(string $name): ?Tag
     {
-        if ($this->namedObjectProvider->hasTag($name)) {
-            return $this->namedObjectProvider->getTag($name);
+        try {
+            if ($this->namedObjectProvider->hasTag($name)) {
+                return $this->namedObjectProvider->getTag($name);
+            }
+        } catch (UnauthorizedException $e) {
+            if ($this->isDebug) {
+                $this->logger->debug($e->getMessage());
+            }
         }
 
         return null;

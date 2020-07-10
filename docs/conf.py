@@ -16,6 +16,7 @@ lexers['html'] = HtmlLexer(startinline=True)
 lexers['json'] = JsonLexer(startinline=True)
 
 extensions = ['sphinx.ext.autodoc',
+    'sphinx_copybutton',
     'sphinx.ext.doctest',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',

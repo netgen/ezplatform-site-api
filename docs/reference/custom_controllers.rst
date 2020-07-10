@@ -27,7 +27,7 @@ it with extending the Site API base controller:
 
             $hasRelatedItems = false;
 
-            if (!$content->getField('related')->isEmpty()) {
+            if ($content->hasField('related') && !$content->getField('related')->isEmpty()) {
                 $hasRelatedItems = true;
             }
 

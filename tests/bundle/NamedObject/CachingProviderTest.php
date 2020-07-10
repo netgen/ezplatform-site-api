@@ -167,14 +167,15 @@ final class CachingProviderTest extends TestCase
         $providerMock = $this->getProviderMock();
         $provider = $this->getProviderUnderTest($providerMock);
 
+        $tag = new Tag();
+
         $providerMock
             ->expects($this->once())
             ->method('getTag')
             ->with('apple')
-            ->willReturn($this->getTagMock());
+            ->willReturn($tag);
 
-        $this->assertSame($this->getTagMock(), $provider->getTag('apple'));
-        $this->assertSame($this->getTagMock(), $provider->getTag('apple'));
+        $this->assertSame($tag, $provider->getTag('apple'));
     }
 
     public function testGetTagThrowsException(): void
@@ -227,16 +228,5 @@ final class CachingProviderTest extends TestCase
         }
 
         return $locationMock;
-    }
-
-    protected function getTagMock(): MockObject
-    {
-        static $tagMock;
-
-        if ($tagMock === null) {
-            $tagMock = $this->getMockBuilder(Tag::class)->getMock();
-        }
-
-        return $tagMock;
     }
 }

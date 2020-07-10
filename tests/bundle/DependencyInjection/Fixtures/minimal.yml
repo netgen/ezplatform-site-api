@@ -1,11 +1,11 @@
 siteaccess:
-    default_siteaccess: cro
+    default_siteaccess: ezdemo_site
     list:
-        - cro
+        - ezdemo_site
     groups:
-        siteaccess_group:
-            - cro
+        ezdemo_group:
+            - ezdemo_site
     match:
         URIElement: 1
         Map\URI:
-            site: cro
+            site: ezdemo_site

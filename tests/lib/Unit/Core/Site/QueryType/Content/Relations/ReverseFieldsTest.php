@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
@@ -282,9 +283,9 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
         return [];
     }
 
-    protected function internalGetRepoFieldDefinitions(): array
+    protected function internalGetRepoFieldDefinitions(): FieldDefinitionCollection
     {
-        return [];
+        return new FieldDefinitionCollection();
     }
 
     protected function getTestContent(): Content

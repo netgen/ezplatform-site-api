@@ -1,0 +1,4 @@
+services:
+    Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider: '@netgen.ezplatform_site.named_object_provider'
+    Netgen\EzPlatformSiteApi\API\Site: '@netgen.ezplatform_site.site'
+    eZ\Publish\Core\QueryType\QueryTypeRegistry: '@ezpublish.query_type.registry'

@@ -100,4 +100,16 @@ abstract class Controller extends AbstractController
 
         return $namedObjectProvider;
     }
+
+    public static function getSubscribedServices()
+    {
+        return [
+            'netgen.ezplatform_site.site' => Site::class,
+            'netgen.ezplatform_site.named_object_provider' => Provider::class,
+            'ezpublish.query_type.registry' => QueryTypeRegistry::class,
+            'ezpublish.api.repository' => Repository::class,
+            'ezpublish.templating.global_helper' => GlobalHelper::class,
+            'ezpublish.config.resolver' => ConfigResolverInterface::class,
+        ] + parent::getSubscribedServices();
+    }
 }

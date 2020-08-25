@@ -31,11 +31,5 @@ class PreviewControllerOverridePass implements CompilerPassInterface
                 [new Reference('netgen.ezplatform_site.core.site')]
             );
 
-        // Resetting the alias to the original value
-        // to disable legacy bridge taking over the preview controller
-        $container->setAlias(
-            'ezpublish.controller.content.preview',
-            $corePreviewControllerServiceId
-        );
     }
 }

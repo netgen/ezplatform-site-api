@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
          bootstrap="./tests/bootstrap.php"
-         processIsolation="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
          colors="true">
-    <php>
-        <env name="setupFactory" value="Netgen\EzPlatformSiteApi\Tests\Integration\SetupFactory\Legacy" />
-    </php>
-    <testsuites>
-        <testsuite name="Netgen's Site API for eZ Platform integration tests">
-            <file>tests/lib/Integration/PrepareFixturesTest.php</file>
-            <file>tests/lib/Integration/SiteTest.php</file>
-            <file>tests/lib/Integration/FilterServiceTest.php</file>
-            <file>tests/lib/Integration/FindServiceTest.php</file>
-            <file>tests/lib/Integration/LoadServiceTest.php</file>
-            <file>tests/lib/Integration/RelationServiceTest.php</file>
-            <file>tests/lib/Integration/Traits/SearchResultExtractorTraitTest.php</file>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./lib</directory>
-        </whitelist>
-    </filter>
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./lib</directory>
+    </include>
+  </coverage>
+  <php>
+    <env name="setupFactory" value="Netgen\EzPlatformSiteApi\Tests\Integration\SetupFactory\Legacy"/>
+  </php>
+  <testsuites>
+    <testsuite name="Netgen's Site API for eZ Platform integration tests">
+      <file>tests/lib/Integration/PrepareFixturesTest.php</file>
+      <file>tests/lib/Integration/SiteTest.php</file>
+      <file>tests/lib/Integration/FilterServiceTest.php</file>
+      <file>tests/lib/Integration/FindServiceTest.php</file>
+      <file>tests/lib/Integration/LoadServiceTest.php</file>
+      <file>tests/lib/Integration/RelationServiceTest.php</file>
+      <file>tests/lib/Integration/Traits/SearchResultExtractorTraitTest.php</file>
+    </testsuite>
+  </testsuites>
 </phpunit>

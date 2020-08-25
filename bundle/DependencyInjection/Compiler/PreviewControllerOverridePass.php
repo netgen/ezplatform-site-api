@@ -8,6 +8,7 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\Controller\PreviewController;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Alias;
 
 class PreviewControllerOverridePass implements CompilerPassInterface
 {
@@ -35,7 +36,7 @@ class PreviewControllerOverridePass implements CompilerPassInterface
         // to disable legacy bridge taking over the preview controller
         $container->setAlias(
             'ezpublish.controller.content.preview',
-            $corePreviewControllerServiceId
+            new Alias($corePreviewControllerServiceId, true)
         );
     }
 }

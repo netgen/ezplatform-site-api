@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./tests/bootstrap.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true">
-    <testsuites>
-        <testsuite name="Netgen's Site API for eZ Platform unit tests">
-            <directory suffix="Test.php">./tests/bundle/</directory>
-            <directory suffix="Test.php">./tests/lib/Unit</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./bundle</directory>
-            <directory suffix=".php">./lib</directory>
-        </whitelist>
-    </filter>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         bootstrap="./tests/bootstrap.php"
+         colors="true">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./bundle</directory>
+      <directory suffix=".php">./lib</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="Netgen's Site API for eZ Platform unit tests">
+      <directory>./tests/bundle/</directory>
+      <directory>./tests/lib/Unit</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

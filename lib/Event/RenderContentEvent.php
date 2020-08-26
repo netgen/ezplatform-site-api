@@ -8,7 +8,7 @@ use eZ\Publish\Core\MVC\Symfony\View\View;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * @deprecated since 3.1, to be removed in 4.0. Use RenderViewEvent instead.
+ * @deprecated since 3.5, to be removed in 4.0. Use RenderViewEvent instead.
  *
  * @see \Netgen\Bundle\EzPlatformSiteApiBundle\Event\RenderViewEvent
  */

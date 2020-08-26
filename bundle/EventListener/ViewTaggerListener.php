@@ -10,7 +10,7 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * @uses \Netgen\Bundle\EzPlatformSiteApiBundle\Events::NG_VIEW_CONTENT_RENDER
+ * @uses \Netgen\Bundle\EzPlatformSiteApiBundle\Events::NG_VIEW_CONTENT_RENDER_VIEW
  */
 final class ViewTaggerListener implements EventSubscriberInterface
 {

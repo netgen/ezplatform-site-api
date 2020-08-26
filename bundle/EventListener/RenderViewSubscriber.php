@@ -7,14 +7,13 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\EventListener;
 use EzSystems\PlatformHttpCacheBundle\ResponseTagger\ResponseTagger;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Event\RenderViewEvent;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Events;
-use Netgen\EzPlatformSiteApi\Event\RenderContentEvent;
 use Netgen\EzPlatformSiteApi\Event\SiteApiEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * @uses \Netgen\Bundle\EzPlatformSiteApiBundle\Events::NG_VIEW_CONTENT_RENDER_VIEW
+ * @uses \Netgen\Bundle\EzPlatformSiteApiBundle\Events::RENDER_VIEW
  */
-final class ViewTaggerListener implements EventSubscriberInterface
+final class RenderViewSubscriber implements EventSubscriberInterface
 {
     /**
      * @var \EzSystems\PlatformHttpCacheBundle\ResponseTagger\ResponseTagger
@@ -29,17 +28,12 @@ final class ViewTaggerListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            SiteApiEvents::RENDER_CONTENT => 'onRenderContent',
-            Events::NG_VIEW_CONTENT_RENDER_VIEW => 'onNgViewContentRenderView',
+            Events::RENDER_VIEW => 'tagResponse',
+            SiteApiEvents::RENDER_CONTENT => 'tagResponse',
         ];
     }
 
-    public function onRenderContent(RenderContentEvent $event): void
-    {
-        $this->responseTagger->tag($event->getView());
-    }
-
-    public function onNgViewContentRenderView(RenderViewEvent $event): void
+    public function tagResponse(RenderViewEvent $event): void
     {
         $this->responseTagger->tag($event->getView());
     }

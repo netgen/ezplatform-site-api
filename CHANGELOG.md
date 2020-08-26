@@ -1,6 +1,16 @@
 eZ Platform Site API changelog
 ==============================
 
+3.4.3 (03.07.2020)
+------------------
+
+[`3.4.2...3.4.3`](https://github.com/netgen/ezplatform-site-api/compare/3.4.2...3.4.3)
+
+### Fixed
+
+* Fix code example in documentation by @leohajder ([#162](https://github.com/netgen/ezplatform-site-api/pull/162))
+* Handle UnauthorizedException when accessing named objects from Twig by @leohajder ([#164](https://github.com/netgen/ezplatform-site-api/pull/164))
+
 3.4.2 (15.05.2020)
 ------------------
 

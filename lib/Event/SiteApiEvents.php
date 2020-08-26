@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Event;
 
 /**
- * @deprecated since 3.1, to be removed in 4.0. Use Events instead.
+ * @deprecated since 3.5, to be removed in 4.0. Use Events instead.
  *
  * @see \Netgen\Bundle\EzPlatformSiteApiBundle\Events
  */

@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * @uses \Netgen\Bundle\EzPlatformSiteApiBundle\Events::RENDER_VIEW
  */
-final class RenderViewSubscriber implements EventSubscriberInterface
+final class ViewTaggerSubscriber implements EventSubscriberInterface
 {
     /**
      * @var \EzSystems\PlatformHttpCacheBundle\ResponseTagger\ResponseTagger

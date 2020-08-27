@@ -9,7 +9,7 @@ namespace Netgen\EzPlatformSiteApi\Event;
  *
  * @see \Netgen\Bundle\EzPlatformSiteApiBundle\Events
  */
-class SiteApiEvents
+final class SiteApiEvents
 {
     /**
      * Dispatched when the content is rendered without usage of sub-requests.

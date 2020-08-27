@@ -1,6 +1,6 @@
 services:
-    netgen.ezplatform_site.event_listener.render_view:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\RenderViewSubscriber
+    netgen.ezplatform_site.event_listener.view_tagger:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\ViewTaggerSubscriber
         arguments:
             - '@ezplatform.view_cache.response_tagger.dispatcher'
         tags:

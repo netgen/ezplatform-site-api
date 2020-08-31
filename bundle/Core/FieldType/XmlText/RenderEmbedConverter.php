@@ -68,12 +68,9 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
      */
     protected function processTag(DOMDocument $xmlDoc, $tagName): void
     {
-        $overrideViewAction = $this->configResolver->getParameter(
-            'override_url_alias_view_action',
-            'netgen_ez_platform_site_api'
-        );
+        $isSiteApiPrimaryContentView = $this->configResolver->getParameter('ng_set_site_api_as_primary_content_view');
 
-        if ($overrideViewAction) {
+        if ($isSiteApiPrimaryContentView) {
             $this->internalProcessTag($xmlDoc, $tagName);
 
             return;

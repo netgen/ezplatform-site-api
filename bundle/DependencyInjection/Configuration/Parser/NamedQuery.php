@@ -14,7 +14,7 @@ use Twig\Lexer;
  */
 class NamedQuery extends AbstractParser
 {
-    public const NODE_KEY = 'ng_named_query';
+    public const NODE_KEY = 'ng_named_queries';
 
     public function addSemanticConfig(NodeBuilder $nodeBuilder): void
     {

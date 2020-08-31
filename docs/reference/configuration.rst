@@ -1,7 +1,7 @@
 Configuration
 =============
 
-Site API has its own view configuration, available under ``ngcontent_view`` key. Aside from
+Site API has its own view configuration, available under ``ng_content_views`` key. Aside from
 :doc:`Query Type </reference/query_types>` configuration that is documented separately, this is
 exactly the same as eZ Platform's default view configuration under ``content_view`` key. You can use
 this configuration right after the installation, but note that it won't be used for full views
@@ -22,10 +22,10 @@ for a specific siteaccess with the following semantic configuration:
 
 .. code-block:: yaml
 
-    netgen_ez_platform_site_api:
+    ezpublish:
         system:
             frontend_group:
-                override_url_alias_view_action: true
+                ng_set_site_api_as_primary_content_view: true
 
 Here ``frontend_group`` is the siteaccess group (or a siteaccess) for which you want to activate the
 Site API. This switch is useful if you have a siteaccess that can't use it, for example a custom
@@ -39,12 +39,12 @@ admin or intranet interface.
 Site API Content views
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Once you enable ``override_url_alias_view_action`` for a siteaccess, all your **full view** templates
-and controllers will need to use Site API to keep working. They will be resolved from Site API view
-configuration, available under ``ngcontent_view`` key. That means Content and Location variables
-inside Twig templates will be instances of Site API Content and Location value objects, ``$view``
-variable passed to your custom controllers will be an instance of Site API ContentView variable, and
-so on.
+Once you enable ``ng_set_site_api_as_primary_content_view`` for a siteaccess, all your **full view**
+templates and controllers will need to use Site API to keep working. They will be resolved from Site
+API view configuration, available under ``ng_content_views`` key. That means Content and Location
+variables inside Twig templates will be instances of Site API Content and Location value objects,
+``$view`` variable passed to your custom controllers will be an instance of Site API ContentView
+variable, and so on.
 
 If needed you can still use ``content_view`` rules. This will allow you to have both Site API
 template override rules as well as original eZ Platform template override rules, so you can rewrite
@@ -67,7 +67,7 @@ For example, if using the following configuration:
     ezpublish:
         system:
             frontend_group:
-                ngcontent_view:
+                ng_content_views:
                     line:
                         article:
                             template: '@App/content/line/article.html.twig'
@@ -108,7 +108,7 @@ through two configuration options (showing default values):
     With this option you control whether **automatic fallback** will be used. By default, automatic
     fallback is disabled. Secondary content view means the fallback can be used both from Site API
     to eZ Platform views, and from eZ Platform to Site API content views. Which one will be used is
-    defined by ``override_url_alias_view_action`` configuration documented above.
+    defined by ``ng_set_site_api_as_primary_content_view`` configuration documented above.
 
 - ``ng_fallback_without_subrequest``
 
@@ -147,7 +147,7 @@ opposite.
       ezpublish:
           system:
               frontend_group:
-                  ngcontent_view:
+                  ng_content_views:
                       line:
                           article:
                               template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_ez_platform.html.twig'
@@ -186,7 +186,7 @@ Example configuration:
     ezpublish:
         system:
             frontend_group:
-                ngcontent_view:
+                ng_content_views:
                     container:
                         redirect:
                             target: "@=location.parent"
@@ -232,7 +232,7 @@ There also shortcuts available for simplified configuration:
     ezpublish:
         system:
             frontend_group:
-                ngcontent_view:
+                ng_content_views:
                     container:
                         temporary_redirect: "@=namedObject.getTag('running')"
                         match:

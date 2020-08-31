@@ -81,8 +81,8 @@ class PreviewController extends BasePreviewController
         }
 
         $overrideViewAction = $this->configResolver->getParameter(
-            'override_url_alias_view_action',
-            'netgen_ez_platform_site_api',
+            'ng_set_site_api_as_primary_content_view',
+            null,
             $previewSiteAccess->name
         );
 

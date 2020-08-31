@@ -39,11 +39,11 @@ final class SettingsTest extends TestCase
         $this->assertEquals(42, $settings->rootLocationId);
     }
 
-    public function testGetFailOnMissingFields(): void
+    public function testGetFailOnMissingField(): void
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertFalse($settings->failOnMissingFields);
+        $this->assertFalse($settings->failOnMissingField);
     }
 
     public function testGetNonexistentProperty(): void

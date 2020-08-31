@@ -18,10 +18,6 @@ services:
             - '@ezpublish.view.view_parameters.injector.dispatcher'
             - '@netgen.ezplatform_site.view.location_resolver'
 
-    # deprecated since 3.3, used aliased service
-    netgen.ezplatform_site.ngcontent_view_provider.configured:
-        alias: netgen.ezplatform_site.content_view_provider.ngcontent_configured
-
     netgen.ezplatform_site.content_view_provider.ngcontent_configured:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Provider\Configured
         arguments:
@@ -69,7 +65,7 @@ services:
             - '@ezpublish.api.repository'
             - 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased'
             - '@ezpublish.config.resolver'
-            - 'ngcontent_view'
+            - 'ng_content_views'
         calls:
             - [setContainer, ["@service_container"]]
         public: false
@@ -89,7 +85,7 @@ services:
             - '@ezpublish.api.repository'
             - 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased'
             - '@ezpublish.config.resolver'
-            - 'ngcontent_view_defaults'
+            - 'ng_content_view_defaults'
         calls:
             - [setContainer, ["@service_container"]]
         public: false

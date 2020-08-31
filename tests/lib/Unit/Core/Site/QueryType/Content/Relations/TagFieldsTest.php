@@ -409,19 +409,19 @@ final class TagFieldsTest extends QueryTypeBaseTest
         ]);
     }
 
-    protected function getTestContent(bool $failOnMissingFields = true): Content
+    protected function getTestContent(bool $failOnMissingField = true): Content
     {
         return new Content(
             [
                 'id' => 42,
                 'site' => false,
-                'domainObjectMapper' => $this->getDomainObjectMapper($failOnMissingFields),
+                'domainObjectMapper' => $this->getDomainObjectMapper($failOnMissingField),
                 'repository' => $this->getRepositoryMock(),
                 'innerContent' => $this->getRepoContent(),
                 'innerVersionInfo' => $this->getRepoVersionInfo(),
                 'languageCode' => 'eng-GB',
             ],
-            $failOnMissingFields,
+            $failOnMissingField,
             new NullLogger()
         );
     }

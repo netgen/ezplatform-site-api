@@ -12,6 +12,7 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\ViewBuild
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\XmlTextFieldTypePass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\BaseOptions;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView;
+use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\NamedObject;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\NamedQuery;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -34,6 +35,7 @@ class NetgenEzPlatformSiteApiBundle extends Bundle
 
         $coreExtension->addConfigParser(new BaseOptions());
         $coreExtension->addConfigParser(new ContentView());
+        $coreExtension->addConfigParser(new NamedObject());
         $coreExtension->addConfigParser(new NamedQuery());
 
         $coreExtension->addDefaultSettings(__DIR__ . '/Resources/config', ['ezplatform_default_settings.yml']);

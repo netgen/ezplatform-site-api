@@ -34,7 +34,7 @@ sort them by title and paginate them by 10 per page using URL query parameter ``
     ezpublish:
         system:
             frontend_group:
-                ngcontent_view:
+                ng_content_views:
                     full:
                         author:
                             template: '@ezdesign/content/full/author.html.twig'

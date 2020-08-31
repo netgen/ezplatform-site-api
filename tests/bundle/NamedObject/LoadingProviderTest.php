@@ -355,9 +355,9 @@ final class LoadingProviderTest extends TestCase
                 null,
                 null,
                 [
-                    'content' => $template,
-                    'location' => $template,
-                    'tag' => $template,
+                    'content_items' => $template,
+                    'locations' => $template,
+                    'tags' => $template,
                 ],
             ],
         ];

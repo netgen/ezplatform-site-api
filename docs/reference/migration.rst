@@ -26,9 +26,9 @@ At this point, you can:
    use it in a custom route.
 
 2. use Site API's view :doc:`configuration </reference/configuration>`, available under
-   ``ngcontent_view`` key. You need to know that eZ Platform URL alias routes still won't be handled
-   through it at this point. Until you explicitly turn that on for a siteaccess or configure view
-   fallback, you can only use it by making a subrequest to Site API's Content view controller
+   ``ng_content_views`` key. You need to know that eZ Platform URL alias routes still won't be
+   handled through it at this point. Until you explicitly turn that on for a siteaccess or configure
+   view fallback, you can only use it by making a subrequest to Site API's Content view controller
    ``ng_content::viewAction``.
 
 Handling eZ Platform URL alias routes through Site API's view configuration has to be enabled per
@@ -36,10 +36,10 @@ siteaccess, with the following configuration:
 
 .. code-block:: yaml
 
-    netgen_ez_platform_site_api:
+    ezpublish:
         system:
             frontend_group:
-                override_url_alias_view_action: true
+                ng_set_site_api_as_primary_content_view: true
 
 Once you do this, all URL alias routes on the siteaccess will be handled through Site API's view
 configuration. That means you will need to migrate or adapt all full view templates, otherwise
@@ -49,9 +49,9 @@ unless you configure view fallback, that will be possible only through explicit 
 Platform's view controller ``ez_content::viewAction``.
 
 You can configure automatic :ref:`view fallback<content_view_fallback_configuration>`, from Site API
-(if ``override_url_alias_view_action`` is enabled) to eZ Platform, and from eZ Platform (when
-``override_url_alias_view_action`` is disabled) to Site API. This is controlled through the
-``ng_fallback_to_secondary_content_view`` configuration option:
+(if ``ng_set_site_api_as_primary_content_view`` is enabled) to eZ Platform, and from eZ Platform
+(when ``ng_set_site_api_as_primary_content_view`` is disabled) to Site API. This is controlled
+through the ``ng_fallback_to_secondary_content_view`` configuration option:
 
 .. code-block:: yaml
 

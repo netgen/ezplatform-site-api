@@ -14,12 +14,9 @@ class UrlAliasRouter extends BaseUrlAliasRouter
     public function matchRequest(Request $request): array
     {
         $parameters = parent::matchRequest($request);
-        $overrideViewAction = $this->configResolver->getParameter(
-            'override_url_alias_view_action',
-            'netgen_ez_platform_site_api'
-        );
+        $isSiteApiPrimaryContentView = $this->configResolver->getParameter('ng_set_site_api_as_primary_content_view');
 
-        if ($overrideViewAction) {
+        if ($isSiteApiPrimaryContentView) {
             $parameters['_controller'] = self::OVERRIDE_VIEW_ACTION;
         }
 

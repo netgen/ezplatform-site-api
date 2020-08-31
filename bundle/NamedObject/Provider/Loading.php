@@ -56,7 +56,7 @@ final class Loading extends Provider
     {
         $this->setConfiguration();
 
-        return isset($this->configuration['content'][$name]);
+        return isset($this->configuration['content_items'][$name]);
     }
 
     /**
@@ -87,7 +87,7 @@ final class Loading extends Provider
     {
         $this->setConfiguration();
 
-        return isset($this->configuration['location'][$name]);
+        return isset($this->configuration['locations'][$name]);
     }
 
     /**
@@ -118,7 +118,7 @@ final class Loading extends Provider
     {
         $this->setConfiguration();
 
-        return isset($this->configuration['tag'][$name]);
+        return isset($this->configuration['tags'][$name]);
     }
 
     /**
@@ -152,42 +152,42 @@ final class Loading extends Provider
     {
         $this->setConfiguration();
 
-        return $this->configuration['content'][$name]['id'] ?? null;
+        return $this->configuration['content_items'][$name]['id'] ?? null;
     }
 
     private function getContentRemoteId(string $name): ?string
     {
         $this->setConfiguration();
 
-        return $this->configuration['content'][$name]['remote_id'] ?? null;
+        return $this->configuration['content_items'][$name]['remote_id'] ?? null;
     }
 
     private function getLocationId(string $name): ?int
     {
         $this->setConfiguration();
 
-        return $this->configuration['location'][$name]['id'] ?? null;
+        return $this->configuration['locations'][$name]['id'] ?? null;
     }
 
     private function getLocationRemoteId(string $name): ?string
     {
         $this->setConfiguration();
 
-        return $this->configuration['location'][$name]['remote_id'] ?? null;
+        return $this->configuration['locations'][$name]['remote_id'] ?? null;
     }
 
     private function getTagId(string $name): ?int
     {
         $this->setConfiguration();
 
-        return $this->configuration['tag'][$name]['id'] ?? null;
+        return $this->configuration['tags'][$name]['id'] ?? null;
     }
 
     private function getTagRemoteId(string $name): ?string
     {
         $this->setConfiguration();
 
-        return $this->configuration['tag'][$name]['remote_id'] ?? null;
+        return $this->configuration['tags'][$name]['remote_id'] ?? null;
     }
 
     private function setConfiguration(): void
@@ -196,7 +196,7 @@ final class Loading extends Provider
             return;
         }
 
-        $configuration = $this->configResolver->getParameter('named_objects', 'netgen_ez_platform_site_api');
+        $configuration = $this->configResolver->getParameter('ng_named_objects');
 
         $this->configuration = $configuration ?? [];
     }

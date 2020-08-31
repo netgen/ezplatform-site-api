@@ -179,7 +179,7 @@ class Site implements SiteInterface
             $this->domainObjectMapper = new DomainObjectMapper(
                 $this,
                 $this->repository,
-                $this->settings->failOnMissingFields,
+                $this->settings->failOnMissingField,
                 $this->logger
             );
         }

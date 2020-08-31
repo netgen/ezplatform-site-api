@@ -37,7 +37,7 @@ final class Fields extends APIFields
     /**
      * @var bool
      */
-    private $failOnMissingFields;
+    private $failOnMissingField;
 
     /**
      * @var \Psr\Log\LoggerInterface
@@ -72,12 +72,12 @@ final class Fields extends APIFields
     public function __construct(
         RepoContent $content,
         DomainObjectMapper $domainObjectMapper,
-        bool $failOnMissingFields,
+        bool $failOnMissingField,
         LoggerInterface $logger
     ) {
         $this->content = $content;
         $this->domainObjectMapper = $domainObjectMapper;
-        $this->failOnMissingFields = $failOnMissingFields;
+        $this->failOnMissingField = $failOnMissingField;
         $this->logger = $logger;
     }
 
@@ -143,7 +143,7 @@ final class Fields extends APIFields
 
         $message = \sprintf('Field "%s" in Content #%s does not exist', $identifier, $this->content->id);
 
-        if ($this->failOnMissingFields) {
+        if ($this->failOnMissingField) {
             throw new RuntimeException($message);
         }
 
@@ -171,7 +171,7 @@ final class Fields extends APIFields
 
         $message = \sprintf('Field "%s" in Content #%s does not exist', $identifier, $this->content->id);
 
-        if ($this->failOnMissingFields) {
+        if ($this->failOnMissingField) {
             throw new RuntimeException($message);
         }
 
@@ -227,7 +227,7 @@ final class Fields extends APIFields
 
         $message = \sprintf('Field #%s in Content #%s does not exist', $id, $this->content->id);
 
-        if ($this->failOnMissingFields) {
+        if ($this->failOnMissingField) {
             throw new RuntimeException($message);
         }
 

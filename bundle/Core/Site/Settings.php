@@ -34,17 +34,11 @@ final class Settings extends BaseSettings
             case 'prioritizedLanguages':
                 return $this->configResolver->getParameter('languages');
             case 'useAlwaysAvailable':
-                return $this->configResolver->getParameter(
-                    'use_always_available_fallback',
-                    'netgen_ez_platform_site_api'
-                );
+                return $this->configResolver->getParameter('ng_use_always_available_fallback');
             case 'rootLocationId':
                 return $this->configResolver->getParameter('content.tree_root.location_id');
-            case 'failOnMissingFields':
-                return $this->configResolver->getParameter(
-                    'fail_on_missing_fields',
-                    'netgen_ez_platform_site_api'
-                );
+            case 'failOnMissingField':
+                return $this->configResolver->getParameter('ng_fail_on_missing_field');
         }
 
         throw new PropertyNotFoundException($property, \get_class($this));
@@ -74,7 +68,7 @@ final class Settings extends BaseSettings
             case 'prioritizedLanguages':
             case 'useAlwaysAvailable':
             case 'rootLocationId':
-            case 'failOnMissingFields':
+            case 'failOnMissingField':
                 return true;
         }
 

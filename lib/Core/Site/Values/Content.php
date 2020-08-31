@@ -124,14 +124,14 @@ final class Content extends APIContent
      */
     private $isInnerOwnerUserInitialized = false;
 
-    public function __construct(array $properties, bool $failOnMissingFields, LoggerInterface $logger)
+    public function __construct(array $properties, bool $failOnMissingField, LoggerInterface $logger)
     {
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
         $this->contentService = $properties['repository']->getContentService();
         $this->userService = $properties['repository']->getUserService();
         $this->repository = $properties['repository'];
-        $this->fields = new Fields($this, $this->domainObjectMapper, $failOnMissingFields, $logger);
+        $this->fields = new Fields($this, $this->domainObjectMapper, $failOnMissingField, $logger);
 
         unset(
             $properties['site'],

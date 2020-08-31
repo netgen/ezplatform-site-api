@@ -51,7 +51,7 @@ Previous configuration:
 
 .. code-block:: yaml
 
-    ezpublish:
+    netgen_ez_platform_site_api:
         system:
             frontend_group:
                 ng_named_query: []

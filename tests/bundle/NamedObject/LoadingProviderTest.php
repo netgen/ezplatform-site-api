@@ -334,26 +334,28 @@ final class LoadingProviderTest extends TestCase
     {
         $configResolverMock = $this->getMockBuilder(ConfigResolverInterface::class)->getMock();
 
+        $template = [
+            'apple' => [
+                'id' => 42,
+            ],
+            'pear' => [
+                'remote_id' => 'abc',
+            ],
+            'plum' => [
+                'id' => 24,
+            ],
+            'fig' => [
+                'remote_id' => 'cba',
+            ],
+        ];
+
         $getParameterMap = [
             [
-                'named_objects',
-                'netgen_ez_platform_site_api',
+                'ng_named_objects',
+                null,
                 null,
                 [
-                    'content' => $template = [
-                        'apple' => [
-                            'id' => 42,
-                        ],
-                        'pear' => [
-                            'remote_id' => 'abc',
-                        ],
-                        'plum' => [
-                            'id' => 24,
-                        ],
-                        'fig' => [
-                            'remote_id' => 'cba',
-                        ],
-                    ],
+                    'content' => $template,
                     'location' => $template,
                     'tag' => $template,
                 ],

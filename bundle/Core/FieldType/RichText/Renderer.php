@@ -104,12 +104,9 @@ class Renderer extends CoreRenderer
 
     private function getConfigurationReference(): string
     {
-        $overrideViewAction = $this->configResolver->getParameter(
-            'override_url_alias_view_action',
-            'netgen_ez_platform_site_api'
-        );
+        $isSiteApiPrimaryContentView = $this->configResolver->getParameter('ng_set_site_api_as_primary_content_view');
 
-        if ($overrideViewAction) {
+        if ($isSiteApiPrimaryContentView) {
             return $this->ngEmbedConfigurationNamespace;
         }
 

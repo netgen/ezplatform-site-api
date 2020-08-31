@@ -48,7 +48,7 @@ final class DomainObjectMapper
     /**
      * @var bool
      */
-    private $failOnMissingFields;
+    private $failOnMissingField;
 
     /**
      * @var \Psr\Log\LoggerInterface
@@ -58,14 +58,14 @@ final class DomainObjectMapper
     public function __construct(
         SiteInterface $site,
         Repository $repository,
-        bool $failOnMissingFields,
+        bool $failOnMissingField,
         LoggerInterface $logger
     ) {
         $this->site = $site;
         $this->repository = $repository;
         $this->contentTypeService = $repository->getContentTypeService();
         $this->fieldTypeService = $repository->getFieldTypeService();
-        $this->failOnMissingFields = $failOnMissingFields;
+        $this->failOnMissingField = $failOnMissingField;
         $this->logger = $logger;
     }
 
@@ -92,7 +92,7 @@ final class DomainObjectMapper
                 'domainObjectMapper' => $this,
                 'repository' => $this->repository,
             ],
-            $this->failOnMissingFields,
+            $this->failOnMissingField,
             $this->logger
         );
     }

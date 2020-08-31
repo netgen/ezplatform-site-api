@@ -359,16 +359,16 @@ final class FieldsTest extends TestCase
     }
 
     /**
-     * @param bool $failOnMissingFields
+     * @param bool $failOnMissingField
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Fields
      */
-    protected function getFieldsUnderTest(bool $failOnMissingFields): Fields
+    protected function getFieldsUnderTest(bool $failOnMissingField): Fields
     {
         return new Fields(
             $this->getMockedContent(),
             $this->getDomainObjectMapper(),
-            $failOnMissingFields,
+            $failOnMissingField,
             $this->getLoggerMock()
         );
     }

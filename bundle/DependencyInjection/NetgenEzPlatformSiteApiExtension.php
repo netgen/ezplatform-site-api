@@ -53,18 +53,7 @@ class NetgenEzPlatformSiteApiExtension extends Extension implements PrependExten
 
         $fileLocator = new FileLocator(__DIR__ . '/../Resources/config');
         $loader = new Loader\YamlFileLoader($container, $fileLocator);
-        $loader->load('default_settings.yml');
         $loader->load('services.yml');
-
-        $processor = new ConfigurationProcessor($container, $this->getAlias());
-        $processor->mapConfig(
-            $config,
-            static function ($scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void {
-                foreach ($scopeSettings as $key => $value) {
-                    $contextualizer->setContextualParameter($key, $currentScope, $value);
-                }
-            }
-        );
     }
 
     public function prepend(ContainerBuilder $container): void

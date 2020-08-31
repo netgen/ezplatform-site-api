@@ -119,7 +119,7 @@ final class QueryDefinitionMapper
             return;
         }
 
-        $configuration = $this->configResolver->getParameter('ng_named_query');
+        $configuration = $this->configResolver->getParameter('ng_named_queries');
 
         if ($configuration === null) {
             $configuration = [];

@@ -36,7 +36,7 @@ Site API provides four Twig functions for content rendering:
   render them can improve performance and hence   developer's experience.
 
   Both functions support custom controllers. ``ng_view_content`` can be used for views defined in
-  Site API view configuration under ``ngcontent_view`` configuration node, and
+  Site API view configuration under ``ng_content_views`` configuration node, and
   ``ng_ez_view_content`` can be used for views defined in eZ Platform view configuration under
   ``content_view`` configuration node.
 

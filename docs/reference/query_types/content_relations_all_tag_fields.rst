@@ -44,7 +44,7 @@ query parameter ``page``:
     ezpublish:
         system:
             frontend_group:
-                ngcontent_view:
+                ng_content_views:
                     full:
                         product:
                             template: '@ezdesign/content/full/product.html.twig'

@@ -132,7 +132,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'ezdemo_group' => [
-                    'ngcontent_view' => [
+                    'ng_content_views' => [
                         'full' => [
                             'throttle' => [
                                 'match' => [],
@@ -146,8 +146,7 @@ final class ContentViewTest extends AbstractParserTestCase
             ],
         ]);
 
-        // Avoid detecting risky tests
-        $this->assertTrue(true);
+        $this->addToAssertionCount(1);
     }
 
     public function providerForTextExtends(): array
@@ -260,7 +259,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $baseConfig = [
             'system' => [
                 'ezdemo_group' => [
-                    'ngcontent_view' => [
+                    'ng_content_views' => [
                         'base' => [
                             'one' => [
                                 'match' => [],
@@ -321,10 +320,9 @@ final class ContentViewTest extends AbstractParserTestCase
             ],
         ];
 
-        $this->assertContainerBuilderHasParameter('ezsettings.ezdemo_site.ngcontent_view', $expectedValues);
+        $this->assertContainerBuilderHasParameter('ezsettings.ezdemo_site.ng_content_views', $expectedValues);
 
-        // Avoid detecting risky tests
-        $this->assertTrue(true);
+        $this->addToAssertionCount(1);
     }
 
     public function providerForTestInvalid(): array
@@ -439,7 +437,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'ezdemo_group' => [
-                    'ngcontent_view' => [
+                    'ng_content_views' => [
                         'potato' => [
                             'chips' => [
                                 'match' => null,
@@ -574,7 +572,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'ezdemo_group' => [
-                    'ngcontent_view' => [
+                    'ng_content_views' => [
                         'some_view' => [
                             'some_key' => $configurationValues,
                         ],
@@ -589,7 +587,7 @@ final class ContentViewTest extends AbstractParserTestCase
         ];
 
         $this->assertConfigResolverParameterValue(
-            'ngcontent_view',
+            'ng_content_views',
             $expectedConfigurationValues,
             'ezdemo_site'
         );

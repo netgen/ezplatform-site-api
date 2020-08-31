@@ -38,7 +38,7 @@ parameter ``page``:
     ezpublish:
         system:
             frontend_group:
-                ngcontent_view:
+                ng_content_views:
                     full:
                         article:
                             template: '@ezdesign/content/full/article.html.twig'

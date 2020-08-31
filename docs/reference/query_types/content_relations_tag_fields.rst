@@ -49,7 +49,7 @@ by their publication date and paginate them by 10 per page using URL query param
     ezpublish:
         system:
             frontend_group:
-                ngcontent_view:
+                ng_content_views:
                     full:
                         product:
                             template: '@ezdesign/content/full/product.html.twig'

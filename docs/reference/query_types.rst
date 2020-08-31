@@ -57,7 +57,7 @@ Example below shows how described configuration looks in practice:
     ezpublish:
         system:
             frontend_group:
-                ngcontent_view:
+                ng_content_views:
                     full:
                         category:
                             template: '@ezdesign/content/full/category.html.twig'
@@ -89,15 +89,15 @@ Named query configuration
 
 As hinted above with ``named_query`` parameter, it is possible to define "named queries", which can
 be referenced in query configuration for a particular content view. They are configured under
-``ng_named_query``, which is a top section of a siteaccess configuration, on the same level as
-``ng_content_view``:
+``ng_named_queries``, which is a top section of a siteaccess configuration, on the same level as
+``ng_content_views``:
 
 .. code-block:: yaml
 
     ezpublish:
         system:
             frontend_group:
-                ng_named_query:
+                ng_named_queries:
                     children_named_query:
                         query_type: 'SiteAPI:Location/Children'
                         max_per_page: 10
@@ -105,7 +105,7 @@ be referenced in query configuration for a particular content view. They are con
                         parameters:
                             content_type: 'article'
                             sort: 'published desc'
-                ngcontent_view:
+                ng_content_views:
                     full:
                         category:
                             template: '@ezdesign/content/full/category.html.twig'
@@ -297,7 +297,7 @@ dynamic (per siteaccess) configuration, for example maximum items per page:
 .. code-block:: yaml
 
     ...
-        ng_named_query:
+        ng_named_queries:
             children:
                 query_type: 'SiteAPI:Location/Children'
                 max_per_page: '@=configResolver.getParameter("max_per_page", "ngsite")'
@@ -317,7 +317,7 @@ of ``ConfigResolver`` service:
 .. code-block:: yaml
 
     ...
-        ng_named_query:
+        ng_named_queries:
             children:
                 query_type: 'SiteAPI:Location/Children'
                 max_per_page: '@=config("max_per_page", "ngsite")'
@@ -358,7 +358,7 @@ of type ``category`` found below the root Location):
     ezpublish:
         system:
             frontend_group:
-                ng_named_query:
+                ng_named_queries:
                     top_categories:
                         query_type: 'SiteAPI:Location/Children'
                         parameters:

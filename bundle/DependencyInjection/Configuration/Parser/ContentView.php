@@ -14,7 +14,7 @@ use Twig\Lexer;
 class ContentView extends AbstractParser
 {
     public const QUERY_KEY = 'queries';
-    public const NODE_KEY = 'ngcontent_view';
+    public const NODE_KEY = 'ng_content_views';
     private const INFO = 'Template selection settings when displaying a content with Netgen Site API';
     private const DEFAULT_MATCH_VALUE = ['NG_DEFAULT_MATCH_VALUE'];
     private const DEFAULT_QUERIES_VALUE = ['NG_DEFAULT_QUERIES_VALUE'];
@@ -187,12 +187,12 @@ EOT
 
     public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
     {
-        foreach ($scopeSettings['ngcontent_view'] as $viewType => &$viewConfigs) {
+        foreach ($scopeSettings['ng_content_views'] as $viewType => &$viewConfigs) {
             foreach ($viewConfigs as $name => &$viewConfig) {
                 $this->extendViewConfig(
                     $viewConfig,
                     $viewType . '/' . $name,
-                    $scopeSettings['ngcontent_view']
+                    $scopeSettings['ng_content_views']
                 );
             }
         }

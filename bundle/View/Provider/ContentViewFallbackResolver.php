@@ -101,7 +101,7 @@ final class ContentViewFallbackResolver
 
     private function isSiteApiContentViewEnabled(): bool
     {
-        return $this->configResolver->getParameter('override_url_alias_view_action', 'netgen_ez_platform_site_api');
+        return $this->configResolver->getParameter('ng_set_site_api_as_primary_content_view');
     }
 
     private function useContentViewFallback(): bool

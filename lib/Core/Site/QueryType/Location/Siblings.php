@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 
+use eZ\Publish\API\Repository\Exceptions\NotImplementedException;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
@@ -42,7 +43,11 @@ final class Siblings extends Location
                 /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
                 $location = $options['location'];
 
-                return $location->parent->innerLocation->getSortClauses();
+                try {
+                    return $location->parent->innerLocation->getSortClauses();
+                } catch (NotImplementedException $e) {
+                    return [];
+                }
             }
         );
     }

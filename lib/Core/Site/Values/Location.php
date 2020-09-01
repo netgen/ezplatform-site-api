@@ -15,6 +15,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
+use eZ\Publish\API\Repository\Exceptions\NotImplementedException;
 use Pagerfanta\Pagerfanta;
 
 final class Location extends APILocation
@@ -216,11 +217,17 @@ final class Location extends APILocation
 
     private function getFilterPager(array $criteria, int $maxPerPage = 25, int $currentPage = 1): Pagerfanta
     {
+        try {
+            $sortClausses = $this->innerLocation->getSortClauses();
+        } catch (NotImplementedException $e) {
+            $sortClausses = [];
+        }
+
         $pager = new Pagerfanta(
             new FilterAdapter(
                 new LocationQuery([
                     'filter' => new LogicalAnd($criteria),
-                    'sortClauses' => $this->innerLocation->getSortClauses(),
+                    'sortClauses' => $sortClausses,
                 ]),
                 $this->site->getFilterService()
             )

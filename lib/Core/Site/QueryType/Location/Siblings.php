@@ -13,6 +13,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Siblings Location QueryType.
@@ -22,7 +23,7 @@ use Psr\Log\LoggerInterface;
 final class Siblings extends Location
 {
     /**
-     * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
@@ -33,7 +34,7 @@ final class Siblings extends Location
      */
     public function __construct(?LoggerInterface $logger = null)
     {
-        $this->logger = $logger;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public static function getName(): string

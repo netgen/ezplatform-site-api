@@ -347,19 +347,22 @@ final class SubtreeTest extends QueryTypeBaseTest
 
     protected function getTestLocation(): Location
     {
-        return new Location([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'innerVersionInfo' => false,
-            'languageCode' => false,
-            'innerLocation' => new RepositoryLocation([
-                'id' => 42,
-                'pathString' => '/3/5/7/11/',
-                'depth' => 4,
-                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
-                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
-            ]),
-        ]);
+        return new Location(
+            [
+                'site' => false,
+                'domainObjectMapper' => false,
+                'innerVersionInfo' => false,
+                'languageCode' => false,
+                'innerLocation' => new RepositoryLocation([
+                    'id' => 42,
+                    'pathString' => '/3/5/7/11/',
+                    'depth' => 4,
+                    'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
+                    'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
+                ]),
+            ],
+            new NullLogger()
+        );
     }
 
     protected function getSupportedParameters(): array

@@ -144,7 +144,8 @@ final class DomainObjectMapper
                 'innerVersionInfo' => $versionInfo,
                 'site' => $this->site,
                 'domainObjectMapper' => $this,
-            ]
+            ],
+            $this->logger
         );
     }
 

@@ -25,6 +25,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Siblings;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
+use Psr\Log\NullLogger;
 
 /**
  * Location Siblings QueryType test case.
@@ -327,35 +328,41 @@ final class SiblingsTest extends QueryTypeBaseTest
             ->method('getLoadService')
             ->willReturn($loadServiceMock);
 
-        $parentLocation = new Location([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'innerVersionInfo' => false,
-            'languageCode' => false,
-            'innerLocation' => new RepositoryLocation([
-                'id' => 42,
-                'sortField' => RepositoryLocation::SORT_FIELD_DEPTH,
-                'sortOrder' => RepositoryLocation::SORT_ORDER_ASC,
-            ]),
-        ]);
+        $parentLocation = new Location(
+            [
+                'site' => false,
+                'domainObjectMapper' => false,
+                'innerVersionInfo' => false,
+                'languageCode' => false,
+                'innerLocation' => new RepositoryLocation([
+                    'id' => 42,
+                    'sortField' => RepositoryLocation::SORT_FIELD_DEPTH,
+                    'sortOrder' => RepositoryLocation::SORT_ORDER_ASC,
+                ]),
+            ],
+            new NullLogger()
+        );
 
         $loadServiceMock
             ->method('loadLocation')
             ->with(42)
             ->willReturn($parentLocation);
 
-        return new Location([
-            'site' => $siteMock,
-            'domainObjectMapper' => false,
-            'innerVersionInfo' => false,
-            'languageCode' => false,
-            'innerLocation' => new RepositoryLocation([
-                'id' => 24,
-                'parentLocationId' => 42,
-                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
-                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
-            ]),
-        ]);
+        return new Location(
+            [
+                'site' => $siteMock,
+                'domainObjectMapper' => false,
+                'innerVersionInfo' => false,
+                'languageCode' => false,
+                'innerLocation' => new RepositoryLocation([
+                    'id' => 24,
+                    'parentLocationId' => 42,
+                    'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
+                    'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
+                ]),
+            ],
+            new NullLogger()
+        );
     }
 
     protected function getSupportedParameters(): array

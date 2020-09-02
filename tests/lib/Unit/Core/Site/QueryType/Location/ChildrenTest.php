@@ -20,6 +20,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Children;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
+use Psr\Log\NullLogger;
 
 /**
  * Location Children QueryType test case.
@@ -289,17 +290,20 @@ final class ChildrenTest extends QueryTypeBaseTest
 
     protected function getTestLocation(): Location
     {
-        return new Location([
-            'site' => false,
-            'domainObjectMapper' => false,
-            'innerVersionInfo' => false,
-            'languageCode' => false,
-            'innerLocation' => new RepositoryLocation([
-                'id' => 42,
-                'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
-                'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
-            ]),
-        ]);
+        return new Location(
+            [
+                'site' => false,
+                'domainObjectMapper' => false,
+                'innerVersionInfo' => false,
+                'languageCode' => false,
+                'innerLocation' => new RepositoryLocation([
+                    'id' => 42,
+                    'sortField' => RepositoryLocation::SORT_FIELD_PRIORITY,
+                    'sortOrder' => RepositoryLocation::SORT_ORDER_DESC,
+                ]),
+            ],
+            new NullLogger()
+        );
     }
 
     protected function getSupportedParameters(): array

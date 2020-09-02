@@ -60,12 +60,18 @@ final class Location extends APILocation
      */
     private $internalContent;
 
-    public function __construct(array $properties = [])
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(array $properties = [], LoggerInterface $logger)
     {
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
         $this->innerVersionInfo = $properties['innerVersionInfo'];
         $this->languageCode = $properties['languageCode'];
+        $this->logger = $logger;
 
         unset(
             $properties['site'],
@@ -220,6 +226,8 @@ final class Location extends APILocation
         try {
             $sortClausses = $this->innerLocation->getSortClauses();
         } catch (NotImplementedException $e) {
+            $this->logger->notice("Cannot use sort clausses from parent location: {$e->getMessage()}");
+
             $sortClausses = [];
         }
 

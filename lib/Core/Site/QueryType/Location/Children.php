@@ -41,7 +41,7 @@ final class Children extends Location
             $location = $options['location'];
 
             try {
-                return $location->parent->innerLocation->getSortClauses();
+                return $location->innerLocation->getSortClauses();
             } catch (NotImplementedException $e) {
                 return [];
             }

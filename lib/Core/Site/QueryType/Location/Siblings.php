@@ -20,6 +20,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class Siblings extends Location
 {
+    /**
+     * @var \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * Children constructor.
+     *
+     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\LoggerInterface|null $logger
+     */
+    public function __construct(?LoggerInterface $logger = null)
+    {
+        $this->logger = $logger;
+    }
+
     public static function getName(): string
     {
         return 'SiteAPI:Location/Siblings';
@@ -46,6 +61,8 @@ final class Siblings extends Location
                 try {
                     return $location->parent->innerLocation->getSortClauses();
                 } catch (NotImplementedException $e) {
+                    $this->logger->notice("Cannot use sort clausses from parent location: {$e->getMessage()}");
+
                     return [];
                 }
             }

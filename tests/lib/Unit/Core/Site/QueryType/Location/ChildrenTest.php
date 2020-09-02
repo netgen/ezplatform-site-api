@@ -285,7 +285,7 @@ final class ChildrenTest extends QueryTypeBaseTest
 
     protected function getQueryTypeUnderTest(): QueryType
     {
-        return new Children();
+        return new Children(new NullLogger());
     }
 
     protected function getTestLocation(): Location

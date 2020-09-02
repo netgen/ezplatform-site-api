@@ -16,6 +16,7 @@ use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use eZ\Publish\API\Repository\Exceptions\NotImplementedException;
+use Psr\Log\LoggerInterface;
 use Pagerfanta\Pagerfanta;
 
 final class Location extends APILocation

@@ -22,6 +22,7 @@ use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Subtree;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
+use Psr\Log\NullLogger;
 
 /**
  * Location Subtree QueryType test case.

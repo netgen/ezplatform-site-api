@@ -23,12 +23,16 @@ services:
 
     netgen.ezplatform_site.query_type.location.children:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Children
+        arguments:
+            - '@logger'
         tags:
             - {name: ezpublish.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.location.siblings:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Siblings
+        arguments:
+            - '@logger'
         tags:
             - {name: ezpublish.query_type}
         public: false

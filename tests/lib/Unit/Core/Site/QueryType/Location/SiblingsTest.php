@@ -317,7 +317,7 @@ final class SiblingsTest extends QueryTypeBaseTest
 
     protected function getQueryTypeUnderTest(): QueryType
     {
-        return new Siblings();
+        return new Siblings(new NullLogger());
     }
 
     protected function getTestLocation(): Location

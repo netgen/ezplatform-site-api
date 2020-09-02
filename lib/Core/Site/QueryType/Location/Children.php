@@ -11,6 +11,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Location as SiteLocation;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Psr\Log\LoggerInterface;
 
 /**
  * Children Location QueryType.

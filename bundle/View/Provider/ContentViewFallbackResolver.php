@@ -101,11 +101,11 @@ final class ContentViewFallbackResolver
 
     private function isSiteApiContentViewEnabled(): bool
     {
-        return $this->configResolver->getParameter('ng_set_site_api_as_primary_content_view');
+        return $this->configResolver->getParameter('ng_site_api.site_api_is_primary_content_view');
     }
 
     private function useContentViewFallback(): bool
     {
-        return $this->configResolver->getParameter('ng_fallback_to_secondary_content_view');
+        return $this->configResolver->getParameter('ng_site_api.fallback_to_secondary_content_view');
     }
 }

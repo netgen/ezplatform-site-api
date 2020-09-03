@@ -3,7 +3,7 @@ parameters:
     netgen.ezplatform_site.prioritized_languages:
         - 'eng-GB'
     netgen.ezplatform_site.root_location_id: 2
-    netgen.ezplatform_site.fail_on_missing_fields: false
+    netgen.ezplatform_site.fail_on_missing_field: false
 
 services:
     netgen.ezplatform_site.repository.inner:
@@ -48,7 +48,7 @@ services:
             - '%netgen.ezplatform_site.prioritized_languages%'
             - '%netgen.ezplatform_site.use_always_available%'
             - '%netgen.ezplatform_site.root_location_id%'
-            - '%netgen.ezplatform_site.fail_on_missing_fields%'
+            - '%netgen.ezplatform_site.fail_on_missing_field%'
 
     netgen.ezplatform_site.core.site:
         class: Netgen\EzPlatformSiteApi\Core\Site\Site

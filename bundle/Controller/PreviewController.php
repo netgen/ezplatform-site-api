@@ -81,7 +81,7 @@ class PreviewController extends BasePreviewController
         }
 
         $overrideViewAction = $this->configResolver->getParameter(
-            'ng_set_site_api_as_primary_content_view',
+            'ng_site_api.site_api_is_primary_content_view',
             null,
             $previewSiteAccess->name
         );

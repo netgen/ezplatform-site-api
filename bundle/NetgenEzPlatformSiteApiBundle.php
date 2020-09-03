@@ -10,10 +10,8 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\PreviewCo
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\RelationResolverRegistrationPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\ViewBuilderRegistrationPass;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler\XmlTextFieldTypePass;
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\BaseOptions;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView;
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\NamedObject;
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\NamedQuery;
+use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\SiteApi;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -33,10 +31,8 @@ class NetgenEzPlatformSiteApiBundle extends Bundle
         /** @var \eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension $coreExtension */
         $coreExtension = $container->getExtension('ezpublish');
 
-        $coreExtension->addConfigParser(new BaseOptions());
+        $coreExtension->addConfigParser(new SiteApi());
         $coreExtension->addConfigParser(new ContentView());
-        $coreExtension->addConfigParser(new NamedObject());
-        $coreExtension->addConfigParser(new NamedQuery());
 
         $coreExtension->addDefaultSettings(__DIR__ . '/Resources/config', ['ezplatform_default_settings.yml']);
     }

@@ -1,12 +1,28 @@
 Configuration
 =============
 
-Site API has its own view configuration, available under ``ng_content_views`` key. Aside from
+Site API has its own view configuration, available under ``ng_content_view`` key. Aside from
 :doc:`Query Type </reference/query_types>` configuration that is documented separately, this is
 exactly the same as eZ Platform's default view configuration under ``content_view`` key. You can use
 this configuration right after the installation, but note that it won't be used for full views
 rendered for eZ Platform URL aliases right away. Until you configure that, it will be used only when
 calling its controller explicitly with ``ng_content::viewAction``.
+
+All other configuration is grouped under ``ng_site_api`` key under eZ Platform semantic
+configuration. If you need to fetch this configuration directly in your code, combine
+``ng_site_api`` with the specific key name, for example:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ng_site_api:
+                    site_api_is_primary_content_view: true
+
+.. code-block:: php
+
+    $configResolver->get('ng_site_api.site_api_is_primary_content_view');
 
 **Content on this page:**
 
@@ -25,7 +41,8 @@ for a specific siteaccess with the following semantic configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_set_site_api_as_primary_content_view: true
+                ng_site_api:
+                    site_api_is_primary_content_view: true
 
 Here ``frontend_group`` is the siteaccess group (or a siteaccess) for which you want to activate the
 Site API. This switch is useful if you have a siteaccess that can't use it, for example a custom
@@ -39,9 +56,9 @@ admin or intranet interface.
 Site API Content views
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Once you enable ``ng_set_site_api_as_primary_content_view`` for a siteaccess, all your **full view**
+Once you enable ``site_api_is_primary_content_view`` for a siteaccess, all your **full view**
 templates and controllers will need to use Site API to keep working. They will be resolved from Site
-API view configuration, available under ``ng_content_views`` key. That means Content and Location
+API view configuration, available under ``ng_content_view`` key. That means Content and Location
 variables inside Twig templates will be instances of Site API Content and Location value objects,
 ``$view`` variable passed to your custom controllers will be an instance of Site API ContentView
 variable, and so on.
@@ -67,7 +84,7 @@ For example, if using the following configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     line:
                         article:
                             template: '@App/content/line/article.html.twig'
@@ -100,17 +117,18 @@ through two configuration options (showing default values):
     ezpublish:
         system:
             frontend_group:
-                ng_fallback_to_secondary_content_view: false
-                ng_fallback_without_subrequest: false
+                ng_site_api:
+                    fallback_to_secondary_content_view: false
+                    fallback_without_subrequest: false
 
-- ``ng_fallback_to_secondary_content_view``
+- ``fallback_to_secondary_content_view``
 
     With this option you control whether **automatic fallback** will be used. By default, automatic
     fallback is disabled. Secondary content view means the fallback can be used both from Site API
     to eZ Platform views, and from eZ Platform to Site API content views. Which one will be used is
-    defined by ``ng_set_site_api_as_primary_content_view`` configuration documented above.
+    defined by ``site_api_is_primary_content_view`` configuration documented above.
 
-- ``ng_fallback_without_subrequest``
+- ``fallback_without_subrequest``
 
     With this option you can control whether the fallback will use a subrequest (default), or Twig
     functions that can render content view without a subrequest. That applies both to automatic and
@@ -120,8 +138,8 @@ through two configuration options (showing default values):
 
 .. note::
 
-    For backward compatibility reasons, ``ng_fallback_to_secondary_content_view`` and
-    ``ng_fallback_without_subrequest`` are turned off, but in next major release that will be
+    For backward compatibility reasons, ``fallback_to_secondary_content_view`` and
+    ``fallback_without_subrequest`` are turned off, but in next major release that will be
     reversed by default.
 
 .. note::
@@ -147,7 +165,7 @@ opposite.
       ezpublish:
           system:
               frontend_group:
-                  ng_content_views:
+                  ng_content_view:
                       line:
                           article:
                               template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_ez_platform.html.twig'
@@ -186,7 +204,7 @@ Example configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     container:
                         redirect:
                             target: "@=location.parent"
@@ -232,7 +250,7 @@ There also shortcuts available for simplified configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     container:
                         temporary_redirect: "@=namedObject.getTag('running')"
                         match:
@@ -273,19 +291,20 @@ Example configuration:
 
 .. code-block:: yaml
 
-    netgen_ez_platform_site_api:
+    ezpublish:
         system:
             frontend_group:
-                named_objects:
-                    content:
-                        certificate: 42
-                        site_info: 'abc123'
-                    location:
-                        homepage: 2
-                        articles: 'zxc456'
-                    tag:
-                        categories: 24
-                        colors: 'bnm789'
+                ng_site_api:
+                    named_objects:
+                        content_items:
+                            certificate: 42
+                            site_info: 'abc123'
+                        locations:
+                            homepage: 2
+                            articles: 'zxc456'
+                        tags:
+                            categories: 24
+                            colors: 'bnm789'
 
 From the example, ``certificate`` and ``site_info`` are names of Content objects, ``homepage`` and
 ``articles`` are names of Location objects and ``categories`` and ``colors`` are names of Tag
@@ -295,25 +314,26 @@ full syntax equivalent to the above would be:
 
 .. code-block:: yaml
 
-    netgen_ez_platform_site_api:
+    ezpublish:
         system:
             frontend_group:
-                named_objects:
-                    content:
-                        certificate:
-                            id: 42
-                        site_info:
-                            remote_id: 'abc123'
-                    location:
-                        homepage:
-                            id: 2
-                        articles:
-                            remote_id: 'zxc456'
-                    tag:
-                        categories:
-                            id: 24
-                        colors:
-                            remote_id: 'bnm789'
+                ng_site_api:
+                    named_objects:
+                        content_items:
+                            certificate:
+                                id: 42
+                            site_info:
+                                remote_id: 'abc123'
+                        locations:
+                            homepage:
+                                id: 2
+                            articles:
+                                remote_id: 'zxc456'
+                        tags:
+                            categories:
+                                id: 24
+                            colors:
+                                remote_id: 'bnm789'
 
 Accessing named objects
 -----------------------
@@ -336,13 +356,14 @@ To account for this Site API provides the following semantic configuration:
 
 .. code-block:: yaml
 
-    netgen_ez_platform_site_api:
+    ezpublish:
         system:
             frontend_group:
-                fail_on_missing_fields: true
-                render_missing_field_info: false
+                ng_site_api:
+                    fail_on_missing_field: true
+                    render_missing_field_info: false
 
-By default ``fail_on_missing_fields`` is set to ``%kernel.debug%`` container parameter, which means
+By default ``fail_on_missing_field`` is set to ``%kernel.debug%`` container parameter, which means
 accessing a nonexistent field in ``dev`` environment will fail and result in a ``RuntimeException``.
 
 On the other hand, when not in debug mode (in ``prod`` environment), the system will not crash, but
@@ -354,11 +375,11 @@ Second configuration option ``render_missing_field_info`` controls whether ``Sur
 render as an empty string or it will render useful debug information. By default its value is
 ``false``, meaning it will render as an empty string. That behavior is also what you should use in
 the production environment. Setting this option to ``true`` can be useful in debug mode, together
-with setting ``fail_on_missing_fields`` to ``false``, as that will provide a visual cue about the
+with setting ``fail_on_missing_field`` to ``false``, as that will provide a visual cue about the
 missing field without the page crashing and without the need to go into the web debug toolbar to
 find the logged message.
 
 .. note::
 
-    You can configure both ``render_missing_field_info`` and ``fail_on_missing_fields`` per
+    You can configure both ``render_missing_field_info`` and ``fail_on_missing_field`` per
     siteaccess or siteaccess group.

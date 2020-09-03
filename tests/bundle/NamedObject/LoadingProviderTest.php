@@ -351,7 +351,7 @@ final class LoadingProviderTest extends TestCase
 
         $getParameterMap = [
             [
-                'ng_named_objects',
+                'ng_site_api.named_objects',
                 null,
                 null,
                 [

@@ -16,7 +16,7 @@ consolidated under `ng_site_api` key.
 - ``ng_named_query`` has been renamed to ``named_queries``
 
 Semantic configuration located under ``netgen_ez_platform_site_api`` has been renamed and moved
-under `ng_site_api` key under eZ Platform siteaccess aware configuration:
+under ``ng_site_api`` key under eZ Platform siteaccess aware configuration:
 
 - ``override_url_alias_view_action`` has been renamed to ``site_api_is_primary_content_view``
 - ``fail_on_missing_fields`` has been renamed to ``fail_on_missing_field``

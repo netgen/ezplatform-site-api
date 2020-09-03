@@ -29,10 +29,7 @@ class SiteApi extends AbstractParser
                 ->info('Controls whether secondary content view fallback should use a subrequest')
             ->end()
             ->booleanNode('richtext_embed_without_subrequest')
-                ->info('Controls whether RichText and XmlText embed rendering should use a subrequest')
-            ->end()
-            ->booleanNode('xmltext_embed_without_subrequest')
-                ->info('Controls whether RichText and XmlText embed rendering should use a subrequest')
+                ->info('Controls whether RichText embed rendering should use a subrequest')
             ->end()
             ->booleanNode('use_always_available_fallback')
                 ->info('Controls missing translation fallback to main language marked as always available')
@@ -56,7 +53,6 @@ class SiteApi extends AbstractParser
             'fallback_to_secondary_content_view',
             'fallback_without_subrequest',
             'richtext_embed_without_subrequest',
-            'xmltext_embed_without_subrequest',
             'use_always_available_fallback',
             'fail_on_missing_field',
             'render_missing_field_info',

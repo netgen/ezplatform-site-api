@@ -26,7 +26,6 @@ class SiteApiTest extends AbstractParserTestCase
             'fallback_to_secondary_content_view',
             'fallback_without_subrequest',
             'richtext_embed_without_subrequest',
-            'xmltext_embed_without_subrequest',
             'use_always_available_fallback',
             'fail_on_missing_field',
             'render_missing_field_info',

@@ -12,7 +12,6 @@ consolidated under `ng_site_api` key.
 - ``ng_fallback_to_secondary_content_view`` has been renamed to ``fallback_to_secondary_content_view``
 - ``ng_fallback_without_subrequest`` has been renamed to ``fallback_without_subrequest``
 - ``ng_richtext_embed_without_subrequest`` has been renamed to ``richtext_embed_without_subrequest``
-- ``ng_xmltext_embed_without_subrequest`` has been renamed to ``xmltext_embed_without_subrequest``
 - ``ng_named_query`` has been renamed to ``named_queries``
 
 Semantic configuration located under ``netgen_ez_platform_site_api`` has been renamed and moved
@@ -31,7 +30,6 @@ Previous configuration:
                 ng_fallback_to_secondary_content_view: true
                 ng_fallback_without_subrequest: true
                 ng_richtext_embed_without_subrequest: true
-                ng_xmltext_embed_without_subrequest: true
                 ng_named_query: []
     netgen_ez_platform_site_api:
         system:
@@ -54,7 +52,6 @@ New configuration:
                     fallback_to_secondary_content_view: true
                     fallback_without_subrequest: true
                     richtext_embed_without_subrequest: true
-                    xmltext_embed_without_subrequest: true
                     use_always_available_fallback: true
                     fail_on_missing_field: true
                     render_missing_field_info: true

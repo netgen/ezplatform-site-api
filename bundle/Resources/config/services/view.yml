@@ -65,7 +65,7 @@ services:
             - '@ezpublish.api.repository'
             - 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased'
             - '@ezpublish.config.resolver'
-            - 'ng_content_views'
+            - 'ng_content_view'
         calls:
             - [setContainer, ["@service_container"]]
         public: false

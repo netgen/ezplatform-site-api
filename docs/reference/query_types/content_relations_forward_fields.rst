@@ -34,7 +34,7 @@ paginate them by 10 per page using URL query parameter ``page``.
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     full:
                         blog_post:
                             template: '@ezdesign/content/full/blog_post.html.twig'

@@ -36,17 +36,17 @@ parameters:
         template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/location_inline_denied.html.twig"
 
     # Default Site API settings under eZ Platform 'ezpublish/system' configuration node
-    ezsettings.default.ng_set_site_api_as_primary_content_view: false
-    ezsettings.default.ng_fallback_to_secondary_content_view: false
-    ezsettings.default.ng_fallback_without_subrequest: false
-    ezsettings.default.ng_richtext_embed_without_subrequest: false
-    ezsettings.default.ng_xmltext_embed_without_subrequest: false
-    ezsettings.default.ng_use_always_available_fallback: true
-    ezsettings.default.ng_fail_on_missing_field: '%kernel.debug%'
-    ezsettings.default.ng_render_missing_field_info: false
-    ezsettings.default.ng_named_queries: []
-    ezsettings.default.ng_named_objects: []
-    ezsettings.default.ng_content_views: []
+    ezsettings.default.ng_site_api.site_api_is_primary_content_view: false
+    ezsettings.default.ng_site_api.fallback_to_secondary_content_view: false
+    ezsettings.default.ng_site_api.fallback_without_subrequest: false
+    ezsettings.default.ng_site_api.richtext_embed_without_subrequest: false
+    ezsettings.default.ng_site_api.xmltext_embed_without_subrequest: false
+    ezsettings.default.ng_site_api.use_always_available_fallback: true
+    ezsettings.default.ng_site_api.fail_on_missing_field: '%kernel.debug%'
+    ezsettings.default.ng_site_api.render_missing_field_info: false
+    ezsettings.default.ng_site_api.named_queries: []
+    ezsettings.default.ng_site_api.named_objects: []
+    ezsettings.default.ng_content_view: []
     ezsettings.default.ng_content_view_defaults:
         asset_image:
             default:

@@ -205,7 +205,7 @@ final class QueryDefinitionMapperTest extends TestCase
 
         $configResolverMock
             ->method('getParameter')
-            ->with('ng_named_queries')
+            ->with('ng_site_api.named_queries')
             ->willReturn([
                 'named_query' => [
                     'query_type' => 'query_type',

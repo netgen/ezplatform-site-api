@@ -6,19 +6,33 @@ Version 4.0.0 is a major release where all previous deprecations are removed.
 Configuration changes
 ---------------------
 
-Symfony semantic configuration located under ``netgen_ez_platform_site_api`` has been renamed and
-moved under eZ Platform siteaccess aware configuration:
+Semantic configuration located under eZ Platform siteaccess aware configuration has been renamed and
+consolidated under `ng_site_api` key.
 
-- ``override_url_alias_view_action`` has been renamed to ``ng_set_site_api_as_primary_content_view``
-- ``named_objects`` has been renamed to ``ng_named_objects``
-- ``use_always_available_fallback`` has been renamed to ``ng_use_always_available_fallback``
-- ``fail_on_missing_fields`` has been renamed to ``ng_fail_on_missing_fields``
-- ``render_missing_field_info`` has been renamed to ``ng_render_missing_field_info``
+- ``ng_fallback_to_secondary_content_view`` has been renamed to ``fallback_to_secondary_content_view``
+- ``ng_fallback_without_subrequest`` has been renamed to ``fallback_without_subrequest``
+- ``ng_richtext_embed_without_subrequest`` has been renamed to ``richtext_embed_without_subrequest``
+- ``ng_xmltext_embed_without_subrequest`` has been renamed to ``xmltext_embed_without_subrequest``
+- ``ng_named_query`` has been renamed to ``named_queries``
+
+Semantic configuration located under ``netgen_ez_platform_site_api`` has been renamed and moved
+under `ng_site_api` key under eZ Platform siteaccess aware configuration:
+
+- ``override_url_alias_view_action`` has been renamed to ``site_api_is_primary_content_view``
+- ``fail_on_missing_fields`` has been renamed to ``fail_on_missing_field``
 
 Previous configuration:
 
 .. code-block:: yaml
 
+    ezpublish:
+        system:
+            frontend_group:
+                ng_fallback_to_secondary_content_view: true
+                ng_fallback_without_subrequest: true
+                ng_richtext_embed_without_subrequest: true
+                ng_xmltext_embed_without_subrequest: true
+                ng_named_query: []
     netgen_ez_platform_site_api:
         system:
             frontend_group:
@@ -35,26 +49,28 @@ New configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_set_site_api_as_primary_content_view: true
-                ng_use_always_available_fallback: true
-                ng_fail_on_missing_field: true
-                ng_render_missing_field_info: true
-                ng_named_objects: []
+                ng_site_api:
+                    site_api_is_primary_content_view: true
+                    fallback_to_secondary_content_view: true
+                    fallback_without_subrequest: true
+                    richtext_embed_without_subrequest: true
+                    xmltext_embed_without_subrequest: true
+                    use_always_available_fallback: true
+                    fail_on_missing_field: true
+                    render_missing_field_info: true
+                    named_objects: []
+                    named_queries: []
 
-Some semantic configuration located under eZ Platform siteaccess aware configuration has been
-renamed:
-
-- ``ng_named_query`` has been renamed to ``ng_named_queries``
-- ``ngcontent_view`` has been renamed to ``ng_content_views``
+Key for Site API content view configuration has been renamed from ``ngcontent_view`` to
+``ng_content_view``:
 
 Previous configuration:
 
 .. code-block:: yaml
 
-    netgen_ez_platform_site_api:
+    ezpublish:
         system:
             frontend_group:
-                ng_named_query: []
                 ngcontent_view: []
 
 New configuration:
@@ -64,8 +80,7 @@ New configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_named_queries: []
-                ng_content_views: []
+                ng_content_view: []
 
 Named object configuration has renamed keys used for named object types:
 
@@ -95,10 +110,11 @@ New configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_named_objects:
-                    content_items:
-                        certificate: 123
-                    locations:
-                        home: 2
-                    tags:
-                        colors: 456
+                ng_site_api:
+                    named_objects:
+                        content_items:
+                            certificate: 123
+                        locations:
+                            home: 2
+                        tags:
+                            colors: 456

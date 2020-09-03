@@ -4,7 +4,7 @@
 {% set viewType = app.request.attributes.get('viewType') %}
 {% set layout = (viewType == 'full') %}
 
-{% if ezplatform.configResolver.getParameter('ng_fallback_without_subrequest') == true %}
+{% if ezplatform.configResolver.getParameter('ng_site_api.fallback_without_subrequest') == true %}
     {{ ng_ez_view_content(location|default(content), viewType, [], layout) }}
 {% else %}
     {{ render(

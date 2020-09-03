@@ -14,7 +14,7 @@ class UrlAliasRouter extends BaseUrlAliasRouter
     public function matchRequest(Request $request): array
     {
         $parameters = parent::matchRequest($request);
-        $isSiteApiPrimaryContentView = $this->configResolver->getParameter('ng_set_site_api_as_primary_content_view');
+        $isSiteApiPrimaryContentView = $this->configResolver->getParameter('ng_site_api.site_api_is_primary_content_view');
 
         if ($isSiteApiPrimaryContentView) {
             $parameters['_controller'] = self::OVERRIDE_VIEW_ACTION;

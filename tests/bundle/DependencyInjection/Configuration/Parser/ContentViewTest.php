@@ -132,7 +132,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'ezdemo_group' => [
-                    'ng_content_views' => [
+                    'ng_content_view' => [
                         'full' => [
                             'throttle' => [
                                 'match' => [],
@@ -259,7 +259,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $baseConfig = [
             'system' => [
                 'ezdemo_group' => [
-                    'ng_content_views' => [
+                    'ng_content_view' => [
                         'base' => [
                             'one' => [
                                 'match' => [],
@@ -320,7 +320,7 @@ final class ContentViewTest extends AbstractParserTestCase
             ],
         ];
 
-        $this->assertContainerBuilderHasParameter('ezsettings.ezdemo_site.ng_content_views', $expectedValues);
+        $this->assertContainerBuilderHasParameter('ezsettings.ezdemo_site.ng_content_view', $expectedValues);
 
         $this->addToAssertionCount(1);
     }
@@ -437,7 +437,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'ezdemo_group' => [
-                    'ng_content_views' => [
+                    'ng_content_view' => [
                         'potato' => [
                             'chips' => [
                                 'match' => null,
@@ -572,7 +572,7 @@ final class ContentViewTest extends AbstractParserTestCase
         $this->load([
             'system' => [
                 'ezdemo_group' => [
-                    'ng_content_views' => [
+                    'ng_content_view' => [
                         'some_view' => [
                             'some_key' => $configurationValues,
                         ],
@@ -587,7 +587,7 @@ final class ContentViewTest extends AbstractParserTestCase
         ];
 
         $this->assertConfigResolverParameterValue(
-            'ng_content_views',
+            'ng_content_view',
             $expectedConfigurationValues,
             'ezdemo_site'
         );

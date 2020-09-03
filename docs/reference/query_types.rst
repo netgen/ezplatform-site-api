@@ -57,7 +57,7 @@ Example below shows how described configuration looks in practice:
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     full:
                         category:
                             template: '@ezdesign/content/full/category.html.twig'
@@ -89,23 +89,23 @@ Named query configuration
 
 As hinted above with ``named_query`` parameter, it is possible to define "named queries", which can
 be referenced in query configuration for a particular content view. They are configured under
-``ng_named_queries``, which is a top section of a siteaccess configuration, on the same level as
-``ng_content_views``:
+``named_queries``, located under the ``ng_site_api`` key:
 
 .. code-block:: yaml
 
     ezpublish:
         system:
             frontend_group:
-                ng_named_queries:
-                    children_named_query:
-                        query_type: 'SiteAPI:Location/Children'
-                        max_per_page: 10
-                        page: 1
-                        parameters:
-                            content_type: 'article'
-                            sort: 'published desc'
-                ng_content_views:
+                ng_site_api:
+                    named_queries:
+                        children_named_query:
+                            query_type: 'SiteAPI:Location/Children'
+                            max_per_page: 10
+                            page: 1
+                            parameters:
+                                content_type: 'article'
+                                sort: 'published desc'
+                ng_content_view:
                     full:
                         category:
                             template: '@ezdesign/content/full/category.html.twig'
@@ -130,16 +130,18 @@ parameters, you can do it directly like this:.
 
 .. code-block:: yaml
 
-    queries:
-        children: 'children_named_query'
+    ...
+        queries:
+            children: 'children_named_query'
 
 The example above is really just a shortcut to the example below:
 
 .. code-block:: yaml
 
-    queries:
-        children:
-            named_query: 'children_named_query'
+    ...
+        queries:
+            children:
+                named_query: 'children_named_query'
 
 You can also notice that it's possible to override parameters from the referenced named query. This
 is limited to first level keys from the main configuration and also first level keys under the
@@ -297,14 +299,15 @@ dynamic (per siteaccess) configuration, for example maximum items per page:
 .. code-block:: yaml
 
     ...
-        ng_named_queries:
-            children:
-                query_type: 'SiteAPI:Location/Children'
-                max_per_page: '@=configResolver.getParameter("max_per_page", "ngsite")'
-                page: 1
-                parameters:
-                    content_type: 'article'
-                    sort: 'published desc'
+        ng_site_api:
+            named_queries:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: '@=configResolver.getParameter("max_per_page", "ngsite")'
+                    page: 1
+                    parameters:
+                        content_type: 'article'
+                        sort: 'published desc'
 
 Function ``config(name, namespace = null, scope = null)`` is a shortcut to ``getParameter()`` method
 of ``ConfigResolver`` service:
@@ -317,14 +320,15 @@ of ``ConfigResolver`` service:
 .. code-block:: yaml
 
     ...
-        ng_named_queries:
-            children:
-                query_type: 'SiteAPI:Location/Children'
-                max_per_page: '@=config("max_per_page", "ngsite")'
-                page: 1
-                parameters:
-                    content_type: 'article'
-                    sort: 'published desc'
+        ng_site_api:
+            named_queries:
+                children:
+                    query_type: 'SiteAPI:Location/Children'
+                    max_per_page: '@=config("max_per_page", "ngsite")'
+                    page: 1
+                    parameters:
+                        content_type: 'article'
+                        sort: 'published desc'
 
 .. _named_object_query_types:
 
@@ -346,25 +350,27 @@ of type ``category`` found below the root Location):
 
 .. code-block:: yaml
 
-    netgen_ez_platform_site_api:
+    ezpublish:
         system:
             frontend_group:
-                named_objects:
-                    location:
-                        homepage: 2
+                ng_site_api:
+                    named_objects:
+                        locations:
+                            homepage: 2
 
 .. code-block:: yaml
 
     ezpublish:
         system:
             frontend_group:
-                ng_named_queries:
-                    top_categories:
-                        query_type: 'SiteAPI:Location/Children'
-                        parameters:
-                            location: '@=namedObject.getLocation("homepage")'
-                            content_type: 'category'
-                            sort: 'name desc'
+                ng_site_api:
+                    named_queries:
+                        top_categories:
+                            query_type: 'SiteAPI:Location/Children'
+                            parameters:
+                                location: '@=namedObject.getLocation("homepage")'
+                                content_type: 'category'
+                                sort: 'name desc'
 
 Shortcut functions are available for accessing each type of named object directly:
 

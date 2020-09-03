@@ -214,14 +214,14 @@ Integration with eZ Platform
 
 You can use the Site API services described above as you would normally do it a Symfony application.
 But these are also integrated into eZ Platform's view layer. There is a Site API version of the view
-configuration, available under ``ng_content_views`` key:
+configuration, available under ``ng_content_view`` key:
 
 .. code-block:: yaml
 
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     line:
                         article:
                             template: "@NetgenSite/content/line/article.html.twig"
@@ -244,7 +244,8 @@ siteaccess:
     ezpublish:
         system:
             frontend_group:
-                ng_set_site_api_as_primary_content_view: true
+                ng_site_api:
+                    site_api_is_primary_content_view: true
 
 .. note::
 
@@ -257,7 +258,7 @@ Query Types
 -----------
 
 Query Types provide a set of predefined queries that can be configured for a specific view, as part
-of the view configuration under ``ng_content_views`` key. It also provides a system for developing
+of the view configuration under ``ng_content_view`` key. It also provides a system for developing
 new queries inheriting common functionality.
 
 While they can be used from PHP, main intention is to use them from the view configuration. This is
@@ -268,7 +269,7 @@ best explained with an example:
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     full:
                         folder:
                             template: '@ezdesign/content/full/folder.html.twig'

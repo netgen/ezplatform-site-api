@@ -26,7 +26,7 @@ At this point, you can:
    use it in a custom route.
 
 2. use Site API's view :doc:`configuration </reference/configuration>`, available under
-   ``ng_content_views`` key. You need to know that eZ Platform URL alias routes still won't be
+   ``ng_content_view`` key. You need to know that eZ Platform URL alias routes still won't be
    handled through it at this point. Until you explicitly turn that on for a siteaccess or configure
    view fallback, you can only use it by making a subrequest to Site API's Content view controller
    ``ng_content::viewAction``.
@@ -39,7 +39,8 @@ siteaccess, with the following configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_set_site_api_as_primary_content_view: true
+                ng_site_api:
+                    site_api_is_primary_content_view: true
 
 Once you do this, all URL alias routes on the siteaccess will be handled through Site API's view
 configuration. That means you will need to migrate or adapt all full view templates, otherwise
@@ -49,16 +50,17 @@ unless you configure view fallback, that will be possible only through explicit 
 Platform's view controller ``ez_content::viewAction``.
 
 You can configure automatic :ref:`view fallback<content_view_fallback_configuration>`, from Site API
-(if ``ng_set_site_api_as_primary_content_view`` is enabled) to eZ Platform, and from eZ Platform
-(when ``ng_set_site_api_as_primary_content_view`` is disabled) to Site API. This is controlled
-through the ``ng_fallback_to_secondary_content_view`` configuration option:
+(if ``site_api_is_primary_content_view`` is enabled) to eZ Platform, and from eZ Platform
+(when ``site_api_is_primary_content_view`` is disabled) to Site API. This is controlled
+through the ``fallback_to_secondary_content_view`` configuration option:
 
 .. code-block:: yaml
 
     ezpublish:
         system:
             frontend_group:
-                ng_fallback_to_secondary_content_view: false
+                ng_site_api:
+                    fallback_to_secondary_content_view: false
 
 If you are introducing Site API into an existing project, configuring automatic view fallback will
 enable having a fully functional site from the beginning. If needed, it's also possible to configure

@@ -68,7 +68,7 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
      */
     protected function processTag(DOMDocument $xmlDoc, $tagName): void
     {
-        $isSiteApiPrimaryContentView = $this->configResolver->getParameter('ng_set_site_api_as_primary_content_view');
+        $isSiteApiPrimaryContentView = $this->configResolver->getParameter('ng_site_api.site_api_is_primary_content_view');
 
         if ($isSiteApiPrimaryContentView) {
             $this->internalProcessTag($xmlDoc, $tagName);
@@ -181,7 +181,7 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
      */
     private function renderContentEmbed(Content $content, string $viewType, array $parameters): string
     {
-        if ($this->configResolver->getParameter('ng_xmltext_embed_without_subrequest') === true) {
+        if ($this->configResolver->getParameter('ng_site_api.xmltext_embed_without_subrequest') === true) {
             return $this->renderContentEmbedWithoutSubrequest($content, $viewType, $parameters);
         }
 
@@ -237,7 +237,7 @@ class RenderEmbedConverter extends BaseEmbedToHtml5
      */
     private function renderLocationEmbed(Location $location, string $view, array $parameters): string
     {
-        if ($this->configResolver->getParameter('ng_xmltext_embed_without_subrequest') === true) {
+        if ($this->configResolver->getParameter('ng_site_api.xmltext_embed_without_subrequest') === true) {
             return $this->renderLocationEmbedWithoutSubrequest($location, $view, $parameters);
         }
 

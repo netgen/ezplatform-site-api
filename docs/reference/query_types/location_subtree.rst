@@ -40,7 +40,7 @@ date and paginate them by 10 per page using URL query parameter ``page``:
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     full:
                         calendar:
                             template: '@ezdesign/content/full/calendar.html.twig'

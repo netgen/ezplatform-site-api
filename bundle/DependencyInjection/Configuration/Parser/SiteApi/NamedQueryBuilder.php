@@ -2,25 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\SiteApi;
 
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\AbstractParser;
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Twig\Lexer;
 
-/**
- * Named queries configuration.
- */
-class NamedQuery extends AbstractParser
+class NamedQueryBuilder
 {
-    public const NODE_KEY = 'ng_named_queries';
-
-    public function addSemanticConfig(NodeBuilder $nodeBuilder): void
+    public static function build(NodeBuilder $nodeBuilder): void
     {
         $nodeBuilder
-            ->arrayNode(static::NODE_KEY)
-                ->info("Netgen's Site API named query configuration")
+            ->arrayNode('named_queries')
+                ->info("Netgen's Site API named queries configuration")
                 ->useAttributeAsKey('key')
                 ->arrayPrototype()
                     ->children()
@@ -59,18 +52,6 @@ class NamedQuery extends AbstractParser
 
                     return false;
                 })
-                ->thenInvalid(
-                    'Query key must be a string conforming to a valid Twig variable name.'
-                );
-    }
-
-    public function preMap(array $config, ContextualizerInterface $contextualizer): void
-    {
-        $contextualizer->mapConfigArray(static::NODE_KEY, $config, ContextualizerInterface::MERGE_FROM_SECOND_LEVEL);
-    }
-
-    public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
-    {
-        // does nothing
+                ->thenInvalid('Query key must be a string conforming to a valid Twig variable name.');
     }
 }

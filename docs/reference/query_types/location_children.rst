@@ -38,7 +38,7 @@ by 10 per page using URL query parameter ``page``:
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     full:
                         folder:
                             template: '@ezdesign/content/full/folder.html.twig'

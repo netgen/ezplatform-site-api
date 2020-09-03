@@ -68,7 +68,7 @@ Now you can use your custom controller in the view configuration:
     ezpublish:
         system:
             frontend_group:
-                ng_content_views:
+                ng_content_view:
                     full:
                         article:
                             template: "@App/content/full/article.html.twig"

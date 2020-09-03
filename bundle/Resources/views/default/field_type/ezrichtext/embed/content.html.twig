@@ -16,7 +16,7 @@
 
 <div {% if embedParams.anchor is defined %}id="{{ embedParams.anchor }}"{% endif %} class="{% if embedParams.align is defined %}align-{{ embedParams.align }}{% endif %}{% if embedParams.class is defined %} {{ embedParams.class }}{% endif %}"{{ data_attributes_str|raw }}>
     {{ fos_httpcache_tag('relation-' ~ embedParams.id) }}
-    {% if ezplatform.configResolver.getParameter('ng_richtext_embed_without_subrequest') == true %}
+    {% if ezplatform.configResolver.getParameter('ng_site_api.richtext_embed_without_subrequest') == true %}
         {{ ng_view_content_embedded(embedParams.viewType, params|merge( { "contentId": embedParams.id } )) }}
     {% else %}
         {{ render(

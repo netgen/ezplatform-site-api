@@ -2,17 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\SiteApi;
 
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\AbstractParser;
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
-class NamedObject extends AbstractParser
+class NamedObjectBuilder
 {
-    public const NODE_KEY = 'ng_named_objects';
-
-    public function addSemanticConfig(NodeBuilder $nodeBuilder): void
+    public static function build(NodeBuilder $nodeBuilder): void
     {
         $keyValidator = static function ($v): bool {
             foreach (\array_keys($v) as $key) {
@@ -33,7 +29,7 @@ class NamedObject extends AbstractParser
         };
 
         $nodeBuilder
-            ->arrayNode(static::NODE_KEY)
+            ->arrayNode('named_objects')
             ->info('Named objects')
             ->children()
                 ->arrayNode('content_items')
@@ -120,16 +116,7 @@ class NamedObject extends AbstractParser
                         ->thenInvalid('Tag name must be a string conforming to a valid Twig variable name.')
                     ->end()
                 ->end()
-            ->end();
-    }
-
-    public function preMap(array $config, ContextualizerInterface $contextualizer): void
-    {
-        $contextualizer->mapConfigArray(static::NODE_KEY, $config, ContextualizerInterface::MERGE_FROM_SECOND_LEVEL);
-    }
-
-    public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
-    {
-        // does nothing
+            ->end()
+        ->end();
     }
 }

@@ -36,7 +36,7 @@ Site API provides four Twig functions for content rendering:
   render them can improve performance and hence   developer's experience.
 
   Both functions support custom controllers. ``ng_view_content`` can be used for views defined in
-  Site API view configuration under ``ng_content_views`` configuration node, and
+  Site API view configuration under ``ng_content_view`` configuration node, and
   ``ng_ez_view_content`` can be used for views defined in eZ Platform view configuration under
   ``content_view`` configuration node.
 
@@ -620,16 +620,17 @@ A following named object configuration is given:
 
 .. code-block:: yaml
 
-    netgen_ez_platform_site_api:
+    ezpublish:
         system:
             frontend_group:
-                named_objects:
-                    content:
-                        certificate: 3
-                    location:
-                        homepage: 2
-                    tag:
-                        colors: 4
+                ng_site_api:
+                    named_objects:
+                        content_items:
+                            certificate: 3
+                        locations:
+                            homepage: 2
+                        tags:
+                            colors: 4
 
 Three functions for accessing named objects are available, one for each object type:
 

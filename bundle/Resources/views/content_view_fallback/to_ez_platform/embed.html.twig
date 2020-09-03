@@ -1,7 +1,7 @@
 {# content \Netgen\EzPlatformSiteApi\API\Values\Content #}
 {# location \Netgen\EzPlatformSiteApi\API\Values\Location #}
 
-{% if ezplatform.configResolver.getParameter('ng_fallback_without_subrequest') == true %}
+{% if ezplatform.configResolver.getParameter('ng_site_api.fallback_without_subrequest') == true %}
     {{ ng_ez_view_content_embedded(app.request.attributes.get('viewType'), { "content": content.innerContent, "location": location.innerLocation }) }}
 {% else %}
     {{ render(

@@ -34,11 +34,11 @@ final class Settings extends BaseSettings
             case 'prioritizedLanguages':
                 return $this->configResolver->getParameter('languages');
             case 'useAlwaysAvailable':
-                return $this->configResolver->getParameter('ng_use_always_available_fallback');
+                return $this->configResolver->getParameter('ng_site_api.use_always_available_fallback');
             case 'rootLocationId':
                 return $this->configResolver->getParameter('content.tree_root.location_id');
             case 'failOnMissingField':
-                return $this->configResolver->getParameter('ng_fail_on_missing_field');
+                return $this->configResolver->getParameter('ng_site_api.fail_on_missing_field');
         }
 
         throw new PropertyNotFoundException($property, \get_class($this));

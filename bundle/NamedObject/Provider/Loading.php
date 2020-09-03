@@ -196,7 +196,7 @@ final class Loading extends Provider
             return;
         }
 
-        $configuration = $this->configResolver->getParameter('ng_named_objects');
+        $configuration = $this->configResolver->getParameter('ng_site_api.named_objects');
 
         $this->configuration = $configuration ?? [];
     }

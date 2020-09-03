@@ -43,25 +43,7 @@ it with extending the Site API base controller:
         }
     }
 
-Next, register your controller with the DI container. The Symfony's base controller expects that
-``setContainer()`` is called on instantiation. You can do this manually:
-
-.. code-block:: yaml
-
-    app.controller.demo:
-        class: AppBundle\Controller\DemoController
-        calls:
-            - [setContainer, ['@service_container']]
-
-Or by extending the base definition:
-
-.. code-block:: yaml
-
-    app.controller.demo:
-        parent: netgen.ezplatform_site.controller.base
-        class: AppBundle\Controller\DemoController
-
-Now you can use your custom controller in the view configuration:
+Since autowiring is enabled, this is sufficient to use your controller in the view configuration:
 
 .. code-block:: yaml
 
@@ -72,6 +54,6 @@ Now you can use your custom controller in the view configuration:
                     full:
                         article:
                             template: "@App/content/full/article.html.twig"
-                            controller: "app.controller.demo:viewArticleAction"
+                            controller: AppBundle\Controller\DemoController:viewArticleAction
                             match:
                                 Identifier\ContentType: article

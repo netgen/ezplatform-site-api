@@ -40,7 +40,6 @@ parameters:
     ezsettings.default.ng_site_api.fallback_to_secondary_content_view: false
     ezsettings.default.ng_site_api.fallback_without_subrequest: false
     ezsettings.default.ng_site_api.richtext_embed_without_subrequest: false
-    ezsettings.default.ng_site_api.xmltext_embed_without_subrequest: false
     ezsettings.default.ng_site_api.use_always_available_fallback: true
     ezsettings.default.ng_site_api.fail_on_missing_field: '%kernel.debug%'
     ezsettings.default.ng_site_api.render_missing_field_info: false

@@ -56,7 +56,7 @@ final class Loading extends Provider
     {
         $this->setConfiguration();
 
-        return isset($this->configuration['content_items'][$name]);
+        return isset($this->configuration['content'][$name]);
     }
 
     /**
@@ -152,14 +152,14 @@ final class Loading extends Provider
     {
         $this->setConfiguration();
 
-        return $this->configuration['content_items'][$name]['id'] ?? null;
+        return $this->configuration['content'][$name]['id'] ?? null;
     }
 
     private function getContentRemoteId(string $name): ?string
     {
         $this->setConfiguration();
 
-        return $this->configuration['content_items'][$name]['remote_id'] ?? null;
+        return $this->configuration['content'][$name]['remote_id'] ?? null;
     }
 
     private function getLocationId(string $name): ?int

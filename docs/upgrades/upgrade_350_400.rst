@@ -81,7 +81,6 @@ New configuration:
 
 Named object configuration has renamed keys used for named object types:
 
-- ``content`` has been renamed to ``content_items``
 - ``location`` has been renamed to ``locations``
 - ``tag`` has been renamed to ``tags``
 
@@ -109,7 +108,7 @@ New configuration:
             frontend_group:
                 ng_site_api:
                     named_objects:
-                        content_items:
+                        content:
                             certificate: 123
                         locations:
                             home: 2

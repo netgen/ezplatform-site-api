@@ -625,7 +625,7 @@ A following named object configuration is given:
             frontend_group:
                 ng_site_api:
                     named_objects:
-                        content_items:
+                        content:
                             certificate: 3
                         locations:
                             homepage: 2

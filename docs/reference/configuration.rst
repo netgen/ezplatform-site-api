@@ -296,7 +296,7 @@ Example configuration:
             frontend_group:
                 ng_site_api:
                     named_objects:
-                        content_items:
+                        content:
                             certificate: 42
                             site_info: 'abc123'
                         locations:
@@ -319,7 +319,7 @@ full syntax equivalent to the above would be:
             frontend_group:
                 ng_site_api:
                     named_objects:
-                        content_items:
+                        content:
                             certificate:
                                 id: 42
                             site_info:

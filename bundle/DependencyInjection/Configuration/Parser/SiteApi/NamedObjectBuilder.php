@@ -32,7 +32,7 @@ class NamedObjectBuilder
             ->arrayNode('named_objects')
             ->info('Named objects')
             ->children()
-                ->arrayNode('content_items')
+                ->arrayNode('content')
                     ->info('Content items by name')
                     ->useAttributeAsKey('name')
                     ->normalizeKeys(false)

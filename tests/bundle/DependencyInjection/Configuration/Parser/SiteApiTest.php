@@ -138,7 +138,7 @@ class SiteApiTest extends AbstractParserTestCase
     public function getNamedObjectConfigurationNames(): array
     {
         return [
-            'content_items',
+            'content',
             'locations',
             'tags',
         ];
@@ -262,7 +262,7 @@ class SiteApiTest extends AbstractParserTestCase
         ]);
 
         $defaultValues = [
-            'content_items' => [],
+            'content' => [],
             'locations' => [],
             'tags' => [],
         ];
@@ -342,7 +342,7 @@ class SiteApiTest extends AbstractParserTestCase
     public function providerForTestNamedObjectDefaultValues(): array
     {
         $defaultValues = [
-            'content_items' => [],
+            'content' => [],
             'locations' => [],
             'tags' => [],
         ];

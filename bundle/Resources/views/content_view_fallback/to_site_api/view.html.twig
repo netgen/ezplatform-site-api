@@ -1,15 +1,19 @@
 {# content \Netgen\EzPlatformSiteApi\API\Values\Content #}
 {# location \Netgen\EzPlatformSiteApi\API\Values\Location #}
 
+{% set viewType = app.request.attributes.get('viewType') %}
+{% set layout = (viewType == 'full') %}
+
 {% if ezpublish.configResolver.getParameter('ng_fallback_without_subrequest') == true %}
-    {{ ng_view_content(location|default(content), app.request.attributes.get('viewType')) }}
+    {{ ng_view_content(location|default(content), viewType, [], layout) }}
 {% else %}
     {{ render(
         controller(
             'ng_content:viewAction', {
                 'contentId': content.id,
                 'locationId': location.id,
-                'viewType': app.request.attributes.get('viewType')
+                'viewType': viewType,
+                'layout': layout
             }
         )
     ) }}

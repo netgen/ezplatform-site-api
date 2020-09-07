@@ -50,4 +50,38 @@ interface RelationService
         array $contentTypeIdentifiers = [],
         ?int $limit = null
     ): array;
+
+    /**
+     * Get single related Content from $fieldDefinitionIdentifier field in $content,
+     * optionally limited by a list of $contentTypeIdentifiers.
+     *
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
+     * @param string $fieldDefinitionIdentifier
+     * @param array $contentTypeIdentifiers
+     *
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
+     */
+    public function getFieldRelation(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = []
+    ): ?Content;
+
+    /**
+     * Get all related Content from $fieldDefinitionIdentifier field in $content,
+     * optionally limited by a list of $contentTypeIdentifiers and $limit.
+     *
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
+     * @param string $fieldDefinitionIdentifier
+     * @param array $contentTypeIdentifiers
+     * @param null|int $limit
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
+     */
+    public function getFieldRelations(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        ?int $limit = null
+    ): array;
 }

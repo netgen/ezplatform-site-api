@@ -57,7 +57,7 @@ final class RelationServiceTest extends BaseTest
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier);
 
-        $this->assertEquals(\count($testRelationIds), \count($contentItems));
+        $this->assertSameSize($testRelationIds, $contentItems);
 
         foreach ($testRelationIds as $index => $relationId) {
             $content = $contentItems[$index];
@@ -83,7 +83,7 @@ final class RelationServiceTest extends BaseTest
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier, ['landing_page']);
 
-        $this->assertEquals(1, \count($contentItems));
+        $this->assertCount(1, $contentItems);
 
         $this->assertInstanceOf(Content::class, $contentItems[0]);
         $this->assertEquals($testRelationIds[0], $contentItems[0]->id);
@@ -106,7 +106,7 @@ final class RelationServiceTest extends BaseTest
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier, [], 1);
 
-        $this->assertEquals(1, \count($contentItems));
+        $this->assertCount(1, $contentItems);
 
         $this->assertInstanceOf(Content::class, $contentItems[0]);
         $this->assertEquals($testRelationIds[0], $contentItems[0]->id);
@@ -129,7 +129,7 @@ final class RelationServiceTest extends BaseTest
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, $identifier, ['feedback_form'], 1);
 
-        $this->assertEquals(1, \count($contentItems));
+        $this->assertCount(1, $contentItems);
 
         $this->assertInstanceOf(Content::class, $contentItems[0]);
         $this->assertEquals($testRelationIds[1], $contentItems[0]->id);
@@ -151,6 +151,154 @@ final class RelationServiceTest extends BaseTest
 
         $relationService = $this->getSite()->getRelationService();
         $contentItems = $relationService->loadFieldRelations($testApiContent->id, 'nonexistent');
+
+        $this->assertCount(0, $contentItems);
+    }
+
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function testGetFieldRelation(): void
+    {
+        [$identifier, $testApiContent, $testRelationId] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $content = $relationService->getFieldRelation($testSiteContent, $identifier);
+
+        $this->assertInstanceOf(Content::class, $content);
+        $this->assertEquals($testRelationId, $content->id);
+    }
+
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function testGetFieldRelations(): void
+    {
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $contentItems = $relationService->getFieldRelations($testSiteContent, $identifier);
+
+        $this->assertSameSize($testRelationIds, $contentItems);
+
+        foreach ($testRelationIds as $index => $relationId) {
+            $content = $contentItems[$index];
+            $this->assertInstanceOf(Content::class, $content);
+            $this->assertEquals($relationId, $content->id);
+        }
+    }
+
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function testGetFieldRelationsWithTypeFilter(): void
+    {
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $contentItems = $relationService->getFieldRelations($testSiteContent, $identifier, ['landing_page']);
+
+        $this->assertCount(1, $contentItems);
+
+        $this->assertInstanceOf(Content::class, $contentItems[0]);
+        $this->assertEquals($testRelationIds[0], $contentItems[0]->id);
+    }
+
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function testGetFieldRelationsWithLimit(): void
+    {
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $contentItems = $relationService->getFieldRelations($testSiteContent, $identifier, [], 1);
+
+        $this->assertCount(1, $contentItems);
+
+        $this->assertInstanceOf(Content::class, $contentItems[0]);
+        $this->assertEquals($testRelationIds[0], $contentItems[0]->id);
+    }
+
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function testGetFieldRelationsWithTypeFilterAndLimit(): void
+    {
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $contentItems = $relationService->getFieldRelations($testSiteContent, $identifier, ['feedback_form'], 1);
+
+        $this->assertCount(1, $contentItems);
+
+        $this->assertInstanceOf(Content::class, $contentItems[0]);
+        $this->assertEquals($testRelationIds[1], $contentItems[0]->id);
+    }
+
+    /**
+     * @throws \ErrorException
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentTypeFieldDefinitionValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function testGetFieldRelationsForNonexistentField(): void
+    {
+        [, , , $testApiContent] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $contentItems = $relationService->getFieldRelations($testSiteContent, 'nonexistent');
 
         $this->assertCount(0, $contentItems);
     }

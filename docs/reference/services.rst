@@ -239,7 +239,7 @@ Methods
 ``loadFieldRelation()``
 .......................
 
-Load single field relation from a specific field of a specific Content.
+Load single field relation from a specific field in a published version of a specific Content.
 
 The method will return ``null`` if the field does not contain relations that can be loaded by the
 current user. If the field contains multiple relations, the first one will be returned. The method
@@ -265,8 +265,8 @@ supports optional filtering by ContentType.
 ``loadFieldRelations()``
 ........................
 
-Load all field relations from a specific field of a specific Content. The method supports optional
-filtering by ContentType.
+Load all field relations from a specific field in a published version of a specific Content. The
+method supports optional filtering by ContentType.
 
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Parameters**                         | 1. ``string|int $contentId``                                                       |
@@ -277,8 +277,57 @@ filtering by ContentType.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example**                            | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $content = $relationService->loadFieldRelations(                               |
+|                                        |     $contentItems = $relationService->loadFieldRelations(                          |
 |                                        |         42,                                                                        |
+|                                        |         'relations',                                                               |
+|                                        |         ['articles']                                                               |
+|                                        |     );                                                                             |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+
+``getFieldRelation()``
+......................
+
+Get single field relation from a specific field of a given Content.
+
+The method will return ``null`` if the field does not contain relations that can be loaded by the
+current user. If the field contains multiple relations, the first one will be returned. The method
+supports optional filtering by ContentType.
+
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Parameters**                         | 1. ``Netgen\EzPlatformSiteApi\API\Values\Content $content``                        |
+|                                        | 2. ``string $fieldDefinitionIdentifier``                                           |
+|                                        | 3. ``array $contentTypeIdentifiers = []``                                          |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Returns**                            | :ref:`Content object<content_object>` or ``null``                                  |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example**                            | .. code-block:: php                                                                |
+|                                        |                                                                                    |
+|                                        |     $content = $relationService->getFieldRelation(                                 |
+|                                        |         $content,                                                                  |
+|                                        |         'relations',                                                               |
+|                                        |         ['articles']                                                               |
+|                                        |     );                                                                             |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+
+``getFieldRelations()``
+.......................
+
+Get all field relations from a specific field of a given Content. The method supports optional
+filtering by ContentType.
+
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Parameters**                         | 1. ``Netgen\EzPlatformSiteApi\API\Values\Content $content``                        |
+|                                        | 2. ``string $fieldDefinitionIdentifier``                                           |
+|                                        | 3. ``array $contentTypeIdentifiers = []``                                          |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Returns**                            | An array of :ref:`Content objects<content_object>`                                 |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example**                            | .. code-block:: php                                                                |
+|                                        |                                                                                    |
+|                                        |     $contentItems = $relationService->getFieldRelations(                           |
+|                                        |         $content,                                                                  |
 |                                        |         'relations',                                                               |
 |                                        |         ['articles']                                                               |
 |                                        |     );                                                                             |

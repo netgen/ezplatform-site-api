@@ -319,16 +319,16 @@ final class Content extends APIContent
 
     public function getFieldRelation(string $fieldDefinitionIdentifier): ?APIContent
     {
-        return $this->site->getRelationService()->loadFieldRelation(
-            $this->id,
+        return $this->site->getRelationService()->getFieldRelation(
+            $this,
             $fieldDefinitionIdentifier
         );
     }
 
     public function getFieldRelations(string $fieldDefinitionIdentifier, int $limit = 25): array
     {
-        return $this->site->getRelationService()->loadFieldRelations(
-            $this->id,
+        return $this->site->getRelationService()->getFieldRelations(
+            $this,
             $fieldDefinitionIdentifier,
             [],
             $limit
@@ -341,8 +341,8 @@ final class Content extends APIContent
         int $maxPerPage = 25,
         int $currentPage = 1
     ): Pagerfanta {
-        $relations = $this->site->getRelationService()->loadFieldRelations(
-            $this->id,
+        $relations = $this->site->getRelationService()->getFieldRelations(
+            $this,
             $fieldDefinitionIdentifier,
             $contentTypeIdentifiers
         );

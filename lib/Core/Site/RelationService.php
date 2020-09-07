@@ -92,6 +92,50 @@ class RelationService implements RelationServiceInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     */
+    public function getFieldRelation(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = []
+    ): ?Content {
+        $relatedContentItems = $this->getFieldRelations(
+            $content,
+            $fieldDefinitionIdentifier,
+            $contentTypeIdentifiers
+        );
+
+        return $relatedContentItems[0] ?? null;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     */
+    public function getFieldRelations(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        ?int $limit = null
+    ): array {
+        $field = $content->getField($fieldDefinitionIdentifier);
+        $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);
+
+        $relatedContentIds = $relationResolver->getRelationIds($field);
+        $relatedContentItems = $this->getRelatedContentItems(
+            $relatedContentIds,
+            $contentTypeIdentifiers,
+            $limit
+        );
+        $this->sortByIdOrder($relatedContentItems, $relatedContentIds);
+
+        return $relatedContentItems;
+    }
+
+    /**
      * Return an array of related Content items, optionally limited by $limit.
      *
      * @param array $relatedContentIds

@@ -118,6 +118,12 @@ through two configuration options (showing default values):
     where profiling is turned on. Depending on the number of views used on a page, performance
     improvement when not using subrequest can be significant.
 
+.. warning::
+
+    Because of reverse siteaccess matching limitations, when ``ng_fallback_without_subrequest`` is
+    turned off, links in the preview in the admin UI will not be correctly generated. To work around
+    that problem, turn the option on.
+
 .. note::
 
     For backward compatibility reasons, ``ng_fallback_to_secondary_content_view`` and

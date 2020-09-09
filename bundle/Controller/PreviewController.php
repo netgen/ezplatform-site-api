@@ -10,7 +10,6 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\Controller\Content\PreviewController as BasePreviewController;
 use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter;
-use Netgen\EzPlatformSiteApi\API\Values\Location as SiteLocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Site;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -116,7 +115,11 @@ class PreviewController extends BasePreviewController
             $content->versionInfo->versionNo,
             $languageCode
         );
-        $siteLocation = $this->getSiteLocation($content, $location, $languageCode);
+        $siteLocation = $this->site->getDomainObjectMapper()->mapLocation(
+            $location,
+            $content->versionInfo,
+            $languageCode
+        );
 
         $requestParams = $request->attributes->get('params');
         $requestParams['content'] = $siteContent;
@@ -125,30 +128,6 @@ class PreviewController extends BasePreviewController
         $request->attributes->set('content', $siteContent);
         $request->attributes->set('location', $siteLocation);
         $request->attributes->set('params', $requestParams);
-    }
-
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     * @param string $languageCode
-     *
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
-     */
-    protected function getSiteLocation(Content $content, Location $location, string $languageCode): SiteLocation
-    {
-        if ($location->isDraft()) {
-            return $this->site->getDomainObjectMapper()->mapLocation(
-                $location,
-                $content->versionInfo,
-                $languageCode
-            );
-        }
-
-        return $this->site->getLoadService()->loadLocation($location->id);
     }
 
     /**

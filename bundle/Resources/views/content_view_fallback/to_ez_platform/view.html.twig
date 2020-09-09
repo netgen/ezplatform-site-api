@@ -5,7 +5,7 @@
 {% set layout = (viewType == 'full') %}
 
 {% if ezpublish.configResolver.getParameter('ng_fallback_without_subrequest') == true %}
-    {{ ng_ez_view_content(location.innerLocation|default(content.innerContent), viewType, [], layout) }}
+    {{ ng_ez_view_content(location|default(content), viewType, [], layout) }}
 {% else %}
     {{ render(
         controller(

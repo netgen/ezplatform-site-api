@@ -51,57 +51,11 @@ class RelationService implements RelationServiceInterface
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     public function loadFieldRelation(
-        $contentId,
+        $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): ?Content {
         $relatedContentItems = $this->loadFieldRelations(
-            $contentId,
-            $fieldDefinitionIdentifier,
-            $contentTypeIdentifiers
-        );
-
-        return $relatedContentItems[0] ?? null;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     */
-    public function loadFieldRelations(
-        $contentId,
-        string $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = [],
-        ?int $limit = null
-    ): array {
-        $content = $this->site->getLoadService()->loadContent($contentId);
-
-        $field = $content->getField($fieldDefinitionIdentifier);
-        $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);
-
-        $relatedContentIds = $relationResolver->getRelationIds($field);
-        $relatedContentItems = $this->getRelatedContentItems(
-            $relatedContentIds,
-            $contentTypeIdentifiers,
-            $limit
-        );
-        $this->sortByIdOrder($relatedContentItems, $relatedContentIds);
-
-        return $relatedContentItems;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     */
-    public function getFieldRelation(
-        Content $content,
-        string $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = []
-    ): ?Content {
-        $relatedContentItems = $this->getFieldRelations(
             $content,
             $fieldDefinitionIdentifier,
             $contentTypeIdentifiers
@@ -115,12 +69,21 @@ class RelationService implements RelationServiceInterface
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
-    public function getFieldRelations(
-        Content $content,
+    public function loadFieldRelations(
+        $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         ?int $limit = null
     ): array {
+        if (!$content instanceof Content) {
+            @trigger_error(
+                'Using loadFieldRelations() with Content ID as the first argument is deprecated since version 3.5, and will be removed in 4.0. Provide Content instance instead.',
+                E_USER_DEPRECATED
+            );
+
+            $content = $this->site->getLoadService()->loadContent($content);
+        }
+
         $field = $content->getField($fieldDefinitionIdentifier);
         $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);
 

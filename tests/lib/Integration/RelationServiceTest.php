@@ -165,14 +165,14 @@ final class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function testGetFieldRelation(): void
+    public function testLoadFieldRelationWithContent(): void
     {
         [$identifier, $testApiContent, $testRelationId] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $content = $relationService->getFieldRelation($testSiteContent, $identifier);
+        $content = $relationService->loadFieldRelation($testSiteContent, $identifier);
 
         $this->assertInstanceOf(Content::class, $content);
         $this->assertEquals($testRelationId, $content->id);
@@ -188,14 +188,14 @@ final class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function testGetFieldRelations(): void
+    public function testLoadFieldRelationsWithContent(): void
     {
         [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $contentItems = $relationService->getFieldRelations($testSiteContent, $identifier);
+        $contentItems = $relationService->loadFieldRelations($testSiteContent, $identifier);
 
         $this->assertSameSize($testRelationIds, $contentItems);
 
@@ -216,14 +216,14 @@ final class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function testGetFieldRelationsWithTypeFilter(): void
+    public function testLoadFieldRelationsWithTypeFilterWithContent(): void
     {
         [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $contentItems = $relationService->getFieldRelations($testSiteContent, $identifier, ['landing_page']);
+        $contentItems = $relationService->loadFieldRelations($testSiteContent, $identifier, ['landing_page']);
 
         $this->assertCount(1, $contentItems);
 
@@ -241,14 +241,14 @@ final class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function testGetFieldRelationsWithLimit(): void
+    public function testLoadFieldRelationsWithLimitWithContent(): void
     {
         [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $contentItems = $relationService->getFieldRelations($testSiteContent, $identifier, [], 1);
+        $contentItems = $relationService->loadFieldRelations($testSiteContent, $identifier, [], 1);
 
         $this->assertCount(1, $contentItems);
 
@@ -266,14 +266,14 @@ final class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function testGetFieldRelationsWithTypeFilterAndLimit(): void
+    public function testLoadFieldRelationsWithTypeFilterAndLimitWithContent(): void
     {
         [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $contentItems = $relationService->getFieldRelations($testSiteContent, $identifier, ['feedback_form'], 1);
+        $contentItems = $relationService->loadFieldRelations($testSiteContent, $identifier, ['feedback_form'], 1);
 
         $this->assertCount(1, $contentItems);
 
@@ -291,14 +291,14 @@ final class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function testGetFieldRelationsForNonexistentField(): void
+    public function testLoadFieldRelationsForNonexistentFieldWithContent(): void
     {
         [, , , $testApiContent] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $contentItems = $relationService->getFieldRelations($testSiteContent, 'nonexistent');
+        $contentItems = $relationService->loadFieldRelations($testSiteContent, 'nonexistent');
 
         $this->assertCount(0, $contentItems);
     }

@@ -15,7 +15,7 @@ interface RelationService
      * Load single related Content from $fieldDefinitionIdentifier field in Content with given
      * $contentId, optionally limited by a list of $contentTypeIdentifiers.
      *
-     * @param int|string $contentId
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
      *
@@ -25,7 +25,7 @@ interface RelationService
      * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     public function loadFieldRelation(
-        $contentId,
+        $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): ?Content;
@@ -34,7 +34,7 @@ interface RelationService
      * Load all related Content from $fieldDefinitionIdentifier field in Content with given
      * $contentId, optionally limited by a list of $contentTypeIdentifiers and $limit.
      *
-     * @param int|string $contentId
+     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      * @param string $fieldDefinitionIdentifier
      * @param array $contentTypeIdentifiers
      * @param null|int $limit
@@ -45,41 +45,7 @@ interface RelationService
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */
     public function loadFieldRelations(
-        $contentId,
-        string $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = [],
-        ?int $limit = null
-    ): array;
-
-    /**
-     * Get single related Content from $fieldDefinitionIdentifier field in $content,
-     * optionally limited by a list of $contentTypeIdentifiers.
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     * @param string $fieldDefinitionIdentifier
-     * @param array $contentTypeIdentifiers
-     *
-     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
-     */
-    public function getFieldRelation(
-        Content $content,
-        string $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = []
-    ): ?Content;
-
-    /**
-     * Get all related Content from $fieldDefinitionIdentifier field in $content,
-     * optionally limited by a list of $contentTypeIdentifiers and $limit.
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     * @param string $fieldDefinitionIdentifier
-     * @param array $contentTypeIdentifiers
-     * @param null|int $limit
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
-     */
-    public function getFieldRelations(
-        Content $content,
+        $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         ?int $limit = null

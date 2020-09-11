@@ -10,10 +10,10 @@ use eZ\Publish\API\Repository\Values\Content\Content as RepoContent;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\SPI\FieldType\Value;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Field as APIField;
@@ -296,7 +296,7 @@ final class Content extends APIContent
                     'filter' => new LogicalAnd(
                         [
                             new ContentId($this->id),
-                            new Visibility(Visibility::VISIBLE),
+                            new Visible(true),
                         ]
                     ),
                     'sortClauses' => [

@@ -23,7 +23,6 @@ abstract class Location extends Base
             'parent_location_id',
             'priority',
             'subtree',
-            'visible',
         ]);
 
         $resolver->setAllowedTypes('parent_location_id', ['int', 'string', 'array']);
@@ -32,7 +31,6 @@ abstract class Location extends Base
         $resolver->setAllowedTypes('priority', ['int', 'array']);
 
         $resolver->setAllowedValues('main', [true, false, null]);
-        $resolver->setAllowedValues('visible', [true, false, null]);
     }
 
     protected function buildQuery(): Query

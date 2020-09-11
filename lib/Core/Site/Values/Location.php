@@ -11,7 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
@@ -177,7 +177,7 @@ final class Location extends APILocation
     {
         $criteria = [
             new ParentLocationId($this->id),
-            new Visibility(Visibility::VISIBLE),
+            new Visible(true),
         ];
 
         if (!empty($contentTypeIdentifiers)) {
@@ -216,7 +216,7 @@ final class Location extends APILocation
             new LogicalNot(
                 new LocationId($this->id)
             ),
-            new Visibility(Visibility::VISIBLE),
+            new Visible(true),
         ];
 
         if (!empty($contentTypeIdentifiers)) {

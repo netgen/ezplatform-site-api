@@ -15,11 +15,11 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use InvalidArgumentException;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\IsFieldEmpty;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 
 /**
  * @internal Do not depend on this service, it can be changed without warning.
@@ -89,7 +89,7 @@ final class CriteriaBuilder
             case 'subtree':
                 return $this->buildSubtree($definition);
             case 'visible':
-                return $this->buildVisibility($definition);
+                return $this->buildVisible($definition);
             case 'is_field_empty':
                 return $this->buildIsFieldEmpty($definition);
         }
@@ -296,15 +296,13 @@ final class CriteriaBuilder
      *
      * @throws \InvalidArgumentException
      */
-    private function buildVisibility(CriterionDefinition $definition): ?Visibility
+    private function buildVisible(CriterionDefinition $definition): ?Visible
     {
         if ($definition->value === null) {
             return null;
         }
 
-        $isVisible = $definition->value ? Visibility::VISIBLE : Visibility::HIDDEN;
-
-        return new Visibility($isVisible);
+        return new Visible($definition->value);
     }
 
     /**

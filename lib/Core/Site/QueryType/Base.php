@@ -195,6 +195,7 @@ abstract class Base implements QueryType
             'modification_date',
             'section',
             'state',
+            'visible',
         ]);
         $resolver->setDefaults([
             'sort' => [],
@@ -211,6 +212,7 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('creation_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('modification_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
+        $resolver->setAllowedValues('visible', [true, false, null]);
 
         $resolver->setAllowedValues(
             'is_field_empty',

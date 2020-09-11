@@ -15,11 +15,11 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use InvalidArgumentException;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\IsFieldEmpty;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition;
 use PHPUnit\Framework\TestCase;
@@ -240,7 +240,7 @@ final class CriteriaBuilderTest extends TestCase
                     ]),
                 ],
                 [
-                    new Visibility(Visibility::VISIBLE),
+                    new Visible(true),
                 ],
             ],
             [
@@ -253,7 +253,7 @@ final class CriteriaBuilderTest extends TestCase
                     ]),
                 ],
                 [
-                    new Visibility(Visibility::HIDDEN),
+                    new Visible(false),
                 ],
             ],
             [

@@ -9,6 +9,9 @@ eZ Platform Site API changelog
 ### Added
 * NGSTACK-411: using an unsupported Location child sort will now log a notice instead of causing a
   fatal crash by @RandyCupic ([#170](https://github.com/netgen/ezplatform-site-api/pull/170))
+* NGSTACK-429: `RelationService` methods `loadFieldRelation` and `loadFieldRelations` will now also
+  accept Content instance as the first argument, in addition to the Content ID ([#173](https://github.com/netgen/ezplatform-site-api/pull/173))
+
 
 ### Fixed
 * Fixed documentation code example by @leohajder ([#166](https://github.com/netgen/ezplatform-site-api/pull/166))
@@ -26,6 +29,10 @@ eZ Platform Site API changelog
   is deprecated and replaced by `Netgen\Bundle\EzPlatformSiteApiBundle\Events::RENDER_VIEW`, event
   object ` namespace Netgen\EzPlatformSiteApi\Event\RenderContentEvent` is deprecated and replaced by `Netgen\Bundle\EzPlatformSiteApiBundle\Event\RenderViewEvent`. Deprecated
   implementation will be removed in `4.0`.
+* Using `RelationService` methods `loadFieldRelation` and `loadFieldRelations` with Content ID as
+  the first argument is now deprecated in favor of using Content instance in its place ([#173](https://github.com/netgen/ezplatform-site-api/pull/173))
+
+  Using Content ID as the first argument will be removed in `4.0`.
 
 3.4.3 (03.07.2020)
 ------------------

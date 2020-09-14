@@ -7,11 +7,11 @@ eZ Platform Site API changelog
 [`3.5.0...4.0.0`](https://github.com/netgen/ezplatform-site-api/compare/master...4.0)
 
 ### Added
-* eZ Platform v3 compatibility by @emodric
+* eZ Platform v3 compatibility by @emodric ([#175](https://github.com/netgen/ezplatform-site-api/pull/175))
 * Autowired controllers by @MarioBlazek ([#165](https://github.com/netgen/ezplatform-site-api/pull/165))
 
 ### Changed
-Configuration has been reorganized, for more details see upgrade docs.
+* Reorganized bundle configuration ([#169](https://github.com/netgen/ezplatform-site-api/pull/169))
 
 3.5.0 (14.09.2020)
 ------------------

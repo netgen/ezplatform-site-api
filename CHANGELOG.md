@@ -1,6 +1,32 @@
 eZ Platform Site API changelog
 ==============================
 
+3.5.0 (Unreleased)
+------------------
+
+[`3.4.3...3.5.0`](https://github.com/netgen/ezplatform-site-api/compare/3.4.3...3.5.0)
+
+### Added
+* NGSTACK-411: using an unsupported Location child sort will now log a notice instead of causing a
+  fatal crash by @RandyCupic ([#170](https://github.com/netgen/ezplatform-site-api/pull/170))
+
+### Fixed
+* Fixed documentation code example by @leohajder ([#166](https://github.com/netgen/ezplatform-site-api/pull/166))
+* NGSTACK-416: Rendering a full view through automatic view fallback will now correctly set `layout`
+  variable ([#172](https://github.com/netgen/ezplatform-site-api/pull/172))
+* NGSTACK-429: Previewing a Content containing field relations will now correctly render draft
+  relations instead of the published ones ([#173](https://github.com/netgen/ezplatform-site-api/pull/173))
+* NGSTACK-423: Previewing a Content rendered through automatic view fallback will now correctly
+  render the draft version instead of the published one ([#174](https://github.com/netgen/ezplatform-site-api/pull/174))
+
+### Deprecated
+* Content view renderer event implementation has been moved to bundle ([#146](https://github.com/netgen/ezplatform-site-api/pull/146))
+
+  Event `Netgen\EzPlatformSiteApi\Event\SiteApiEvents::SiteApiEvents`
+  is deprecated and replaced by `Netgen\Bundle\EzPlatformSiteApiBundle\Events::RENDER_VIEW`, event
+  object ` namespace Netgen\EzPlatformSiteApi\Event\RenderContentEvent` is deprecated and replaced by `Netgen\Bundle\EzPlatformSiteApiBundle\Event\RenderViewEvent`. Deprecated
+  implementation will be removed in `4.0`.
+
 3.4.3 (03.07.2020)
 ------------------
 

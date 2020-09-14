@@ -1,7 +1,7 @@
 eZ Platform Site API changelog
 ==============================
 
-3.5.0 (Unreleased)
+3.5.0 (14.09.2020)
 ------------------
 
 [`3.4.3...3.5.0`](https://github.com/netgen/ezplatform-site-api/compare/3.4.3...3.5.0)

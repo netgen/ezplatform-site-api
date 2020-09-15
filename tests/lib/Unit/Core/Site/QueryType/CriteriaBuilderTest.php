@@ -385,6 +385,19 @@ final class CriteriaBuilderTest extends TestCase
                     new IsFieldEmpty('video', IsFieldEmpty::IS_NOT_EMPTY),
                 ],
             ],
+            [
+                [
+                    new CriterionDefinition([
+                        'name' => 'visible',
+                        'target' => null,
+                        'operator' => null,
+                        'value' => false,
+                    ]),
+                ],
+                [
+                    new Visible(false),
+                ],
+            ],
         ];
     }
 

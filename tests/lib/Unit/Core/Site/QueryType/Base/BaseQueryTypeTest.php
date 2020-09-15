@@ -303,6 +303,7 @@ final class BaseQueryTypeTest extends QueryTypeBaseTest
             'modification_date',
             'section',
             'state',
+            'visible',
             'sort',
             'limit',
             'offset',

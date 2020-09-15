@@ -436,6 +436,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
             'modification_date',
             'section',
             'state',
+            'visible',
             'sort',
             'limit',
             'offset',

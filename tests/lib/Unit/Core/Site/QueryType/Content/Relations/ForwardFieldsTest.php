@@ -422,6 +422,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
             'modification_date',
             'section',
             'state',
+            'visible',
             'sort',
             'limit',
             'offset',

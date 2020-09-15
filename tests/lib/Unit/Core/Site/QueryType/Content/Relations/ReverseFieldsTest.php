@@ -314,6 +314,7 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
             'modification_date',
             'section',
             'state',
+            'visible',
             'sort',
             'limit',
             'offset',

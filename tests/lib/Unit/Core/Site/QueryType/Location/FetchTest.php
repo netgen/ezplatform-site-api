@@ -275,6 +275,7 @@ final class FetchTest extends QueryTypeBaseTest
             'modification_date',
             'section',
             'state',
+            'visible',
             'sort',
             'limit',
             'offset',
@@ -283,7 +284,6 @@ final class FetchTest extends QueryTypeBaseTest
             'parent_location_id',
             'priority',
             'subtree',
-            'visible',
         ];
     }
 }

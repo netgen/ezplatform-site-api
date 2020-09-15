@@ -49,6 +49,7 @@ final class CustomQueryTypeTest extends TestCase
                 'modification_date',
                 'section',
                 'state',
+                'visible',
                 'sort',
                 'limit',
                 'offset',

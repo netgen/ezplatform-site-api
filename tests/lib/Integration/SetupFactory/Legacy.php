@@ -17,6 +17,13 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class Legacy extends CoreLegacySetupFactory
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \Exception
+     *
+     * @return \eZ\Publish\Core\Base\ServiceContainer
+     */
     public function getServiceContainer(): ServiceContainer
     {
         if (self::$serviceContainer === null) {
@@ -39,6 +46,11 @@ class Legacy extends CoreLegacySetupFactory
             $settingsPath = __DIR__ . '/../../../../tests/lib/Integration/Resources/config/';
             $siteLoader = new YamlFileLoader($containerBuilder, new FileLocator($settingsPath));
             $siteLoader->load('legacy.yml');
+
+            $settingsPath = __DIR__ . '/../../../../vendor/netgen/ezplatform-search-extra/lib/Resources/config/search/';
+            $searchExtraLoader = new YamlFileLoader($containerBuilder, new FileLocator($settingsPath));
+            $searchExtraLoader->load('common.yml');
+            $searchExtraLoader->load('legacy.yml');
 
             $containerBuilder->setParameter(
                 'legacy_dsn',

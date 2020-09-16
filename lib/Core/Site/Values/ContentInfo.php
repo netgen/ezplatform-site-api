@@ -20,7 +20,7 @@ final class ContentInfo extends APIContentInfo
     protected $languageCode;
 
     /**
-     * @var int|string
+     * @var string
      */
     protected $contentTypeIdentifier;
 

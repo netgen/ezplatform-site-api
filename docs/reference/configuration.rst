@@ -188,6 +188,26 @@ opposite.
                               template: '@NetgenEzPlatformSiteApi/content_view_fallback/to_site_api.html.twig'
                               match: ~
 
+.. _show_hidden_items_configuration:
+
+Configure showing hidden items
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can configure whether hidden Content and Location objects will be shown by default through
+``show_hidden_items`` configuration option (``false`` by default):
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ng_site_api:
+                    show_hidden_items: false
+
+This affects loading Location's children and siblings, Content's relations and search through Query
+Types. In Query Types you can override the configured option by explicitly defining ``visible``
+condition, see :doc:`the Query Type documentation</reference/query_types>` for more details.
+
 Redirections
 ~~~~~~~~~~~~
 

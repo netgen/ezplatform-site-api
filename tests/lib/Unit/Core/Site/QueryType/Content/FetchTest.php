@@ -12,8 +12,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Fetch;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 
 /**
@@ -31,16 +33,22 @@ final class FetchTest extends QueryTypeBaseTest
     {
         return [
             [
+                false,
                 [],
-                new Query(),
+                new Query([
+                    'filter' => new Visible(true),
+                ]),
             ],
             [
+                false,
                 [
+                    'visible' => false,
                     'limit' => 12,
                     'offset' => 34,
                     'sort' => 'published asc',
                 ],
                 new Query([
+                    'filter' => new Visible(false),
                     'limit' => 12,
                     'offset' => 34,
                     'sortClauses' => [
@@ -49,7 +57,9 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => null,
                     'content_type' => [
                         'eq' => 'article',
                     ],
@@ -63,6 +73,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
                     'content_type' => [
                         'in' => [
@@ -82,7 +93,9 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
+                    'visible' => true,
                     'content_type' => 'article',
                     'field' => [
                         'title' => 'Hello',
@@ -94,6 +107,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                     ]),
@@ -104,6 +118,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content_type' => 'article',
                     'field' => [
@@ -115,6 +130,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                     ]),
@@ -124,6 +140,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content_type' => 'article',
                     'field' => [
@@ -139,6 +156,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
@@ -150,6 +168,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'creation_date' => '4 May 2018',
                     'sort' => [
@@ -158,11 +177,14 @@ final class FetchTest extends QueryTypeBaseTest
                     ],
                 ],
                 new Query([
-                    'filter' => new DateMetadata(
-                        DateMetadata::CREATED,
-                        Operator::EQ,
-                        1525384800
-                    ),
+                    'filter' => new LogicalAnd([
+                        new Visible(true),
+                        new DateMetadata(
+                            DateMetadata::CREATED,
+                            Operator::EQ,
+                            1525384800
+                        ),
+                    ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_DESC),
                         new ContentName(Query::SORT_ASC),
@@ -170,6 +192,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'creation_date' => [
                         'eq' => '4 May 2018',
@@ -177,17 +200,21 @@ final class FetchTest extends QueryTypeBaseTest
                     'sort' => 'published asc',
                 ],
                 new Query([
-                    'filter' => new DateMetadata(
-                        DateMetadata::CREATED,
-                        Operator::EQ,
-                        1525384800
-                    ),
+                    'filter' => new LogicalAnd([
+                        new Visible(true),
+                        new DateMetadata(
+                            DateMetadata::CREATED,
+                            Operator::EQ,
+                            1525384800
+                        ),
+                    ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
                 ]),
             ],
             [
+                false,
                 [
                     'creation_date' => [
                         'in' => [
@@ -198,20 +225,24 @@ final class FetchTest extends QueryTypeBaseTest
                     'sort' => 'published asc',
                 ],
                 new Query([
-                    'filter' => new DateMetadata(
-                        DateMetadata::CREATED,
-                        Operator::IN,
-                        [
-                            1525384800,
-                            1563660000,
-                        ]
-                    ),
+                    'filter' => new LogicalAnd([
+                        new Visible(true),
+                        new DateMetadata(
+                            DateMetadata::CREATED,
+                            Operator::IN,
+                            [
+                                1525384800,
+                                1563660000,
+                            ]
+                        ),
+                    ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
                 ]),
             ],
             [
+                false,
                 [
                     'creation_date' => [
                         'between' => [
@@ -222,20 +253,24 @@ final class FetchTest extends QueryTypeBaseTest
                     'sort' => 'published asc',
                 ],
                 new Query([
-                    'filter' => new DateMetadata(
-                        DateMetadata::CREATED,
-                        Operator::BETWEEN,
-                        [
-                            1525384800,
-                            1563660000,
-                        ]
-                    ),
+                    'filter' => new LogicalAnd([
+                        new Visible(true),
+                        new DateMetadata(
+                            DateMetadata::CREATED,
+                            Operator::BETWEEN,
+                            [
+                                1525384800,
+                                1563660000,
+                            ]
+                        ),
+                    ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
                 ]),
             ],
             [
+                false,
                 [
                     'creation_date' => [
                         'gte' => '4 May 2018',
@@ -243,11 +278,14 @@ final class FetchTest extends QueryTypeBaseTest
                     'sort' => 'published asc',
                 ],
                 new Query([
-                    'filter' => new DateMetadata(
-                        DateMetadata::CREATED,
-                        Operator::GTE,
-                        1525384800
-                    ),
+                    'filter' => new LogicalAnd([
+                        new Visible(true),
+                        new DateMetadata(
+                            DateMetadata::CREATED,
+                            Operator::GTE,
+                            1525384800
+                        ),
+                    ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
@@ -323,9 +361,17 @@ final class FetchTest extends QueryTypeBaseTest
         return 'SiteAPI:Content/Fetch';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
-        return new Fetch();
+        return new Fetch(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            )
+        );
     }
 
     protected function getSupportedParameters(): array

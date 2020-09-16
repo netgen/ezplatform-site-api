@@ -18,8 +18,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\AllTagFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -48,6 +50,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
 
         return [
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'limit' => 12,
@@ -56,6 +59,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new TagId([1, 2, 3, 4]),
                         new LogicalNot(new ContentId(42)),
                     ]),
@@ -67,13 +71,16 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => false,
                     'content' => $contentWithoutTags,
                     'content_type' => 'article',
                     'sort' => 'published desc',
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(false),
                         new ContentTypeIdentifier('article'),
                         new MatchNone(),
                     ]),
@@ -83,7 +90,9 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => null,
                     'content' => $contentWithTags,
                     'exclude_self' => true,
                     'content_type' => 'article',
@@ -104,6 +113,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
                     'content' => $contentWithTags,
                     'exclude_self' => false,
@@ -129,7 +139,9 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
+                    'visible' => true,
                     'content' => $contentWithTags,
                     'content_type' => 'article',
                     'field' => [
@@ -141,6 +153,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new TagId([1, 2, 3, 4]),
@@ -152,6 +165,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'content_type' => 'article',
@@ -168,6 +182,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
@@ -181,6 +196,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'creation_date' => '4 May 2018',
@@ -191,6 +207,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new DateMetadata(
                             DateMetadata::CREATED,
                             Operator::EQ,
@@ -281,9 +298,17 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
         return 'SiteAPI:Content/Relations/AllTagFields';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
-        return new AllTagFields();
+        return new AllTagFields(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            )
+        );
     }
 
     protected function internalGetRepoFields(): array

@@ -20,8 +20,10 @@ use eZ\Publish\Core\FieldType\TextLine\Value;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
 use InvalidArgumentException;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\TagFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -50,6 +52,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
 
         return [
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['tags_a', 'tags_b'],
@@ -59,6 +62,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new TagId([1, 2, 3, 4]),
                         new LogicalNot(new ContentId(42)),
                     ]),
@@ -70,7 +74,9 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => false,
                     'content' => $content,
                     'exclude_self' => true,
                     'relation_field' => ['tags_a'],
@@ -82,6 +88,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(false),
                         new ContentTypeIdentifier('article'),
                         new TagId([1, 2]),
                         new LogicalNot(new ContentId(42)),
@@ -92,7 +99,9 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => null,
                     'content' => $content,
                     'exclude_self' => false,
                     'relation_field' => ['tags_b'],
@@ -118,6 +127,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
                     'content' => $content,
                     'relation_field' => [],
@@ -141,7 +151,9 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
+                    'visible' => true,
                     'content' => $content,
                     'relation_field' => ['tags_a', 'tags_b'],
                     'content_type' => 'article',
@@ -158,6 +170,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
@@ -171,6 +184,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['tags_a', 'tags_b'],
@@ -182,6 +196,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new DateMetadata(
                             DateMetadata::CREATED,
                             Operator::EQ,
@@ -245,6 +260,7 @@ final class TagFieldsTest extends QueryTypeBaseTest
         $this->assertEquals(
             new Query([
                 'filter' => new LogicalAnd([
+                    new Visible(true),
                     new ContentTypeIdentifier('article'),
                     new MatchNone(),
                 ]),
@@ -342,9 +358,17 @@ final class TagFieldsTest extends QueryTypeBaseTest
         return 'SiteAPI:Content/Relations/TagFields';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
-        return new TagFields();
+        return new TagFields(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            )
+        );
     }
 
     protected function internalGetRepoFields(): array

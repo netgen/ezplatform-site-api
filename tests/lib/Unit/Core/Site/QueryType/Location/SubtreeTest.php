@@ -18,8 +18,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree as SubtreeC
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\Core\Repository\Values\Content\Location as RepositoryLocation;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Subtree;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 use Psr\Log\NullLogger;
@@ -39,32 +41,41 @@ final class SubtreeTest extends QueryTypeBaseTest
 
         return [
             [
+                false,
                 [
                     'location' => $location,
                     'exclude_self' => true,
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new SubtreeCriterion('/3/5/7/11/'),
                         new LogicalNot(new LocationId(42)),
                     ]),
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => false,
                     'location' => $location,
                     'exclude_self' => false,
                     'sort' => 'published asc',
                 ],
                 new LocationQuery([
-                    'filter' => new SubtreeCriterion('/3/5/7/11/'),
+                    'filter' => new LogicalAnd([
+                        new Visible(false),
+                        new SubtreeCriterion('/3/5/7/11/'),
+                    ]),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => null,
                     'location' => $location,
                     'depth' => [
                         'in' => [2, 3, 7],
@@ -87,6 +98,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
                     'location' => $location,
                     'relative_depth' => 5,
@@ -108,7 +120,9 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
+                    'visible' => true,
                     'location' => $location,
                     'relative_depth' => [
                         'in' => [2, 3, 7],
@@ -119,6 +133,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new Depth(Operator::IN, [6, 7, 11]),
                         new SubtreeCriterion('/3/5/7/11/'),
                         new LogicalNot(new LocationId(42)),
@@ -131,6 +146,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -140,6 +156,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new SubtreeCriterion('/3/5/7/11/'),
                         new LogicalNot(new LocationId(42)),
@@ -150,6 +167,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -161,6 +179,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new SubtreeCriterion('/3/5/7/11/'),
                         new LogicalNot(new LocationId(42)),
@@ -172,6 +191,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -182,6 +202,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new SubtreeCriterion('/3/5/7/11/'),
@@ -193,6 +214,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -208,6 +230,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new SubtreeCriterion('/3/5/7/11/'),
@@ -220,6 +243,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -236,6 +260,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
@@ -249,12 +274,14 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'creation_date' => '4 May 2018',
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new DateMetadata(
                             DateMetadata::CREATED,
                             Operator::EQ,
@@ -341,9 +368,17 @@ final class SubtreeTest extends QueryTypeBaseTest
         return 'SiteAPI:Location/Subtree';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
-        return new Subtree();
+        return new Subtree(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            )
+        );
     }
 
     protected function getTestLocation(): Location

@@ -20,8 +20,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Depth as DepthSortClause;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Priority;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Fetch;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 
 /**
@@ -37,21 +39,29 @@ final class FetchTest extends QueryTypeBaseTest
     {
         return [
             [
+                false,
                 [],
-                new LocationQuery(),
+                new LocationQuery([
+                    'filter' => new Visible(true),
+                ]),
             ],
             [
+                false,
                 [
+                    'visible' => false,
                     'sort' => 'published asc',
                 ],
                 new LocationQuery([
+                    'filter' => new Visible(false),
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => null,
                     'limit' => 12,
                     'offset' => 34,
                     'priority' => [
@@ -69,6 +79,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
                     'content_type' => 'article',
                     'sort' => [
@@ -83,7 +94,9 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
+                    'visible' => true,
                     'section' => 'standard',
                     'field' => [],
                     'depth' => 5,
@@ -94,6 +107,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new SectionIdentifier('standard'),
                         new DepthCriterion(Operator::EQ, 5),
                     ]),
@@ -104,6 +118,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'section' => [
                         'eq' => 'standard',
@@ -115,6 +130,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new SectionIdentifier('standard'),
                         new Field('title', Operator::EQ, 'Hello'),
                     ]),
@@ -124,6 +140,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'section' => [
                         'in' => [
@@ -144,6 +161,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new SectionIdentifier(['standard']),
                         new ParentLocationId(42),
                         new Subtree('/1/2/42/'),
@@ -156,6 +174,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content_type' => 'article',
                     'parent_location_id' => [24, 42],
@@ -173,6 +192,7 @@ final class FetchTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new ParentLocationId([24, 42]),
                         new Subtree(['/1/2/42/', '/2/3/4/']),
@@ -186,15 +206,19 @@ final class FetchTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'creation_date' => '4 May 2018',
                 ],
                 new LocationQuery([
-                    'filter' => new DateMetadata(
-                        DateMetadata::CREATED,
-                        Operator::EQ,
-                        1525384800
-                    ),
+                    'filter' => new LogicalAnd([
+                        new Visible(true),
+                        new DateMetadata(
+                            DateMetadata::CREATED,
+                            Operator::EQ,
+                            1525384800
+                        ),
+                    ]),
                 ]),
             ],
         ];
@@ -260,9 +284,17 @@ final class FetchTest extends QueryTypeBaseTest
         return 'SiteAPI:Location/Fetch';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
-        return new Fetch();
+        return new Fetch(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            )
+        );
     }
 
     protected function getSupportedParameters(): array

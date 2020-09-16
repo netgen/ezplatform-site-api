@@ -82,9 +82,9 @@ abstract class QueryTypeBaseTest extends TestCase
     /**
      * @dataProvider providerForTestGetQuery
      */
-    public function testGetQuery(array $parameters, Query $expectedQuery): void
+    public function testGetQuery(bool $showHiddenItems, array $parameters, Query $expectedQuery): void
     {
-        $queryType = $this->getQueryTypeUnderTest();
+        $queryType = $this->getQueryTypeUnderTest($showHiddenItems);
 
         $query = $queryType->getQuery($parameters);
 
@@ -139,7 +139,7 @@ abstract class QueryTypeBaseTest extends TestCase
         $queryType->getQuery($parameters);
     }
 
-    abstract protected function getQueryTypeUnderTest(): QueryType;
+    abstract protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType;
 
     abstract protected function getQueryTypeName(): string;
 

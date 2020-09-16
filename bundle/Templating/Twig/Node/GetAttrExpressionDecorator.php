@@ -175,11 +175,6 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
     }
 
     /**
-     * @param \Twig\Environment $env
-     * @param \Twig\Source $source
-     * @param mixed $object
-     * @param mixed $item
-     * @param array $arguments
      * @param string $type
      * @param bool $isDefinedTest
      * @param bool $ignoreStrictCheck
@@ -188,8 +183,6 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
      *
      * @throws \Twig\Error\RuntimeError
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return mixed
      */
     public static function twig_get_attribute(
         Environment $env,

@@ -35,11 +35,6 @@ class ImageRuntime
 
     /**
      * Returns the image variation object for $field/$versionInfo.
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
-     * @param string $variationName
-     *
-     * @return null|\eZ\Publish\SPI\Variation\Values\Variation
      */
     public function getImageVariation(Field $field, string $variationName): ?Variation
     {

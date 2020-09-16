@@ -23,10 +23,6 @@ class ViewController extends Controller
      * converted to. They may also bypass the ViewRenderer by returning an HttpFoundation Response.
      *
      * Cache is in both cases handled by the CacheViewResponseListener.
-     *
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
-     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
     public function viewAction(ContentView $view): ContentView
     {
@@ -36,10 +32,6 @@ class ViewController extends Controller
     /**
      * Embed a content.
      * Behaves mostly like viewAction(), but with specific content load permission handling.
-     *
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
-     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
     public function embedAction(ContentView $view): ContentView
     {

@@ -13,11 +13,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Location;
 abstract class LocationResolver
 {
     /**
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     abstract public function getLocation(Content $content): Location;
 }

@@ -28,13 +28,8 @@ class QueryRuntime
     }
 
     /**
-     * @param mixed $context
-     * @param string $name
-     *
      * @throws \Pagerfanta\Exception\Exception
      * @throws \Twig\Error\RuntimeError
-     *
-     * @return \Pagerfanta\Pagerfanta
      */
     public function executeQuery($context, string $name): Pagerfanta
     {
@@ -44,13 +39,8 @@ class QueryRuntime
     }
 
     /**
-     * @param mixed $context
-     * @param string $name
-     *
      * @throws \Twig\Error\RuntimeError
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     public function executeRawQuery($context, string $name): SearchResult
     {
@@ -62,11 +52,7 @@ class QueryRuntime
     /**
      * Returns the QueryDefinitionCollection variable from the given $context.
      *
-     * @param mixed $context
-     *
      * @throws \Twig\Error\RuntimeError
-     *
-     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionCollection
      */
     private function getQueryDefinitionCollection($context): QueryDefinitionCollection
     {

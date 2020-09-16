@@ -26,8 +26,6 @@ abstract class Controller extends AbstractController
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     public function getRootLocation(): Location
     {
@@ -36,9 +34,6 @@ abstract class Controller extends AbstractController
         );
     }
 
-    /**
-     * @return \eZ\Publish\Core\QueryType\QueryTypeRegistry
-     */
     public function getQueryTypeRegistry(): QueryTypeRegistry
     {
         /** @var \eZ\Publish\Core\QueryType\QueryTypeRegistry $registry */
@@ -47,9 +42,6 @@ abstract class Controller extends AbstractController
         return $registry;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Repository
-     */
     public function getRepository(): Repository
     {
         /** @var \eZ\Publish\API\Repository\Repository $repository */
@@ -60,8 +52,6 @@ abstract class Controller extends AbstractController
 
     /**
      * Returns the general helper service, exposed in Twig templates as "ezpublish" global variable.
-     *
-     * @return \eZ\Publish\Core\MVC\Symfony\Templating\GlobalHelper
      */
     public function getGlobalHelper(): GlobalHelper
     {
@@ -71,9 +61,18 @@ abstract class Controller extends AbstractController
         return $globalHelper;
     }
 
-    /**
-     * @return \Netgen\EzPlatformSiteApi\API\Site
-     */
+    public static function getSubscribedServices()
+    {
+        return [
+            'netgen.ezplatform_site.site' => Site::class,
+            'netgen.ezplatform_site.named_object_provider' => Provider::class,
+            'ezpublish.query_type.registry' => QueryTypeRegistry::class,
+            'ezpublish.api.repository' => Repository::class,
+            'ezpublish.templating.global_helper' => GlobalHelper::class,
+            'ezpublish.config.resolver' => ConfigResolverInterface::class,
+        ] + parent::getSubscribedServices();
+    }
+
     protected function getSite(): Site
     {
         /** @var \Netgen\EzPlatformSiteApi\API\Site $site */
@@ -82,9 +81,6 @@ abstract class Controller extends AbstractController
         return $site;
     }
 
-    /**
-     * @return \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
     protected function getConfigResolver(): ConfigResolverInterface
     {
         /** @var \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver */
@@ -99,17 +95,5 @@ abstract class Controller extends AbstractController
         $namedObjectProvider = $this->container->get('netgen.ezplatform_site.named_object_provider');
 
         return $namedObjectProvider;
-    }
-
-    public static function getSubscribedServices()
-    {
-        return [
-            'netgen.ezplatform_site.site' => Site::class,
-            'netgen.ezplatform_site.named_object_provider' => Provider::class,
-            'ezpublish.query_type.registry' => QueryTypeRegistry::class,
-            'ezpublish.api.repository' => Repository::class,
-            'ezpublish.templating.global_helper' => GlobalHelper::class,
-            'ezpublish.config.resolver' => ConfigResolverInterface::class,
-        ] + parent::getSubscribedServices();
     }
 }

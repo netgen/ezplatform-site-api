@@ -73,14 +73,10 @@ class ContentViewBuilder implements ViewBuilder
     }
 
     /**
-     * @param array $parameters
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Exception
-     *
-     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView
      */
     public function buildView(array $parameters): ContentView
     {
@@ -159,8 +155,6 @@ class ContentViewBuilder implements ViewBuilder
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private function loadContent($contentId): Content
     {
@@ -177,8 +171,6 @@ class ContentViewBuilder implements ViewBuilder
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Exception
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private function loadEmbeddedContent($contentId, Location $location = null): Content
     {
@@ -216,11 +208,8 @@ class ContentViewBuilder implements ViewBuilder
      * @todo Do we need to handle permissions here ?
      *
      * @param int $locationId
-     * @param bool $checkVisibility
      *
      * @throws \Exception
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private function loadLocation($locationId, bool $checkVisibility = true): Location
     {
@@ -242,13 +231,10 @@ class ContentViewBuilder implements ViewBuilder
     /**
      * Checks if a user can read a content, or view it as an embed.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo
      * @param \Netgen\EzPlatformSiteApi\API\Values\Location $location
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     *
-     * @return bool
      */
     private function canReadOrViewEmbed(ContentInfo $contentInfo, Location $location = null): bool
     {
@@ -264,8 +250,6 @@ class ContentViewBuilder implements ViewBuilder
      * Uses either the controller action (embedAction), or the viewType (embed/embed-inline).
      *
      * @param array $parameters The ViewBuilder parameters array
-     *
-     * @return bool
      */
     private function isEmbed(array $parameters): bool
     {

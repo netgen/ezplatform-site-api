@@ -22,11 +22,7 @@ final class Settings extends BaseSettings
     }
 
     /**
-     * @param string $property
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
-     *
-     * @return mixed
      */
     public function __get(string $property)
     {
@@ -41,26 +37,19 @@ final class Settings extends BaseSettings
                 return $this->configResolver->getParameter('ng_site_api.fail_on_missing_field');
         }
 
-        throw new PropertyNotFoundException($property, \get_class($this));
+        throw new PropertyNotFoundException($property, static::class);
     }
 
     /**
-     * @param string $property
-     * @param mixed $value
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
      */
     public function __set(string $property, $value): void
     {
-        throw new PropertyReadOnlyException($property, \get_class($this));
+        throw new PropertyReadOnlyException($property, static::class);
     }
 
     /**
-     * @param string $property
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
-     *
-     * @return bool
      */
     public function __isset(string $property): bool
     {
@@ -72,6 +61,6 @@ final class Settings extends BaseSettings
                 return true;
         }
 
-        throw new PropertyNotFoundException($property, \get_class($this));
+        throw new PropertyNotFoundException($property, static::class);
     }
 }

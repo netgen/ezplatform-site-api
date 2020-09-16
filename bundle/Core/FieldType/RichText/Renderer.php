@@ -50,8 +50,6 @@ class Renderer extends CoreRenderer
      * @param $resourceType
      * @param $isInline
      * @param $isDenied
-     *
-     * @return null|string
      */
     protected function getEmbedTemplateName($resourceType, $isInline, $isDenied): ?string
     {

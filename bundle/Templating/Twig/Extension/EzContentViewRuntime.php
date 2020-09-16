@@ -37,15 +37,8 @@ final class EzContentViewRuntime
     /**
      * Renders the HTML for a given $content.
      *
-     * @param \eZ\Publish\API\Repository\Values\ValueObject $value
-     * @param string $viewType
-     * @param array $parameters
-     * @param bool $layout
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return string
      */
     public function renderContentView(
         ValueObject $value,
@@ -94,11 +87,6 @@ final class EzContentViewRuntime
         throw new LogicException('Given value must be Content or Location instance.');
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\ValueObject $value
-     *
-     * @return null|\eZ\Publish\API\Repository\Values\ValueObject
-     */
     private function getLocation(ValueObject $value): ?ValueObject
     {
         if ($value instanceof Location) {

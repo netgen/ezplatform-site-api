@@ -20,8 +20,6 @@ trait SearchResultExtractorTrait
     /**
      * Extracts value objects from SearchResult.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
-     *
      * @return \eZ\Publish\API\Repository\Values\ValueObject[]
      */
     protected function extractValueObjects(SearchResult $searchResult): array
@@ -36,8 +34,6 @@ trait SearchResultExtractorTrait
 
     /**
      * Extracts Content items from SearchResult.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */
@@ -56,8 +52,6 @@ trait SearchResultExtractorTrait
 
     /**
      * Extracts Locations from SearchResult.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */

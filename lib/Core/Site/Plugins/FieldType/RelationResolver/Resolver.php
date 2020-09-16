@@ -22,8 +22,6 @@ abstract class Resolver
     /**
      * Return related Content IDs for the given $field.
      *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
-     *
      * @throws \LogicException If the field can't be handled by the resolver
      *
      * @return int[]|string[]
@@ -43,15 +41,11 @@ abstract class Resolver
 
     /**
      * Return accepted field type identifier.
-     *
-     * @return string
      */
     abstract protected function getSupportedFieldTypeIdentifier(): string;
 
     /**
      * Return related Content IDs for the given $field value.
-     *
-     * @param \eZ\Publish\SPI\FieldType\Value $value
      *
      * @return int[]|string[]
      */
@@ -59,10 +53,6 @@ abstract class Resolver
 
     /**
      * Check if the given $field is of the accepted field type.
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Field $field
-     *
-     * @return bool
      */
     protected function accept(Field $field): bool
     {

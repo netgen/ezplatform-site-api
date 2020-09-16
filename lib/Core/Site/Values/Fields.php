@@ -117,11 +117,7 @@ final class Fields extends APIFields
     }
 
     /**
-     * @param string $identifier
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return bool
      */
     public function hasField(string $identifier): bool
     {

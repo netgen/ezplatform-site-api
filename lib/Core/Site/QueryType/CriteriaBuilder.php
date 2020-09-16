@@ -60,8 +60,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return null|Criterion
      */
     private function dispatchBuild(CriterionDefinition $definition): ?Criterion
     {
@@ -105,8 +103,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier
      */
     private function buildContentTypeIdentifier(CriterionDefinition $definition): ContentTypeIdentifier
     {
@@ -117,8 +113,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\Depth
      */
     private function buildDepth(CriterionDefinition $definition): Depth
     {
@@ -129,8 +123,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Field
      */
     private function buildField(CriterionDefinition $definition): Field
     {
@@ -145,8 +137,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return null|IsMainLocation
      */
     private function buildIsMainLocation(CriterionDefinition $definition): ?IsMainLocation
     {
@@ -163,8 +153,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot
      */
     private function buildLogicalNot(CriterionDefinition $definition): LogicalNot
     {
@@ -187,8 +175,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId
      */
     private function buildParentLocationId(CriterionDefinition $definition): ParentLocationId
     {
@@ -199,8 +185,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\Priority
      */
     private function buildPriority(CriterionDefinition $definition): Priority
     {
@@ -211,8 +195,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\DateMetadata
      */
     private function buildDateMetadataCreated(CriterionDefinition $definition): DateMetadata
     {
@@ -227,8 +209,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\DateMetadata
      */
     private function buildDateMetadataModified(CriterionDefinition $definition): DateMetadata
     {
@@ -243,8 +223,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier
      */
     private function buildSection(CriterionDefinition $definition): SectionIdentifier
     {
@@ -255,8 +233,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier
      */
     private function buildObjectState(CriterionDefinition $definition): ObjectStateIdentifier
     {
@@ -267,8 +243,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree
      */
     private function buildSubtree(CriterionDefinition $definition): Subtree
     {
@@ -276,8 +250,6 @@ final class CriteriaBuilder
     }
 
     /**
-     * @param mixed $valueOrValues
-     *
      * @throws \InvalidArgumentException
      *
      * @return array|false|int
@@ -301,8 +273,6 @@ final class CriteriaBuilder
      * @param int|string $value
      *
      * @throws \InvalidArgumentException
-     *
-     * @return int
      */
     private function resolveTimeValue($value): int
     {
@@ -325,8 +295,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return null|Visibility
      */
     private function buildVisibility(CriterionDefinition $definition): ?Visibility
     {
@@ -343,8 +311,6 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
-     *
-     * @return null|IsFieldEmpty
      */
     private function buildIsFieldEmpty(CriterionDefinition $definition): ?IsFieldEmpty
     {

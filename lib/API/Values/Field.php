@@ -30,8 +30,6 @@ abstract class Field extends ValueObject
 
     /**
      * Returns whether the field is of 'ngsurrogate' type, returned when nonexistent field is requested from Content.
-     *
-     * @return bool
      */
     abstract public function isSurrogate(): bool;
 }

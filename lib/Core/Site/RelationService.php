@@ -92,10 +92,6 @@ class RelationService implements RelationServiceInterface
     /**
      * Return an array of related Content items, optionally limited by $limit.
      *
-     * @param array $relatedContentIds
-     * @param array $contentTypeIdentifiers
-     * @param null|int $limit
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
@@ -132,9 +128,6 @@ class RelationService implements RelationServiceInterface
 
     /**
      * Sorts $relatedContentItems to match order from $relatedContentIds.
-     *
-     * @param array $relatedContentItems
-     * @param array $relatedContentIds
      */
     private function sortByIdOrder(array &$relatedContentItems, array $relatedContentIds): void
     {

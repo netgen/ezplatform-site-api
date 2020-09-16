@@ -15,19 +15,10 @@ use Pagerfanta\Pagerfanta;
  */
 trait PagerfantaTrait
 {
-    /**
-     * @return \Netgen\EzPlatformSiteApi\API\Site
-     */
     abstract protected function getSite(): Site;
 
     /**
      * Return Pagerfanta instance using FilterAdapter for the given $query.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
-     * @param int $currentPage
-     * @param int $maxPerPage
-     *
-     * @return \Pagerfanta\Pagerfanta
      */
     protected function getFilterPager(Query $query, int $currentPage, int $maxPerPage): Pagerfanta
     {
@@ -43,12 +34,6 @@ trait PagerfantaTrait
 
     /**
      * Return Pagerfanta instance using FindAdapter for the given $query.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
-     * @param int $currentPage
-     * @param int $maxPerPage
-     *
-     * @return \Pagerfanta\Pagerfanta
      */
     protected function getFindPager(Query $query, int $currentPage, int $maxPerPage): Pagerfanta
     {

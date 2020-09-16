@@ -15,9 +15,8 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as APIContent;
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
-use eZ\Publish\API\Repository\Exceptions\NotImplementedException;
-use Psr\Log\LoggerInterface;
 use Pagerfanta\Pagerfanta;
+use Psr\Log\LoggerInterface;
 
 final class Location extends APILocation
 {
@@ -95,8 +94,6 @@ final class Location extends APILocation
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return mixed
      */
     public function __get($property)
     {
@@ -126,8 +123,6 @@ final class Location extends APILocation
      * Magic isset for signaling existence of convenience properties.
      *
      * @param string $property
-     *
-     * @return bool
      */
     public function __isset($property): bool
     {
@@ -148,8 +143,6 @@ final class Location extends APILocation
 
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return array
      */
     public function __debugInfo(): array
     {
@@ -263,8 +256,6 @@ final class Location extends APILocation
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private function getParent(): APILocation
     {
@@ -291,8 +282,6 @@ final class Location extends APILocation
 
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     private function getContentInfo(): APIContentInfo
     {

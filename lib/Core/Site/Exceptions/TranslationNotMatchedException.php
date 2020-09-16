@@ -21,8 +21,6 @@ class TranslationNotMatchedException extends APITranslationNotMatchedException i
      * Generates: Could not match translation for Content '{$contentId}' in context '{$context}'.
      *
      * @param int|string $contentId
-     * @param mixed $context
-     * @param null|\Exception $previous
      */
     public function __construct($contentId, $context, Exception $previous = null)
     {

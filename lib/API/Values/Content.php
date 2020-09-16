@@ -33,17 +33,11 @@ abstract class Content extends ValueObject
 {
     /**
      * Returns if content has the field with the given field definition $identifier.
-     *
-     * @param string $identifier
-     *
-     * @return bool
      */
     abstract public function hasField(string $identifier): bool;
 
     /**
      * Return Field object for the given field definition $identifier.
-     *
-     * @param string $identifier
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
@@ -53,8 +47,6 @@ abstract class Content extends ValueObject
      * Returns if content has the field with the given field $id.
      *
      * @param int|string $id
-     *
-     * @return bool
      */
     abstract public function hasFieldById($id): bool;
 
@@ -73,7 +65,6 @@ abstract class Content extends ValueObject
      * If no field is found in the Content, a surrogate field will be returned.
      * If all found fields are empty, the first found field will be returned.
      *
-     * @param string $firstIdentifier
      * @param string ...$otherIdentifiers
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Field
@@ -82,10 +73,6 @@ abstract class Content extends ValueObject
 
     /**
      * Returns a field value for the given field definition identifier.
-     *
-     * @param string $identifier
-     *
-     * @return \eZ\Publish\SPI\FieldType\Value
      */
     abstract public function getFieldValue(string $identifier): Value;
 
@@ -93,15 +80,11 @@ abstract class Content extends ValueObject
      * Returns a field value for the given field $id.
      *
      * @param int|string $id
-     *
-     * @return \eZ\Publish\SPI\FieldType\Value
      */
     abstract public function getFieldValueById($id): Value;
 
     /**
      * Return an array of Locations, limited by optional $limit.
-     *
-     * @param int $limit
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
@@ -110,9 +93,6 @@ abstract class Content extends ValueObject
     /**
      * Return an array of Locations, limited by optional $maxPerPage and $currentPage.
      *
-     * @param int $maxPerPage
-     * @param int $currentPage
-     *
      * @return \Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
     abstract public function filterLocations(int $maxPerPage = 25, int $currentPage = 1): Pagerfanta;
@@ -120,17 +100,12 @@ abstract class Content extends ValueObject
     /**
      * Return single related Content from $fieldDefinitionIdentifier field.
      *
-     * @param string $fieldDefinitionIdentifier
-     *
      * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     abstract public function getFieldRelation(string $fieldDefinitionIdentifier): ?Content;
 
     /**
      * Return all related Content from $fieldDefinitionIdentifier.
-     *
-     * @param string $fieldDefinitionIdentifier
-     * @param int $limit
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */
@@ -140,10 +115,7 @@ abstract class Content extends ValueObject
      * Return related Content from $fieldDefinitionIdentifier field in Content with given $contentId,
      * optionally limited by a list of $contentTypeIdentifiers.
      *
-     * @param string $fieldDefinitionIdentifier
      * @param string[] $contentTypeIdentifiers
-     * @param int $maxPerPage
-     * @param int $currentPage
      *
      * @return \Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Content items
      */

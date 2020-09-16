@@ -34,9 +34,6 @@ final class CriterionDefinitionResolver
     /**
      * Resolve Criterion $parameters.
      *
-     * @param string $name
-     * @param mixed $parameters
-     *
      * @throws \InvalidArgumentException
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
@@ -48,9 +45,6 @@ final class CriterionDefinitionResolver
 
     /**
      * Resolve Field Criterion $parameters.
-     *
-     * @param string $name
-     * @param array $parameters
      *
      * @throws \InvalidArgumentException
      *
@@ -70,10 +64,6 @@ final class CriterionDefinitionResolver
     /**
      * Return CriterionDefinition instances for the given Field $target and its $parameters.
      *
-     * @param string $name
-     * @param null|string $target
-     * @param mixed $parameters
-     *
      * @throws \InvalidArgumentException
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
@@ -92,10 +82,6 @@ final class CriterionDefinitionResolver
     /**
      * Return CriterionDefinition instances for the given Field $target and its operator $map.
      *
-     * @param string $name
-     * @param null|string $target
-     * @param array $map
-     *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
     private function resolveOperatorMap(string $name, ?string $target, array $map): array
@@ -110,11 +96,6 @@ final class CriterionDefinitionResolver
     }
 
     /**
-     * @param string $name
-     * @param null|string $target
-     * @param string $operator
-     * @param mixed $value
-     *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
     private function buildDefinitionForOperator(string $name, ?string $target, string $operator, $value): CriterionDefinition
@@ -133,11 +114,6 @@ final class CriterionDefinitionResolver
 
     /**
      * Return CriterionDefinition instance from the given arguments.
-     *
-     * @param string $name
-     * @param null|string $target
-     * @param null|string $operator
-     * @param mixed $value
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
@@ -158,11 +134,7 @@ final class CriterionDefinitionResolver
     /**
      * Decide if the given $parameters is an operator-value map (otherwise it's a value collection).
      *
-     * @param mixed $parameters
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return bool
      */
     private function isOperatorMap($parameters): bool
     {
@@ -190,11 +162,6 @@ final class CriterionDefinitionResolver
         return $isOperatorMap;
     }
 
-    /**
-     * @param mixed $key
-     *
-     * @return bool
-     */
     private function isOperator($key): bool
     {
         return \array_key_exists($key, self::$operatorMap) || $key === 'not';
@@ -202,11 +169,6 @@ final class CriterionDefinitionResolver
 
     /**
      * Resolve actual operator value from the given arguments.
-     *
-     * @param null|string $symbol
-     * @param mixed $value
-     *
-     * @return mixed
      */
     private function resolveOperator(?string $symbol, $value)
     {
@@ -220,11 +182,7 @@ final class CriterionDefinitionResolver
     /**
      * Return operator value by the given $value.
      *
-     * @param mixed $value
-     *
      * @throws \RuntimeException
-     *
-     * @return string
      */
     private function getOperatorByValueType($value): string
     {

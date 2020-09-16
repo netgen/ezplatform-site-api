@@ -46,11 +46,7 @@ final class SortClauseParser
     /**
      * Return new sort clause instance by the given $definition string.
      *
-     * @param string $definition
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause
      */
     public function parse(string $definition): SortClause
     {
@@ -82,12 +78,7 @@ final class SortClauseParser
     /**
      * Build a new Field sort clause from the given arguments.
      *
-     * @param array $values
-     * @param mixed $direction
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause\Field
      */
     private function buildFieldSortClause(array $values, $direction): Field
     {
@@ -112,8 +103,6 @@ final class SortClauseParser
      * @param string[] $values
      *
      * @throws \InvalidArgumentException
-     *
-     * @return string
      */
     private function getDirection(array $values): string
     {

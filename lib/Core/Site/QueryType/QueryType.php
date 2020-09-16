@@ -13,10 +13,6 @@ interface QueryType extends BaseQueryTypeInterface
 {
     /**
      * Check if the QueryType supports parameter with the given $name.
-     *
-     * @param string $name
-     *
-     * @return bool
      */
     public function supportsParameter(string $name): bool;
 }

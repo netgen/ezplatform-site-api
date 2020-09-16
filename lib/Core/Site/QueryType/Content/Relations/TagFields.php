@@ -80,12 +80,9 @@ final class TagFields extends Content
     /**
      * Extract Tag IDs from $fields in the given $content.
      *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      * @param string[] $fields
      *
      * @throws \InvalidArgumentException
-     *
-     * @return array
      */
     private function extractTagIds(SiteContent $content, array $fields): array
     {

@@ -10,10 +10,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use Netgen\EzPlatformSiteApi\API\Values\Location as SiteLocation;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Siblings Location QueryType.
@@ -30,7 +30,7 @@ final class Siblings extends Location
     /**
      * Children constructor.
      *
-     * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\LoggerInterface|null $logger
+     * @param null|\Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\LoggerInterface $logger
      */
     public function __construct(?LoggerInterface $logger = null)
     {

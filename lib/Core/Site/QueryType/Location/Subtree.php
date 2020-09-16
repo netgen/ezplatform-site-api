@@ -89,7 +89,6 @@ final class Subtree extends Location
     }
 
     /**
-     * @param int $startDepth
      * @param int|int[] $value
      *
      * @return int|int[] array

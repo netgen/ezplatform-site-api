@@ -72,8 +72,6 @@ final class AllTagFields extends Content
     /**
      * Extract all Tag IDs from the given $content.
      *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     *
      * @return int[]|string[]
      */
     private function extractTagIds(SiteContent $content): array

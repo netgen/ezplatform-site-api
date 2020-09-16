@@ -21,8 +21,8 @@ class Relation extends Resolver
 
     protected function getRelationIdsFromValue(Value $value): array
     {
-        /* @var \eZ\Publish\Core\FieldType\Relation\Value $value */
-        if (null === $value->destinationContentId) {
+        /** @var \eZ\Publish\Core\FieldType\Relation\Value $value */
+        if ($value->destinationContentId === null) {
             return [];
         }
 

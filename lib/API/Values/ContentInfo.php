@@ -13,18 +13,18 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\ContentInfo
  *
- * @property int|string $id
- * @property int|string $contentTypeId
- * @property int|string $sectionId
+ * @property int $id
+ * @property int $contentTypeId
+ * @property int $sectionId
  * @property int $currentVersionNo
  * @property bool $published
- * @property int|string $ownerId
+ * @property int $ownerId
  * @property \DateTime $modificationDate
  * @property \DateTime $publishedDate
  * @property bool $alwaysAvailable
  * @property string $remoteId
  * @property string $mainLanguageCode
- * @property int|string $mainLocationId
+ * @property int $mainLocationId
  * @property string $name
  * @property string $languageCode
  * @property string $contentTypeIdentifier

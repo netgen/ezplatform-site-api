@@ -14,19 +14,19 @@ use Pagerfanta\Pagerfanta;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\Location
  *
- * @property int|string $id
+ * @property int $id
  * @property int $status
  * @property int $priority
  * @property bool $hidden
  * @property bool $invisible
  * @property string $remoteId
- * @property int|string $parentLocationId
+ * @property int $parentLocationId
  * @property string $pathString
  * @property int[] $path
  * @property int $depth
  * @property int $sortField
  * @property int $sortOrder
- * @property int|string $contentId
+ * @property int $contentId
  * @property \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
  * @property \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $parent
@@ -47,7 +47,7 @@ abstract class Location extends ValueObject
      * Return an array of children Locations, filtered by optional
      * $contentTypeIdentifiers, $maxPerPage and $currentPage.
      *
-     * @param array $contentTypeIdentifiers
+     * @param string[] $contentTypeIdentifiers
      * @param int $maxPerPage
      * @param int $currentPage
      *
@@ -79,7 +79,7 @@ abstract class Location extends ValueObject
      *
      * Siblings will not include current Locations.
      *
-     * @param array $contentTypeIdentifiers
+     * @param string[] $contentTypeIdentifiers
      * @param int $maxPerPage
      * @param int $currentPage
      *

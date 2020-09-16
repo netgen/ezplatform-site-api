@@ -118,8 +118,8 @@ through two configuration options (showing default values):
         system:
             frontend_group:
                 ng_site_api:
-                    fallback_to_secondary_content_view: false
-                    fallback_without_subrequest: false
+                    fallback_to_secondary_content_view: true
+                    fallback_without_subrequest: true
 
 - ``fallback_to_secondary_content_view``
 
@@ -141,12 +141,6 @@ through two configuration options (showing default values):
     Because of reverse siteaccess matching limitations, when ``ng_fallback_without_subrequest`` is
     turned off, links in the preview in the admin UI will not be correctly generated. To work around
     that problem, turn the option on.
-
-.. note::
-
-    For backward compatibility reasons, ``fallback_to_secondary_content_view`` and
-    ``fallback_without_subrequest`` are turned off, but in next major release that will be
-    reversed by default.
 
 .. note::
 

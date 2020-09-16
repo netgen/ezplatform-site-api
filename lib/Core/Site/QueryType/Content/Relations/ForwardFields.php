@@ -6,6 +6,7 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
+use Netgen\EzPlatformSiteApi\API\Settings;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content;
@@ -21,8 +22,10 @@ final class ForwardFields extends Content
      */
     private $relationResolverRegistry;
 
-    public function __construct(RelationResolverRegistry $relationResolverRegistry)
+    public function __construct(Settings $settings, RelationResolverRegistry $relationResolverRegistry)
     {
+        parent::__construct($settings);
+
         $this->relationResolverRegistry = $relationResolverRegistry;
     }
 

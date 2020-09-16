@@ -8,6 +8,7 @@ use eZ\Publish\API\Repository\Exceptions\NotImplementedException;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
+use Netgen\EzPlatformSiteApi\API\Settings;
 use Netgen\EzPlatformSiteApi\API\Values\Location as SiteLocation;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use Psr\Log\LoggerInterface;
@@ -27,13 +28,10 @@ final class Siblings extends Location
      */
     protected $logger;
 
-    /**
-     * Children constructor.
-     *
-     * @param null|\Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\LoggerInterface $logger
-     */
-    public function __construct(?LoggerInterface $logger = null)
+    public function __construct(Settings $settings, ?LoggerInterface $logger = null)
     {
+        parent::__construct($settings);
+
         $this->logger = $logger ?? new NullLogger();
     }
 

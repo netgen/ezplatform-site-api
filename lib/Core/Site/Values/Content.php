@@ -290,15 +290,18 @@ final class Content extends APIContent
 
     public function filterLocations(int $maxPerPage = 25, int $currentPage = 1): Pagerfanta
     {
+        $criteria = [
+            new ContentId($this->id),
+        ];
+
+        if (!$this->site->getSettings()->showHiddenItems) {
+            $criteria[] = new Visible(true);
+        }
+
         $pager = new Pagerfanta(
             new FilterAdapter(
                 new LocationQuery([
-                    'filter' => new LogicalAnd(
-                        [
-                            new ContentId($this->id),
-                            new Visible(true),
-                        ]
-                    ),
+                    'filter' => new LogicalAnd($criteria),
                     'sortClauses' => [
                         new Path(),
                     ],
@@ -391,6 +394,8 @@ final class Content extends APIContent
 
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     private function getContentInfo(): APIContentInfo
     {

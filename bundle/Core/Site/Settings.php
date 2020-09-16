@@ -33,6 +33,8 @@ final class Settings extends BaseSettings
                 return $this->configResolver->getParameter('ng_site_api.use_always_available_fallback');
             case 'rootLocationId':
                 return $this->configResolver->getParameter('content.tree_root.location_id');
+            case 'showHiddenItems':
+                return $this->configResolver->getParameter('ng_site_api.show_hidden_items');
             case 'failOnMissingField':
                 return $this->configResolver->getParameter('ng_site_api.fail_on_missing_field');
         }
@@ -57,6 +59,7 @@ final class Settings extends BaseSettings
             case 'prioritizedLanguages':
             case 'useAlwaysAvailable':
             case 'rootLocationId':
+            case 'showHiddenItems':
             case 'failOnMissingField':
                 return true;
         }

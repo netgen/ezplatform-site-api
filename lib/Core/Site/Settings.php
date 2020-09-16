@@ -35,6 +35,11 @@ final class Settings extends BaseSettings
     /**
      * @var bool
      */
+    private $showHiddenItems;
+
+    /**
+     * @var bool
+     */
     private $failOnMissingField;
 
     /**
@@ -44,11 +49,13 @@ final class Settings extends BaseSettings
         array $prioritizedLanguages,
         bool $useAlwaysAvailable,
         int $rootLocationId,
+        bool $showHiddenItems,
         bool $failOnMissingField
     ) {
         $this->prioritizedLanguages = $prioritizedLanguages;
         $this->useAlwaysAvailable = $useAlwaysAvailable;
         $this->rootLocationId = $rootLocationId;
+        $this->showHiddenItems = $showHiddenItems;
         $this->failOnMissingField = $failOnMissingField;
     }
 
@@ -64,6 +71,8 @@ final class Settings extends BaseSettings
                 return $this->useAlwaysAvailable;
             case 'rootLocationId':
                 return $this->rootLocationId;
+            case 'showHiddenItems':
+                return $this->showHiddenItems;
             case 'failOnMissingField':
                 return $this->failOnMissingField;
         }
@@ -88,6 +97,7 @@ final class Settings extends BaseSettings
             case 'prioritizedLanguages':
             case 'useAlwaysAvailable':
             case 'rootLocationId':
+            case 'showHiddenItems':
             case 'failOnMissingField':
                 return true;
         }

@@ -1,9 +1,8 @@
-parameters:
-
 services:
     netgen.ezplatform_site.query_type.content.relations.forward_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ForwardFields
         arguments:
+            - '@netgen.ezplatform_site.settings'
             - '@netgen.ezplatform_site.plugins.field_type.relation_resolver.registry'
         tags:
             - {name: ezplatform.query_type}
@@ -11,12 +10,16 @@ services:
 
     netgen.ezplatform_site.query_type.content.relations.reverse_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ReverseFields
+        arguments:
+            - '@netgen.ezplatform_site.settings'
         tags:
             - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.content.fetch:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Fetch
+        arguments:
+            - '@netgen.ezplatform_site.settings'
         tags:
             - {name: ezplatform.query_type}
         public: false
@@ -24,6 +27,7 @@ services:
     netgen.ezplatform_site.query_type.location.children:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Children
         arguments:
+            - '@netgen.ezplatform_site.settings'
             - '@logger'
         tags:
             - {name: ezplatform.query_type}
@@ -32,6 +36,7 @@ services:
     netgen.ezplatform_site.query_type.location.siblings:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Siblings
         arguments:
+            - '@netgen.ezplatform_site.settings'
             - '@logger'
         tags:
             - {name: ezplatform.query_type}
@@ -39,12 +44,16 @@ services:
 
     netgen.ezplatform_site.query_type.location.subtree:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Subtree
+        arguments:
+            - '@netgen.ezplatform_site.settings'
         tags:
             - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.location.fetch:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Fetch
+        arguments:
+            - '@netgen.ezplatform_site.settings'
         tags:
             - {name: ezplatform.query_type}
         public: false

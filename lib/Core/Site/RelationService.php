@@ -8,6 +8,7 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\API\RelationService as RelationServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
@@ -102,17 +103,20 @@ class RelationService implements RelationServiceInterface
             return [];
         }
 
-        $criteria = new ContentId($relatedContentIds);
+        $criteria = [
+            new ContentId($relatedContentIds),
+        ];
 
         if (!empty($contentTypeIdentifiers)) {
-            $criteria = new LogicalAnd([
-                $criteria,
-                new ContentTypeIdentifier($contentTypeIdentifiers),
-            ]);
+            $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
+        }
+
+        if (!$this->site->getSettings()->showHiddenItems) {
+            $criteria[] = new Visible(true);
         }
 
         $query = new Query([
-            'filter' => $criteria,
+            'filter' => new LogicalAnd($criteria),
             'limit' => \count($relatedContentIds),
         ]);
 

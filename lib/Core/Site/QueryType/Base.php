@@ -87,8 +87,6 @@ abstract class Base implements QueryType
      * Configure options with the given options $resolver.
      *
      * Override this method as needed.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     protected function configureOptions(OptionsResolver $resolver): void
     {
@@ -103,8 +101,6 @@ abstract class Base implements QueryType
      * using logical AND.
      * Override this method as needed.
      *
-     * @param array $parameters
-     *
      * @return null|Criterion|Criterion[]
      */
     protected function getFilterCriteria(array $parameters)
@@ -117,10 +113,6 @@ abstract class Base implements QueryType
      *
      * Here you can return null or a Criterion instance.
      * Override this method as needed.
-     *
-     * @param array $parameters
-     *
-     * @return null|Criterion
      */
     protected function getQueryCriterion(array $parameters): ?Criterion
     {
@@ -140,8 +132,6 @@ abstract class Base implements QueryType
      *
      * Return an empty array if you don't need to use facets.
      * Override this method as needed.
-     *
-     * @param array $parameters
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\FacetBuilder[]
      */
@@ -166,10 +156,6 @@ abstract class Base implements QueryType
      * Parse custom sort string.
      *
      * Override the method if needed, this implementation will only throw an exception.
-     *
-     * @param string $string
-     *
-     * @return null|SortClause
      */
     protected function parseCustomSortString(string $string): ?SortClause
     {
@@ -185,9 +171,6 @@ abstract class Base implements QueryType
      * parameters and it must return a Criterion instance.
      *
      * @see \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
-     *
-     * @param string $name
-     * @param \Closure $builder
      */
     final protected function registerCriterionBuilder(string $name, Closure $builder): void
     {
@@ -196,15 +179,11 @@ abstract class Base implements QueryType
 
     /**
      * Return the appropriate Query instance.
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Query
      */
     abstract protected function buildQuery(): Query;
 
     /**
      * Configure $resolver for the QueryType.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     protected function configureBaseOptions(OptionsResolver $resolver): void
     {
@@ -253,8 +232,6 @@ abstract class Base implements QueryType
     /**
      * Build criteria for the base supported options.
      *
-     * @param array $parameters
-     *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      *
@@ -276,9 +253,6 @@ abstract class Base implements QueryType
     }
 
     /**
-     * @param string $name
-     * @param mixed $parameters
-     *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
      */
     private function resolveCriterionDefinitions(string $name, $parameters): array
@@ -306,8 +280,6 @@ abstract class Base implements QueryType
     }
 
     /**
-     * @param array $parameters
-     *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
      */
     private function buildRegisteredCriteria(array $parameters): array
@@ -327,10 +299,6 @@ abstract class Base implements QueryType
     }
 
     /**
-     * @param \Closure $builder
-     * @param string $name
-     * @param array $parameters
-     *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion[]
      */
     private function buildCriteria(Closure $builder, string $name, array $parameters): array
@@ -349,12 +317,8 @@ abstract class Base implements QueryType
     }
 
     /**
-     * @param array $parameters
-     *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     *
-     * @return null|\eZ\Publish\API\Repository\Values\Content\Query\Criterion
      */
     private function resolveFilterCriteria(array $parameters): ?Criterion
     {
@@ -386,8 +350,6 @@ abstract class Base implements QueryType
     /**
      * Return an array of SortClause instances from the given $parameters.
      *
-     * @param array $parameters
-     *
      * @throws \InvalidArgumentException
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause[]
@@ -412,8 +374,6 @@ abstract class Base implements QueryType
     }
 
     /**
-     * @param string $string
-     *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause|string
      */
     private function parseSortString(string $string)
@@ -429,8 +389,6 @@ abstract class Base implements QueryType
 
     /**
      * Builds the resolver and configures it using configureOptions().
-     *
-     * @return \Symfony\Component\OptionsResolver\OptionsResolver
      */
     private function getOptionsResolver(): OptionsResolver
     {

@@ -71,11 +71,6 @@ final class DomainObjectMapper
 
     /**
      * Maps Repository Content to the Site Content.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
-     * @param string $languageCode
-     *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Content
      */
     public function mapContent(VersionInfo $versionInfo, string $languageCode): Content
     {
@@ -100,12 +95,7 @@ final class DomainObjectMapper
     /**
      * Maps Repository ContentInfo to the Site ContentInfo.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
-     * @param string $languageCode
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\ContentInfo
      */
     public function mapContentInfo(VersionInfo $versionInfo, string $languageCode): ContentInfo
     {
@@ -128,12 +118,6 @@ final class DomainObjectMapper
 
     /**
      * Maps Repository Location to the Site Location.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
-     * @param string $languageCode
-     *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Location
      */
     public function mapLocation(RepoLocation $location, VersionInfo $versionInfo, string $languageCode): Location
     {
@@ -152,12 +136,7 @@ final class DomainObjectMapper
     /**
      * Maps Repository Field to the Site Field.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Field $apiField
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Field
      */
     public function mapField(RepoField $apiField, SiteContent $content): APIField
     {

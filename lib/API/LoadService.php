@@ -15,11 +15,6 @@ interface LoadService
     /**
      * Loads Content object for the given $contentId.
      *
-     * @param int $contentId
-     * @param int|null $versionNo
-     * @param string|null $languageCode
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
@@ -29,39 +24,27 @@ interface LoadService
     /**
      * Loads Content object for the given $remoteId.
      *
-     * @param string $remoteId
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
     public function loadContentByRemoteId(string $remoteId): Content;
 
     /**
      * Loads Location object for the given $locationId.
      *
-     * @param int $locationId
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     public function loadLocation(int $locationId): Location;
 
     /**
      * Loads Location object for the given $remoteId.
      *
-     * @param string $remoteId
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     public function loadLocationByRemoteId(string $remoteId): Location;
 }

@@ -15,8 +15,6 @@ trait SiteAwareTrait
 
     /**
      * Site setter.
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Site $site
      */
     public function setSite(Site $site): void
     {
@@ -25,8 +23,6 @@ trait SiteAwareTrait
 
     /**
      * Site getter.
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Site
      */
     protected function getSite(): Site
     {

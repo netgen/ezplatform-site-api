@@ -89,13 +89,9 @@ class LoadService implements LoadServiceInterface
     /**
      * Returns Site Location object for the given Repository $location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private function getSiteLocation(APILocation $location): Location
     {
@@ -108,12 +104,7 @@ class LoadService implements LoadServiceInterface
     /**
      * Returns the most prioritized language code for the given parameters.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
-     * @param null|string $languageCode
-     *
      * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
-     *
-     * @return string
      */
     private function resolveLanguageCode(VersionInfo $versionInfo, ?string $languageCode = null): string
     {
@@ -129,11 +120,7 @@ class LoadService implements LoadServiceInterface
     }
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
-     *
      * @throws \Netgen\EzPlatformSiteApi\Core\Site\Exceptions\TranslationNotMatchedException
-     *
-     * @return string
      */
     private function resolveLanguageCodeFromConfiguration(VersionInfo $versionInfo): string
     {
@@ -154,10 +141,6 @@ class LoadService implements LoadServiceInterface
      * Returns an array describing language resolving context.
      *
      * To be used when throwing TranslationNotMatchedException.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
-     *
-     * @return array
      */
     private function getContext(VersionInfo $versionInfo): array
     {

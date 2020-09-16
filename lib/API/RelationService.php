@@ -14,12 +14,6 @@ interface RelationService
     /**
      * Load single related Content from $fieldDefinitionIdentifier field in the given
      * $content, optionally limited by a list of $contentTypeIdentifiers.
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     * @param string $fieldDefinitionIdentifier
-     * @param array $contentTypeIdentifiers
-     *
-     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     public function loadFieldRelation(
         Content $content,
@@ -30,11 +24,6 @@ interface RelationService
     /**
      * Load all related Content from $fieldDefinitionIdentifier field in the given
      * $content, optionally limited by a list of $contentTypeIdentifiers and $limit.
-     *
-     * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
-     * @param string $fieldDefinitionIdentifier
-     * @param array $contentTypeIdentifiers
-     * @param null|int $limit
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */

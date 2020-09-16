@@ -37,8 +37,6 @@ abstract class Location extends ValueObject
     /**
      * Return an array of children Locations, limited by optional $limit.
      *
-     * @param int $limit
-     *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
     abstract public function getChildren(int $limit = 25): array;
@@ -48,8 +46,6 @@ abstract class Location extends ValueObject
      * $contentTypeIdentifiers, $maxPerPage and $currentPage.
      *
      * @param string[] $contentTypeIdentifiers
-     * @param int $maxPerPage
-     * @param int $currentPage
      *
      * @return \Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
@@ -58,16 +54,12 @@ abstract class Location extends ValueObject
     /**
      * Return first child, limited by optional $contentTypeIdentifier.
      *
-     * @param null|string $contentTypeIdentifier
-     *
      * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
      */
     abstract public function getFirstChild(?string $contentTypeIdentifier = null): ?Location;
 
     /**
      * Return an array of Location siblings, limited by optional $limit.
-     *
-     * @param int $limit
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
@@ -80,8 +72,6 @@ abstract class Location extends ValueObject
      * Siblings will not include current Locations.
      *
      * @param string[] $contentTypeIdentifiers
-     * @param int $maxPerPage
-     * @param int $currentPage
      *
      * @return \Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */

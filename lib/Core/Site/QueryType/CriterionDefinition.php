@@ -43,8 +43,6 @@ final class CriterionDefinition extends ValueObject
 
     /**
      * Mandatory value.
-     *
-     * @var mixed
      */
     protected $value;
 }

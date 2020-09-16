@@ -151,8 +151,6 @@ final class Content extends APIContent
      *
      * @throws \Exception
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return mixed
      */
     public function __get($property)
     {
@@ -180,8 +178,6 @@ final class Content extends APIContent
      * Magic isset for signaling existence of convenience properties.
      *
      * @param string $property
-     *
-     * @return bool
      */
     public function __isset($property): bool
     {
@@ -361,8 +357,6 @@ final class Content extends APIContent
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Location|null
      */
     private function getMainLocation(): ?APILocation
     {
@@ -377,8 +371,6 @@ final class Content extends APIContent
 
     /**
      * @throws \Exception
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
     private function getInnerContent(): RepoContent
     {
@@ -399,8 +391,6 @@ final class Content extends APIContent
 
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     private function getContentInfo(): APIContentInfo
     {
@@ -416,8 +406,6 @@ final class Content extends APIContent
 
     /**
      * @throws \Exception
-     *
-     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private function getOwner(): ?APIContent
     {
@@ -442,9 +430,6 @@ final class Content extends APIContent
         return $this->owner;
     }
 
-    /**
-     * @return null|\eZ\Publish\API\Repository\Values\User\User
-     */
     private function getInnerOwnerUser(): ?User
     {
         if ($this->isInnerOwnerUserInitialized) {

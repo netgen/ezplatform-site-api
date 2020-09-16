@@ -33,7 +33,6 @@ class Registry
     /**
      * Register a $resolver for $fieldTypeIdentifier.
      *
-     * @param string $fieldTypeIdentifier
      * @param \Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver $resolver
      */
     public function register(string $fieldTypeIdentifier, Resolver $resolver): void
@@ -43,8 +42,6 @@ class Registry
 
     /**
      * Returns Resolver for $fieldTypeIdentifier.
-     *
-     * @param string $fieldTypeIdentifier
      *
      * @throws \OutOfBoundsException When there is no resolver for the given $fieldTypeIdentifier
      *

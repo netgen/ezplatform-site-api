@@ -74,8 +74,6 @@ final class ContentInfo extends APIContentInfo
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return mixed
      */
     public function __get($property)
     {
@@ -98,8 +96,6 @@ final class ContentInfo extends APIContentInfo
      * Magic isset for signaling existence of convenience properties.
      *
      * @param string $property
-     *
-     * @return bool
      */
     public function __isset($property): bool
     {
@@ -144,8 +140,6 @@ final class ContentInfo extends APIContentInfo
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
      */
     private function getMainLocation(): ?APILocation
     {

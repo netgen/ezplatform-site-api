@@ -9,7 +9,7 @@ namespace Netgen\EzPlatformSiteApi\API;
  *
  * @property array $prioritizedLanguages Array of prioritized languages
  * @property bool $useAlwaysAvailable Always available fallback state
- * @property int|string $rootLocationId Root Location ID
+ * @property int $rootLocationId Root Location ID
  * @property bool $failOnMissingField Whether to fail on a missing Content Field
  */
 abstract class Settings

@@ -31,12 +31,12 @@ use Psr\Log\LoggerInterface;
 final class Content extends APIContent
 {
     /**
-     * @var int|string
+     * @var int
      */
     protected $id;
 
     /**
-     * @var int|string
+     * @var int
      */
     protected $mainLocationId;
 
@@ -149,6 +149,7 @@ final class Content extends APIContent
      *
      * @param string $property The name of the property to retrieve
      *
+     * @throws \Exception
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      *
      * @return mixed
@@ -356,6 +357,13 @@ final class Content extends APIContent
         return $pager;
     }
 
+    /**
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location|null
+     */
     private function getMainLocation(): ?APILocation
     {
         if ($this->internalMainLocation === null && $this->mainLocationId !== null) {
@@ -367,6 +375,11 @@ final class Content extends APIContent
         return $this->internalMainLocation;
     }
 
+    /**
+     * @throws \Exception
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     */
     private function getInnerContent(): RepoContent
     {
         if ($this->innerContent === null) {
@@ -385,9 +398,9 @@ final class Content extends APIContent
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     private function getContentInfo(): APIContentInfo
     {
@@ -402,6 +415,8 @@ final class Content extends APIContent
     }
 
     /**
+     * @throws \Exception
+     *
      * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     private function getOwner(): ?APIContent

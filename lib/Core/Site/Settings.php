@@ -28,7 +28,7 @@ final class Settings extends BaseSettings
     private $useAlwaysAvailable;
 
     /**
-     * @var int|string
+     * @var int
      */
     private $rootLocationId;
 
@@ -40,13 +40,13 @@ final class Settings extends BaseSettings
     /**
      * @param string[] $prioritizedLanguages
      * @param bool $useAlwaysAvailable
-     * @param int|string $rootLocationId
+     * @param int $rootLocationId
      * @param bool $failOnMissingField
      */
     public function __construct(
         array $prioritizedLanguages,
         bool $useAlwaysAvailable,
-        $rootLocationId,
+        int $rootLocationId,
         bool $failOnMissingField
     ) {
         $this->prioritizedLanguages = $prioritizedLanguages;

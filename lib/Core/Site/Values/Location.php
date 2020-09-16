@@ -66,7 +66,7 @@ final class Location extends APILocation
      */
     private $logger;
 
-    public function __construct(array $properties = [], LoggerInterface $logger)
+    public function __construct(array $properties, LoggerInterface $logger)
     {
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
@@ -90,6 +90,11 @@ final class Location extends APILocation
      * Magic getter for retrieving convenience properties.
      *
      * @param string $property The name of the property to retrieve
+     *
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      *
      * @return mixed
      */
@@ -141,6 +146,11 @@ final class Location extends APILocation
         return parent::__isset($property);
     }
 
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return array
+     */
     public function __debugInfo(): array
     {
         return [
@@ -249,6 +259,13 @@ final class Location extends APILocation
         return $pager;
     }
 
+    /**
+     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location
+     */
     private function getParent(): APILocation
     {
         if ($this->internalParent === null) {
@@ -272,6 +289,11 @@ final class Location extends APILocation
         return $this->internalContent;
     }
 
+    /**
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
+     */
     private function getContentInfo(): APIContentInfo
     {
         if ($this->contentInfo === null) {

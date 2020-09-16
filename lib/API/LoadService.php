@@ -15,17 +15,16 @@ interface LoadService
     /**
      * Loads Content object for the given $contentId.
      *
-     * @param int|string $contentId
-     * @param int $versionNo
-     * @param string $languageCode
+     * @param int $contentId
+     * @param int|null $versionNo
+     * @param string|null $languageCode
      *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
      */
-    public function loadContent($contentId, ?int $versionNo = null, ?string $languageCode = null): Content;
+    public function loadContent(int $contentId, ?int $versionNo = null, ?string $languageCode = null): Content;
 
     /**
      * Loads Content object for the given $remoteId.
@@ -43,7 +42,7 @@ interface LoadService
     /**
      * Loads Location object for the given $locationId.
      *
-     * @param int|string $locationId
+     * @param int $locationId
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
@@ -51,7 +50,7 @@ interface LoadService
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    public function loadLocation($locationId): Location;
+    public function loadLocation(int $locationId): Location;
 
     /**
      * Loads Location object for the given $remoteId.

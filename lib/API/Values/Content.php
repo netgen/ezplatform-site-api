@@ -16,8 +16,8 @@ use Pagerfanta\Pagerfanta;
  *
  * @see \eZ\Publish\API\Repository\Values\Content\Content
  *
- * @property int|string $id
- * @property null|int|string $mainLocationId
+ * @property int $id
+ * @property null|int $mainLocationId
  * @property string $name
  * @property string $languageCode
  * @property \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo

@@ -57,7 +57,7 @@ class LoadService implements LoadServiceInterface
         $this->locationService = $locationService;
     }
 
-    public function loadContent($contentId, ?int $versionNo = null, ?string $languageCode = null): Content
+    public function loadContent(int $contentId, ?int $versionNo = null, ?string $languageCode = null): Content
     {
         $versionInfo = $this->contentService->loadVersionInfoById($contentId, $versionNo);
         $languageCode = $this->resolveLanguageCode($versionInfo, $languageCode);
@@ -72,7 +72,7 @@ class LoadService implements LoadServiceInterface
         return $this->loadContent($contentInfo->id);
     }
 
-    public function loadLocation($locationId): Location
+    public function loadLocation(int $locationId): Location
     {
         $location = $this->locationService->loadLocation($locationId);
 

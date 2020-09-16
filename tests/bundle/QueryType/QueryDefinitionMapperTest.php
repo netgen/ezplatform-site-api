@@ -149,9 +149,6 @@ final class QueryDefinitionMapperTest extends TestCase
 
     /**
      * @dataProvider providerForTestMap
-     *
-     * @param array $configuration
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $expectedQueryDefinition
      */
     public function testMap(array $configuration, QueryDefinition $expectedQueryDefinition): void
     {
@@ -252,17 +249,11 @@ final class QueryDefinitionMapperTest extends TestCase
         return $queryTypeRegistryMock;
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
     protected function getQueryTypeMock(): MockObject
     {
         return $this->getMockBuilder(QueryType::class)->getMock();
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
     protected function getSiteQueryTypeMock(): MockObject
     {
         $queryTypeMock = $this->getMockBuilder(SiteQueryType::class)->getMock();
@@ -276,9 +267,6 @@ final class QueryDefinitionMapperTest extends TestCase
         return $queryTypeMock;
     }
 
-    /**
-     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
-     */
     protected function getParameterProcessor(): ParameterProcessor
     {
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */

@@ -437,9 +437,6 @@ final class CriteriaBuilderTest extends TestCase
         ]);
     }
 
-    /**
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriteriaBuilder
-     */
     protected function getCriteriaBuilderUnderTest(): CriteriaBuilder
     {
         if ($this->criteriaBuilder === null) {

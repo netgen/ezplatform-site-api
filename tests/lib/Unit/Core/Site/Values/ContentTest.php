@@ -201,9 +201,6 @@ final class ContentTest extends TestCase
         $this->assertNull($content->innerOwnerUser);
     }
 
-    /**
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
-     */
     protected function getMockedContent(): APIContent
     {
         return new Content(
@@ -244,9 +241,6 @@ final class ContentTest extends TestCase
         return $this->siteMock;
     }
 
-    /**
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
-     */
     protected function getDomainObjectMapper(): DomainObjectMapper
     {
         if ($this->domainObjectMapper !== null) {

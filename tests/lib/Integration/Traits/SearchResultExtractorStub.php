@@ -12,8 +12,6 @@ class SearchResultExtractorStub
     use SearchResultExtractorTrait;
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
-     *
      * @return \eZ\Publish\API\Repository\Values\ValueObject[]
      */
     public function doExtractValueObjects(SearchResult $searchResult): array
@@ -22,8 +20,6 @@ class SearchResultExtractorStub
     }
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
-     *
      * @return \eZ\Publish\API\Repository\Values\ValueObject[]
      */
     public function doExtractContentItems(SearchResult $searchResult): array
@@ -32,8 +28,6 @@ class SearchResultExtractorStub
     }
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
-     *
      * @return \eZ\Publish\API\Repository\Values\ValueObject[]
      */
     public function doExtractLocations(SearchResult $searchResult): array

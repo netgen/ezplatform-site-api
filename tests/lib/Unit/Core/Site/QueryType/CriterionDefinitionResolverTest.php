@@ -355,7 +355,6 @@ final class CriterionDefinitionResolverTest extends TestCase
     /**
      * @dataProvider providerForTestResolve
      *
-     * @param mixed $parameters
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $expectedCriterionDefinitions
      */
     public function testResolve($parameters, array $expectedCriterionDefinitions): void
@@ -804,7 +803,6 @@ final class CriterionDefinitionResolverTest extends TestCase
     /**
      * @dataProvider providerForTestResolveTargets
      *
-     * @param mixed $parameters
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $expectedCriterionDefinitions
      */
     public function testResolveTargets($parameters, array $expectedCriterionDefinitions): void
@@ -851,9 +849,6 @@ final class CriterionDefinitionResolverTest extends TestCase
         );
     }
 
-    /**
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinitionResolver
-     */
     protected function getCriterionDefinitionResolverUnderTest(): CriterionDefinitionResolver
     {
         if ($this->criterionDefinitionResolver === null) {

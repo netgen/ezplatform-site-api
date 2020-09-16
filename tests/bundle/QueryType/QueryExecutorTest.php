@@ -187,9 +187,6 @@ final class QueryExecutorTest extends TestCase
         $this->assertTrue($result->getNormalizeOutOfRangePages());
     }
 
-    /**
-     * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor
-     */
     protected function getQueryExecutorUnderTest(): QueryExecutor
     {
         return new QueryExecutor(
@@ -280,9 +277,6 @@ final class QueryExecutorTest extends TestCase
         return $queryTypeRegistryMock;
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
     protected function getContentQueryTypeMock(): MockObject
     {
         $mock = $this->getMockBuilder(QueryType::class)->getMock();
@@ -293,9 +287,6 @@ final class QueryExecutorTest extends TestCase
         return $mock;
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
     protected function getLocationQueryTypeMock(): MockObject
     {
         $mock = $this->getMockBuilder(QueryType::class)->getMock();

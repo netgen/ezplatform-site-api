@@ -19,10 +19,12 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Depth;
 use eZ\Publish\Core\Repository\Values\Content\Location as RepositoryLocation;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Siblings;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Location;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
 use Psr\Log\NullLogger;
@@ -42,11 +44,13 @@ final class SiblingsTest extends QueryTypeBaseTest
 
         return [
             [
+                false,
                 [
                     'location' => $location,
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ParentLocationId(42),
                         new LogicalNot(new LocationId(24)),
                     ]),
@@ -56,12 +60,15 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => false,
                     'location' => $location,
                     'sort' => 'published asc',
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(false),
                         new ParentLocationId(42),
                         new LogicalNot(new LocationId(24)),
                     ]),
@@ -71,7 +78,9 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => null,
                     'location' => $location,
                     'limit' => 12,
                     'offset' => 34,
@@ -90,6 +99,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -115,7 +125,9 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
+                    'visible' => true,
                     'location' => $location,
                     'content_type' => 'article',
                     'field' => [],
@@ -126,6 +138,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new ParentLocationId(42),
                         new LogicalNot(new LocationId(24)),
@@ -137,6 +150,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -147,6 +161,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new ParentLocationId(42),
@@ -158,6 +173,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -173,6 +189,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new ParentLocationId(42),
@@ -185,6 +202,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'content_type' => 'article',
@@ -202,6 +220,7 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new DateMetadata(
                             DateMetadata::MODIFIED,
@@ -220,12 +239,14 @@ final class SiblingsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'creation_date' => '4 May 2018',
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new DateMetadata(
                             DateMetadata::CREATED,
                             Operator::EQ,
@@ -315,9 +336,18 @@ final class SiblingsTest extends QueryTypeBaseTest
         return 'SiteAPI:Location/Siblings';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
-        return new Siblings(new NullLogger());
+        return new Siblings(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            ),
+            new NullLogger()
+        );
     }
 
     protected function getTestLocation(): Location

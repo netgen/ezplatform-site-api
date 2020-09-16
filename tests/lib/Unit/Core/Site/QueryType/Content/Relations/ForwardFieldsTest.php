@@ -20,12 +20,14 @@ use eZ\Publish\Core\FieldType\RelationList\Value as RelationListValue;
 use eZ\Publish\Core\FieldType\TextLine\Value;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\Relation;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\RelationList;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Resolver\Surrogate;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\ForwardFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -52,6 +54,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
 
         return [
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['relations_a', 'relations_b'],
@@ -60,7 +63,10 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                     'sort' => 'published asc',
                 ],
                 new Query([
-                    'filter' => new ContentId([1, 2, 3, 4]),
+                    'filter' => new LogicalAnd([
+                        new Visible(true),
+                        new ContentId([1, 2, 3, 4]),
+                    ]),
                     'limit' => 12,
                     'offset' => 34,
                     'sortClauses' => [
@@ -69,7 +75,9 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => false,
                     'content' => $content,
                     'relation_field' => ['relations_a'],
                     'content_type' => 'article',
@@ -80,6 +88,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(false),
                         new ContentTypeIdentifier('article'),
                         new ContentId([1, 2, 3]),
                     ]),
@@ -89,7 +98,9 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
+                    'visible' => null,
                     'content' => $content,
                     'relation_field' => ['relations_b'],
                     'content_type' => 'article',
@@ -114,6 +125,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
                     'content' => $content,
                     'relation_field' => [],
@@ -137,7 +149,9 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                true,
                 [
+                    'visible' => true,
                     'content' => $content,
                     'relation_field' => ['relations_a', 'relations_b'],
                     'content_type' => 'article',
@@ -154,6 +168,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
@@ -166,6 +181,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['relations_a', 'relations_b'],
@@ -177,6 +193,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
                 ],
                 new Query([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new DateMetadata(
                             DateMetadata::CREATED,
                             Operator::EQ,
@@ -239,6 +256,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
         $this->assertEquals(
             new Query([
                 'filter' => new LogicalAnd([
+                    new Visible(true),
                     new ContentTypeIdentifier('article'),
                     new ContentId([1, 2, 3]),
                 ]),
@@ -336,9 +354,16 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
         return 'SiteAPI:Content/Relations/ForwardFields';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
         return new ForwardFields(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            ),
             new Registry([
                 'ezobjectrelation' => new Relation(),
                 'ezobjectrelationlist' => new RelationList(),

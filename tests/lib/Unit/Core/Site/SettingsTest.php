@@ -103,6 +103,7 @@ final class SettingsTest extends TestCase
             ['cro-HR'],
             true,
             42,
+            true,
             false
         );
     }

@@ -14,7 +14,9 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\SectionId;
 use eZ\Publish\API\Repository\Values\Content\Query\FacetBuilder\SectionFacetBuilder;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionName;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -69,6 +71,7 @@ final class CustomQueryTypeTest extends TestCase
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new DateMetadata(
                             DateMetadata::MODIFIED,
                             Operator::EQ,
@@ -87,6 +90,7 @@ final class CustomQueryTypeTest extends TestCase
             ],
             [
                 [
+                    'visible' => false,
                     'prefabrication_date' => [123, 456],
                     'sort' => [
                         'whatever',
@@ -95,6 +99,7 @@ final class CustomQueryTypeTest extends TestCase
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(false),
                         new DateMetadata(
                             DateMetadata::MODIFIED,
                             Operator::IN,
@@ -114,6 +119,7 @@ final class CustomQueryTypeTest extends TestCase
             ],
             [
                 [
+                    'visible' => null,
                     'prefabrication_date' => [
                         'eq' => 123,
                         'in' => [123, 456],
@@ -159,6 +165,14 @@ final class CustomQueryTypeTest extends TestCase
 
     protected function getQueryTypeUnderTest(): QueryType
     {
-        return new CustomQueryType();
+        return new CustomQueryType(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                false,
+                true
+            )
+        );
     }
 }

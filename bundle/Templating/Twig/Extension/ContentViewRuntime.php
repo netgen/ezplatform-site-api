@@ -37,16 +37,9 @@ class ContentViewRuntime
     /**
      * Renders the HTML for a given $content.
      *
-     * @param \eZ\Publish\API\Repository\Values\ValueObject $value
-     * @param string $viewType
-     * @param array $parameters
-     * @param bool $layout
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return string
      */
     public function renderContentView(
         ValueObject $value,

@@ -25,11 +25,6 @@ final class ParameterProcessor
      * Return given $value processed with ExpressionLanguage if needed.
      *
      * Parameter $view is used to provide values for evaluation.
-     *
-     * @param mixed $value
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
-     * @return mixed
      */
     public function process($value, ContentView $view)
     {
@@ -53,8 +48,6 @@ final class ParameterProcessor
 
     /**
      * Register functions with the given $expressionLanguage.
-     *
-     * @param \Symfony\Component\ExpressionLanguage\ExpressionLanguage $expressionLanguage
      */
     private function registerFunctions(ExpressionLanguage $expressionLanguage): void
     {

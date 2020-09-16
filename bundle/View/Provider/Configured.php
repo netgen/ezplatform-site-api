@@ -110,13 +110,8 @@ class Configured implements ViewProvider
     /**
      * Builds a ContentView object from $viewConfig.
      *
-     * @param array $viewConfig
-     * @param ContentView $view
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration
-     *
-     * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView
      */
     private function getDTO(array $viewConfig, ContentView $view): CoreContentView
     {
@@ -148,10 +143,6 @@ class Configured implements ViewProvider
     }
 
     /**
-     * @param \eZ\Publish\Core\MVC\Symfony\View\ContentView $dto
-     * @param array $viewConfig
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
      * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration
      */
     private function processRedirects(CoreContentView $dto, array $viewConfig, ContentView $view): void

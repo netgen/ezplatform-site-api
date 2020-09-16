@@ -52,9 +52,6 @@ final class QueryDefinitionMapper
     /**
      * Map given $configuration in $view context to a QueryDefinition instance.
      *
-     * @param array $configuration
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
      * @throws \InvalidArgumentException
      *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
@@ -73,11 +70,6 @@ final class QueryDefinitionMapper
      * Override $configuration parameters with $override.
      *
      * Only first level keys in main configuration and separately under 'parameters' key are replaced.
-     *
-     * @param array $configuration
-     * @param array $override
-     *
-     * @return array
      */
     private function overrideConfiguration(array $configuration, array $override): array
     {
@@ -94,11 +86,7 @@ final class QueryDefinitionMapper
     /**
      * Return named query configuration by the given $name.
      *
-     * @param string $name
-     *
      * @throws \InvalidArgumentException if no such configuration exist
-     *
-     * @return array
      */
     private function getQueryConfigurationByName(string $name): array
     {
@@ -131,9 +119,6 @@ final class QueryDefinitionMapper
     /**
      * Build QueryDefinition instance from the given arguments.
      *
-     * @param array $configuration
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
      * @return \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition
      */
     private function buildQueryDefinition(array $configuration, ContentView $view): QueryDefinition
@@ -153,10 +138,6 @@ final class QueryDefinitionMapper
 
     /**
      * Inject parameters into $parameters if available in the $view and supported by the QueryType.
-     *
-     * @param array $parameters
-     * @param string $queryTypeName
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      */
     private function injectSupportedParameters(array &$parameters, string $queryTypeName, ContentView $view): void
     {
@@ -179,11 +160,6 @@ final class QueryDefinitionMapper
      * Recursively process given $parameters using ParameterProcessor.
      *
      * @see \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
-     *
-     * @param array $parameters
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
-     * @return array
      */
     private function processParameters(array $parameters, ContentView $view): array
     {
@@ -196,12 +172,6 @@ final class QueryDefinitionMapper
         return $processedParameters;
     }
 
-    /**
-     * @param mixed $parameters
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
-     * @return mixed
-     */
     private function recursiveProcessParameters($parameters, ContentView $view)
     {
         if (\is_array($parameters)) {

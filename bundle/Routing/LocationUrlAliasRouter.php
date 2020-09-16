@@ -83,7 +83,7 @@ class LocationUrlAliasRouter implements ChainedRouterInterface, RequestMatcherIn
 
     public function supports($name): bool
     {
-        if (is_object($name)) {
+        if (\is_object($name)) {
             return $this->supportsObject($name);
         }
 

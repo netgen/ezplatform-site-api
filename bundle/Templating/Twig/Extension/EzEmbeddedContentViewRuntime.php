@@ -33,13 +33,8 @@ class EzEmbeddedContentViewRuntime
     /**
      * Renders the HTML for a given $content.
      *
-     * @param string $viewType
-     * @param array $parameters
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return string
      */
     public function renderEmbeddedContentView(string $viewType, array $parameters = []): string
     {

@@ -25,7 +25,6 @@ final class QueryDefinitionCollection
     /**
      * Add $queryDefinition by $name to the internal map.
      *
-     * @param string $name
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      */
     public function add(string $name, QueryDefinition $queryDefinition): void
@@ -35,8 +34,6 @@ final class QueryDefinitionCollection
 
     /**
      * Return QueryDefinition by given $name.
-     *
-     * @param string $name
      *
      * @throws \OutOfBoundsException if no QueryDefinition with given $name is found
      *

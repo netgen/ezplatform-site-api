@@ -25,9 +25,6 @@ class PreviewController extends BasePreviewController
      */
     protected $site;
 
-    /**
-     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
-     */
     public function setConfigResolver(ConfigResolverInterface $configResolver): void
     {
         $this->configResolver = $configResolver;
@@ -60,10 +57,6 @@ class PreviewController extends BasePreviewController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \eZ\Publish\Core\MVC\Symfony\SiteAccess $previewSiteAccess
-     * @param string $languageCode
-     *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
@@ -95,9 +88,6 @@ class PreviewController extends BasePreviewController
     /**
      * Injects the Site API value objects into request, replacing the original
      * eZ API value objects.
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $languageCode
      *
      * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -132,10 +122,6 @@ class PreviewController extends BasePreviewController
 
     /**
      * Returns if the provided siteaccess is running in legacy mode.
-     *
-     * @param string $siteAccessName
-     *
-     * @return bool
      */
     protected function isLegacyModeSiteAccess(string $siteAccessName): bool
     {

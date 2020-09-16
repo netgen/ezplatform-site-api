@@ -44,33 +44,21 @@ final class RedirectConfiguration
         return new RedirectConfiguration($target, $targetParameters, $permanent, $absolute);
     }
 
-    /**
-     * @return string
-     */
     public function getTarget(): string
     {
         return $this->target;
     }
 
-    /**
-     * @return array
-     */
     public function getTargetParameters(): array
     {
         return $this->targetParameters;
     }
 
-    /**
-     * @return bool
-     */
     public function isPermanent(): bool
     {
         return $this->permanent;
     }
 
-    /**
-     * @return bool
-     */
     public function isAbsolute(): bool
     {
         return $this->absolute;

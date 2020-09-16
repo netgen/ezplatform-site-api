@@ -50,8 +50,6 @@ final class ContentViewFallbackResolver
     }
 
     /**
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
-     *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView
@@ -70,8 +68,6 @@ final class ContentViewFallbackResolver
     }
 
     /**
-     * @param \eZ\Publish\Core\MVC\Symfony\View\ContentView $view
-     *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView

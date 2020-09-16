@@ -53,8 +53,6 @@ final class QueryExecutor
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      *
      * @throws \Pagerfanta\Exception\Exception
-     *
-     * @return \Pagerfanta\Pagerfanta
      */
     public function execute(QueryDefinition $queryDefinition): Pagerfanta
     {
@@ -74,8 +72,6 @@ final class QueryExecutor
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     public function executeRaw(QueryDefinition $queryDefinition): SearchResult
     {
@@ -102,12 +98,9 @@ final class QueryExecutor
     /**
      * Return search result by the given parameters.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     private function getLocationResult(LocationQuery $query, QueryDefinition $queryDefinition): SearchResult
     {
@@ -121,12 +114,9 @@ final class QueryExecutor
     /**
      * Return search result by the given parameters.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition $queryDefinition
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     private function getContentResult(Query $query, QueryDefinition $queryDefinition): SearchResult
     {

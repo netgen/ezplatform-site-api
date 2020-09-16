@@ -40,11 +40,8 @@ final class Resolver
      * Builds a path to the redirect target.
      *
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\RedirectConfiguration $redirectConfig
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      *
      * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration
-     *
-     * @return string
      */
     public function resolveTarget(RedirectConfiguration $redirectConfig, ContentView $view): string
     {
@@ -69,11 +66,8 @@ final class Resolver
 
     /**
      * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\RedirectConfiguration $redirectConfig
-     * @param \Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView $view
      *
      * @throws \Netgen\Bundle\EzPlatformSiteApiBundle\Exception\InvalidRedirectConfiguration
-     *
-     * @return string
      */
     private function processExpression(RedirectConfiguration $redirectConfig, ContentView $view): string
     {

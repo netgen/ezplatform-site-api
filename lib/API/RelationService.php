@@ -12,8 +12,8 @@ use Netgen\EzPlatformSiteApi\API\Values\Content;
 interface RelationService
 {
     /**
-     * Load single related Content from $fieldDefinitionIdentifier field in Content with given
-     * $contentId, optionally limited by a list of $contentTypeIdentifiers.
+     * Load single related Content from $fieldDefinitionIdentifier field in the given
+     * $content, optionally limited by a list of $contentTypeIdentifiers.
      *
      * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      * @param string $fieldDefinitionIdentifier
@@ -25,14 +25,14 @@ interface RelationService
      * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
      */
     public function loadFieldRelation(
-        $content,
+        Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): ?Content;
 
     /**
-     * Load all related Content from $fieldDefinitionIdentifier field in Content with given
-     * $contentId, optionally limited by a list of $contentTypeIdentifiers and $limit.
+     * Load all related Content from $fieldDefinitionIdentifier field in the given
+     * $content, optionally limited by a list of $contentTypeIdentifiers and $limit.
      *
      * @param \Netgen\EzPlatformSiteApi\API\Values\Content $content
      * @param string $fieldDefinitionIdentifier
@@ -45,7 +45,7 @@ interface RelationService
      * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
      */
     public function loadFieldRelations(
-        $content,
+        Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         ?int $limit = null

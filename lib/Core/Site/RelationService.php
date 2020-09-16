@@ -51,7 +51,7 @@ class RelationService implements RelationServiceInterface
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     public function loadFieldRelation(
-        $content,
+        Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): ?Content {
@@ -70,20 +70,11 @@ class RelationService implements RelationServiceInterface
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     public function loadFieldRelations(
-        $content,
+        Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         ?int $limit = null
     ): array {
-        if (!$content instanceof Content) {
-            @trigger_error(
-                'Using loadFieldRelations() with Content ID as the first argument is deprecated since version 3.5, and will be removed in 4.0. Provide Content instance instead.',
-                E_USER_DEPRECATED
-            );
-
-            $content = $this->site->getLoadService()->loadContent($content);
-        }
-
         $field = $content->getField($fieldDefinitionIdentifier);
         $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);
 

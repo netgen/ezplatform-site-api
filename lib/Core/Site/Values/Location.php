@@ -177,8 +177,11 @@ final class Location extends APILocation
     {
         $criteria = [
             new ParentLocationId($this->id),
-            new Visible(true),
         ];
+
+        if (!$this->site->getSettings()->showHiddenItems) {
+            $criteria[] = new Visible(true);
+        }
 
         if (!empty($contentTypeIdentifiers)) {
             $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
@@ -216,8 +219,11 @@ final class Location extends APILocation
             new LogicalNot(
                 new LocationId($this->id)
             ),
-            new Visible(true),
         ];
+
+        if (!$this->site->getSettings()->showHiddenItems) {
+            $criteria[] = new Visible(true);
+        }
 
         if (!empty($contentTypeIdentifiers)) {
             $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);

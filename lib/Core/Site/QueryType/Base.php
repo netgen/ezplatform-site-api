@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use InvalidArgumentException;
+use Netgen\EzPlatformSiteApi\API\Settings;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -22,6 +23,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 abstract class Base implements QueryType
 {
+    /**
+     * @var \Netgen\EzPlatformSiteApi\API\Settings
+     */
+    private $settings;
+
     /**
      * @var \Symfony\Component\OptionsResolver\OptionsResolver
      */
@@ -46,6 +52,11 @@ abstract class Base implements QueryType
      * @var \Closure[]
      */
     private $registeredCriterionBuilders;
+
+    public function __construct(Settings $settings)
+    {
+        $this->settings = $settings;
+    }
 
     /**
      * {@inheritdoc}
@@ -202,6 +213,10 @@ abstract class Base implements QueryType
             'limit' => 25,
             'offset' => 0,
         ]);
+
+        if (!$this->settings->showHiddenItems) {
+            $resolver->setDefault('visible', true);
+        }
 
         $resolver->setAllowedTypes('content_type', ['string', 'array']);
         $resolver->setAllowedTypes('section', ['string', 'array']);

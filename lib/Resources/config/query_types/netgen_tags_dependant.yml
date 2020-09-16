@@ -3,12 +3,16 @@ parameters:
 services:
     netgen.ezplatform_site.query_type.content.relations.tag_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\TagFields
+        arguments:
+            - '@netgen.ezplatform_site.settings'
         tags:
             - {name: ezplatform.query_type}
         public: false
 
     netgen.ezplatform_site.query_type.content.relations.all_tag_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\AllTagFields
+        arguments:
+            - '@netgen.ezplatform_site.settings'
         tags:
             - {name: ezplatform.query_type}
         public: false

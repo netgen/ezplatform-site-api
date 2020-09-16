@@ -108,9 +108,6 @@ final class SortClauseParserTest extends TestCase
 
     /**
      * @dataProvider providerForTestParseValid
-     *
-     * @param string $stringDefinition
-     * @param \eZ\Publish\API\Repository\Values\Content\Query\SortClause $expectedSortClause
      */
     public function testParseValid(string $stringDefinition, SortClause $expectedSortClause): void
     {
@@ -149,9 +146,6 @@ final class SortClauseParserTest extends TestCase
 
     /**
      * @dataProvider providerForTestParseInvalid
-     *
-     * @param string $stringDefinition
-     * @param string $message
      */
     public function testParseInvalid(string $stringDefinition, string $message): void
     {

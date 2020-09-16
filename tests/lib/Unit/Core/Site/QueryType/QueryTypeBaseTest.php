@@ -81,9 +81,6 @@ abstract class QueryTypeBaseTest extends TestCase
 
     /**
      * @dataProvider providerForTestGetQuery
-     *
-     * @param array $parameters
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $expectedQuery
      */
     public function testGetQuery(array $parameters, Query $expectedQuery): void
     {
@@ -101,8 +98,6 @@ abstract class QueryTypeBaseTest extends TestCase
 
     /**
      * @dataProvider providerForTestGetQueryWithInvalidOptions
-     *
-     * @param array $parameters
      */
     public function testGetQueryWithInvalidOptions(array $parameters): void
     {
@@ -117,8 +112,6 @@ abstract class QueryTypeBaseTest extends TestCase
 
     /**
      * @dataProvider providerForTestGetQueryWithInvalidCriteria
-     *
-     * @param array $parameters
      */
     public function testGetQueryWithInvalidCriteria(array $parameters): void
     {
@@ -133,8 +126,6 @@ abstract class QueryTypeBaseTest extends TestCase
 
     /**
      * @dataProvider providerForTestInvalidSortClauseThrowsException
-     *
-     * @param array $parameters
      */
     public function testInvalidSortClauseThrowsException(array $parameters): void
     {
@@ -148,14 +139,8 @@ abstract class QueryTypeBaseTest extends TestCase
         $queryType->getQuery($parameters);
     }
 
-    /**
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType
-     */
     abstract protected function getQueryTypeUnderTest(): QueryType;
 
-    /**
-     * @return string
-     */
     abstract protected function getQueryTypeName(): string;
 
     /**

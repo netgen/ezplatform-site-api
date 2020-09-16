@@ -358,11 +358,6 @@ final class FieldsTest extends TestCase
         );
     }
 
-    /**
-     * @param bool $failOnMissingField
-     *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\Values\Fields
-     */
     protected function getFieldsUnderTest(bool $failOnMissingField): Fields
     {
         return new Fields(
@@ -387,9 +382,6 @@ final class FieldsTest extends TestCase
         return $this->loggerMock;
     }
 
-    /**
-     * @return \Netgen\EzPlatformSiteApi\API\Values\Content
-     */
     protected function getMockedContent(): APIContent
     {
         return new Content(

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site;
 
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\FieldType;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo as RepoContentInfo;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCollection;
@@ -13,7 +14,6 @@ use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Content as RepoContent;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
-use eZ\Publish\API\Repository\FieldType;
 use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper;
 use PHPUnit\Framework\MockObject\MockBuilder;
@@ -99,11 +99,6 @@ trait ContentFieldsMockTrait
         return $this->siteMock;
     }
 
-    /**
-     * @param bool $failOnMissingField
-     *
-     * @return \Netgen\EzPlatformSiteApi\Core\Site\DomainObjectMapper
-     */
     protected function getDomainObjectMapper(bool $failOnMissingField = true): DomainObjectMapper
     {
         if (isset($this->domainObjectMapper[$failOnMissingField])) {

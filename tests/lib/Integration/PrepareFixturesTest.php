@@ -29,8 +29,6 @@ final class PrepareFixturesTest extends APIBaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return array
      */
     public function testPrepareTestFixtures(): array
     {
@@ -81,13 +79,7 @@ final class PrepareFixturesTest extends APIBaseTest
     }
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      * @param $parentLocationId
-     * @param string $contentRemoteId
-     * @param string $locationRemoteId
-     * @param string $mainLanguageCode
-     * @param array $languageCodes
-     * @param bool $alwaysAvailable
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
@@ -95,8 +87,6 @@ final class PrepareFixturesTest extends APIBaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
     protected function createContent(
         ContentType $contentType,
@@ -148,8 +138,6 @@ final class PrepareFixturesTest extends APIBaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      */
     protected function createContentType(): ContentType
     {

@@ -77,9 +77,6 @@ abstract class BaseTest extends APIBaseTest
     }
 
     /**
-     * @param string $name
-     * @param mixed $value
-     *
      * @throws \ReflectionException
      * @throws \ErrorException
      */
@@ -94,8 +91,6 @@ abstract class BaseTest extends APIBaseTest
 
     /**
      * @throws \ErrorException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Site
      */
     protected function getSite(): Site
     {

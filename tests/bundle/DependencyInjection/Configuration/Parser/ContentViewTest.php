@@ -124,8 +124,6 @@ final class ContentViewTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestValid
-     *
-     * @param array $configurationValues
      */
     public function testValid(array $configurationValues): void
     {
@@ -250,9 +248,6 @@ final class ContentViewTest extends AbstractParserTestCase
     /**
      * @group xxx
      * @dataProvider providerForTextExtends
-     *
-     * @param array $configurationValues
-     * @param array $expectedValues
      */
     public function testExtends(array $configurationValues, array $expectedValues): void
     {
@@ -423,10 +418,6 @@ final class ContentViewTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestInvalid
-     *
-     * @param array $configurationValues
-     * @param string $exceptionClass
-     * @param string $exceptionMessage
      */
     public function testInvalid(array $configurationValues, string $exceptionClass, string $exceptionMessage): void
     {
@@ -563,9 +554,6 @@ final class ContentViewTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestDefaultValues
-     *
-     * @param array $configurationValues
-     * @param array $expectedConfigurationValues
      */
     public function testDefaultValues(array $configurationValues, array $expectedConfigurationValues): void
     {

@@ -306,7 +306,7 @@ final class LoadingProviderTest extends TestCase
 
         $mock
             ->method('loadTag')
-            ->willReturnCallback(function ($id) {
+            ->willReturnCallback(static function ($id) {
                 if ($id === 42) {
                     return new Tag(['id' => 42]);
                 }
@@ -316,7 +316,7 @@ final class LoadingProviderTest extends TestCase
 
         $mock
             ->method('loadTagByRemoteId')
-            ->willReturnCallback(function ($id) {
+            ->willReturnCallback(static function ($id) {
                 if ($id === 'abc') {
                     return new Tag(['remoteId' => 'abc']);
                 }

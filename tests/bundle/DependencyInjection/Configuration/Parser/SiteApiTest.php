@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\DependencyInjection\Configuration\Parser;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension;
 use eZ\Bundle\EzPublishCoreBundle\Tests\DependencyInjection\Configuration\Parser\AbstractParserTestCase;
-use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\BaseOptions;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\SiteApi;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
@@ -17,7 +17,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @internal
  */
-class SiteApiTest extends AbstractParserTestCase
+final class SiteApiTest extends AbstractParserTestCase
 {
     public function getBooleanConfigurationNames(): array
     {
@@ -64,10 +64,6 @@ class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestBooleanConfigurationValid
-     *
-     * @param string $name
-     * @param mixed $config
-     * @param mixed $expectedValue
      */
     public function testBooleanConfigurationValid(string $name, $config, $expectedValue): void
     {
@@ -116,9 +112,6 @@ class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestBooleanConfigurationInvalid
-     *
-     * @param string $name
-     * @param mixed $config
      */
     public function testBooleanConfigurationInvalid(string $name, $config): void
     {
@@ -242,10 +235,6 @@ class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestNamedObjectConfigurationValid
-     *
-     * @param string $name
-     * @param array $configuration
-     * @param mixed $expectedValue
      */
     public function testNamedObjectConfigurationValid(string $name, array $configuration, $expectedValue): void
     {
@@ -318,9 +307,6 @@ class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestNamedObjectConfigurationInvalid
-     *
-     * @param string $name
-     * @param array $configuration
      */
     public function testNamedObjectConfigurationInvalid(string $name, array $configuration): void
     {
@@ -361,9 +347,6 @@ class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestNamedObjectDefaultValues
-     *
-     * @param mixed $configurationValues
-     * @param array $expectedConfigurationValues
      */
     public function testNamedObjectDefaultValues($configurationValues, array $expectedConfigurationValues): void
     {
@@ -427,8 +410,6 @@ class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestNamedQueryConfigurationValid
-     *
-     * @param array $configurationValues
      */
     public function testNamedQueryConfigurationValid(array $configurationValues): void
     {
@@ -521,9 +502,6 @@ class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestNamedQueryConfigurationInvalid
-     *
-     * @param array $configurationValues
-     * @param string $message
      */
     public function testNamedQueryConfigurationInvalid(array $configurationValues, string $message): void
     {
@@ -566,9 +544,6 @@ class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestNamedQueryConfigurationDefaultValues
-     *
-     * @param array $configurationValues
-     * @param array $expectedConfigurationValues
      */
     public function testNamedQueryConfigurationDefaultValues(array $configurationValues, array $expectedConfigurationValues): void
     {

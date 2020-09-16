@@ -175,8 +175,6 @@ final class RelationServiceTest extends BaseTest
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return array
      */
     protected function prepareTestContent(): array
     {

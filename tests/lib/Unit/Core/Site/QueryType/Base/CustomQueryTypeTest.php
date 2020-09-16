@@ -143,9 +143,6 @@ final class CustomQueryTypeTest extends TestCase
 
     /**
      * @dataProvider providerForTestGetQuery
-     *
-     * @param array $parameters
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $expectedQuery
      */
     public function testGetQuery(array $parameters, Query $expectedQuery): void
     {

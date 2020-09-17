@@ -19,6 +19,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property int $currentVersionNo
  * @property bool $published
  * @property bool $isHidden
+ * @property bool $isVisible
  * @property int $ownerId
  * @property \DateTime $modificationDate
  * @property \DateTime $publishedDate

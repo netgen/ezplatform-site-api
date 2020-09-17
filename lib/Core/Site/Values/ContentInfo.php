@@ -77,8 +77,11 @@ final class ContentInfo extends APIContentInfo
      */
     public function __get($property)
     {
-        if ($property === 'mainLocation') {
-            return $this->getMainLocation();
+        switch ($property) {
+            case 'mainLocation':
+                return $this->getMainLocation();
+            case 'isVisible':
+                return !$this->isHidden;
         }
 
         if (\property_exists($this, $property)) {
@@ -99,8 +102,10 @@ final class ContentInfo extends APIContentInfo
      */
     public function __isset($property): bool
     {
-        if ($property === 'mainLocation') {
-            return true;
+        switch ($property) {
+            case 'mainLocation':
+            case 'isVisible':
+                return true;
         }
 
         if (\property_exists($this, $property) || \property_exists($this->innerContentInfo, $property)) {
@@ -119,6 +124,7 @@ final class ContentInfo extends APIContentInfo
             'currentVersionNo' => $this->innerContentInfo->currentVersionNo,
             'published' => $this->innerContentInfo->published,
             'isHidden' => $this->innerContentInfo->isHidden,
+            'isVisible' => !$this->innerContentInfo->isHidden,
             'ownerId' => $this->innerContentInfo->ownerId,
             'modificationDate' => $this->innerContentInfo->modificationDate,
             'publishedDate' => $this->innerContentInfo->publishedDate,

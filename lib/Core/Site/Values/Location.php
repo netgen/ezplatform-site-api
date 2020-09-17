@@ -107,6 +107,8 @@ final class Location extends APILocation
                 return $this->getContent();
             case 'contentInfo':
                 return $this->getContentInfo();
+            case 'isVisible':
+                return !$this->innerLocation->hidden && !$this->innerLocation->invisible;
         }
 
         if (\property_exists($this, $property)) {
@@ -132,6 +134,7 @@ final class Location extends APILocation
             case 'contentId':
             case 'parent':
             case 'content':
+            case 'isVisible':
                 return true;
         }
 
@@ -154,6 +157,7 @@ final class Location extends APILocation
             'hidden' => $this->innerLocation->hidden,
             'invisible' => $this->innerLocation->invisible,
             'explicitlyHidden' => $this->innerLocation->explicitlyHidden,
+            'isVisible' => !$this->innerLocation->hidden && !$this->innerLocation->invisible,
             'remoteId' => $this->innerLocation->remoteId,
             'parentLocationId' => $this->innerLocation->parentLocationId,
             'pathString' => $this->innerLocation->pathString,

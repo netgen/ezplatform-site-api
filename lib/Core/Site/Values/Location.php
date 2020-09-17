@@ -153,6 +153,7 @@ final class Location extends APILocation
             'priority' => $this->innerLocation->priority,
             'hidden' => $this->innerLocation->hidden,
             'invisible' => $this->innerLocation->invisible,
+            'explicitlyHidden' => $this->innerLocation->explicitlyHidden,
             'remoteId' => $this->innerLocation->remoteId,
             'parentLocationId' => $this->innerLocation->parentLocationId,
             'pathString' => $this->innerLocation->pathString,

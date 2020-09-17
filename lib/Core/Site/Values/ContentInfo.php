@@ -118,6 +118,7 @@ final class ContentInfo extends APIContentInfo
             'sectionId' => $this->innerContentInfo->sectionId,
             'currentVersionNo' => $this->innerContentInfo->currentVersionNo,
             'published' => $this->innerContentInfo->published,
+            'isHidden' => $this->innerContentInfo->isHidden,
             'ownerId' => $this->innerContentInfo->ownerId,
             'modificationDate' => $this->innerContentInfo->modificationDate,
             'publishedDate' => $this->innerContentInfo->publishedDate,

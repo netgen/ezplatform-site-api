@@ -57,6 +57,7 @@ class SiteApi extends AbstractParser
             'fallback_without_subrequest',
             'richtext_embed_without_subrequest',
             'use_always_available_fallback',
+            'show_hidden_items',
             'fail_on_missing_field',
             'render_missing_field_info',
         ];

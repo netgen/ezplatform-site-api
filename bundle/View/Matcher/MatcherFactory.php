@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\Matcher;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Matcher;
 
 use eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry;
 use eZ\Publish\API\Repository\Repository;

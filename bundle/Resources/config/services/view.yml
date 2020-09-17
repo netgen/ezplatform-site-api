@@ -59,7 +59,7 @@ services:
         public: false
 
     netgen.ezplatform_site.ngcontent_view.matcher_factory:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\Matcher\MatcherFactory
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Matcher\MatcherFactory
         arguments:
             - '@?eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry'
             - '@ezpublish.api.repository'
@@ -79,7 +79,7 @@ services:
         public: false
 
     netgen.ezplatform_site.ngcontent_view.default_matcher_factory:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\Matcher\MatcherFactory
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\View\Matcher\MatcherFactory
         arguments:
             - '@?eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry'
             - '@ezpublish.api.repository'

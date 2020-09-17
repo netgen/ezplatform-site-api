@@ -20,6 +20,7 @@ use Pagerfanta\Pagerfanta;
  * @property bool $hidden
  * @property bool $invisible
  * @property bool $explicitlyHidden
+ * @property bool $isVisible
  * @property string $remoteId
  * @property int $parentLocationId
  * @property string $pathString

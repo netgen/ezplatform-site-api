@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\Converter;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\Request\ParamConverter;
 
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

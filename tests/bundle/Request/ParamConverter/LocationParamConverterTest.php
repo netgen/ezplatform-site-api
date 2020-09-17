@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\Converter;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\Request\ParamConverter;
 
-use Netgen\Bundle\EzPlatformSiteApiBundle\Converter\LocationParamConverter;
+use Netgen\Bundle\EzPlatformSiteApiBundle\Request\ParamConverter\LocationParamConverter;
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ final class LocationParamConverterTest extends AbstractParamConverterTest
     const LOCATION_CLASS = Location::class;
 
     /**
-     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\Converter\LocationParamConverter
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\Request\ParamConverter\LocationParamConverter
      */
     protected $converter;
 

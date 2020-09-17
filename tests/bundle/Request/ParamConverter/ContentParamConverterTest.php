@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\Converter;
+namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\Request\ParamConverter;
 
-use Netgen\Bundle\EzPlatformSiteApiBundle\Converter\ContentParamConverter;
+use Netgen\Bundle\EzPlatformSiteApiBundle\Request\ParamConverter\ContentParamConverter;
 use Netgen\EzPlatformSiteApi\API\LoadService;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ final class ContentParamConverterTest extends AbstractParamConverterTest
     const CONTENT_CLASS = Content::class;
 
     /**
-     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\Converter\ContentParamConverter
+     * @var \Netgen\Bundle\EzPlatformSiteApiBundle\Request\ParamConverter\ContentParamConverter
      */
     protected $converter;
 

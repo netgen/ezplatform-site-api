@@ -20,6 +20,7 @@ use Pagerfanta\Pagerfanta;
  * @property null|int $mainLocationId
  * @property string $name
  * @property string $languageCode
+ * @property bool $isVisible
  * @property \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property \Netgen\EzPlatformSiteApi\API\Values\Field[]|\Netgen\EzPlatformSiteApi\API\Values\Fields $fields
  * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation

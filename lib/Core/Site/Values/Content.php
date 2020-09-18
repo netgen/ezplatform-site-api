@@ -169,6 +169,8 @@ final class Content extends APIContent
                 return $this->getOwner();
             case 'innerOwnerUser':
                 return $this->getInnerOwnerUser();
+            case 'isVisible':
+                return $this->getContentInfo()->isVisible;
         }
 
         return parent::__get($property);
@@ -189,6 +191,7 @@ final class Content extends APIContent
             case 'versionInfo':
             case 'owner':
             case 'innerOwnerUser':
+            case 'isVisible':
                 return true;
         }
 
@@ -205,6 +208,7 @@ final class Content extends APIContent
             'mainLocationId' => $this->mainLocationId,
             'name' => $this->name,
             'languageCode' => $this->languageCode,
+            'isVisible' => $this->getContentInfo()->isVisible,
             'contentInfo' => $this->getContentInfo(),
             'fields' => $this->fields,
             'mainLocation' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]',

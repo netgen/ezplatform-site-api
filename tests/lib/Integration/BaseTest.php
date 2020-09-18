@@ -109,6 +109,7 @@ abstract class BaseTest extends APIBaseTest
         $this->assertSame($name, $content->name);
         $this->assertEquals($data['mainLocationId'], $content->mainLocationId);
         $this->assertEquals($data['languageCode'], $content->languageCode);
+        $this->assertTrue($content->isVisible);
         $this->assertContentInfo($content->contentInfo, $data);
         $this->assertFields($content, $data);
         $this->assertInstanceOf(Content::class, $content->owner);
@@ -144,6 +145,7 @@ abstract class BaseTest extends APIBaseTest
                 'mainLocationId' => $content->mainLocationId,
                 'name' => $content->name,
                 'languageCode' => $content->languageCode,
+                'isVisible' => $content->isVisible,
                 'contentInfo' => $content->contentInfo,
                 'fields' => $content->fields,
                 'mainLocation' => '[An instance of Netgen\EzPlatformSiteApi\API\Values\Location]',

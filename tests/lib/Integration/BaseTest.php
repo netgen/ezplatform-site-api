@@ -39,9 +39,13 @@ abstract class BaseTest extends APIBaseTest
             'locationId' => 63,
             'locationRemoteId' => 'location-remote-id',
             'parentLocationId' => 62,
+            'contentIsHidden' => false,
+            'contentIsVisible' => true,
             'locationPriority' => 1,
             'locationHidden' => false,
             'locationInvisible' => false,
+            'locationExplicitlyHidden' => false,
+            'locationIsVisible' => true,
             'locationPathString' => '/1/2/62/63/',
             'locationPath' => [1, 2, 62, 63],
             'locationDepth' => 3,
@@ -109,7 +113,7 @@ abstract class BaseTest extends APIBaseTest
         $this->assertSame($name, $content->name);
         $this->assertEquals($data['mainLocationId'], $content->mainLocationId);
         $this->assertEquals($data['languageCode'], $content->languageCode);
-        $this->assertTrue($content->isVisible);
+        $this->assertEquals($data['contentIsVisible'], $content->isVisible);
         $this->assertContentInfo($content->contentInfo, $data);
         $this->assertFields($content, $data);
         $this->assertInstanceOf(Content::class, $content->owner);
@@ -169,6 +173,8 @@ abstract class BaseTest extends APIBaseTest
         $this->assertEquals($data['sectionId'], $contentInfo->sectionId);
         $this->assertEquals($data['currentVersionNo'], $contentInfo->currentVersionNo);
         $this->assertEquals($data['published'], $contentInfo->published);
+        $this->assertEquals($data['contentIsHidden'], $contentInfo->isHidden);
+        $this->assertEquals($data['contentIsVisible'], $contentInfo->isVisible);
         $this->assertEquals($data['ownerId'], $contentInfo->ownerId);
         $this->assertEquals($data['modificationDateTimestamp'], $contentInfo->modificationDate->getTimestamp());
         $this->assertEquals($data['publishedDateTimestamp'], $contentInfo->publishedDate->getTimestamp());
@@ -324,6 +330,8 @@ abstract class BaseTest extends APIBaseTest
         $this->assertEquals($data['locationPriority'], $location->priority);
         $this->assertEquals($data['locationHidden'], $location->hidden);
         $this->assertEquals($data['locationInvisible'], $location->invisible);
+        $this->assertEquals($data['locationExplicitlyHidden'], $location->explicitlyHidden);
+        $this->assertEquals($data['locationIsVisible'], $location->isVisible);
         $this->assertEquals($data['locationPathString'], $location->pathString);
         $this->assertEquals($data['locationPath'], $location->path);
         $this->assertEquals($data['locationDepth'], $location->depth);

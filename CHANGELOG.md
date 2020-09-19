@@ -10,6 +10,7 @@ eZ Platform Site API changelog
 * Autowired controllers by @MarioBlazek ([#165](https://github.com/netgen/ezplatform-site-api/pull/165))
 * eZ Platform v3 compatibility by @emodric ([#175](https://github.com/netgen/ezplatform-site-api/pull/175))
 * Siteaccess-configurable support for combined Content/Location visibility by @RandyCupic ([#176](https://github.com/netgen/ezplatform-site-api/pull/176))
+* Added new visibility properties ([#180](https://github.com/netgen/ezplatform-site-api/pull/180))
 
 ### Changed
 * Reorganized bundle configuration ([#169](https://github.com/netgen/ezplatform-site-api/pull/169))

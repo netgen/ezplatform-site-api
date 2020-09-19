@@ -30,7 +30,7 @@ final class CachingProviderTest extends TestCase
             ->with('apple')
             ->willReturn(true);
 
-        $this->assertTrue($provider->hasContent('apple'));
+        self::assertTrue($provider->hasContent('apple'));
     }
 
     public function testHasContentReturnsFalse(): void
@@ -43,7 +43,7 @@ final class CachingProviderTest extends TestCase
             ->with('fig')
             ->willReturn(false);
 
-        $this->assertFalse($provider->hasContent('fig'));
+        self::assertFalse($provider->hasContent('fig'));
     }
 
     public function testGetContent(): void
@@ -52,13 +52,13 @@ final class CachingProviderTest extends TestCase
         $provider = $this->getProviderUnderTest($providerMock);
 
         $providerMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getContent')
             ->with('apple')
             ->willReturn($this->getContentMock());
 
-        $this->assertSame($this->getContentMock(), $provider->getContent('apple'));
-        $this->assertSame($this->getContentMock(), $provider->getContent('apple'));
+        self::assertSame($this->getContentMock(), $provider->getContent('apple'));
+        self::assertSame($this->getContentMock(), $provider->getContent('apple'));
     }
 
     public function testGetContentThrowsException(): void
@@ -67,7 +67,7 @@ final class CachingProviderTest extends TestCase
         $provider = $this->getProviderUnderTest($providerMock);
 
         $providerMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getContent')
             ->with('fig')
             ->willThrowException(new RuntimeException('content not found'));
@@ -88,7 +88,7 @@ final class CachingProviderTest extends TestCase
             ->with('apple')
             ->willReturn(true);
 
-        $this->assertTrue($provider->hasLocation('apple'));
+        self::assertTrue($provider->hasLocation('apple'));
     }
 
     public function testHasLocationReturnsFalse(): void
@@ -101,7 +101,7 @@ final class CachingProviderTest extends TestCase
             ->with('fig')
             ->willReturn(false);
 
-        $this->assertFalse($provider->hasLocation('fig'));
+        self::assertFalse($provider->hasLocation('fig'));
     }
 
     public function testGetLocation(): void
@@ -110,13 +110,13 @@ final class CachingProviderTest extends TestCase
         $provider = $this->getProviderUnderTest($providerMock);
 
         $providerMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getLocation')
             ->with('apple')
             ->willReturn($this->getLocationMock());
 
-        $this->assertSame($this->getLocationMock(), $provider->getLocation('apple'));
-        $this->assertSame($this->getLocationMock(), $provider->getLocation('apple'));
+        self::assertSame($this->getLocationMock(), $provider->getLocation('apple'));
+        self::assertSame($this->getLocationMock(), $provider->getLocation('apple'));
     }
 
     public function testGetLocationThrowsException(): void
@@ -125,7 +125,7 @@ final class CachingProviderTest extends TestCase
         $provider = $this->getProviderUnderTest($providerMock);
 
         $providerMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getLocation')
             ->with('fig')
             ->willThrowException(new RuntimeException('location not found'));
@@ -146,7 +146,7 @@ final class CachingProviderTest extends TestCase
             ->with('apple')
             ->willReturn(true);
 
-        $this->assertTrue($provider->hasTag('apple'));
+        self::assertTrue($provider->hasTag('apple'));
     }
 
     public function testHasTagReturnsFalse(): void
@@ -159,7 +159,7 @@ final class CachingProviderTest extends TestCase
             ->with('fig')
             ->willReturn(false);
 
-        $this->assertFalse($provider->hasTag('fig'));
+        self::assertFalse($provider->hasTag('fig'));
     }
 
     public function testGetTag(): void
@@ -170,12 +170,12 @@ final class CachingProviderTest extends TestCase
         $tag = new Tag();
 
         $providerMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getTag')
             ->with('apple')
             ->willReturn($tag);
 
-        $this->assertSame($tag, $provider->getTag('apple'));
+        self::assertSame($tag, $provider->getTag('apple'));
     }
 
     public function testGetTagThrowsException(): void
@@ -184,7 +184,7 @@ final class CachingProviderTest extends TestCase
         $provider = $this->getProviderUnderTest($providerMock);
 
         $providerMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getTag')
             ->with('fig')
             ->willThrowException(new RuntimeException('tag not found'));

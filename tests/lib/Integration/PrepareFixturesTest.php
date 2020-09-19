@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
-use DateTime;
 use eZ\Publish\API\Repository\Tests\BaseTest as APIBaseTest;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
@@ -124,8 +123,8 @@ final class PrepareFixturesTest extends APIBaseTest
         $content = $contentService->publishVersion($contentDraft->getVersionInfo());
 
         $contentMetadataUpdateStruct = $contentService->newContentMetadataUpdateStruct();
-        $contentMetadataUpdateStruct->modificationDate = new DateTime('@100');
-        $contentMetadataUpdateStruct->publishedDate = new DateTime('@101');
+        $contentMetadataUpdateStruct->modificationDate = new \DateTimeImmutable('@100');
+        $contentMetadataUpdateStruct->publishedDate = new \DateTimeImmutable('@101');
 
         $contentService->updateContentMetadata($content->contentInfo, $contentMetadataUpdateStruct);
 

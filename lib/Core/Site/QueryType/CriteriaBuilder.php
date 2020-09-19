@@ -20,6 +20,11 @@ use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\IsFieldEmpty
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\ObjectStateIdentifier;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
+use function count;
+use function is_array;
+use function is_int;
+use function reset;
+use function strtotime;
 
 /**
  * @internal Do not depend on this service, it can be changed without warning.
@@ -164,8 +169,8 @@ final class CriteriaBuilder
 
     private function reduceCriteria(array $criteria): Criterion
     {
-        if (\count($criteria) === 1) {
-            return \reset($criteria);
+        if (count($criteria) === 1) {
+            return reset($criteria);
         }
 
         return new LogicalAnd($criteria);
@@ -250,13 +255,15 @@ final class CriteriaBuilder
     }
 
     /**
+     * @param mixed $valueOrValues
+     *
      * @throws \InvalidArgumentException
      *
      * @return array|false|int
      */
     private function resolveTimeValues($valueOrValues)
     {
-        if (!\is_array($valueOrValues)) {
+        if (!is_array($valueOrValues)) {
             return $this->resolveTimeValue($valueOrValues);
         }
 
@@ -276,11 +283,11 @@ final class CriteriaBuilder
      */
     private function resolveTimeValue($value): int
     {
-        if (\is_int($value)) {
+        if (is_int($value)) {
             return $value;
         }
 
-        $timestamp = \strtotime($value);
+        $timestamp = strtotime($value);
 
         if ($timestamp === false) {
             throw new InvalidArgumentException(

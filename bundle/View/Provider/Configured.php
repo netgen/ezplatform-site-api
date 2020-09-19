@@ -16,6 +16,10 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\RedirectConfiguration;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect\Resolver;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
+use function array_key_exists;
+use function is_array;
+use function preg_replace;
+use function sprintf;
 
 /**
  * A kind of a plugin to the Configurator, uses view configuration.
@@ -100,7 +104,7 @@ class Configured implements ViewProvider
 
     private function getQueriesConfiguration(array $configHash): array
     {
-        if (\array_key_exists(ContentViewParser::QUERY_KEY, $configHash)) {
+        if (array_key_exists(ContentViewParser::QUERY_KEY, $configHash)) {
             return $configHash[ContentViewParser::QUERY_KEY];
         }
 
@@ -128,7 +132,7 @@ class Configured implements ViewProvider
             $dto->setControllerReference(new ControllerReference($viewConfig['controller']));
         }
 
-        if (isset($viewConfig['params']) && \is_array($viewConfig['params'])) {
+        if (isset($viewConfig['params']) && is_array($viewConfig['params'])) {
             $dto->addParameters($viewConfig['params']);
         }
 
@@ -139,7 +143,7 @@ class Configured implements ViewProvider
     {
         $contentTypeIdentifier = $view->getSiteContent()->contentInfo->contentTypeIdentifier;
 
-        return \preg_replace('/{content_type}/', $contentTypeIdentifier, $identifier) ?? $identifier;
+        return preg_replace('/{content_type}/', $contentTypeIdentifier, $identifier) ?? $identifier;
     }
 
     /**
@@ -153,7 +157,7 @@ class Configured implements ViewProvider
 
         $dto->setControllerReference(
             new ControllerReference(
-                \sprintf('%s::%s', RedirectController::class, 'urlRedirectAction')
+                sprintf('%s::%s', RedirectController::class, 'urlRedirectAction')
             )
         );
 

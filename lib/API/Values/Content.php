@@ -17,15 +17,15 @@ use Pagerfanta\Pagerfanta;
  * @see \eZ\Publish\API\Repository\Values\Content\Content
  *
  * @property int $id
- * @property null|int $mainLocationId
+ * @property int|null $mainLocationId
  * @property string $name
  * @property string $languageCode
  * @property bool $isVisible
  * @property \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
  * @property \Netgen\EzPlatformSiteApi\API\Values\Field[]|\Netgen\EzPlatformSiteApi\API\Values\Fields $fields
- * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
- * @property null|\Netgen\EzPlatformSiteApi\API\Values\Content $owner
- * @property null|\eZ\Publish\API\Repository\Values\User\User $innerOwnerUser
+ * @property \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
+ * @property \Netgen\EzPlatformSiteApi\API\Values\Content|null $owner
+ * @property \eZ\Publish\API\Repository\Values\User\User|null $innerOwnerUser
  * @property \eZ\Publish\API\Repository\Values\Content\Content $innerContent
  * @property \eZ\Publish\API\Repository\Values\Content\VersionInfo $innerVersionInfo
  * @property \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
@@ -101,7 +101,7 @@ abstract class Content extends ValueObject
     /**
      * Return single related Content from $fieldDefinitionIdentifier field.
      *
-     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Content
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content|null
      */
     abstract public function getFieldRelation(string $fieldDefinitionIdentifier): ?Content;
 

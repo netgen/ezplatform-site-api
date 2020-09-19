@@ -26,14 +26,14 @@ final class LoadingProviderTest extends TestCase
     {
         $provider = $this->getProviderUnderTest();
 
-        $this->assertTrue($provider->hasContent('apple'));
+        self::assertTrue($provider->hasContent('apple'));
     }
 
     public function testHasContentReturnsFalse(): void
     {
         $provider = $this->getProviderUnderTest();
 
-        $this->assertFalse($provider->hasContent('quince'));
+        self::assertFalse($provider->hasContent('quince'));
     }
 
     /**
@@ -47,7 +47,7 @@ final class LoadingProviderTest extends TestCase
 
         $content = $provider->getContent('apple');
 
-        $this->assertSame($this->getContentMock(), $content);
+        self::assertSame($this->getContentMock(), $content);
     }
 
     /**
@@ -76,7 +76,7 @@ final class LoadingProviderTest extends TestCase
 
         $content = $provider->getContent('pear');
 
-        $this->assertSame($this->getContentMock(), $content);
+        self::assertSame($this->getContentMock(), $content);
     }
 
     /**
@@ -98,14 +98,14 @@ final class LoadingProviderTest extends TestCase
     {
         $provider = $this->getProviderUnderTest();
 
-        $this->assertTrue($provider->hasLocation('apple'));
+        self::assertTrue($provider->hasLocation('apple'));
     }
 
     public function testHasLocationReturnsFalse(): void
     {
         $provider = $this->getProviderUnderTest();
 
-        $this->assertFalse($provider->hasLocation('quince'));
+        self::assertFalse($provider->hasLocation('quince'));
     }
 
     /**
@@ -119,7 +119,7 @@ final class LoadingProviderTest extends TestCase
 
         $location = $provider->getLocation('apple');
 
-        $this->assertSame($this->getLocationMock(), $location);
+        self::assertSame($this->getLocationMock(), $location);
     }
 
     /**
@@ -148,7 +148,7 @@ final class LoadingProviderTest extends TestCase
 
         $location = $provider->getLocation('pear');
 
-        $this->assertSame($this->getLocationMock(), $location);
+        self::assertSame($this->getLocationMock(), $location);
     }
 
     /**
@@ -170,14 +170,14 @@ final class LoadingProviderTest extends TestCase
     {
         $provider = $this->getProviderUnderTest();
 
-        $this->assertTrue($provider->hasContent('apple'));
+        self::assertTrue($provider->hasContent('apple'));
     }
 
     public function testHasTagReturnsFalse(): void
     {
         $provider = $this->getProviderUnderTest();
 
-        $this->assertFalse($provider->hasContent('quince'));
+        self::assertFalse($provider->hasContent('quince'));
     }
 
     /**
@@ -190,7 +190,7 @@ final class LoadingProviderTest extends TestCase
 
         $tag = $provider->getTag('apple');
 
-        $this->assertSame(42, $tag->id);
+        self::assertSame(42, $tag->id);
     }
 
     /**
@@ -217,7 +217,7 @@ final class LoadingProviderTest extends TestCase
 
         $tag = $provider->getTag('pear');
 
-        $this->assertSame('abc', $tag->remoteId);
+        self::assertSame('abc', $tag->remoteId);
     }
 
     /**

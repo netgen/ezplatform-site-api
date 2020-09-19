@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use function is_string;
+use function mb_stripos;
 
 final class Resolver
 {
@@ -45,11 +47,11 @@ final class Resolver
      */
     public function resolveTarget(RedirectConfiguration $redirectConfig, ContentView $view): string
     {
-        if (\mb_stripos($redirectConfig->getTarget(), '@=') === 0) {
+        if (mb_stripos($redirectConfig->getTarget(), '@=') === 0) {
             return $this->processExpression($redirectConfig, $view);
         }
 
-        if (\mb_stripos($redirectConfig->getTarget(), 'http') === 0) {
+        if (mb_stripos($redirectConfig->getTarget(), 'http') === 0) {
             return $redirectConfig->getTarget();
         }
 
@@ -84,7 +86,7 @@ final class Resolver
             );
         }
 
-        if (\is_string($value) && \mb_stripos($value, 'http') === 0) {
+        if (is_string($value) && mb_stripos($value, 'http') === 0) {
             return $value;
         }
 

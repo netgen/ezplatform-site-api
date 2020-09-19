@@ -43,6 +43,8 @@ final class Settings extends BaseSettings
     }
 
     /**
+     * @param mixed $value
+     *
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException
      */
     public function __set(string $property, $value): void

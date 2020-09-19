@@ -24,7 +24,7 @@ class Renderer extends CoreRenderer
         $styleConfigurationNamespace,
         $embedConfigurationNamespace,
         $ngEmbedConfigurationNamespace,
-        LoggerInterface $logger = null,
+        ?LoggerInterface $logger = null,
         array $customTagsConfiguration = [],
         array $customStylesConfiguration = []
     ) {

@@ -356,6 +356,7 @@ final class CriterionDefinitionResolverTest extends TestCase
      * @dataProvider providerForTestResolve
      *
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $expectedCriterionDefinitions
+     * @param mixed $parameters
      */
     public function testResolve($parameters, array $expectedCriterionDefinitions): void
     {
@@ -363,7 +364,7 @@ final class CriterionDefinitionResolverTest extends TestCase
 
         $criterionArguments = $criterionDefinitionResolver->resolve('test', $parameters);
 
-        $this->assertEquals(
+        self::assertEquals(
             $expectedCriterionDefinitions,
             $criterionArguments
         );
@@ -804,6 +805,7 @@ final class CriterionDefinitionResolverTest extends TestCase
      * @dataProvider providerForTestResolveTargets
      *
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[] $expectedCriterionDefinitions
+     * @param mixed $parameters
      */
     public function testResolveTargets($parameters, array $expectedCriterionDefinitions): void
     {
@@ -811,7 +813,7 @@ final class CriterionDefinitionResolverTest extends TestCase
 
         $criterionArguments = $criterionDefinitionResolver->resolveTargets('test', $parameters);
 
-        $this->assertEquals(
+        self::assertEquals(
             $expectedCriterionDefinitions,
             $criterionArguments
         );

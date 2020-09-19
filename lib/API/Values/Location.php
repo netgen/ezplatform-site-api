@@ -31,7 +31,7 @@ use Pagerfanta\Pagerfanta;
  * @property int $contentId
  * @property \eZ\Publish\API\Repository\Values\Content\Location $innerLocation
  * @property \Netgen\EzPlatformSiteApi\API\Values\ContentInfo $contentInfo
- * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $parent
+ * @property \Netgen\EzPlatformSiteApi\API\Values\Location|null $parent
  * @property \Netgen\EzPlatformSiteApi\API\Values\Content $content
  */
 abstract class Location extends ValueObject
@@ -56,7 +56,7 @@ abstract class Location extends ValueObject
     /**
      * Return first child, limited by optional $contentTypeIdentifier.
      *
-     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location|null
      */
     abstract public function getFirstChild(?string $contentTypeIdentifier = null): ?Location;
 

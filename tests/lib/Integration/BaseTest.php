@@ -22,6 +22,10 @@ use Netgen\EzPlatformSiteApi\API\Values\Fields;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Field\SurrogateValue;
 use ReflectionProperty;
+use function array_values;
+use function count;
+use function get_class;
+use function reset;
 
 /**
  * Base class for API integration tests.
@@ -81,6 +85,8 @@ abstract class BaseTest extends APIBaseTest
     }
 
     /**
+     * @param mixed $value
+     *
      * @throws \ReflectionException
      * @throws \ErrorException
      */
@@ -88,7 +94,7 @@ abstract class BaseTest extends APIBaseTest
     {
         $settings = $this->getSite()->getSettings();
 
-        $property = new ReflectionProperty(\get_class($settings), $name);
+        $property = new ReflectionProperty(get_class($settings), $name);
         $property->setAccessible(true);
         $property->setValue($settings, $value);
     }
@@ -106,44 +112,44 @@ abstract class BaseTest extends APIBaseTest
 
     protected function assertContent(Content $content, array $data): void
     {
-        [$name, $contentId, , $locationId] = \array_values($data);
+        [$name, $contentId, , $locationId] = array_values($data);
 
-        $this->assertSame($contentId, $content->id);
-        $this->assertSame($locationId, $content->mainLocationId);
-        $this->assertSame($name, $content->name);
-        $this->assertEquals($data['mainLocationId'], $content->mainLocationId);
-        $this->assertEquals($data['languageCode'], $content->languageCode);
-        $this->assertEquals($data['contentIsVisible'], $content->isVisible);
+        self::assertSame($contentId, $content->id);
+        self::assertSame($locationId, $content->mainLocationId);
+        self::assertSame($name, $content->name);
+        self::assertEquals($data['mainLocationId'], $content->mainLocationId);
+        self::assertEquals($data['languageCode'], $content->languageCode);
+        self::assertEquals($data['contentIsVisible'], $content->isVisible);
         $this->assertContentInfo($content->contentInfo, $data);
         $this->assertFields($content, $data);
-        $this->assertInstanceOf(Content::class, $content->owner);
-        $this->assertInstanceOf(Location::class, $content->mainLocation);
-        $this->assertInstanceOf(Content::class, $content->owner);
-        $this->assertInstanceOf(User::class, $content->innerOwnerUser);
-        $this->assertInstanceOf(User::class, $content->innerOwnerUser);
-        $this->assertInstanceOf(APIContent::class, $content->innerContent);
-        $this->assertInstanceOf(VersionInfo::class, $content->versionInfo);
-        $this->assertInstanceOf(VersionInfo::class, $content->innerVersionInfo);
+        self::assertInstanceOf(Content::class, $content->owner);
+        self::assertInstanceOf(Location::class, $content->mainLocation);
+        self::assertInstanceOf(Content::class, $content->owner);
+        self::assertInstanceOf(User::class, $content->innerOwnerUser);
+        self::assertInstanceOf(User::class, $content->innerOwnerUser);
+        self::assertInstanceOf(APIContent::class, $content->innerContent);
+        self::assertInstanceOf(VersionInfo::class, $content->versionInfo);
+        self::assertInstanceOf(VersionInfo::class, $content->innerVersionInfo);
 
         $locations = $content->getLocations();
-        $this->assertIsArray($locations);
-        $this->assertCount(1, $locations);
-        $this->assertInstanceOf(Location::class, \reset($locations));
+        self::assertIsArray($locations);
+        self::assertCount(1, $locations);
+        self::assertInstanceOf(Location::class, reset($locations));
 
-        $this->assertTrue(isset($content->id));
-        $this->assertTrue(isset($content->name));
-        $this->assertTrue(isset($content->mainLocationId));
-        $this->assertTrue(isset($content->contentInfo));
-        $this->assertFalse(isset($content->nonExistentProperty));
+        self::assertTrue(isset($content->id));
+        self::assertTrue(isset($content->name));
+        self::assertTrue(isset($content->mainLocationId));
+        self::assertTrue(isset($content->contentInfo));
+        self::assertFalse(isset($content->nonExistentProperty));
 
         try {
             $content->nonExistentProperty;
-            $this->fail('This property should not be found');
+            self::fail('This property should not be found');
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'id' => $content->id,
                 'mainLocationId' => $content->mainLocationId,
@@ -162,47 +168,47 @@ abstract class BaseTest extends APIBaseTest
 
     protected function assertContentInfo(APIContentInfo $contentInfo, array $data): void
     {
-        [$name, $contentId, $contentRemoteId, $locationId] = \array_values($data);
+        [$name, $contentId, $contentRemoteId, $locationId] = array_values($data);
 
-        $this->assertEquals($contentId, $contentInfo->id);
-        $this->assertEquals($contentRemoteId, $contentInfo->remoteId);
-        $this->assertEquals($locationId, $contentInfo->mainLocationId);
-        $this->assertEquals($name, $contentInfo->name);
-        $this->assertEquals($data['contentTypeIdentifier'], $contentInfo->contentTypeIdentifier);
-        $this->assertEquals($data['contentTypeId'], $contentInfo->contentTypeId);
-        $this->assertEquals($data['sectionId'], $contentInfo->sectionId);
-        $this->assertEquals($data['currentVersionNo'], $contentInfo->currentVersionNo);
-        $this->assertEquals($data['published'], $contentInfo->published);
-        $this->assertEquals($data['contentIsHidden'], $contentInfo->isHidden);
-        $this->assertEquals($data['contentIsVisible'], $contentInfo->isVisible);
-        $this->assertEquals($data['ownerId'], $contentInfo->ownerId);
-        $this->assertEquals($data['modificationDateTimestamp'], $contentInfo->modificationDate->getTimestamp());
-        $this->assertEquals($data['publishedDateTimestamp'], $contentInfo->publishedDate->getTimestamp());
-        $this->assertEquals($data['alwaysAvailable'], $contentInfo->alwaysAvailable);
-        $this->assertEquals($data['mainLanguageCode'], $contentInfo->mainLanguageCode);
-        $this->assertEquals($data['mainLocationId'], $contentInfo->mainLocationId);
-        $this->assertEquals($data['contentTypeName'], $contentInfo->contentTypeName);
-        $this->assertEquals($data['contentTypeDescription'], $contentInfo->contentTypeDescription);
-        $this->assertEquals($data['languageCode'], $contentInfo->languageCode);
-        $this->assertInstanceOf(Location::class, $contentInfo->mainLocation);
-        $this->assertInstanceOf(ContentInfo::class, $contentInfo->innerContentInfo);
-        $this->assertInstanceOf(ContentType::class, $contentInfo->innerContentType);
+        self::assertEquals($contentId, $contentInfo->id);
+        self::assertEquals($contentRemoteId, $contentInfo->remoteId);
+        self::assertEquals($locationId, $contentInfo->mainLocationId);
+        self::assertEquals($name, $contentInfo->name);
+        self::assertEquals($data['contentTypeIdentifier'], $contentInfo->contentTypeIdentifier);
+        self::assertEquals($data['contentTypeId'], $contentInfo->contentTypeId);
+        self::assertEquals($data['sectionId'], $contentInfo->sectionId);
+        self::assertEquals($data['currentVersionNo'], $contentInfo->currentVersionNo);
+        self::assertEquals($data['published'], $contentInfo->published);
+        self::assertEquals($data['contentIsHidden'], $contentInfo->isHidden);
+        self::assertEquals($data['contentIsVisible'], $contentInfo->isVisible);
+        self::assertEquals($data['ownerId'], $contentInfo->ownerId);
+        self::assertEquals($data['modificationDateTimestamp'], $contentInfo->modificationDate->getTimestamp());
+        self::assertEquals($data['publishedDateTimestamp'], $contentInfo->publishedDate->getTimestamp());
+        self::assertEquals($data['alwaysAvailable'], $contentInfo->alwaysAvailable);
+        self::assertEquals($data['mainLanguageCode'], $contentInfo->mainLanguageCode);
+        self::assertEquals($data['mainLocationId'], $contentInfo->mainLocationId);
+        self::assertEquals($data['contentTypeName'], $contentInfo->contentTypeName);
+        self::assertEquals($data['contentTypeDescription'], $contentInfo->contentTypeDescription);
+        self::assertEquals($data['languageCode'], $contentInfo->languageCode);
+        self::assertInstanceOf(Location::class, $contentInfo->mainLocation);
+        self::assertInstanceOf(ContentInfo::class, $contentInfo->innerContentInfo);
+        self::assertInstanceOf(ContentType::class, $contentInfo->innerContentType);
 
-        $this->assertTrue(isset($contentInfo->name));
-        $this->assertTrue(isset($contentInfo->contentTypeIdentifier));
-        $this->assertTrue(isset($contentInfo->contentTypeName));
-        $this->assertTrue(isset($contentInfo->contentTypeDescription));
-        $this->assertTrue(isset($contentInfo->mainLocation));
-        $this->assertFalse(isset($contentInfo->nonExistentProperty));
+        self::assertTrue(isset($contentInfo->name));
+        self::assertTrue(isset($contentInfo->contentTypeIdentifier));
+        self::assertTrue(isset($contentInfo->contentTypeName));
+        self::assertTrue(isset($contentInfo->contentTypeDescription));
+        self::assertTrue(isset($contentInfo->mainLocation));
+        self::assertFalse(isset($contentInfo->nonExistentProperty));
 
         try {
             $contentInfo->nonExistentProperty;
-            $this->fail('This property should not be found');
+            self::fail('This property should not be found');
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'id' => $contentInfo->id,
                 'contentTypeId' => $contentInfo->contentTypeId,
@@ -233,42 +239,42 @@ abstract class BaseTest extends APIBaseTest
 
     protected function assertFields(Content $content, array $data): void
     {
-        $this->assertInstanceOf(Fields::class, $content->fields);
-        $this->assertCount(\count($data['fields']), $content->fields);
+        self::assertInstanceOf(Fields::class, $content->fields);
+        self::assertCount(count($data['fields']), $content->fields);
 
         foreach ($content->fields as $identifier => $field) {
-            $this->assertInstanceOf(Field::class, $field);
-            $this->assertInstanceOf(Value::class, $field->value);
-            $this->assertInstanceOf(APIField::class, $field->innerField);
+            self::assertInstanceOf(Field::class, $field);
+            self::assertInstanceOf(Value::class, $field->value);
+            self::assertInstanceOf(APIField::class, $field->innerField);
 
             $fieldById = $content->getFieldById($field->id);
             $fieldByIdentifier = $content->getField($identifier);
             $fieldByFirstNonEmptyField = $content->getFirstNonEmptyField($identifier);
 
-            $this->assertSame($field, $fieldById);
-            $this->assertSame($field, $fieldByIdentifier);
-            $this->assertSame($field, $fieldByFirstNonEmptyField);
+            self::assertSame($field, $fieldById);
+            self::assertSame($field, $fieldByIdentifier);
+            self::assertSame($field, $fieldByFirstNonEmptyField);
 
             $fieldValueById = $content->getFieldValueById($field->id);
             $fieldValueByIdentifier = $content->getFieldValue($identifier);
 
-            $this->assertSame($field->value, $fieldValueById);
-            $this->assertSame($fieldValueById, $fieldValueByIdentifier);
+            self::assertSame($field->value, $fieldValueById);
+            self::assertSame($fieldValueById, $fieldValueByIdentifier);
 
-            $this->assertSame($content, $field->content);
+            self::assertSame($content, $field->content);
 
-            $this->assertSame($data['fields'][$identifier]['value'], (string) $field->value);
+            self::assertSame($data['fields'][$identifier]['value'], (string) $field->value);
         }
 
         foreach ($data['fields'] as $identifier => $fieldData) {
             $this->assertField($content, $identifier, $data['languageCode'], $fieldData);
         }
 
-        $this->assertInstanceOf(Field::class, $content->getField('non_existent_field'));
-        $this->assertInstanceOf(Field::class, $content->getFieldById('non_existent_field'));
-        $this->assertInstanceOf(SurrogateValue::class, $content->getFieldValue('non_existent_field'));
-        $this->assertInstanceOf(SurrogateValue::class, $content->getFieldValueById('non_existent_field'));
-        $this->assertInstanceOf(SurrogateValue::class, $content->getFirstNonEmptyField('non_existent_field')->value);
+        self::assertInstanceOf(Field::class, $content->getField('non_existent_field'));
+        self::assertInstanceOf(Field::class, $content->getFieldById('non_existent_field'));
+        self::assertInstanceOf(SurrogateValue::class, $content->getFieldValue('non_existent_field'));
+        self::assertInstanceOf(SurrogateValue::class, $content->getFieldValueById('non_existent_field'));
+        self::assertInstanceOf(SurrogateValue::class, $content->getFirstNonEmptyField('non_existent_field')->value);
     }
 
     protected function assertField(Content $content, string $identifier, string $languageCode, array $data): void
@@ -276,30 +282,30 @@ abstract class BaseTest extends APIBaseTest
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Field|\Netgen\EzPlatformSiteApi\Core\Site\Values\Field $field */
         $field = $content->getField($identifier);
 
-        $this->assertSame($field->id, $field->innerField->id);
-        $this->assertSame($data['isEmpty'], $field->isEmpty());
-        $this->assertSame($data['isSurrogate'], $field->isSurrogate());
-        $this->assertSame($identifier, $field->fieldDefIdentifier);
-        $this->assertSame($data['fieldTypeIdentifier'], $field->fieldTypeIdentifier);
-        $this->assertSame($data['name'], $field->name);
-        $this->assertSame($data['description'], $field->description);
-        $this->assertEquals($languageCode, $field->languageCode);
+        self::assertSame($field->id, $field->innerField->id);
+        self::assertSame($data['isEmpty'], $field->isEmpty());
+        self::assertSame($data['isSurrogate'], $field->isSurrogate());
+        self::assertSame($identifier, $field->fieldDefIdentifier);
+        self::assertSame($data['fieldTypeIdentifier'], $field->fieldTypeIdentifier);
+        self::assertSame($data['name'], $field->name);
+        self::assertSame($data['description'], $field->description);
+        self::assertEquals($languageCode, $field->languageCode);
 
-        $this->assertTrue(isset($field->fieldTypeIdentifier));
-        $this->assertTrue(isset($field->innerFieldDefinition));
-        $this->assertTrue(isset($field->name));
-        $this->assertTrue(isset($field->description));
-        $this->assertTrue(isset($field->languageCode));
-        $this->assertFalse(isset($field->nonExistantProperty));
+        self::assertTrue(isset($field->fieldTypeIdentifier));
+        self::assertTrue(isset($field->innerFieldDefinition));
+        self::assertTrue(isset($field->name));
+        self::assertTrue(isset($field->description));
+        self::assertTrue(isset($field->languageCode));
+        self::assertFalse(isset($field->nonExistantProperty));
 
         try {
             $field->nonExistentProperty;
-            $this->fail('This property should not be found');
+            self::fail('This property should not be found');
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'id' => $field->id,
                 'fieldDefIdentifier' => $field->fieldDefIdentifier,
@@ -321,58 +327,58 @@ abstract class BaseTest extends APIBaseTest
 
     protected function assertLocation(Location $location, array $data): void
     {
-        [, , , $locationId, $locationRemoteId, $parentLocationId] = \array_values($data);
+        [, , , $locationId, $locationRemoteId, $parentLocationId] = array_values($data);
 
-        $this->assertEquals($locationId, $location->id);
-        $this->assertEquals($locationRemoteId, $location->remoteId);
-        $this->assertEquals($parentLocationId, $location->parentLocationId);
-        $this->assertEquals(APILocation::STATUS_PUBLISHED, $location->status);
-        $this->assertEquals($data['locationPriority'], $location->priority);
-        $this->assertEquals($data['locationHidden'], $location->hidden);
-        $this->assertEquals($data['locationInvisible'], $location->invisible);
-        $this->assertEquals($data['locationExplicitlyHidden'], $location->explicitlyHidden);
-        $this->assertEquals($data['locationIsVisible'], $location->isVisible);
-        $this->assertEquals($data['locationPathString'], $location->pathString);
-        $this->assertEquals($data['locationPath'], $location->path);
-        $this->assertEquals($data['locationDepth'], $location->depth);
-        $this->assertEquals($data['locationSortField'], $location->sortField);
-        $this->assertEquals($data['locationSortOrder'], $location->sortOrder);
-        $this->assertEquals($location->contentInfo->id, $location->contentId);
+        self::assertEquals($locationId, $location->id);
+        self::assertEquals($locationRemoteId, $location->remoteId);
+        self::assertEquals($parentLocationId, $location->parentLocationId);
+        self::assertEquals(APILocation::STATUS_PUBLISHED, $location->status);
+        self::assertEquals($data['locationPriority'], $location->priority);
+        self::assertEquals($data['locationHidden'], $location->hidden);
+        self::assertEquals($data['locationInvisible'], $location->invisible);
+        self::assertEquals($data['locationExplicitlyHidden'], $location->explicitlyHidden);
+        self::assertEquals($data['locationIsVisible'], $location->isVisible);
+        self::assertEquals($data['locationPathString'], $location->pathString);
+        self::assertEquals($data['locationPath'], $location->path);
+        self::assertEquals($data['locationDepth'], $location->depth);
+        self::assertEquals($data['locationSortField'], $location->sortField);
+        self::assertEquals($data['locationSortOrder'], $location->sortOrder);
+        self::assertEquals($location->contentInfo->id, $location->contentId);
         $this->assertContentInfo($location->contentInfo, $data);
-        $this->assertInstanceOf(APILocation::class, $location->innerLocation);
-        $this->assertInstanceOf(Content::class, $location->content);
+        self::assertInstanceOf(APILocation::class, $location->innerLocation);
+        self::assertInstanceOf(Content::class, $location->content);
 
-        $this->assertInstanceOf(Location::class, $location->parent);
-        $this->assertEquals($parentLocationId, $location->parent->id);
+        self::assertInstanceOf(Location::class, $location->parent);
+        self::assertEquals($parentLocationId, $location->parent->id);
 
         $children = $location->getChildren();
-        $this->assertIsArray($children);
-        $this->assertCount(1, $children);
-        $this->assertInstanceOf(Location::class, $children[0]);
-        $this->assertEquals($data['childLocationId'], $children[0]->id);
+        self::assertIsArray($children);
+        self::assertCount(1, $children);
+        self::assertInstanceOf(Location::class, $children[0]);
+        self::assertEquals($data['childLocationId'], $children[0]->id);
 
         $firstChild = $location->getFirstChild();
-        $this->assertInstanceOf(Location::class, $firstChild);
-        $this->assertEquals($data['childLocationId'], $firstChild->id);
+        self::assertInstanceOf(Location::class, $firstChild);
+        self::assertEquals($data['childLocationId'], $firstChild->id);
 
         $siblings = $location->getSiblings();
-        $this->assertIsArray($siblings);
-        $this->assertCount(1, $siblings);
-        $this->assertInstanceOf(Location::class, $siblings[0]);
-        $this->assertEquals($data['siblingLocationId'], $siblings[0]->id);
+        self::assertIsArray($siblings);
+        self::assertCount(1, $siblings);
+        self::assertInstanceOf(Location::class, $siblings[0]);
+        self::assertEquals($data['siblingLocationId'], $siblings[0]->id);
 
-        $this->assertTrue(isset($location->contentId));
-        $this->assertTrue(isset($location->contentInfo));
-        $this->assertFalse(isset($location->nonExistentProperty));
+        self::assertTrue(isset($location->contentId));
+        self::assertTrue(isset($location->contentInfo));
+        self::assertFalse(isset($location->nonExistentProperty));
 
         try {
             $location->nonExistentProperty;
-            $this->fail('This property should not be found');
+            self::fail('This property should not be found');
         } catch (PropertyNotFoundException $e) {
             // Do nothing
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'id' => $location->id,
                 'status' => $location->status,

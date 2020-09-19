@@ -10,6 +10,8 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryExecutor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Pagerfanta\Pagerfanta;
 use Twig\Error\RuntimeError;
+use function array_key_exists;
+use function is_array;
 
 /**
  * Twig extension runtime for executing queries from the QueryDefinitionCollection injected
@@ -28,6 +30,8 @@ class QueryRuntime
     }
 
     /**
+     * @param mixed $context
+     *
      * @throws \Pagerfanta\Exception\Exception
      * @throws \Twig\Error\RuntimeError
      */
@@ -39,6 +43,8 @@ class QueryRuntime
     }
 
     /**
+     * @param mixed $context
+     *
      * @throws \Twig\Error\RuntimeError
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
@@ -52,13 +58,15 @@ class QueryRuntime
     /**
      * Returns the QueryDefinitionCollection variable from the given $context.
      *
+     * @param mixed $context
+     *
      * @throws \Twig\Error\RuntimeError
      */
     private function getQueryDefinitionCollection($context): QueryDefinitionCollection
     {
         $variableName = ContentView::QUERY_DEFINITION_COLLECTION_NAME;
 
-        if (\is_array($context) && \array_key_exists($variableName, $context)) {
+        if (is_array($context) && array_key_exists($variableName, $context)) {
             return $context[$variableName];
         }
 

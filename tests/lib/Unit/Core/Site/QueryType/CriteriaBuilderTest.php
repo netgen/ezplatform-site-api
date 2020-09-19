@@ -413,7 +413,7 @@ final class CriteriaBuilderTest extends TestCase
 
         $criteria = $criteriaBuilder->build($arguments);
 
-        $this->assertEquals(
+        self::assertEquals(
             $expectedCriteria,
             $criteria
         );

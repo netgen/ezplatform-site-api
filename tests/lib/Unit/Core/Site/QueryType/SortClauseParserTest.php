@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Priority;
 use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\SortClauseParser;
 use PHPUnit\Framework\TestCase;
+use function preg_quote;
 
 /**
  * SortClauseParser test case.
@@ -115,7 +116,7 @@ final class SortClauseParserTest extends TestCase
 
         $sortClause = $parser->parse($stringDefinition);
 
-        $this->assertEquals($sortClause, $expectedSortClause);
+        self::assertEquals($sortClause, $expectedSortClause);
     }
 
     public function providerForTestParseInvalid(): array
@@ -150,8 +151,8 @@ final class SortClauseParserTest extends TestCase
     public function testParseInvalid(string $stringDefinition, string $message): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $message = \preg_quote($message, '/');
-        $this->matchesRegularExpression("/{$message}/");
+        $message = preg_quote($message, '/');
+        self::matchesRegularExpression("/{$message}/");
 
         $parser = $this->getParserUnderTest();
         $parser->parse($stringDefinition);

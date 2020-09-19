@@ -10,6 +10,13 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Twig\Lexer;
+use function array_key_exists;
+use function array_keys;
+use function array_replace;
+use function explode;
+use function is_string;
+use function preg_match;
+use function sprintf;
 
 class ContentView extends AbstractParser
 {
@@ -39,12 +46,12 @@ class ContentView extends AbstractParser
                     ->arrayPrototype()
                         ->beforeNormalization()
                             ->ifTrue(static function ($v) {
-                                return (\array_key_exists('permanent_redirect', $v) xor \array_key_exists('temporary_redirect', $v))
-                                    && !\array_key_exists('redirect', $v);
+                                return (array_key_exists('permanent_redirect', $v) xor array_key_exists('temporary_redirect', $v))
+                                    && !array_key_exists('redirect', $v);
                             })
                             ->then(static function ($v) {
                                 $value = $v['permanent_redirect'] ?? $v['temporary_redirect'];
-                                $permanent = \array_key_exists('permanent_redirect', $v);
+                                $permanent = array_key_exists('permanent_redirect', $v);
 
                                 $v['redirect'] = [
                                     'target' => $value,
@@ -59,7 +66,7 @@ class ContentView extends AbstractParser
                         ->end()
                         ->beforeNormalization()
                             ->ifTrue(static function ($v): bool {
-                                return !\array_key_exists('match', $v) && !\array_key_exists('extends', $v);
+                                return !array_key_exists('match', $v) && !array_key_exists('extends', $v);
                             })
                             ->thenInvalid(
                                 'When view configuration is not extending another, match key is required'
@@ -138,8 +145,8 @@ EOT
                         ->end()
                         ->validate()
                             ->ifTrue(static function ($v): bool {
-                                if (\array_key_exists('redirect', $v)) {
-                                    return \array_key_exists('controller', $v) || \array_key_exists('template', $v);
+                                if (array_key_exists('redirect', $v)) {
+                                    return array_key_exists('controller', $v) || array_key_exists('template', $v);
                                 }
 
                                 return false;
@@ -150,8 +157,8 @@ EOT
                         ->end()
                         ->validate()
                             ->ifTrue(static function ($v): bool {
-                                if (\array_key_exists('redirect', $v)) {
-                                    return \array_key_exists('temporary_redirect', $v) || \array_key_exists('permanent_redirect', $v);
+                                if (array_key_exists('redirect', $v)) {
+                                    return array_key_exists('temporary_redirect', $v) || array_key_exists('permanent_redirect', $v);
                                 }
 
                                 return false;
@@ -162,7 +169,7 @@ EOT
                         ->end()
                         ->validate()
                             ->ifTrue(static function ($v): bool {
-                                return \array_key_exists('temporary_redirect', $v) && \array_key_exists('permanent_redirect', $v);
+                                return array_key_exists('temporary_redirect', $v) && array_key_exists('permanent_redirect', $v);
                             })
                             ->thenInvalid(
                                 'You cannot use both "temporary_redirect" and "permanent_redirect" at the same time.'
@@ -170,8 +177,8 @@ EOT
                         ->end()
                         ->validate()
                             ->ifTrue(static function ($v): bool {
-                                if (\array_key_exists('temporary_redirect', $v) || \array_key_exists('permanent_redirect', $v)) {
-                                    return \array_key_exists('controller', $v) || \array_key_exists('template', $v);
+                                if (array_key_exists('temporary_redirect', $v) || array_key_exists('permanent_redirect', $v)) {
+                                    return array_key_exists('controller', $v) || array_key_exists('template', $v);
                                 }
 
                                 return false;
@@ -209,7 +216,7 @@ EOT
 
     private function extendViewConfig(&$config, string $viewPath, array $viewConfigs): void
     {
-        if (!\array_key_exists('extends', $config)) {
+        if (!array_key_exists('extends', $config)) {
             $this->restoreDefaultValues($config);
 
             return;
@@ -217,11 +224,11 @@ EOT
 
         $this->unsetDefaultValues($config);
 
-        [$extendedViewType, $extendedName] = \explode('/', $config['extends'] . '/');
+        [$extendedViewType, $extendedName] = explode('/', $config['extends'] . '/');
 
         if (!isset($viewConfigs[$extendedViewType][$extendedName])) {
             throw new InvalidConfigurationException(
-                \sprintf(
+                sprintf(
                     'In %s: extended view configuration "%s" was not found',
                     $viewPath,
                     $config['extends']
@@ -231,9 +238,9 @@ EOT
 
         $baseConfig = $viewConfigs[$extendedViewType][$extendedName];
 
-        if (\array_key_exists('extends', $baseConfig)) {
+        if (array_key_exists('extends', $baseConfig)) {
             throw new InvalidConfigurationException(
-                \sprintf(
+                sprintf(
                     'In %s: only one level of view configuration inheritance is allowed, %s already extends %s',
                     $viewPath,
                     $extendedViewType . '/' . $extendedName,
@@ -242,7 +249,7 @@ EOT
             );
         }
 
-        $replacedConfig = \array_replace($baseConfig, $config);
+        $replacedConfig = array_replace($baseConfig, $config);
 
         if ($replacedConfig === null) {
             throw new InvalidConfigurationException('Could not replace extended config');
@@ -318,7 +325,7 @@ EOT
                 ->end()
                 ->validate()
                     ->ifTrue(static function ($v): bool {
-                        return \array_key_exists('named_query', $v) && \array_key_exists('query_type', $v);
+                        return array_key_exists('named_query', $v) && array_key_exists('query_type', $v);
                     })
                     ->thenInvalid(
                         'You cannot use both "named_query" and "query_type" at the same time.'
@@ -326,28 +333,28 @@ EOT
                 ->end()
                 ->validate()
                     ->ifTrue(static function ($v): bool {
-                        return !\array_key_exists('named_query', $v) && !\array_key_exists('query_type', $v);
+                        return !array_key_exists('named_query', $v) && !array_key_exists('query_type', $v);
                     })
                     ->thenInvalid(
                         'One of "named_query" or "query_type" must be set.'
                     )
                 ->end()
                 ->validate()
-                    ->ifTrue(static function ($v): bool {return \array_key_exists('query_type', $v);})
+                    ->ifTrue(static function ($v): bool {return array_key_exists('query_type', $v);})
                     ->then(static function ($v): array {
-                        if (!\array_key_exists('use_filter', $v)) {
+                        if (!array_key_exists('use_filter', $v)) {
                             $v['use_filter'] = true;
                         }
 
-                        if (!\array_key_exists('max_per_page', $v)) {
+                        if (!array_key_exists('max_per_page', $v)) {
                             $v['max_per_page'] = 25;
                         }
 
-                        if (!\array_key_exists('page', $v)) {
+                        if (!array_key_exists('page', $v)) {
                             $v['page'] = 1;
                         }
 
-                        if (!\array_key_exists('parameters', $v)) {
+                        if (!array_key_exists('parameters', $v)) {
                             $v['parameters'] = [];
                         }
 
@@ -357,8 +364,8 @@ EOT
             ->end()
             ->validate()
                 ->ifTrue(static function ($v): bool {
-                    foreach (\array_keys($v) as $key) {
-                        if (!\is_string($key) || !\preg_match(Lexer::REGEX_NAME, $key)) {
+                    foreach (array_keys($v) as $key) {
+                        if (!is_string($key) || !preg_match(Lexer::REGEX_NAME, $key)) {
                             return true;
                         }
                     }

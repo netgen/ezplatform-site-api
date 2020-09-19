@@ -10,6 +10,8 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Pars
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Yaml\Yaml;
+use function file_get_contents;
+use function preg_quote;
 
 /**
  * @group config
@@ -64,6 +66,9 @@ final class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestBooleanConfigurationValid
+     *
+     * @param mixed $config
+     * @param mixed $expectedValue
      */
     public function testBooleanConfigurationValid(string $name, $config, $expectedValue): void
     {
@@ -112,6 +117,8 @@ final class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestBooleanConfigurationInvalid
+     *
+     * @param mixed $config
      */
     public function testBooleanConfigurationInvalid(string $name, $config): void
     {
@@ -235,6 +242,8 @@ final class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestNamedObjectConfigurationValid
+     *
+     * @param mixed $expectedValue
      */
     public function testNamedObjectConfigurationValid(string $name, array $configuration, $expectedValue): void
     {
@@ -347,6 +356,8 @@ final class SiteApiTest extends AbstractParserTestCase
 
     /**
      * @dataProvider providerForTestNamedObjectDefaultValues
+     *
+     * @param mixed $configurationValues
      */
     public function testNamedObjectDefaultValues($configurationValues, array $expectedConfigurationValues): void
     {
@@ -440,7 +451,7 @@ final class SiteApiTest extends AbstractParserTestCase
             'ezdemo_site'
         );
         // Avoid detecting risky tests
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function providerForTestNamedQueryConfigurationInvalid(): array
@@ -506,8 +517,8 @@ final class SiteApiTest extends AbstractParserTestCase
     public function testNamedQueryConfigurationInvalid(array $configurationValues, string $message): void
     {
         $this->expectException(InvalidConfigurationException::class);
-        $message = \preg_quote($message, '/');
-        $this->matchesRegularExpression("/{$message}/");
+        $message = preg_quote($message, '/');
+        self::matchesRegularExpression("/{$message}/");
 
         $this->load([
             'system' => [
@@ -575,6 +586,6 @@ final class SiteApiTest extends AbstractParserTestCase
 
     protected function getMinimalConfiguration(): array
     {
-        return Yaml::parse(\file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
+        return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
     }
 }

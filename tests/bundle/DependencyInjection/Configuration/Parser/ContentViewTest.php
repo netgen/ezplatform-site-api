@@ -10,6 +10,8 @@ use InvalidArgumentException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\ContentView;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Yaml\Yaml;
+use function file_get_contents;
+use function preg_quote;
 
 /**
  * @group config
@@ -422,8 +424,8 @@ final class ContentViewTest extends AbstractParserTestCase
     public function testInvalid(array $configurationValues, string $exceptionClass, string $exceptionMessage): void
     {
         $this->expectException($exceptionClass);
-        $exceptionMessage = \preg_quote($exceptionMessage, '/');
-        $this->matchesRegularExpression("/{$exceptionMessage}/");
+        $exceptionMessage = preg_quote($exceptionMessage, '/');
+        self::matchesRegularExpression("/{$exceptionMessage}/");
 
         $this->load([
             'system' => [
@@ -592,6 +594,6 @@ final class ContentViewTest extends AbstractParserTestCase
 
     protected function getMinimalConfiguration(): array
     {
-        return Yaml::parse(\file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
+        return Yaml::parse(file_get_contents(__DIR__ . '/../../Fixtures/minimal.yml'));
     }
 }

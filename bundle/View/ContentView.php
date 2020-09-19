@@ -31,7 +31,7 @@ class ContentView extends BaseView implements ContentValueView, LocationValueVie
     private $content;
 
     /**
-     * @var null|\Netgen\EzPlatformSiteApi\API\Values\Location
+     * @var \Netgen\EzPlatformSiteApi\API\Values\Location|null
      */
     private $location;
 

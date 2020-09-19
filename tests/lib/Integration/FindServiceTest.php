@@ -144,7 +144,7 @@ final class FindServiceTest extends BaseTest
             ])
         );
 
-        $this->assertEquals(0, $searchResult->totalCount);
+        self::assertEquals(0, $searchResult->totalCount);
     }
 
     /**
@@ -270,15 +270,15 @@ final class FindServiceTest extends BaseTest
             ])
         );
 
-        $this->assertEquals(0, $searchResult->totalCount);
+        self::assertEquals(0, $searchResult->totalCount);
     }
 
     protected function assertContentSearchResult(SearchResult $searchResult, $data): void
     {
         $languageCode = $data['languageCode'];
 
-        $this->assertSame(1, $searchResult->totalCount);
-        $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
+        self::assertSame(1, $searchResult->totalCount);
+        self::assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
         $this->assertContent($searchResult->searchHits[0]->valueObject, $data);
     }
 
@@ -286,8 +286,8 @@ final class FindServiceTest extends BaseTest
     {
         $languageCode = $data['languageCode'];
 
-        $this->assertSame(1, $searchResult->totalCount);
-        $this->assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
+        self::assertSame(1, $searchResult->totalCount);
+        self::assertSame($languageCode, $searchResult->searchHits[0]->matchedTranslation);
         $this->assertLocation($searchResult->searchHits[0]->valueObject, $data);
     }
 }

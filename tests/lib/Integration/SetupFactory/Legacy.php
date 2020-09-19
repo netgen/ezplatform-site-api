@@ -18,11 +18,9 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class Legacy extends CoreLegacySetupFactory
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \Exception
-     *
-     * @return \eZ\Publish\Core\Base\ServiceContainer
      */
     public function getServiceContainer(): ServiceContainer
     {

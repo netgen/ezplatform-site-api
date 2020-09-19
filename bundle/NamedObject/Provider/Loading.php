@@ -28,7 +28,7 @@ final class Loading extends Provider
     private $loadService;
 
     /**
-     * @var null|\Netgen\TagsBundle\API\Repository\TagsService
+     * @var \Netgen\TagsBundle\API\Repository\TagsService|null
      */
     private $tagsService;
 

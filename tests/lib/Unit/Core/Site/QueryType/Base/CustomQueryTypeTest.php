@@ -32,7 +32,7 @@ final class CustomQueryTypeTest extends TestCase
     {
         $queryType = $this->getQueryTypeUnderTest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'Test:Custom',
             $queryType::getName()
         );
@@ -42,7 +42,7 @@ final class CustomQueryTypeTest extends TestCase
     {
         $queryType = $this->getQueryTypeUnderTest();
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'content_type',
                 'field',
@@ -157,7 +157,7 @@ final class CustomQueryTypeTest extends TestCase
 
         $query = $queryType->getQuery($parameters);
 
-        $this->assertEquals(
+        self::assertEquals(
             $expectedQuery,
             $query
         );

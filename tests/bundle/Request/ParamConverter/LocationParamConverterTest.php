@@ -31,15 +31,15 @@ final class LocationParamConverterTest extends AbstractParamConverterTest
     public function testSupports(): void
     {
         $config = $this->createConfiguration(self::LOCATION_CLASS);
-        $this->assertTrue($this->converter->supports($config));
+        self::assertTrue($this->converter->supports($config));
     }
 
     public function testDoesNotSupport(): void
     {
         $config = $this->createConfiguration(__CLASS__);
-        $this->assertFalse($this->converter->supports($config));
+        self::assertFalse($this->converter->supports($config));
         $config = $this->createConfiguration();
-        $this->assertFalse($this->converter->supports($config));
+        self::assertFalse($this->converter->supports($config));
     }
 
     public function testApplyLocation(): void
@@ -47,7 +47,7 @@ final class LocationParamConverterTest extends AbstractParamConverterTest
         $id = 42;
         $valueObject = $this->createMock(Location::class);
         $this->loadServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadLocation')
             ->with($id)
             ->willReturn($valueObject);
@@ -58,7 +58,7 @@ final class LocationParamConverterTest extends AbstractParamConverterTest
 
         $this->converter->apply($request, $config);
 
-        $this->assertInstanceOf(self::LOCATION_CLASS, $request->attributes->get('location'));
+        self::assertInstanceOf(self::LOCATION_CLASS, $request->attributes->get('location'));
     }
 
     public function testApplyLocationOptionalWithEmptyAttribute(): void
@@ -66,11 +66,11 @@ final class LocationParamConverterTest extends AbstractParamConverterTest
         $request = new Request([], [], [self::PROPERTY_NAME => null]);
 
         $config = $this->createConfiguration(self::LOCATION_CLASS, 'location');
-        $config->expects($this->once())
+        $config->expects(self::once())
             ->method('isOptional')
             ->willReturn(true);
 
-        $this->assertFalse($this->converter->apply($request, $config));
-        $this->assertNull($request->attributes->get('location'));
+        self::assertFalse($this->converter->apply($request, $config));
+        self::assertNull($request->attributes->get('location'));
     }
 }

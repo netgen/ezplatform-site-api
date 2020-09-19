@@ -398,8 +398,6 @@ final class Content extends APIContent
 
     /**
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return \Netgen\EzPlatformSiteApi\API\Values\ContentInfo
      */
     private function getContentInfo(): APIContentInfo
     {

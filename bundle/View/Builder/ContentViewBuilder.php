@@ -22,6 +22,9 @@ use Netgen\EzPlatformSiteApi\API\Site;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use function in_array;
+use function is_string;
+use function mb_strpos;
 
 /**
  * Builds ContentView objects.
@@ -69,7 +72,7 @@ class ContentViewBuilder implements ViewBuilder
 
     public function matches($argument): bool
     {
-        return \is_string($argument) && \strpos($argument, 'ng_content:') !== false;
+        return is_string($argument) && mb_strpos($argument, 'ng_content:') !== false;
     }
 
     /**
@@ -172,7 +175,7 @@ class ContentViewBuilder implements ViewBuilder
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \Exception
      */
-    private function loadEmbeddedContent($contentId, Location $location = null): Content
+    private function loadEmbeddedContent($contentId, ?Location $location = null): Content
     {
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
         $content = $this->repository->sudo(
@@ -236,7 +239,7 @@ class ContentViewBuilder implements ViewBuilder
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
-    private function canReadOrViewEmbed(ContentInfo $contentInfo, Location $location = null): bool
+    private function canReadOrViewEmbed(ContentInfo $contentInfo, ?Location $location = null): bool
     {
         $targets = isset($location) ? [$location->innerLocation] : [];
 
@@ -257,7 +260,7 @@ class ContentViewBuilder implements ViewBuilder
             return true;
         }
 
-        if (\in_array($parameters['viewType'], ['embed', 'embed-inline'], true)) {
+        if (in_array($parameters['viewType'], ['embed', 'embed-inline'], true)) {
             return true;
         }
 

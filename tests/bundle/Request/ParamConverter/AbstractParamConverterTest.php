@@ -29,13 +29,13 @@ abstract class AbstractParamConverterTest extends TestCase
             ->getMock();
 
         if ($name !== null) {
-            $config->expects($this->any())
+            $config->expects(self::any())
                 ->method('getName')
                 ->willReturn($name);
         }
 
         if ($class !== null) {
-            $config->expects($this->any())
+            $config->expects(self::any())
                 ->method('getClass')
                 ->willReturn($class);
         }

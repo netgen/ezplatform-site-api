@@ -34,7 +34,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * @property string $contentTypeDescription
  * @property \eZ\Publish\API\Repository\Values\Content\ContentInfo $innerContentInfo
  * @property \eZ\Publish\API\Repository\Values\ContentType\ContentType $innerContentType
- * @property null|\Netgen\EzPlatformSiteApi\API\Values\Location $mainLocation
+ * @property \Netgen\EzPlatformSiteApi\API\Values\Location|null $mainLocation
  */
 abstract class ContentInfo extends ValueObject
 {

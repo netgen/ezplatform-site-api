@@ -41,7 +41,7 @@ final class SearchResultExtractorTraitTest extends BaseTest
         $locationValueObjects = $this->stub->doExtractValueObjects($searchResult);
 
         foreach ($locationValueObjects as $value) {
-            $this->assertInstanceOf(Location::class, $value);
+            self::assertInstanceOf(Location::class, $value);
         }
     }
 
@@ -59,8 +59,8 @@ final class SearchResultExtractorTraitTest extends BaseTest
 
         $locationValueObjects = $this->stub->doExtractValueObjects($searchResult);
 
-        $this->assertIsArray($locationValueObjects);
-        $this->assertEmpty($locationValueObjects);
+        self::assertIsArray($locationValueObjects);
+        self::assertEmpty($locationValueObjects);
     }
 
     public function testItExtractsValuesFromContentSearchResult(): void
@@ -78,7 +78,7 @@ final class SearchResultExtractorTraitTest extends BaseTest
         $contentValueObjects = $this->stub->doExtractValueObjects($searchResult);
 
         foreach ($contentValueObjects as $value) {
-            $this->assertInstanceOf(Content::class, $value);
+            self::assertInstanceOf(Content::class, $value);
         }
     }
 
@@ -96,8 +96,8 @@ final class SearchResultExtractorTraitTest extends BaseTest
 
         $contentValueObjects = $this->stub->doExtractValueObjects($searchResult);
 
-        $this->assertIsArray($contentValueObjects);
-        $this->assertEmpty($contentValueObjects);
+        self::assertIsArray($contentValueObjects);
+        self::assertEmpty($contentValueObjects);
     }
 
     public function testItExtractsContentItemsFromContentSearchResult(): void
@@ -114,10 +114,10 @@ final class SearchResultExtractorTraitTest extends BaseTest
 
         $contentValueObjects = $this->stub->doExtractContentItems($searchResult);
 
-        $this->assertCount(2, $contentValueObjects);
+        self::assertCount(2, $contentValueObjects);
 
         foreach ($contentValueObjects as $value) {
-            $this->assertInstanceOf(Content::class, $value);
+            self::assertInstanceOf(Content::class, $value);
         }
     }
 
@@ -135,8 +135,8 @@ final class SearchResultExtractorTraitTest extends BaseTest
 
         $contentValueObjects = $this->stub->doExtractContentItems($searchResult);
 
-        $this->assertIsArray($contentValueObjects);
-        $this->assertEmpty($contentValueObjects);
+        self::assertIsArray($contentValueObjects);
+        self::assertEmpty($contentValueObjects);
     }
 
     public function testItExtractsLocationsFromLocationSearchResult(): void
@@ -153,10 +153,10 @@ final class SearchResultExtractorTraitTest extends BaseTest
 
         $locationValueObjects = $this->stub->doExtractLocations($searchResult);
 
-        $this->assertCount(2, $locationValueObjects);
+        self::assertCount(2, $locationValueObjects);
 
         foreach ($locationValueObjects as $value) {
-            $this->assertInstanceOf(Location::class, $value);
+            self::assertInstanceOf(Location::class, $value);
         }
     }
 
@@ -174,7 +174,7 @@ final class SearchResultExtractorTraitTest extends BaseTest
 
         $locationValueObjects = $this->stub->doExtractLocations($searchResult);
 
-        $this->assertIsArray($locationValueObjects);
-        $this->assertEmpty($locationValueObjects);
+        self::assertIsArray($locationValueObjects);
+        self::assertEmpty($locationValueObjects);
     }
 }

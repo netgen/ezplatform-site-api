@@ -9,6 +9,11 @@ use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\RequestStack;
+use function in_array;
+use function is_string;
+use function mb_strpos;
+use function mb_substr;
+use function strtotime;
 
 /**
  * ParameterProcessor processes query configuration parameter values using ExpressionLanguage.
@@ -46,10 +51,12 @@ final class ParameterProcessor
      * Return given $value processed with ExpressionLanguage if needed.
      *
      * Parameter $view is used to provide values for evaluation.
+     *
+     * @param mixed $value
      */
     public function process($value, ContentView $view)
     {
-        if (!\is_string($value) || \strpos($value, '@=') !== 0) {
+        if (!is_string($value) || mb_strpos($value, '@=') !== 0) {
             return $value;
         }
 
@@ -58,7 +65,7 @@ final class ParameterProcessor
         $this->registerFunctions($language);
 
         return $language->evaluate(
-            \substr($value, 2),
+            mb_substr($value, 2),
             [
                 'view' => $view,
                 'location' => $view->getSiteLocation(),
@@ -93,7 +100,7 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParam',
             static function (): void {},
-            static function (array $arguments, string $name, $default, array $allowed = null) {
+            static function (array $arguments, string $name, $default, ?array $allowed = null) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -103,7 +110,7 @@ final class ParameterProcessor
 
                 $value = $request->query->get($name);
 
-                if ($allowed === null || \in_array($value, $allowed, true)) {
+                if ($allowed === null || in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -114,7 +121,7 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParamString',
             static function (): void {},
-            static function (array $arguments, string $name, string $default, array $allowed = null): string {
+            static function (array $arguments, string $name, string $default, ?array $allowed = null): string {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -124,7 +131,7 @@ final class ParameterProcessor
 
                 $value = (string) $request->query->get($name);
 
-                if ($allowed === null || \in_array($value, $allowed, true)) {
+                if ($allowed === null || in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -135,7 +142,7 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParamInt',
             static function (): void {},
-            static function (array $arguments, string $name, int $default, array $allowed = null): int {
+            static function (array $arguments, string $name, int $default, ?array $allowed = null): int {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -145,7 +152,7 @@ final class ParameterProcessor
 
                 $value = $request->query->getInt($name);
 
-                if ($allowed === null || \in_array($value, $allowed, true)) {
+                if ($allowed === null || in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -156,7 +163,7 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParamFloat',
             static function (): void {},
-            static function (array $arguments, string $name, float $default, array $allowed = null): float {
+            static function (array $arguments, string $name, float $default, ?array $allowed = null): float {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -166,7 +173,7 @@ final class ParameterProcessor
 
                 $value = (float) $request->query->get($name);
 
-                if ($allowed === null || \in_array($value, $allowed, true)) {
+                if ($allowed === null || in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -177,7 +184,7 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'queryParamBool',
             static function (): void {},
-            static function (array $arguments, string $name, bool $default, array $allowed = null): bool {
+            static function (array $arguments, string $name, bool $default, ?array $allowed = null): bool {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
                 $request = $arguments['request'];
 
@@ -187,7 +194,7 @@ final class ParameterProcessor
 
                 $value = $request->query->getBoolean($name);
 
-                if ($allowed === null || \in_array($value, $allowed, true)) {
+                if ($allowed === null || in_array($value, $allowed, true)) {
                     return $value;
                 }
 
@@ -199,7 +206,7 @@ final class ParameterProcessor
             'timestamp',
             static function (): void {},
             static function (array $arguments, string $timeString) {
-                return \strtotime($timeString);
+                return strtotime($timeString);
             }
         );
 

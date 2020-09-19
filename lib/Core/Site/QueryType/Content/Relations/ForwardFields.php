@@ -11,6 +11,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function array_merge;
 
 /**
  * QueryType for finding relations from specific relation fields of a Content.
@@ -71,7 +72,7 @@ final class ForwardFields extends Content
             $idsGrouped[] = $relationResolver->getRelationIds($field);
         }
 
-        $relatedContentIds = \array_merge(...$idsGrouped);
+        $relatedContentIds = array_merge(...$idsGrouped);
 
         if (empty($relatedContentIds)) {
             return new MatchNone();

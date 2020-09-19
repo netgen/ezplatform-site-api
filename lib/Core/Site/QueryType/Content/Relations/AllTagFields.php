@@ -12,6 +12,8 @@ use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content;
 use Netgen\TagsBundle\API\Repository\Values\Content\Query\Criterion\TagId;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag as TagValue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function array_map;
+use function array_merge;
 
 /**
  * QueryType for finding all Tag relations in a given Content.
@@ -85,9 +87,9 @@ final class AllTagFields extends Content
 
             /** @var \Netgen\TagsBundle\Core\FieldType\Tags\Value $value */
             $value = $field->value;
-            $tagsIdsGrouped[] = \array_map(static function (TagValue $tag) {return $tag->id;}, $value->tags);
+            $tagsIdsGrouped[] = array_map(static function (TagValue $tag) {return $tag->id;}, $value->tags);
         }
 
-        return \array_merge(...$tagsIdsGrouped);
+        return array_merge(...$tagsIdsGrouped);
     }
 }

@@ -156,7 +156,7 @@ final class QueryDefinitionMapperTest extends TestCase
 
         $queryDefinition = $queryDefinitionMapper->map($configuration, $this->getViewMock());
 
-        $this->assertEquals($expectedQueryDefinition, $queryDefinition);
+        self::assertEquals($expectedQueryDefinition, $queryDefinition);
     }
 
     public function testMapNonexistentNamedQueryThrowsException(): void

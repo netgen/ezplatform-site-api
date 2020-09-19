@@ -22,28 +22,28 @@ final class SettingsTest extends TestCase
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertEquals(['cro-HR'], $settings->prioritizedLanguages);
+        self::assertEquals(['cro-HR'], $settings->prioritizedLanguages);
     }
 
     public function testGetUseAlwaysAvailable(): void
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertTrue($settings->useAlwaysAvailable);
+        self::assertTrue($settings->useAlwaysAvailable);
     }
 
     public function testGetRootLocationId(): void
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertEquals(42, $settings->rootLocationId);
+        self::assertEquals(42, $settings->rootLocationId);
     }
 
     public function testGetFailOnMissingField(): void
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertFalse($settings->failOnMissingField);
+        self::assertFalse($settings->failOnMissingField);
     }
 
     public function testGetNonexistentProperty(): void
@@ -59,21 +59,21 @@ final class SettingsTest extends TestCase
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertTrue(isset($settings->prioritizedLanguages));
+        self::assertTrue(isset($settings->prioritizedLanguages));
     }
 
     public function testIssetUseAlwaysAvailable(): void
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertTrue(isset($settings->useAlwaysAvailable));
+        self::assertTrue(isset($settings->useAlwaysAvailable));
     }
 
     public function testIssetRootLocationId(): void
     {
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertTrue(isset($settings->rootLocationId));
+        self::assertTrue(isset($settings->rootLocationId));
     }
 
     public function testIssetNonexistentProperty(): void
@@ -82,7 +82,7 @@ final class SettingsTest extends TestCase
 
         $settings = $this->getSettingsUnderTest();
 
-        $this->assertFalse(isset($settings->blah));
+        self::assertFalse(isset($settings->blah));
     }
 
     public function testSet(): void

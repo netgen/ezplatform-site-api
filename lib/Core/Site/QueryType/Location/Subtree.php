@@ -12,6 +12,8 @@ use Netgen\EzPlatformSiteApi\API\Values\Location as SiteLocation;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function array_map;
+use function is_array;
 
 /**
  * Subtree Location QueryType.
@@ -95,8 +97,8 @@ final class Subtree extends Location
      */
     private function getRelativeDepthValue(int $startDepth, $value)
     {
-        if (\is_array($value)) {
-            return \array_map(
+        if (is_array($value)) {
+            return array_map(
                 static function (int $value) use ($startDepth): int {
                     return $startDepth + $value;
                 },

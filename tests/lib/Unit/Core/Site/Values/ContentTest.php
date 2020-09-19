@@ -94,11 +94,11 @@ final class ContentTest extends TestCase
         $content = $this->getMockedContent();
         $ownerMock = $this->getMockBuilder(APIContent::class)->getMock();
 
-        $this->repositoryMock->expects($this->once())
+        $this->repositoryMock->expects(self::once())
             ->method('sudo')
             ->willReturn($ownerMock);
 
-        $this->assertSame($ownerMock, $content->owner);
+        self::assertSame($ownerMock, $content->owner);
     }
 
     public function testContentOwnerExistsRepeated(): void
@@ -106,35 +106,35 @@ final class ContentTest extends TestCase
         $content = $this->getMockedContent();
         $ownerMock = $this->getMockBuilder(APIContent::class)->getMock();
 
-        $this->repositoryMock->expects($this->once())
+        $this->repositoryMock->expects(self::once())
             ->method('sudo')
             ->willReturn($ownerMock);
 
-        $this->assertSame($ownerMock, $content->owner);
-        $this->assertSame($ownerMock, $content->owner);
+        self::assertSame($ownerMock, $content->owner);
+        self::assertSame($ownerMock, $content->owner);
     }
 
     public function testContentOwnerDoesNotExist(): void
     {
         $content = $this->getMockedContent();
 
-        $this->repositoryMock->expects($this->once())
+        $this->repositoryMock->expects(self::once())
             ->method('sudo')
             ->willReturn(null);
 
-        $this->assertNull($content->owner);
+        self::assertNull($content->owner);
     }
 
     public function testContentOwnerDoesNotExistRepeated(): void
     {
         $content = $this->getMockedContent();
 
-        $this->repositoryMock->expects($this->once())
+        $this->repositoryMock->expects(self::once())
             ->method('sudo')
             ->willReturn(null);
 
-        $this->assertNull($content->owner);
-        $this->assertNull($content->owner);
+        self::assertNull($content->owner);
+        self::assertNull($content->owner);
     }
 
     public function testContentInnerOwnerUserExists(): void
@@ -144,12 +144,12 @@ final class ContentTest extends TestCase
 
         $this
             ->userServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadUser')
             ->with(14)
             ->willReturn($ownerUserMock);
 
-        $this->assertSame($ownerUserMock, $content->innerOwnerUser);
+        self::assertSame($ownerUserMock, $content->innerOwnerUser);
     }
 
     public function testContentInnerOwnerUserExistsRepeated(): void
@@ -159,13 +159,13 @@ final class ContentTest extends TestCase
 
         $this
             ->userServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadUser')
             ->with(14)
             ->willReturn($ownerUserMock);
 
-        $this->assertSame($ownerUserMock, $content->innerOwnerUser);
-        $this->assertSame($ownerUserMock, $content->innerOwnerUser);
+        self::assertSame($ownerUserMock, $content->innerOwnerUser);
+        self::assertSame($ownerUserMock, $content->innerOwnerUser);
     }
 
     public function testContentInnerOwnerUserDoesNotExist(): void
@@ -174,14 +174,14 @@ final class ContentTest extends TestCase
 
         $this
             ->userServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadUser')
             ->with(14)
             ->willThrowException(
                 new NotFoundException('User', 14)
             );
 
-        $this->assertNull($content->innerOwnerUser);
+        self::assertNull($content->innerOwnerUser);
     }
 
     public function testContentInnerOwnerUserDoesNotExistRepeated(): void
@@ -190,15 +190,15 @@ final class ContentTest extends TestCase
 
         $this
             ->userServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadUser')
             ->with(14)
             ->willThrowException(
                 new NotFoundException('User', 14)
             );
 
-        $this->assertNull($content->innerOwnerUser);
-        $this->assertNull($content->innerOwnerUser);
+        self::assertNull($content->innerOwnerUser);
+        self::assertNull($content->innerOwnerUser);
     }
 
     protected function getMockedContent(): APIContent

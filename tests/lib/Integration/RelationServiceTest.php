@@ -38,8 +38,8 @@ final class RelationServiceTest extends BaseTest
         $testSiteContent = $loadService->loadContent($testApiContent->id);
         $content = $relationService->loadFieldRelation($testSiteContent, $identifier);
 
-        $this->assertInstanceOf(Content::class, $content);
-        $this->assertEquals($testRelationId, $content->id);
+        self::assertInstanceOf(Content::class, $content);
+        self::assertEquals($testRelationId, $content->id);
     }
 
     /**
@@ -61,12 +61,12 @@ final class RelationServiceTest extends BaseTest
         $testSiteContent = $loadService->loadContent($testApiContent->id);
         $contentItems = $relationService->loadFieldRelations($testSiteContent, $identifier);
 
-        $this->assertSameSize($testRelationIds, $contentItems);
+        self::assertSameSize($testRelationIds, $contentItems);
 
         foreach ($testRelationIds as $index => $relationId) {
             $content = $contentItems[$index];
-            $this->assertInstanceOf(Content::class, $content);
-            $this->assertEquals($relationId, $content->id);
+            self::assertInstanceOf(Content::class, $content);
+            self::assertEquals($relationId, $content->id);
         }
     }
 
@@ -89,10 +89,10 @@ final class RelationServiceTest extends BaseTest
         $testSiteContent = $loadService->loadContent($testApiContent->id);
         $contentItems = $relationService->loadFieldRelations($testSiteContent, $identifier, ['landing_page']);
 
-        $this->assertCount(1, $contentItems);
+        self::assertCount(1, $contentItems);
 
-        $this->assertInstanceOf(Content::class, $contentItems[0]);
-        $this->assertEquals($testRelationIds[0], $contentItems[0]->id);
+        self::assertInstanceOf(Content::class, $contentItems[0]);
+        self::assertEquals($testRelationIds[0], $contentItems[0]->id);
     }
 
     /**
@@ -114,10 +114,10 @@ final class RelationServiceTest extends BaseTest
         $testSiteContent = $loadService->loadContent($testApiContent->id);
         $contentItems = $relationService->loadFieldRelations($testSiteContent, $identifier, [], 1);
 
-        $this->assertCount(1, $contentItems);
+        self::assertCount(1, $contentItems);
 
-        $this->assertInstanceOf(Content::class, $contentItems[0]);
-        $this->assertEquals($testRelationIds[0], $contentItems[0]->id);
+        self::assertInstanceOf(Content::class, $contentItems[0]);
+        self::assertEquals($testRelationIds[0], $contentItems[0]->id);
     }
 
     /**
@@ -139,10 +139,10 @@ final class RelationServiceTest extends BaseTest
         $testSiteContent = $loadService->loadContent($testApiContent->id);
         $contentItems = $relationService->loadFieldRelations($testSiteContent, $identifier, ['feedback_form'], 1);
 
-        $this->assertCount(1, $contentItems);
+        self::assertCount(1, $contentItems);
 
-        $this->assertInstanceOf(Content::class, $contentItems[0]);
-        $this->assertEquals($testRelationIds[1], $contentItems[0]->id);
+        self::assertInstanceOf(Content::class, $contentItems[0]);
+        self::assertEquals($testRelationIds[1], $contentItems[0]->id);
     }
 
     /**
@@ -164,7 +164,7 @@ final class RelationServiceTest extends BaseTest
         $testSiteContent = $loadService->loadContent($testApiContent->id);
         $contentItems = $relationService->loadFieldRelations($testSiteContent, 'nonexistent');
 
-        $this->assertCount(0, $contentItems);
+        self::assertCount(0, $contentItems);
     }
 
     /**

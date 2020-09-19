@@ -180,6 +180,8 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
      * @param bool $ignoreStrictCheck
      * @param bool $sandboxed
      * @param int $lineno
+     * @param mixed $object
+     * @param mixed $item
      *
      * @throws \Twig\Error\RuntimeError
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException

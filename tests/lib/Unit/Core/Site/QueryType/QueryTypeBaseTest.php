@@ -9,6 +9,11 @@ use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use function array_flip;
+use function array_key_exists;
+use function count;
+use function md5;
+use function time;
 
 /**
  * Base QueryType test case.
@@ -19,7 +24,7 @@ abstract class QueryTypeBaseTest extends TestCase
     {
         $queryType = $this->getQueryTypeUnderTest();
 
-        $this->assertEquals(
+        self::assertEquals(
             $this->getQueryTypeName(),
             $queryType::getName()
         );
@@ -29,7 +34,7 @@ abstract class QueryTypeBaseTest extends TestCase
     {
         $queryType = $this->getQueryTypeUnderTest();
 
-        $this->assertEquals(
+        self::assertEquals(
             $this->getSupportedParameters(),
             $queryType->getSupportedParameters()
         );
@@ -40,7 +45,7 @@ abstract class QueryTypeBaseTest extends TestCase
         $queryType = $this->getQueryTypeUnderTest();
 
         foreach ($this->getSupportedParameters() as $parameter) {
-            $this->assertTrue($queryType->supportsParameter($parameter));
+            self::assertTrue($queryType->supportsParameter($parameter));
         }
     }
 
@@ -48,7 +53,7 @@ abstract class QueryTypeBaseTest extends TestCase
     {
         $queryType = $this->getQueryTypeUnderTest();
 
-        $this->assertFalse($queryType->supportsParameter(\md5((string) \time())));
+        self::assertFalse($queryType->supportsParameter(md5((string) time())));
     }
 
     public function testGetBaseSupportedParameters(): void
@@ -68,12 +73,12 @@ abstract class QueryTypeBaseTest extends TestCase
             'offset',
         ];
 
-        $this->assertGreaterThanOrEqual(\count($expectedParameters), \count($parameters));
-        $parameterSet = \array_flip($parameters);
+        self::assertGreaterThanOrEqual(count($expectedParameters), count($parameters));
+        $parameterSet = array_flip($parameters);
 
         foreach ($expectedParameters as $expectedParameter) {
-            $this->assertTrue(\array_key_exists($expectedParameter, $parameterSet));
-            $this->assertTrue($queryType->supportsParameter($expectedParameter));
+            self::assertTrue(array_key_exists($expectedParameter, $parameterSet));
+            self::assertTrue($queryType->supportsParameter($expectedParameter));
         }
     }
 
@@ -88,7 +93,7 @@ abstract class QueryTypeBaseTest extends TestCase
 
         $query = $queryType->getQuery($parameters);
 
-        $this->assertEquals(
+        self::assertEquals(
             $expectedQuery,
             $query
         );
@@ -130,7 +135,7 @@ abstract class QueryTypeBaseTest extends TestCase
     public function testInvalidSortClauseThrowsException(array $parameters): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->matchesRegularExpression(
+        self::matchesRegularExpression(
             "/Sort string '.*' was not converted to a SortClause/"
         );
 

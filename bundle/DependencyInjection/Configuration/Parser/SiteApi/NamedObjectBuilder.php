@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuration\Parser\SiteApi;
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+use function array_keys;
+use function is_array;
+use function is_int;
+use function is_string;
+use function preg_match;
 
 class NamedObjectBuilder
 {
     public static function build(NodeBuilder $nodeBuilder): void
     {
         $keyValidator = static function ($v): bool {
-            foreach (\array_keys($v) as $key) {
-                if (!\is_string($key) || !\preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/A', $key)) {
+            foreach (array_keys($v) as $key) {
+                if (!is_string($key) || !preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/A', $key)) {
                     return true;
                 }
             }
@@ -21,7 +26,7 @@ class NamedObjectBuilder
         };
 
         $idMapper = static function ($v) {
-            if (\is_int($v)) {
+            if (is_int($v)) {
                 return ['id' => $v];
             }
 
@@ -39,7 +44,7 @@ class NamedObjectBuilder
                     ->arrayPrototype()
                         ->info('Content ID or remote ID')
                         ->beforeNormalization()
-                            ->ifTrue(static function ($v) {return !\is_array($v);})
+                            ->ifTrue(static function ($v) {return !is_array($v);})
                             ->then($idMapper)
                         ->end()
                         ->children()
@@ -49,7 +54,7 @@ class NamedObjectBuilder
                             ->scalarNode('remote_id')
                                 ->info('Content remote ID')
                                 ->validate()
-                                    ->ifTrue(static function ($v) {return !\is_string($v);})
+                                    ->ifTrue(static function ($v) {return !is_string($v);})
                                     ->thenInvalid('Content remote ID value must be of string type.')
                                 ->end()
                             ->end()
@@ -67,7 +72,7 @@ class NamedObjectBuilder
                     ->arrayPrototype()
                         ->info('Location ID or remote ID')
                         ->beforeNormalization()
-                            ->ifTrue(static function ($v) {return !\is_array($v);})
+                            ->ifTrue(static function ($v) {return !is_array($v);})
                             ->then($idMapper)
                         ->end()
                         ->children()
@@ -77,7 +82,7 @@ class NamedObjectBuilder
                             ->scalarNode('remote_id')
                                 ->info('Location remote ID')
                                 ->validate()
-                                    ->ifTrue(static function ($v) {return !\is_string($v);})
+                                    ->ifTrue(static function ($v) {return !is_string($v);})
                                     ->thenInvalid('Location remote ID value must be of string type.')
                                 ->end()
                             ->end()
@@ -95,7 +100,7 @@ class NamedObjectBuilder
                     ->arrayPrototype()
                         ->info('Tag ID or remote ID')
                         ->beforeNormalization()
-                            ->ifTrue(static function ($v) {return !\is_array($v);})
+                            ->ifTrue(static function ($v) {return !is_array($v);})
                             ->then($idMapper)
                         ->end()
                         ->children()
@@ -105,7 +110,7 @@ class NamedObjectBuilder
                             ->scalarNode('remote_id')
                                 ->info('Tag remote ID')
                                 ->validate()
-                                    ->ifTrue(static function ($v) {return !\is_string($v);})
+                                    ->ifTrue(static function ($v) {return !is_string($v);})
                                     ->thenInvalid('Tag remote ID value must be of string type.')
                                 ->end()
                             ->end()

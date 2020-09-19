@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route as SymfonyRoute;
 use Symfony\Component\Routing\RouteCollection;
+use function is_object;
 
 class LocationUrlAliasRouter implements ChainedRouterInterface, RequestMatcherInterface
 {
@@ -83,7 +84,7 @@ class LocationUrlAliasRouter implements ChainedRouterInterface, RequestMatcherIn
 
     public function supports($name): bool
     {
-        if (\is_object($name)) {
+        if (is_object($name)) {
             return $this->supportsObject($name);
         }
 

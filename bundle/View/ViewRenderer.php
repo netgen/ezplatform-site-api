@@ -17,6 +17,8 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use function call_user_func_array;
+use function sprintf;
 
 /**
  * @internal
@@ -93,7 +95,7 @@ final class ViewRenderer
         $controller = $this->resolveController($controllerReference);
         $arguments = $this->resolveControllerArguments($view, $controller, $arguments);
 
-        $result = \call_user_func_array($controller, $arguments);
+        $result = call_user_func_array($controller, $arguments);
 
         if ($result instanceof View) {
             return $this->coreViewRenderer->render($result);
@@ -114,7 +116,7 @@ final class ViewRenderer
 
         if ($controller === false) {
             throw new NotFoundHttpException(
-                \sprintf('Unable to find the controller "%s".', $controllerReference->controller)
+                sprintf('Unable to find the controller "%s".', $controllerReference->controller)
             );
         }
 

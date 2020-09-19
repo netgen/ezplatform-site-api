@@ -22,35 +22,35 @@ final class SurrogateValueTest extends TestCase
     {
         $value = new SurrogateValue(1, 2, 'three');
 
-        $this->assertInstanceOf(SurrogateValue::class, $value);
+        self::assertInstanceOf(SurrogateValue::class, $value);
     }
 
     public function testGetPropertyReturnsNull(): void
     {
         $value = new SurrogateValue();
 
-        $this->assertNull($value->property);
+        self::assertNull($value->property);
     }
 
     public function testCallMethodReturnsNull(): void
     {
         $value = new SurrogateValue();
 
-        $this->assertNull($value->method());
+        self::assertNull($value->method());
     }
 
     public function testCastToStringReturnsEmptyString(): void
     {
         $value = new SurrogateValue();
 
-        $this->assertEquals('', (string) $value);
+        self::assertEquals('', (string) $value);
     }
 
     public function testCheckingForPropertyReturnsFalse(): void
     {
         $value = new SurrogateValue();
 
-        $this->assertFalse(isset($value->property));
+        self::assertFalse(isset($value->property));
     }
 
     public function testSettingPropertyDoesNothing(): void

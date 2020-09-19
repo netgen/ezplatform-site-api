@@ -19,6 +19,8 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use RuntimeException;
+use function count;
+use function sprintf;
 
 /**
  * Fields value unit tests.
@@ -42,7 +44,7 @@ final class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertEquals(3, \count($fields));
+        self::assertEquals(3, count($fields));
     }
 
     /**
@@ -54,8 +56,8 @@ final class FieldsTest extends TestCase
         $i = 1;
 
         foreach ($fields as $field) {
-            $this->assertInstanceOf(APIFields::class, $fields);
-            $this->assertEquals($i, $field->id);
+            self::assertInstanceOf(APIFields::class, $fields);
+            self::assertEquals($i, $field->id);
             ++$i;
         }
     }
@@ -67,7 +69,7 @@ final class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertTrue($fields->hasField('first'));
+        self::assertTrue($fields->hasField('first'));
     }
 
     /**
@@ -77,35 +79,35 @@ final class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertFalse($fields->hasField('fourth'));
+        self::assertFalse($fields->hasField('fourth'));
     }
 
     public function testExistenceOfExistingFieldCanBeCheckedAsAnArrayByIdentifier(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertTrue(isset($fields['first']));
+        self::assertTrue(isset($fields['first']));
     }
 
     public function testExistenceOfNonExistingFieldCanBeCheckedAsAnArrayByIdentifier(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertFalse(isset($fields['fourth']));
+        self::assertFalse(isset($fields['fourth']));
     }
 
     public function testExistenceOfExistingFieldCanBeCheckedAsAnArrayByNumericIndex(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertTrue(isset($fields[0]));
+        self::assertTrue(isset($fields[0]));
     }
 
     public function testExistenceOfNonExistingFieldCanBeCheckedAsAnArrayByNumericIndex(): void
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertFalse(isset($fields[101]));
+        self::assertFalse(isset($fields[101]));
     }
 
     public function testFieldsCanBeAccessedAsAnArrayByNumericIndex(): void
@@ -114,8 +116,8 @@ final class FieldsTest extends TestCase
 
         for ($i = 0; $i < 3; ++$i) {
             $field = $fields[$i];
-            $this->assertInstanceOf(SiteField::class, $field);
-            $this->assertEquals($i + 1, $field->id);
+            self::assertInstanceOf(SiteField::class, $field);
+            self::assertEquals($i + 1, $field->id);
         }
     }
 
@@ -126,8 +128,8 @@ final class FieldsTest extends TestCase
 
         foreach ($identifiers as $identifier) {
             $field = $fields[$identifier];
-            $this->assertInstanceOf(SiteField::class, $field);
-            $this->assertEquals($identifier, $field->fieldDefIdentifier);
+            self::assertInstanceOf(SiteField::class, $field);
+            self::assertEquals($identifier, $field->fieldDefIdentifier);
         }
     }
 
@@ -147,17 +149,17 @@ final class FieldsTest extends TestCase
 
         $loggerMock = $this->getLoggerMock();
         $loggerMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('critical')
             ->with('Field "fourth" in Content #1 does not exist, using surrogate field instead');
 
         /** @var \Netgen\EzPlatformSiteApi\API\Values\Field $field */
         $field = $fields[$identifier];
 
-        $this->assertInstanceOf(SiteField::class, $field);
-        $this->assertEquals($identifier, $field->fieldDefIdentifier);
-        $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
-        $this->assertTrue($field->isEmpty());
+        self::assertInstanceOf(SiteField::class, $field);
+        self::assertEquals($identifier, $field->fieldDefIdentifier);
+        self::assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
+        self::assertTrue($field->isEmpty());
     }
 
     public function testFieldCanNotBeSet(): void
@@ -188,7 +190,7 @@ final class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertTrue($fields->hasFieldById(1));
+        self::assertTrue($fields->hasFieldById(1));
     }
 
     /**
@@ -198,7 +200,7 @@ final class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertFalse($fields->hasFieldById(101));
+        self::assertFalse($fields->hasFieldById(101));
     }
 
     /**
@@ -211,7 +213,7 @@ final class FieldsTest extends TestCase
 
         $field = $fields->getFieldById($id);
 
-        $this->assertEquals($id, $field->id);
+        self::assertEquals($id, $field->id);
     }
 
     /**
@@ -240,9 +242,9 @@ final class FieldsTest extends TestCase
 
         $field = $fields->getFieldById($id);
 
-        $this->assertEquals((string) $id, $field->fieldDefIdentifier);
-        $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
-        $this->assertTrue($field->isEmpty());
+        self::assertEquals((string) $id, $field->fieldDefIdentifier);
+        self::assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
+        self::assertTrue($field->isEmpty());
     }
 
     /**
@@ -255,7 +257,7 @@ final class FieldsTest extends TestCase
 
         $field = $fields->getField($identifier);
 
-        $this->assertEquals($identifier, $field->fieldDefIdentifier);
+        self::assertEquals($identifier, $field->fieldDefIdentifier);
     }
 
     /**
@@ -266,7 +268,7 @@ final class FieldsTest extends TestCase
         $identifier = 'fourth';
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(\sprintf('Field "%s" in Content #1 does not exist', $identifier));
+        $this->expectExceptionMessage(sprintf('Field "%s" in Content #1 does not exist', $identifier));
 
         $fields = $this->getFieldsUnderTest(true);
 
@@ -284,9 +286,9 @@ final class FieldsTest extends TestCase
 
         $field = $fields->getField($identifier);
 
-        $this->assertEquals($identifier, $field->fieldDefIdentifier);
-        $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
-        $this->assertTrue($field->isEmpty());
+        self::assertEquals($identifier, $field->fieldDefIdentifier);
+        self::assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
+        self::assertTrue($field->isEmpty());
     }
 
     /**
@@ -300,7 +302,7 @@ final class FieldsTest extends TestCase
 
         $field = $fields->getFirstNonEmptyField($identifier, 'second', 'third', 'fourth');
 
-        $this->assertEquals($identifier, $field->fieldDefIdentifier);
+        self::assertEquals($identifier, $field->fieldDefIdentifier);
     }
 
     /**
@@ -312,7 +314,7 @@ final class FieldsTest extends TestCase
 
         $field = $fields->getFirstNonEmptyField('1st', 'second', 'third', 'fourth');
 
-        $this->assertEquals('third', $field->fieldDefIdentifier);
+        self::assertEquals('third', $field->fieldDefIdentifier);
     }
 
     /**
@@ -326,7 +328,7 @@ final class FieldsTest extends TestCase
 
         $field = $fields->getFirstNonEmptyField('1st', '2nd', $identifier, 'fourth');
 
-        $this->assertEquals($identifier, $field->fieldDefIdentifier);
+        self::assertEquals($identifier, $field->fieldDefIdentifier);
     }
 
     /**
@@ -340,9 +342,9 @@ final class FieldsTest extends TestCase
 
         $field = $fields->getFirstNonEmptyField($identifier, '2nd', '3rd', '4th');
 
-        $this->assertEquals($identifier, $field->fieldDefIdentifier);
-        $this->assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
-        $this->assertTrue($field->isEmpty());
+        self::assertEquals($identifier, $field->fieldDefIdentifier);
+        self::assertEquals('ngsurrogate', $field->fieldTypeIdentifier);
+        self::assertTrue($field->isEmpty());
     }
 
     /**
@@ -352,7 +354,7 @@ final class FieldsTest extends TestCase
     {
         $fields = $this->getFieldsUnderTest(true);
 
-        $this->assertEquals(
+        self::assertEquals(
             (array) $fields->getIterator(),
             $fields->__debugInfo()
         );

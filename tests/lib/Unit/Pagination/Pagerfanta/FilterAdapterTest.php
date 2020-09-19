@@ -43,15 +43,15 @@ final class FilterAdapterTest extends TestCase
         $searchResult = new SearchResult(['totalCount' => $nbResults]);
 
         $this->filterService
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('filterContent')
-            ->with($this->equalTo($countQuery))
+            ->with(self::equalTo($countQuery))
             ->willReturn($searchResult);
 
         $adapter = $this->getAdapter($query);
 
-        $this->assertSame($nbResults, $adapter->getNbResults());
-        $this->assertSame($nbResults, $adapter->getNbResults());
+        self::assertSame($nbResults, $adapter->getNbResults());
+        self::assertSame($nbResults, $adapter->getNbResults());
     }
 
     public function testGetFacets(): void
@@ -63,15 +63,15 @@ final class FilterAdapterTest extends TestCase
         $searchResult = new SearchResult(['facets' => $facets]);
 
         $this->filterService
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('filterContent')
-            ->with($this->equalTo($countQuery))
+            ->with(self::equalTo($countQuery))
             ->willReturn($searchResult);
 
         $adapter = $this->getAdapter($query);
 
-        $this->assertSame($facets, $adapter->getFacets());
-        $this->assertSame($facets, $adapter->getFacets());
+        self::assertSame($facets, $adapter->getFacets());
+        self::assertSame($facets, $adapter->getFacets());
     }
 
     public function testMaxScore(): void
@@ -83,27 +83,27 @@ final class FilterAdapterTest extends TestCase
         $searchResult = new SearchResult(['maxScore' => $maxScore]);
 
         $this->filterService
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('filterContent')
-            ->with($this->equalTo($countQuery))
+            ->with(self::equalTo($countQuery))
             ->willReturn($searchResult);
 
         $adapter = $this->getAdapter($query);
 
-        $this->assertSame($maxScore, $adapter->getMaxScore());
-        $this->assertSame($maxScore, $adapter->getMaxScore());
+        self::assertSame($maxScore, $adapter->getMaxScore());
+        self::assertSame($maxScore, $adapter->getMaxScore());
     }
 
     public function testTimeIsNotSet(): void
     {
         $this->filterService
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('filterContent');
 
         $adapter = $this->getAdapter(new Query());
 
-        $this->assertNull($adapter->getTime());
-        $this->assertNull($adapter->getTime());
+        self::assertNull($adapter->getTime());
+        self::assertNull($adapter->getTime());
     }
 
     public function testGetSlice(): void
@@ -130,20 +130,20 @@ final class FilterAdapterTest extends TestCase
         ]);
 
         $this->filterService
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('filterContent')
-            ->with($this->equalTo($searchQuery))
+            ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
 
         $adapter = $this->getAdapter($query);
         $slice = $adapter->getSlice($offset, $limit);
 
-        $this->assertInstanceOf(Slice::class, $slice);
-        $this->assertSame($hits, $slice->getSearchHits());
-        $this->assertSame($nbResults, $adapter->getNbResults());
-        $this->assertSame($facets, $adapter->getFacets());
-        $this->assertSame($maxScore, $adapter->getMaxScore());
-        $this->assertSame($time, $adapter->getTime());
+        self::assertInstanceOf(Slice::class, $slice);
+        self::assertSame($hits, $slice->getSearchHits());
+        self::assertSame($nbResults, $adapter->getNbResults());
+        self::assertSame($facets, $adapter->getFacets());
+        self::assertSame($maxScore, $adapter->getMaxScore());
+        self::assertSame($time, $adapter->getTime());
     }
 
     public function testLocationQuery(): void
@@ -151,9 +151,9 @@ final class FilterAdapterTest extends TestCase
         $query = new LocationQuery(['performCount' => false]);
 
         $this->filterService
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('filterLocations')
-            ->with($this->equalTo($query))
+            ->with(self::equalTo($query))
             ->willReturn(new SearchResult());
 
         $adapter = $this->getAdapter($query);

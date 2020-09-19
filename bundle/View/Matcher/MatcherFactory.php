@@ -10,13 +10,15 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\Matcher\ClassNameMatcherFactory;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use function mb_strpos;
+use function mb_substr;
 
 class MatcherFactory extends ClassNameMatcherFactory
 {
     use ContainerAwareTrait;
 
     /**
-     * @var null|\eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry
+     * @var \eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry|null
      */
     private $viewMatcherRegistry;
 
@@ -31,12 +33,12 @@ class MatcherFactory extends ClassNameMatcherFactory
     private $parameterName;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $namespace;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $scope;
 
@@ -75,8 +77,8 @@ class MatcherFactory extends ClassNameMatcherFactory
      */
     protected function getMatcher($matcherIdentifier)
     {
-        if ($this->viewMatcherRegistry !== null && \strpos($matcherIdentifier, '@') === 0) {
-            return $this->viewMatcherRegistry->getMatcher(\substr($matcherIdentifier, 1));
+        if ($this->viewMatcherRegistry !== null && mb_strpos($matcherIdentifier, '@') === 0) {
+            return $this->viewMatcherRegistry->getMatcher(mb_substr($matcherIdentifier, 1));
         }
 
         if ($this->container->has($matcherIdentifier)) {

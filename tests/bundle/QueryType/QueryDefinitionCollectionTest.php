@@ -22,7 +22,7 @@ final class QueryDefinitionCollectionTest extends TestCase
 
         $queryDefinitionCollection->add($name, $queryDefinition);
 
-        $this->assertSame(
+        self::assertSame(
             $queryDefinition,
             $queryDefinitionCollection->get($name)
         );

@@ -13,6 +13,9 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Field;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Depth;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Priority;
 use InvalidArgumentException;
+use function array_key_exists;
+use function explode;
+use function mb_strtolower;
 
 /**
  * Sort clause parser parses string representation of the SortClause
@@ -50,12 +53,12 @@ final class SortClauseParser
      */
     public function parse(string $definition): SortClause
     {
-        $values = \explode(' ', $definition);
+        $values = explode(' ', $definition);
         $direction = $this->getDirection($values);
-        $values = \explode('/', $values[0]);
+        $values = explode('/', $values[0]);
         $type = $values[0];
 
-        switch (\strtolower($type)) {
+        switch (mb_strtolower($type)) {
             case 'depth':
                 return new Depth($direction);
             case 'field':
@@ -78,17 +81,19 @@ final class SortClauseParser
     /**
      * Build a new Field sort clause from the given arguments.
      *
+     * @param mixed $direction
+     *
      * @throws \InvalidArgumentException
      */
     private function buildFieldSortClause(array $values, $direction): Field
     {
-        if (!\array_key_exists(1, $values)) {
+        if (!array_key_exists(1, $values)) {
             throw new InvalidArgumentException(
                 'Field sort clause requires ContentType identifier'
             );
         }
 
-        if (!\array_key_exists(2, $values)) {
+        if (!array_key_exists(2, $values)) {
             throw new InvalidArgumentException(
                 'Field sort clause requires FieldDefinition identifier'
             );
@@ -108,11 +113,11 @@ final class SortClauseParser
     {
         $direction = 'asc';
 
-        if (\array_key_exists(1, $values)) {
+        if (array_key_exists(1, $values)) {
             $direction = $values[1];
         }
 
-        switch (\strtolower($direction)) {
+        switch (mb_strtolower($direction)) {
             case 'asc':
                 return Query::SORT_ASC;
             case 'desc':

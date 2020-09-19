@@ -6,6 +6,9 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Configuratio
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Twig\Lexer;
+use function array_keys;
+use function is_string;
+use function preg_match;
 
 class NamedQueryBuilder
 {
@@ -44,8 +47,8 @@ class NamedQueryBuilder
             ->end()
             ->validate()
                 ->ifTrue(static function ($v): bool {
-                    foreach (\array_keys($v) as $key) {
-                        if (!\is_string($key) || !\preg_match(Lexer::REGEX_NAME, $key)) {
+                    foreach (array_keys($v) as $key) {
+                        if (!is_string($key) || !preg_match(Lexer::REGEX_NAME, $key)) {
                             return true;
                         }
                     }

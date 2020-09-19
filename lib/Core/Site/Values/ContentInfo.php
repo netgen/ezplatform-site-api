@@ -6,6 +6,8 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\Values;
 
 use Netgen\EzPlatformSiteApi\API\Values\ContentInfo as APIContentInfo;
 use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
+use function array_key_exists;
+use function property_exists;
 
 final class ContentInfo extends APIContentInfo
 {
@@ -56,7 +58,7 @@ final class ContentInfo extends APIContentInfo
 
     public function __construct(array $properties = [])
     {
-        if (\array_key_exists('site', $properties)) {
+        if (array_key_exists('site', $properties)) {
             $this->site = $properties['site'];
             unset($properties['site']);
         }
@@ -84,11 +86,11 @@ final class ContentInfo extends APIContentInfo
                 return !$this->isHidden;
         }
 
-        if (\property_exists($this, $property)) {
+        if (property_exists($this, $property)) {
             return $this->{$property};
         }
 
-        if (\property_exists($this->innerContentInfo, $property)) {
+        if (property_exists($this->innerContentInfo, $property)) {
             return $this->innerContentInfo->{$property};
         }
 
@@ -108,7 +110,7 @@ final class ContentInfo extends APIContentInfo
                 return true;
         }
 
-        if (\property_exists($this, $property) || \property_exists($this->innerContentInfo, $property)) {
+        if (property_exists($this, $property) || property_exists($this->innerContentInfo, $property)) {
             return true;
         }
 

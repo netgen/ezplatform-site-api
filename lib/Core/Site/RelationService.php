@@ -14,6 +14,10 @@ use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
+use function array_flip;
+use function array_slice;
+use function count;
+use function usort;
 
 /**
  * @final
@@ -99,7 +103,7 @@ class RelationService implements RelationServiceInterface
      */
     private function getRelatedContentItems(array $relatedContentIds, array $contentTypeIdentifiers, ?int $limit = null): array
     {
-        if (\count($relatedContentIds) === 0) {
+        if (count($relatedContentIds) === 0) {
             return [];
         }
 
@@ -117,14 +121,14 @@ class RelationService implements RelationServiceInterface
 
         $query = new Query([
             'filter' => new LogicalAnd($criteria),
-            'limit' => \count($relatedContentIds),
+            'limit' => count($relatedContentIds),
         ]);
 
         $searchResult = $this->site->getFilterService()->filterContent($query);
         $contentItems = $this->extractContentItems($searchResult);
 
         if ($limit !== null) {
-            return \array_slice($contentItems, 0, $limit);
+            return array_slice($contentItems, 0, $limit);
         }
 
         return $contentItems;
@@ -135,12 +139,12 @@ class RelationService implements RelationServiceInterface
      */
     private function sortByIdOrder(array &$relatedContentItems, array $relatedContentIds): void
     {
-        $sortedIdList = \array_flip($relatedContentIds);
+        $sortedIdList = array_flip($relatedContentIds);
 
         $sorter = static function (Content $content1, Content $content2) use ($sortedIdList): int {
             return $sortedIdList[$content1->id] <=> $sortedIdList[$content2->id];
         };
 
-        \usort($relatedContentItems, $sorter);
+        usort($relatedContentItems, $sorter);
     }
 }

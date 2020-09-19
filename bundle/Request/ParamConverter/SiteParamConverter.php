@@ -8,6 +8,7 @@ use Netgen\EzPlatformSiteApi\API\LoadService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
+use function is_a;
 
 abstract class SiteParamConverter implements ParamConverterInterface
 {
@@ -23,7 +24,7 @@ abstract class SiteParamConverter implements ParamConverterInterface
 
     public function supports(ParamConverter $configuration): bool
     {
-        return \is_a($configuration->getClass(), $this->getSupportedClass(), true);
+        return is_a($configuration->getClass(), $this->getSupportedClass(), true);
     }
 
     public function apply(Request $request, ParamConverter $configuration): bool

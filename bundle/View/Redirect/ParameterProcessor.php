@@ -7,6 +7,9 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\View\Redirect;
 use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use function is_string;
+use function mb_stripos;
+use function mb_substr;
 
 final class ParameterProcessor
 {
@@ -25,10 +28,12 @@ final class ParameterProcessor
      * Return given $value processed with ExpressionLanguage if needed.
      *
      * Parameter $view is used to provide values for evaluation.
+     *
+     * @param mixed $value
      */
     public function process($value, ContentView $view)
     {
-        if (!\is_string($value) || \mb_stripos($value, '@=') !== 0) {
+        if (!is_string($value) || mb_stripos($value, '@=') !== 0) {
             return $value;
         }
 
@@ -37,7 +42,7 @@ final class ParameterProcessor
         $this->registerFunctions($language);
 
         return $language->evaluate(
-            \substr($value, 2),
+            mb_substr($value, 2),
             [
                 'location' => $view->getSiteLocation(),
                 'content' => $view->getSiteContent(),

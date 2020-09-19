@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
-use DateTime;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
@@ -24,7 +23,7 @@ final class ParameterProcessorTest extends TestCase
 {
     public function providerForTestProcess(): array
     {
-        $date = new DateTime('@1');
+        $date = new \DateTimeImmutable('@1');
 
         return [
             [
@@ -244,6 +243,9 @@ final class ParameterProcessorTest extends TestCase
 
     /**
      * @dataProvider providerForTestProcess
+     *
+     * @param mixed $parameter
+     * @param mixed $expectedProcessedParameter
      */
     public function testProcess($parameter, $expectedProcessedParameter): void
     {
@@ -252,7 +254,7 @@ final class ParameterProcessorTest extends TestCase
 
         $processedParameter = $parameterProcessor->process($parameter, $viewMock);
 
-        $this->assertSame($expectedProcessedParameter, $processedParameter);
+        self::assertSame($expectedProcessedParameter, $processedParameter);
     }
 
     public function testProcessLanguageExpressionValues(): void
@@ -260,11 +262,11 @@ final class ParameterProcessorTest extends TestCase
         $parameterProcessor = $this->getParameterProcessorUnderTest();
         $viewMock = $this->getViewMock();
 
-        $this->assertSame($viewMock, $parameterProcessor->process('@=view', $viewMock));
-        $this->assertInstanceOf(Location::class, $parameterProcessor->process('@=location', $viewMock));
-        $this->assertInstanceOf(Content::class, $parameterProcessor->process('@=content', $viewMock));
-        $this->assertInstanceOf(Request::class, $parameterProcessor->process('@=request', $viewMock));
-        $this->assertInstanceOf(ConfigResolverInterface::class, $parameterProcessor->process('@=configResolver', $viewMock));
+        self::assertSame($viewMock, $parameterProcessor->process('@=view', $viewMock));
+        self::assertInstanceOf(Location::class, $parameterProcessor->process('@=location', $viewMock));
+        self::assertInstanceOf(Content::class, $parameterProcessor->process('@=content', $viewMock));
+        self::assertInstanceOf(Request::class, $parameterProcessor->process('@=request', $viewMock));
+        self::assertInstanceOf(ConfigResolverInterface::class, $parameterProcessor->process('@=configResolver', $viewMock));
     }
 
     protected function getParameterProcessorUnderTest(): ParameterProcessor

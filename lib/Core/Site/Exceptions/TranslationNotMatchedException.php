@@ -9,6 +9,7 @@ use eZ\Publish\Core\Base\Exceptions\Httpable;
 use eZ\Publish\Core\Base\Translatable;
 use eZ\Publish\Core\Base\TranslatableBase;
 use Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException as APITranslationNotMatchedException;
+use function var_export;
 
 /**
  * This exception is thrown if the Content translation language could not be resolved.
@@ -19,8 +20,10 @@ class TranslationNotMatchedException extends APITranslationNotMatchedException i
 
     /**
      * Generates: Could not match translation for Content '{$contentId}' in context '{$context}'.
+     *
+     * @param mixed $context
      */
-    public function __construct(int $contentId, $context, Exception $previous = null)
+    public function __construct(int $contentId, $context, ?Exception $previous = null)
     {
         $this->setMessageTemplate(
             "Could not match translation for Content '%contentId%' in context '%context%'"
@@ -28,7 +31,7 @@ class TranslationNotMatchedException extends APITranslationNotMatchedException i
         $this->setParameters(
             [
                 '%contentId%' => $contentId,
-                '%context%' => \var_export($context, true),
+                '%context%' => var_export($context, true),
             ]
         );
 

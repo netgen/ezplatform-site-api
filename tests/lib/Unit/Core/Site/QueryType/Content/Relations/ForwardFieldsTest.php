@@ -253,7 +253,7 @@ final class ForwardFieldsTest extends QueryTypeBaseTest
             'sort' => 'published desc',
         ]);
 
-        $this->assertEquals(
+        self::assertEquals(
             new Query([
                 'filter' => new LogicalAnd([
                     new Visible(true),

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\QueryType;
 
 use OutOfBoundsException;
+use function array_key_exists;
 
 /**
  * QueryDefinitionCollection contains a map of QueryDefinitions by their name string.
@@ -41,7 +42,7 @@ final class QueryDefinitionCollection
      */
     public function get(string $name): QueryDefinition
     {
-        if (\array_key_exists($name, $this->queryDefinitionMap)) {
+        if (array_key_exists($name, $this->queryDefinitionMap)) {
             return $this->queryDefinitionMap[$name];
         }
 

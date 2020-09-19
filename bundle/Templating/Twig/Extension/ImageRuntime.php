@@ -27,7 +27,7 @@ class ImageRuntime
 
     public function __construct(
         VariationHandler $imageVariationService,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->imageVariationService = $imageVariationService;
         $this->logger = $logger ?? new NullLogger();

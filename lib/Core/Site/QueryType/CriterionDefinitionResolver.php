@@ -6,6 +6,10 @@ namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use InvalidArgumentException;
+use function array_key_exists;
+use function array_keys;
+use function array_merge;
+use function is_array;
 
 /**
  * @internal Do not depend on this service, it can be changed without warning.
@@ -34,6 +38,9 @@ final class CriterionDefinitionResolver
     /**
      * Resolve Criterion $parameters.
      *
+     *
+     * @param mixed $parameters
+     *
      * @throws \InvalidArgumentException
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition[]
@@ -58,11 +65,14 @@ final class CriterionDefinitionResolver
             $definitionsGrouped[] = $this->resolveForTarget($name, $target, $params);
         }
 
-        return \array_merge(...$definitionsGrouped);
+        return array_merge(...$definitionsGrouped);
     }
 
     /**
      * Return CriterionDefinition instances for the given Field $target and its $parameters.
+     *
+     *
+     * @param mixed $parameters
      *
      * @throws \InvalidArgumentException
      *
@@ -96,6 +106,8 @@ final class CriterionDefinitionResolver
     }
 
     /**
+     * @param mixed $value
+     *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
     private function buildDefinitionForOperator(string $name, ?string $target, string $operator, $value): CriterionDefinition
@@ -114,6 +126,8 @@ final class CriterionDefinitionResolver
 
     /**
      * Return CriterionDefinition instance from the given arguments.
+     *
+     * @param mixed $value
      *
      * @return \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition
      */
@@ -134,18 +148,20 @@ final class CriterionDefinitionResolver
     /**
      * Decide if the given $parameters is an operator-value map (otherwise it's a value collection).
      *
+     * @param mixed $parameters
+     *
      * @throws \InvalidArgumentException
      */
     private function isOperatorMap($parameters): bool
     {
-        if (!\is_array($parameters)) {
+        if (!is_array($parameters)) {
             return false;
         }
 
         $isOperatorMap = false;
         $isValueCollection = false;
 
-        foreach (\array_keys($parameters) as $key) {
+        foreach (array_keys($parameters) as $key) {
             if ($this->isOperator($key)) {
                 $isOperatorMap = true;
             } else {
@@ -164,11 +180,13 @@ final class CriterionDefinitionResolver
 
     private function isOperator($key): bool
     {
-        return \array_key_exists($key, self::$operatorMap) || $key === 'not';
+        return array_key_exists($key, self::$operatorMap) || $key === 'not';
     }
 
     /**
      * Resolve actual operator value from the given arguments.
+     *
+     * @param mixed $value
      */
     private function resolveOperator(?string $symbol, $value)
     {
@@ -182,11 +200,13 @@ final class CriterionDefinitionResolver
     /**
      * Return operator value by the given $value.
      *
+     * @param mixed $value
+     *
      * @throws \RuntimeException
      */
     private function getOperatorByValueType($value): string
     {
-        if (\is_array($value)) {
+        if (is_array($value)) {
             return Operator::IN;
         }
 

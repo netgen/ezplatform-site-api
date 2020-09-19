@@ -9,12 +9,13 @@ use Twig\Environment;
 use Twig\Node\Expression\GetAttrExpression;
 use Twig\Node\Node;
 use Twig\NodeVisitor\NodeVisitorInterface;
+use function get_class;
 
 class GetAttrExpressionReplacer implements NodeVisitorInterface
 {
     public function enterNode(Node $node, Environment $env): Node
     {
-        if (\get_class($node) !== GetAttrExpression::class) {
+        if (get_class($node) !== GetAttrExpression::class) {
             return $node;
         }
 

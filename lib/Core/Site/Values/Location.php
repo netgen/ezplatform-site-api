@@ -18,6 +18,7 @@ use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 use Netgen\EzPlatformSiteApi\Core\Site\Pagination\Pagerfanta\FilterAdapter;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
+use function property_exists;
 
 final class Location extends APILocation
 {
@@ -111,11 +112,11 @@ final class Location extends APILocation
                 return !$this->innerLocation->hidden && !$this->innerLocation->invisible;
         }
 
-        if (\property_exists($this, $property)) {
+        if (property_exists($this, $property)) {
             return $this->{$property};
         }
 
-        if (\property_exists($this->innerLocation, $property)) {
+        if (property_exists($this->innerLocation, $property)) {
             return $this->innerLocation->{$property};
         }
 
@@ -138,7 +139,7 @@ final class Location extends APILocation
                 return true;
         }
 
-        if (\property_exists($this, $property) || \property_exists($this->innerLocation, $property)) {
+        if (property_exists($this, $property) || property_exists($this->innerLocation, $property)) {
             return true;
         }
 

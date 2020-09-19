@@ -7,11 +7,18 @@ eZ Platform Site API changelog
 [`3.5.0...4.0.0`](https://github.com/netgen/ezplatform-site-api/compare/master...4.0)
 
 ### Added
-* eZ Platform v3 compatibility by @emodric ([#175](https://github.com/netgen/ezplatform-site-api/pull/175))
 * Autowired controllers by @MarioBlazek ([#165](https://github.com/netgen/ezplatform-site-api/pull/165))
+* eZ Platform v3 compatibility by @emodric ([#175](https://github.com/netgen/ezplatform-site-api/pull/175))
+* Siteaccess-configurable support for combined Content/Location visibility by @RandyCupic ([#176](https://github.com/netgen/ezplatform-site-api/pull/176))
 
 ### Changed
 * Reorganized bundle configuration ([#169](https://github.com/netgen/ezplatform-site-api/pull/169))
+* Enabled view fallback without a subrequest ([#177](https://github.com/netgen/ezplatform-site-api/pull/177))
+
+### Removed
+* Removed deprecated loading of Content relations by ID ([#178](https://github.com/netgen/ezplatform-site-api/pull/178))
+* Removed support for XmlText view rendering without a subrequest (https://github.com/netgen/ezplatform-site-api/commit/cb10955f58b707be27ffad6d9a9feed4b4af90a4)
+* Removed deprecated event `RenderContentEvent` (https://github.com/netgen/ezplatform-site-api/commit/a29ed912cbccda0910c45bed1cd7883e7b857fe7) 
 
 3.5.0 (14.09.2020)
 ------------------

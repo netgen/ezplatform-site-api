@@ -1,10 +1,13 @@
 eZ Platform Site API changelog
 ==============================
 
-4.0.0 (Unreleased)
+4.0.0 (19.09.2020)
 ------------------
 
-[`3.5.0...4.0.0`](https://github.com/netgen/ezplatform-site-api/compare/master...4.0)
+[`3.5.0...4.0.0`](https://github.com/netgen/ezplatform-site-api/compare/3.5.0...4.0.0)
+
+Version 4.0.0 is a major release where all previous deprecations have been removed and several breaking changes have
+been introduced. For upgrade instructions see https://docs.netgen.io/projects/site-api/en/4.0.0/upgrades/upgrade_350_400.html.
 
 ### Added
 * Autowired controllers by @MarioBlazek ([#165](https://github.com/netgen/ezplatform-site-api/pull/165))

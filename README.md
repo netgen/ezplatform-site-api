@@ -6,8 +6,8 @@
 [![Read the Docs](https://img.shields.io/readthedocs/netgen-ezplatform-site-api)](https://docs.netgen.io/projects/site-api/en/latest/)
 [![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)
 [![Latest stable](https://img.shields.io/packagist/v/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)
-[![PHP](https://img.shields.io/badge/PHP-%E2%89%A5%207.1-%238892BF.svg)](https://secure.php.net/)
-[![eZ](https://img.shields.io/badge/eZ%20Platform-%E2%89%A5%202.4-orange.svg?style=popout)](https://ezplatform.com/)
+[![PHP](https://img.shields.io/badge/PHP-%E2%89%A5%207.3-%238892BF.svg)](https://secure.php.net/)
+[![eZ](https://img.shields.io/badge/eZ%20Platform-%E2%89%A5%203.1-orange.svg?style=popout)](https://ezplatform.com/)
 
 </div>
 

@@ -366,6 +366,10 @@ Properties
 +---------------------+---------------------+-----------------------------------------------------------------------------+
 | ``$languageCode``   | ``string``          | Translation language code                                                   |
 +---------------------+---------------------+-----------------------------------------------------------------------------+
+| ``$isVisible``      | ``bool``            | | Indicates that the Content is visible                                     |
+|                     |                     | | **You can use this property to check if the**                             |
+|                     |                     | | **Content should be visible on the frontend**                             |
++---------------------+---------------------+-----------------------------------------------------------------------------+
 | ``$contentInfo``    | `ContentInfo`_      | ContentInfo object                                                          |
 +---------------------+---------------------+-----------------------------------------------------------------------------+
 | ``$fields``         | ``Field[]``         | | An array of `Field`_ instances, which can be accessed                     |
@@ -406,7 +410,9 @@ Properties
 +-----------------------------+----------------+----------------------------------------------------------+
 | ``$isHidden``               | ``bool``       | Indicates that the Content is hidden                     |
 +-----------------------------+----------------+----------------------------------------------------------+
-| ``$isVisible``              | ``bool``       | Indicates that the Content is visible                    |
+| ``$isVisible``              | ``bool``       | | Indicates that the Content is visible                  |
+|                             |                | | **You can use this property to check if the**          |
+|                             |                | | **Content should be visible on the frontend**          |
 +-----------------------------+----------------+----------------------------------------------------------+
 | ``$ownerId``                | ``string|int`` | ID of the owner user Content                             |
 +-----------------------------+----------------+----------------------------------------------------------+
@@ -694,14 +700,20 @@ Properties
 +-----------------------+----------------+------------------------------------------------------------------------------------+
 | ``$priority``         | ``int``        | Priority                                                                           |
 +-----------------------+----------------+------------------------------------------------------------------------------------+
-| ``$hidden``           | ``bool``       | Indicates that the Location is hidden (explicitly or hidden by its Content)        |
+| ``$hidden``           | ``bool``       | | Indicates that the Location is hidden (explicitly or                             |
+|                       |                | | hidden by its Content)                                                           |
 +-----------------------+----------------+------------------------------------------------------------------------------------+
-| ``$invisible``        | ``bool``       | Indicates that the Location is implicitly marked as hidden by a parent Location    |
+| ``$invisible``        | ``bool``       | | Indicates that the Location is not visible, being either                         |
+|                       |                | | marked as hidden itself, or implicitly hidden by                                 |
+|                       |                | | its Content or an ancestor Location                                              |
 +-----------------------+----------------+------------------------------------------------------------------------------------+
-| ``$explicitlyHidden`` | ``bool``       | Indicates that the Location has been explicitly marked as hidden                   |
+| ``$explicitlyHidden`` | ``bool``       | | Indicates that the Location has been                                             |
+|                       |                | | explicitly marked as hidden                                                      |
 +-----------------------+----------------+------------------------------------------------------------------------------------+
-| ``$isVisible``        | ``bool``       | Indicates that the Location is visible (not hidden itself, by its Content or by    |
-|                       |                | a parent Location)                                                                 |
+| ``$isVisible``        | ``bool``       | | Indicates that the Location is visible (not hidden itself,                       |
+|                       |                | | by its Content or by an ancestor Location)                                       |
+|                       |                | | **You can use this property to check if the**                                    |
+|                       |                | | **Location should be visible on the frontend**                                   |
 +-----------------------+----------------+------------------------------------------------------------------------------------+
 | ``$remoteId``         | ``string``     | Remote ID                                                                          |
 +-----------------------+----------------+------------------------------------------------------------------------------------+

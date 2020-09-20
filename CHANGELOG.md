@@ -1,6 +1,22 @@
 eZ Platform Site API changelog
 ==============================
 
+4.0.1 (20.09.2020)
+------------------
+
+[`4.0.0...4.0.1`](https://github.com/netgen/ezplatform-site-api/compare/4.0.0...4.0.1)
+
+### Fixed
+Fixed usage of `$this` pseudo variable inside a static function in `Children` and `Siblings` query types ([#181](https://github.com/netgen/ezplatform-site-api/pull/181))
+
+3.5.1 (20.09.2020)
+------------------
+
+[`3.5.0...3.5.1`](https://github.com/netgen/ezplatform-site-api/compare/3.5.0...3.5.1)
+
+### Fixed
+Fixed usage of `$this` pseudo variable inside a static function in `Children` and `Siblings` query types ([#181](https://github.com/netgen/ezplatform-site-api/pull/181))
+
 4.0.0 (19.09.2020)
 ------------------
 

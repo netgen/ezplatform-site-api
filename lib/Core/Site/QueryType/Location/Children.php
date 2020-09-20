@@ -60,7 +60,7 @@ final class Children extends Location
             try {
                 return $location->innerLocation->getSortClauses();
             } catch (NotImplementedException $e) {
-                $this->logger->notice("Cannot use sort clausses from parent location: {$e->getMessage()}");
+                $this->logger->notice("Cannot use sort clauses from parent location: {$e->getMessage()}");
 
                 return [];
             }

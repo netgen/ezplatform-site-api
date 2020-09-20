@@ -54,14 +54,14 @@ final class Siblings extends Location
 
         $resolver->setDefault(
             'sort',
-            static function (Options $options): array {
+            function (Options $options): array {
                 /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
                 $location = $options['location'];
 
                 try {
                     return $location->parent->innerLocation->getSortClauses();
                 } catch (NotImplementedException $e) {
-                    $this->logger->notice("Cannot use sort clausses from parent location: {$e->getMessage()}");
+                    $this->logger->notice("Cannot use sort clauses from parent location: {$e->getMessage()}");
 
                     return [];
                 }

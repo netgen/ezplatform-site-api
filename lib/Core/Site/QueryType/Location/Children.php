@@ -51,18 +51,21 @@ final class Children extends Location
         $resolver->setRequired('location');
         $resolver->setAllowedTypes('location', SiteLocation::class);
 
-        $resolver->setDefault('sort', static function (Options $options): array {
-            /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
-            $location = $options['location'];
+        $resolver->setDefault(
+            'sort',
+            function (Options $options): array {
+                /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
+                $location = $options['location'];
 
-            try {
-                return $location->innerLocation->getSortClauses();
-            } catch (NotImplementedException $e) {
-                $this->logger->notice("Cannot use sort clausses from parent location: {$e->getMessage()}");
+                try {
+                    return $location->innerLocation->getSortClauses();
+                } catch (NotImplementedException $e) {
+                    $this->logger->notice("Cannot use sort clauses from parent location: {$e->getMessage()}");
 
-                return [];
+                    return [];
+                }
             }
-        });
+        );
     }
 
     /**

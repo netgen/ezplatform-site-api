@@ -225,18 +225,18 @@ final class Location extends APILocation
     private function getFilterPager(array $criteria, int $maxPerPage = 25, int $currentPage = 1): Pagerfanta
     {
         try {
-            $sortClausses = $this->innerLocation->getSortClauses();
+            $sortClauses = $this->innerLocation->getSortClauses();
         } catch (NotImplementedException $e) {
             $this->logger->notice("Cannot use sort clauses from parent location: {$e->getMessage()}");
 
-            $sortClausses = [];
+            $sortClauses = [];
         }
 
         $pager = new Pagerfanta(
             new FilterAdapter(
                 new LocationQuery([
                     'filter' => new LogicalAnd($criteria),
-                    'sortClauses' => $sortClausses,
+                    'sortClauses' => $sortClauses,
                 ]),
                 $this->site->getFilterService()
             )

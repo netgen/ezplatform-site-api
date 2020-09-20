@@ -56,7 +56,7 @@ final class Siblings extends Location
 
         $resolver->setDefault(
             'sort',
-            static function (Options $options): array {
+            function (Options $options): array {
                 /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
                 $location = $options['location'];
 

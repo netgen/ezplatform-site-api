@@ -6,6 +6,7 @@ namespace Netgen\Bundle\EzPlatformSiteApiBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 use function array_keys;
 
 final class QueryTypeExpressionFunctionProviderPass implements CompilerPassInterface
@@ -25,7 +26,7 @@ final class QueryTypeExpressionFunctionProviderPass implements CompilerPassInter
         foreach (array_keys($functionProviders) as $functionProviderId) {
             $expressionLanguageDefinition->addMethodCall(
                 'registerProvider',
-                [$functionProviderId]
+                [new Reference($functionProviderId)]
             );
         }
     }

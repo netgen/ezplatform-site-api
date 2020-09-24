@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use eZ\Publish\Core\MVC\Symfony\ExpressionLanguage\ExpressionLanguage;
 use eZ\Publish\Core\QueryType\QueryType;
 use eZ\Publish\Core\QueryType\QueryTypeRegistry;
 use InvalidArgumentException;
 use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
+use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ExpressionFunctionProvider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinition;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\QueryDefinitionMapper;
@@ -184,13 +186,11 @@ final class QueryDefinitionMapperTest extends TestCase
 
     protected function getQueryDefinitionMapperUnderTest(): QueryDefinitionMapper
     {
-        $queryDefinitionMapper = new QueryDefinitionMapper(
+        return new QueryDefinitionMapper(
             $this->getQueryTypeRegistryMock(),
             $this->getParameterProcessor(),
             $this->getConfigResolverMock()
         );
-
-        return $queryDefinitionMapper;
     }
 
     /**
@@ -275,8 +275,9 @@ final class QueryDefinitionMapperTest extends TestCase
         $configResolverMock = $this->getMockBuilder(ConfigResolverInterface::class)->getMock();
         /** @var \Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider $namedObjectProviderMock */
         $namedObjectProviderMock = $this->getMockBuilder(Provider::class)->getMock();
+        $expressionLanguage = new ExpressionLanguage(null, [new ExpressionFunctionProvider()]);
 
-        return new ParameterProcessor($requestStack, $configResolverMock, $namedObjectProviderMock);
+        return new ParameterProcessor($expressionLanguage, $requestStack, $configResolverMock, $namedObjectProviderMock);
     }
 
     /**

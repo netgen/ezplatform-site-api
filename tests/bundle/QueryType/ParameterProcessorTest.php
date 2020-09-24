@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use eZ\Publish\Core\MVC\Symfony\ExpressionLanguage\ExpressionLanguage;
 use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
+use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ExpressionFunctionProvider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
 use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentView;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
@@ -286,8 +288,9 @@ final class ParameterProcessorTest extends TestCase
 
         $configResolver = $this->getConfigResolverMock();
         $namedObjectProvider = $this->getNamedObjectProviderMock();
+        $expressionLanguage = new ExpressionLanguage(null, [new ExpressionFunctionProvider()]);
 
-        return new ParameterProcessor($requestStack, $configResolver, $namedObjectProvider);
+        return new ParameterProcessor($expressionLanguage, $requestStack, $configResolver, $namedObjectProvider);
     }
 
     /**

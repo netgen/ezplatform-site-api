@@ -1,6 +1,22 @@
 eZ Platform Site API changelog
 ==============================
 
+4.0.2 (24.09.2020)
+------------------
+
+[`4.0.1...4.0.2`](https://github.com/netgen/ezplatform-site-api/compare/4.0.1...4.0.2)
+
+### Fixed
+Overridden default eZ Platform full view template to prevent it from extending configured Site API pagelayout ([#183](https://github.com/netgen/ezplatform-site-api/pull/183))
+
+4.0.1 (20.09.2020)
+------------------
+
+[`4.0.0...4.0.1`](https://github.com/netgen/ezplatform-site-api/compare/4.0.0...4.0.1)
+
+### Fixed
+Fixed usage of `$this` pseudo variable inside a static function in `Children` and `Siblings` query types ([#181](https://github.com/netgen/ezplatform-site-api/pull/181))
+
 4.0.0 (19.09.2020)
 ------------------
 

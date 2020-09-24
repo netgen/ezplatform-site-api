@@ -17,7 +17,6 @@ Enabled registering custom expression functions for Query Type configuration ([#
 ### Fixed
 Overridden default eZ Platform full view template to prevent it from extending configured Site API pagelayout ([#183](https://github.com/netgen/ezplatform-site-api/pull/183))
 
-
 4.0.1 (20.09.2020)
 ------------------
 

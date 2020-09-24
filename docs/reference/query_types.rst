@@ -413,6 +413,22 @@ Miscellaneous
         Function ``timestamp()`` maps directly to the PHP's function `strtotime <https://secure.php.net/manual/en/function.strtotime.php>`_.
         That means it accepts any date and time format `supported by that function <https://secure.php.net/manual/en/datetime.formats.php>`_.
 
+Extending expressions
+~~~~~~~~~~~~~~~~~~~~~
+
+You can add you own functions for parameter expression through an expression function provider,
+implementing ``Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface`` interface
+and tagging it with ``netgen.ezplatform_site.query_type.expression_function_provider`` service tag.
+
+Values that will be provided for evaluation in your custom expression function implementation are:
+
+- ``view``, Site API View object
+- ``location``, :ref:`Site API Location object<location_object>`
+- ``content``, :ref:`Site API Content object<content_object>`
+- ``request``, Symfony's Request object (current request)
+- ``configResolver``, eZ Platform ConfigResolver service
+- ``namedObject``, :ref:`Site API NamedObjectProvider service<named_object_php>`
+
 Templating
 --------------------------------------------------------------------------------
 

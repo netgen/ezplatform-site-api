@@ -1,7 +1,19 @@
 services:
+    # Expression language function providers tagged with
+    # 'netgen.ezplatform_site.query_type.expression_function_provider'
+    # are registered to this service
+    netgen.ezplatform_site.query_type.expression_language:
+        class: Symfony\Component\ExpressionLanguage\ExpressionLanguage
+
+    netgen.ezplatform_site.query_type.expression_function_provider:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ExpressionFunctionProvider
+        tags:
+            - { name: netgen.ezplatform_site.query_type.expression_function_provider }
+
     netgen.ezplatform_site.query_type.parameter_processor:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor
         arguments:
+            - '@netgen.ezplatform_site.query_type.expression_language'
             - '@request_stack'
             - '@ezpublish.config.resolver'
             - '@netgen.ezplatform_site.named_object_provider'

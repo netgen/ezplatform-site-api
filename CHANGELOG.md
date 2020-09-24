@@ -9,6 +9,15 @@ eZ Platform Site API changelog
 ### Added
 Enabled registering custom expression functions for Query Type configuration ([#182](https://github.com/netgen/ezplatform-site-api/pull/182))
 
+4.0.2 (24.09.2020)
+------------------
+
+[`4.0.1...4.0.2`](https://github.com/netgen/ezplatform-site-api/compare/4.0.1...4.0.2)
+
+### Fixed
+Overridden default eZ Platform full view template to prevent it from extending configured Site API pagelayout ([#183](https://github.com/netgen/ezplatform-site-api/pull/183))
+
+
 4.0.1 (20.09.2020)
 ------------------
 

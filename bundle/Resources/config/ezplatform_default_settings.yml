@@ -14,6 +14,11 @@ parameters:
     # By default we don't override URL alias view action, for that reason this is commented out
     #ezsettings.default.pagelayout: '@@NetgenEzPlatformSiteApi/pagelayout.html.twig'
 
+    # We override the default full view template because of the automatic view fallback, to prevent
+    # the default one from extending configured page_layout, which is customized for Site API
+    # See: @EzPublishCore/default/content/full.html.twig
+    ezplatform.default_view_templates.content.full: '@@NetgenEzPlatformSiteApi/ez_default/content/full.html.twig'
+
     ezsettings.default.ng_fieldtypes.ezrichtext.embed.content:
         template: "@@NetgenEzPlatformSiteApi/default/field_type/ezrichtext/embed/content.html.twig"
     ezsettings.default.ng_fieldtypes.ezrichtext.embed.content_denied:

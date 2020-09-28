@@ -85,13 +85,16 @@ class InternalContentViewRouteListener implements EventSubscriberInterface
             throw new NotFoundHttpException();
         }
 
+        $event->setResponse($this->getResponse($request));
+    }
+
+    private function getResponse(Request $request): Response
+    {
         if ($this->configResolver->getParameter('ng_site_api.redirect_internal_view_route_to_url_alias')) {
-            $response = new RedirectResponse($this->generateUrlAlias($request));
-        } else {
-            $response = new Response($this->renderView($request));
+            return new RedirectResponse($this->generateUrlAlias($request));
         }
 
-        $event->setResponse($response);
+        return new Response($this->renderView($request));
     }
 
     private function renderView(Request $request): string

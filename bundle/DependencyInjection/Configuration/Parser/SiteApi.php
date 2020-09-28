@@ -43,6 +43,12 @@ class SiteApi extends AbstractParser
             ->booleanNode('render_missing_field_info')
                 ->info('Controls rendering useful debug information in place of a missing field')
             ->end()
+            ->booleanNode('enable_internal_view_route')
+                ->info('Controls whether internal Content view route will work (applies for a frontend siteaccess only)')
+            ->end()
+            ->booleanNode('redirect_internal_view_route_to_url_alias')
+                ->info('Controls whether internal Content view route will redirect to URL alias route')
+            ->end()
         ->end();
 
         NamedObjectBuilder::build($childrenBuilder);
@@ -60,6 +66,8 @@ class SiteApi extends AbstractParser
             'show_hidden_items',
             'fail_on_missing_field',
             'render_missing_field_info',
+            'enable_internal_view_route',
+            'redirect_internal_view_route_to_url_alias',
         ];
 
         foreach ($booleanKeys as $parameterName) {

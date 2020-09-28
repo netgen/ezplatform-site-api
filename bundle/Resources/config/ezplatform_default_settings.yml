@@ -49,6 +49,8 @@ parameters:
     ezsettings.default.ng_site_api.show_hidden_items: false
     ezsettings.default.ng_site_api.fail_on_missing_field: '%kernel.debug%'
     ezsettings.default.ng_site_api.render_missing_field_info: false
+    ezsettings.default.ng_site_api.enable_internal_view_route: '%kernel.debug%'
+    ezsettings.default.ng_site_api.redirect_internal_view_route_to_url_alias: true
     ezsettings.default.ng_site_api.named_queries: []
     ezsettings.default.ng_site_api.named_objects: []
     ezsettings.default.ng_content_view: []

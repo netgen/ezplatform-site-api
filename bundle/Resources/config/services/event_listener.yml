@@ -6,6 +6,16 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    netgen.ezplatform_site.event_listener.internal_content_view_route:
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\InternalContentViewRouteListener
+        arguments:
+            - '@ezpublish.config.resolver'
+            - '@fragment.handler'
+            - '@router'
+            - '%ezpublish.siteaccess.groups%'
+        tags:
+            - { name: kernel.event_subscriber }
+
     netgen.ezplatform_site.event_listener.invalid_redirect_configuration:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\EventListener\InvalidRedirectConfigurationListener
         public: false

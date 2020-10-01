@@ -83,7 +83,9 @@ class InternalContentViewRouteListener implements EventSubscriberInterface
         }
 
         if (!$this->configResolver->getParameter('ng_site_api.enable_internal_view_route')) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException(
+                'Internal Content view route has been disabled, check your Site API configuration for: "ng_site_api.enable_internal_view_route"'
+            );
         }
 
         $event->setResponse($this->getResponse($request));
@@ -155,7 +157,7 @@ class InternalContentViewRouteListener implements EventSubscriberInterface
         try {
             return $this->router->generate(UrlAliasRouter::URL_ALIAS_ROUTE_NAME, $parameters);
         } catch (Exception $e) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('URL alias could not be generated');
         }
     }
 }

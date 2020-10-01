@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\EventListener;
 
+use Exception;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator;
 use eZ\Publish\Core\MVC\Symfony\Routing\UrlAliasRouter;
@@ -91,7 +92,7 @@ class InternalContentViewRouteListener implements EventSubscriberInterface
     private function getResponse(Request $request): Response
     {
         if ($this->configResolver->getParameter('ng_site_api.redirect_internal_view_route_to_url_alias')) {
-            return new RedirectResponse($this->generateUrlAlias($request));
+            return new RedirectResponse($this->generateUrlAlias($request), 308);
         }
 
         return new Response($this->renderView($request));
@@ -151,6 +152,10 @@ class InternalContentViewRouteListener implements EventSubscriberInterface
             $parameters['locationId'] = (int) $locationId;
         }
 
-        return $this->router->generate(UrlAliasRouter::URL_ALIAS_ROUTE_NAME, $parameters);
+        try {
+            return $this->router->generate(UrlAliasRouter::URL_ALIAS_ROUTE_NAME, $parameters);
+        } catch (Exception $e) {
+            throw new NotFoundHttpException();
+        }
     }
 }

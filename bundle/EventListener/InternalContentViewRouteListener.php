@@ -113,7 +113,7 @@ class InternalContentViewRouteListener implements EventSubscriberInterface
         }
 
         return $this->fragmentHandler->render(
-            new ControllerReference('ng_content:viewAction', $attributes)
+            new ControllerReference('ng_content::viewAction', $attributes)
         );
     }
 

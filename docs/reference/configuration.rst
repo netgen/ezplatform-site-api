@@ -190,6 +190,26 @@ opposite.
 
 .. _show_hidden_items_configuration:
 
+Internal Content View route on frontend siteaccesses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+eZ Platform allows use of internal Content View route from the admin UI on the frontend
+siteaccesses. That might not be desirable in all cases, so Site API provides two configuration
+options to control whether the internal route will be enabled on a frontend siteaccess and, if
+enabled, whether it will permanently (HTTP code 308) redirect to the URL alias.
+
+By default, both options are set to true and the route will be enabled and it will permanently
+redirect to the URL alias:
+
+.. code-block:: yaml
+
+    ezpublish:
+        system:
+            frontend_group:
+                ng_site_api:
+                    enable_internal_view_route: true
+                    redirect_internal_view_route_to_url_alias: true
+
 Configure showing hidden items
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

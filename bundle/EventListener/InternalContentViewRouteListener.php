@@ -98,7 +98,7 @@ class InternalContentViewRouteListener implements EventSubscriberInterface
         return new Response($this->renderView($request));
     }
 
-    private function renderView(Request $request): string
+    private function renderView(Request $request): ?string
     {
         $attributes = [
             'contentId' => $request->attributes->getInt('contentId'),

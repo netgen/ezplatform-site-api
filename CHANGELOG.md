@@ -1,13 +1,14 @@
 eZ Platform Site API changelog
 ==============================
 
-4.1.0 Unreleased
-----------------
+4.1.0 (02.10.2020)
+------------------
 
-[`4.0.1...4.1.0`](https://github.com/netgen/ezplatform-site-api/compare/4.0.1...4.1.0)
+[`4.0.2...4.1.0`](https://github.com/netgen/ezplatform-site-api/compare/4.0.1...4.1.0)
 
 ### Added
-Enabled registering custom expression functions for Query Type configuration ([#182](https://github.com/netgen/ezplatform-site-api/pull/182))
+* NGSTACK-400: Enabled registering custom expression functions for Query Type configuration ([#182](https://github.com/netgen/ezplatform-site-api/pull/182))
+* NGSTACK-442: implemented internal Content view route configuration for the frontend siteaccesses ([#184](https://github.com/netgen/ezplatform-site-api/pull/184))
 
 4.0.2 (24.09.2020)
 ------------------

@@ -31,6 +31,11 @@ class BaseOptions extends AbstractParser
             ->booleanNode('ng_xmltext_embed_without_subrequest')
             ->info('Controls whether RichText and XmlText embed rendering should use a subrequest')
             ->end();
+
+        $nodeBuilder
+            ->booleanNode('ng_cross_siteaccess_routing')
+            ->info('Controls whether cross-siteaccess router will be used')
+            ->end();
     }
 
     public function mapConfig(array &$scopeSettings, $currentScope, ContextualizerInterface $contextualizer): void
@@ -39,6 +44,7 @@ class BaseOptions extends AbstractParser
         $this->contextualize('ng_fallback_without_subrequest', $scopeSettings, $currentScope, $contextualizer);
         $this->contextualize('ng_richtext_embed_without_subrequest', $scopeSettings, $currentScope, $contextualizer);
         $this->contextualize('ng_xmltext_embed_without_subrequest', $scopeSettings, $currentScope, $contextualizer);
+        $this->contextualize('ng_cross_siteaccess_routing', $scopeSettings, $currentScope, $contextualizer);
     }
 
     private function contextualize(

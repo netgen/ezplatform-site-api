@@ -24,24 +24,6 @@ services:
         alias: netgen.ezplatform_site.controller.content.view
         public: true
 
-    netgen.ezplatform_site.routing.content_url_alias_router:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\ContentUrlAliasRouter
-        public: false
-        arguments:
-            - "@ezpublish.urlalias_generator"
-            - "@?router.request_context"
-        tags:
-            - { name: router, priority: 200 }
-
-    netgen.ezplatform_site.routing.location_url_alias_router:
-        class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\LocationUrlAliasRouter
-        public: false
-        arguments:
-            - "@ezpublish.urlalias_generator"
-            - "@?router.request_context"
-        tags:
-            - { name: router, priority: 200 }
-
     netgen.ezplatform_site.param_converter.location:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Converter\ContentParamConverter
         arguments:
@@ -55,3 +37,22 @@ services:
             - '@netgen.ezplatform_site.load_service'
         tags:
             - { name: request.param_converter, priority: -1 }
+
+    netgen.ezplatform_site.routing.cross_host_urlalias_router:
+        decorates: ezpublish.urlalias_router
+        class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\UrlAliasRouter
+        arguments:
+            - "@ezpublish.api.service.location"
+            - "@ezpublish.api.service.url_alias"
+            - "@ezpublish.api.service.content"
+            - "@ezpublish.urlalias_generator"
+            - "@ezpublish.siteaccess"
+            - "%ezpublish.siteaccess.list%"
+            - "%ezpublish.siteaccess.groups_by_siteaccess%"
+            - "@?router.request_context"
+            - "@?logger"
+        calls:
+            - [setConfigResolver, ["@ezpublish.config.resolver"]]
+        tags:
+            - {name: router, priority: 200}
+        lazy: true

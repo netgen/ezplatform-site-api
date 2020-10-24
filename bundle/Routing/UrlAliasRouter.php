@@ -10,7 +10,6 @@ use eZ\Publish\API\Repository\URLAliasService;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator;
 use eZ\Publish\Core\MVC\Symfony\SiteAccess;
-use EzSystems\EzPlatformAdminUiBundle\EzPlatformAdminUiBundle;
 use InvalidArgumentException;
 use LogicException;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
@@ -21,37 +20,31 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RequestContext;
-use function array_key_exists;
-use function array_map;
-use function class_exists;
-use function in_array;
 
 class UrlAliasRouter extends BaseUrlAliasRouter
 {
     public const OVERRIDE_VIEW_ACTION = 'ng_content:viewAction';
 
     private $currentSiteaccess;
-    private $siteaccessNames;
-    private $siteaccessGroupsBySiteaccess;
-    private $frontendSiteaccessNameRootLocationIdMap;
-    private $locationIdFrontendSiteaccessNameSetMapCache = [];
+    private $siteaccessResolver;
 
     public function __construct(
         LocationService $locationService,
         URLAliasService $urlAliasService,
         ContentService $contentService,
         UrlAliasGenerator $generator,
-        SiteAccess $currentSiteaccess,
-        array $siteaccessNames,
-        array $siteaccessGroupsBySiteaccess,
+        SiteaccessResolver $siteaccessResolver,
         RequestContext $requestContext,
         LoggerInterface $logger = null
     ) {
         parent::__construct($locationService, $urlAliasService, $contentService, $generator, $requestContext, $logger);
 
-        $this->currentSiteaccess = $currentSiteaccess;
-        $this->siteaccessNames = $siteaccessNames;
-        $this->siteaccessGroupsBySiteaccess = $siteaccessGroupsBySiteaccess;
+        $this->siteaccessResolver = $siteaccessResolver;
+    }
+
+    public function setSiteaccess(SiteAccess $currentSiteAccess = null): void
+    {
+        $this->currentSiteaccess = $currentSiteAccess;
     }
 
     public function matchRequest(Request $request): array
@@ -80,11 +73,11 @@ class UrlAliasRouter extends BaseUrlAliasRouter
         $location = $this->resolveLocation($name, $parameters);
         $isCrossSiteaccessRoutingEnabled = $this->configResolver->getParameter('ng_cross_siteaccess_routing');
 
-        if (!$isCrossSiteaccessRoutingEnabled) {
-            return parent::generate($location, $parameters, $referenceType);
+        if ($isCrossSiteaccessRoutingEnabled) {
+            return $this->crossSiteaccessGenerate($location, $parameters, $referenceType);
         }
 
-        return $this->crossSiteaccessGenerate($location, $parameters, $referenceType);
+        return parent::generate($location, $parameters, $referenceType);
     }
 
     public function supports($name): bool
@@ -98,7 +91,7 @@ class UrlAliasRouter extends BaseUrlAliasRouter
 
     private function crossSiteaccessGenerate(APILocation $location, $parameters, $referenceType): string
     {
-        $frontendSiteaccessName = $this->getFrontendSiteaccessNameForLocation($location);
+        $frontendSiteaccessName = $this->siteaccessResolver->resolve($location);
 
         if ($frontendSiteaccessName === $this->currentSiteaccess->name) {
             return parent::generate($location, $parameters, $referenceType);
@@ -175,74 +168,5 @@ class UrlAliasRouter extends BaseUrlAliasRouter
         throw new InvalidArgumentException(
             'When generating an UrlAlias route, either "location", "locationId" or "contentId" parameter must be provided'
         );
-    }
-
-    private function getFrontendSiteaccessNameForLocation(APILocation $location): string
-    {
-        $nameSet = $this->getFrontendSiteaccessNameSet($location);
-
-        if (empty($nameSet) || array_key_exists($this->currentSiteaccess->name, $nameSet)) {
-            return $this->currentSiteaccess->name;
-        }
-
-        return array_key_first($nameSet);
-    }
-
-    private function getFrontendSiteaccessNameSet(APILocation $location): array
-    {
-        if (array_key_exists($location->id, $this->locationIdFrontendSiteaccessNameSetMapCache)) {
-            return $this->locationIdFrontendSiteaccessNameSetMapCache[$location->id];
-        }
-
-        $ancestorLocationIds = array_map('\intval', $location->path);
-        $map = $this->getFrontendSiteaccessNameRootLocationIdMap();
-        $nameSet = [];
-
-        foreach ($map as $siteaccessName => $rootLocationId) {
-            if (in_array($rootLocationId, $ancestorLocationIds, true)) {
-                $nameSet[$siteaccessName] = true;
-            }
-        }
-
-        return $this->locationIdFrontendSiteaccessNameSetMapCache[$location->id] = $nameSet;
-    }
-
-    private function getFrontendSiteaccessNameRootLocationIdMap(): array
-    {
-        if ($this->frontendSiteaccessNameRootLocationIdMap !== null) {
-            return $this->frontendSiteaccessNameRootLocationIdMap;
-        }
-
-        $this->frontendSiteaccessNameRootLocationIdMap = [];
-
-        foreach ($this->siteaccessNames as $siteaccessName) {
-            if ($this->isAdminSiteaccess($siteaccessName)) {
-                continue;
-            }
-
-            $rootLocationId = $this->configResolver->getParameter(
-                'content.tree_root.location_id',
-                null,
-                $siteaccessName
-            );
-
-            $this->frontendSiteaccessNameRootLocationIdMap[$siteaccessName] = $rootLocationId;
-        }
-
-        return $this->frontendSiteaccessNameRootLocationIdMap;
-    }
-
-    private function isAdminSiteaccess(string $siteaccessName): bool
-    {
-        $adminSiteaccessGroupName = 'admin_group';
-        $ngAdminSiteaccessGroupName = 'ngadmin_group';
-        $siteaccessGroups = $this->siteaccessGroupsBySiteaccess[$siteaccessName] ?? [];
-
-        if (class_exists(EzPlatformAdminUiBundle::class)) {
-            $adminSiteaccessGroupName = EzPlatformAdminUiBundle::ADMIN_GROUP_NAME;
-        }
-
-        return in_array($adminSiteaccessGroupName, $siteaccessGroups, true)
-            || in_array($ngAdminSiteaccessGroupName, $siteaccessGroups, true);
     }
 }

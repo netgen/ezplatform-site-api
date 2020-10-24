@@ -1,4 +1,7 @@
 parameters:
+    netgen.ezplatform_site.routing.admin_siteaccess_group_names:
+        - admin_group
+        - ngadmin_group
     netgen.ezplatform_site.routing.excluded_siteaccess_group_names: []
     netgen.ezplatform_site.routing.excluded_siteaccess_names: []
 
@@ -7,8 +10,9 @@ services:
         class: Netgen\Bundle\EzPlatformSiteApiBundle\Routing\SiteaccessResolver
         arguments:
             - '@ezpublish.api.persistence_handler'
-            - '%netgen.ezplatform_site.routing.excluded_siteaccess_names%'
+            - '%netgen.ezplatform_site.routing.admin_siteaccess_group_names%'
             - '%netgen.ezplatform_site.routing.excluded_siteaccess_group_names%'
+            - '%netgen.ezplatform_site.routing.excluded_siteaccess_names%'
         calls:
             - [ setConfigResolver, [ '@ezpublish.config.resolver' ] ]
             - [ setSiteaccess, [ '@ezpublish.siteaccess' ] ]

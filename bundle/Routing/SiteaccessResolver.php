@@ -11,6 +11,7 @@ use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use eZ\Publish\SPI\Persistence\Handler;
 use function array_fill_keys;
 use function array_key_exists;
+use function array_keys;
 use function array_map;
 use function in_array;
 use function reset;
@@ -21,6 +22,7 @@ use function reset;
 class SiteaccessResolver
 {
     private $persistenceHandler;
+    private $adminSiteaccessGroupSet;
     private $excludedSiteaccessSet;
     private $excludedSiteaccessGroupSet;
 
@@ -56,10 +58,12 @@ class SiteaccessResolver
 
     public function __construct(
         Handler $persistenceHandler,
+        array $adminSiteaccessGroups,
         array $excludedSiteaccesses,
         array $excludedSiteaccessGroups
     ) {
         $this->persistenceHandler = $persistenceHandler;
+        $this->adminSiteaccessGroupSet = array_fill_keys($adminSiteaccessGroups, true);
         $this->excludedSiteaccessSet = array_fill_keys($excludedSiteaccesses, true);
         $this->excludedSiteaccessGroupSet = array_fill_keys($excludedSiteaccessGroups, true);
     }
@@ -159,6 +163,12 @@ class SiteaccessResolver
             return $this->currentSiteaccess->name;
         }
 
+        foreach (array_keys($set) as $siteaccess) {
+            if (!$this->isAdminSiteaccess($siteaccess)) {
+                return $siteaccess;
+            }
+        }
+
         return array_key_first($set);
     }
 
@@ -250,6 +260,19 @@ class SiteaccessResolver
 
             $this->siteaccessRootLocationIdMap[$siteaccess] = $rootLocationId;
         }
+    }
+
+    private function isAdminSiteaccess(string $siteaccess): bool
+    {
+        $siteaccessGroups = $this->siteaccessGroupsBySiteaccess[$siteaccess] ?? [];
+
+        foreach ($siteaccessGroups as $siteaccessGroup) {
+            if (array_key_exists($siteaccessGroup, $this->adminSiteaccessGroupSet)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function isSiteaccessExcluded(string $siteaccess): bool

@@ -40,7 +40,7 @@ class SiteaccessResolverTest extends TestCase
                         'ger' => ['languages' => ['ger-DE', 'eng-GB']],
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
                             'id' => 42,
@@ -73,7 +73,7 @@ class SiteaccessResolverTest extends TestCase
                         'ger' => ['languages' => ['ger-DE', 'eng-GB']],
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
                             'id' => 42,
@@ -105,7 +105,7 @@ class SiteaccessResolverTest extends TestCase
                         'ger' => ['languages' => ['ger-DE', 'eng-GB']],
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'ger',
                         'location' => [
                             'id' => 42,
@@ -133,7 +133,7 @@ class SiteaccessResolverTest extends TestCase
                         'ger' => ['languages' => ['ger-DE', 'eng-GB']],
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
                             'id' => 42,
@@ -161,7 +161,7 @@ class SiteaccessResolverTest extends TestCase
                         'ger' => ['languages' => ['ger-DE', 'eng-GB']],
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
                             'id' => 42,
@@ -190,7 +190,7 @@ class SiteaccessResolverTest extends TestCase
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                         'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
                             'id' => 42,
@@ -218,7 +218,7 @@ class SiteaccessResolverTest extends TestCase
                         'ger' => ['languages' => ['ger-DE', 'ita-IT', 'eng-GB']],
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'ger',
                         'location' => [
                             'id' => 42,
@@ -245,7 +245,7 @@ class SiteaccessResolverTest extends TestCase
                         'ger' => ['languages' => ['ger-DE', 'eng-GB']],
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'ger',
                         'location' => [
                             'id' => 42,
@@ -277,7 +277,7 @@ class SiteaccessResolverTest extends TestCase
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                         'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'ger',
                         'location' => [
                             'id' => 42,
@@ -311,7 +311,7 @@ class SiteaccessResolverTest extends TestCase
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                         'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
                             'id' => 42,
@@ -345,7 +345,7 @@ class SiteaccessResolverTest extends TestCase
                         'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                         'eng2' => ['languages' => ['eng-GB', 'jpn-JP']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
                             'id' => 42,
@@ -379,7 +379,7 @@ class SiteaccessResolverTest extends TestCase
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                         'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'excluded_siteaccess_names' => ['jpn'],
                         'location' => [
@@ -414,7 +414,7 @@ class SiteaccessResolverTest extends TestCase
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                         'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'excluded_siteaccess_group_names' => ['frontend_group_2'],
                         'location' => [
@@ -449,7 +449,7 @@ class SiteaccessResolverTest extends TestCase
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                         'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'ger',
                         'excluded_siteaccess_names' => ['eng'],
                         'excluded_siteaccess_group_names' => ['frontend_group_2'],
@@ -485,7 +485,7 @@ class SiteaccessResolverTest extends TestCase
                         'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                         'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                     ],
-                    '_config' => [
+                    '_context' => [
                         'current_siteaccess' => 'eng',
                         'excluded_siteaccess_names' => ['eng'],
                         'excluded_siteaccess_group_names' => ['frontend_group_2'],
@@ -514,7 +514,7 @@ class SiteaccessResolverTest extends TestCase
 
     protected function getMockedLocation(array $data): Location
     {
-        $data = $data['_config']['location'];
+        $data = $data['_context']['location'];
 
         return new CoreLocation([
             'id' => $data['id'],
@@ -527,6 +527,7 @@ class SiteaccessResolverTest extends TestCase
     {
         $siteaccessResolver = new SiteaccessResolver(
             $this->persistenceHandlerMock($data),
+            [],
             $this->getExcludedSiteaccessNames($data),
             $this->getExcludedSiteaccessGroupNames($data)
         );
@@ -542,7 +543,7 @@ class SiteaccessResolverTest extends TestCase
     protected function persistenceHandlerMock(array $data): Handler
     {
         $versionInfo = new VersionInfo([
-            'languageCodes' => $data['_config']['location']['languageCodes'],
+            'languageCodes' => $data['_context']['location']['languageCodes'],
         ]);
 
         $contentHandlerMock = $this->createMock(ContentHandler::class);
@@ -556,12 +557,12 @@ class SiteaccessResolverTest extends TestCase
 
     protected function getExcludedSiteaccessNames(array $data): array
     {
-        return $data['_config']['excluded_siteaccess_names'] ?? [];
+        return $data['_context']['excluded_siteaccess_names'] ?? [];
     }
 
     protected function getExcludedSiteaccessGroupNames(array $data): array
     {
-        return $data['_config']['excluded_siteaccess_group_names'] ?? [];
+        return $data['_context']['excluded_siteaccess_group_names'] ?? [];
     }
 
     protected function getConfigResolverMock(array $data): ConfigResolverInterface
@@ -620,7 +621,7 @@ class SiteaccessResolverTest extends TestCase
 
     protected function getSiteaccess(array $data): SiteAccess
     {
-        return new SiteAccess($data['_config']['current_siteaccess']);
+        return new SiteAccess($data['_context']['current_siteaccess']);
     }
 
     protected function getSiteaccessGroupsBySiteaccess(array $data): array

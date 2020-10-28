@@ -76,7 +76,7 @@ final class FilterAdapterTest extends TestCase
 
     public function testMaxScore(): void
     {
-        $maxScore = 100;
+        $maxScore = 100.0;
         $query = new Query(['limit' => 10]);
         $countQuery = clone $query;
         $countQuery->limit = 0;
@@ -112,7 +112,7 @@ final class FilterAdapterTest extends TestCase
         $limit = 25;
         $nbResults = 123;
         $facets = ['facet', 'facet'];
-        $maxScore = 100;
+        $maxScore = 100.0;
         $time = 256;
         $query = new Query(['offset' => 5, 'limit' => 10]);
         $searchQuery = clone $query;

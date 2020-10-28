@@ -30,6 +30,7 @@ services:
             - '@eZ\Publish\API\Repository\PermissionService'
             - '@eZ\Publish\Core\Persistence\Legacy\Filter\Handler\ContentFilteringHandler'
             - '@eZ\Publish\Core\Persistence\Legacy\Filter\Handler\LocationFilteringHandler'
+            - '@eZ\Publish\Core\Repository\User\PasswordValidatorInterface'
             - '%languages%'
         lazy: true
         public: false

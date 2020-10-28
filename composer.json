@@ -12,9 +12,9 @@
     "require": {
         "php": "^7.3",
         "ext-dom": "*",
-        "ezsystems/ezplatform-kernel": "^1.1",
-        "ezsystems/ezplatform-http-cache": "^2.1",
-        "ezsystems/ezplatform-richtext": "^2.1",
+        "ezsystems/ezplatform-kernel": "^1.2",
+        "ezsystems/ezplatform-http-cache": "^2.2",
+        "ezsystems/ezplatform-richtext": "^2.2",
         "netgen/ezplatform-search-extra": "^2.1",
         "sensio/framework-extra-bundle": "^5.5"
     },

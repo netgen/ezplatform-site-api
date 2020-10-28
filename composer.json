@@ -15,7 +15,7 @@
         "ezsystems/ezplatform-kernel": "^1.2",
         "ezsystems/ezplatform-http-cache": "^2.2",
         "ezsystems/ezplatform-richtext": "^2.2",
-        "netgen/ezplatform-search-extra": "^2.1",
+        "netgen/ezplatform-search-extra": "^2.5",
         "sensio/framework-extra-bundle": "^5.5"
     },
     "require-dev": {

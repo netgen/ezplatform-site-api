@@ -123,11 +123,11 @@ class SiteaccessResolver
             }
         }
 
-        if ($location->contentInfo->alwaysAvailable) {
-            return reset($siteaccesses);
+        if (!$location->contentInfo->alwaysAvailable) {
+            return $currentSiteaccess;
         }
 
-        return $currentSiteaccess;
+        return $maybeCurrentSiteaccess ?? reset($siteaccesses);
     }
 
     /**

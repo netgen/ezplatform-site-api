@@ -11,6 +11,7 @@ use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use eZ\Publish\SPI\Persistence\Handler;
 use function array_fill_keys;
 use function array_key_exists;
+use function array_keys;
 use function array_map;
 use function in_array;
 use function reset;
@@ -134,10 +135,10 @@ class SiteaccessResolver
         }
 
         foreach ($currentPrioritizedLanguages as $language) {
-            $matches = [];
-            $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $matches);
+            $matchSet = [];
+            $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $matchSet);
 
-            foreach ($matches as $siteaccess) {
+            foreach (array_keys($matchSet) as $siteaccess) {
                 $maybeSiteaccess = $this->matchTranslationSiteaccess(
                     $siteaccess,
                     $currentPrioritizedLanguages,
@@ -249,7 +250,7 @@ class SiteaccessResolver
     private function matchSiteaccessesByBestPrioritizedLanguage(
         array $siteaccesses,
         string $language,
-        array &$matches,
+        array &$matchSet,
         int $position = 0
     ): void {
         $continue = false;
@@ -259,14 +260,14 @@ class SiteaccessResolver
             $positionedLanguage = $prioritizedLanguages[$position] ?? null;
 
             if ($language === $positionedLanguage) {
-                $matches[] = $siteaccess;
+                $matchSet[$siteaccess] = true;
             }
 
             $continue = $continue || array_key_exists($position + 1, $prioritizedLanguages);
         }
 
         if ($continue) {
-            $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $matches, ++$position);
+            $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $matchSet, ++$position);
         }
     }
 
@@ -334,13 +335,7 @@ class SiteaccessResolver
         $this->initializeSiteaccessRootLocationIdMap();
         $siteaccesses = [];
 
-        foreach ($this->siteaccesses as $siteaccess) {
-            if (!array_key_exists($siteaccess, $this->siteaccessRootLocationIdMap)) {
-                continue;
-            }
-
-            $rootLocationId = $this->siteaccessRootLocationIdMap[$siteaccess];
-
+        foreach ($this->siteaccessRootLocationIdMap as $siteaccess => $rootLocationId) {
             if (in_array($rootLocationId, $ancestorAndSelfLocationIds, true)) {
                 $siteaccesses[] = $siteaccess;
             }

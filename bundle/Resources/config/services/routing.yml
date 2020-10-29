@@ -4,6 +4,7 @@ parameters:
         - ngadmin_group
     netgen.ezplatform_site.routing.excluded_siteaccess_group_names: []
     netgen.ezplatform_site.routing.excluded_siteaccess_names: []
+    netgen.ezplatform_site.routing.recursion_limit: 2
 
 services:
     netgen.ezplatform_site.routing.siteaccess_resolver:

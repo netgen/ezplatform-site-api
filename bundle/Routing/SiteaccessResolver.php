@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Routing;
 
-use Exception;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use eZ\Publish\SPI\Persistence\Handler;
 use function array_fill_keys;
 use function array_key_exists;
-use function array_keys;
 use function array_map;
 use function in_array;
 use function reset;
@@ -56,14 +54,21 @@ class SiteaccessResolver
      */
     private $locationIdSiteaccessesMap = [];
 
+    /**
+     * @var int
+     */
+    private $recursionLimit;
+
     public function __construct(
         Handler $persistenceHandler,
         array $excludedSiteaccesses,
-        array $excludedSiteaccessGroups
+        array $excludedSiteaccessGroups,
+        int $recursionLimit
     ) {
         $this->persistenceHandler = $persistenceHandler;
         $this->excludedSiteaccessSet = array_fill_keys($excludedSiteaccesses, true);
         $this->excludedSiteaccessGroupSet = array_fill_keys($excludedSiteaccessGroups, true);
+        $this->recursionLimit = $recursionLimit;
     }
 
     /**
@@ -89,6 +94,9 @@ class SiteaccessResolver
         $this->siteaccessGroupsBySiteaccess = $siteaccessGroupsBySiteaccess;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function resolve(Location $location): string
     {
         $siteaccesses = $this->getSiteaccesses($location);
@@ -97,77 +105,44 @@ class SiteaccessResolver
             return $this->currentSiteaccess->name;
         }
 
-        try {
-            $availableLanguageSet = $this->getLanguageSet($location);
-        } catch (Exception $e) {
-            return $this->currentSiteaccess->name;
-        }
-
         $currentSiteaccess = $this->currentSiteaccess->name;
-        $alwaysAvailable = $location->contentInfo->alwaysAvailable;
         $currentPrioritizedLanguages = $this->getCurrentPrioritizedLanguages();
+        $maybeCurrentSiteaccess = in_array($currentSiteaccess, $siteaccesses, true) ? $currentSiteaccess : null;
 
-        $maybeSiteaccess = $this->matchTranslationSiteaccess(
-            in_array($currentSiteaccess, $siteaccesses, true) ? $currentSiteaccess : null,
-            $currentPrioritizedLanguages,
-            $availableLanguageSet,
-            $alwaysAvailable
-        );
+        $maybeSiteaccess = $this->matchTranslationSiteaccess($maybeCurrentSiteaccess, $location);
 
         if ($maybeSiteaccess !== null) {
             return $maybeSiteaccess;
         }
 
-        $currentPrimaryLanguage = reset($currentPrioritizedLanguages);
-        $siteaccessesWithSamePrimaryLanguage = $this->matchSiteaccessesByPrimaryLanguage($siteaccesses, $currentPrimaryLanguage);
-
-        foreach ($siteaccessesWithSamePrimaryLanguage as $siteaccess) {
-            $maybeSiteaccess = $this->matchTranslationSiteaccess(
-                $siteaccess,
-                $currentPrioritizedLanguages,
-                $availableLanguageSet,
-                $alwaysAvailable
-            );
+        foreach ($currentPrioritizedLanguages as $language) {
+            $maybeSiteaccess = $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $location);
 
             if ($maybeSiteaccess !== null) {
                 return $maybeSiteaccess;
             }
         }
 
-        foreach ($currentPrioritizedLanguages as $language) {
-            $matchSet = [];
-            $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $matchSet);
-
-            foreach (array_keys($matchSet) as $siteaccess) {
-                $maybeSiteaccess = $this->matchTranslationSiteaccess(
-                    $siteaccess,
-                    $currentPrioritizedLanguages,
-                    $availableLanguageSet,
-                    $alwaysAvailable
-                );
-
-                if ($maybeSiteaccess !== null) {
-                    return $maybeSiteaccess;
-                }
-            }
-        }
-
-        if ($alwaysAvailable) {
+        if ($location->contentInfo->alwaysAvailable) {
             return reset($siteaccesses);
         }
 
         return $currentSiteaccess;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function matchTranslationSiteaccess(
         ?string $siteaccess,
-        array $currentPrioritizedLanguages,
-        array $availableLanguageSet,
-        bool $alwaysAvailable
+        Location $location
     ): ?string {
         if ($siteaccess === null) {
             return null;
         }
+
+        $currentPrioritizedLanguages = $this->getCurrentPrioritizedLanguages();
+        $availableLanguageSet = $this->getLanguageSet($location);
 
         foreach ($currentPrioritizedLanguages as $language) {
             if (!array_key_exists($language, $availableLanguageSet)) {
@@ -181,7 +156,7 @@ class SiteaccessResolver
             }
         }
 
-        if ($alwaysAvailable) {
+        if ($location->contentInfo->alwaysAvailable) {
             return $siteaccess;
         }
 
@@ -225,34 +200,16 @@ class SiteaccessResolver
     }
 
     /**
-     * @param string[] $siteaccesses
+     * @throws \Exception
      *
-     * @return string[]
-     */
-    private function matchSiteaccessesByPrimaryLanguage(array $siteaccesses, string $language): array
-    {
-        $matched = [];
-
-        foreach ($siteaccesses as $siteaccess) {
-            $primaryLanguage = $this->getPrimaryLanguage($siteaccess);
-
-            if ($language === $primaryLanguage) {
-                $matched[] = $siteaccess;
-            }
-        }
-
-        return $matched;
-    }
-
-    /**
      * @param string[] $siteaccesses
      */
     private function matchSiteaccessesByBestPrioritizedLanguage(
         array $siteaccesses,
         string $language,
-        array &$matchSet,
+        Location $location,
         int $position = 0
-    ): void {
+    ): ?string {
         $continue = false;
 
         foreach ($siteaccesses as $siteaccess) {
@@ -260,15 +217,27 @@ class SiteaccessResolver
             $positionedLanguage = $prioritizedLanguages[$position] ?? null;
 
             if ($language === $positionedLanguage) {
-                $matchSet[$siteaccess] = true;
+                $maybeSiteaccess = $this->matchTranslationSiteaccess($siteaccess, $location);
+
+                if ($maybeSiteaccess !== null) {
+                    return $maybeSiteaccess;
+                }
             }
 
             $continue = $continue || array_key_exists($position + 1, $prioritizedLanguages);
         }
 
-        if ($continue) {
-            $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $matchSet, ++$position);
+        $nextPosition = $position + 1;
+
+        if ($nextPosition >= $this->recursionLimit) {
+            return null;
         }
+
+        if ($continue) {
+            $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $location, $nextPosition);
+        }
+
+        return null;
     }
 
     /**

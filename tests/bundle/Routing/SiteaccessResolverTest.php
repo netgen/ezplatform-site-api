@@ -531,7 +531,8 @@ class SiteaccessResolverTest extends TestCase
         $siteaccessResolver = new SiteaccessResolver(
             $this->persistenceHandlerMock($data),
             $this->getExcludedSiteaccessNames($data),
-            $this->getExcludedSiteaccessGroupNames($data)
+            $this->getExcludedSiteaccessGroupNames($data),
+            5
         );
 
         $siteaccessResolver->setConfigResolver($this->getConfigResolverMock($data));

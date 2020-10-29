@@ -519,7 +519,10 @@ class SiteaccessResolverTest extends TestCase
         return new CoreLocation([
             'id' => $data['id'],
             'pathString' => $data['pathString'],
-            'contentInfo' => new ContentInfo(['id' => 24]),
+            'contentInfo' => new ContentInfo([
+                'id' => 24,
+                'alwaysAvailable' => false,
+            ]),
         ]);
     }
 
@@ -527,7 +530,6 @@ class SiteaccessResolverTest extends TestCase
     {
         $siteaccessResolver = new SiteaccessResolver(
             $this->persistenceHandlerMock($data),
-            [],
             $this->getExcludedSiteaccessNames($data),
             $this->getExcludedSiteaccessGroupNames($data)
         );

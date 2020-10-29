@@ -91,13 +91,13 @@ class UrlAliasRouter extends BaseUrlAliasRouter
 
     private function crossSiteaccessGenerate(APILocation $location, $parameters, $referenceType): string
     {
-        $frontendSiteaccessName = $this->siteaccessResolver->resolve($location);
+        $siteaccessName = $this->siteaccessResolver->resolve($location);
 
-        if ($frontendSiteaccessName === $this->currentSiteaccess->name) {
+        if ($siteaccessName === $this->currentSiteaccess->name) {
             return parent::generate($location, $parameters, $referenceType);
         }
 
-        $parameters['siteaccess'] = $frontendSiteaccessName;
+        $parameters['siteaccess'] = $siteaccessName;
 
         return parent::generate($location, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }

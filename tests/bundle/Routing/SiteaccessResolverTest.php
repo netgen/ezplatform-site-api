@@ -1298,6 +1298,32 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'ita',
             ],
+            'Location is in the configured external subtree' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita'],
+                    ],
+                    'system' => [
+                        'eng' => [
+                            'languages' => ['eng-GB'],
+                            'tree_root' => 4,
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'external_subtree_roots' => [8],
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['ita-IT'],
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
         ];
     }
 
@@ -1406,6 +1432,12 @@ class SiteaccessResolverTest extends TestCase
                 null,
                 $data['_context']['prefer_translation_siteaccess'] ?? false
             ],
+            [
+                'ng_cross_siteaccess_routing_external_subtree_roots',
+                null,
+                null,
+                $data['_context']['external_subtree_roots'] ?? []
+            ]
         ];
 
         foreach ($siteaccessConfigMap as $siteaccess => $config) {

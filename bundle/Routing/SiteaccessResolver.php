@@ -114,6 +114,10 @@ class SiteaccessResolver
             return $currentSiteaccess;
         }
 
+        if ($this->isInExternalSubtree($location)) {
+            return $currentSiteaccess;
+        }
+
         if (isset($siteaccessSet[$currentSiteaccess])) {
             $match = $this->cachedMatchFromSiteaccess($location, $currentSiteaccess);
 
@@ -142,6 +146,39 @@ class SiteaccessResolver
         }
 
         return $currentSiteaccess;
+    }
+
+    private function isInExternalSubtree(Location $location): bool
+    {
+        if (isset($this->cache['in_external_subtree'][$location->id])) {
+            return $this->cache['in_external_subtree'][$location->id];
+        }
+
+        $rootSet = $this->getExternalSubtreeRootSet();
+
+        foreach ($location->path as $id) {
+            if (isset($rootSet[(int) $id])) {
+                return $this->cache['in_external_subtree'][$location->id] = true;
+            }
+        }
+
+        return $this->cache['in_external_subtree'][$location->id] = false;
+    }
+
+    /**
+     * @return int[]
+     */
+    private function getExternalSubtreeRootSet(): array
+    {
+        $currentSiteaccess = $this->currentSiteaccess->name;
+
+        if (isset($this->cache['external_subtree_root_set'][$currentSiteaccess])) {
+            return $this->cache['external_subtree_root_set'][$currentSiteaccess];
+        }
+
+        $roots = $this->configResolver->getParameter('ng_cross_siteaccess_routing_external_subtree_roots');
+
+        return $this->cache['external_subtree_root_set'][$currentSiteaccess] = array_fill_keys($roots, true);
     }
 
     /**

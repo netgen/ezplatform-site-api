@@ -9,7 +9,7 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use eZ\Publish\SPI\Persistence\Handler;
 use function array_fill_keys;
-use function array_key_exists;
+use function array_keys;
 use function array_map;
 use function in_array;
 use function reset;
@@ -23,6 +23,7 @@ class SiteaccessResolver
     private $persistenceHandler;
     private $excludedSiteaccessSet;
     private $excludedSiteaccessGroupSet;
+    private $cache = [];
 
     /**
      * @var ConfigResolverInterface
@@ -43,16 +44,6 @@ class SiteaccessResolver
      * @var array
      */
     private $siteaccessGroupsBySiteaccess;
-
-    /**
-     * @var array
-     */
-    private $siteaccessRootLocationIdMap;
-
-    /**
-     * @var array
-     */
-    private $locationIdSiteaccessesMap = [];
 
     /**
      * @var int
@@ -99,89 +90,230 @@ class SiteaccessResolver
      */
     public function resolve(Location $location): string
     {
-        $siteaccesses = $this->getSiteaccesses($location);
-
-        if (empty($siteaccesses)) {
-            return $this->currentSiteaccess->name;
-        }
-
         $currentSiteaccess = $this->currentSiteaccess->name;
-        $currentPrioritizedLanguages = $this->getCurrentPrioritizedLanguages();
-        $maybeCurrentSiteaccess = in_array($currentSiteaccess, $siteaccesses, true) ? $currentSiteaccess : null;
 
-        $maybeSiteaccess = $this->matchTranslationSiteaccess($maybeCurrentSiteaccess, $location);
-
-        if ($maybeSiteaccess !== null) {
-            return $maybeSiteaccess;
+        if (isset($this->cache['resolve'][$currentSiteaccess][$location->id])) {
+            return $this->cache['resolve'][$currentSiteaccess][$location->id];
         }
 
-        foreach ($currentPrioritizedLanguages as $language) {
-            $maybeSiteaccess = $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $location);
+        $siteaccess = $this->internalResolve($location);
+        $this->cache['resolve'][$currentSiteaccess][$location->id] = $siteaccess;
 
-            if ($maybeSiteaccess !== null) {
-                return $maybeSiteaccess;
-            }
-        }
-
-        if (!$location->contentInfo->alwaysAvailable) {
-            return $currentSiteaccess;
-        }
-
-        return $maybeCurrentSiteaccess ?? reset($siteaccesses);
+        return $siteaccess;
     }
 
     /**
      * @throws \Exception
      */
-    private function matchTranslationSiteaccess(
-        ?string $siteaccess,
-        Location $location
-    ): ?string {
-        if ($siteaccess === null) {
-            return null;
+    private function internalResolve(Location $location): string
+    {
+        $siteaccessSet = $this->getSiteaccessSet($location);
+        $currentSiteaccess = $this->currentSiteaccess->name;
+
+        if (empty($siteaccessSet)) {
+            return $currentSiteaccess;
         }
 
-        $currentPrioritizedLanguages = $this->getCurrentPrioritizedLanguages();
-        $availableLanguageSet = $this->getLanguageSet($location);
+        if (isset($siteaccessSet[$currentSiteaccess])) {
+            $match = $this->cachedMatchFromSiteaccess($location, $currentSiteaccess);
+
+            if ($match !== null) {
+                return $match;
+            }
+        }
+
+        unset($siteaccessSet[$currentSiteaccess]);
+        $currentPrioritizedLanguages = $this->getPrioritizedLanguages($currentSiteaccess);
 
         foreach ($currentPrioritizedLanguages as $language) {
-            if (!array_key_exists($language, $availableLanguageSet)) {
+            $match = $this->cachedMatchByPrioritizedLanguage($location, $language);
+
+            if ($match !== null) {
+                return $match;
+            }
+        }
+
+        foreach (array_keys($siteaccessSet) as $siteaccess) {
+            $match = $this->cachedMatchFromSiteaccess($location, $siteaccess);
+
+            if ($match !== null) {
+                return $match;
+            }
+        }
+
+        return $currentSiteaccess;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function cachedMatchByPrioritizedLanguage(Location $location, string $language): ?string
+    {
+        $currentSiteaccess = $this->currentSiteaccess->name;
+
+        if (isset($this->cache['match_by_prioritized'][$currentSiteaccess][$location->id][$language])) {
+            return $this->cache['match_by_prioritized'][$currentSiteaccess][$location->id][$language] ?: null;
+        }
+
+        $match = $this->matchByPrioritizedLanguage($location, $language);
+        /** @noinspection ProperNullCoalescingOperatorUsageInspection */
+        $this->cache['match_by_prioritized'][$currentSiteaccess][$location->id][$language] = $match ?? false;
+
+        return $match;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function matchByPrioritizedLanguage(Location $location, string $language, int $position = 0): ?string
+    {
+        $recurse = false;
+        $siteaccessSet = $this->getSiteaccessSet($location);
+
+        foreach (array_keys($siteaccessSet) as $siteaccess) {
+            $prioritizedLanguages = $this->getPrioritizedLanguages($siteaccess);
+            $positionedLanguage = $prioritizedLanguages[$position] ?? null;
+            $recurse = $recurse || isset($prioritizedLanguages[$position + 1]);
+
+            if ($language !== $positionedLanguage) {
                 continue;
             }
 
-            $maybeTranslationSiteaccess = $this->matchTranslationSiteaccessByLanguage($siteaccess, $language);
+            $match = $this->cachedMatchFromSiteaccess($location, $siteaccess);
 
-            if ($maybeTranslationSiteaccess !== null) {
-                return $maybeTranslationSiteaccess;
+            if ($match !== null) {
+                return $match;
             }
         }
 
-        if ($location->contentInfo->alwaysAvailable) {
-            return $siteaccess;
+        $nextPosition = $position + 1;
+
+        if (!$recurse || $nextPosition >= $this->recursionLimit) {
+            return null;
         }
 
-        if ($this->isSomeLanguageAllowed($siteaccess, $availableLanguageSet)) {
-            return $siteaccess;
+        return $this->matchByPrioritizedLanguage($location, $language, $nextPosition);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function cachedMatchFromSiteaccess(Location $location, string $siteaccess): ?string
+    {
+        $currentSiteaccess = $this->currentSiteaccess->name;
+
+        if (isset($this->cache['match_from_siteaccess'][$currentSiteaccess][$siteaccess][$location->id])) {
+            return $this->cache['match_from_siteaccess'][$currentSiteaccess][$siteaccess][$location->id] ?: null;
+        }
+
+        $match = $this->matchFromSiteaccess($location, $siteaccess);
+        /** @noinspection ProperNullCoalescingOperatorUsageInspection */
+        $this->cache['match_from_siteaccess'][$currentSiteaccess][$siteaccess][$location->id] = $match ?? false;
+
+        return $match;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function matchFromSiteaccess(Location $location, string $siteaccess): ?string
+    {
+        if (!$this->canShow($siteaccess, $location)) {
+            return null;
+        }
+
+        if ($this->preferTranslationSiteaccess()) {
+            if ($this->canShowInPrimaryLanguage($siteaccess, $location)) {
+                return $siteaccess;
+            }
+
+            $match = $this->cachedMatchTranslationSiteaccess($location, $siteaccess);
+
+            if ($match !== null) {
+                return $match;
+            }
+        }
+
+        return $siteaccess;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function canShowInPrimaryLanguage(string $siteaccess, Location $location): bool
+    {
+        if (isset($this->cache['can_show_primary'][$siteaccess][$location->id])) {
+            return $this->cache['can_show_primary'][$siteaccess][$location->id];
+        }
+
+        $availableLanguageSet = $this->getLanguageSet($location);
+        $primaryLanguage = $this->getPrimaryLanguage($siteaccess);
+        $canShow = isset($availableLanguageSet[$primaryLanguage]);
+
+        return $this->cache['can_show_primary'][$siteaccess][$location->id] = $canShow;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function cachedMatchTranslationSiteaccess(Location $location, string $siteaccess): ?string
+    {
+        $currentSiteaccess = $this->currentSiteaccess->name;
+
+        if (isset($this->cache['match_translation_siteaccess'][$currentSiteaccess][$siteaccess][$location->id])) {
+            return $this->cache['match_translation_siteaccess'][$currentSiteaccess][$siteaccess][$location->id] ?: null;
+        }
+
+        $match = $this->matchTranslationSiteaccess($location, $siteaccess);
+        /** @noinspection ProperNullCoalescingOperatorUsageInspection */
+        $this->cache['match_translation_siteaccess'][$currentSiteaccess][$siteaccess][$location->id] = $match ?? false;
+
+        return $match;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function matchTranslationSiteaccess(Location $location, string $siteaccess): ?string
+    {
+        $availableLanguageSet = $this->getLanguageSet($location);
+        $currentPrioritizedLanguages = $this->getPrioritizedLanguages($this->currentSiteaccess->name);
+
+        foreach ($currentPrioritizedLanguages as $language) {
+            if (!isset($availableLanguageSet[$language])) {
+                continue;
+            }
+
+            $match = $this->matchTranslationSiteaccessByLanguage($siteaccess, $language);
+
+            if ($match !== null) {
+                return $match;
+            }
+        }
+
+        $translationSiteaccesses = $this->getTranslationSiteaccesses($siteaccess);
+
+        foreach ($translationSiteaccesses as $translationSiteaccess) {
+            if ($this->isSiteaccessExcluded($translationSiteaccess)) {
+                continue;
+            }
+
+            $primaryLanguage = $this->getPrimaryLanguage($translationSiteaccess);
+
+            if (isset($availableLanguageSet[$primaryLanguage])) {
+                return $translationSiteaccess;
+            }
         }
 
         return null;
     }
 
-    private function isSomeLanguageAllowed(string $siteaccess, array $availableLanguageSet): bool
-    {
-        $prioritizedLanguages = $this->getPrioritizedLanguages($siteaccess);
-
-        foreach ($prioritizedLanguages as $language) {
-            if (array_key_exists($language, $availableLanguageSet)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private function matchTranslationSiteaccessByLanguage(string $siteaccess, string $language): ?string
     {
+        if (isset($this->cache['translation_siteaccess_by_language'][$siteaccess][$language])) {
+            return $this->cache['translation_siteaccess_by_language'][$siteaccess][$language] ?: null;
+        }
+
         $translationSiteaccesses = $this->getTranslationSiteaccesses($siteaccess);
 
         foreach ($translationSiteaccesses as $translationSiteaccess) {
@@ -192,52 +324,51 @@ class SiteaccessResolver
             $primaryLanguage = $this->getPrimaryLanguage($translationSiteaccess);
 
             if ($language === $primaryLanguage) {
-                return $translationSiteaccess;
+                return $this->cache['translation_siteaccess_by_language'][$siteaccess][$language] = $translationSiteaccess;
             }
         }
+
+        $this->cache['translation_siteaccess_by_language'][$siteaccess][$language] = false;
 
         return null;
     }
 
+    private function preferTranslationSiteaccess(): bool
+    {
+        $currentSiteaccess = $this->currentSiteaccess->name;
+
+        if (isset($this->cache['prefer_translation_siteaccess'][$currentSiteaccess])) {
+            return $this->cache['prefer_translation_siteaccess'][$currentSiteaccess];
+        }
+
+        $value = $this->configResolver->getParameter('ng_cross_siteaccess_routing_prefer_translation_siteaccess');
+
+        return $this->cache['prefer_translation_siteaccess'][$currentSiteaccess] = $value;
+    }
+
     /**
      * @throws \Exception
-     *
-     * @param string[] $siteaccesses
      */
-    private function matchSiteaccessesByBestPrioritizedLanguage(
-        array $siteaccesses,
-        string $language,
-        Location $location,
-        int $position = 0
-    ): ?string {
-        $continue = false;
+    private function canShow(string $siteaccess, Location $location): bool
+    {
+        if (isset($this->cache['can_show'][$siteaccess][$location->id])) {
+            return $this->cache['can_show'][$siteaccess][$location->id];
+        }
 
-        foreach ($siteaccesses as $siteaccess) {
-            $prioritizedLanguages = $this->getPrioritizedLanguages($siteaccess);
-            $positionedLanguage = $prioritizedLanguages[$position] ?? null;
+        if ($location->contentInfo->alwaysAvailable) {
+            return $this->cache['can_show'][$siteaccess][$location->id] = true;
+        }
 
-            if ($language === $positionedLanguage) {
-                $maybeSiteaccess = $this->matchTranslationSiteaccess($siteaccess, $location);
+        $prioritizedLanguages = $this->getPrioritizedLanguages($siteaccess);
+        $availableLanguageSet = $this->getLanguageSet($location);
 
-                if ($maybeSiteaccess !== null) {
-                    return $maybeSiteaccess;
-                }
+        foreach ($prioritizedLanguages as $language) {
+            if (isset($availableLanguageSet[$language])) {
+                return $this->cache['can_show'][$siteaccess][$location->id] = true;
             }
-
-            $continue = $continue || array_key_exists($position + 1, $prioritizedLanguages);
         }
 
-        $nextPosition = $position + 1;
-
-        if ($nextPosition >= $this->recursionLimit) {
-            return null;
-        }
-
-        if ($continue) {
-            $this->matchSiteaccessesByBestPrioritizedLanguage($siteaccesses, $language, $location, $nextPosition);
-        }
-
-        return null;
+        return $this->cache['can_show'][$siteaccess][$location->id] = false;
     }
 
     /**
@@ -247,9 +378,14 @@ class SiteaccessResolver
      */
     private function getLanguageSet(Location $location): array
     {
-        $languages = $this->persistenceHandler->contentHandler()->loadVersionInfo($location->contentId)->languageCodes;
+        if (!isset($this->cache['location_available_language_set'][$location->id])) {
+            $this->cache['location_available_language_set'][$location->id] = array_fill_keys(
+                $this->persistenceHandler->contentHandler()->loadVersionInfo($location->contentId)->languageCodes,
+                true
+            );
+        }
 
-        return array_fill_keys($languages, true);
+        return $this->cache['location_available_language_set'][$location->id];
     }
 
     /**
@@ -257,9 +393,14 @@ class SiteaccessResolver
      */
     private function getPrimaryLanguage(string $siteaccess): string
     {
-        $prioritizedLanguages = $this->getPrioritizedLanguages($siteaccess);
+        if (isset($this->cache['primary_language'][$siteaccess])) {
+            return $this->cache['primary_language'][$siteaccess];
+        }
 
-        return reset($prioritizedLanguages);
+        $prioritizedLanguages = $this->getPrioritizedLanguages($siteaccess);
+        $this->cache['primary_language'][$siteaccess] = reset($prioritizedLanguages);
+
+        return $this->cache['primary_language'][$siteaccess];
     }
 
     /**
@@ -267,15 +408,15 @@ class SiteaccessResolver
      */
     private function getPrioritizedLanguages(string $siteaccess): array
     {
-        return $this->configResolver->getParameter('languages', null, $siteaccess);
-    }
+        if (!isset($this->cache['prioritized_languages'][$siteaccess])) {
+            $this->cache['prioritized_languages'][$siteaccess] = $this->configResolver->getParameter(
+                'languages',
+                null,
+                $siteaccess
+            );
+        }
 
-    /**
-     * @return string[]
-     */
-    private function getCurrentPrioritizedLanguages(): array
-    {
-        return $this->getPrioritizedLanguages($this->currentSiteaccess->name);
+        return $this->cache['prioritized_languages'][$siteaccess];
     }
 
     /**
@@ -283,45 +424,49 @@ class SiteaccessResolver
      */
     private function getTranslationSiteaccesses(string $siteaccess): array
     {
+        if (isset($this->cache['translation_siteaccesses'][$siteaccess])) {
+            return $this->cache['translation_siteaccesses'][$siteaccess];
+        }
+
+        $translationSiteaccesses = [];
+
         if ($this->configResolver->hasParameter('translation_siteaccesses', null, $siteaccess)) {
-            return $this->configResolver->getParameter(
+            $translationSiteaccesses = $this->configResolver->getParameter(
                 'translation_siteaccesses',
                 null,
                 $siteaccess
             );
         }
 
-        return [];
+        return $this->cache['translation_siteaccesses'][$siteaccess] = $translationSiteaccesses;
     }
 
-    private function getSiteaccesses(Location $location): array
+    private function getSiteaccessSet(Location $location): array
     {
-        if (array_key_exists($location->id, $this->locationIdSiteaccessesMap)) {
-            return $this->locationIdSiteaccessesMap[$location->id];
+        if (isset($this->cache['location_siteaccess_set'][$location->id])) {
+            return $this->cache['location_siteaccess_set'][$location->id];
         }
 
         $ancestorAndSelfLocationIds = array_map('\intval', $location->path);
         $this->initializeSiteaccessRootLocationIdMap();
-        $siteaccesses = [];
+        $siteaccessSet = [];
 
-        foreach ($this->siteaccessRootLocationIdMap as $siteaccess => $rootLocationId) {
+        foreach ($this->cache['siteaccess_root_location_id_map'] as $siteaccess => $rootLocationId) {
             if (in_array($rootLocationId, $ancestorAndSelfLocationIds, true)) {
-                $siteaccesses[] = $siteaccess;
+                $siteaccessSet[$siteaccess] = true;
             }
         }
 
-        $this->locationIdSiteaccessesMap[$location->id] = $siteaccesses;
-
-        return $siteaccesses;
+        return $this->cache['location_siteaccess_set'][$location->id] = $siteaccessSet;
     }
 
     private function initializeSiteaccessRootLocationIdMap(): void
     {
-        if ($this->siteaccessRootLocationIdMap !== null) {
+        if (isset($this->cache['siteaccess_root_location_id_map'])) {
             return;
         }
 
-        $this->siteaccessRootLocationIdMap = [];
+        $this->cache['siteaccess_root_location_id_map'] = [];
 
         foreach ($this->siteaccesses as $siteaccess) {
             if ($this->isSiteaccessExcluded($siteaccess)) {
@@ -334,24 +479,28 @@ class SiteaccessResolver
                 $siteaccess
             );
 
-            $this->siteaccessRootLocationIdMap[$siteaccess] = $rootLocationId;
+            $this->cache['siteaccess_root_location_id_map'][$siteaccess] = $rootLocationId;
         }
     }
 
     private function isSiteaccessExcluded(string $siteaccess): bool
     {
-        if (array_key_exists($siteaccess, $this->excludedSiteaccessSet)) {
-            return true;
+        if (isset($this->cache['siteaccess_excluded'][$siteaccess])) {
+            return $this->cache['siteaccess_excluded'][$siteaccess];
+        }
+
+        if (isset($this->excludedSiteaccessSet[$siteaccess])) {
+            return $this->cache['siteaccess_excluded'][$siteaccess] = true;
         }
 
         $siteaccessGroups = $this->siteaccessGroupsBySiteaccess[$siteaccess] ?? [];
 
         foreach ($siteaccessGroups as $siteaccessGroup) {
-            if (array_key_exists($siteaccessGroup, $this->excludedSiteaccessGroupSet)) {
-                return true;
+            if (isset($this->excludedSiteaccessGroupSet[$siteaccessGroup])) {
+                return $this->cache['siteaccess_excluded'][$siteaccess] = true;
             }
         }
 
-        return false;
+        return $this->cache['siteaccess_excluded'][$siteaccess] = false;
     }
 }

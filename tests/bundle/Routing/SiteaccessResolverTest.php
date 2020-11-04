@@ -13,6 +13,10 @@ use eZ\Publish\SPI\Persistence\Handler;
 use Netgen\Bundle\EzPlatformSiteApiBundle\Routing\SiteaccessResolver;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use PHPUnit\Framework\TestCase;
+use function array_filter;
+use function array_key_exists;
+use function array_pop;
+use function explode;
 use function in_array;
 
 /**
@@ -23,60 +27,69 @@ class SiteaccessResolverTest extends TestCase
     public function providerForTestResolve(): array
     {
         return [
-            'Same siteaccess is used' => [
+            'Nothing matches the subtree, current siteaccess is used as a fallback' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita'],
+                        'list' => ['eng', 'ger'],
                         'groups' => [
-                            'frontend_group' => ['eng', 'ger', 'ita'],
+                            'frontend_group' => ['eng', 'ger'],
                         ],
                     ],
                     'system' => [
-                        'frontend_group' => [
-                            'translation_siteaccesses' => ['eng', 'ger', 'ita'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
+                        'frontend_group' => ['tree_root' =>  4],
                         'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
+                        'ger' => ['languages' => ['ger-DE']],
                     ],
                     '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/2/42/',
-                            'languageCodes' => ['eng-GB', 'ger-DE'],
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['ita-IT'],
                         ],
                     ],
                 ],
                 'eng',
             ],
-            'Matched siteaccess is used if no matching translation siteaccess is configured' => [
+            'Current siteaccess matches the subtree and Content is always available' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita'],
+                        'list' => ['eng', 'ger'],
                         'groups' => [
-                            'frontend_group_1' => ['eng', 'ger'],
-                            'frontend_group_2' => ['ger', 'ita'],
+                            'frontend_group' => ['eng', 'ger'],
                         ],
                     ],
                     'system' => [
-                        'frontend_group_1' => [
-                            'translation_siteaccesses' => ['eng', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
-                        'frontend_group_2' => [
-                            'translation_siteaccesses' => ['ger', 'ita'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
+                        'frontend_group' => ['tree_root' => 2],
                         'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
+                        'ger' => ['languages' => ['ger-DE']],
                     ],
                     '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
-                            'id' => 42,
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT'],
+                            'alwaysAvailable' => true,
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Current siteaccess matches the subtree and Content has a language that is allowed on it' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ger'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ger'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => ['tree_root' => 2],
+                        'eng' => ['languages' => ['eng-GB', 'ita-IT']],
+                        'ger' => ['languages' => ['ger-DE']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
                             'pathString' => '/1/2/42/',
                             'languageCodes' => ['ita-IT'],
                         ],
@@ -84,31 +97,817 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'eng',
             ],
-            'Current siteaccess is preferred' => [
+            'First siteaccess matching the subtree and allowing the Content with the most prioritized language,
+             translation siteaccess is ignored 1' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita'],
+                        'list' => ['eng', 'ger', 'ger_mobile'],
                         'groups' => [
-                            'frontend_group_1' => ['eng'],
-                            'frontend_group_2' => ['ger', 'ita'],
+                            'frontend_group' => ['eng', 'ger'],
                         ],
                     ],
                     'system' => [
-                        'frontend_group_1' => [
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
-                        'frontend_group_2' => [
-                            'translation_siteaccesses' => ['ger', 'ita'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ger'],
                         ],
                         'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
+                        'ger' => ['languages' => ['ger-DE']],
+                        'ger_mobile' => ['languages' => ['ger-DE']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ger-DE'],
+                        ],
+                    ],
+                ],
+                'ger',
+            ],
+            'First siteaccess matching the subtree and allowing the Content with the most prioritized language,
+             translation siteaccess is ignored 2' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ger', 'ger_mobile'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ger'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ger_mobile'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB']],
+                        'ger' => ['languages' => ['ger-DE']],
+                        'ger_mobile' => ['languages' => ['ger-DE']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ger-DE'],
+                        ],
+                    ],
+                ],
+                'ger',
+            ],
+            'Current siteaccess matches the subtree and allows the Content,
+            translation siteaccesses are not configured' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'fre'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'fre'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'fre' => ['languages' => ['fre-FR']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Current siteaccess matches the subtree and Content has a language that has a configured
+            translation siteaccess 1' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'fre'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'fre'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita', 'fre'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'fre' => ['languages' => ['fre-FR']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'prefer_translation_siteaccess' => true,
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'fre',
+            ],
+            'Current siteaccess matches the subtree and Content has a language that has a configured
+            translation siteaccess 1 / prefer translation siteaccess off' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'fre'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'fre'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita', 'fre'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'fre' => ['languages' => ['fre-FR']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Current siteaccess matches the subtree and Content has a language that has a configured
+            translation siteaccess 2' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'fre'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'fre'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita', 'fre'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'ita-IT', 'fre-FR']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'fre' => ['languages' => ['fre-FR']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'prefer_translation_siteaccess' => true,
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'ita',
+            ],
+            'Current siteaccess matches the subtree and Content has a language that has a configured
+            translation siteaccess 2 / prefer translation siteaccess off' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'fre'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'fre'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita', 'fre'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'ita-IT', 'fre-FR']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'fre' => ['languages' => ['fre-FR']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Current siteaccess matches the subtree and Content has a language that has a configured
+            translation siteaccess 3' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'ita_mobile'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'ita_mobile'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita', 'ita_mobile'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'ita_mobile' => ['languages' => ['ita-IT']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'prefer_translation_siteaccess' => true,
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'ita',
+            ],
+            'Current siteaccess matches the subtree and Content has a language that has a configured
+            translation siteaccess 3 / prefer translation siteaccess off' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'ita_mobile'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'ita_mobile'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita', 'ita_mobile'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'ita_mobile' => ['languages' => ['ita-IT']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Current siteaccess matches the subtree and Content matches multiple
+            translation siteaccesses, their order is significant' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'ita_mobile'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'ita_mobile'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita_mobile', 'ita'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'ita_mobile' => ['languages' => ['ita-IT']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'prefer_translation_siteaccess' => true,
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'ita_mobile',
+            ],
+            'Current siteaccess matches the subtree and Content matches multiple
+            translation siteaccesses, their order is significant / prefer translation siteaccess off' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'ita_mobile'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'ita_mobile'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita_mobile', 'ita'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'ita_mobile' => ['languages' => ['ita-IT']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Current siteaccess matches the subtree and Content matches multiple
+            translation siteaccesses, one of them is excluded' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'ita_mobile'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'ita_mobile'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita_mobile', 'ita'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'ita_mobile' => ['languages' => ['ita-IT']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'prefer_translation_siteaccess' => true,
+                        'excluded_siteaccess_names' => ['ita_mobile'],
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'ita',
+            ],
+            'Current siteaccess matches the subtree and Content matches multiple
+            translation siteaccesses, one of them is excluded / prefer translation siteaccess off' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ita', 'ita_mobile'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ita', 'ita_mobile'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ita_mobile', 'ita'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB', 'fre-FR', 'ita-IT']],
+                        'ita' => ['languages' => ['ita-IT']],
+                        'ita_mobile' => ['languages' => ['ita-IT']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'excluded_siteaccess_names' => ['ita_mobile'],
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Current siteaccess matches the subtree and it can show the Content in its
+            most prioritized language' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'eng_mobile'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'eng_mobile'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng_mobile'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB']],
+                        'eng_mobile' => ['languages' => ['eng-GB']],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['eng-GB'],
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Nothing matches, current siteaccess is returned as a fallback 1' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ger'],
+                        'groups' => [
+                            'frontend_group' => ['eng', 'ger'],
+                        ],
+                    ],
+                    'system' => [
+                        'frontend_group' => [
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ger'],
+                        ],
+                        'eng' => ['languages' => ['eng-GB']],
+                        'ger' => ['languages' => ['ger-DE']],
                     ],
                     '_context' => [
                         'current_siteaccess' => 'ger',
                         'location' => [
-                            'id' => 42,
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ger',
+            ],
+            'Nothing matches, current siteaccess is returned as a fallback 2' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ger'],
+                    ],
+                    'system' => [
+                        'eng' => [
+                            'languages' => ['eng-GB'],
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ger'],
+                        ],
+                        'ger' => [
+                            'languages' => ['ger-DE'],
+                            'tree_root' => 4,
+                            'translation_siteaccesses' => ['eng', 'ger'],
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ger',
+            ],
+            'Siteaccess matches the subtree and Content is always available' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ger'],
+                    ],
+                    'system' => [
+                        'eng' => [
+                            'languages' => ['eng-GB'],
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['eng', 'ger'],
+                        ],
+                        'ger' => [
+                            'languages' => ['ger-DE'],
+                            'tree_root' => 4,
+                            'translation_siteaccesses' => ['eng', 'ger'],
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                            'alwaysAvailable' => true,
+                        ],
+                    ],
+                ],
+                'eng',
+            ],
+            'Single siteaccess matching current siteaccess prioritized languages 1' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'jpn', 'ita'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'jpn-JP'],
+                            'tree_root' => 4,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 8,
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'jpn',
+            ],
+            'Single siteaccess matching current siteaccess prioritized languages 2' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'jpn', 'ita'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT'],
+                            'tree_root' => 4,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 8,
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ita',
+            ],
+            'First siteaccess matching current siteaccess prioritized languages 1' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'jpn', 'ita', 'ita_mobile'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 4,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 8,
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                        'ita_mobile' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ita',
+            ],
+            'First siteaccess matching current siteaccess prioritized languages 2' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'jpn', 'ita_mobile', 'ita'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 4,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 8,
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                        'ita_mobile' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ita_mobile',
+            ],
+            'First siteaccess matching current siteaccess prioritized languages 3' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'jpn', 'ger_other', 'ger_other_mobile'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 4,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 8,
+                        ],
+                        'ger_other' => [
+                            'languages' => ['ger-DE', 'jpn-JP', 'ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                        'ger_other_mobile' => [
+                            'languages' => ['ger-DE', 'ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ger_other',
+            ],
+            'First siteaccess matching current siteaccess prioritized languages 4' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'jpn', 'fre', 'fre_mobile'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 4,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 8,
+                        ],
+                        'fre' => [
+                            'languages' => ['fre-FR', 'ger-DE', 'jpn-JP', 'ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                        'fre_mobile' => [
+                            'languages' => ['fre-FR', 'ger-DE', 'ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'fre',
+            ],
+            'Order of siteaccesses is significant 1' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'jpn', 'fre'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE'],
+                            'tree_root' => 4,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 8,
+                        ],
+                        'fre' => [
+                            'languages' => ['fre-FR'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'jpn',
+            ],
+            'Order of siteaccesses is significant 2' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'fre', 'jpn'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE'],
+                            'tree_root' => 4,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 8,
+                        ],
+                        'fre' => [
+                            'languages' => ['fre-FR'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'fre-FR'],
+                        ],
+                    ],
+                ],
+                'fre',
+            ],
+            'Nothing matches, current siteaccess is returned as a fallback 3' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'ita', 'fre'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE'],
+                            'tree_root' => 4,
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 8,
+                        ],
+                        'fre' => [
+                            'languages' => ['fre-FR'],
+                            'tree_root' => 8,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/8/42/',
+                            'languageCodes' => ['jpn-JP', 'port-PT'],
+                        ],
+                    ],
+                ],
+                'ger',
+            ],
+            'First siteaccess matching current siteaccess prioritized languages
+            (translation siteaccess is ignored)' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'ita', 'por'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
+                        ],
+                        'por' => [
+                            'languages' => ['por-PT', 'ita-IT'],
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['ita'],
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT', 'por-PT'],
+                            'tree_root' => 2,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['por-PT', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'por',
+            ],
+            'Translation siteaccess of the first siteaccess matching current siteaccess
+            prioritized languages' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'por', 'ita'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
+                        ],
+                        'por' => [
+                            'languages' => ['por-PT', 'ita-IT'],
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['ita'],
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 2,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'prefer_translation_siteaccess' => true,
+                        'location' => [
                             'pathString' => '/1/2/42/',
                             'languageCodes' => ['ita-IT'],
                         ],
@@ -116,393 +915,396 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'ita',
             ],
-            'Order of translation siteaccesses is significant 1' => [
+            'Translation siteaccess of the first siteaccess matching current siteaccess
+            prioritized languages / prefer translation siteaccess off' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita'],
-                        'groups' => [
-                            'frontend_group' => ['eng', 'ger', 'ita'],
-                        ],
+                        'list' => ['ger', 'por', 'ita'],
                     ],
                     'system' => [
-                        'frontend_group' => [
-                            'translation_siteaccesses' => ['eng', 'ger', 'ita'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
                         ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                    ],
-                    '_context' => [
-                        'current_siteaccess' => 'eng',
-                        'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/2/42/',
-                            'languageCodes' => ['ger-DE', 'ita-IT'],
+                        'por' => [
+                            'languages' => ['por-PT', 'ita-IT'],
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['ita'],
                         ],
-                    ],
-                ],
-                'ger',
-            ],
-            'Order of translation siteaccesses is significant 2' => [
-                [
-                    'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita'],
-                        'groups' => [
-                            'frontend_group' => ['eng', 'ger', 'ita'],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 2,
                         ],
-                    ],
-                    'system' => [
-                        'frontend_group' => [
-                            'translation_siteaccesses' => ['eng', 'ita', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                    ],
-                    '_context' => [
-                        'current_siteaccess' => 'eng',
-                        'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/2/42/',
-                            'languageCodes' => ['ger-DE', 'ita-IT'],
-                        ],
-                    ],
-                ],
-                'ita',
-            ],
-            'Siteaccess not in translation siteaccesses list of the matched siteaccess is not used' => [
-                [
-                    'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita', 'jpn'],
-                        'groups' => [
-                            'frontend_group' => ['eng', 'ger', 'ita', 'jpn'],
-                        ],
-                    ],
-                    'system' => [
-                        'frontend_group' => [
-                            'translation_siteaccesses' => ['eng', 'ita', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                        'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
-                    ],
-                    '_context' => [
-                        'current_siteaccess' => 'eng',
-                        'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/2/42/',
-                            'languageCodes' => ['jpn-JP'],
-                        ],
-                    ],
-                ],
-                'eng',
-            ],
-            'Current siteaccess is used if language is allowed' => [
-                [
-                    'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita'],
-                        'groups' => [
-                            'frontend_group' => ['eng', 'ger', 'ita'],
-                        ],
-                    ],
-                    'system' => [
-                        'frontend_group' => [
-                            'translation_siteaccesses' => ['eng', 'ger', 'ita'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'ita-IT', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
                     ],
                     '_context' => [
                         'current_siteaccess' => 'ger',
                         'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/2/42/',
-                            'languageCodes' => ['ita-IT', 'eng-GB'],
-                        ],
-                    ],
-                ],
-                'ger',
-            ],
-            'When no translation siteaccesses are defined, matched (current) siteaccess is used' => [
-                [
-                    'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita'],
-                        'groups' => [
-                            'frontend_group' => ['eng', 'ger', 'ita'],
-                        ],
-                    ],
-                    'system' => [
-                        'frontend_group' => [
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                    ],
-                    '_context' => [
-                        'current_siteaccess' => 'ger',
-                        'location' => [
-                            'id' => 42,
                             'pathString' => '/1/2/42/',
                             'languageCodes' => ['ita-IT'],
                         ],
                     ],
                 ],
-                'ger',
+                'por',
             ],
-            'When no translation siteaccesses are defined, matched (first found) siteaccess is used' => [
+            'First siteaccess matching available languages 1' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita', 'jpn'],
-                        'groups' => [
-                            'frontend_group_1' => ['eng', 'ita'],
-                            'frontend_group_2' => ['ger', 'jpn'],
-                        ],
+                        'list' => ['eng', 'ger', 'jpn'],
                     ],
                     'system' => [
-                        'frontend_group_1' => [
-                            'content' => ['tree_root' => ['location_id' => 2]],
+                        'eng' => [
+                            'languages' => ['eng-GB'],
+                            'tree_root' => 2,
                         ],
-                        'frontend_group_2' => [
-                            'content' => ['tree_root' => ['location_id' => 200]],
+                        'ger' => [
+                            'languages' => ['ger-DE'],
+                            'tree_root' => 2,
                         ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                        'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
                     ],
                     '_context' => [
                         'current_siteaccess' => 'ger',
                         'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/200/42/',
-                            'languageCodes' => ['ita-IT'],
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['jpn-JP', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'jpn',
+            ],
+            'First siteaccess matching available languages 2' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ger', 'jpn'],
+                    ],
+                    'system' => [
+                        'eng' => [
+                            'languages' => ['eng-GB'],
+                            'tree_root' => 2,
+                        ],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT'],
+                            'tree_root' => 2,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['fre-FR', 'ita-IT'],
                         ],
                     ],
                 ],
                 'ger',
             ],
-            'Tree root and translation siteaccess is matched' => [
+            'First siteaccess matching available languages 3' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita', 'jpn'],
-                        'groups' => [
-                            'frontend_group_1' => ['eng', 'ger'],
-                            'frontend_group_2' => ['ita', 'jpn'],
-                        ],
+                        'list' => ['eng', 'ger', 'jpn', 'fre'],
                     ],
                     'system' => [
-                        'frontend_group_1' => [
-                            'translation_siteaccesses' => ['eng', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
+                        'eng' => [
+                            'languages' => ['eng-GB'],
+                            'tree_root' => 2,
                         ],
-                        'frontend_group_2' => [
-                            'translation_siteaccesses' => ['ita', 'jpn'],
-                            'content' => ['tree_root' => ['location_id' => 200]],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT'],
+                            'tree_root' => 2,
                         ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                        'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
+                        'fre' => [
+                            'languages' => ['fre-FR'],
+                            'tree_root' => 2,
+                        ],
                     ],
                     '_context' => [
                         'current_siteaccess' => 'eng',
                         'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/200/42/',
-                            'languageCodes' => ['jpn-JP', 'eng-GB'],
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['fre-FR', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ger',
+            ],
+            'First siteaccess matching available languages with excluded siteaccess' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ger', 'jpn', 'fre'],
+                    ],
+                    'system' => [
+                        'eng' => [
+                            'languages' => ['eng-GB'],
+                            'tree_root' => 2,
+                        ],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT'],
+                            'tree_root' => 2,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
+                        'fre' => [
+                            'languages' => ['fre-FR'],
+                            'tree_root' => 2,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'excluded_siteaccess_names' => ['fre'],
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['fre-FR', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ger',
+            ],
+            'First siteaccess matching available languages with excluded siteaccess group' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['eng', 'ger', 'jpn', 'fre'],
+                        'groups' => [
+                            'excluded_group' => ['fre'],
+                        ],
+                    ],
+                    'system' => [
+                        'eng' => [
+                            'languages' => ['eng-GB'],
+                            'tree_root' => 2,
+                        ],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'ita-IT'],
+                            'tree_root' => 2,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
+                        'fre' => [
+                            'languages' => ['fre-FR'],
+                            'tree_root' => 2,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'eng',
+                        'excluded_siteaccess_group_names' => ['excluded_group'],
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['fre-FR', 'ita-IT'],
+                        ],
+                    ],
+                ],
+                'ger',
+            ],
+            'Translation siteaccess of the first siteaccess matching current siteaccess prioritized languages
+            with excluded siteaccess 1' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'por', 'ita', 'jpn'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
+                        ],
+                        'por' => [
+                            'languages' => ['por-PT', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['ita', 'jpn'],
+                        ],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 2,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'prefer_translation_siteaccess' => true,
+                        'excluded_siteaccess_names' => ['ita'],
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'jpn-JP'],
                         ],
                     ],
                 ],
                 'jpn',
             ],
-            'Tree root and translation siteaccess is matched by priority' => [
+            'Translation siteaccess of the first siteaccess matching current siteaccess prioritized languages
+            with excluded siteaccess 1 / prefer translation siteaccess off' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'jpn', 'eng2'],
-                        'groups' => [
-                            'frontend_group_1' => ['eng', 'ger'],
-                            'frontend_group_2' => ['eng2', 'jpn'],
-                        ],
+                        'list' => ['ger', 'por', 'ita', 'jpn'],
                     ],
                     'system' => [
-                        'frontend_group_1' => [
-                            'translation_siteaccesses' => ['eng', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
                         ],
-                        'frontend_group_2' => [
-                            'translation_siteaccesses' => ['jpn', 'eng2'],
-                            'content' => ['tree_root' => ['location_id' => 200]],
+                        'por' => [
+                            'languages' => ['por-PT', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 2,
+                            'translation_siteaccesses' => ['ita', 'jpn'],
                         ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
-                        'eng2' => ['languages' => ['eng-GB', 'jpn-JP']],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 2,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
                     ],
                     '_context' => [
-                        'current_siteaccess' => 'eng',
+                        'current_siteaccess' => 'ger',
+                        'excluded_siteaccess_names' => ['ita'],
                         'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/200/42/',
-                            'languageCodes' => ['jpn-JP', 'eng-GB'],
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'jpn-JP'],
                         ],
                     ],
                 ],
-                'jpn',
+                'por',
             ],
-            'Siteaccess is excluded' => [
+            'Translation siteaccess of the first siteaccess matching current siteaccess prioritized languages
+            with excluded siteaccess 2' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita', 'jpn'],
-                        'groups' => [
-                            'frontend_group_1' => ['eng', 'ger'],
-                            'frontend_group_2' => ['ita', 'jpn'],
-                        ],
+                        'list' => ['ger', 'por', 'ita', 'jpn'],
                     ],
                     'system' => [
-                        'frontend_group_1' => [
-                            'translation_siteaccesses' => ['eng', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
                         ],
-                        'frontend_group_2' => [
+                        'por' => [
+                            'languages' => ['por-PT', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 2,
                             'translation_siteaccesses' => ['ita', 'jpn'],
-                            'content' => ['tree_root' => ['location_id' => 200]],
                         ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                        'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 2,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
                     ],
                     '_context' => [
-                        'current_siteaccess' => 'eng',
+                        'current_siteaccess' => 'ger',
+                        'prefer_translation_siteaccess' => true,
                         'excluded_siteaccess_names' => ['jpn'],
                         'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/200/42/',
-                            'languageCodes' => ['jpn-JP', 'eng-GB'],
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'jpn-JP'],
                         ],
                     ],
                 ],
                 'ita',
             ],
-            'Siteaccess group is excluded' => [
+            'Translation siteaccess of the first siteaccess matching current siteaccess prioritized languages
+            with excluded siteaccess group 1' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita', 'jpn'],
+                        'list' => ['ger', 'por', 'ita', 'jpn'],
                         'groups' => [
-                            'frontend_group_1' => ['eng', 'ger'],
-                            'frontend_group_2' => ['ita', 'jpn'],
+                            'excluded_group' => ['ita'],
                         ],
                     ],
                     'system' => [
-                        'frontend_group_1' => [
-                            'translation_siteaccesses' => ['eng', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
                         ],
-                        'frontend_group_2' => [
+                        'por' => [
+                            'languages' => ['por-PT', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 2,
                             'translation_siteaccesses' => ['ita', 'jpn'],
-                            'content' => ['tree_root' => ['location_id' => 200]],
                         ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                        'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
-                    ],
-                    '_context' => [
-                        'current_siteaccess' => 'eng',
-                        'excluded_siteaccess_group_names' => ['frontend_group_2'],
-                        'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/200/42/',
-                            'languageCodes' => ['jpn-JP', 'eng-GB'],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 2,
                         ],
-                    ],
-                ],
-                'eng',
-            ],
-            'Siteaccess and siteaccess group are excluded' => [
-                [
-                    'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita', 'jpn'],
-                        'groups' => [
-                            'frontend_group_1' => ['eng', 'ger'],
-                            'frontend_group_2' => ['ita', 'jpn'],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
                         ],
-                    ],
-                    'system' => [
-                        'frontend_group_1' => [
-                            'translation_siteaccesses' => ['eng', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
-                        ],
-                        'frontend_group_2' => [
-                            'translation_siteaccesses' => ['ita', 'jpn'],
-                            'content' => ['tree_root' => ['location_id' => 200]],
-                        ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                        'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
                     ],
                     '_context' => [
                         'current_siteaccess' => 'ger',
-                        'excluded_siteaccess_names' => ['eng'],
-                        'excluded_siteaccess_group_names' => ['frontend_group_2'],
+                        'prefer_translation_siteaccess' => true,
+                        'excluded_siteaccess_group_names' => ['excluded_group'],
                         'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/200/42/',
-                            'languageCodes' => ['jpn-JP', 'eng-GB'],
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'jpn-JP'],
                         ],
                     ],
                 ],
-                'ger',
+                'jpn',
             ],
-            'Current siteaccess is used by default' => [
+            'Translation siteaccess of the first siteaccess matching current siteaccess prioritized languages
+            with excluded siteaccess group 2' => [
                 [
                     'siteaccess' => [
-                        'list' => ['eng', 'ger', 'ita', 'jpn'],
+                        'list' => ['ger', 'por', 'ita', 'jpn'],
                         'groups' => [
-                            'frontend_group_1' => ['eng', 'ger'],
-                            'frontend_group_2' => ['ita', 'jpn'],
+                            'excluded_group' => ['jpn'],
                         ],
                     ],
                     'system' => [
-                        'frontend_group_1' => [
-                            'translation_siteaccesses' => ['eng', 'ger'],
-                            'content' => ['tree_root' => ['location_id' => 2]],
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
                         ],
-                        'frontend_group_2' => [
+                        'por' => [
+                            'languages' => ['por-PT', 'ita-IT', 'jpn-JP'],
+                            'tree_root' => 2,
                             'translation_siteaccesses' => ['ita', 'jpn'],
-                            'content' => ['tree_root' => ['location_id' => 200]],
                         ],
-                        'eng' => ['languages' => ['eng-GB']],
-                        'ger' => ['languages' => ['ger-DE', 'eng-GB']],
-                        'ita' => ['languages' => ['ita-IT', 'eng-GB']],
-                        'jpn' => ['languages' => ['jpn-JP', 'eng-GB']],
+                        'ita' => [
+                            'languages' => ['ita-IT'],
+                            'tree_root' => 2,
+                        ],
+                        'jpn' => [
+                            'languages' => ['jpn-JP'],
+                            'tree_root' => 2,
+                        ],
                     ],
                     '_context' => [
-                        'current_siteaccess' => 'eng',
-                        'excluded_siteaccess_names' => ['eng'],
-                        'excluded_siteaccess_group_names' => ['frontend_group_2'],
+                        'current_siteaccess' => 'ger',
+                        'prefer_translation_siteaccess' => true,
+                        'excluded_siteaccess_group_names' => ['excluded_group'],
                         'location' => [
-                            'id' => 42,
-                            'pathString' => '/1/200/42/',
-                            'languageCodes' => ['jpn-JP', 'eng-GB'],
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['ita-IT', 'jpn-JP'],
                         ],
                     ],
                 ],
-                'eng',
+                'ita',
             ],
         ];
     }
 
     /**
      * @dataProvider providerForTestResolve
+     *
+     * @throws \Exception
      */
     public function testResolve(array $data, string $expectedSiteaccessName): void
     {
@@ -510,18 +1312,20 @@ class SiteaccessResolverTest extends TestCase
         $location = $this->getMockedLocation($data);
 
         self::assertSame($expectedSiteaccessName, $siteaccessResolver->resolve($location));
+        self::assertSame($expectedSiteaccessName, $siteaccessResolver->resolve($location));
     }
 
     protected function getMockedLocation(array $data): Location
     {
         $data = $data['_context']['location'];
+        $pathIds = array_filter(explode('/', $data['pathString']));
 
         return new CoreLocation([
-            'id' => $data['id'],
+            'id' => array_pop($pathIds),
             'pathString' => $data['pathString'],
             'contentInfo' => new ContentInfo([
                 'id' => 24,
-                'alwaysAvailable' => false,
+                'alwaysAvailable' => $data['alwaysAvailable'] ?? false,
             ]),
         ]);
     }
@@ -571,23 +1375,43 @@ class SiteaccessResolverTest extends TestCase
     protected function getConfigResolverMock(array $data): ConfigResolverInterface
     {
         $configResolver = $this->createMock(ConfigResolverInterface::class);
-        $getParameterValueMap = $this->getConfigResolverReturnValueMap($data);
+        $hasParameterValueMap = $this->getConfigResolverHasParameterReturnValueMap($data);
+        $getParameterValueMap = $this->getConfigResolverGetParameterReturnValueMap($data);
 
-        $configResolver->method('hasParameter')->willReturn(true);
+        $configResolver->method('hasParameter')->will(self::returnValueMap($hasParameterValueMap));
         $configResolver->method('getParameter')->will(self::returnValueMap($getParameterValueMap));
 
         return $configResolver;
     }
 
-    protected function getConfigResolverReturnValueMap(array $data): array
+    protected function getConfigResolverHasParameterReturnValueMap(array $data): array
     {
         $valueMap = [];
         $siteaccessConfigMap = $this->getSiteaccessConfigMap($data);
 
         foreach ($siteaccessConfigMap as $siteaccess => $config) {
+            $valueMap[] = ['translation_siteaccesses', null, $siteaccess, array_key_exists('translation_siteaccesses', $config)];
+        }
+
+        return $valueMap;
+    }
+
+    protected function getConfigResolverGetParameterReturnValueMap(array $data): array
+    {
+        $siteaccessConfigMap = $this->getSiteaccessConfigMap($data);
+        $valueMap = [
+            [
+                'ng_cross_siteaccess_routing_prefer_translation_siteaccess',
+                null,
+                null,
+                $data['_context']['prefer_translation_siteaccess'] ?? false
+            ],
+        ];
+
+        foreach ($siteaccessConfigMap as $siteaccess => $config) {
             $valueMap[] = ['languages', null, $siteaccess, $config['languages'] ?? []];
             $valueMap[] = ['translation_siteaccesses', null, $siteaccess, $config['translation_siteaccesses'] ?? []];
-            $valueMap[] = ['content.tree_root.location_id', null, $siteaccess, $config['content']['tree_root']['location_id'] ?? null];
+            $valueMap[] = ['content.tree_root.location_id', null, $siteaccess, $config['tree_root'] ?? null];
         }
 
         return $valueMap;

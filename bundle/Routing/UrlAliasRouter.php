@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RequestContext;
+use function strlen as strlen;
+use function strpos as strpos;
+use function substr as substr;
 
 class UrlAliasRouter extends BaseUrlAliasRouter
 {
@@ -67,6 +70,7 @@ class UrlAliasRouter extends BaseUrlAliasRouter
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \Exception
      */
     public function generate($name, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
@@ -80,16 +84,10 @@ class UrlAliasRouter extends BaseUrlAliasRouter
         return parent::generate($location, $parameters, $referenceType);
     }
 
-    public function supports($name): bool
-    {
-        return
-            $name instanceof Content
-            || $name instanceof ContentInfo
-            || $name instanceof Location
-            || parent::supports($name);
-    }
-
-    private function crossSiteaccessGenerate(APILocation $location, $parameters, $referenceType): string
+    /**
+     * @throws \Exception
+     */
+    private function crossSiteaccessGenerate(APILocation $location, array $parameters, int $referenceType): string
     {
         $siteaccessName = $this->siteaccessResolver->resolve($location);
 
@@ -99,7 +97,27 @@ class UrlAliasRouter extends BaseUrlAliasRouter
 
         $parameters['siteaccess'] = $siteaccessName;
 
-        return parent::generate($location, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = parent::generate($location, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+
+        if ($referenceType === UrlGeneratorInterface::RELATIVE_PATH) {
+            $host = $this->requestContext->getHost();
+            $hostLength = strlen($host);
+
+            if (strpos($url, $host) === 0) {
+                return substr($url, $hostLength);
+            }
+        }
+
+        return $url;
+    }
+
+    public function supports($name): bool
+    {
+        return
+            $name instanceof Content
+            || $name instanceof ContentInfo
+            || $name instanceof Location
+            || parent::supports($name);
     }
 
     /**

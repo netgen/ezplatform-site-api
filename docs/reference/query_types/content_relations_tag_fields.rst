@@ -120,8 +120,9 @@ Examples:
 ~~~~~~~~~~~~~~~~
 
 Defines whether to include Content defined by the ``content`` condition in the result set.
+If ``null`` is used as a value, the criterion won't be added.
 
-- **value type**: ``boolean``
+- **value type**: ``boolean``, `null``
 - **value format**: ``single``
 - **operators**: none
 - **target**: none

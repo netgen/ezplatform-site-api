@@ -2,8 +2,9 @@
 ~~~~~~~~~
 
 Defines absolute depth of the Location in the tree.
+If ``null`` is used as a value, the criterion won't be added.
 
-- **value type**: ``integer``
+- **value type**: ``integer``, ``null``
 - **value format**: ``single``, ``array``
 - **operators**: ``eq``, ``in``, ``gt``, ``gte``, ``lt``, ``lte``, ``between``
 - **target**: none

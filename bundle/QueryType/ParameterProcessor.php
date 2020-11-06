@@ -241,5 +241,13 @@ final class ParameterProcessor
                 return $this->namedObjectProvider->getTag($name);
             }
         );
+
+        $expressionLanguage->register(
+            'split',
+            static function (): void {},
+            function (array $arguments, string $name, string $delimiter) {
+                return array_map('trim', explode($delimiter, $name));
+            }
+        );
     }
 }

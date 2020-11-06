@@ -8,7 +8,7 @@ If ``null`` is used as a value, the criterion won't be added.
 - **operators**: ``eq``, ``in``
 - **target**: none
 - **required**: ``false``
-- **default**: not defined
+- **default**: ``null``
 
 Examples:
 

@@ -10,7 +10,7 @@ Defines ObjectState of the Content by the ObjectStateGroup and ObjectState ident
 - **operators**: ``eq``
 - **target**: ``string`` ObjectStateGroup identifier
 - **required**: ``false``
-- **default**: not defined
+- **default**: ``null``
 
 Examples:
 

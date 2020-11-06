@@ -58,10 +58,15 @@ abstract class Base implements QueryType
         $parameters = $this->getOptionsResolver()->resolve($parameters);
         $query = $this->buildQuery();
 
+        $sortDefinitions = $parameters['sort'];
+        if (!\is_array($sortDefinitions)) {
+            $sortDefinitions = [$sortDefinitions];
+        }
+
         $query->query = $this->getQueryCriterion($parameters);
         $query->filter = $this->resolveFilterCriteria($parameters);
         $query->facetBuilders = $this->getFacetBuilders($parameters);
-        $query->sortClauses = $this->getSortClauses($parameters);
+        $query->sortClauses = $this->getSortClauses($sortDefinitions);
 
         if ($parameters['limit'] !== null) {
             $query->limit = $parameters['limit'];
@@ -401,36 +406,18 @@ abstract class Base implements QueryType
      */
     private function getSortClauses(array $parameters): array
     {
-        $sortDefinitions = $parameters['sort'];
         $sortClauses = [];
 
-        if (empty($sortDefinitions)) {
-            return $sortClauses;
-        }
-
-        if (\strtolower(\trim($sortDefinitions)) === 'parent' && array_key_exists('location', $parameters)) {
-            /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
-            $location = $parameters['location'];
-
-            return $location->innerLocation->getSortClauses();
-        }
-
-        if (!\is_array($sortDefinitions)) {
-            $sortDefinitions = [$sortDefinitions];
-        }
-
-        $sortClauses = [];
-
-        foreach ($sortDefinitions as $sortDefinition) {
-            if (\is_string($sortDefinition)) {
-                $sortDefinition = $this->parseSortString($sortDefinition);
+        foreach ($parameters as $parameter) {
+            if (\is_string($parameter)) {
+                $parameter = $this->parseSortString($parameter);
             }
 
-            if (\is_string($sortDefinition)) {
-                $sortDefinition = $this->parseCustomSortString($sortDefinition);
+            if (\is_string($parameter)) {
+                $parameter = $this->parseCustomSortString($parameter);
             }
 
-            $sortClauses[] = $sortDefinition;
+            $sortClauses[] = $parameter;
         }
 
         return $sortClauses;

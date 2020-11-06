@@ -9,7 +9,7 @@ Use ``true`` to get main Locations, ``false`` to get non-main Locations and ``nu
 - **operators**: ``eq``
 - **target**: none
 - **required**: ``false``
-- **default**: not defined
+- **default**: ``null``
 
 Examples:
 

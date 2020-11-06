@@ -9,7 +9,7 @@ Use ``true`` to get visible Locations, ``false`` to get hidden Locations and ``n
 - **operators**: ``eq``
 - **target**: none
 - **required**: ``false``
-- **default**: not defined
+- **default**: ``null``
 
 Examples:
 

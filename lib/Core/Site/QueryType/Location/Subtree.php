@@ -41,8 +41,8 @@ final class Subtree extends Location
         ]);
 
         $resolver->setAllowedTypes('location', [SiteLocation::class]);
-        $resolver->setAllowedTypes('exclude_self', ['bool']);
-        $resolver->setAllowedTypes('relative_depth', ['int', 'array']);
+        $resolver->setAllowedTypes('exclude_self', [null, 'bool']);
+        $resolver->setAllowedTypes('relative_depth', [null, 'int', 'array']);
 
         $resolver->setDefaults([
             'exclude_self' => true,
@@ -53,7 +53,11 @@ final class Subtree extends Location
     {
         $this->registerCriterionBuilder(
             'relative_depth',
-            function (CriterionDefinition $definition, array $parameters): Depth {
+            function (CriterionDefinition $definition, array $parameters): ?Depth {
+                if ($definition->value === null) {
+                    return null;
+                }
+
                 /** @var \Netgen\EzPlatformSiteApi\API\Values\Location $location */
                 $location = $parameters['location'];
                 $relativeDepth = $this->getRelativeDepthValue(

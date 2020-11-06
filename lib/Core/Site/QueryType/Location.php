@@ -26,10 +26,10 @@ abstract class Location extends Base
             'visible',
         ]);
 
-        $resolver->setAllowedTypes('parent_location_id', [null, 'int', 'string', 'array']);
-        $resolver->setAllowedTypes('subtree', [null, 'string', 'array']);
-        $resolver->setAllowedTypes('depth', [null, 'int', 'array']);
-        $resolver->setAllowedTypes('priority', [null, 'int', 'array']);
+        $resolver->setAllowedTypes('parent_location_id', ['null', 'int', 'string', 'array']);
+        $resolver->setAllowedTypes('subtree', ['null', 'string', 'array']);
+        $resolver->setAllowedTypes('depth', ['null', 'int', 'array']);
+        $resolver->setAllowedTypes('priority', ['null', 'int', 'array']);
 
         $resolver->setAllowedValues('main', [true, false, null]);
         $resolver->setAllowedValues('visible', [true, false, null]);

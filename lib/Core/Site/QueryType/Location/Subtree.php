@@ -41,8 +41,8 @@ final class Subtree extends Location
         ]);
 
         $resolver->setAllowedTypes('location', [SiteLocation::class]);
-        $resolver->setAllowedTypes('exclude_self', [null, 'bool']);
-        $resolver->setAllowedTypes('relative_depth', [null, 'int', 'array']);
+        $resolver->setAllowedTypes('exclude_self', ['null', 'bool']);
+        $resolver->setAllowedTypes('relative_depth', ['null', 'int', 'array']);
 
         $resolver->setDefaults([
             'exclude_self' => true,

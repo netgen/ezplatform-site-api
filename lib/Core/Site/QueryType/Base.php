@@ -229,12 +229,12 @@ abstract class Base implements QueryType
             'offset' => 0,
         ]);
 
-        $resolver->setAllowedTypes('content_type', [null, 'string', 'array']);
-        $resolver->setAllowedTypes('section', [null, 'string', 'array']);
+        $resolver->setAllowedTypes('content_type', ['null', 'string', 'array']);
+        $resolver->setAllowedTypes('section', ['null', 'string', 'array']);
         $resolver->setAllowedTypes('field', ['array']);
-        $resolver->setAllowedTypes('is_field_empty', [null, 'array']);
-        $resolver->setAllowedTypes('limit', [null, 'int']);
-        $resolver->setAllowedTypes('offset', [null, 'int']);
+        $resolver->setAllowedTypes('is_field_empty', ['null', 'array']);
+        $resolver->setAllowedTypes('limit', ['null', 'int']);
+        $resolver->setAllowedTypes('offset', ['null', 'int']);
         $resolver->setAllowedTypes('creation_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('modification_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);

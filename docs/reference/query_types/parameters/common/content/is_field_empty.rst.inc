@@ -2,6 +2,7 @@
 ~~~~~~~~~~~~~~~~~~
 
 Defines conditions on whether the Content fields are empty or not.
+If ``null`` is used as a value, the criterion won't be added.
 
 .. note::
 

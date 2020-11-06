@@ -2,8 +2,9 @@
 ~~~~~~~~~~~~
 
 Defines the priority of the Location.
+If ``null`` is used as a value, the criterion won't be added.
 
-- **value type**: ``integer``
+- **value type**: ``integer``, ``null``
 - **value format**: ``single``
 - **operators**: ``gt``, ``gte``, ``lt``, ``lte``, ``between``
 - **target**: none

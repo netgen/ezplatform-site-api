@@ -67,8 +67,14 @@ abstract class Base implements QueryType
         $query->filter = $this->resolveFilterCriteria($parameters);
         $query->facetBuilders = $this->getFacetBuilders($parameters);
         $query->sortClauses = $this->getSortClauses($sortDefinitions);
-        $query->limit = $parameters['limit'];
-        $query->offset = $parameters['offset'];
+
+        if ($parameters['limit'] !== null) {
+            $query->limit = $parameters['limit'];
+        }
+
+        if ($parameters['offset'] !== null) {
+            $query->offset = $parameters['offset'];
+        }
 
         return $query;
     }
@@ -223,12 +229,12 @@ abstract class Base implements QueryType
             'offset' => 0,
         ]);
 
-        $resolver->setAllowedTypes('content_type', ['string', 'array']);
-        $resolver->setAllowedTypes('section', ['string', 'array']);
+        $resolver->setAllowedTypes('content_type', [null, 'string', 'array']);
+        $resolver->setAllowedTypes('section', [null, 'string', 'array']);
         $resolver->setAllowedTypes('field', ['array']);
-        $resolver->setAllowedTypes('is_field_empty', ['array']);
-        $resolver->setAllowedTypes('limit', ['int']);
-        $resolver->setAllowedTypes('offset', ['int']);
+        $resolver->setAllowedTypes('is_field_empty', [null, 'array']);
+        $resolver->setAllowedTypes('limit', [null, 'int']);
+        $resolver->setAllowedTypes('offset', [null, 'int']);
         $resolver->setAllowedTypes('creation_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('modification_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);

@@ -35,7 +35,7 @@ final class AllTagFields extends Content
         $resolver->setAllowedTypes('content', SiteContent::class);
 
         $resolver->setDefined('exclude_self');
-        $resolver->setAllowedTypes('exclude_self', ['bool']);
+        $resolver->setAllowedTypes('exclude_self', [null, 'bool']);
         $resolver->setDefaults([
             'exclude_self' => true,
         ]);

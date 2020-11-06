@@ -246,6 +246,10 @@ final class ParameterProcessor
             'split',
             static function (): void {},
             function (array $arguments, string $name, string $delimiter) {
+                if (empty($name)) {
+                    return null;
+                }
+
                 return array_map('trim', explode($delimiter, $name));
             }
         );

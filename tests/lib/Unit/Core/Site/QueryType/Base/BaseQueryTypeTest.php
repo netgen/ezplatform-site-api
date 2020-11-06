@@ -166,6 +166,7 @@ final class BaseQueryTypeTest extends QueryTypeBaseTest
             ],
             [
                 [
+                    'is_field_empty' => null,
                     'modification_date' => '8 October 2019',
                     'sort' => 'modified desc',
                 ],

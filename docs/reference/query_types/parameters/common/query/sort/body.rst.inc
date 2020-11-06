@@ -18,15 +18,6 @@ Following sort clauses are available through string definition:
     :depth: 1
     :local:
 
-Parent sort clausses
-~~~~~~~~~~~~~~~~~~~~
-
-String ``parent`` enables sorting by settings on parent location in administration.
-
-.. code-block:: yaml
-
-sort: parent
-
 Location depth
 ~~~~~~~~~~~~~~
 

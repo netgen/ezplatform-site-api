@@ -342,7 +342,13 @@ abstract class Base implements QueryType
             $definitions = $this->getCriterionDefinitionResolver()->resolve($name, $parameters[$name]);
 
             foreach ($definitions as $definition) {
-                $criteria[] = $builder($definition, $parameters);
+                $builtCriteria = $builder($definition, $parameters);
+
+                if ($builtCriteria === null) {
+                    continue;
+                }
+
+                $criteria[] = $builtCriteria;
             }
         }
 

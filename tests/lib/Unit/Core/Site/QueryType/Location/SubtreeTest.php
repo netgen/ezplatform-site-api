@@ -42,6 +42,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 [
                     'location' => $location,
                     'exclude_self' => true,
+                    'depth' => null,
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
@@ -54,10 +55,15 @@ final class SubtreeTest extends QueryTypeBaseTest
                 [
                     'location' => $location,
                     'exclude_self' => false,
+                    'relative_depth' => null,
+                    'limit' => null,
+                    'offset' => null,
                     'sort' => 'published asc',
                 ],
                 new LocationQuery([
                     'filter' => new SubtreeCriterion('/3/5/7/11/'),
+                    'limit' => 0,
+                    'offset' => 25,
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
@@ -66,6 +72,7 @@ final class SubtreeTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
+                    'exclude_self' => null,
                     'depth' => [
                         'in' => [2, 3, 7],
                     ],
@@ -110,6 +117,7 @@ final class SubtreeTest extends QueryTypeBaseTest
             [
                 [
                     'location' => $location,
+                    'content_type' => null,
                     'relative_depth' => [
                         'in' => [2, 3, 7],
                     ],

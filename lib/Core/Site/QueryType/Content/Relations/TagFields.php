@@ -41,7 +41,7 @@ final class TagFields extends Content
         $resolver->setAllowedTypes('relation_field', ['string', 'string[]']);
 
         $resolver->setDefined('exclude_self');
-        $resolver->setAllowedTypes('exclude_self', [null, 'bool']);
+        $resolver->setAllowedTypes('exclude_self', ['null', 'bool']);
         $resolver->setDefaults([
             'exclude_self' => true,
         ]);

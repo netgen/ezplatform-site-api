@@ -417,7 +417,10 @@ class SiteaccessResolver
     {
         if (!isset($this->cache['location_available_language_set'][$location->id])) {
             $this->cache['location_available_language_set'][$location->id] = array_fill_keys(
-                $this->persistenceHandler->contentHandler()->loadVersionInfo($location->contentId)->languageCodes,
+                $this->persistenceHandler->contentHandler()->loadVersionInfo(
+                    $location->contentId,
+                    $location->contentInfo->currentVersionNo
+                )->languageCodes,
                 true
             );
         }

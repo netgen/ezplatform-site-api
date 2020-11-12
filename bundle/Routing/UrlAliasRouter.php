@@ -77,7 +77,7 @@ class UrlAliasRouter extends BaseUrlAliasRouter
         $location = $this->resolveLocation($name, $parameters);
         $isCrossSiteaccessRoutingEnabled = $this->configResolver->getParameter('ng_cross_siteaccess_routing');
 
-        if ($isCrossSiteaccessRoutingEnabled) {
+        if (!isset($parameters['siteaccess']) && $isCrossSiteaccessRoutingEnabled) {
             return $this->crossSiteaccessGenerate($location, $parameters, $referenceType);
         }
 

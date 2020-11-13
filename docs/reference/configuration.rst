@@ -62,6 +62,13 @@ one considers the following:
 - Location Content translations
 - Location Content always available flag
 
+.. note::
+
+    The matching process is described below, but the rules are dense and it might be hard to
+    understand all the implications right away. To better understand the matching logic, you are
+    encouraged to look into the test cases. They were written to simulate the siteaccess
+    configuration and to be easy to read.
+
 Current siteaccess will always be preferred if it matches the context, meaning given Location's
 subtree, available translations and always available flag. Otherwise, the siteaccess will be chosen
 among the siteaccesses that do match the given context.
@@ -72,7 +79,11 @@ In case when multiple (non current) siteaccesses match the context, the best mat
 chosen according to the current siteaccess configured prioritized languages. The matching logic will
 respect the order/priority of the configured prioritized languages for both current and potentially
 matching siteaccess, resulting in the selection of a siteaccess that can allows highest possible
-language of the current siteaccess at a highest possible position on the matching siteaccess.
+language of the current siteaccess at a highest possible position on the matching siteaccess. The
+important think to note here is that configured prioritized languages take precedence over the
+available languages of the Location, which means that in some cases, the resulting siteaccess will
+be the best one in regard to the prioritized languages, but not the best one in regard to the
+Location's available languages.
 
 It's possible that matching a siteaccess by the current siteaccess prioritized languages will
 produce no result. In that case all siteaccesses matching the context will be checked, according to

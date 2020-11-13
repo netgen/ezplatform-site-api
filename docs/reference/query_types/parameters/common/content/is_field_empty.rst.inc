@@ -15,7 +15,7 @@ If ``null`` is used as a value, the criterion won't be added.
 - **operators**: ``eq``
 - **target**: ``string`` Field identifier
 - **required**: ``false``
-- **default**: ``null``
+- **default**: ``not defined``
 
 Examples:
 

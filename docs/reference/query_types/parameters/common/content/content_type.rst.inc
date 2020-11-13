@@ -9,7 +9,7 @@ If ``null`` is used as a value, the criterion won't be added.
 - **operators**: ``eq``, ``in``
 - **target**: ``string`` ContentType identifier
 - **required**: ``false``
-- **default**: ``null``
+- **default**: ``not defined``
 
 Examples:
 

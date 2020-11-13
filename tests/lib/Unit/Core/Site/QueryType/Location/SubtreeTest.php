@@ -62,8 +62,8 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new SubtreeCriterion('/3/5/7/11/'),
-                    'limit' => 0,
-                    'offset' => 25,
+                    'limit' => 25,
+                    'offset' => 0,
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
@@ -84,7 +84,6 @@ final class SubtreeTest extends QueryTypeBaseTest
                     'filter' => new LogicalAnd([
                         new Depth(Operator::IN, [2, 3, 7]),
                         new SubtreeCriterion('/3/5/7/11/'),
-                        new LogicalNot(new LocationId(42)),
                     ]),
                     'limit' => 12,
                     'offset' => 34,

@@ -9,7 +9,7 @@ If ``null`` is used as a value, the criterion won't be added.
 - **operators**: ``eq``, ``in``, ``gt``, ``gte``, ``lt``, ``lte``, ``between``
 - **target**: none
 - **required**: ``false``
-- **default**: ``null``
+- **default**: ``not defined``
 
 Examples:
 

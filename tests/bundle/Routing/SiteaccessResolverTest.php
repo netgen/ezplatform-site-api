@@ -1298,6 +1298,64 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'ita',
             ],
+            'Siteaccess is selected by the current siteaccess prioritized languages first, available languages second 1' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'ger_other', 'por'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
+                        ],
+                        'ger_other' => [
+                            'languages' => ['ger-DE', 'jpn-JP'],
+                            'tree_root' => 2,
+                        ],
+                        'por' => [
+                            'languages' => ['por-PT', 'ger-DE'],
+                            'tree_root' => 2,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['por-PT', 'jpn-JP'],
+                        ],
+                    ],
+                ],
+                'ger_other',
+            ],
+            'Siteaccess is selected by the current siteaccess prioritized languages first, available languages second 2' => [
+                [
+                    'siteaccess' => [
+                        'list' => ['ger', 'ger_other', 'por'],
+                    ],
+                    'system' => [
+                        'ger' => [
+                            'languages' => ['ger-DE', 'por-PT'],
+                            'tree_root' => 4,
+                        ],
+                        'ger_other' => [
+                            'languages' => ['ger-DE', 'jpn-JP'],
+                            'tree_root' => 2,
+                        ],
+                        'por' => [
+                            'languages' => ['por-PT', 'ger-DE'],
+                            'tree_root' => 2,
+                        ],
+                    ],
+                    '_context' => [
+                        'current_siteaccess' => 'ger',
+                        'location' => [
+                            'pathString' => '/1/2/42/',
+                            'languageCodes' => ['por-PT'],
+                        ],
+                    ],
+                ],
+                'por',
+            ],
             'Location is in the configured external subtree' => [
                 [
                     'siteaccess' => [

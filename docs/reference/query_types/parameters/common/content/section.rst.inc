@@ -2,14 +2,14 @@
 ~~~~~~~~~~~
 
 Defines Section of the Content by the identifier.
-If ``null`` is used as a value, the criterion won't be added.
+If ``null`` is used as a value, the condition won't be added.
 
 - **value type**: ``string``, ``null``
 - **value format**: ``single``, ``array``
 - **operators**: ``eq``, ``in``
 - **target**: none
 - **required**: ``false``
-- **default**: ``not defined``
+- **default**: not defined
 
 Examples:
 

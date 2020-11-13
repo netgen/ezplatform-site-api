@@ -81,7 +81,7 @@ Own conditions
 ~~~~~~~~~~~~~~~~
 
 Defines whether to include Location defined by the ``location`` condition in the result set.
-If ``null`` is used as a value, the criterion won't be added.
+If ``null`` is used as a value, the condition won't be added.
 
 - **value type**: ``boolean``, ``null``
 - **value format**: ``single``
@@ -141,7 +141,7 @@ Examples:
 
 Defines depth of the Location in the tree relative to the Location defined by ``location``
 condition.
-If ``null`` is used as a value, the criterion won't be added.
+If ``null`` is used as a value, the condition won't be added.
 
 - **value type**: ``integer``, ``null``
 - **value format**: ``single``, ``array``

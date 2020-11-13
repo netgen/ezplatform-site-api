@@ -2,14 +2,14 @@
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Defines Location's parent Location ID.
-If ``null`` is used as a value, the criterion won't be added.
+If ``null`` is used as a value, the condition won't be added.
 
 - **value type**: ``integer``, ``string``, ``null``
 - **value format**: ``single``, ``array``
 - **operators**: ``eq``, ``in``
 - **target**: none
 - **required**: ``false``
-- **default**: ``not defined``
+- **default**: not defined
 
 Examples:
 

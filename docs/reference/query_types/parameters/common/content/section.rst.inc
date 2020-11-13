@@ -2,8 +2,9 @@
 ~~~~~~~~~~~
 
 Defines Section of the Content by the identifier.
+If ``null`` is used as a value, the condition won't be added.
 
-- **value type**: ``string``
+- **value type**: ``string``, ``null``
 - **value format**: ``single``, ``array``
 - **operators**: ``eq``, ``in``
 - **target**: none

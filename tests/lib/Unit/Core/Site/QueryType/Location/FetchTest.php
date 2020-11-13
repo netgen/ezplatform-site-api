@@ -49,6 +49,8 @@ final class FetchTest extends QueryTypeBaseTest
                 false,
                 [
                     'visible' => false,
+                    'priority' => null,
+                    'main' => null,
                     'sort' => 'published asc',
                 ],
                 new LocationQuery([
@@ -123,6 +125,8 @@ final class FetchTest extends QueryTypeBaseTest
                     'section' => [
                         'eq' => 'standard',
                     ],
+                    'parent_location_id' => null,
+                    'subtree' => null,
                     'field' => [
                         'title' => 'Hello',
                     ],

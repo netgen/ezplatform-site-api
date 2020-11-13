@@ -240,6 +240,10 @@ final class ParameterProcessorTest extends TestCase
                 "@=namedTag('radoslava')",
                 $this->getTag(),
             ],
+            [
+                "@=split('pterodaktilivojka, grozdana,radoslava', ',')",
+                ['pterodaktilivojka', 'grozdana', 'radoslava'],
+            ],
         ];
     }
 

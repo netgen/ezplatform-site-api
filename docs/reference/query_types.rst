@@ -413,6 +413,24 @@ Miscellaneous
         Function ``timestamp()`` maps directly to the PHP's function `strtotime <https://secure.php.net/manual/en/function.strtotime.php>`_.
         That means it accepts any date and time format `supported by that function <https://secure.php.net/manual/en/datetime.formats.php>`_.
 
+- ``split(value)``
+
+    This function is used to split a string by a given delimiter. For example, you could use it to
+    split a string of comma-delimited ContentType identifiers:
+
+    .. code-block:: yaml
+
+        ...
+            queries:
+                pending_events:
+                    query_type: SiteAPI:Location/Children
+                    max_per_page: 10
+                    page: 1
+                    parameters:
+                        content_type: '@=split(content.getFieldValue("types").text, ",")'
+
+    Note that each returned string will also be trimmed of leading and trailing whitespace.
+
 Extending expressions
 ~~~~~~~~~~~~~~~~~~~~~
 

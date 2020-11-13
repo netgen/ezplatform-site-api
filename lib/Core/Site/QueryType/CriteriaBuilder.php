@@ -108,9 +108,15 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
+     *
+     * @return null|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier
      */
-    private function buildContentTypeIdentifier(CriterionDefinition $definition): ContentTypeIdentifier
+    private function buildContentTypeIdentifier(CriterionDefinition $definition): ?ContentTypeIdentifier
     {
+        if ($definition->value === null) {
+            return null;
+        }
+
         return new ContentTypeIdentifier($definition->value);
     }
 
@@ -118,9 +124,15 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
+     *
+     * @return null|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\Depth
      */
-    private function buildDepth(CriterionDefinition $definition): Depth
+    private function buildDepth(CriterionDefinition $definition): ?Depth
     {
+        if ($definition->value === null) {
+            return null;
+        }
+
         return new Depth($definition->operator, $definition->value);
     }
 
@@ -158,9 +170,15 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
+     *
+     * @return null|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot
      */
-    private function buildLogicalNot(CriterionDefinition $definition): LogicalNot
+    private function buildLogicalNot(CriterionDefinition $definition): ?LogicalNot
     {
+        if ($definition->value === null) {
+            return null;
+        }
+
         $criteria = $this->build($definition->value);
         $criterion = $this->reduceCriteria($criteria);
 
@@ -180,9 +198,15 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
+     *
+     * @return null|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId
      */
-    private function buildParentLocationId(CriterionDefinition $definition): ParentLocationId
+    private function buildParentLocationId(CriterionDefinition $definition): ?ParentLocationId
     {
+        if ($definition->value === null) {
+            return null;
+        }
+
         return new ParentLocationId($definition->value);
     }
 
@@ -190,9 +214,15 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
+     *
+     * @return null|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\Priority
      */
-    private function buildPriority(CriterionDefinition $definition): Priority
+    private function buildPriority(CriterionDefinition $definition): ?Priority
     {
+        if ($definition->value === null) {
+            return null;
+        }
+
         return new Priority($definition->operator, $definition->value);
     }
 
@@ -228,9 +258,15 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
+     *
+     * @return null|\Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\SectionIdentifier
      */
-    private function buildSection(CriterionDefinition $definition): SectionIdentifier
+    private function buildSection(CriterionDefinition $definition): ?SectionIdentifier
     {
+        if ($definition->value === null) {
+            return null;
+        }
+
         return new SectionIdentifier($definition->value);
     }
 
@@ -248,9 +284,15 @@ final class CriteriaBuilder
      * @param \Netgen\EzPlatformSiteApi\Core\Site\QueryType\CriterionDefinition $definition
      *
      * @throws \InvalidArgumentException
+     *
+     * @return null|\eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree
      */
-    private function buildSubtree(CriterionDefinition $definition): Subtree
+    private function buildSubtree(CriterionDefinition $definition): ?Subtree
     {
+        if ($definition->value === null) {
+            return null;
+        }
+
         return new Subtree($definition->value);
     }
 

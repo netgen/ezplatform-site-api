@@ -21,7 +21,8 @@
         "phpunit/phpunit": "^7.0",
         "matthiasnoback/symfony-dependency-injection-test": "~3.0",
         "netgen/tagsbundle": "^3.3",
-        "ezsystems/ezplatform-xmltext-fieldtype": "~1.8"
+        "ezsystems/ezplatform-xmltext-fieldtype": "~1.8",
+        "composer/package-versions-deprecated": "*"
     },
     "suggest": {
         "netgen/tagsbundle": "Allows using Tag relation Query Types and named Tag objects"

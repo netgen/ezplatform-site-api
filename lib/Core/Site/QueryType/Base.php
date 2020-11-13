@@ -67,14 +67,8 @@ abstract class Base implements QueryType
         $query->filter = $this->resolveFilterCriteria($parameters);
         $query->facetBuilders = $this->getFacetBuilders($parameters);
         $query->sortClauses = $this->getSortClauses($sortDefinitions);
-
-        if ($parameters['limit'] !== null) {
-            $query->limit = $parameters['limit'];
-        }
-
-        if ($parameters['offset'] !== null) {
-            $query->offset = $parameters['offset'];
-        }
+        $query->limit = $parameters['limit'];
+        $query->offset = $parameters['offset'];
 
         return $query;
     }
@@ -238,6 +232,10 @@ abstract class Base implements QueryType
         $resolver->setAllowedTypes('creation_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('modification_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
+
+        $resolver->setNormalizer('limit', static function (Options $options, $value) {return $value ?? 25;});
+        $resolver->setNormalizer('offset', static function (Options $options, $value) {return $value ?? 0;});
+        $resolver->setNormalizer('is_field_empty', static function (Options $options, $value) {return $value ?? [];});
 
         $resolver->setAllowedValues(
             'is_field_empty',

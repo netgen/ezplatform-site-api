@@ -2,7 +2,7 @@
 ~~~~~~~~~~~~~~~~~~
 
 Defines conditions on whether the Content fields are empty or not.
-If ``null`` is used as a value, the criterion won't be added.
+If ``null`` is used as a value, the condition won't be added.
 
 .. note::
 
@@ -15,7 +15,7 @@ If ``null`` is used as a value, the criterion won't be added.
 - **operators**: ``eq``
 - **target**: ``string`` Field identifier
 - **required**: ``false``
-- **default**: ``not defined``
+- **default**: not defined
 
 Examples:
 

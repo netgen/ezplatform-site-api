@@ -114,7 +114,7 @@ Examples:
 ~~~~~~~~~~~~~~~~
 
 Defines whether to include Content defined by the ``content`` condition in the result set.
-If ``null`` is used as a value, the criterion won't be added.
+If ``null`` is used as a value, the condition won't be added.
 
 - **value type**: ``boolean``, ``null``
 - **value format**: ``single``

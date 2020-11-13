@@ -2,14 +2,14 @@
 ~~~~~~~~~~~~
 
 Defines the priority of the Location.
-If ``null`` is used as a value, the criterion won't be added.
+If ``null`` is used as a value, the condition won't be added.
 
 - **value type**: ``integer``, ``null``
 - **value format**: ``single``
 - **operators**: ``gt``, ``gte``, ``lt``, ``lte``, ``between``
 - **target**: none
 - **required**: ``false``
-- **default**: ``not defined``
+- **default**: not defined
 
 Examples:
 

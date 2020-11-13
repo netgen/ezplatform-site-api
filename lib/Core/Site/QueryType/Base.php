@@ -11,6 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\API\Settings;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use function array_key_exists;
 use function array_merge;
@@ -224,20 +225,28 @@ abstract class Base implements QueryType
             $resolver->setDefault('visible', true);
         }
 
-        $resolver->setAllowedTypes('content_type', ['string', 'array']);
-        $resolver->setAllowedTypes('section', ['string', 'array']);
+        $resolver->setAllowedTypes('content_type', ['null', 'string', 'array']);
+        $resolver->setAllowedTypes('section', ['null', 'string', 'array']);
         $resolver->setAllowedTypes('field', ['array']);
-        $resolver->setAllowedTypes('is_field_empty', ['array']);
-        $resolver->setAllowedTypes('limit', ['int']);
-        $resolver->setAllowedTypes('offset', ['int']);
+        $resolver->setAllowedTypes('is_field_empty', ['null', 'array']);
+        $resolver->setAllowedTypes('limit', ['null', 'int']);
+        $resolver->setAllowedTypes('offset', ['null', 'int']);
         $resolver->setAllowedTypes('creation_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('modification_date', ['int', 'string', 'array']);
         $resolver->setAllowedTypes('state', ['array']);
         $resolver->setAllowedValues('visible', [true, false, null]);
 
+        $resolver->setNormalizer('limit', static function (Options $options, $value) {return $value ?? 25;});
+        $resolver->setNormalizer('offset', static function (Options $options, $value) {return $value ?? 0;});
+        $resolver->setNormalizer('is_field_empty', static function (Options $options, $value) {return $value ?? [];});
+
         $resolver->setAllowedValues(
             'is_field_empty',
-            static function (array $isEmptyMap): bool {
+            static function ($isEmptyMap): bool {
+                if ($isEmptyMap === null) {
+                    return true;
+                }
+
                 foreach ($isEmptyMap as $key => $value) {
                     if (!is_string($key) || ($value !== null && !is_bool($value))) {
                         return false;
@@ -334,7 +343,13 @@ abstract class Base implements QueryType
             $definitions = $this->getCriterionDefinitionResolver()->resolve($name, $parameters[$name]);
 
             foreach ($definitions as $definition) {
-                $criteria[] = $builder($definition, $parameters);
+                $builtCriteria = $builder($definition, $parameters);
+
+                if ($builtCriteria === null) {
+                    continue;
+                }
+
+                $criteria[] = $builtCriteria;
             }
         }
 

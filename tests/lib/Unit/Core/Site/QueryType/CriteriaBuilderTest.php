@@ -170,6 +170,17 @@ final class CriteriaBuilderTest extends TestCase
             [
                 [
                     new CriterionDefinition([
+                        'name' => 'not',
+                        'target' => null,
+                        'operator' => null,
+                        'value' => null,
+                    ]),
+                ],
+                [],
+            ],
+            [
+                [
+                    new CriterionDefinition([
                         'name' => 'main',
                         'target' => null,
                         'operator' => null,

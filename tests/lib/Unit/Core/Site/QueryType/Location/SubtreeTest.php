@@ -45,6 +45,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 [
                     'location' => $location,
                     'exclude_self' => true,
+                    'depth' => null,
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
@@ -60,6 +61,9 @@ final class SubtreeTest extends QueryTypeBaseTest
                     'visible' => false,
                     'location' => $location,
                     'exclude_self' => false,
+                    'relative_depth' => null,
+                    'limit' => null,
+                    'offset' => null,
                     'sort' => 'published asc',
                 ],
                 new LocationQuery([
@@ -67,6 +71,8 @@ final class SubtreeTest extends QueryTypeBaseTest
                         new Visible(false),
                         new SubtreeCriterion('/3/5/7/11/'),
                     ]),
+                    'limit' => 25,
+                    'offset' => 0,
                     'sortClauses' => [
                         new DatePublished(Query::SORT_ASC),
                     ],
@@ -77,6 +83,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 [
                     'visible' => null,
                     'location' => $location,
+                    'exclude_self' => null,
                     'depth' => [
                         'in' => [2, 3, 7],
                     ],
@@ -88,7 +95,6 @@ final class SubtreeTest extends QueryTypeBaseTest
                     'filter' => new LogicalAnd([
                         new Depth(Operator::IN, [2, 3, 7]),
                         new SubtreeCriterion('/3/5/7/11/'),
-                        new LogicalNot(new LocationId(42)),
                     ]),
                     'limit' => 12,
                     'offset' => 34,
@@ -124,6 +130,7 @@ final class SubtreeTest extends QueryTypeBaseTest
                 [
                     'visible' => true,
                     'location' => $location,
+                    'content_type' => null,
                     'relative_depth' => [
                         'in' => [2, 3, 7],
                     ],

@@ -247,6 +247,10 @@ final class ParameterProcessorTest extends TestCase
                 "@=split('burek, kifla,sirnica', ',')",
                 ['burek', 'kifla', 'sirnica'],
             ],
+            [
+                "@=split('  marmelada ::pekmez : đem:', ':')",
+                ['marmelada', 'pekmez', 'đem'],
+            ],
         ];
     }
 

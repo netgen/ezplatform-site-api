@@ -245,7 +245,7 @@ final class ParameterProcessor
         $expressionLanguage->register(
             'split',
             static function (): void {},
-            static function (array $arguments, string $name, string $delimiter) {
+            static function (array $arguments, string $name, string $delimiter = ',') {
                 if (empty($name)) {
                     return null;
                 }

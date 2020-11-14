@@ -240,8 +240,12 @@ final class ParameterProcessorTest extends TestCase
                 $this->getTagMock(),
             ],
             [
-                "@=split('pterodaktilivojka, grozdana,radoslava', ',')",
+                "@=split('pterodaktilivojka, grozdana,radoslava')",
                 ['pterodaktilivojka', 'grozdana', 'radoslava'],
+            ],
+            [
+                "@=split('burek, kifla,sirnica', ',')",
+                ['burek', 'kifla', 'sirnica'],
             ],
         ];
     }

@@ -250,7 +250,7 @@ final class ParameterProcessor
                     return null;
                 }
 
-                return \array_map('\trim', \explode($delimiter, $name));
+                return \array_values(\array_filter(\array_map('\trim', \explode($delimiter, $name))));
             }
         );
     }

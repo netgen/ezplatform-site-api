@@ -11,6 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use InvalidArgumentException;
 use Netgen\EzPlatformSiteApi\API\Settings;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use function array_key_exists;
@@ -257,8 +258,18 @@ abstract class Base implements QueryType
             }
         );
 
-        $class = SortClause::class;
-        $resolver->setAllowedTypes('sort', ['string', $class, 'array']);
+        $resolver->setAllowedTypes('sort', ['string', SortClause::class, Location::class, 'array']);
+
+        $resolver->setNormalizer(
+            'sort',
+            static function (Options $options, $value) {
+                if ($value instanceof Location) {
+                    return $value->innerLocation->getSortClauses();
+                }
+
+                return $value ?? [];
+            }
+        );
     }
 
     /**

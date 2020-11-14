@@ -17,6 +17,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree as SubtreeCriterion;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Priority;
 use eZ\Publish\Core\Repository\Values\Content\Location as RepositoryLocation;
 use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Subtree;
@@ -297,6 +298,21 @@ final class SubtreeTest extends QueryTypeBaseTest
                         new SubtreeCriterion('/3/5/7/11/'),
                         new LogicalNot(new LocationId(42)),
                     ]),
+                ]),
+            ],
+            [
+                [
+                    'location' => $location,
+                    'sort' => $location,
+                ],
+                new LocationQuery([
+                    'filter' => new LogicalAnd([
+                        new SubtreeCriterion('/3/5/7/11/'),
+                        new LogicalNot(new LocationId(42)),
+                    ]),
+                    'sortClauses' => [
+                        new Priority(Query::SORT_DESC),
+                    ],
                 ]),
             ],
         ];

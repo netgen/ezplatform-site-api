@@ -253,5 +253,16 @@ final class ParameterProcessor
                 return \array_values(\array_filter(\array_map('\trim', \explode($delimiter, $name))));
             }
         );
+
+        $expressionLanguage->register(
+            'fieldValue',
+            static function (): void {},
+            static function (array $arguments, string $fieldIdentifier) {
+                /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
+                $content = $arguments['content'];
+
+                return $content->getFieldValue($fieldIdentifier);
+            }
+        );
     }
 }

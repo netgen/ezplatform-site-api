@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\EzPlatformSiteApiBundle\Tests\QueryType;
 
 use DateTime;
+use eZ\Publish\Core\FieldType\Integer\Value;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\EzPlatformSiteApiBundle\NamedObject\Provider;
 use Netgen\Bundle\EzPlatformSiteApiBundle\QueryType\ParameterProcessor;
@@ -251,6 +252,10 @@ final class ParameterProcessorTest extends TestCase
                 "@=split('  marmelada ::pekmez : đem:', ':')",
                 ['marmelada', 'pekmez', 'đem'],
             ],
+            [
+                "@=fieldValue('buhtla').value",
+                5,
+            ],
         ];
     }
 
@@ -388,8 +393,8 @@ final class ParameterProcessorTest extends TestCase
                 ['paramExists', 123],
             ]);
 
-        $locationMock = $this->getMockBuilder(Location::class)->getMock();
-        $contentMock = $this->getMockBuilder(Content::class)->getMock();
+        $locationMock = $this->getLocationMock();
+        $contentMock = $this->getContentMock();
 
         $viewMock->method('getSiteLocation')->willReturn($locationMock);
         $viewMock->method('getSiteContent')->willReturn($contentMock);
@@ -403,6 +408,8 @@ final class ParameterProcessorTest extends TestCase
 
         if ($contentMock === null) {
             $contentMock = $this->getMockBuilder(Content::class)->getMock();
+
+            $contentMock->method('getFieldValue')->willReturn(new Value(5));
         }
 
         return $contentMock;

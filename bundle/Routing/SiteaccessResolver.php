@@ -126,7 +126,6 @@ class SiteaccessResolver
             }
         }
 
-        unset($siteaccessSet[$currentSiteaccess]);
         $currentPrioritizedLanguages = $this->getPrioritizedLanguages($currentSiteaccess);
 
         foreach ($currentPrioritizedLanguages as $language) {
@@ -145,7 +144,11 @@ class SiteaccessResolver
             }
         }
 
-        return $currentSiteaccess;
+        if (isset($siteaccessSet[$currentSiteaccess])) {
+            return $currentSiteaccess;
+        }
+
+        return array_key_first($siteaccessSet);
     }
 
     private function isInExternalSubtree(Location $location): bool

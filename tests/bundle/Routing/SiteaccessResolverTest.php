@@ -103,7 +103,7 @@ class SiteaccessResolverTest extends TestCase
                     'siteaccess' => [
                         'list' => ['eng', 'ger', 'ger_mobile'],
                         'groups' => [
-                            'frontend_group' => ['eng', 'ger'],
+                            'frontend_group' => ['eng', 'ger', 'ger_mobile'],
                         ],
                     ],
                     'system' => [
@@ -131,7 +131,7 @@ class SiteaccessResolverTest extends TestCase
                     'siteaccess' => [
                         'list' => ['eng', 'ger', 'ger_mobile'],
                         'groups' => [
-                            'frontend_group' => ['eng', 'ger'],
+                            'frontend_group' => ['eng', 'ger', 'ger_mobile'],
                         ],
                     ],
                     'system' => [
@@ -545,7 +545,7 @@ class SiteaccessResolverTest extends TestCase
                         ],
                     ],
                 ],
-                'ger',
+                'eng',
             ],
             'Siteaccess matches the subtree and Content is always available' => [
                 [
@@ -850,7 +850,7 @@ class SiteaccessResolverTest extends TestCase
                         ],
                     ],
                 ],
-                'ger',
+                'ita',
             ],
             'First siteaccess matching current siteaccess prioritized languages
             (translation siteaccess is ignored)' => [
@@ -946,7 +946,7 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'por',
             ],
-            'First siteaccess matching available languages 1' => [
+            'First siteaccess in siteaccess list matching available languages 1' => [
                 [
                     'siteaccess' => [
                         'list' => ['eng', 'ger', 'jpn'],
@@ -975,7 +975,7 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'jpn',
             ],
-            'First siteaccess matching available languages 2' => [
+            'First siteaccess in siteaccess list matching available languages 2' => [
                 [
                     'siteaccess' => [
                         'list' => ['eng', 'ger', 'jpn'],
@@ -1004,7 +1004,7 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'ger',
             ],
-            'First siteaccess matching available languages 3' => [
+            'First siteaccess in siteaccess list matching available languages 3' => [
                 [
                     'siteaccess' => [
                         'list' => ['eng', 'ger', 'jpn', 'fre'],
@@ -1037,7 +1037,7 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'ger',
             ],
-            'First siteaccess matching available languages with excluded siteaccess' => [
+            'First siteaccess in siteaccess list matching available languages with excluded siteaccess' => [
                 [
                     'siteaccess' => [
                         'list' => ['eng', 'ger', 'jpn', 'fre'],
@@ -1071,7 +1071,7 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'ger',
             ],
-            'First siteaccess matching available languages with excluded siteaccess group' => [
+            'First siteaccess in siteaccess list matching available languages with excluded siteaccess group' => [
                 [
                     'siteaccess' => [
                         'list' => ['eng', 'ger', 'jpn', 'fre'],
@@ -1298,7 +1298,8 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'ita',
             ],
-            'Siteaccess is selected by the current siteaccess prioritized languages first, available languages second 1' => [
+            'Siteaccess is selected by the current siteaccess prioritized languages first, siteaccess list and
+            available languages second 1' => [
                 [
                     'siteaccess' => [
                         'list' => ['ger', 'ger_other', 'por'],
@@ -1327,7 +1328,8 @@ class SiteaccessResolverTest extends TestCase
                 ],
                 'ger_other',
             ],
-            'Siteaccess is selected by the current siteaccess prioritized languages first, available languages second 2' => [
+            'Siteaccess is selected by the current siteaccess prioritized languages first, siteaccess list and
+            available languages second 2' => [
                 [
                     'siteaccess' => [
                         'list' => ['ger', 'ger_other', 'por'],

@@ -4,11 +4,23 @@ services:
     netgen.ezplatform_site.query_type.content.relations.tag_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\TagFields
         tags:
-            - {name: ezpublish.query_type}
+            - { name: ezpublish.query_type }
         public: false
 
     netgen.ezplatform_site.query_type.content.relations.all_tag_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Content\Relations\AllTagFields
         tags:
-            - {name: ezpublish.query_type}
+            - { name: ezpublish.query_type }
+        public: false
+
+    netgen.ezplatform_site.query_type.location.relations.tag_fields:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations\TagFields
+        tags:
+            - { name: ezpublish.query_type }
+        public: false
+
+    netgen.ezplatform_site.query_type.location.relations.all_tag_fields:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations\AllTagFields
+        tags:
+            - { name: ezpublish.query_type }
         public: false

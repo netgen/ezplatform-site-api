@@ -1,0 +1,6 @@
+- **value type**: ``boolean``, ``null``
+- **value format**: ``single``
+- **operators**: ``eq``
+- **target**: none
+- **required**: ``false``
+- **default**: not defined

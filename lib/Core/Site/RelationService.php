@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Netgen\EzPlatformSiteApi\Core\Site;
 
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\IsMainLocation;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use Netgen\EzPlatformSiteApi\API\RelationService as RelationServiceInterface;
 use Netgen\EzPlatformSiteApi\API\Site as SiteInterface;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use Netgen\EzPlatformSiteApi\Core\Traits\SearchResultExtractorTrait;
 
@@ -99,6 +103,50 @@ class RelationService implements RelationServiceInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     */
+    public function loadLocationFieldRelation(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = []
+    ): ?Location {
+        $relatedLocations = $this->loadLocationFieldRelations(
+            $content,
+            $fieldDefinitionIdentifier,
+            $contentTypeIdentifiers
+        );
+
+        return $relatedLocations[0] ?? null;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     */
+    public function loadLocationFieldRelations(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        ?int $limit = null
+    ): array {
+        $field = $content->getField($fieldDefinitionIdentifier);
+        $relationResolver = $this->relationResolverRegistry->get($field->fieldTypeIdentifier);
+
+        $relatedContentIds = $relationResolver->getRelationIds($field);
+        $relatedLocations = $this->getRelatedLocations(
+            $relatedContentIds,
+            $contentTypeIdentifiers,
+            $limit
+        );
+        $this->sortLocationsByIdOrder($relatedLocations, $relatedContentIds);
+
+        return $relatedLocations;
+    }
+
+    /**
      * Return an array of related Content items, optionally limited by $limit.
      *
      * @param array $relatedContentIds
@@ -140,6 +188,48 @@ class RelationService implements RelationServiceInterface
     }
 
     /**
+     * Return an array of related Content items, optionally limited by $limit.
+     *
+     * @param array $relatedContentIds
+     * @param array $contentTypeIdentifiers
+     * @param null|int $limit
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Content[]
+     */
+    private function getRelatedLocations(array $relatedContentIds, array $contentTypeIdentifiers, ?int $limit = null): array
+    {
+        if (\count($relatedContentIds) === 0) {
+            return [];
+        }
+
+        $criteria = [
+            new ContentId($relatedContentIds),
+            new IsMainLocation(IsMainLocation::MAIN),
+            new Visibility(Visibility::VISIBLE),
+        ];
+
+        if (!empty($contentTypeIdentifiers)) {
+            $criteria[] = new ContentTypeIdentifier($contentTypeIdentifiers);
+        }
+
+        $query = new LocationQuery([
+            'filter' => new LogicalAnd($criteria),
+            'limit' => \count($relatedContentIds),
+        ]);
+
+        $searchResult = $this->site->getFilterService()->filterLocations($query);
+        $locations = $this->extractLocations($searchResult);
+
+        if ($limit !== null) {
+            return \array_slice($locations, 0, $limit);
+        }
+
+        return $locations;
+    }
+
+    /**
      * Sorts $relatedContentItems to match order from $relatedContentIds.
      *
      * @param array $relatedContentItems
@@ -154,5 +244,22 @@ class RelationService implements RelationServiceInterface
         };
 
         \usort($relatedContentItems, $sorter);
+    }
+
+    /**
+     * Sorts $relatedLocations to match order from $relatedContentIds.
+     *
+     * @param array $relatedLocations
+     * @param array $relatedContentIds
+     */
+    private function sortLocationsByIdOrder(array &$relatedLocations, array $relatedContentIds): void
+    {
+        $sortedIdList = \array_flip($relatedContentIds);
+
+        $sorter = static function (Location $location1, Location $location2) use ($sortedIdList): int {
+            return $sortedIdList[$location1->contentId] <=> $sortedIdList[$location2->contentId];
+        };
+
+        \usort($relatedLocations, $sorter);
     }
 }

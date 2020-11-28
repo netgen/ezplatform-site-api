@@ -237,7 +237,7 @@ Methods
     :local:
 
 ``loadFieldRelation()``
-......................
+.......................
 
 Get single field relation from a specific field of a given Content.
 
@@ -263,7 +263,7 @@ supports optional filtering by ContentType.
 +----------------------------------------+------------------------------------------------------------------------------------+
 
 ``loadFieldRelations()``
-.......................
+........................
 
 Get all field relations from a specific field of a given Content. The method supports optional
 filtering by ContentType.

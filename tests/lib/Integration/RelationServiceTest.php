@@ -6,6 +6,7 @@ namespace Netgen\EzPlatformSiteApi\Tests\Integration;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use Netgen\EzPlatformSiteApi\API\Values\Content;
+use Netgen\EzPlatformSiteApi\API\Values\Location;
 
 /**
  * Test case for the RelationService.
@@ -301,6 +302,112 @@ final class RelationServiceTest extends BaseTest
         $contentItems = $relationService->loadFieldRelations($testSiteContent, 'nonexistent');
 
         $this->assertCount(0, $contentItems);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testLoadLocationFieldRelation(): void
+    {
+        [$identifier, $testApiContent, $testRelationId] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $location = $relationService->loadLocationFieldRelation($testSiteContent, $identifier);
+
+        self::assertInstanceOf(Location::class, $location);
+        self::assertEquals($testRelationId, $location->content->id);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testLoadLocationFieldRelations(): void
+    {
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $locations = $relationService->loadLocationFieldRelations($testSiteContent, $identifier);
+
+        self::assertSameSize($testRelationIds, $locations);
+
+        foreach ($testRelationIds as $index => $relationId) {
+            $location = $locations[$index];
+            self::assertInstanceOf(Location::class, $location);
+            self::assertEquals($relationId, $location->content->id);
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testLoadLocationFieldRelationsWithTypeFilter(): void
+    {
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $locations = $relationService->loadLocationFieldRelations($testSiteContent, $identifier, ['landing_page']);
+
+        self::assertCount(1, $locations);
+
+        self::assertInstanceOf(Location::class, $locations[0]);
+        self::assertEquals($testRelationIds[0], $locations[0]->content->id);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testLoadLocationFieldRelationsWithLimit(): void
+    {
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $locations = $relationService->loadLocationFieldRelations($testSiteContent, $identifier, [], 1);
+
+        self::assertCount(1, $locations);
+
+        self::assertInstanceOf(Location::class, $locations[0]);
+        self::assertEquals($testRelationIds[0], $locations[0]->content->id);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testLoadLocationFieldRelationsWithTypeFilterAndLimit(): void
+    {
+        [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $locations = $relationService->loadLocationFieldRelations($testSiteContent, $identifier, ['feedback_form'], 1);
+
+        self::assertCount(1, $locations);
+
+        self::assertInstanceOf(Location::class, $locations[0]);
+        self::assertEquals($testRelationIds[1], $locations[0]->content->id);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testLoadLocationFieldRelationsForNonexistentField(): void
+    {
+        [, , , $testApiContent] = $this->prepareTestContent();
+
+        $relationService = $this->getSite()->getRelationService();
+        $loadService = $this->getSite()->getLoadService();
+        $testSiteContent = $loadService->loadContent($testApiContent->id);
+        $locations = $relationService->loadLocationFieldRelations($testSiteContent, 'nonexistent');
+
+        self::assertCount(0, $locations);
     }
 
     /**

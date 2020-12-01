@@ -134,7 +134,7 @@ abstract class Content extends ValueObject
      *
      * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    abstract public function getLocationFieldRelation(string $fieldDefinitionIdentifier): ?Location;
+    abstract public function getFieldRelationLocation(string $fieldDefinitionIdentifier): ?Location;
 
     /**
      * Return all related Locations from $fieldDefinitionIdentifier.
@@ -144,7 +144,7 @@ abstract class Content extends ValueObject
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
-    abstract public function getLocationFieldRelations(string $fieldDefinitionIdentifier, int $limit = 25): array;
+    abstract public function getFieldRelationLocations(string $fieldDefinitionIdentifier, int $limit = 25): array;
 
     /**
      * Return related Locations from $fieldDefinitionIdentifier field,
@@ -157,7 +157,7 @@ abstract class Content extends ValueObject
      *
      * @return \Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
      */
-    abstract public function filterLocationFieldRelations(
+    abstract public function filterFieldRelationLocations(
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,

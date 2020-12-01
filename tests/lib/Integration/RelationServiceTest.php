@@ -171,14 +171,14 @@ final class RelationServiceTest extends BaseTest
     /**
      * @throws \Exception
      */
-    public function testLoadLocationFieldRelation(): void
+    public function testLoadFieldRelationLocation(): void
     {
         [$identifier, $testApiContent, $testRelationId] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $location = $relationService->loadLocationFieldRelation($testSiteContent, $identifier);
+        $location = $relationService->loadFieldRelationLocation($testSiteContent, $identifier);
 
         self::assertInstanceOf(Location::class, $location);
         self::assertEquals($testRelationId, $location->content->id);
@@ -187,14 +187,14 @@ final class RelationServiceTest extends BaseTest
     /**
      * @throws \Exception
      */
-    public function testLoadLocationFieldRelations(): void
+    public function testLoadFieldRelationLocations(): void
     {
         [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $locations = $relationService->loadLocationFieldRelations($testSiteContent, $identifier);
+        $locations = $relationService->loadFieldRelationLocations($testSiteContent, $identifier);
 
         self::assertSameSize($testRelationIds, $locations);
 
@@ -208,14 +208,14 @@ final class RelationServiceTest extends BaseTest
     /**
      * @throws \Exception
      */
-    public function testLoadLocationFieldRelationsWithTypeFilter(): void
+    public function testLoadFieldRelationLocationsWithTypeFilter(): void
     {
         [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $locations = $relationService->loadLocationFieldRelations($testSiteContent, $identifier, ['landing_page']);
+        $locations = $relationService->loadFieldRelationLocations($testSiteContent, $identifier, ['landing_page']);
 
         self::assertCount(1, $locations);
 
@@ -226,14 +226,14 @@ final class RelationServiceTest extends BaseTest
     /**
      * @throws \Exception
      */
-    public function testLoadLocationFieldRelationsWithLimit(): void
+    public function testLoadFieldRelationLocationsWithLimit(): void
     {
         [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $locations = $relationService->loadLocationFieldRelations($testSiteContent, $identifier, [], 1);
+        $locations = $relationService->loadFieldRelationLocations($testSiteContent, $identifier, [], 1);
 
         self::assertCount(1, $locations);
 
@@ -244,14 +244,14 @@ final class RelationServiceTest extends BaseTest
     /**
      * @throws \Exception
      */
-    public function testLoadLocationFieldRelationsWithTypeFilterAndLimit(): void
+    public function testLoadFieldRelationLocationsWithTypeFilterAndLimit(): void
     {
         [$identifier, , , $testApiContent, $testRelationIds] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $locations = $relationService->loadLocationFieldRelations($testSiteContent, $identifier, ['feedback_form'], 1);
+        $locations = $relationService->loadFieldRelationLocations($testSiteContent, $identifier, ['feedback_form'], 1);
 
         self::assertCount(1, $locations);
 
@@ -262,14 +262,14 @@ final class RelationServiceTest extends BaseTest
     /**
      * @throws \Exception
      */
-    public function testLoadLocationFieldRelationsForNonexistentField(): void
+    public function testLoadFieldRelationLocationsForNonexistentField(): void
     {
         [, , , $testApiContent] = $this->prepareTestContent();
 
         $relationService = $this->getSite()->getRelationService();
         $loadService = $this->getSite()->getLoadService();
         $testSiteContent = $loadService->loadContent($testApiContent->id);
-        $locations = $relationService->loadLocationFieldRelations($testSiteContent, 'nonexistent');
+        $locations = $relationService->loadFieldRelationLocations($testSiteContent, 'nonexistent');
 
         self::assertCount(0, $locations);
     }

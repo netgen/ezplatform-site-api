@@ -107,12 +107,12 @@ class RelationService implements RelationServiceInterface
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
-    public function loadLocationFieldRelation(
+    public function loadFieldRelationLocation(
         Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
     ): ?Location {
-        $relatedLocations = $this->loadLocationFieldRelations(
+        $relatedLocations = $this->loadFieldRelationLocations(
             $content,
             $fieldDefinitionIdentifier,
             $contentTypeIdentifiers
@@ -126,7 +126,7 @@ class RelationService implements RelationServiceInterface
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
-    public function loadLocationFieldRelations(
+    public function loadFieldRelationLocations(
         Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],

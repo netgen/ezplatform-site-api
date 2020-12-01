@@ -64,7 +64,7 @@ interface RelationService
      *
      * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
      */
-    public function loadLocationFieldRelation(
+    public function loadFieldRelationLocation(
         Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = []
@@ -83,7 +83,7 @@ interface RelationService
      *
      * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
      */
-    public function loadLocationFieldRelations(
+    public function loadFieldRelationLocations(
         Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],

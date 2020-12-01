@@ -356,17 +356,17 @@ final class Content extends APIContent
         return $pager;
     }
 
-    public function getLocationFieldRelation(string $fieldDefinitionIdentifier): ?APILocation
+    public function getFieldRelationLocation(string $fieldDefinitionIdentifier): ?APILocation
     {
-        return $this->site->getRelationService()->loadLocationFieldRelation(
+        return $this->site->getRelationService()->loadFieldRelationLocation(
             $this,
             $fieldDefinitionIdentifier
         );
     }
 
-    public function getLocationFieldRelations(string $fieldDefinitionIdentifier, int $limit = 25): array
+    public function getFieldRelationLocations(string $fieldDefinitionIdentifier, int $limit = 25): array
     {
-        return $this->site->getRelationService()->loadLocationFieldRelations(
+        return $this->site->getRelationService()->loadFieldRelationLocations(
             $this,
             $fieldDefinitionIdentifier,
             [],
@@ -374,13 +374,13 @@ final class Content extends APIContent
         );
     }
 
-    public function filterLocationFieldRelations(
+    public function filterFieldRelationLocations(
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
         int $currentPage = 1
     ): Pagerfanta {
-        $relations = $this->site->getRelationService()->loadLocationFieldRelations(
+        $relations = $this->site->getRelationService()->loadFieldRelationLocations(
             $this,
             $fieldDefinitionIdentifier,
             $contentTypeIdentifiers

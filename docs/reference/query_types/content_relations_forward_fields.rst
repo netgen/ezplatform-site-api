@@ -1,7 +1,8 @@
 Forward field Content relations Query Type
 ================================================================================
 
-This Query Type is used to build fetch Content that is related to from relation type fields of the given Content.
+This Query Type is used to build queries that fetch Content that is related to from relation type
+fields of the given Content.
 
 +-------------+----------------------------------------------------------------------------------------------+
 | Identifier  | ``SiteAPI:Content/Relations/ForwardFields``                                                  |

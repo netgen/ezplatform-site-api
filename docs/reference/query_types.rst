@@ -26,6 +26,11 @@ Content relations
 
 .. include:: /reference/query_types/content_relations_query_types.rst.inc
 
+Location relations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. include:: /reference/query_types/location_relations_query_types.rst.inc
+
 Location hierarchy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

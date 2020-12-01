@@ -106,7 +106,7 @@ final class Content extends APIContent
     private $repository;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location
+     * @var APILocation
      */
     private $internalMainLocation;
 
@@ -342,6 +342,45 @@ final class Content extends APIContent
         int $currentPage = 1
     ): Pagerfanta {
         $relations = $this->site->getRelationService()->loadFieldRelations(
+            $this,
+            $fieldDefinitionIdentifier,
+            $contentTypeIdentifiers
+        );
+
+        $pager = new Pagerfanta(new ArrayAdapter($relations));
+
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
+
+        return $pager;
+    }
+
+    public function getFieldRelationLocation(string $fieldDefinitionIdentifier): ?APILocation
+    {
+        return $this->site->getRelationService()->loadFieldRelationLocation(
+            $this,
+            $fieldDefinitionIdentifier
+        );
+    }
+
+    public function getFieldRelationLocations(string $fieldDefinitionIdentifier, int $limit = 25): array
+    {
+        return $this->site->getRelationService()->loadFieldRelationLocations(
+            $this,
+            $fieldDefinitionIdentifier,
+            [],
+            $limit
+        );
+    }
+
+    public function filterFieldRelationLocations(
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        int $maxPerPage = 25,
+        int $currentPage = 1
+    ): Pagerfanta {
+        $relations = $this->site->getRelationService()->loadFieldRelationLocations(
             $this,
             $fieldDefinitionIdentifier,
             $contentTypeIdentifiers

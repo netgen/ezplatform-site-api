@@ -1,6 +1,6 @@
 Here you can use any SortClause implementation. However, if you define the query in the view
 configuration, you won't be able to instantiate the SortClause there. For that reason we provide a
-way to define the sort clause as a string instead. We this format a subset of commonly used
+way to define the sort clause as a string instead. With this format a subset of commonly used
 SortClauses is supported. Sort direction is defined as ``asc`` for ascending and ``desc`` for
 descending. In can be omitted, in which case it will default to ``asc``.
 

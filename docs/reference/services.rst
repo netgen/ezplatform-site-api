@@ -239,7 +239,7 @@ Methods
 ``loadFieldRelation()``
 .......................
 
-Get single field relation from a specific field of a given Content.
+Get single field relation :ref:`Content<content_object>` from a specific field of a given Content.
 
 The method will return ``null`` if the field does not contain relations that can be loaded by the
 current user. If the field contains multiple relations, the first one will be returned. The method
@@ -250,7 +250,7 @@ supports optional filtering by ContentType.
 |                                        | 2. ``string $fieldDefinitionIdentifier``                                           |
 |                                        | 3. ``array $contentTypeIdentifiers = []``                                          |
 +----------------------------------------+------------------------------------------------------------------------------------+
-| **Returns**                            | :ref:`Content object<content_object>` or ``null``                                  |
+| **Returns**                            | :ref:`Content<content_object>` or ``null``                                         |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example**                            | .. code-block:: php                                                                |
 |                                        |                                                                                    |
@@ -265,7 +265,7 @@ supports optional filtering by ContentType.
 ``loadFieldRelations()``
 ........................
 
-Get all field relations from a specific field of a given Content. The method supports optional
+Get all field relation :ref:`Content items<content_object>` from a specific field of a given Content. The method supports optional
 filtering by ContentType.
 
 +----------------------------------------+------------------------------------------------------------------------------------+
@@ -273,11 +273,60 @@ filtering by ContentType.
 |                                        | 2. ``string $fieldDefinitionIdentifier``                                           |
 |                                        | 3. ``array $contentTypeIdentifiers = []``                                          |
 +----------------------------------------+------------------------------------------------------------------------------------+
-| **Returns**                            | An array of :ref:`Content objects<content_object>`                                 |
+| **Returns**                            | An array of :ref:`Content items<content_object>`                                   |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example**                            | .. code-block:: php                                                                |
 |                                        |                                                                                    |
 |                                        |     $contentItems = $relationService->getFieldRelations(                           |
+|                                        |         $content,                                                                  |
+|                                        |         'relations',                                                               |
+|                                        |         ['articles']                                                               |
+|                                        |     );                                                                             |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+
+``loadFieldRelationLocation()``
+...............................
+
+Get single field relation :ref:`Location<location_object>` from a specific field of a given Content.
+
+The method will return ``null`` if the field does not contain relations that can be loaded by the
+current user. If the field contains multiple relations, the first one will be returned. The method
+supports optional filtering by ContentType.
+
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Parameters**                         | 1. ``Netgen\EzPlatformSiteApi\API\Values\Content $content``                        |
+|                                        | 2. ``string $fieldDefinitionIdentifier``                                           |
+|                                        | 3. ``array $contentTypeIdentifiers = []``                                          |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Returns**                            | :ref:`Location<location_object>` or ``null``                                       |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example**                            | .. code-block:: php                                                                |
+|                                        |                                                                                    |
+|                                        |     $content = $relationService->getFieldRelationLocation(                         |
+|                                        |         $content,                                                                  |
+|                                        |         'relations',                                                               |
+|                                        |         ['articles']                                                               |
+|                                        |     );                                                                             |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+
+``loadFieldRelationLocations()``
+................................
+
+Get all field relation :ref:`Locations<location_object>` from a specific field of a given Content. The method supports optional
+filtering by ContentType.
+
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Parameters**                         | 1. ``Netgen\EzPlatformSiteApi\API\Values\Content $content``                        |
+|                                        | 2. ``string $fieldDefinitionIdentifier``                                           |
+|                                        | 3. ``array $contentTypeIdentifiers = []``                                          |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Returns**                            | An array of :ref:`Locations<location_object>`                                      |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example**                            | .. code-block:: php                                                                |
+|                                        |                                                                                    |
+|                                        |     $contentItems = $relationService->getFieldRelationLocations(                   |
 |                                        |         $content,                                                                  |
 |                                        |         'relations',                                                               |
 |                                        |         ['articles']                                                               |

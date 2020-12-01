@@ -275,7 +275,7 @@ __ Location_
 ``getFieldRelation``
 ....................
 
-Used to get a single field relation from the `Field`_ with the given ``$identifier``.
+Used to get a single field relation Content from the `Field`_ with the given ``$identifier``.
 
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Parameters**                         | ``string $identifier``                                                             |
@@ -296,7 +296,7 @@ Used to get a single field relation from the `Field`_ with the given ``$identifi
 ``getFieldRelations``
 .....................
 
-Used to get ``$limit`` field relations from the `Field`_ with the given ``$identifier``. Relations
+Used to get ``$limit`` field relation Content items from the `Field`_ with the given ``$identifier``. Relations
 will be sorted as is defined by the relation field.
 
 +----------------------------------------+------------------------------------------------------------------------------------+
@@ -321,7 +321,7 @@ will be sorted as is defined by the relation field.
 ``filterFieldRelations``
 ........................
 
-Used to filter field relations from the `Field`_ with the given ``$identifier``.
+Used to filter field relation Content items from the `Field`_ with the given ``$identifier``.
 
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Parameters**                         | 1. ``string $identifier``                                                          |
@@ -329,7 +329,7 @@ Used to filter field relations from the `Field`_ with the given ``$identifier``.
 |                                        | 3. ``int $maxPerPage = 25``                                                        |
 |                                        | 4. ``int $currentPage = 1``                                                        |
 +----------------------------------------+------------------------------------------------------------------------------------+
-| **Returns**                            | Pagerfanta instance with related Content items                                     |
+| **Returns**                            | Pagerfanta instance with related `Content`_ items                                  |
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in PHP**                     | .. code-block:: php                                                                |
 |                                        |                                                                                    |
@@ -343,7 +343,87 @@ Used to filter field relations from the `Field`_ with the given ``$identifier``.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example in Twig**                    | .. code-block:: twig                                                               |
 |                                        |                                                                                    |
-|                                        |     {% set relations = content.fieldRelation(                                      |
+|                                        |     {% set relations = content.filterFieldRelations(                               |
+|                                        |         'related_items'                                                            |
+|                                        |         ['images', 'videos']                                                       |
+|                                        |         10,                                                                        |
+|                                        |         2                                                                          |
+|                                        |     ) %}                                                                           |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+
+``getFieldRelationLocation``
+............................
+
+Used to get a single field relation Location from the `Field`_ with the given ``$identifier``.
+
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Parameters**                         | ``string $identifier``                                                             |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Returns**                            | Related `Location`_ or ``null`` if the relation does not exist                     |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example in PHP**                     | .. code-block:: php                                                                |
+|                                        |                                                                                    |
+|                                        |     $relation = $content->getFieldRelationLocation('author');                      |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example in Twig**                    | .. code-block:: twig                                                               |
+|                                        |                                                                                    |
+|                                        |     {% set relation = content.fieldRelationLocation('author') %}                   |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+
+``getFieldRelationLocations``
+.............................
+
+Used to get ``$limit`` field relation Locations from the `Field`_ with the given ``$identifier``. Relations
+will be sorted as is defined by the relation field.
+
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Parameters**                         | 1. ``string $identifier``                                                          |
+|                                        | 2. ``int $limit = 25``                                                             |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Returns**                            | An array of related `Location`_ items                                              |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Sorting method**                     | Sorted as is defined by the relation `Field`_                                      |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example in PHP**                     | .. code-block:: php                                                                |
+|                                        |                                                                                    |
+|                                        |     $relations = $content->getFieldRelationLocations('images', 10);                |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example in Twig**                    | .. code-block:: twig                                                               |
+|                                        |                                                                                    |
+|                                        |     {% set relations = content.fieldRelationLocations('images') %}                 |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+
+``filterFieldRelationLocations``
+................................
+
+Used to filter field relation Locations from the `Field`_ with the given ``$identifier``.
+
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Parameters**                         | 1. ``string $identifier``                                                          |
+|                                        | 2. ``array $contentTypeIdentifiers = []``                                          |
+|                                        | 3. ``int $maxPerPage = 25``                                                        |
+|                                        | 4. ``int $currentPage = 1``                                                        |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Returns**                            | Pagerfanta instance with related `Location`_ items                                 |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example in PHP**                     | .. code-block:: php                                                                |
+|                                        |                                                                                    |
+|                                        |     $relations = $content->filterFieldRelationLocations(                           |
+|                                        |         'related_items',                                                           |
+|                                        |         ['images', 'videos'],                                                      |
+|                                        |         10,                                                                        |
+|                                        |         2                                                                          |
+|                                        |     );                                                                             |
+|                                        |                                                                                    |
++----------------------------------------+------------------------------------------------------------------------------------+
+| **Example in Twig**                    | .. code-block:: twig                                                               |
+|                                        |                                                                                    |
+|                                        |     {% set relations = content.filterFieldRelationLocations(                       |
 |                                        |         'related_items'                                                            |
 |                                        |         ['images', 'videos']                                                       |
 |                                        |         10,                                                                        |

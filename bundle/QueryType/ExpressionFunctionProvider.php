@@ -186,6 +186,27 @@ final class ExpressionFunctionProvider implements ExpressionFunctionProviderInte
                     return \array_map('\trim', \explode($delimiter, $name));
                 }
             ),
+            new ExpressionFunction(
+                'split',
+                static function (): void {},
+                static function (array $arguments, string $name, string $delimiter = ',') {
+                    if (empty($name)) {
+                        return null;
+                    }
+
+                    return \array_values(\array_filter(\array_map('\trim', \explode($delimiter, $name))));
+                }
+            ),
+            new ExpressionFunction(
+                'fieldValue',
+                static function (): void {},
+                static function (array $arguments, string $fieldIdentifier) {
+                    /** @var \Netgen\EzPlatformSiteApi\API\Values\Content $content */
+                    $content = $arguments['content'];
+
+                    return $content->getFieldValue($fieldIdentifier);
+                }
+            ),
         ];
     }
 }

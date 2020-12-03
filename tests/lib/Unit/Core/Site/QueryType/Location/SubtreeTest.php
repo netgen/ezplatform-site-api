@@ -301,12 +301,14 @@ final class SubtreeTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'location' => $location,
                     'sort' => $location,
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new SubtreeCriterion('/3/5/7/11/'),
                         new LogicalNot(new LocationId(42)),
                     ]),

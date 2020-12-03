@@ -10,7 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use InvalidArgumentException;
-use Netgen\EzPlatformSiteApi\API\Values\Location;
+use Netgen\EzPlatformSiteApi\API\Values\Location as APILocation;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -256,12 +256,12 @@ abstract class Base implements QueryType
             }
         );
 
-        $resolver->setAllowedTypes('sort', ['string', SortClause::class, Location::class, 'array']);
+        $resolver->setAllowedTypes('sort', ['string', SortClause::class, APILocation::class, 'array']);
 
         $resolver->setNormalizer(
             'sort',
             static function (Options $options, $value) {
-                if ($value instanceof Location) {
+                if ($value instanceof APILocation) {
                     return $value->innerLocation->getSortClauses();
                 }
 

@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\IsMainLocation;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\Plugins\FieldType\RelationResolver\Registry as RelationResolverRegistry;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
+use Netgen\EzPlatformSiteApi\API\Settings;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -25,8 +24,10 @@ final class ForwardFields extends Location
      */
     private $relationResolverRegistry;
 
-    public function __construct(RelationResolverRegistry $relationResolverRegistry)
+    public function __construct(Settings $settings, RelationResolverRegistry $relationResolverRegistry)
     {
+        parent::__construct($settings);
+
         $this->relationResolverRegistry = $relationResolverRegistry;
     }
 

@@ -16,12 +16,14 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalNot;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations\AllTagFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -50,6 +52,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
 
         return [
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'limit' => 12,
@@ -58,8 +61,8 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new TagId([1, 2, 3, 4]),
                         new LogicalNot(new ContentId(42)),
                     ]),
@@ -71,6 +74,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $contentWithoutTags,
                     'content_type' => 'article',
@@ -78,8 +82,8 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new MatchNone(),
                     ]),
@@ -89,6 +93,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'exclude_self' => true,
@@ -100,8 +105,8 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new TagId([1, 2, 3, 4]),
                         new LogicalNot(new ContentId(42)),
@@ -112,6 +117,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'exclude_self' => false,
@@ -126,8 +132,8 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new TagId([1, 2, 3, 4]),
@@ -139,6 +145,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'content_type' => 'article',
@@ -151,8 +158,8 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new TagId([1, 2, 3, 4]),
@@ -164,6 +171,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'content_type' => 'article',
@@ -180,8 +188,8 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
@@ -195,6 +203,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $contentWithTags,
                     'creation_date' => '4 May 2018',
@@ -205,8 +214,8 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new DateMetadata(
                             DateMetadata::CREATED,
                             Operator::EQ,
@@ -297,9 +306,17 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
         return 'SiteAPI:Location/Relations/AllTagFields';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
-        return new AllTagFields();
+        return new AllTagFields(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            )
+        );
     }
 
     protected function internalGetRepoFields(): array
@@ -350,9 +367,9 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
         ];
     }
 
-    protected function internalGetRepoFieldDefinitions(): array
+    protected function internalGetRepoFieldDefinitions(): FieldDefinitionCollection
     {
-        return [
+        return new FieldDefinitionCollection([
             new FieldDefinition([
                 'id' => 1,
                 'identifier' => 'tags_a',
@@ -368,7 +385,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
                 'identifier' => 'third',
                 'fieldTypeIdentifier' => 'ezstring',
             ]),
-        ];
+        ]);
     }
 
     protected function getTestContentWithTags(): Content
@@ -414,6 +431,7 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
             'modification_date',
             'section',
             'state',
+            'visible',
             'sort',
             'limit',
             'offset',
@@ -422,7 +440,6 @@ final class AllTagFieldsTest extends QueryTypeBaseTest
             'parent_location_id',
             'priority',
             'subtree',
-            'visible',
             'content',
             'exclude_self',
         ];

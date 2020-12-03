@@ -14,11 +14,13 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\IsMainLoca
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinitionCollection;
+use Netgen\EzPlatformSearchExtra\API\Values\Content\Query\Criterion\Visible;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations\ReverseFields;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\QueryType;
+use Netgen\EzPlatformSiteApi\Core\Site\Settings;
 use Netgen\EzPlatformSiteApi\Core\Site\Values\Content;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\ContentFieldsMockTrait;
 use Netgen\EzPlatformSiteApi\Tests\Unit\Core\Site\QueryType\QueryTypeBaseTest;
@@ -43,6 +45,7 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
 
         return [
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['relations_a', 'relations_b'],
@@ -52,8 +55,8 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new FieldRelation('relations_a', Operator::CONTAINS, [42]),
                         new FieldRelation('relations_b', Operator::CONTAINS, [42]),
                     ]),
@@ -65,6 +68,7 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['relations_a'],
@@ -76,8 +80,8 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new FieldRelation('relations_a', Operator::CONTAINS, [42]),
                     ]),
@@ -87,6 +91,7 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['relations_b'],
@@ -101,8 +106,8 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new FieldRelation('relations_b', Operator::CONTAINS, [42]),
@@ -114,6 +119,7 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => [],
@@ -127,8 +133,8 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new MatchNone(),
@@ -139,6 +145,7 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['relations_a', 'relations_b'],
@@ -156,8 +163,8 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new ContentTypeIdentifier('article'),
                         new Field('title', Operator::EQ, 'Hello'),
                         new Field('title', Operator::GTE, 7),
@@ -171,6 +178,7 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ]),
             ],
             [
+                false,
                 [
                     'content' => $content,
                     'relation_field' => ['relations_a', 'relations_b'],
@@ -182,8 +190,8 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
                 ],
                 new LocationQuery([
                     'filter' => new LogicalAnd([
+                        new Visible(true),
                         new IsMainLocation(IsMainLocation::MAIN),
-                        new Visibility(Visibility::VISIBLE),
                         new DateMetadata(
                             DateMetadata::CREATED,
                             Operator::EQ,
@@ -287,9 +295,17 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
         return 'SiteAPI:Location/Relations/ReverseFields';
     }
 
-    protected function getQueryTypeUnderTest(): QueryType
+    protected function getQueryTypeUnderTest(bool $showHiddenItems = false): QueryType
     {
-        return new ReverseFields();
+        return new ReverseFields(
+            new Settings(
+                ['eng-GB'],
+                true,
+                2,
+                $showHiddenItems,
+                true
+            )
+        );
     }
 
     protected function internalGetRepoFields(): array
@@ -297,9 +313,9 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
         return [];
     }
 
-    protected function internalGetRepoFieldDefinitions(): array
+    protected function internalGetRepoFieldDefinitions(): FieldDefinitionCollection
     {
-        return [];
+        return new FieldDefinitionCollection();
     }
 
     protected function getTestContent(): Content
@@ -328,6 +344,7 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
             'modification_date',
             'section',
             'state',
+            'visible',
             'sort',
             'limit',
             'offset',
@@ -336,7 +353,6 @@ final class ReverseFieldsTest extends QueryTypeBaseTest
             'parent_location_id',
             'priority',
             'subtree',
-            'visible',
             'content',
             'relation_field',
         ];

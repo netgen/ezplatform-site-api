@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\FieldRelation;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Location\IsMainLocation;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchNone;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Visibility;
 use Netgen\EzPlatformSiteApi\API\Values\Content as SiteContent;
 use Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location;
 use Symfony\Component\OptionsResolver\OptionsResolver;

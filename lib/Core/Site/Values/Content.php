@@ -106,7 +106,7 @@ final class Content extends APIContent
     private $repository;
 
     /**
-     * @var \Netgen\EzPlatformSiteApi\API\Values\Location
+     * @var APILocation
      */
     private $internalMainLocation;
 
@@ -360,11 +360,45 @@ final class Content extends APIContent
         return $pager;
     }
 
-    /**
-     * @throws \Netgen\EzPlatformSiteApi\API\Exceptions\TranslationNotMatchedException
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     */
+    public function getLocationFieldRelation(string $fieldDefinitionIdentifier): ?APILocation
+    {
+        return $this->site->getRelationService()->loadLocationFieldRelation(
+            $this,
+            $fieldDefinitionIdentifier
+        );
+    }
+
+    public function getLocationFieldRelations(string $fieldDefinitionIdentifier, int $limit = 25): array
+    {
+        return $this->site->getRelationService()->loadLocationFieldRelations(
+            $this,
+            $fieldDefinitionIdentifier,
+            [],
+            $limit
+        );
+    }
+
+    public function filterLocationFieldRelations(
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        int $maxPerPage = 25,
+        int $currentPage = 1
+    ): Pagerfanta {
+        $relations = $this->site->getRelationService()->loadLocationFieldRelations(
+            $this,
+            $fieldDefinitionIdentifier,
+            $contentTypeIdentifiers
+        );
+
+        $pager = new Pagerfanta(new ArrayAdapter($relations));
+
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
+
+        return $pager;
+    }
+
     private function getMainLocation(): ?APILocation
     {
         if ($this->internalMainLocation === null && $this->mainLocationId !== null) {

@@ -1,8 +1,21 @@
-Here you can use any SortClause implementation. However, if you define the query in the view
-configuration, you won't be able to instantiate the SortClause there. For that reason we provide a
-way to define the sort clause as a string instead. With this format a subset of commonly used
-SortClauses is supported. Sort direction is defined as ``asc`` for ascending and ``desc`` for
-descending. In can be omitted, in which case it will default to ``asc``.
+Here you can use any SortClause implementation or a :ref:`Site API Location object<location_object>`.
+Using a Location object is the same a using sort clauses that are defined on it:
+
+.. code-block:: yaml
+
+    sort: "@=location"
+
+The example above is a shortcut to the example below:
+
+.. code-block:: yaml
+
+    sort: "@=location.innerLocation.getSortClauses()"
+
+If you define your query in the view configuration, you won't be able to directly instantiate a
+SortClause there. For that reason we provide a way to define the sort clause as a string instead.
+With this format a subset of commonly used SortClauses is supported. Sort direction is defined as
+``asc`` for ascending and ``desc`` for  descending. In can be omitted, in which case it will default
+to ``asc``.
 
 Strings can be used to define multiple sort clauses through an array of definitions:
 

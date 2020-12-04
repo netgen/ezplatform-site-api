@@ -1,4 +1,4 @@
-- **value type**: ``string``, ``SortClause``
+- **value type**: ``string``, ``SortClause``, ``Location``
 - **value format**: ``single``, ``array``
 - **required**: ``false``
 - **default**: not defined

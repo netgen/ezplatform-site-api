@@ -9,13 +9,13 @@ matrix:
     fast_finish: true
     include:
         - php: 7.3
-          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+          env: CONFIG="phpunit.xml" COVERGAGE="unit" XDEBUG_MODE="coverage"
         - php: 7.3
-          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration" XDEBUG_MODE="coverage"
         - php: 7.4
-          env: CONFIG="phpunit.xml" COVERGAGE="unit"
+          env: CONFIG="phpunit.xml" COVERGAGE="unit" XDEBUG_MODE="coverage"
         - php: 7.4
-          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration"
+          env: CONFIG="phpunit-integration-legacy.xml" COVERGAGE="integration" XDEBUG_MODE="coverage"
 
 # test only master (+ pull requests)
 branches:

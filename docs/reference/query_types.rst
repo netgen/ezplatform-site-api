@@ -285,6 +285,25 @@ example we use it to find only children of the same ContentType as the parent:
                     content_type: '@=location.contentInfo.contentTypeIdentifier'
                     sort: 'published desc'
 
+Content Fields
+~~~~~~~~~~~~~~
+
+Function ``fieldValue(identifier)`` provides access to the field value object of the
+:ref:`Site API Content object<content_object>`. It's a shortcut function which is identical to
+``content.fields.identifier.value``:
+
+.. code-block:: yaml
+
+    ...
+        queries:
+            children:
+                query_type: 'SiteAPI:Location/Children'
+                max_per_page: 10
+                page: 1
+                parameters:
+                    content_type: '@=fieldValue("content_type").text'
+                    sort: 'published desc'
+
 Configuration
 ~~~~~~~~~~~~~
 
@@ -413,10 +432,11 @@ Miscellaneous
         Function ``timestamp()`` maps directly to the PHP's function `strtotime <https://secure.php.net/manual/en/function.strtotime.php>`_.
         That means it accepts any date and time format `supported by that function <https://secure.php.net/manual/en/datetime.formats.php>`_.
 
-- ``split(value)``
+- ``split(value, delimiter = ",")``
 
-    This function is used to split a string by a given delimiter. For example, you could use it to
-    split a string of comma-delimited ContentType identifiers:
+    This function is used to split a string by a given delimiter, which defaults to the comma if
+    omitted. For example, you could use it to split a string of comma-delimited ContentType
+    identifiers:
 
     .. code-block:: yaml
 
@@ -427,9 +447,10 @@ Miscellaneous
                     max_per_page: 10
                     page: 1
                     parameters:
-                        content_type: '@=split(content.getFieldValue("types").text, ",")'
+                        content_type: '@=split(fieldValue("types").text)'
 
-    Note that each returned string will also be trimmed of leading and trailing whitespace.
+    Note that each returned string will also be trimmed of leading and trailing whitespace, and any
+    empty values will be filtered out.
 
 Extending expressions
 ~~~~~~~~~~~~~~~~~~~~~

@@ -113,7 +113,7 @@ abstract class Content extends ValueObject
     abstract public function getFieldRelations(string $fieldDefinitionIdentifier, int $limit = 25): array;
 
     /**
-     * Return related Content from $fieldDefinitionIdentifier field in Content with given $contentId,
+     * Return related Content from $fieldDefinitionIdentifier field,
      * optionally limited by a list of $contentTypeIdentifiers.
      *
      * @param string[] $contentTypeIdentifiers
@@ -121,6 +121,43 @@ abstract class Content extends ValueObject
      * @return \Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Content items
      */
     abstract public function filterFieldRelations(
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        int $maxPerPage = 25,
+        int $currentPage = 1
+    ): Pagerfanta;
+
+    /**
+     * Return single related Location from $fieldDefinitionIdentifier field.
+     *
+     * @param string $fieldDefinitionIdentifier
+     *
+     * @return null|\Netgen\EzPlatformSiteApi\API\Values\Location
+     */
+    abstract public function getLocationFieldRelation(string $fieldDefinitionIdentifier): ?Location;
+
+    /**
+     * Return all related Locations from $fieldDefinitionIdentifier.
+     *
+     * @param string $fieldDefinitionIdentifier
+     * @param int $limit
+     *
+     * @return \Netgen\EzPlatformSiteApi\API\Values\Location[]
+     */
+    abstract public function getLocationFieldRelations(string $fieldDefinitionIdentifier, int $limit = 25): array;
+
+    /**
+     * Return related Locations from $fieldDefinitionIdentifier field,
+     * optionally limited by a list of $contentTypeIdentifiers.
+     *
+     * @param string $fieldDefinitionIdentifier
+     * @param string[] $contentTypeIdentifiers
+     * @param int $maxPerPage
+     * @param int $currentPage
+     *
+     * @return \Pagerfanta\Pagerfanta Pagerfanta instance iterating over Site API Locations
+     */
+    abstract public function filterLocationFieldRelations(
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,

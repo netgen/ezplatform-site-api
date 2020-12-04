@@ -6,7 +6,7 @@ services:
         arguments:
             - '@netgen.ezplatform_site.settings'
         tags:
-            - {name: ezplatform.query_type}
+            - { name: ezplatform.query_type }
         public: false
 
     netgen.ezplatform_site.query_type.content.relations.all_tag_fields:
@@ -14,5 +14,21 @@ services:
         arguments:
             - '@netgen.ezplatform_site.settings'
         tags:
-            - {name: ezplatform.query_type}
+            - { name: ezplatform.query_type }
+        public: false
+
+    netgen.ezplatform_site.query_type.location.relations.tag_fields:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations\TagFields
+        arguments:
+            - '@netgen.ezplatform_site.settings'
+        tags:
+            - { name: ezplatform.query_type }
+        public: false
+
+    netgen.ezplatform_site.query_type.location.relations.all_tag_fields:
+        class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations\AllTagFields
+        arguments:
+            - '@netgen.ezplatform_site.settings'
+        tags:
+            - { name: ezplatform.query_type }
         public: false

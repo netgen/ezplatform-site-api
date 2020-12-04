@@ -1,14 +1,22 @@
-Forward field Content relations Query Type
+Forward field Location relations Query Type
 ================================================================================
 
-This Query Type is used to build queries that fetch Content that is related to from relation type
-fields of the given Content.
+This Query Type is used to build queries that fetch Locations with Content that is related to from
+relation type fields of the given Content.
+
+.. note::
+
+    Only visible main Locations of the related Content will be used.
 
 +-------------+----------------------------------------------------------------------------------------------+
-| Identifier  | ``SiteAPI:Content/Relations/ForwardFields``                                                  |
+| Identifier  | ``SiteAPI:Location/Relations/ForwardFields``                                                 |
 +-------------+----------------------------------------------------------------------------------------------+
 | Own         | - `content`_                                                                                 |
 | conditions  | - `relation_field`_                                                                          |
++-------------+----------------------------------------------------------------------------------------------+
+| Inherited   | - `main`_                                                                                    |
+| Location    | - `priority`_                                                                                |
+| conditions  | - `visible`_                                                                                 |
 +-------------+----------------------------------------------------------------------------------------------+
 | Common      | - `content_type`_                                                                            |
 | Content     | - `field`_                                                                                   |
@@ -35,7 +43,7 @@ paginate them by 10 per page using URL query parameter ``page``.
     ezpublish:
         system:
             frontend_group:
-                ng_content_view:
+                ngcontent_view:
                     full:
                         blog_post:
                             template: '@ezdesign/content/full/blog_post.html.twig'
@@ -43,7 +51,7 @@ paginate them by 10 per page using URL query parameter ``page``.
                                 Identifier\ContentType: blog_post
                             queries:
                                 related_images:
-                                    query_type: SiteAPI:Content/Relations/ForwardFields
+                                    query_type: SiteAPI:Location/Relations/ForwardFields
                                     max_per_page: 10
                                     page: 1
                                     parameters:
@@ -58,7 +66,7 @@ paginate them by 10 per page using URL query parameter ``page``.
     <ul>
     {% for image in ng_query( 'related_images' ) %}
         <li>
-            {{ ng_image_alias( image.fields.image, 'gallery' ) }}
+            {{ ng_image_alias( image.content.fields.image, 'gallery' ) }}
         </li>
     {% endfor %}
     </ul>
@@ -123,6 +131,38 @@ Examples:
 .. code-block:: yaml
 
     relation_field: [head, heart, base]
+
+Inherited Location conditions
+--------------------------------------------------------------------------------
+.. include:: /reference/query_types/parameters/common/location/main/title.rst.inc
+
+Defines whether returned Locations are main Locations or not.
+Use ``true`` to get main Locations (which is also the default behaviour), ``false`` to get non-main Locations and ``null`` to get both.
+
+- **value type**: ``boolean``, ``null``
+- **value format**: ``single``
+- **operators**: ``eq``
+- **target**: none
+- **required**: ``false``
+- **default**: ``true``
+
+.. include:: /reference/query_types/parameters/common/location/main/examples.rst.inc
+
+.. include:: /reference/query_types/parameters/common/location/priority.rst.inc
+
+.. include:: /reference/query_types/parameters/common/location/visible/title.rst.inc
+
+Defines whether returned Locations are main Locations or not.
+Use ``true`` to get main Locations (which is also the default behaviour), ``false`` to get non-main Locations and ``null`` to get both.
+
+- **value type**: ``boolean``, ``null``
+- **value format**: ``single``
+- **operators**: ``eq``
+- **target**: none
+- **required**: ``false``
+- **default**: ``true``
+
+.. include:: /reference/query_types/parameters/common/location/visible/examples.rst.inc
 
 .. include:: /reference/query_types/parameters/common_content_parameters.rst.inc
 .. include:: /reference/query_types/parameters/common_query_parameters.rst.inc

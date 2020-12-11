@@ -27,6 +27,7 @@ services:
     netgen.ezplatform_site.query_type.location.relations.forward_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations\ForwardFields
         arguments:
+            - '@netgen.ezplatform_site.settings'
             - '@netgen.ezplatform_site.plugins.field_type.relation_resolver.registry'
         tags:
             - {name: ezpublish.query_type}
@@ -34,6 +35,8 @@ services:
 
     netgen.ezplatform_site.query_type.location.relations.reverse_fields:
         class: Netgen\EzPlatformSiteApi\Core\Site\QueryType\Location\Relations\ReverseFields
+        arguments:
+            - '@netgen.ezplatform_site.settings'
         tags:
             - {name: ezpublish.query_type}
         public: false

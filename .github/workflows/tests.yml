@@ -1,0 +1,66 @@
+name: Tests
+
+on:
+    push:
+        branches:
+            - 'master'
+            - '[0-9].[0-9]+'
+    pull_request: ~
+
+jobs:
+    tests:
+        name: ${{ matrix.php }} / ${{ matrix.kernel }} / ${{ matrix.phpunit }}
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - php: '7.1'
+                      phpunit: 'phpunit.xml'
+                      coverage: 'unit'
+                      kernel: '~7.4.4'
+                    - php: '7.1'
+                      phpunit: 'phpunit-integration-legacy.xml'
+                      coverage: 'integration'
+                      kernel: '~7.4.4'
+
+                    - php: '7.1'
+                      phpunit: 'phpunit.xml'
+                      coverage: 'unit'
+                      kernel: '~7.5.13'
+                    - php: '7.1'
+                      phpunit: 'phpunit-integration-legacy.xml'
+                      coverage: 'integration'
+                      kernel: '~7.5.13'
+
+                    - php: '7.2'
+                      phpunit: 'phpunit.xml'
+                      coverage: 'unit'
+                    - php: '7.2'
+                      phpunit: 'phpunit-integration-legacy.xml'
+                      coverage: 'integration'
+
+                    - php: '7.3'
+                      phpunit: 'phpunit.xml'
+                      coverage: 'unit'
+                    - php: '7.3'
+                      phpunit: 'phpunit-integration-legacy.xml'
+                      coverage: 'integration'
+
+        steps:
+            - uses: actions/checkout@v2
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: xdebug
+
+            # Read-only OAuth token to work around GitHub API rate limits
+            - run: composer config -g github-oauth.github.com "4b3b0a83ea27d9544d3608a384c7a14625a98804"
+            - run: composer require --no-update ezsystems/ezpublish-kernel="${{ matrix.kernel }}"
+              if: matrix.kernel
+            - run: composer --version
+            - run: composer validate --strict
+            - run: composer update --prefer-dist
+            - run: vendor/bin/phpunit -c ${{ matrix.phpunit }} --colors=always --coverage-clover=coverage.xml
+            - run: bash <(curl -s https://codecov.io/bash) -F ${{ matrix.coverage }}

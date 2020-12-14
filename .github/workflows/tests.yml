@@ -9,42 +9,24 @@ on:
 
 jobs:
     tests:
-        name: ${{ matrix.php }} / ${{ matrix.kernel }} / ${{ matrix.phpunit }}
+        name: ${{ matrix.php }} ${{ matrix.coverage }}
         runs-on: ubuntu-latest
 
         strategy:
             fail-fast: false
             matrix:
                 include:
-                    - php: '7.1'
-                      phpunit: 'phpunit.xml'
-                      coverage: 'unit'
-                      kernel: '~7.4.4'
-                    - php: '7.1'
-                      phpunit: 'phpunit-integration-legacy.xml'
-                      coverage: 'integration'
-                      kernel: '~7.4.4'
-
-                    - php: '7.1'
-                      phpunit: 'phpunit.xml'
-                      coverage: 'unit'
-                      kernel: '~7.5.13'
-                    - php: '7.1'
-                      phpunit: 'phpunit-integration-legacy.xml'
-                      coverage: 'integration'
-                      kernel: '~7.5.13'
-
-                    - php: '7.2'
-                      phpunit: 'phpunit.xml'
-                      coverage: 'unit'
-                    - php: '7.2'
-                      phpunit: 'phpunit-integration-legacy.xml'
-                      coverage: 'integration'
-
                     - php: '7.3'
                       phpunit: 'phpunit.xml'
                       coverage: 'unit'
                     - php: '7.3'
+                      phpunit: 'phpunit-integration-legacy.xml'
+                      coverage: 'integration'
+
+                    - php: '7.4'
+                      phpunit: 'phpunit.xml'
+                      coverage: 'unit'
+                    - php: '7.4'
                       phpunit: 'phpunit-integration-legacy.xml'
                       coverage: 'integration'
 

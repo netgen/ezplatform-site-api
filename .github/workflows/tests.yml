@@ -37,8 +37,6 @@ jobs:
                   php-version: ${{ matrix.php }}
                   coverage: xdebug
 
-            # Read-only OAuth token to work around GitHub API rate limits
-            - run: composer config -g github-oauth.github.com "4b3b0a83ea27d9544d3608a384c7a14625a98804"
             - run: composer require --no-update ezsystems/ezpublish-kernel="${{ matrix.kernel }}"
               if: matrix.kernel
             - run: composer --version

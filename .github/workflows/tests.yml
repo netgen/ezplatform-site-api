@@ -9,7 +9,7 @@ on:
 
 jobs:
     tests:
-        name: ${{ matrix.php }} ${{ matrix.coverage }}
+        name: ${{ matrix.php }} ${{ matrix.coverage }} ${{ matrix.kernel }}
         runs-on: ubuntu-latest
 
         strategy:

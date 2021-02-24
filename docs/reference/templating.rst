@@ -326,7 +326,7 @@ Working with Content fields
 
   .. code-block:: twig
 
-    <h1>Value of the title field is: '{{ content.field.title.value.text }}'</h1>
+    <h1>Value of the title field is: '{{ content.fields.title.value.text }}'</h1>
 
 - **Rendering the image field**
 

@@ -176,11 +176,11 @@ Basic usage
 
 - **Linking to a Location**
 
-  Linking is done using the ``path()`` Twig function, same as before.
+  Linking is done using the ``ez_path()`` Twig function, same as before.
 
   .. code-block:: twig
 
-    <a href="{{ path(location) }}">{{ location.content.name }}</a>
+    <a href="{{ ez_path(location) }}">{{ location.content.name }}</a>
 
 - **Linking to a Content**
 
@@ -188,7 +188,7 @@ Basic usage
 
   .. code-block:: twig
 
-    <a href="{{ path(content) }}">{{ content.name }}</a>
+    <a href="{{ ez_path(content) }}">{{ content.name }}</a>
 
 Working with Content fields
 ---------------------------
@@ -369,7 +369,7 @@ Content Locations
     <ul>
     {% for location in locations %}
         <li>
-            <a href="{{ path(location) }}">Location #{{ location.id }}</a>
+            <a href="{{ ez_path(location) }}">Location #{{ location.id }}</a>
         </li>
     {% endif %}
     </ul>
@@ -393,7 +393,7 @@ Content Locations
     <ul>
     {% for location in locations %}
         <li>
-            <a href="{{ path(location) }}">Location #{{ location.id }}</a>
+            <a href="{{ ez_path(location) }}">Location #{{ location.id }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -414,7 +414,7 @@ Content Field relations
     {% set related_content = content.fieldRelation('related_article') %}
 
     {% if related_content is defined %}
-        <a href="{{ path(related_content) }}">{{ related_content.name }}</a>
+        <a href="{{ ez_path(related_content) }}">{{ related_content.name }}</a>
     {% else %}
         <p>There are two possibilities:</p>
         <ol>
@@ -445,7 +445,7 @@ Content Field relations
     <ul>
     {% for article in related_articles %}
         <li>
-            <a href="{{ path(article) }}">{{ article.name }}</a>
+            <a href="{{ ez_path(article) }}">{{ article.name }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -468,7 +468,7 @@ Content Field relations
     <ul>
     {% for article in articles %}
         <li>
-            <a href="{{ path(article) }}">{{ article.name }}</a>
+            <a href="{{ ez_path(article) }}">{{ article.name }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -493,7 +493,7 @@ Location children
     <ul>
     {% for child in children %}
         <li>
-            <a href="{{ path(child) }}">{{ child.content.name }}</a>
+            <a href="{{ ez_path(child) }}">{{ child.content.name }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -513,7 +513,7 @@ Location children
     {% if first_child is not null %}
         <p>
             First blog post, as sorted by the parent Location:
-            <a href="{{ path(first_child) }}">{{ first_child.content.name }}</a>
+            <a href="{{ ez_path(first_child) }}">{{ first_child.content.name }}</a>
         </p>
     {% else %}
         <p>There are no blog posts under this Location</p>
@@ -544,7 +544,7 @@ Location children
     <ul>
     {% for document in documents %}
         <li>
-            <a href="{{ path(document) }}">{{ document.content.name }}</a>
+            <a href="{{ ez_path(document) }}">{{ document.content.name }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -569,7 +569,7 @@ Location siblings
     <ul>
     {% for sibling in siblings %}
         <li>
-            <a href="{{ path(sibling) }}">{{ sibling.content.name }}</a>
+            <a href="{{ ez_path(sibling) }}">{{ sibling.content.name }}</a>
         </li>
     {% endfor %}
     </ul>
@@ -594,7 +594,7 @@ Location siblings
     <ul>
     {% for article in articles %}
         <li>
-            <a href="{{ path(articles) }}">{{ articles.content.name }}</a>
+            <a href="{{ ez_path(articles) }}">{{ articles.content.name }}</a>
         </li>
     {% endfor %}
     </ul>

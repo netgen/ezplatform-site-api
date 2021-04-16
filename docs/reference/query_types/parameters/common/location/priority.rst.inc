@@ -16,11 +16,11 @@ Examples:
 .. code-block:: yaml
 
     # multiple operators are combined with logical AND
-    depth:
+    priority:
         gt: 4
         lte: 8
 
 .. code-block:: yaml
 
-    depth:
+    priority:
         between: [4, 7]

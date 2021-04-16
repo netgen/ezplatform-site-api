@@ -418,7 +418,7 @@ Content Field relations
     {% else %}
         <p>There are two possibilities:</p>
         <ol>
-            <li>Relation field 'related_article' is empty</p>
+            <li>Relation field 'related_article' is empty</li>
             <li>You don't have a permission to read the related Content</li>
         </ol>
         <p>In any case, you can't render the related Content!</p>
@@ -562,7 +562,7 @@ Location siblings
 
   .. code-block:: twig
 
-    {% set children = location.siblings(10) %}
+    {% set siblings = location.siblings(10) %}
 
     <h3>List of 10 Location's siblings, sorted as is defined on the parent Location</h3>
 
@@ -594,7 +594,7 @@ Location siblings
     <ul>
     {% for article in articles %}
         <li>
-            <a href="{{ ez_path(articles) }}">{{ articles.content.name }}</a>
+            <a href="{{ ez_path(article) }}">{{ article.content.name }}</a>
         </li>
     {% endfor %}
     </ul>

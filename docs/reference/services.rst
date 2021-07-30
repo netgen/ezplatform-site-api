@@ -254,7 +254,7 @@ supports optional filtering by ContentType.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example**                            | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $content = $relationService->getFieldRelation(                                 |
+|                                        |     $content = $relationService->loadFieldRelation(                                |
 |                                        |         $content,                                                                  |
 |                                        |         'relations',                                                               |
 |                                        |         ['articles']                                                               |
@@ -277,7 +277,7 @@ filtering by ContentType.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example**                            | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $contentItems = $relationService->getFieldRelations(                           |
+|                                        |     $contentItems = $relationService->loadFieldRelations(                          |
 |                                        |         $content,                                                                  |
 |                                        |         'relations',                                                               |
 |                                        |         ['articles']                                                               |
@@ -303,7 +303,7 @@ supports optional filtering by ContentType.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example**                            | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $content = $relationService->getFieldRelationLocation(                         |
+|                                        |     $content = $relationService->loadFieldRelationLocation(                        |
 |                                        |         $content,                                                                  |
 |                                        |         'relations',                                                               |
 |                                        |         ['articles']                                                               |
@@ -326,7 +326,7 @@ filtering by ContentType.
 +----------------------------------------+------------------------------------------------------------------------------------+
 | **Example**                            | .. code-block:: php                                                                |
 |                                        |                                                                                    |
-|                                        |     $contentItems = $relationService->getFieldRelationLocations(                   |
+|                                        |     $contentItems = $relationService->loadFieldRelationLocations(                  |
 |                                        |         $content,                                                                  |
 |                                        |         'relations',                                                               |
 |                                        |         ['articles']                                                               |

@@ -413,22 +413,16 @@ Content Field relations
 
     {% set related_content = content.fieldRelation('related_article') %}
 
-    {% if related_content is defined %}
+    {% if related_content is not empty %}
         <a href="{{ ez_path(related_content) }}">{{ related_content.name }}</a>
-    {% else %}
-        <p>There are two possibilities:</p>
-        <ol>
-            <li>Relation field 'related_article' is empty</li>
-            <li>You don't have a permission to read the related Content</li>
-        </ol>
-        <p>In any case, you can't render the related Content!</p>
     {% endif %}
 
   .. note::
 
     If relation field contains multiple relations, the first one will be returned. If it doesn't
     contain relations or you don't have the access to read the related Content, the method will
-    return ``null``. Make sure to check if that's the case.
+    return ``
+    ``. Make sure to check if that's the case.
 
 - **Accessing all field relations**
 

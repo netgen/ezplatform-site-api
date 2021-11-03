@@ -413,7 +413,7 @@ Content Field relations
 
     {% set related_content = content.fieldRelation('related_article') %}
 
-    {% if related_content is defined %}
+    {% if related_content is not empty %}
         <a href="{{ ez_path(related_content) }}">{{ related_content.name }}</a>
     {% else %}
         <p>There are two possibilities:</p>

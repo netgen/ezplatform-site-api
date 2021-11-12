@@ -557,12 +557,12 @@ Location siblings
 - **Listing Location's siblings**
 
   This is done by calling the method ``getSiblings()``, also available as ``siblings()`` in
-  Twig. It returns an array of children Locations and optionally accepts maximum number of items
+  Twig. It returns an array of sibling Locations and optionally accepts maximum number of items
   returned (by default ``25``).
 
   .. code-block:: twig
 
-    {% set children = location.siblings(10) %}
+    {% set siblings = location.siblings(10) %}
 
     <h3>List of 10 Location's siblings, sorted as is defined on the parent Location</h3>
 

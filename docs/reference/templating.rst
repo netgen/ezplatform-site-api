@@ -557,7 +557,7 @@ Location siblings
 - **Listing Location's siblings**
 
   This is done by calling the method ``getSiblings()``, also available as ``siblings()`` in
-  Twig. It returns an array of siblings Locations and optionally accepts maximum number of items
+  Twig. It returns an array of sibling Locations and optionally accepts maximum number of items
   returned (by default ``25``).
 
   .. code-block:: twig

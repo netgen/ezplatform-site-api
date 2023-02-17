@@ -1,6 +1,6 @@
 # Netgen's Site API for eZ Platform
 
-[![Build Status](https://img.shields.io/github/workflow/status/netgen/ezplatform-site-api/Tests/master?style=popout)](https://github.com/netgen/ezplatform-site-api/actions?query=workflow%3ATests+branch%3Amaster)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/netgen/ezplatform-site-api/tests.yml?branch=master)](https://github.com/netgen/ezplatform-site-api/actions)
 [![Read the Docs](https://img.shields.io/readthedocs/netgen-ezplatform-site-api?style=popout)](https://docs.netgen.io/projects/site-api/en/latest/)
 [![Downloads](https://img.shields.io/packagist/dt/netgen/ezplatform-site-api.svg)](https://packagist.org/packages/netgen/ezplatform-site-api)
 [![Latest stable](https://img.shields.io/packagist/v/netgen/ezplatform-site-api.svg?style=popout)](https://packagist.org/packages/netgen/ezplatform-site-api)

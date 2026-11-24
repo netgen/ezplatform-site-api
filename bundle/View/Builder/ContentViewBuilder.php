@@ -222,7 +222,11 @@ class ContentViewBuilder implements ViewBuilder
             }
         );
 
-        if ($checkVisibility && $location->innerLocation->invisible) {
+        if (
+            $checkVisibility &&
+            !$this->site->getSettings()->showHiddenItems &&
+            $location->innerLocation->invisible
+        ) {
             throw new NotFoundHttpException(
                 'Location cannot be displayed as it is flagged as invisible.'
             );
